@@ -1,0 +1,182 @@
+{
+   "title":"Xadrez",
+   "description":"Jogue online com outros fãns de xadrez.",
+   "online":"Online",
+   "offline":"Offline",
+   "home":"Home",
+   "play":"Jogar",
+   "ranking":"Classificação",
+   "invite":"Convidar",
+   "points":"Pontos",
+   "player":"Jogador",
+   "challengers":"challengers",
+   "all":"Todos",
+   "time":"Tempo",
+   "minutes":"atas",
+   "color":"Cor",
+   "blanc":"Branco",
+   "noir":"Pretro",
+   "min":"Mínimo",
+   "max":"Máximo",
+   "winner":"Vencedor",
+   "game_over":"Game Over",
+   "mat":"Xeque-mate",
+   "pat":"Afogamento",
+   "nul":"Empatado",
+   "start_game":"Comece o jogo",
+   "search_game":"Procurar um jogo",
+   "level":"Nível",
+   "facile":"Fácil",
+   "normal":"Normal",
+   "difficile":"Difícil",
+   "none":"Nenhum",
+   "one_player":"Um jogador",
+   "two_player":"Dois jogadores",
+   "error_browser":"Seu navegador não é compatível com este jogo",
+   "error":"Ocorreu um erro",
+   "wait_game":"À espera de um jogo ...",
+   "offer_draw":"Fornecer empatado",
+   "offers_a_draw":"fornecer empatado",
+   "resign":"Resignar",
+   "ok":"Ok",
+   "cancel":"Cancelar",
+   "create_game":"Criar um jogo",
+   "defier":"Desafiar",
+   "new_defi":"Novo desafio",
+   "cancel_partie":"Este jogo não existe mais",
+   "win":"Ganhar",
+   "lose":"Perder",
+   "draw":"Empatado",
+   "game":"Jogo",
+   "connected":"conectado",
+   "quick_game":"jogo",
+   "defi":"desafio",
+   "partager":"Compartilhar",
+   "friends":"Amigos",
+   "shop":"Loja",
+   "tokens":"Fichas",
+   "free_tokens":"Fichas Grátis",
+   "no_tokens":"Você não tem fichas suficientes para jogar.",
+   "buy_tokens":"Comprar Fichas",
+   "congratulation":"Parabéns",
+   "fanpage":"Fan Page",
+   "terms_service":"Termos de Serviço",
+   "privacy_policy":"Política de Privacidade",
+   "invite_friends":{
+      "title":"Convide seus amigos (30 max)",
+      "infos":"E ganhe 10% das fichas jogadas por convite aceito",
+      "send":"Enviar convites",
+      "max_requests":"Você já enviou 30 convites hoje.",
+      "all":"Todos os amigos"
+   },
+   "pub":{
+      "title":"Anão amarelo",
+      "text":"Jogo de cartas online. Livre-se de todas as suas cartas e ganha a aposta."
+   },
+   "trophy":{
+      "title":"Troféu",
+      "win":"Você ganha um troféu",
+      "content":{
+         "1":{
+            "_class":"_1_game",
+            "title":"Novato",
+            "description":"Jogar 1 jogo"
+         },
+         "2":{
+            "_class":"_100_game",
+            "title":"Aprendiz",
+            "description":"Jogar 100 jogos"
+         },
+         "3":{
+            "_class":"_500_game",
+            "title":"Intermediário",
+            "description":"Jogar 500 jogos"
+         },
+         "4":{
+            "_class":"_1000_game",
+            "title":"Confirmado",
+            "description":"Jogar 1000 jogos"
+         },
+         "5":{
+            "_class":"_5000_game",
+            "title":"Especialista",
+            "description":"Jogar 5000 jogos"
+         },
+         "6":{
+            "_class":"_1_wins",
+            "title":"Campeão Chocolate",
+            "description":"Ganhe 1 jogo"
+         },
+         "7":{
+            "_class":"_50_wins",
+            "title":"Campeão Bronze",
+            "description":"Ganhe 50 jogos"
+         },
+         "8":{
+            "_class":"_250_wins",
+            "title":"Campeão Prata",
+            "description":"Ganhe 250 jogos"
+         },
+         "9":{
+            "_class":"_500_wins",
+            "title":"Campeão Ouro",
+            "description":"Ganhe 500 jogos"
+         },
+         "10":{
+            "_class":"_2000_wins",
+            "title":"Campeão Platina",
+            "description":"Ganhe 2000 jogos"
+         },
+         "11":{
+            "_class":"_5_games_day",
+            "title":"Amador",
+            "description":"Jogue 5 jogos em um dia"
+         },
+         "12":{
+            "_class":"_10_games_day",
+            "title":"Entusiasta",
+            "description":"Jogue 10 jogos em um dia"
+         },
+         "13":{
+            "_class":"_25_games_day",
+            "title":"Aficionado",
+            "description":"Jogue 25 jogos em um dia"
+         },
+         "14":{
+            "_class":"_50_games_day",
+            "title":"Fanático",
+            "description":"Jogue 50 jogos em um dia"
+         },
+         "15":{
+            "_class":"_100_games_day",
+            "title":"Viciado",
+            "description":"Jogue 100 jogos em um dia"
+         },
+         "16":{
+            "_class":"_3_wins_cons",
+            "title":"Vencedor",
+            "description":"Ganhar 3 jogos consecutivos"
+         },
+         "17":{
+            "_class":"_5_wins_cons",
+            "title":"Conquistador",
+            "description":"Ganhar 5 jogos consecutivos"
+         },
+         "18":{
+            "_class":"_10_wins_cons",
+            "title":"Assassino",
+            "description":"Ganhar 10 jogos consecutivos"
+         },
+         "19":{
+            "_class":"_20_wins_cons",
+            "title":"Invencível",
+            "description":"Ganhar 20 jogos consecutivos"
+         },
+         "20":{
+            "_class":"_3_loses_cons",
+            "title":"Perdedor",
+            "description":"Perder 3 jogos consecutivos"
+         }
+      }
+   }
+}

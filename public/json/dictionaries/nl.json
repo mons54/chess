@@ -1,0 +1,182 @@
+{
+   "title":"schaak",
+   "description":"Schaak tegen spelers over de hele wereld. Verbeter uw schaken en je ranking.",
+   "online":"online",
+   "offline":"offline",
+   "home":"Home",
+   "play":"spelen",
+   "ranking":"Ranking",
+   "invite":"nodigen",
+   "points":"punten",
+   "player":"speler",
+   "challengers":"uitdagers",
+   "all":"alle",
+   "time":"tijd",
+   "minutes":"notulen",
+   "color":"kleur",
+   "blanc":"wit",
+   "noir":"zwart",
+   "min":"minimum",
+   "max":"maximaal",
+   "winner":"winnaar",
+   "game_over":"Game Over",
+   "mat":"schaakmat",
+   "pat":"gelijkheid",
+   "nul":"gelijkheid",
+   "start_game":"Start spel",
+   "search_game":"Zoek een spel",
+   "level":"niveau",
+   "facile":"gemakkelijk",
+   "normal":"normaal",
+   "difficile":"hard",
+   "none":"geen",
+   "one_player":"een speler",
+   "two_player":"twee spelers",
+   "error_browser":"Uw browser is niet compatibel met dit spel",
+   "error":"Er is een fout opgetreden",
+   "wait_game":"Wachten op een spel ...",
+   "offer_draw":"bieden te trekken",
+   "offers_a_draw":"biedt een gelijkspel",
+   "resign":"aftreden",
+   "ok":"Ok",
+   "cancel":"annuleren",
+   "create_game":"Maak een spel",
+   "defier":"uitdagen",
+   "new_defi":"nieuwe uitdaging",
+   "cancel_partie":"Dit spel sessie bestaat niet meer",
+   "win":"winnen",
+   "lose":"verliezen",
+   "draw":"trekken",
+   "game":"spel",
+   "connected":"verbonden",
+   "quick_game":"spel",
+   "defi":"uitdaging",
+   "partager":"delen",
+   "friends":"vrienden",
+   "shop":"Winkel",
+   "tokens":"Chips",
+   "free_tokens":"Gratis Chips",
+   "no_tokens":"Je hoeft niet genoeg chips om mee te spelen.",
+   "buy_tokens":"Koop Chips",
+   "congratulation":"Felicitatie",
+   "fanpage":"Fan Page",
+   "terms_service":"Gebruiksvoorwaarden",
+   "privacy_policy":"Privacy Policy",
+   "invite_friends":{
+      "title":"Nodig je vrienden uit (30 max)",
+      "infos":"En verdien 10% van de chips gespeeld op uitnodiging geaccepteerd",
+      "send":"Stuur uitnodigingen",
+      "max_requests":"Je hebt al verzonden 30 uitnodigingen vandaag.",
+      "all":"Alle vrienden"
+   },
+   "pub":{
+      "title":"Gele Dwerg",
+      "text":"Kaartspel online. Bevrijd jezelf van al uw kaarten en wint de weddenschap."
+   },
+   "trophy":{
+      "title":"Trofee",
+      "win":"Je wint een trofee",
+      "content":{
+         "1":{
+            "_class":"_1_game",
+            "title":"Beginner",
+            "description":"Speel 1 spel"
+         },
+         "2":{
+            "_class":"_100_game",
+            "title":"Novice",
+            "description":"Speel 100 spellen"
+         },
+         "3":{
+            "_class":"_500_game",
+            "title":"Tussen-",
+            "description":"Speel 500 spellen"
+         },
+         "4":{
+            "_class":"_1000_game",
+            "title":"Gevorderd",
+            "description":"Speel 1000 spellen"
+         },
+         "5":{
+            "_class":"_5000_game",
+            "title":"Expert",
+            "description":"Speel 5000 spellen"
+         },
+         "6":{
+            "_class":"_1_wins",
+            "title":"Champion chocolate",
+            "description":"Win 1 spel"
+         },
+         "7":{
+            "_class":"_50_wins",
+            "title":"Champion bronzen",
+            "description":"Win 50 spellen"
+         },
+         "8":{
+            "_class":"_250_wins",
+            "title":"Champion zilver",
+            "description":"Win 250 spellen"
+         },
+         "9":{
+            "_class":"_500_wins",
+            "title":"Champion goud",
+            "description":"Win 500 spellen"
+         },
+         "10":{
+            "_class":"_2000_wins",
+            "title":"Champion platina",
+            "description":"Win 2000 spellen"
+         },
+         "11":{
+            "_class":"_5_games_day",
+            "title":"Amateur",
+            "description":"Speel 5 spellen in een dag"
+         },
+         "12":{
+            "_class":"_10_games_day",
+            "title":"Enthousiast",
+            "description":"Speel 10 spellen in een dag"
+         },
+         "13":{
+            "_class":"_25_games_day",
+            "title":"Fan",
+            "description":"Speel 25 spellen in een dag"
+         },
+         "14":{
+            "_class":"_50_games_day",
+            "title":"Super fan",
+            "description":"Speel 50 spellen in een dag"
+         },
+         "15":{
+            "_class":"_100_games_day",
+            "title":"Addict",
+            "description":"Speel 100 spellen in een dag"
+         },
+         "16":{
+            "_class":"_3_wins_cons",
+            "title":"Winnaar",
+            "description":"Win 3 opeenvolgende spellen"
+         },
+         "17":{
+            "_class":"_5_wins_cons",
+            "title":"Veroveraar",
+            "description":"Win 5 opeenvolgende spellen"
+         },
+         "18":{
+            "_class":"_10_wins_cons",
+            "title":"Moordenaar",
+            "description":"Win 10 opeenvolgende spellen"
+         },
+         "19":{
+            "_class":"_20_wins_cons",
+            "title":"Onoverwinnelijk",
+            "description":"Win 20 opeenvolgende spellen"
+         },
+         "20":{
+            "_class":"_3_loses_cons",
+            "title":"Verliezer",
+            "description":"Lose 3 opeenvolgende spellen"
+         }
+      }
+   }
+}

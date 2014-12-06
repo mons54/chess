@@ -1,0 +1,182 @@
+{
+   "title":"Scacchi",
+   "description":"Giocare a scacchi in linea contro i giocatori di tutte il mondo.",
+   "online":"In linea",
+   "offline":"Non in linea",
+   "home":"Home",
+   "play":"Giocare",
+   "ranking":"Classifica",
+   "invite":"Invitare",
+   "points":"Punti",
+   "player":"Giocatore",
+   "challengers":"sfidanti",
+   "all":"Tutti",
+   "time":"Tempo",
+   "minutes":"verbale",
+   "color":"Colore",
+   "blanc":"Bianco",
+   "noir":"Nero",
+   "min":"Minimo",
+   "max":"Massimo",
+   "winner":"Vincitore",
+   "game_over":"Game Over",
+   "mat":"Scacco Matto",
+   "pat":"Stallo",
+   "nul":"Pari",
+   "start_game":"Inizia la partita",
+   "search_game":"Cerca un gioco",
+   "level":"Livello",
+   "facile":"Facile",
+   "normal":"Normale",
+   "difficile":"Duro",
+   "none":"Nessuno",
+   "one_player":"Un giocatore",
+   "two_player":"Due giocatori",
+   "error_browser":"Il tuo browser non è compatibile con questo gioco",
+   "error":"C'è stato un errore",
+   "wait_game":"In attesa di un gioco ...",
+   "offer_draw":"Offerta pari",
+   "offers_a_draw":"offre pari",
+   "resign":"Abbandonare",
+   "ok":"Ok",
+   "cancel":"Annullare",
+   "create_game":"Creare un gioco",
+   "defier":"Sfidare",
+   "new_defi":"Nuova sfida",
+   "cancel_partie":"Questa sessione di gioco non esiste più",
+   "win":"Vinte",
+   "lose":"Perse",
+   "draw":"Pari",
+   "game":"Gioco",
+   "connected":"collegato",
+   "quick_game":"gioco",
+   "defi":"sfida",
+   "partager":"Condividi",
+   "friends":"Amici",
+   "shop":"Acquista",
+   "tokens":"Chips",
+   "free_tokens":"Chips gratuito",
+   "no_tokens":"Non hai abbastanza chips per giocare.",
+   "buy_tokens":"Acquista chips",
+   "congratulation":"Congratulazione",
+   "fanpage":"Fan Page",
+   "terms_service":"Termini di servizio",
+   "privacy_policy":"Informativa sulla privacy",
+   "invite_friends":{
+      "title":"Invita i tuoi amici (30 max)",
+      "infos":"E guadagnare il 10% delle chips giocate su invito accettato",
+      "send":"Invia inviti",
+      "max_requests":"Hai già inviato 30 inviti oggi.",
+      "all":"Tutti gli amici"
+   },
+   "pub":{
+      "title":"Nano Giallo",
+      "text":"Gioco di carte online. Sbarazzarsi di tutte le carte e vince la scommessa."
+   },
+   "trophy":{
+      "title":"Trofeo",
+      "win":"Si vince un trofeo",
+      "content":{
+         "1":{
+            "_class":"_1_game",
+            "title":"Principiante",
+            "description":"Gioca 1 gioco"
+         },
+         "2":{
+            "_class":"_100_game",
+            "title":"Novizio",
+            "description":"Giocare 100 giochi"
+         },
+         "3":{
+            "_class":"_500_game",
+            "title":"Intermedio",
+            "description":"Giocare 500 giochi"
+         },
+         "4":{
+            "_class":"_1000_game",
+            "title":"Confermato",
+            "description":"Giocare 1000 giochi"
+         },
+         "5":{
+            "_class":"_5000_game",
+            "title":"Esperto",
+            "description":"Giocare 5000 giochi"
+         },
+         "6":{
+            "_class":"_1_wins",
+            "title":"Campione Cioccolato",
+            "description":"Vinci 1 gioco"
+         },
+         "7":{
+            "_class":"_50_wins",
+            "title":"Campione Bronzo",
+            "description":"Vinci 50 giochi"
+         },
+         "8":{
+            "_class":"_250_wins",
+            "title":"Campione Argento",
+            "description":"Vinci 250 giochi"
+         },
+         "9":{
+            "_class":"_500_wins",
+            "title":"Campione Oro",
+            "description":"Vinci 500 giochi"
+         },
+         "10":{
+            "_class":"_2000_wins",
+            "title":"Campione Platino",
+            "description":"Vinci 2000 giochi"
+         },
+         "11":{
+            "_class":"_5_games_day",
+            "title":"Amatore",
+            "description":"Gioca 5 giochi in un giorno"
+         },
+         "12":{
+            "_class":"_10_games_day",
+            "title":"Appassionato",
+            "description":"Gioca 10 giochi in un giorno"
+         },
+         "13":{
+            "_class":"_25_games_day",
+            "title":"Fan",
+            "description":"Gioca 25 giochi in un giorno"
+         },
+         "14":{
+            "_class":"_50_games_day",
+            "title":"Super Fan",
+            "description":"Gioca 50 giochi in un giorno"
+         },
+         "15":{
+            "_class":"_100_games_day",
+            "title":"Fanatico",
+            "description":"Gioca 100 giochi in un giorno"
+         },
+         "16":{
+            "_class":"_3_wins_cons",
+            "title":"Vincitore",
+            "description":"Vinci 3 giochi consecutive"
+         },
+         "17":{
+            "_class":"_5_wins_cons",
+            "title":"Conquistatore",
+            "description":"Vinci 5 giochi consecutive"
+         },
+         "18":{
+            "_class":"_10_wins_cons",
+            "title":"Killer",
+            "description":"Vinci 10 giochi consecutive"
+         },
+         "19":{
+            "_class":"_20_wins_cons",
+            "title":"Invincible",
+            "description":"Vinci 20 giochi consecutive"
+         },
+         "20":{
+            "_class":"_3_loses_cons",
+            "title":"Perdente",
+            "description":"Perdere 3 giochi consecutive"
+         }
+      }
+   }
+}

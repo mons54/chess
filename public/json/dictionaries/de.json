@@ -1,0 +1,182 @@
+{
+	"title":"Schach",
+	"description":"spielen Partie Schach gegen andere Spieler. Vergleichen Sie Ihre Ergebnisse mit anderen Spielern und erkämpfen Sie sich einen Platz in der Rangliste.",
+	"online":"Online",
+	"offline":"Offline",
+	"home":"Home",
+	"play":"spielen",
+	"ranking":"Rangliste",
+	"invite":"Laden",
+	"points":"Punkte",
+	"player":"Spieler",
+	"challengers":"Herausforderer",
+	"all":"All",
+	"time":"Zeit",
+	"minutes":"Minuten",
+	"color":"Farbe",
+	"blanc":"weiß",
+	"noir":"Schwarz",
+	"min":"Mini",
+	"max":"Maxi",
+	"winner":"Gewinner",
+	"game_over":"Game Over",
+	"mat":"Schachmatt",
+	"pat":"Patt",
+	"nul":"Remis",
+	"start_game":"Spiel starten",
+	"search_game":"Suche nach einem Spiel",
+	"level":"Ebene",
+	"facile":"leicht",
+	"normal":"normal",
+	"difficile":"schwer",
+	"none":"Ninguno",
+	"one_player":"Ein Spieler",
+	"two_player":"zwei Spieler",
+	"error_browser":"Ihr Browser ist nicht kompatibel mit diesem Spiel",
+	"error":"Ein Fehler ist aufgetreten",
+	"wait_game":"Waiting for a game ...",
+	"offer_draw":"Remis anbieten",
+	"offers_a_draw":"anbiete ein Remis",
+	"resign":"aufgeben",
+	"ok":"Ok",
+	"cancel":"Abbrechen",
+	"create_game":"Erstellen Sie ein Spiel",
+	"defier":"Herausfordern",
+	"new_defi":"neue Herausforderung",
+	"cancel_partie":"Dieses Spiel ist nicht mehr vorhanden",
+	"win":"gewinnen",
+	"lose":"verlieren",
+	"draw":"Remis",
+	"game":"Spiel",
+	"connected":"verbunden",
+	"quick_game":"Spiel",
+	"defi":"Herausforderung",
+	"partager":"Teilen",
+	"friends":"Freunde",
+	"shop":"Shop",
+	"tokens":"Chips",
+	"free_tokens":"Free Chips",
+	"no_tokens":"Sie haben noch genug Chips, um zu spielen.",
+	"buy_tokens":"Chips kaufen",
+	"congratulation":"Glückwunsch",
+	"fanpage":"Fan Page",
+	"terms_service":"Nutzungsbedingungen",
+	"privacy_policy":"Datenschutz",
+	"invite_friends":{
+		"title":"Laden Sie Ihre Freunde (30 max)",
+		"infos":"Und verdienen 10% der Chips auf Einladung spielte akzeptiert",
+		"send":"Einladungen senden",
+		"max_requests":"Sie haben bereits 30 Einladungen verschickt heute.",
+		"all":"Alle Freunde"
+	},
+	"pub":{
+		"title":"Der Gelbe Zwerg",
+		"text":"Kartenspiel online. Befreien Sie sich von all Ihre Karten und gewinnt die Wette."
+	},
+	"trophy":{
+		"title":"Trophäe",
+		"win":"Sie gewinnen eine Trophäe",
+		"content":{
+			"1":{
+				"_class":"_1_game",
+				"title":"Neuling",
+				"description":"Spielen Sie 1 Spiel"
+			},
+			"2":{
+				"_class":"_100_game",
+				"title":"Anfänger",
+				"description":"Spielen Sie 100 Spiele"
+			},
+			"3":{
+				"_class":"_500_game",
+				"title":"Zwischen-",
+				"description":"Spielen Sie 500 Spiele"
+			},
+			"4":{
+				"_class":"_1000_game",
+				"title":"fortgeschritten",
+				"description":"Spielen Sie 1000 Spiele"
+			},
+			"5":{
+				"_class":"_5000_game",
+				"title":"Experte",
+				"description":"Spielen Sie 5000 Spiele"
+			},
+			"6":{
+				"_class":"_1_wins",
+				"title":"Meister Schokolade",
+				"description":"Gewinnen Sie 1 Spiel"
+			},
+			"7":{
+				"_class":"_50_wins",
+				"title":"Meister Bronze",
+				"description":"Gewinnen Sie 50 Spiele"
+			},
+			"8":{
+				"_class":"_250_wins",
+				"title":"Meister Bronze",
+				"description":"Gewinnen Sie 250 Spiele"
+			},
+			"9":{
+				"_class":"_500_wins",
+				"title":"Meister Gold",
+				"description":"Gewinnen Sie 500 Spiele"
+			},
+			"10":{
+				"_class":"_2000_wins",
+				"title":"Meister Platin",
+				"description":"Gewinnen Sie 2000 Spiele"
+			},
+			"11":{
+				"_class":"_5_games_day",
+				"title":"Amateur",
+				"description":"Spielen Sie 5 Spiele an einem Tag"
+			},
+			"12":{
+				"_class":"_10_games_day",
+				"title":"Enthusiast",
+				"description":"Spielen Sie 10 Spiele an einem Tag"
+			},
+			"13":{
+				"_class":"_25_games_day",
+				"title":"Fan",
+				"description":"Spielen Sie 25 Spiele an einem Tag"
+			},
+			"14":{
+				"_class":"_50_games_day",
+				"title":"Super Fan",
+				"description":"Spielen Sie 50 Spiele an einem Tag"
+			},
+			"15":{
+				"_class":"_100_games_day",
+				"title":"Süchtige",
+				"description":"Spielen Sie 100 Spiele an einem Tag"
+			},
+			"16":{
+				"_class":"_3_wins_cons",
+				"title":"Gewinner",
+				"description":"Gewinne 3 Spiele in Folge"
+			},
+			"17":{
+				"_class":"_5_wins_cons",
+				"title":"Eroberer",
+				"description":"Gewinne 5 Spiele in Folge"
+			},
+			"18":{
+				"_class":"_10_wins_cons",
+				"title":"Killer",
+				"description":"Gewinne 10 Spiele in Folge"
+			},
+			"19":{
+				"_class":"_20_wins_cons",
+				"title":"unbesiegbar",
+				"description":"Gewinne 20 Spiele in Folge"
+			},
+			"20":{
+				"_class":"_3_loses_cons",
+				"title":"Verlierer",
+				"description":"Lose 3 Spiele in Folge"
+			}
+		}
+	}
+}

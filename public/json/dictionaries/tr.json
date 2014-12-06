@@ -1,0 +1,182 @@
+{
+   "title":"Satranç",
+   "description":"Dünyanın her yerinden insanlarla satranç oyna.",
+   "online":"Çevrimiçi",
+   "offline":"Çevrimdışı",
+   "home":"Anasayfa",
+   "play":"Oynamak",
+   "ranking":"Sıralaması",
+   "invite":"Davet",
+   "points":"Puan",
+   "player":"Oyuncu",
+   "challengers":"meydan",
+   "all":"Tüm",
+   "time":"Zaman",
+   "minutes":"Dakika",
+   "color":"Renk",
+   "blanc":"Beyaz",
+   "noir":"Siyah",
+   "min":"en az",
+   "max":"Maksimum",
+   "winner":"Kazanan",
+   "game_over":"Game Over",
+   "mat":"Şah mat",
+   "pat":"Çıkmazı",
+   "nul":"Berabere",
+   "start_game":"Oyunu başlat",
+   "search_game":"Bir oyun için ara",
+   "level":"Seviye",
+   "facile":"Kolay",
+   "normal":"Normal",
+   "difficile":"Sert",
+   "none":"Hiçbiri",
+   "one_player":"Bir oyuncu",
+   "two_player":"İki oyuncu",
+   "error_browser":"Tarayıcınız bu oyun ile uyumlu değildir",
+   "error":"Bir hata oluştu",
+   "wait_game":"Bir oyun bekliyorum ...",
+   "offer_draw":"Beraberlik Gönder",
+   "offers_a_draw":"bir beraberlik sunuyor",
+   "resign":"Istifa etmek",
+   "ok":"Tamam",
+   "cancel":"Iptal",
+   "create_game":"Bir oyun oluşturma",
+   "defier":"Meydan okumak",
+   "new_defi":"Yeni meydan",
+   "cancel_partie":"Bu oyun oturumu artık yok",
+   "win":"Galibiyet",
+   "lose":"Mağlubiyet ",
+   "draw":"Berabere",
+   "game":"Oyun",
+   "connected":"bağlı",
+   "quick_game":"oyun",
+   "defi":"meydan okumak",
+   "partager":"Paylaş",
+   "friends":"Arkadaşlar",
+   "shop":"Dükkan",
+   "tokens":"Tokens",
+   "free_tokens":"Ücretsiz Tokens",
+   "no_tokens":"Sen oynamak için yeterli tokens yok.",
+   "buy_tokens":"Tokens al",
+   "congratulation":"Kutlama",
+   "fanpage":"Fan Page",
+   "terms_service":"Hizmet Şartları",
+   "privacy_policy":"Gizlilik Politikası",
+   "invite_friends":{
+      "title":"Arkadaşlarınızı davet edin (30 max)",
+      "infos":"Ve davetiye ile Tokens fiş% 10 kazanın kabul",
+      "send":"istek gönder",
+      "max_requests":"Zaten bugün 30 davetiye gönderdik.",
+      "all":"Tüm arkadaşlar"
+   },
+   "pub":{
+      "title":"Sarı Cüce",
+      "text":"Kart oyunu online. Tüm kartları kurtulun ve bahis kazanır."
+   },
+   "trophy":{
+      "title":"Ganimet",
+      "win":"Bir kupa kazanmak",
+      "content":{
+         "1":{
+            "_class":"_1_game",
+            "title":"Acemi",
+            "description":"1 oyunu oyna"
+         },
+         "2":{
+            "_class":"_100_game",
+            "title":"Yeni",
+            "description":"100 oyna"
+         },
+         "3":{
+            "_class":"_500_game",
+            "title":"Ara",
+            "description":"500 oyna"
+         },
+         "4":{
+            "_class":"_1000_game",
+            "title":"Gelişmiş",
+            "description":"1000 oyna"
+         },
+         "5":{
+            "_class":"_5000_game",
+            "title":"Uzman",
+            "description":"5000 oyna"
+         },
+         "6":{
+            "_class":"_1_wins",
+            "title":"Şampiyon Çikolata",
+            "description":"1 oyunu kazanın"
+         },
+         "7":{
+            "_class":"_50_wins",
+            "title":"Şampiyon bronz",
+            "description":"50 oyun kazan"
+         },
+         "8":{
+            "_class":"_250_wins",
+            "title":"Şampiyon gümüş",
+            "description":"250 oyun kazan"
+         },
+         "9":{
+            "_class":"_500_wins",
+            "title":"Şampiyon altın",
+            "description":"500 oyun kazan"
+         },
+         "10":{
+            "_class":"_2000_wins",
+            "title":"Şampiyon platin",
+            "description":"2000 oyun kazan"
+         },
+         "11":{
+            "_class":"_5_games_day",
+            "title":"Amatör",
+            "description":"Bir günde 5 oyna"
+         },
+         "12":{
+            "_class":"_10_games_day",
+            "title":"Tutkunları",
+            "description":"Bir günde 10 oyna"
+         },
+         "13":{
+            "_class":"_25_games_day",
+            "title":"Fan",
+            "description":"Bir günde 25 oyna"
+         },
+         "14":{
+            "_class":"_50_games_day",
+            "title":"Hayran",
+            "description":"Bir günde 50 oyna"
+         },
+         "15":{
+            "_class":"_100_games_day",
+            "title":"Bağımlı",
+            "description":"Bir günde 100 oyna"
+         },
+         "16":{
+            "_class":"_3_wins_cons",
+            "title":"Kazanan",
+            "description":"3 ardışık oyunlar Win"
+         },
+         "17":{
+            "_class":"_5_wins_cons",
+            "title":"Fatih",
+            "description":"5 ardışık oyunlar Win"
+         },
+         "18":{
+            "_class":"_10_wins_cons",
+            "title":"Katil",
+            "description":"10 ardışık oyunlar Win"
+         },
+         "19":{
+            "_class":"_20_wins_cons",
+            "title":"Yenilmez",
+            "description":"20 ardışık oyunlar Win"
+         },
+         "20":{
+            "_class":"_3_loses_cons",
+            "title":"Mağlup",
+            "description":"3 ardışık oyunlar Lose"
+         }
+      }
+   }
+}

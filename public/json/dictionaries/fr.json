@@ -1,0 +1,182 @@
+{
+   "title":"Échecs",
+   "description":"Jouez aux échecs contre des joueurs du monde entier. Défiez les meilleurs et faites vous une place dans le classement.",
+   "online":"En ligne",
+   "offline":"Hors ligne",
+   "home":"Accueil",
+   "play":"Jouer",
+   "ranking":"Classement",
+   "invite":"Inviter",
+   "points":"Points",
+   "player":"Joueur",
+   "challengers":"challengers",
+   "all":"Tous",
+   "time":"Temps",
+   "minutes":"minutes",
+   "color":"Couleur",
+   "blanc":"Blanc",
+   "noir":"Noir",
+   "min":"Minimum",
+   "max":"Maximum",
+   "winner":"Gagnant",
+   "game_over":"Game Over",
+   "mat":"Échec et mat",
+   "pat":"Pat",
+   "nul":"Égalité",
+   "start_game":"Démarrer la partie",
+   "search_game":"Rechercher une partie",
+   "level":"Niveau",
+   "facile":"Facile",
+   "normal":"Normal",
+   "difficile":"Difficile",
+   "none":"Aucun",
+   "one_player":"Un joueur",
+   "two_player":"Deux joueurs",
+   "error_browser":"Votre navigateur n'est pas compatible avec ce jeu",
+   "error":"Une erreur est survenue",
+   "wait_game":"En attente d'une partie ...",
+   "offer_draw":"Proposer le nul",
+   "offers_a_draw":"propose le nul",
+   "resign":"Abandonner",
+   "ok":"Valider",
+   "cancel":"Annuler",
+   "create_game":"Creer une partie",
+   "defier":"Défier",
+   "new_defi":"Nouveau défi",
+   "cancel_partie":"Cette partie n'existe plus",
+   "win":"Victoire",
+   "lose":"Défaite",
+   "draw":"Nul",
+   "game":"Jeu",
+   "connected":"connectés",
+   "quick_game":"partie",
+   "defi":"défi",
+   "partager":"Partager",
+   "friends":"Amis",
+   "shop":"Boutique",
+   "tokens":"Jetons",
+   "free_tokens":"Jetons gratuits",
+   "no_tokens":"Vous n'avez pas assez de jetons pour jouer.",
+   "buy_tokens":"Acheter des jetons",
+   "congratulation":"Félicitation",
+   "fanpage":"Fan Page",
+   "terms_service":"Conditions d'utilisation",
+   "privacy_policy":"Politique de confidentialité",
+   "invite_friends":{
+      "title":"Invitez vos amis (30 max)",
+      "infos":"Et gagnez 10% des jetons joués par invitation acceptée",
+      "send":"Envoyer les invitations",
+      "max_requests":"Vous avez déjà envoyé 30 invitations aujourd'hui.",
+      "all":"Tous les amis"
+   },
+   "pub":{
+      "title":"Nain Jaune",
+      "text":"Jeu de cartes en ligne. Débarrasse toi de toutes tes cartes et remporte les mises."
+   },
+   "trophy":{
+      "title":"Trophées",
+      "win":"Vous gagnez un trophée.",
+      "content":{
+         "1":{
+            "_class":"_1_game",
+            "title":"Débutant",
+            "description":"Jouer 1 partie"
+         },
+         "2":{
+            "_class":"_100_game",
+            "title":"Apprenti",
+            "description":"Jouer 100 parties"
+         },
+         "3":{
+            "_class":"_500_game",
+            "title":"Intermédiaire",
+            "description":"Jouer 500 parties"
+         },
+         "4":{
+            "_class":"_1000_game",
+            "title":"Confirmé",
+            "description":"Jouer 1000 parties"
+         },
+         "5":{
+            "_class":"_5000_game",
+            "title":"Expert",
+            "description":"Jouer 5000 parties"
+         },
+         "6":{
+            "_class":"_1_wins",
+            "title":"Champion de Chocolat",
+            "description":"Gagner 1 partie"
+         },
+         "7":{
+            "_class":"_50_wins",
+            "title":"Champion de Bronze",
+            "description":"Gagner 50 parties"
+         },
+         "8":{
+            "_class":"_250_wins",
+            "title":"Champion d'Argent",
+            "description":"Gagner 250 parties"
+         },
+         "9":{
+            "_class":"_500_wins",
+            "title":"Champion d'Or",
+            "description":"Gagner 500 parties"
+         },
+         "10":{
+            "_class":"_2000_wins",
+            "title":"Champion de platine",
+            "description":"Gagner 2000 parties"
+         },
+         "11":{
+            "_class":"_5_games_day",
+            "title":"Amateur",
+            "description":"Jouer 5 parties en une journée"
+         },
+         "12":{
+            "_class":"_10_games_day",
+            "title":"Passionné",
+            "description":"Jouer 10 parties en une journée"
+         },
+         "13":{
+            "_class":"_25_games_day",
+            "title":"Fan",
+            "description":"Jouer 25 parties en une journée"
+         },
+         "14":{
+            "_class":"_50_games_day",
+            "title":"Super Fan",
+            "description":"Jouer 50 parties en une journée"
+         },
+         "15":{
+            "_class":"_100_games_day",
+            "title":"Accro",
+            "description":"Jouer 100 parties en une journée"
+         },
+         "16":{
+            "_class":"_3_wins_cons",
+            "title":"Vainqueur",
+            "description":"Gagner 3 parties à la suite"
+         },
+         "17":{
+            "_class":"_5_wins_cons",
+            "title":"Conquérant",
+            "description":"Gagner 5 parties à la suite"
+         },
+         "18":{
+            "_class":"_10_wins_cons",
+            "title":"Killer",
+            "description":"Gagner 10 parties à la suite"
+         },
+         "19":{
+            "_class":"_20_wins_cons",
+            "title":"Invincible",
+            "description":"Gagner 20 parties à la suite"
+         },
+         "20":{
+            "_class":"_3_loses_cons",
+            "title":"Loser",
+            "description":"Perdre 3 parties à la suite"
+         }
+      }
+   }
+}

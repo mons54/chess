@@ -1,0 +1,182 @@
+{
+   "title":"Chess",
+   "description":"Play Chess against players all over the world. Improve your chess and your ranking.",
+   "online":"Online",
+   "offline":"Offline",
+   "home":"Home",
+   "play":"Play",
+   "ranking":"Ranking",
+   "invite":"Invite",
+   "points":"Points",
+   "player":"Player",
+   "challengers":"challengers",
+   "all":"All",
+   "time":"Time",
+   "minutes":"minutes",
+   "color":"Color",
+   "blanc":"White",
+   "noir":"Black",
+   "min":"Minimum",
+   "max":"Maximum",
+   "winner":"Winner",
+   "game_over":"Game Over",
+   "mat":"Checkmate",
+   "pat":"Stalemate",
+   "nul":"Draw",
+   "start_game":"Start game",
+   "search_game":"Search for a game",
+   "level":"Level",
+   "facile":"Easy",
+   "normal":"Normal",
+   "difficile":"Hard",
+   "none":"None",
+   "one_player":"One player",
+   "two_player":"Two players",
+   "error_browser":"Your browser is not compatible with this game",
+   "error":"An error has occurred",
+   "wait_game":"Waiting for a game ...",
+   "offer_draw":"Offer draw",
+   "offers_a_draw":"offers a draw",
+   "resign":"Resign",
+   "ok":"Ok",
+   "cancel":"Cancel",
+   "create_game":"Create a game",
+   "defier":"Challenge",
+   "new_defi":"New challenge",
+   "cancel_partie":"This game session no longer exists",
+   "win":"Win",
+   "lose":"Lose",
+   "draw":"Draw",
+   "game":"Game",
+   "connected":"connected",
+   "quick_game":"game",
+   "defi":"challenge",
+   "partager":"Share",
+   "friends":"Friends",
+   "shop":"Shop",
+   "tokens":"Chips",
+   "free_tokens":"Free Chips",
+   "no_tokens":"You do not have enough chips to play.",
+   "buy_tokens":"Buy chips",
+   "congratulation":"Congratulation",
+   "fanpage":"Fan Page",
+   "terms_service":"Terms of Service",
+   "privacy_policy":"Privacy Policy",
+   "invite_friends":{
+      "title":"Invite your friends (30 max)",
+      "infos":"And earn 10% of the chips played by invitation accepted",
+      "send":"Send requests",
+      "max_requests":"You have already sent 30 invitations today.",
+      "all":"All friends"
+   },
+   "pub":{
+      "title":"Pope Joan",
+      "text":"Card game online. Rid yourself of all your cards and wins the bet."
+   },
+   "trophy":{
+      "title":"Trophy",
+      "win":"You win a trophy",
+      "content":{
+         "1":{
+            "_class":"_1_game",
+            "title":"Beginner",
+            "description":"Play 1 game"
+         },
+         "2":{
+            "_class":"_100_game",
+            "title":"Novice",
+            "description":"Play 100 games"
+         },
+         "3":{
+            "_class":"_500_game",
+            "title":"Intermediate",
+            "description":"Play 500 games"
+         },
+         "4":{
+            "_class":"_1000_game",
+            "title":"Advanced",
+            "description":"Play 1000 games"
+         },
+         "5":{
+            "_class":"_5000_game",
+            "title":"Expert",
+            "description":"Play 5000 games"
+         },
+         "6":{
+            "_class":"_1_wins",
+            "title":"Champion Chocolate",
+            "description":"Win 1 game"
+         },
+         "7":{
+            "_class":"_50_wins",
+            "title":"Champion bronze",
+            "description":"Win 50 games"
+         },
+         "8":{
+            "_class":"_250_wins",
+            "title":"Champion silver",
+            "description":"Win 250 games"
+         },
+         "9":{
+            "_class":"_500_wins",
+            "title":"Champion gold",
+            "description":"Win 500 games"
+         },
+         "10":{
+            "_class":"_2000_wins",
+            "title":"Champion platinum",
+            "description":"Win 2000 games"
+         },
+         "11":{
+            "_class":"_5_games_day",
+            "title":"Amateur",
+            "description":"Play 5 games in one day"
+         },
+         "12":{
+            "_class":"_10_games_day",
+            "title":"Enthusiast",
+            "description":"Play 10 games in one day"
+         },
+         "13":{
+            "_class":"_25_games_day",
+            "title":"Fan",
+            "description":"Play 25 games in one day"
+         },
+         "14":{
+            "_class":"_50_games_day",
+            "title":"Super Fan",
+            "description":"Play 50 games in one day"
+         },
+         "15":{
+            "_class":"_100_games_day",
+            "title":"Addict",
+            "description":"Play 100 games in one day"
+         },
+         "16":{
+            "_class":"_3_wins_cons",
+            "title":"Winner",
+            "description":"Win 3 consecutive games"
+         },
+         "17":{
+            "_class":"_5_wins_cons",
+            "title":"Conqueror",
+            "description":"Win 5 consecutive games"
+         },
+         "18":{
+            "_class":"_10_wins_cons",
+            "title":"Killer",
+            "description":"Win 10 consecutive games"
+         },
+         "19":{
+            "_class":"_20_wins_cons",
+            "title":"Invincible",
+            "description":"Win 20 consecutive games"
+         },
+         "20":{
+            "_class":"_3_loses_cons",
+            "title":"Loser",
+            "description":"Lose 3 consecutive games"
+         }
+      }
+   }
+}

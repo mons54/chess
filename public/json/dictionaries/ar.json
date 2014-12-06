@@ -1,0 +1,182 @@
+{
+	"title":"شطرنج",
+	"description":"لعبة الملوك والعباقرة . لعب لعبة شطرنج مع اصدقاءك .",
+	"online":"على الانترنت",
+	"offline":"حاليا",
+	"home":"الرئيسية",
+	"play":"طريقة اللعب",
+	"ranking":"الترتيب",
+	"invite":"يدعو",
+	"points":"النقاط",
+	"player":"لاعب",
+	"challengers":"منافسيه",
+	"all":"جميع",
+	"time":"مرة",
+	"minutes":"دقائق",
+	"color":"اللون",
+	"blanc":"أبيض",
+	"noir":"أسود",
+	"min":"الحد الأدنى",
+	"max":"أقصى",
+	"winner":"الفائز",
+	"game_over":"أكثر من لعبة",
+	"mat":"أمات الشاه الشطرنج",
+	"pat":"إحراج الشاه في الشطرنج",
+	"nul":"تعادل",
+	"start_game":"بدء اللعبة",
+	"search_game":"البحث عن لعبة",
+	"level":"مستوى",
+	"facile":"سهل",
+	"normal":"طبيعي",
+	"difficile":"شاق",
+	"none":"لا شيء",
+	"one_player":"لاعب واحد",
+	"two_player":"لاعبين اثنين",
+	"error_browser":"متصفحك لا يتوافق مع هذه اللعبة",
+	"error":"حدث خطأ",
+	"wait_game":"في انتظار لعبة ...",
+	"offer_draw":"رسم",
+	"offers_a_draw":"يقدم بالتعادل",
+	"resign":"استقال",
+	"ok":"حسنا",
+	"cancel":"إلغاء",
+	"create_game":"خلق لعبة",
+	"defier":"تحدى",
+	"new_defi":"التحدي الجديد",
+	"cancel_partie":"هذه اللعبة لم تعد موجودة",
+	"win":"كسب",
+	"lose":"فقد",
+	"draw":"رسم",
+	"game":"لعبة",
+	"connected":"متصل",
+	"quick_game":"لعبة",
+	"defi":"تحد",
+	"partager":"المشاركة",
+	"friends":"أصدقاء",
+	"shop":"تسوق",
+	"tokens":"رقائق",
+	"free_tokens":"رقائق مجانا",
+	"no_tokens":"لم يكن لديك ما يكفي من رقائق للعب.",
+	"buy_tokens":"شراء رقائق",
+	"congratulation":"تهنئة",
+	"fanpage":"مروحة الصفحة",
+	"terms_service":"شروط الخدمة",
+	"privacy_policy":"سياسة الخصوصية",
+	"invite_friends":{
+		"title":"دعوة أصدقائك (30 كحد أقصى)",
+		"infos":"وكسب 10٪ من رقائق الذي تقوم به دعوة مقبولة",
+		"send":"إرسال دعوات",
+		"max_requests":"لقد أرسلت بالفعل 30 دعوات اليوم.",
+		"all":"جميع الأصدقاء"
+	},
+	"pub":{
+		"title":"القزم الأصفر",
+		"text":"بطاقة المباراة عبر الإنترنت. تخليص نفسك من كل ما تبذلونه من بطاقات ويفوز في الرهان."
+	},
+	"trophy":{
+		"title":"كأس",
+		"win":"تربح الكأس",
+		"content":{
+			"1":{
+				"_class":"_1_game",
+				"title":"مبتدئ",
+				"description":"تلعب لعبة 1"
+			},
+			"2":{
+				"_class":"_100_game",
+				"title":"مبتدئ",
+				"description":"لعب 100 مباراة"
+			},
+			"3":{
+				"_class":"_500_game",
+				"title":"​​متوسط",
+				"description":"لعب 500 مباراة"
+			},
+				"4":{
+				"_class":"_1000_game",
+				"title":"متقدم",
+				"description":"لعب ألعاب 1000"
+			},
+			"5":{
+				"_class":"_5000_game",
+				"title":"خبير",
+				"description":"لعب ألعاب 5000"
+			},
+			"6":{
+				"_class":"_1_wins",
+				"title":"بطل الشوكولاته",
+				"description":"فوز لعبة 1"
+			},
+			"7":{
+				"_class":"_50_wins",
+				"title":"بطل البرونزية",
+				"description":"فوز 50 مباراة"
+			},
+			"8":{
+				"_class":"_250_wins",
+				"title":"بطل الفضة",
+				"description":"فوز 250 مباراة"
+			},
+			"9":{
+				"_class":"_500_wins",
+				"title":"بطل الذهب",
+				"description":"فوز 500 مباراة"
+			},
+			"10":{
+				"_class":"_2000_wins",
+				"title":"بطل البلاتين",
+				"description":"فوز 2000 ألعاب"
+			},
+			"11":{
+				"_class":"_5_games_day",
+				"title":"الهاوي",
+				"description":"لعب 5 مباريات في يوم واحد"
+			},
+			"12":{
+				"_class":"_10_games_day",
+				"title":"متحمس",
+				"description":"لعب 10 مباراة في يوم واحد"
+			},
+			"13":{
+				"_class":"_25_games_day",
+				"title":"مروحة",
+				"description":"لعب 25 مباراة في يوم واحد"
+			},
+			"14":{
+				"_class":"_50_games_day",
+				"title":"سوبر فان",
+				"description":"لعب 50 مباراة في يوم واحد"
+			},
+			"15":{
+				"_class":"_100_games_day",
+				"title":"مدمن",
+				"description":"لعب 100 مباراة في يوم واحد"
+			},
+			"16":{
+				"_class":"_3_wins_cons",
+				"title":"الفائز",
+				"description":"فوز 3 مباريات متتالية"
+			},
+			"17":{
+				"_class":"_5_wins_cons",
+				"title":"فاتح",
+				"description":"فوز 5 مباريات متتالية"
+			},
+			"18":{
+				"_class":"_10_wins_cons",
+				"title":"القاتل",
+				"description":"فوز 10 مباراة متتالية"
+			},
+			"19":{
+				"_class":"_20_wins_cons",
+				"title":"لا يقهر",
+				"description":"فوز 20 مباراة متتالية"
+			},
+			"20":{
+				"_class":"_3_loses_cons",
+				"title":"خاسر",
+				"description":"تفقد 3 مباريات متتالية"
+			}
+		}
+	}
+}

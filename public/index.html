@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ user.lang }}" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Chess</title>
+
+        <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link ng-if="user.lang == 'ar'" ng-href="css/style.ar.css" rel="stylesheet">
+    </head>
+    
+    <body>
+
+        <header>
+            <div id="header"></div>
+        </header>
+
+        <div ng-if="ready" ng-view class="app"></div>
+
+        <footer>
+            <div class="footer">
+                <div id="pub"></div>
+
+                <div class="fb-like-box" data-href="https://www.facebook.com/ChessCommunity" data-width="460" data-height="250" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
+
+                <div class="link">
+                    <a href="https://www.facebook.com/ChessCommunity" target="_blank">{{ text.fanpage }}</a>
+                    <a href="http://apps.solutionsweb.pro/jeux/fb-chess/chess" target="_blank">{{ text.terms_service }}</a>
+                    <a href="http://apps.solutionsweb.pro/jeux/fb-chess/chess" target="_blank">{{ text.privacy_policy }}</a>
+                </div>
+            </div>
+        </footer>
+
+        <div ng-class="{'show': loading, 'hide': !loading}" class="loading">
+            <div class="content"></div>
+        </div>
+
+        <div id="fb-root"></div>
+
+        <script src="socket.io/socket.io.js"></script>
+
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-route.min.js"></script>
+
+        <script src="app/app.js"></script>
+
+        <script src="app/components/components.services.js"></script>
+
+        <script src="app/home/home.controllers.js"></script>
+
+        <script src="//ads.lfstmedia.com/getad?site=150053"></script>
+
+    </body>
+</html>

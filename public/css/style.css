@@ -1,0 +1,126 @@
+html, body {
+    background-color: #C8C8C8;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+}
+
+a {
+    cursor:pointer;
+    font-weight:bold;
+    text-decoration: none;
+    color: #3b5998
+}
+
+header {
+    background-color: #002D40;
+    padding: 10px 0;
+    border-bottom: 3px solid #fff;
+    box-shadow: 0 0 5px #000;
+}
+
+header #header {
+    position: relative;
+    width: 728px;
+    height: 90px;
+    margin: 0 auto;
+    background-color: #002D40;
+}
+
+
+header #header iframe {
+    width: 728px;
+    height: 90px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    overflow: hidden;
+}
+
+.content {
+    width: 750px;
+    margin: 0 auto;
+}
+
+.start {
+    position: relative;
+    width: 705px;
+    height: 200px;
+    margin: 132px auto 0 auto;
+}
+
+.start .play {
+    display: inline-block;
+    position: relative;
+    color: #fff;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-align: center;
+    height: 200px;
+    width: 300px;
+    font-weight: bold;
+    background: url(/img/i-mac.png) no-repeat center;
+    border: 0;
+    margin: 0 25px;
+    vertical-align: middle;
+    padding-bottom: 30px;
+}
+
+footer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #595959;
+    border-top: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+}
+
+footer .footer {
+    position: relative;
+    width: 760px;
+    height: 300px;
+    margin: 20px auto;
+    border: 5px solid #362f2d;
+    background: #fff;
+    border-radius: 10px;
+}
+
+footer .footer #pub {
+    float: right;
+    width: 300px;
+    height: 250px;
+}
+
+footer .footer .fb-like-box {
+    width: 428px;
+    height: 250px;
+}
+
+footer .footer .link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+footer .footer .link a {
+    font-weight: normal;
+    padding: 0 5px;
+}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+}
+
+.loading .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(/img/loading.gif) #fff no-repeat center;
+    opacity: 0.7;
+}
