@@ -18,6 +18,16 @@
         }
     ]).
 
+    factory('utils', function () {
+
+        return {
+            colors: ['white', 'black'],
+            sprintf: function(value) {
+                return (value.toString().length == 1 ? '0' : '') + value;
+            }
+        };
+    }).
+
     factory('lfstmedia', function () {
 
         return {

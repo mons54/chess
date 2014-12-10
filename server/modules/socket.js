@@ -571,7 +571,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 socket.emit('infosUser', {
                     moderateur: socket.moderateur,
                     points: socket.points,
-                    classement: socket.ranking,
+                    ranking: socket.ranking,
                     tokens: token,
                     free: getFreeTime(freeTime),
                     trophy: trophy
@@ -599,7 +599,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 }
                 challengers.user[socket.uid] = {
                     name: socket.name,
-                    classement: socket.classement,
+                    ranking: socket.ranking,
                     points: socket.points
                 };
                 challengers.count++;

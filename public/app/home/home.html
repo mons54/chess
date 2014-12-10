@@ -1,6 +1,28 @@
 <div class="content">
-    <div class="start">
-        <button class="play">{{ text.online }}</button>
-        <button class="play">{{ text.offline }}</button>
+    <div class="pull-left left">
+        <div class="element clock">{{ time }}</div>
+    </div>
+
+    <div class="middle">
+        <div class="profil element">
+            <div class="pull-right">
+                <button class="btn btn-primary">{{ text.create_game }}</button>
+            </div>
+            <div class="pull-left img">
+                <img src="https://graph.facebook.com/{{ user.uid }}/picture">
+            </div>
+            <div>
+                <a href="#">{{ user.name }}</a>
+            </div>
+            <div>
+                <span>{{ text.points }}: </span>
+                <strong>{{ user.points }}</strong>
+            </div>
+            <div>
+                <span>{{ text.ranking }}: </span>
+                <strong>{{ user.ranking }}</strong>
+            </div>
+            <div class="clear"></div>
+        </div>
     </div>
 </div>

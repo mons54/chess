@@ -7,6 +7,7 @@
     module('app', [
         'ngRoute',
         'components.services',
+        'components.directives',
         'home.controllers'
     ]).
 
@@ -148,7 +149,7 @@
             
             when('/', {
                 templateUrl: '/app/home/home.html',
-                controller: 'HomeCtrl'
+                controller: 'homeCtrl'
             }).
 
             otherwise({

@@ -1,7 +1,10 @@
-html, body {
-    background-color: #C8C8C8;
+* {
     margin: 0;
     padding: 0;
+}
+
+html, body {
+    background-color: #C8C8C8;
     font-size: 13px;
 }
 
@@ -10,6 +13,14 @@ a {
     font-weight:bold;
     text-decoration: none;
     color: #3b5998
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.clear {
+    clear: both;
 }
 
 header {
@@ -32,38 +43,92 @@ header #header iframe {
     width: 728px;
     height: 90px;
     padding: 0;
-    margin: 0;
-    border: 0;
     overflow: hidden;
 }
 
-.content {
+.app {
     width: 750px;
     margin: 0 auto;
 }
 
-.start {
-    position: relative;
-    width: 705px;
-    height: 200px;
-    margin: 132px auto 0 auto;
+.content {
+    height: 580px;
+    margin: 20px 0;
 }
 
-.start .play {
-    display: inline-block;
+.content .element {
+    border-radius: 5px;
+    background: #fff;
+}
+
+.content .element:nth-child(even) { 
+    margin-top: 10px;
+}
+
+.content .left {
     position: relative;
+    height: 100%;
+    width: 100px;
+    margin: 0 auto;
+}
+
+.content .middle {
+    position: relative;
+    margin: 0 auto;
+    height: 100%;
+    width: 520px;
+}
+
+.content .profil {
+    position: relative;
+    padding: 10px;
+    height: 70px;
+}
+
+.content .profil .img {
+    padding-right: 10px;
+    border-radius: 3px;
+}
+
+.content .clock {
+    background: #362F2D;
     color: #fff;
-    font-size: 40px;
-    text-transform: uppercase;
-    text-align: center;
-    height: 200px;
-    width: 300px;
+    font-size: 20px;
     font-weight: bold;
-    background: url(/img/i-mac.png) no-repeat center;
-    border: 0;
-    margin: 0 25px;
-    vertical-align: middle;
-    padding-bottom: 30px;
+    line-height: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.content .menu {
+    height: 40px;
+    background-color: #362F2D;
+}
+
+.content .menu ul {
+    list-style-type: none;
+    line-height: 40px;
+    font-size: 20px;
+}
+
+.content .menu ul li {
+    display: inline-block;
+}
+
+.content .menu ul li a {
+    display: block;
+    padding: 0 10px;
+    color: #fff;
+}
+
+.content .menu ul li:first-child a {
+    border-radius: 5px 0 0 5px;
+}
+
+.content .menu ul li a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #595959;
 }
 
 footer {
@@ -80,7 +145,6 @@ footer .footer {
     width: 760px;
     height: 300px;
     margin: 20px auto;
-    border: 5px solid #362f2d;
     background: #fff;
     border-radius: 10px;
 }
@@ -115,7 +179,7 @@ footer .footer .link a {
     background-color: #000;
 }
 
-.loading .content {
+.loading .loader {
     position: absolute;
     top: 0;
     left: 0;
