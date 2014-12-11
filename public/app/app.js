@@ -8,10 +8,27 @@
         'ngRoute',
         'components.services',
         'components.directives',
-        'home.controllers'
+        'home.controllers',
+        'home.directives'
     ]).
 
     constant('appId', '466889913406471').
+
+    constant('paramsGame', {
+        colors: ['white', 'black'],
+        times: [300, 600, 1200, 3600, 5400],
+        pointsMin: [1300, 1400, 1500, 1600, 1700, 1800],
+        pointsMax: [1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500]
+    }).
+
+    factory('utils', function () {
+
+        return {
+            sprintf: function(value) {
+                return (value.toString().length == 1 ? '0' : '') + value;
+            }
+        };
+    }).
 
     run(['$rootScope', '$http', 'loading', 'appId', 'lfstmedia',
 

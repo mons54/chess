@@ -6,7 +6,7 @@
     <div class="middle">
         <div class="profil element">
             <div class="pull-right">
-                <button class="btn btn-primary">{{ text.create_game }}</button>
+                <button data-toggle="modal" data-target="#modal-create-game" class="btn btn-primary">{{ text.create_game }}</button>
             </div>
             <div class="pull-left img">
                 <img src="https://graph.facebook.com/{{ user.uid }}/picture">
@@ -26,3 +26,5 @@
         </div>
     </div>
 </div>
+
+<div modal-create-game class="modal fade" id="modal-create-game"></div>
