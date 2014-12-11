@@ -1,16 +1,73 @@
 module.exports = function () {
-    
-    this.createdGame = {
-        count: 0,
-        data: {}
+
+    var Engine = require(dirname + '/server/modules/game/engine');
+
+    this.options = {
+        colors: ['white', 'black'],
+        times: [300, 600, 1200, 3600, 5400],
+        pointsMin: [1300, 1400, 1500, 1600, 1700, 1800],
+        pointsMax: [1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500]
     };
+    
+    this.createdGame = {};
 
     this.games = {
         id: 1,
         data: {}
     };
 
-    var Engine = require(dirname + '/server/modules/game/engine');
+    this.create = function (socket, data) {
+        
+        var color = data.color, 
+            time = parseInt(data.time), 
+            pointsMin = parseInt(data.pointsMin) ? data.pointsMin : false,
+            pointsMax = parseInt(data.pointsMax) ? data.pointsMax : false;
+
+        console.log(color, time, pointsMin, pointsMax);
+
+        if (!this.checkColor(color) || !this.checkTime(time) || !this.checkPoints(pointsMin, pointsMax)) {
+            return false;
+        }
+
+        this.createdGame[socket.uid] = {
+            name: socket.name,
+            points: socket.points,
+            ranking: socket.ranking,
+            color: color,
+            time: time,
+            pointsMin: pointsMin,
+            pointsMax: pointsMax,
+        };
+
+        return true;
+
+    };
+
+    this.checkColor = function (color) {
+        if (this.options.colors.indexOf(color) === -1) {
+            return false;
+        }
+        return true;
+    };
+
+    this.checkTime = function (time) {
+        if (this.options.times.indexOf(time) === -1) {
+            return false;
+        }
+        return true;
+    };
+
+    this.checkPoints = function (pointsMin, pointsMax) {
+        if (!pointsMin || !pointsMax) {
+            return true;
+        }
+
+        if (this.options.pointsMin.indexOf(pointsMin) === -1 || this.options.pointsMin.indexOf(pointsMax) === -1) {
+            return false;
+        }
+
+        return pointsMin < pointsMax;
+    };
 
     this.move = function (id, start, end, promotion) {
         
@@ -25,7 +82,7 @@ module.exports = function () {
         return new Engine(game, start, end, promotion);
     };
 
-    this.create = function (white, black, time) {
+    this.start = function (white, black, time) {
 
         var gid = this.games.id++,
             timeTurn = 120,

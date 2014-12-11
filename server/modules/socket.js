@@ -28,8 +28,17 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             });
         });
 
+        socket.on('createGame', function (data) {
+
+            if (!data || !checkSocketUid() || !Socket.game.create(socket, data)) {
+                return;
+            }
+
+            listGames();
+        });
+
         socket.on('newGame', function (data) {
-            var game = Socket.game.create(data.white, data.black, data.time);
+            var game = Socket.game.start(data.white, data.black, data.time);
 
             socket.gid = game.id;
 
