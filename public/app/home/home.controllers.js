@@ -11,24 +11,38 @@
             $rootScope.socket.emit('initUser');
             
             $rootScope.socket.on('listGames', function (data) {
-                $scope.games = data.games;
+                
+                $scope.createdGame = [];
+                
+                angular.forEach(data, function (value, key) {
+                    value.uid = key;
+                    $scope.createdGame.push(value);
+                });
+                
+                $scope.createdGame.sort(function (a, b) {
+                    return a.points < b.points;
+                });
             });
 
 
             $scope.paramsGame = angular.copy(paramsGame);
 
-            $scope.createGame = {
+            $scope.game = {
                 color: $scope.paramsGame.colors[0],
                 time: $scope.paramsGame.times[0],
                 pointsMin: 0,
                 pointsMax: 0
             };
 
-            $scope.$watch('createGame.pointsMin', function (value) {
+            $scope.createGame = function () {
+                $rootScope.socket.emit('createGame', $scope.game);
+            };
+
+            $scope.$watch('game.pointsMin', function (value) {
                 setPointsMax(value);
             });
 
-            $scope.$watch('createGame.pointsMax', function (value) {
+            $scope.$watch('game.pointsMax', function (value) {
                 setPointsMin(value);
             });
 
