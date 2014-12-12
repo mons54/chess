@@ -6,7 +6,7 @@
 
     directive('modalCreateGame', function () {
         return {
-            templateUrl: '/app/home/templates/modalCreateGame.html'
+            templateUrl: '/app/home/templates/modal-create-game.html'
         };
     });
 })();

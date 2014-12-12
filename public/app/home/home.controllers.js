@@ -12,20 +12,26 @@
             
             $rootScope.socket.on('listGames', function (data) {
                 
-                $scope.createdGame = [];
+                $scope.$apply(function () {
+                    $scope.createdGames = [];
                 
-                angular.forEach(data, function (value, key) {
-                    value.uid = key;
-                    $scope.createdGame.push(value);
-                });
-                
-                $scope.createdGame.sort(function (a, b) {
-                    return a.points < b.points;
+                    angular.forEach(data, function (value, key) {
+                        value.uid = key;
+                        $scope.createdGames.push(value);
+                    });
+                    
+                    $scope.createdGames.sort(function (a, b) {
+                        return a.points < b.points;
+                    });
                 });
             });
 
 
+            setPointsMinMax();
+
             $scope.paramsGame = angular.copy(paramsGame);
+
+            $scope.predicate = 'name';
 
             $scope.game = {
                 color: $scope.paramsGame.colors[0],
@@ -45,6 +51,23 @@
             $scope.$watch('game.pointsMax', function (value) {
                 setPointsMin(value);
             });
+
+            function setPointsMinMax () {
+                var pointsMin = [],
+                    pointsMax = [],
+                    value;
+
+                for (value = paramsGame.pointsMin; value <= paramsGame.pointsMax; value += 100) {
+                    if (value > paramsGame.pointsMin) {
+                        pointsMax.push(value);
+                    }
+                    if (value < paramsGame.pointsMax) {
+                        pointsMin.push(value);
+                    }
+                }
+                paramsGame.pointsMin = pointsMin;
+                paramsGame.pointsMax = pointsMax;
+            }
 
             function setPointsMin (pointsMax) {
                 var data = [];

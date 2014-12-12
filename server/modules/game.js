@@ -5,8 +5,8 @@ module.exports = function () {
     this.options = {
         colors: ['white', 'black'],
         times: [300, 600, 1200, 3600, 5400],
-        pointsMin: [1300, 1400, 1500, 1600, 1700, 1800],
-        pointsMax: [1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500]
+        pointsMin: 1200,
+        pointsMax: 3000
     };
     
     this.createdGame = {};
@@ -62,7 +62,7 @@ module.exports = function () {
             return true;
         }
 
-        if (this.options.pointsMin.indexOf(pointsMin) === -1 || this.options.pointsMin.indexOf(pointsMax) === -1) {
+        if (pointsMin < this.options.pointsMin || pointsMax > this.options.pointsMax) {
             return false;
         }
 

@@ -15,8 +15,24 @@ a {
     color: #3b5998
 }
 
-a:hover {
+a:hover, a:active, a:visited, a:focus {
     text-decoration: none;
+}
+
+/*** Bootstrap ***/
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+/*** Icomoon ***/
+[class^="icon-"], [class*=" icon-"] {
+    font-size: 16px;
+    color: #444444;
+}
+
+.icon-table-sortable {
+    position: relative;
+    top: 3px;
 }
 
 .clear {
@@ -65,20 +81,6 @@ header #header iframe {
     margin-top: 10px;
 }
 
-.content .left {
-    position: relative;
-    height: 100%;
-    width: 100px;
-    margin: 0 auto;
-}
-
-.content .middle {
-    position: relative;
-    margin: 0 auto;
-    height: 100%;
-    width: 520px;
-}
-
 .content .profil {
     position: relative;
     padding: 10px;
@@ -98,37 +100,6 @@ header #header iframe {
     line-height: 40px;
     height: 40px;
     text-align: center;
-}
-
-.content .menu {
-    height: 40px;
-    background-color: #362F2D;
-}
-
-.content .menu ul {
-    list-style-type: none;
-    line-height: 40px;
-    font-size: 20px;
-}
-
-.content .menu ul li {
-    display: inline-block;
-}
-
-.content .menu ul li a {
-    display: block;
-    padding: 0 10px;
-    color: #fff;
-}
-
-.content .menu ul li:first-child a {
-    border-radius: 5px 0 0 5px;
-}
-
-.content .menu ul li a:hover {
-    color: #fff;
-    text-decoration: none;
-    background-color: #595959;
 }
 
 footer {
