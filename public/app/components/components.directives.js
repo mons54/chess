@@ -37,5 +37,20 @@
                 }
             };
         }
+    ]).
+
+    directive('dropDown', [
+        function () {
+            return {
+                scope: {},
+                templateUrl: '/app/components/templates/drop-down.html',
+                link: function (scope, element, attrs) {
+                    scope.showHide = function () {
+                        scope.open = !scope.open;
+                        element.parents('.element').find('section').toggle();
+                    }
+                }
+            };
+        }
     ]);
 })();

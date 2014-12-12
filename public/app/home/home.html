@@ -24,30 +24,43 @@
             </div>
 
             <div class="element">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>{{ text.name }}</th>
-                            <th th-sortable name="'points'" class="text-center"></th>
-                            <th th-sortable name="'ranking'" class="text-center"></th>
-                            <th th-sortable name="'color'" class="text-center"></th>
-                            <th th-sortable name="'time'" class="text-center"></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
-                            <td><img width="30px" ng-src="https://graph.facebook.com/{{game.uid}}/picture"></td>
-                            <td>{{ game.name }}</td>
-                            <td class="text-center">{{ game.points }}</td>
-                            <td class="text-center">{{ game.ranking }}</td>
-                            <td class="text-center">{{ text[game.color] }}</td>
-                            <td class="text-center">{{ game.time / 60 }}:00</td>
-                            <td><button class="btn btn-success btn-sm">{{ text.play }}</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h2>
+                    <span>{{ text.waitingPlayers }}</span>
+                    <span class="info-tooltip">{{ createdGames.length }}</span>
+                    <div class="pull-right">
+                        <div drop-drag class="btn-right"></div>
+                        <div drop-down class="btn-right"></div>
+                    </div>
+                </h2>
+                <section>
+                    <table ng-if="createdGames.length" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ text.name }}</th>
+                                <th th-sortable name="'points'" class="text-center"></th>
+                                <th th-sortable name="'ranking'" class="text-center"></th>
+                                <th th-sortable name="'color'" class="text-center"></th>
+                                <th th-sortable name="'time'" class="text-center"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
+                                <td><img width="30px" ng-src="https://graph.facebook.com/{{game.uid}}/picture"></td>
+                                <td>{{ game.name }}</td>
+                                <td class="text-center">{{ game.points }}</td>
+                                <td class="text-center">{{ game.ranking }}</td>
+                                <td class="text-center">{{ text[game.color] }}</td>
+                                <td class="text-center">{{ game.time / 60 }}:00</td>
+                                <td><button class="btn btn-success btn-sm">{{ text.play }}</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="!createdGames.length" class="load-spin">
+                        <img src="/img/load-spin.svg">
+                    </div>
+                </section>
             </div>
         </div>
         <div class="col-md-2">

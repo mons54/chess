@@ -20,6 +20,11 @@ a:hover, a:active, a:visited, a:focus {
 }
 
 /*** Bootstrap ***/
+
+.table {
+    margin-bottom: 0;
+}
+
 .table > tbody > tr > td {
     vertical-align: middle;
 }
@@ -72,13 +77,55 @@ header #header iframe {
     margin: 20px 0;
 }
 
+.content .element:nth-child(n+2) {
+    margin-top: 10px;
+}
+
 .content .element {
     border-radius: 5px;
     background: #fff;
 }
 
-.content .element:nth-child(even) { 
-    margin-top: 10px;
+.content .element h2 {
+    margin: 0;
+    padding: 10px;
+    background-color: #eef5f9;
+    border-bottom: 1px solid #dadede;
+    border-radius: 5px 5px 0 0;
+    color: #446479;
+    font-size: 18px;
+}
+
+.content .element .info-tooltip {
+    display: inline-block;
+    padding: 3px 5px 1px;
+    background-color: #446479;
+    color: #EEF5F9;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 3px;
+}
+
+.content .element .btn-right {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+}
+
+.content .element .btn-right .icon {
+    position: relative;
+    top: 2px;
+}
+
+.content .element .load-spin {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.content .element .load-spin img {
+    height: 25px;
 }
 
 .content .profil {

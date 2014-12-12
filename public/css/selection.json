@@ -19,7 +19,7 @@
 			"attrs": [],
 			"properties": {
 				"id": 33,
-				"order": 1275,
+				"order": 6,
 				"prevSize": 32,
 				"code": 57377,
 				"name": "color"
@@ -44,7 +44,7 @@
 			"attrs": [],
 			"properties": {
 				"id": 258,
-				"order": 1274,
+				"order": 5,
 				"prevSize": 32,
 				"code": 57602,
 				"name": "time"
@@ -71,7 +71,7 @@
 			"attrs": [],
 			"properties": {
 				"id": 534,
-				"order": 1270,
+				"order": 2,
 				"prevSize": 32,
 				"code": 57878,
 				"name": "ranking"
@@ -99,13 +99,88 @@
 			"attrs": [],
 			"properties": {
 				"id": 543,
-				"order": 1269,
+				"order": 1,
 				"prevSize": 32,
 				"code": 57887,
 				"name": "points"
 			},
 			"setIdx": 0,
 			"iconIdx": 543
+		},
+		{
+			"icon": {
+				"paths": [
+					"M1024 512l-256-192v128h-192v-192h128l-192-256-192 256h128v192h-192v-128l-256 192 256 192v-128h192v192h-128l192 256 192-256h-128v-192h192v128z"
+				],
+				"attrs": [],
+				"tags": [
+					"move",
+					"drag",
+					"arrows"
+				],
+				"defaultCode": 58194,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 850,
+				"order": 9,
+				"prevSize": 32,
+				"code": 58194,
+				"name": "move"
+			},
+			"setIdx": 0,
+			"iconIdx": 850
+		},
+		{
+			"icon": {
+				"paths": [
+					"M1024 384l-192-192-320 320-320-320-192 192 512 511.998z"
+				],
+				"attrs": [],
+				"tags": [
+					"arrow-down",
+					"download",
+					"bottom"
+				],
+				"defaultCode": 58290,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 946,
+				"order": 7,
+				"prevSize": 32,
+				"code": 58290,
+				"name": "arrow-down"
+			},
+			"setIdx": 0,
+			"iconIdx": 946
+		},
+		{
+			"icon": {
+				"paths": [
+					"M640 1024l192-192-320-320 320-320-192-192-512 512z"
+				],
+				"attrs": [],
+				"tags": [
+					"arrow-left",
+					"previous",
+					"left"
+				],
+				"defaultCode": 58291,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 947,
+				"order": 8,
+				"prevSize": 32,
+				"code": 58291,
+				"name": "arrow-left"
+			},
+			"setIdx": 0,
+			"iconIdx": 947
 		},
 		{
 			"icon": {
@@ -124,7 +199,7 @@
 			"attrs": [],
 			"properties": {
 				"id": 948,
-				"order": 1272,
+				"order": 4,
 				"prevSize": 32,
 				"code": 58292,
 				"name": "sort-up"
@@ -149,7 +224,7 @@
 			"attrs": [],
 			"properties": {
 				"id": 950,
-				"order": 1271,
+				"order": 3,
 				"prevSize": 32,
 				"code": 58294,
 				"name": "sort-down"
