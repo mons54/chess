@@ -73,7 +73,6 @@ header #header iframe {
 }
 
 .content {
-    height: 580px;
     margin: 20px 0;
 }
 
@@ -84,6 +83,11 @@ header #header iframe {
 .content .element {
     border-radius: 5px;
     background: #fff;
+}
+
+.content .element section {
+    max-height: 225px;
+    overflow-x: auto;
 }
 
 .content .element h2 {
@@ -114,7 +118,7 @@ header #header iframe {
     top: -2px;
 }
 
-.content .element .btn-right .icon {
+.content .element .btn .icon {
     position: relative;
     top: 2px;
 }
@@ -134,9 +138,39 @@ header #header iframe {
     height: 70px;
 }
 
-.content .profil .img {
+.profil .img {
     padding-right: 10px;
+}
+
+.profil .img img {
     border-radius: 3px;
+}
+
+.content table.list-user tr .img {
+    width: 30px;
+}
+
+.content table.list-user tr .name {
+    width: 200px;
+}
+
+.content table.list-user tr .info-game {
+    text-align: center;
+    width: 55px;
+}
+
+.content table.list-user tr td .color {
+    background-color: #999999;
+    padding: 4px;
+    border-radius: 3px;
+}
+
+.content table.list-user tr td .white {
+    color: #fff;
+}
+
+.content table.list-user tr td .black {
+    color: #000;
 }
 
 .content .clock {

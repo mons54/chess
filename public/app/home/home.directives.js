@@ -8,5 +8,11 @@
         return {
             templateUrl: '/app/home/templates/modal-create-game.html'
         };
+    }).
+
+    directive('modalChallenge', function () {
+        return {
+            templateUrl: '/app/home/templates/modal-challenge.html'
+        };
     });
 })();

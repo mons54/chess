@@ -19,9 +19,27 @@
                         value.uid = key;
                         $scope.createdGames.push(value);
                     });
+                });
+            });
+
+            $rootScope.socket.on('challenges', function (data) {
+                $scope.$apply(function () {
+                    $scope.challenges = [];
+                
+                    angular.forEach(data, function (value, key) {
+                        value.uid = key;
+                        $scope.challenges.push(value);
+                    });
+                });
+            });
+
+            $rootScope.socket.on('challengers', function (data) {
+
+                $scope.$apply(function () {
+                    $scope.challengers = data;
                     
-                    $scope.createdGames.sort(function (a, b) {
-                        return a.points < b.points;
+                    $scope.challengers.sort(function (a, b) {
+                        return a.points > b.points;
                     });
                 });
             });
@@ -31,8 +49,6 @@
 
             $scope.paramsGame = angular.copy(paramsGame);
 
-            $scope.predicate = 'name';
-
             $scope.game = {
                 color: $scope.paramsGame.colors[0],
                 time: $scope.paramsGame.times[0],
@@ -40,8 +56,22 @@
                 pointsMax: 0
             };
 
+            $scope.challenges = [];
+
             $scope.createGame = function () {
                 $rootScope.socket.emit('createGame', $scope.game);
+            };
+
+            $scope.openModalChallenge = function (challenger) {
+                $scope.challenger = challenger;
+            };
+
+            $scope.challenge = function (uid) {
+                $rootScope.socket.emit('challenge', {
+                    uid: uid,
+                    color: $scope.game.color,
+                    time: $scope.game.time
+                });
             };
 
             $scope.$watch('game.pointsMin', function (value) {

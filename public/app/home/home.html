@@ -10,7 +10,7 @@
                     <img src="https://graph.facebook.com/{{ user.uid }}/picture">
                 </div>
                 <div>
-                    <a href="#">{{ user.name }}</a>
+                    <a href>{{ user.name }}</a>
                 </div>
                 <div>
                     <span>{{ text.points }}: </span>
@@ -33,33 +33,117 @@
                     </div>
                 </h2>
                 <section>
-                    <table ng-if="createdGames.length" class="table table-striped">
+                    <table ng-if="createdGames.length" class="list-user table table-striped">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th>{{ text.name }}</th>
-                                <th th-sortable name="'points'" class="text-center"></th>
-                                <th th-sortable name="'ranking'" class="text-center"></th>
-                                <th th-sortable name="'color'" class="text-center"></th>
-                                <th th-sortable name="'time'" class="text-center"></th>
+                                <th class="img"></th>
+                                <th class="name"></th>
+                                <th th-sortable name="'points'" class="info-game"></th>
+                                <th th-sortable name="'ranking'" class="info-game"></th>
+                                <th th-sortable name="'color'" class="info-game"></th>
+                                <th th-sortable name="'time'" class="info-game"></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
-                                <td><img width="30px" ng-src="https://graph.facebook.com/{{game.uid}}/picture"></td>
+                                <td><img class="img" ng-src="https://graph.facebook.com/{{game.uid}}/picture"></td>
                                 <td>{{ game.name }}</td>
                                 <td class="text-center">{{ game.points }}</td>
                                 <td class="text-center">{{ game.ranking }}</td>
-                                <td class="text-center">{{ text[game.color] }}</td>
+                                <td class="text-center">
+                                    <span class="color {{ game.color }} icon-king"></span>
+                                </td>
                                 <td class="text-center">{{ game.time / 60 }}:00</td>
-                                <td><button class="btn btn-success btn-sm">{{ text.play }}</button></td>
+                                <td class="text-right"><button class="btn btn-success btn-sm">{{ text.play }}</button></td>
                             </tr>
                         </tbody>
                     </table>
                     <div ng-if="!createdGames.length" class="load-spin">
                         <img src="/img/load-spin.svg">
                     </div>
+                </section>
+            </div>
+            <div class="element">
+                <h2>
+                    <span>{{ text.challenges }}</span>
+                    <span class="info-tooltip">{{ challenges.length }}</span>
+                    <div class="pull-right">
+                        <div drop-drag class="btn-right"></div>
+                        <div drop-down class="btn-right"></div>
+                    </div>
+                </h2>
+                <section>
+                    <table ng-if="challenges.length" class="list-user table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="img"></th>
+                                <th class="name"></th>
+                                <th th-sortable name="'points'" class="info-game"></th>
+                                <th th-sortable name="'ranking'" class="info-game"></th>
+                                <th th-sortable name="'color'" class="info-game"></th>
+                                <th th-sortable name="'time'" class="info-game"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="challenge in challenges | orderBy:predicate:reverse">
+                                <td><img class="img" ng-src="https://graph.facebook.com/{{challenge.uid}}/picture"></td>
+                                <td>{{ challenge.name }}</td>
+                                <td class="text-center">{{ challenge.points }}</td>
+                                <td class="text-center">{{ challenge.ranking }}</td>
+                                <td class="text-center">
+                                    <span class="color {{ game.color }} icon-king"></span>
+                                </td>
+                                <td class="text-center">{{ challenge.time / 60 }}:00</td>
+                                <td class="text-right">
+                                    <button class="btn btn-default btn-sm">
+                                        <span class="icon icon-close"></span>
+                                    </button>
+                                    <button ng-if="!challenge.create" class="btn btn-success btn-sm">{{ text.play }}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <div class="element">
+                <h2>
+                    <span>{{ text.challengers }}</span>
+                    <span class="info-tooltip">{{ challengers.length }}</span>
+                    <div class="pull-right">
+                        <div drop-drag class="btn-right"></div>
+                        <div drop-down class="btn-right"></div>
+                    </div>
+                </h2>
+                <section>
+                    <table class="list-user table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="img"></th>
+                                <th class="name"></th>
+                                <th th-sortable name="'points'" class="info-game"></th>
+                                <th th-sortable name="'ranking'" class="info-game"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="challenger in challengers | orderBy:predicate:reverse">
+                                <td><img class="img" ng-src="https://graph.facebook.com/{{ challenger.uid }}/picture"></td>
+                                <td>{{ challenger.name }}</td>
+                                <td class="text-center">{{ challenger.points }}</td>
+                                <td class="text-center">{{ challenger.ranking }}</td>
+                                <td class="text-right">
+                                    <button ng-click="openModalChallenge(challenger)"
+                                            data-toggle="modal" 
+                                            data-target="#modal-challenge"
+                                            class="btn btn-success btn-sm">
+                                            {{ text.challenge }}
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
             </div>
         </div>
@@ -70,3 +154,4 @@
 </div>
 
 <div modal-create-game class="modal fade" id="modal-create-game"></div>
+<div modal-challenge class="modal fade" id="modal-challenge"></div>

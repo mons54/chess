@@ -37,6 +37,50 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             listGames();
         });
 
+        socket.on('challenge', function (data) {
+
+            var socketOpponent = getSocket(Socket.connected[data.uid]),
+                color = data.color,
+                time = Socket.game.getTime(data.time);
+
+            if (!checkSocketUid() || !socketOpponent || !Socket.game.checkColor(color) || !Socket.game.checkColor(color)) {
+                return;
+            }
+
+            console.log(data);
+
+            initChallenges(socketOpponent);
+
+            socketOpponent.challenges[socket.uid] = {
+                create: false,
+                name: socket.name,
+                points: socket.points,
+                ranking: socket.ranking,
+                color: color,
+                time: time
+            };
+
+            initChallenges(socket);
+
+            socket.challenges[data.uid] = {
+                create: true,
+                name: socketOpponent.name,
+                points: socketOpponent.points,
+                ranking: socketOpponent.ranking,
+                color: color,
+                time: time
+            };
+
+            socketOpponent.emit('challenges', socketOpponent.challenges);
+            socket.emit('challenges', socket.challenges);
+        });
+
+        function initChallenges(socket) {
+            if (!socket.challenges) {
+                socket.challenges = {};
+            }
+        }
+
         socket.on('newGame', function (data) {
             var game = Socket.game.start(data.white, data.black, data.time);
 
@@ -371,11 +415,11 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
 
         function removeChallenges(socket) {
 
-            if (!checkSocketUid() || !socket.challenges || !socket.challenges.data) {
+            if (!checkSocketUid() || !socket.challenges) {
                 return;
             }
 
-            for (var uid in socket.challenges.data) {
+            for (var uid in socket.challenges) {
                 removeChallenge(getSocket(Socket.connected[uid]), socket.uid);
             }
 
@@ -384,12 +428,11 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
 
         function removeChallenge(socket, uid) {
 
-            if (!socket || !socket.challenges || !socket.challenges.data || !socket.challenges.data[uid]) {
+            if (!socket || !socket.challenges || !socket.challenges[uid]) {
                 return;
             }
 
-            delete socket.challenges.data[uid];
-            socket.challenges.count--;
+            delete socket.challenges[uid];
             socket.emit('challenges', socket.challenges);
         }
 
@@ -573,9 +616,9 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 }
 
                 socket.ranking = count + 1;
-                socket.join('home');
-
-                connected();
+                socket.join('home', function () {
+                    connected();
+                });
 
                 socket.emit('infosUser', {
                     moderateur: socket.moderateur,
@@ -597,21 +640,18 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
 
         function listChallengers() {
 
-            var challengers = {
-                user: {},
-                count: 0,
-            };
+            var challengers = [];
 
             io.sockets.sockets.forEach(function (socket) {
-                if (!socket.rooms || socket.rooms.indexOf('home') === -1 || !socket.uid || challengers.user[socket.uid]) {
+                if (!socket.uid || !socket.rooms || socket.rooms.indexOf('home') === -1) {
                     return;
                 }
-                challengers.user[socket.uid] = {
+                challengers.push({
+                    uid: socket.uid,
                     name: socket.name,
                     ranking: socket.ranking,
                     points: socket.points
-                };
-                challengers.count++;
+                });
             });
 
             io.sockets.to('home').emit('challengers', challengers);

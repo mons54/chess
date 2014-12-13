@@ -19,11 +19,9 @@ module.exports = function () {
     this.create = function (socket, data) {
         
         var color = data.color, 
-            time = parseInt(data.time), 
+            time = this.getTime(data.time), 
             pointsMin = parseInt(data.pointsMin) ? data.pointsMin : false,
             pointsMax = parseInt(data.pointsMax) ? data.pointsMax : false;
-
-        console.log(color, time, pointsMin, pointsMax);
 
         if (!this.checkColor(color) || !this.checkTime(time) || !this.checkPoints(pointsMin, pointsMax)) {
             return false;
@@ -41,6 +39,10 @@ module.exports = function () {
 
         return true;
 
+    };
+
+    this.getTime = function (time) {
+        return parseInt(time);
     };
 
     this.checkColor = function (color) {
