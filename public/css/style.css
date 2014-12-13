@@ -27,6 +27,7 @@ a:hover, a:active, a:visited, a:focus {
 
 .table > tbody > tr > td {
     vertical-align: middle;
+    line-height: 1.2;
 }
 
 /*** Icomoon ***/
@@ -151,7 +152,19 @@ header #header iframe {
 }
 
 .content table.list-user tr .name {
-    width: 200px;
+    width: 150px;
+}
+
+.content table.list-user tr td .user-name {
+    display: block;
+    max-width: 130px;
+    max-height: 30px;
+    overflow: hidden;
+}
+
+.content table.list-user tr .info-user {
+    text-align: center;
+    width: 75px;
 }
 
 .content table.list-user tr .info-game {

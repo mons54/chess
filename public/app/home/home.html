@@ -38,8 +38,8 @@
                             <tr>
                                 <th class="img"></th>
                                 <th class="name"></th>
-                                <th th-sortable name="'points'" class="info-game"></th>
-                                <th th-sortable name="'ranking'" class="info-game"></th>
+                                <th th-sortable name="'points'" class="info-user"></th>
+                                <th th-sortable name="'ranking'" class="info-user"></th>
                                 <th th-sortable name="'color'" class="info-game"></th>
                                 <th th-sortable name="'time'" class="info-game"></th>
                                 <th></th>
@@ -48,7 +48,9 @@
                         <tbody>
                             <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
                                 <td><img class="img" ng-src="https://graph.facebook.com/{{game.uid}}/picture"></td>
-                                <td>{{ game.name }}</td>
+                                <td>
+                                    <span class="user-name">{{ game.name }}</span>
+                                </td>
                                 <td class="text-center">{{ game.points }}</td>
                                 <td class="text-center">{{ game.ranking }}</td>
                                 <td class="text-center">
@@ -79,8 +81,8 @@
                             <tr>
                                 <th class="img"></th>
                                 <th class="name"></th>
-                                <th th-sortable name="'points'" class="info-game"></th>
-                                <th th-sortable name="'ranking'" class="info-game"></th>
+                                <th th-sortable name="'points'" class="info-user"></th>
+                                <th th-sortable name="'ranking'" class="info-user"></th>
                                 <th th-sortable name="'color'" class="info-game"></th>
                                 <th th-sortable name="'time'" class="info-game"></th>
                                 <th></th>
@@ -122,8 +124,8 @@
                             <tr>
                                 <th class="img"></th>
                                 <th class="name"></th>
-                                <th th-sortable name="'points'" class="info-game"></th>
-                                <th th-sortable name="'ranking'" class="info-game"></th>
+                                <th th-sortable name="'points'" class="info-user"></th>
+                                <th th-sortable name="'ranking'" class="info-user"></th>
                                 <th></th>
                             </tr>
                         </thead>
