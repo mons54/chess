@@ -69,12 +69,6 @@
                 $rootScope.socket.emit('removeGame');
             };
 
-            function checkGame (game) {
-                return game.uid == $rootScope.user.uid || 
-                       ((!game.pointsMin || $rootScope.user.points >= game.pointsMin) && 
-                       (!game.pointsMax || $rootScope.user.points <= game.pointsMax));
-            }
-
             $scope.openModalChallenge = function (challenger) {
                 $scope.challenger = challenger;
             };
@@ -98,6 +92,12 @@
             $scope.$watch('game.pointsMax', function (value) {
                 setPointsMin(value);
             });
+
+            function checkGame (game) {
+                return game.uid == $rootScope.user.uid || 
+                       ((!game.pointsMin || $rootScope.user.points >= game.pointsMin) && 
+                       (!game.pointsMax || $rootScope.user.points <= game.pointsMax));
+            }
 
             function setPointsMinMax () {
                 var pointsMin = [],

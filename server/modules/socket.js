@@ -88,35 +88,6 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             removeChallenge(socket, uid);
         });
 
-        function removeChallenges(socket) {
-
-            if (!checkSocketUid() || !socket.challenges) {
-                return;
-            }
-
-            for (var uid in socket.challenges) {
-                removeChallenge(getSocket(uid), socket.uid);
-            }
-
-            delete socket.challenges;
-        }
-
-        function removeChallenge(socket, uid) {
-
-            if (!socket || !socket.challenges || !socket.challenges[uid]) {
-                return;
-            }
-
-            delete socket.challenges[uid];
-            socket.emit('challenges', socket.challenges);
-        }
-
-        function initChallenges(socket) {
-            if (!socket.challenges) {
-                socket.challenges = {};
-            }
-        }
-
         socket.on('newGame', function (data) {
             var game = Socket.game.start(data.white, data.black, data.time);
 
@@ -216,63 +187,47 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             
         });
 
-        function getRequestRankingWithUser(friends) {
-            
-            var request;
+        function removeGame(uid) {
 
-            if (friends) {
-                request = {
-                    $and: [{
-                        actif: 1,
-                        uid: {
-                            $in: friends
-                        }
-                    }, {
-                        uid: {
-                            $ne: socket.uid
-                        }
-                    }]
-                };
-            } else {
-                request = {
-                    $and: [{
-                        actif: 1
-                    }, {
-                        uid: {
-                            $ne: socket.uid
-                        }
-                    }]
-                };
+            if (!Socket.game.createdGame[uid]) {
+                return;
             }
 
-            return request;
+            delete Socket.game.createdGame[uid];
+            listGames();
         }
 
-        function getRequestRankingWithoutUser(friends) {
-            
-            var request;
+        function listGames() {
+            sendHome('listGames', Socket.game.createdGame);
+        }
 
-            if (friends) {
-                request = {
-                    actif: 1,
-                    uid: {
-                        $in: friends
-                    }
-                };
-            } else {
-                request = {
-                    actif: 1
-                };
+        function initChallenges(socket) {
+            if (!socket.challenges) {
+                socket.challenges = {};
+            }
+        }
+
+        function removeChallenges(socket) {
+
+            if (!checkSocketUid() || !socket.challenges) {
+                return;
             }
 
-            return request;
+            for (var uid in socket.challenges) {
+                removeChallenge(getSocket(uid), socket.uid);
+            }
+
+            delete socket.challenges;
         }
 
-        function emitRanking(data, pages) {
-            socket.emit('ranking', {
-                ranking: data,
-                pages: pages
-            });
+        function removeChallenge(socket, uid) {
+
+            if (!socket || !socket.challenges || !socket.challenges[uid]) {
+                return;
+            }
+
+            delete socket.challenges[uid];
+            socket.emit('challenges', socket.challenges);
         }
 
         function initRanking(friends, page, limit, getUser) {
@@ -430,6 +385,65 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             });
         }
 
+        function getRequestRankingWithUser(friends) {
+            
+            var request;
+
+            if (friends) {
+                request = {
+                    $and: [{
+                        actif: 1,
+                        uid: {
+                            $in: friends
+                        }
+                    }, {
+                        uid: {
+                            $ne: socket.uid
+                        }
+                    }]
+                };
+            } else {
+                request = {
+                    $and: [{
+                        actif: 1
+                    }, {
+                        uid: {
+                            $ne: socket.uid
+                        }
+                    }]
+                };
+            }
+
+            return request;
+        }
+
+        function getRequestRankingWithoutUser(friends) {
+            
+            var request;
+
+            if (friends) {
+                request = {
+                    actif: 1,
+                    uid: {
+                        $in: friends
+                    }
+                };
+            } else {
+                request = {
+                    actif: 1
+                };
+            }
+
+            return request;
+        }
+
+        function emitRanking(data, pages) {
+            socket.emit('ranking', {
+                ranking: data,
+                pages: pages
+            });
+        }
+
         function getPage(total, offset, limit) {
             var page = Math.ceil(offset / limit) + 1,
                 last = Math.ceil(total / limit);
@@ -458,24 +472,6 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 return page - 1;
             }
             return false;
-        }
-
-        function removeGame(uid) {
-
-            if (!Socket.game.createdGame[uid]) {
-                return;
-            }
-
-            delete Socket.game.createdGame[uid];
-            listGames();
-        }
-
-        function listGames() {
-            sendHome('listGames', Socket.game.createdGame);
-        }
-
-        function sendHome(name, data) {
-            io.sockets.to('home').emit(name, data);
         }
 
         function init(data) {
@@ -840,6 +836,10 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 }
             });
             return socket;
+        }
+
+        function sendHome(name, data) {
+            io.sockets.to('home').emit(name, data);
         }
 
         function fn() { };
