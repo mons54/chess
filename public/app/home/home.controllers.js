@@ -17,7 +17,10 @@
                 
                     angular.forEach(data, function (value, key) {
                         value.uid = key;
-                        $scope.createdGames.push(value);
+
+                        if (checkGame(value)) {
+                            $scope.createdGames.push(value);
+                        }
                     });
                 });
             });
@@ -62,6 +65,16 @@
                 $rootScope.socket.emit('createGame', $scope.game);
             };
 
+            $scope.removeGame = function () {
+                $rootScope.socket.emit('removeGame');
+            };
+
+            function checkGame = function (game) {
+                return game.uid == $rootScope.user.uid || 
+                       ($rootScope.user.points >= game.pointsMin && 
+                       (game.pointsMax == 0 || $rootScope.user.points <= data.pointsMax));
+            };
+
             $scope.openModalChallenge = function (challenger) {
                 $scope.challenger = challenger;
             };
@@ -72,6 +85,10 @@
                     color: $scope.game.color,
                     time: $scope.game.time
                 });
+            };
+
+            $scope.removeChallenge = function (uid) {
+                $rootScope.socket.emit('removeChallenge', uid);
             };
 
             $scope.$watch('game.pointsMin', function (value) {

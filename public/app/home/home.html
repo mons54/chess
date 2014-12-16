@@ -57,7 +57,17 @@
                                     <span class="color {{ game.color }} icon-king"></span>
                                 </td>
                                 <td class="text-center">{{ game.time / 60 }}:00</td>
-                                <td class="text-right"><button class="btn btn-success btn-sm">{{ text.play }}</button></td>
+                                <td class="text-right">
+                                    <button ng-if="game.uid == user.uid" 
+                                            ng-click="removeGame()" 
+                                            class="btn btn-default btn-sm">
+                                            <span class="icon icon-close"></span>
+                                    </button>
+                                    <button ng-if="game.uid != user.uid" 
+                                            class="btn btn-success btn-sm">
+                                            {{ text.play }}
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -90,7 +100,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="challenge in challenges | orderBy:predicate:reverse">
-                                <td><img class="img" ng-src="https://graph.facebook.com/{{challenge.uid}}/picture"></td>
+                                <td><img class="img" ng-src="https://graph.facebook.com/{{ challenge.uid }}/picture"></td>
                                 <td>{{ challenge.name }}</td>
                                 <td class="text-center">{{ challenge.points }}</td>
                                 <td class="text-center">{{ challenge.ranking }}</td>
@@ -99,7 +109,7 @@
                                 </td>
                                 <td class="text-center">{{ challenge.time / 60 }}:00</td>
                                 <td class="text-right">
-                                    <button class="btn btn-default btn-sm">
+                                    <button ng-click="removeChallenge(challenge.uid)" class="btn btn-default btn-sm">
                                         <span class="icon icon-close"></span>
                                     </button>
                                     <button ng-if="!challenge.create" class="btn btn-success btn-sm">{{ text.play }}</button>
@@ -136,7 +146,8 @@
                                 <td class="text-center">{{ challenger.points }}</td>
                                 <td class="text-center">{{ challenger.ranking }}</td>
                                 <td class="text-right">
-                                    <button ng-click="openModalChallenge(challenger)"
+                                    <button ng-if="challenger.uid != user.uid"
+                                            ng-click="openModalChallenge(challenger)"
                                             data-toggle="modal" 
                                             data-target="#modal-challenge"
                                             class="btn btn-success btn-sm">

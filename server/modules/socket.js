@@ -37,17 +37,23 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             listGames();
         });
 
+        socket.on('removeGame', function () {
+            if (!checkSocketUid()) {
+                return;
+            }
+            
+            removeGame(socket.uid);
+        });
+
         socket.on('challenge', function (data) {
 
-            var socketOpponent = getSocket(Socket.connected[data.uid]),
+            var socketOpponent = getSocket(data.uid),
                 color = data.color,
                 time = Socket.game.getTime(data.time);
 
             if (!checkSocketUid() || !socketOpponent || !Socket.game.checkColor(color) || !Socket.game.checkColor(color)) {
                 return;
             }
-
-            console.log(data);
 
             initChallenges(socketOpponent);
 
@@ -74,6 +80,36 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             socketOpponent.emit('challenges', socketOpponent.challenges);
             socket.emit('challenges', socket.challenges);
         });
+
+        socket.on('removeChallenge', function (uid) {
+            if (checkSocketUid()) {
+                removeChallenge(getSocket(uid), socket.uid);
+            }
+            removeChallenge(socket, uid);
+        });
+
+        function removeChallenges(socket) {
+
+            if (!checkSocketUid() || !socket.challenges) {
+                return;
+            }
+
+            for (var uid in socket.challenges) {
+                removeChallenge(getSocket(uid), socket.uid);
+            }
+
+            delete socket.challenges;
+        }
+
+        function removeChallenge(socket, uid) {
+
+            if (!socket || !socket.challenges || !socket.challenges[uid]) {
+                return;
+            }
+
+            delete socket.challenges[uid];
+            socket.emit('challenges', socket.challenges);
+        }
 
         function initChallenges(socket) {
             if (!socket.challenges) {
@@ -109,7 +145,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             socket.leave('home');
             listChallengers();
 
-            deleteGame(socket.uid);
+            removeGame(socket.uid);
 
             removeChallenges(socket);
         });
@@ -167,6 +203,17 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                     initRanking(friends, page, limit, true);
                 });
             }
+        });
+
+        socket.on('disconnect', function () {
+
+            if (checkSocketUid()) {
+                delete Socket.connected[socket.uid];
+                removeGame(socket.uid);
+            }
+
+            removeChallenges(socket);
+            
         });
 
         function getRequestRankingWithUser(friends) {
@@ -413,37 +460,13 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             return false;
         }
 
-        function removeChallenges(socket) {
-
-            if (!checkSocketUid() || !socket.challenges) {
-                return;
-            }
-
-            for (var uid in socket.challenges) {
-                removeChallenge(getSocket(Socket.connected[uid]), socket.uid);
-            }
-
-            delete socket.challenges;
-        }
-
-        function removeChallenge(socket, uid) {
-
-            if (!socket || !socket.challenges || !socket.challenges[uid]) {
-                return;
-            }
-
-            delete socket.challenges[uid];
-            socket.emit('challenges', socket.challenges);
-        }
-
-        function deleteGame(uid) {
+        function removeGame(uid) {
 
             if (!Socket.game.createdGame[uid]) {
                 return;
             }
 
             delete Socket.game.createdGame[uid];
-            Socket.game.createdGame.count--;
             listGames();
         }
 
@@ -457,7 +480,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
 
         function init(data) {
 
-            var socketConnected = getSocket(Socket.connected[data.uid]);
+            var socketConnected = getSocket(data.uid);
 
             if (socketConnected) {
                 socketConnected.disconnect();
@@ -781,7 +804,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 badge.badge = trophy;
                 badge.save();
 
-                var socketOpponent = getSocket(Socket.connected[uid]);
+                var socketOpponent = getSocket(uid);
 
                 if (socketOpponent) {
                     socketOpponent.emit('trophy', trophy);
@@ -805,7 +828,8 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             socket.disconnect();
         }
 
-        function getSocket(id) {
+        function getSocket(uid) {
+            var id = Socket.connected[uid];
             if (!id) {
                 return null;
             }
