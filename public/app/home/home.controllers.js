@@ -69,11 +69,11 @@
                 $rootScope.socket.emit('removeGame');
             };
 
-            function checkGame = function (game) {
+            function checkGame (game) {
                 return game.uid == $rootScope.user.uid || 
-                       ($rootScope.user.points >= game.pointsMin && 
-                       (game.pointsMax == 0 || $rootScope.user.points <= data.pointsMax));
-            };
+                       ((!game.pointsMin || $rootScope.user.points >= game.pointsMin) && 
+                       (!game.pointsMax || $rootScope.user.points <= game.pointsMax));
+            }
 
             $scope.openModalChallenge = function (challenger) {
                 $scope.challenger = challenger;
