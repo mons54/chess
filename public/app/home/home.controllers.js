@@ -47,19 +47,52 @@
                 });
             });
 
-
-            setPointsMinMax();
-
-            $scope.paramsGame = angular.copy(paramsGame);
-
-            $scope.game = {
-                color: $scope.paramsGame.colors[0],
-                time: $scope.paramsGame.times[0],
-                pointsMin: 0,
-                pointsMax: 0
+            $scope.resetSearchGame = function () {
+                $scope.searchGame = {
+                    color: '',
+                    time: '',
+                    pointsMin: 0,
+                    pointsMax: 0
+                };
             };
 
-            $scope.challenges = [];
+            $scope.filtersGame = function () {
+                return function (game) {
+                    if (filtersGame($scope.searchGame, game)) {
+                        return true;
+                    }
+                    return false;
+                };
+            };
+
+            $scope.hasFiltersGame = function () {
+                return $scope.searchGame.color || $scope.searchGame.time || $scope.searchGame.pointsMin || $scope.searchGame.pointsMax;
+            };
+
+            function filtersGame(search, game) {
+
+                if ($rootScope.user.uid == game.uid) {
+                    return true;
+                }
+
+                if (search.color && search.color != game.color) {
+                    return false;
+                }
+
+                if (search.time && search.time != game.time) {
+                    return false;
+                }
+
+                if (search.pointsMin && search.pointsMin > game.points) {
+                    return false;
+                }
+
+                if (search.pointsMax && search.pointsMax < game.points) {
+                    return false;
+                }
+
+                return true;
+            }
 
             $scope.createGame = function () {
                 $rootScope.socket.emit('createGame', $scope.game);
@@ -86,11 +119,19 @@
             };
 
             $scope.$watch('game.pointsMin', function (value) {
-                setPointsMax(value);
+                $scope.paramsGame.pointsMax = getPointsMax(value);
             });
 
             $scope.$watch('game.pointsMax', function (value) {
-                setPointsMin(value);
+                $scope.paramsGame.pointsMin = getPointsMin(value);
+            });
+
+            $scope.$watch('searchGame.pointsMin', function (value) {
+                $scope.paramsSearchGame.pointsMax = getPointsMax(value);
+            });
+
+            $scope.$watch('searchGame.pointsMax', function (value) {
+                $scope.paramsSearchGame.pointsMin = getPointsMin(value);
             });
 
             function checkGame (game) {
@@ -116,7 +157,7 @@
                 paramsGame.pointsMax = pointsMax;
             }
 
-            function setPointsMin (pointsMax) {
+            function getPointsMin (pointsMax) {
                 var data = [];
                 
                 if (pointsMax > 0) {
@@ -129,10 +170,10 @@
                     data = paramsGame.pointsMin;
                 }
 
-                $scope.paramsGame.pointsMin = data;
+                return data;
             }
 
-            function setPointsMax (pointsMin) {
+            function getPointsMax (pointsMin) {
                 var data = [];
 
                 if (pointsMin > 0) {
@@ -145,7 +186,7 @@
                     data = paramsGame.pointsMax;
                 }
 
-                $scope.paramsGame.pointsMax = data;
+                return data;
             }
 
             function getTime() {
@@ -154,6 +195,23 @@
 
                 $scope.time = utils.sprintf(date.getHours()) + ':' + utils.sprintf(date.getMinutes());
             }
+
+            setPointsMinMax();
+
+            $scope.paramsGame = angular.copy(paramsGame);
+
+            $scope.game = {
+                color: $scope.paramsGame.colors[0],
+                time: $scope.paramsGame.times[0],
+                pointsMin: 0,
+                pointsMax: 0
+            };
+
+            $scope.paramsSearchGame = angular.copy(paramsGame);
+
+            $scope.resetSearchGame();
+
+            $scope.challenges = [];
 
             getTime();
 

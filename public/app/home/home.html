@@ -27,9 +27,9 @@
                 <h2>
                     <span>{{ text.waitingPlayers }}</span>
                     <span class="info-tooltip">{{ createdGames.length }}</span>
-                    <div class="pull-right">
-                        <div drop-drag class="btn-right"></div>
-                        <div drop-down class="btn-right"></div>
+                    <div class="pull-right navbar-right">
+                        <div dropdown-filter-game class="btn-right"></div>
+                        <div toggle-element class="btn-right"></div>
                     </div>
                 </h2>
                 <section>
@@ -46,7 +46,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
+                            <tr ng-repeat="game in createdGames | orderBy:predicate:reverse | filter:filtersGame()">
                                 <td><img class="img" ng-src="https://graph.facebook.com/{{game.uid}}/picture"></td>
                                 <td>
                                     <span class="user-name">{{ game.name }}</span>
@@ -81,8 +81,7 @@
                     <span>{{ text.challenges }}</span>
                     <span class="info-tooltip">{{ challenges.length }}</span>
                     <div class="pull-right">
-                        <div drop-drag class="btn-right"></div>
-                        <div drop-down class="btn-right"></div>
+                        <div toggle-element class="btn-right"></div>
                     </div>
                 </h2>
                 <section>
@@ -124,8 +123,7 @@
                     <span>{{ text.challengers }}</span>
                     <span class="info-tooltip">{{ challengers.length }}</span>
                     <div class="pull-right">
-                        <div drop-drag class="btn-right"></div>
-                        <div drop-down class="btn-right"></div>
+                        <div toggle-element class="btn-right"></div>
                     </div>
                 </h2>
                 <section>

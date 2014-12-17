@@ -41,6 +41,15 @@ a:hover, a:active, a:visited, a:focus {
     top: 3px;
 }
 
+.btn-xs .icon {
+    position: relative;
+    top: 2px;
+}
+
+.icon-white {
+    color: #fff;
+}
+
 .clear {
     clear: both;
 }
@@ -119,11 +128,6 @@ header #header iframe {
     top: -2px;
 }
 
-.content .element .btn .icon {
-    position: relative;
-    top: 2px;
-}
-
 .content .element .load-spin {
     padding: 20px 0;
     text-align: center;
@@ -145,6 +149,15 @@ header #header iframe {
 
 .profil .img img {
     border-radius: 3px;
+}
+
+.content .dropdown-filter {
+    width:300px; 
+    padding:20px;
+}
+
+.content .dropdown-filter label {
+    font-size: 12px;
 }
 
 .content table.list-user tr .img {

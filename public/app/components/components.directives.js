@@ -39,11 +39,11 @@
         }
     ]).
 
-    directive('dropDown', [
+    directive('toggleElement', [
         function () {
             return {
                 scope: {},
-                templateUrl: '/app/components/templates/drop-down.html',
+                templateUrl: '/app/components/templates/toggle-element.html',
                 link: function (scope, element, attrs) {
                     scope.showHide = function () {
                         scope.open = !scope.open;
