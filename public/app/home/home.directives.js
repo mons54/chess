@@ -20,14 +20,32 @@
         return {
             templateUrl: '/app/home/templates/dropdown-filter-game.html',
             link: function (scope, element) {
-                scope.dropdownToggle = function () {
-                    $('.dropdown-menu').hide();
-                    scope.toggle = !scope.toggle;
-                    if (scope.toggle) {
-                        element.find('.dropdown-menu').show();
-                    }
+                scope.dropdownFilterGameToggle = function () {
+                    dropdown(element);
+                };
+            }
+        };
+    }).
+
+    directive('dropdownFilterChallenger', function () {
+        return {
+            templateUrl: '/app/home/templates/dropdown-filter-challenger.html',
+            link: function (scope, element) {
+                scope.dropdownFilterChallengerToggle = function () {
+                    dropdown(element);
                 };
             }
         };
     });
+
+    function dropdown (element) {
+        var dropdown = element.find('.dropdown-menu'),
+            toggle = dropdown.is(':visible');
+
+        $('.dropdown-menu').hide();
+        if (!toggle) {
+            dropdown.show();
+        }
+    }
+    
 })();

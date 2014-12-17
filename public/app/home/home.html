@@ -25,9 +25,9 @@
 
             <div class="element">
                 <h2>
-                    <span>{{ text.waitingPlayers }}</span>
+                    <span>{{ text.games }}</span>
                     <span class="info-tooltip">{{ filteredCreatedGames.length }}</span>
-                    <div class="pull-right navbar-right">
+                    <div class="navbar-right">
                         <div dropdown-filter-game class="btn-right"></div>
                         <div toggle-element class="btn-right"></div>
                     </div>
@@ -76,16 +76,16 @@
                     </div>
                 </section>
             </div>
-            <div class="element">
+            <div ng-if="challenges.length" class="element">
                 <h2>
                     <span>{{ text.challenges }}</span>
                     <span class="info-tooltip">{{ challenges.length }}</span>
-                    <div class="pull-right">
+                    <div class="navbar-right">
                         <div toggle-element class="btn-right"></div>
                     </div>
                 </h2>
                 <section>
-                    <table ng-if="challenges.length" class="list-user table table-striped">
+                    <table class="list-user table table-striped">
                         <thead>
                             <tr>
                                 <th class="img"></th>
@@ -121,8 +121,51 @@
             <div class="element">
                 <h2>
                     <span>{{ text.challengers }}</span>
-                    <span class="info-tooltip">{{ challengers.length }}</span>
-                    <div class="pull-right">
+                    <span class="info-tooltip">{{ filteredChallengers.length }}</span>
+                    <div class="navbar-right">
+                        <div dropdown-filter-challenger class="btn-right"></div>
+                        <div toggle-element class="btn-right"></div>
+                    </div>
+                </h2>
+                <section>
+                    <table class="list-user table table-striped">
+                        <thead ng-if="filteredChallengers.length">
+                            <tr>
+                                <th class="img"></th>
+                                <th class="name"></th>
+                                <th th-sortable name="'points'" class="info-user"></th>
+                                <th th-sortable name="'ranking'" class="info-user"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="challenger in filteredChallengers = (challengers | orderBy:predicate:reverse | filter:filtersChallenger())">
+                                <td><img class="img" ng-src="https://graph.facebook.com/{{ challenger.uid }}/picture"></td>
+                                <td>{{ challenger.name }}</td>
+                                <td class="text-center">{{ challenger.points }}</td>
+                                <td class="text-center">{{ challenger.ranking }}</td>
+                                <td class="text-right">
+                                    <button ng-if="challenger.uid != user.uid"
+                                            ng-click="openModalChallenge(challenger)"
+                                            data-toggle="modal" 
+                                            data-target="#modal-challenge"
+                                            class="btn btn-success btn-sm">
+                                            {{ text.challenge }}
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="!filteredChallengers.length" class="load-spin">
+                        <img src="/img/load-spin.svg">
+                    </div>
+                </section>
+            </div>
+            <div ng-if="friends.length" class="element">
+                <h2>
+                    <span>{{ text.friends }}</span>
+                    <span class="info-tooltip">{{ friends.length }}</span>
+                    <div class="navbar-right">
                         <div toggle-element class="btn-right"></div>
                     </div>
                 </h2>
@@ -138,14 +181,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="challenger in challengers | orderBy:predicate:reverse">
-                                <td><img class="img" ng-src="https://graph.facebook.com/{{ challenger.uid }}/picture"></td>
-                                <td>{{ challenger.name }}</td>
-                                <td class="text-center">{{ challenger.points }}</td>
-                                <td class="text-center">{{ challenger.ranking }}</td>
+                            <tr ng-repeat="friend in friends | orderBy:predicate:reverse">
+                                <td><img class="img" ng-src="https://graph.facebook.com/{{ friend.uid }}/picture"></td>
+                                <td>{{ friend.name }}</td>
+                                <td class="text-center">{{ friend.points }}</td>
+                                <td class="text-center">{{ friend.ranking }}</td>
                                 <td class="text-right">
-                                    <button ng-if="challenger.uid != user.uid"
-                                            ng-click="openModalChallenge(challenger)"
+                                    <button ng-if="friend.uid != user.uid"
+                                            ng-click="openModalChallenge(friend)"
                                             data-toggle="modal" 
                                             data-target="#modal-challenge"
                                             class="btn btn-success btn-sm">

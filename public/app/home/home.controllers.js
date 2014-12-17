@@ -37,11 +37,28 @@
             });
 
             $rootScope.socket.on('challengers', function (data) {
-
                 $scope.$apply(function () {
-                    $scope.challengers = data;
+
+                    $scope.challengers = [];
+                    $scope.friends = [];
+
+                    angular.forEach(data, function (value) {
+                        if ($rootScope.user.uid == value.uid) {
+                            return;
+                        }
+                        
+                        if ($rootScope.user.friends.indexOf(value.uid) !== -1) {
+                            $scope.friends.push(value);
+                        }
+
+                        $scope.challengers.push(value);
+                    });
                     
                     $scope.challengers.sort(function (a, b) {
+                        return a.points > b.points;
+                    });
+
+                    $scope.friends.sort(function (a, b) {
                         return a.points > b.points;
                     });
                 });
@@ -56,6 +73,13 @@
                 };
             };
 
+            $scope.resetSearchChallenger = function () {
+                $scope.searchChallenger = {
+                    pointsMin: 0,
+                    pointsMax: 0
+                };
+            };
+
             $scope.filtersGame = function () {
                 return function (game) {
                     if (filtersGame($scope.searchGame, game)) {
@@ -65,8 +89,21 @@
                 };
             };
 
+            $scope.filtersChallenger = function () {
+                return function (challenger) {
+                    if (filtersChallenger($scope.searchChallenger, challenger)) {
+                        return true;
+                    }
+                    return false;
+                };
+            };
+
             $scope.hasFiltersGame = function () {
                 return $scope.searchGame.color || $scope.searchGame.time || $scope.searchGame.pointsMin || $scope.searchGame.pointsMax;
+            };
+
+            $scope.hasFiltersChallenger = function () {
+                return $scope.searchChallenger.pointsMin || $scope.searchChallenger.pointsMax;
             };
 
             function filtersGame(search, game) {
@@ -83,11 +120,24 @@
                     return false;
                 }
 
-                if (search.pointsMin && search.pointsMin > game.points) {
+                if (search.pointsMin > 0 && search.pointsMin > game.points) {
                     return false;
                 }
 
-                if (search.pointsMax && search.pointsMax < game.points) {
+                if (search.pointsMax > 0 && search.pointsMax < game.points) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            function filtersChallenger(search, challenger) {
+
+                if (search.pointsMin > 0 && search.pointsMin > challenger.points) {
+                    return false;
+                }
+
+                if (search.pointsMax > 0 && search.pointsMax < challenger.points) {
                     return false;
                 }
 
@@ -132,6 +182,14 @@
 
             $scope.$watch('searchGame.pointsMax', function (value) {
                 $scope.paramsSearchGame.pointsMin = getPointsMin(value);
+            });
+
+            $scope.$watch('searchChallenger.pointsMin', function (value) {
+                $scope.paramsSearchChallenger.pointsMax = getPointsMax(value);
+            });
+
+            $scope.$watch('searchChallenger.pointsMax', function (value) {
+                $scope.paramsSearchChallenger.pointsMin = getPointsMin(value);
             });
 
             function checkGame (game) {
@@ -209,7 +267,13 @@
 
             $scope.paramsSearchGame = angular.copy(paramsGame);
 
+            $scope.paramsSearchChallenger = {
+                pointsMin: angular.copy(paramsGame.pointsMin),
+                pointsMax: angular.copy(paramsGame.pointsMax)
+            };
+
             $scope.resetSearchGame();
+            $scope.resetSearchChallenger();
 
             $scope.challenges = [];
 
