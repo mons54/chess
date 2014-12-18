@@ -247,14 +247,36 @@
                 return data;
             }
 
-            function getTime() {
-                
-                var date = new Date();
+            function freeTime() {
 
-                $scope.time = utils.sprintf(date.getHours()) + ':' + utils.sprintf(date.getMinutes());
+                if (($rootScope.user.freeTime != 0 && !$rootScope.user.freeTime) || $rootScope.user.freeTime < 0) {
+                    return;
+                }
+
+                if ($rootScope.user.freeTime == 0) {
+                    $rootScope.socket.emit('initUser');
+                }
+
+                var time = $rootScope.user.freeTime,
+                    hour = Math.floor(time / 3600);
+
+                time -= (hour * 3600);
+
+                var minute = Math.floor(time / 60),
+                    seconde = Math.floor(time - (minute * 60));
+
+                $scope.freeTime = {
+                    hour: utils.sprintf(hour),
+                    minute: utils.sprintf(minute),
+                    seconde: utils.sprintf(seconde)
+                };
+
+                $rootScope.user.freeTime--;
             }
 
             setPointsMinMax();
+
+            $scope.sound = true;
 
             $scope.paramsGame = angular.copy(paramsGame);
 
@@ -277,10 +299,12 @@
 
             $scope.challenges = [];
 
-            getTime();
+            freeTime();
 
-            setTimeout(function () {
-                getTime();
+            setInterval(function () {
+                $scope.$apply(function () {
+                    freeTime();
+                });
             }, 1000);     
         }
     ]);

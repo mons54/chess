@@ -54,18 +54,17 @@
                                 <td class="text-center">{{ game.points }}</td>
                                 <td class="text-center">{{ game.ranking }}</td>
                                 <td class="text-center">
-                                    <span class="color {{ game.color }} icon-king"></span>
+                                    <span class="color">
+                                        <span class="icon-{{ game.color }} icon-king"></span>
+                                    </span>
                                 </td>
                                 <td class="text-center">{{ game.time / 60 }}:00</td>
                                 <td class="text-right">
-                                    <button ng-if="game.uid == user.uid" 
-                                            ng-click="removeGame()" 
-                                            class="btn btn-default btn-sm">
-                                            <span class="icon icon-close"></span>
+                                    <button ng-if="game.uid == user.uid" ng-click="removeGame()" class="btn btn-sm btn-icon btn-default">
+                                        <span class="icon icon-close"></span>
                                     </button>
-                                    <button ng-if="game.uid != user.uid" 
-                                            class="btn btn-success btn-sm">
-                                            {{ text.play }}
+                                    <button ng-if="game.uid != user.uid" class="btn btn-sm btn-icon btn-success">
+                                        <span class="icon icon-valid"></span>
                                     </button>
                                 </td>
                             </tr>
@@ -104,14 +103,18 @@
                                 <td class="text-center">{{ challenge.points }}</td>
                                 <td class="text-center">{{ challenge.ranking }}</td>
                                 <td class="text-center">
-                                    <span class="color {{ game.color }} icon-king"></span>
+                                    <span class="color">
+                                        <span class="icon-{{ game.color }} icon-king"></span>
+                                    </span>
                                 </td>
                                 <td class="text-center">{{ challenge.time / 60 }}:00</td>
                                 <td class="text-right">
-                                    <button ng-click="removeChallenge(challenge.uid)" class="btn btn-default btn-sm">
+                                    <button ng-click="removeChallenge(challenge.uid)" class="btn btn-sm btn-icon btn-default">
                                         <span class="icon icon-close"></span>
                                     </button>
-                                    <button ng-if="!challenge.create" class="btn btn-success btn-sm">{{ text.play }}</button>
+                                    <button ng-if="!challenge.create" class="btn btn-sm btn-icon btn-success">
+                                        <span class="icon icon-valid"></span>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -149,7 +152,7 @@
                                             ng-click="openModalChallenge(challenger)"
                                             data-toggle="modal" 
                                             data-target="#modal-challenge"
-                                            class="btn btn-success btn-sm">
+                                            class="btn btn-primary btn-sm">
                                             {{ text.challenge }}
                                     </button>
                                 </td>
@@ -191,7 +194,7 @@
                                             ng-click="openModalChallenge(friend)"
                                             data-toggle="modal" 
                                             data-target="#modal-challenge"
-                                            class="btn btn-success btn-sm">
+                                            class="btn btn-primary btn-sm">
                                             {{ text.challenge }}
                                     </button>
                                 </td>
@@ -201,8 +204,35 @@
                 </section>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="element clock">{{ time }}</div>
+        <div class="col-md-2 col-right">
+            <button class="element btn btn-default">
+                <div>
+                    <span>{{ user.tokens }}</span>
+                    <span class="icon-king"></span>
+                </div>
+            </button>
+            <button class="element btn btn-default">
+                <span class="icon-right icon-shop"></span>
+            </button>
+            <button class="element btn btn-default">
+                <span class="icon-right icon-ranking"></span>
+            </button>
+            <button class="element btn btn-default">
+                <span class="icon-right icon-points"></span>
+            </button>
+            <button class="element btn btn-default">
+                <span class="icon-right icon-invite-friends"></span>
+            </button>
+            <button ng-click="sound = !sound" class="element btn btn-default">
+                <span ng-class="{'icon-sound-on': sound, 'icon-sound-off': !sound}" class="icon-right"></span>
+            </button>
+            <div ng-if="freeTime" class="element">
+                <div>{{ freeTime.hour }}:{{ freeTime.minute }}:{{ freeTime.seconde }}</div>
+                <div class="free-token">
+                    <span>+3</span>
+                    <span class="icon-king"></span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

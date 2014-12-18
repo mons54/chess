@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?avbotj');
-	src:url('fonts/icomoon.eot?#iefixavbotj') format('embedded-opentype'),
-		url('fonts/icomoon.woff?avbotj') format('woff'),
-		url('fonts/icomoon.ttf?avbotj') format('truetype'),
-		url('fonts/icomoon.svg?avbotj#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?-8s7o12');
+	src:url('fonts/icomoon.eot?#iefix-8s7o12') format('embedded-opentype'),
+		url('fonts/icomoon.woff?-8s7o12') format('woff'),
+		url('fonts/icomoon.ttf?-8s7o12') format('truetype'),
+		url('fonts/icomoon.svg?-8s7o12#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -29,8 +29,14 @@
 .icon-king:before {
 	content: "\e058";
 }
+.icon-shop:before {
+	content: "\e0c8";
+}
 .icon-time:before {
 	content: "\e102";
+}
+.icon-invite-friends:before {
+	content: "\e188";
 }
 .icon-ranking:before {
 	content: "\e216";
@@ -46,6 +52,15 @@
 }
 .icon-valid:before {
 	content: "\e370";
+}
+.icon-more:before {
+	content: "\e376";
+}
+.icon-sound-on:before {
+	content: "\e38f";
+}
+.icon-sound-off:before {
+	content: "\e393";
 }
 .icon-arrow-down:before {
 	content: "\e3b2";

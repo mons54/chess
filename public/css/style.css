@@ -33,7 +33,7 @@ a:hover, a:active, a:visited, a:focus {
 /*** Icomoon ***/
 [class^="icon-"], [class*=" icon-"] {
     font-size: 16px;
-    color: #444444;
+    color: #362F2D;
 }
 
 .icon-table-sortable {
@@ -41,9 +41,19 @@ a:hover, a:active, a:visited, a:focus {
     top: 3px;
 }
 
-.btn-xs .icon {
+.btn .icon {
     position: relative;
     top: 2px;
+}
+
+.btn-icon {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.btn-danger .icon,
+.btn-success .icon {
+    color: #fff;
 }
 
 .icon-white {
@@ -91,7 +101,9 @@ header #header iframe {
 }
 
 .content .element {
-    border-radius: 5px;
+    display: block;
+    width: 100%;
+    border-radius: 3px;
     background: #fff;
 }
 
@@ -105,7 +117,7 @@ header #header iframe {
     padding: 10px;
     background-color: #eef5f9;
     border-bottom: 1px solid #dadede;
-    border-radius: 5px 5px 0 0;
+    border-radius: 3px 3px 0 0;
     color: #446479;
     font-size: 18px;
 }
@@ -165,12 +177,12 @@ header #header iframe {
 }
 
 .content table.list-user tr .name {
-    width: 150px;
+    width: 200px;
 }
 
 .content table.list-user tr td .user-name {
     display: block;
-    max-width: 130px;
+    max-width: 180px;
     max-height: 30px;
     overflow: hidden;
 }
@@ -186,27 +198,44 @@ header #header iframe {
 }
 
 .content table.list-user tr td .color {
+    display: inline-block;
     background-color: #999999;
-    padding: 4px;
+    padding: 3px 5px;
     border-radius: 3px;
 }
 
-.content table.list-user tr td .white {
+.content table.list-user tr td .icon-white {
     color: #fff;
 }
 
-.content table.list-user tr td .black {
+.content table.list-user tr td .icon-black {
     color: #000;
 }
 
+.content .col-right .element {
+    color: #362F2D;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.content .col-right .icon-right {
+    font-size: 32px;
+}
+
 .content .clock {
-    background: #362F2D;
-    color: #fff;
     font-size: 20px;
     font-weight: bold;
     line-height: 40px;
     height: 40px;
+    background-color: #362F2D;
+    color: #fff;
     text-align: center;
+}
+
+.content .free-token {
+    padding-top: 5px;
 }
 
 footer {
@@ -224,7 +253,7 @@ footer .footer {
     height: 300px;
     margin: 20px auto;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 footer .footer #pub {

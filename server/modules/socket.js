@@ -28,6 +28,10 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             });
         });
 
+        socket.on('initUser', function () {
+            initUser();
+        });
+
         socket.on('createGame', function (data) {
 
             if (!data || !checkSocketUid() || !Socket.game.create(socket, data)) {
@@ -644,7 +648,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                     points: socket.points,
                     ranking: socket.ranking,
                     tokens: token,
-                    free: getFreeTime(freeTime),
+                    freeTime: getFreeTime(freeTime),
                     trophy: trophy
                 });
 
