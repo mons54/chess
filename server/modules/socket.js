@@ -20,7 +20,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             }
 
             fbgraph.post('/' + data.uid + '?access_token=' + data.accessToken, function(err, res) {
-                if (err || !res.data) {
+                if (err || !res.success) {
                     disconnectSocket();
                     return;
                 }

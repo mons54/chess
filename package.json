@@ -11,7 +11,7 @@
         "body-parser": "1.10.0",
         "socket.io": "1.2.1",
         "mongoose": "3.8.20",
-        "fbgraph": "0.3.0",
+        "fbgraph": "mons54/fbgraph",
         "ejs": "1.0.0"
     },
     "devDependencies": {
