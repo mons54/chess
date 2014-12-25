@@ -44,7 +44,6 @@
                 link: function (scope, element) {
                     element.bind('click', function () {
                         $rootScope.sound = !$rootScope.sound;
-                        console.log($rootScope.sound);
                     });
                 }
             };
