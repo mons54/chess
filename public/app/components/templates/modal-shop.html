@@ -1,0 +1,20 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">{{ text.cancel }}</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ text.shop }}</h4>
+        </div>
+        <div class="modal-body">
+            <table class="list-user table table-striped">
+                <tbody>
+                    <tr ng-repeat="token in tokens">
+                        <td>{{ token.number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

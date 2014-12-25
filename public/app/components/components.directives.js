@@ -50,6 +50,17 @@
         }
     ]).
 
+    directive('modalShop', ['utils',
+        function (utils) {
+            return {
+                templateUrl: '/app/components/templates/modal-shop.html',
+                link: function (scope) {
+                    scope.tokens = utils.getTokens();
+                }
+            };
+        }
+    ]).
+
     directive('thSortable', ['$rootScope',
         function ($rootScope) {
             return {
