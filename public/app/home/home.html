@@ -220,12 +220,10 @@
             <button class="element btn btn-default">
                 <span class="icon-right icon-points"></span>
             </button>
-            <button class="element btn btn-default">
+            <button apprequests class="element btn btn-default">
                 <span class="icon-right icon-invite-friends"></span>
             </button>
-            <button ng-click="sound = !sound" class="element btn btn-default">
-                <span ng-class="{'icon-sound-on': sound, 'icon-sound-off': !sound}" class="icon-right"></span>
-            </button>
+            <button button-sound class="element btn btn-default"></button>
             <div ng-if="freeTime" class="element">
                 <div>{{ freeTime.hour }}:{{ freeTime.minute }}:{{ freeTime.seconde }}</div>
                 <div class="free-token">

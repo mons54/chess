@@ -21,6 +21,36 @@
         }
     ]).
 
+    directive('apprequests', ['$rootScope',
+        function ($rootScope) {
+            return {
+                link: function (scope, element) {
+                    element.bind('click', function () {
+                        FB.ui({
+                            method: 'apprequests',
+                            title: $rootScope.text.title,
+                            message: $rootScope.text.description,
+                        });
+                    });
+                }
+            };
+        }
+    ]).
+
+    directive('buttonSound', ['$rootScope',
+        function ($rootScope) {
+            return {
+                templateUrl: '/app/components/templates/button-sound.html',
+                link: function (scope, element) {
+                    element.bind('click', function () {
+                        $rootScope.sound = !$rootScope.sound;
+                        console.log($rootScope.sound);
+                    });
+                }
+            };
+        }
+    ]).
+
     directive('thSortable', ['$rootScope',
         function ($rootScope) {
             return {
