@@ -38,6 +38,7 @@
 
             $rootScope.user = {
                 uid: null,
+                accessToken: null,
                 name: 'User',
                 lang: 'en',
                 gender: 'male',
@@ -51,34 +52,32 @@
                 FB.init({
                     appId: appId,
                     xfbml: true,
-                    version: 'v2.1'
+                    version: 'v2.2'
                 });
 
-                init();
+                getLoginStatus();
             };
 
-            function init () {
-
-                getLoginStatus(getMe);
-            }
-
-            function getLoginStatus (callback) {
-
+            function getLoginStatus () {
                 FB.getLoginStatus(function (res) {
                     if (res.status !== 'connected') {
                         return login();
                     }
-                    callback(res);
+                    getMe(res);
                 });
             }
 
             function login () {
                 FB.login(function (res) {
-                    getMe();
+                    getMe(res);
+                }, {
+                    scope: 'user_friends'
                 });
             }
 
-            function getMe () {
+            function getMe (res) {
+
+                $rootScope.user.accessToken = res.authResponse.accessToken;
                 
                 FB.api('/me', function (res) {
                     
@@ -122,14 +121,14 @@
                 $rootScope.socket = io.connect();
 
                 $rootScope.socket.on('connect', function () {
-                    getLoginStatus(socketCreate);
+                    socketCreate();
                 });
             }
 
-            function socketCreate (res) {
+            function socketCreate () {
                 $rootScope.socket.emit('init', {
-                    uid: res.authResponse.userID,
-                    accessToken: res.authResponse.accessToken,
+                    uid: $rootScope.user.uid,
+                    accessToken: $rootScope.user.accessToken,
                     name: $rootScope.user.name
                 });
 
