@@ -7,13 +7,10 @@
     directive('location', ['$location',
         function ($location) {
             return {
-                scope: {
-                    path: '='
-                },
-                link: function (scope, element) {
+                link: function (scope, element, attr) {
                     element.bind('click', function () {
                         scope.$apply(function () {
-                            $location.path(scope.path);
+                            $location.path(attr.location);
                         });
                     });
                 }
@@ -90,6 +87,14 @@
                         element.parents('.element').find('section').toggle();
                     }
                 }
+            };
+        }
+    ]).
+
+    directive('colRight', [
+        function () {
+            return {
+                templateUrl: '/app/components/templates/col-right.html'
             };
         }
     ]);

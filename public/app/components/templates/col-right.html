@@ -1,0 +1,36 @@
+<div class="col-md-2 col-right">
+    <button class="element btn btn-default">
+        <div>
+            <span>{{ user.tokens }}</span>
+            <span class="icon-king"></span>
+        </div>
+    </button>
+    <button data-toggle="modal" 
+            data-target="#modal-shop"
+            class="element btn btn-default">
+        <span class="icon-right icon-shop"></span>
+    </button>
+    <button location=""
+            class="element btn btn-default">
+        <span class="icon-right icon-home"></span>
+    </button>
+    <button class="element btn btn-default">
+        <span class="icon-right icon-ranking"></span>
+    </button>
+    <button class="element btn btn-default">
+        <span class="icon-right icon-points"></span>
+    </button>
+    <button apprequests class="element btn btn-default">
+        <span class="icon-right icon-invite-friends"></span>
+    </button>
+    <button button-sound class="element btn btn-default"></button>
+    <div ng-if="freeTime" class="element">
+        <div>{{ freeTime.hour }}:{{ freeTime.minute }}:{{ freeTime.seconde }}</div>
+        <div class="free-token">
+            <span>+3</span>
+            <span class="icon-king"></span>
+        </div>
+    </div>
+</div>
+        
+<div modal-shop class="modal fade" id="modal-shop"></div>
