@@ -1,0 +1,297 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: #C8C8C8;
+    font-size: 13px;
+}
+
+a {
+    cursor:pointer;
+    font-weight:bold;
+    text-decoration: none;
+    color: #3b5998
+}
+
+a:hover, a:active, a:visited, a:focus {
+    text-decoration: none;
+}
+
+/*** Bootstrap ***/
+
+.table {
+    margin-bottom: 0;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    line-height: 1.2;
+}
+
+/*** Icomoon ***/
+[class^="icon-"], [class*=" icon-"] {
+    font-size: 16px;
+    color: #362F2D;
+}
+
+.icon-table-sortable {
+    position: relative;
+    top: 3px;
+}
+
+.btn .icon {
+    position: relative;
+    top: 2px;
+}
+
+.btn-icon {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.btn-danger .icon,
+.btn-success .icon {
+    color: #fff;
+}
+
+.icon-white {
+    color: #fff;
+}
+
+.clear {
+    clear: both;
+}
+
+header {
+    background-color: #002D40;
+    padding: 10px 0;
+    border-bottom: 3px solid #fff;
+    box-shadow: 0 0 5px #000;
+}
+
+header #header {
+    position: relative;
+    width: 728px;
+    height: 90px;
+    margin: 0 auto;
+    background-color: #002D40;
+}
+
+
+header #header iframe {
+    width: 728px;
+    height: 90px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.app {
+    width: 750px;
+    margin: 0 auto;
+}
+
+.content {
+    margin: 20px 0;
+}
+
+.content .element:nth-child(n+2) {
+    margin-top: 10px;
+}
+
+.content .element {
+    display: block;
+    width: 100%;
+    border-radius: 3px;
+    background: #fff;
+}
+
+.content .element section {
+    max-height: 225px;
+    overflow-x: auto;
+}
+
+.content .element h2 {
+    margin: 0;
+    padding: 10px;
+    background-color: #eef5f9;
+    border-bottom: 1px solid #dadede;
+    border-radius: 3px 3px 0 0;
+    color: #446479;
+    font-size: 18px;
+}
+
+.content .element .info-tooltip {
+    display: inline-block;
+    padding: 3px 5px 1px;
+    background-color: #446479;
+    color: #EEF5F9;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 3px;
+}
+
+.content .element .btn-right {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+}
+
+.content .element .load-spin {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.content .element .load-spin img {
+    height: 25px;
+}
+
+.content .profil {
+    position: relative;
+    padding: 10px;
+    height: 70px;
+}
+
+.profil .img {
+    padding-right: 10px;
+}
+
+.profil .img img {
+    border-radius: 3px;
+}
+
+.content .dropdown-filter {
+    width:300px; 
+    padding:20px;
+}
+
+.content .dropdown-filter label {
+    font-size: 12px;
+}
+
+.content table.list-user tr .img {
+    width: 30px;
+}
+
+.content table.list-user tr .name {
+    width: 200px;
+}
+
+.content table.list-user tr td .user-name {
+    display: block;
+    max-width: 180px;
+    max-height: 30px;
+    overflow: hidden;
+}
+
+.content table.list-user tr .info-user {
+    text-align: center;
+    width: 75px;
+}
+
+.content table.list-user tr .info-game {
+    text-align: center;
+    width: 55px;
+}
+
+.content table.list-user tr td .color {
+    display: inline-block;
+    background-color: #999999;
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.content table.list-user tr td .icon-white {
+    color: #fff;
+}
+
+.content table.list-user tr td .icon-black {
+    color: #000;
+}
+
+.content .col-right .element {
+    color: #362F2D;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.content .col-right .icon-right {
+    font-size: 32px;
+}
+
+.content .clock {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 40px;
+    height: 40px;
+    background-color: #362F2D;
+    color: #fff;
+    text-align: center;
+}
+
+.content .free-token {
+    padding-top: 5px;
+}
+
+footer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #595959;
+    border-top: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+}
+
+footer .footer {
+    position: relative;
+    width: 760px;
+    height: 300px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 5px;
+}
+
+footer .footer #pub {
+    float: right;
+    width: 300px;
+    height: 250px;
+}
+
+footer .footer .fb-like-box {
+    width: 428px;
+    height: 250px;
+}
+
+footer .footer .link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+footer .footer .link a {
+    font-weight: normal;
+    padding: 0 5px;
+}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+}
+
+.loading .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(/img/loading.gif) #fff no-repeat center;
+    opacity: 0.7;
+}
