@@ -17,8 +17,10 @@
     constant('paramsGame', {
         colors: ['white', 'black'],
         times: [300, 600, 1200, 3600, 5400],
-        pointsMin: 1200,
-        pointsMax: 3000
+        points: {
+            min: 1200,
+            max: 3000
+        }
     }).
 
     factory('utils', ['$rootScope',

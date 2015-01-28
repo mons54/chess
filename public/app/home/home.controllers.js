@@ -203,14 +203,15 @@
                     pointsMax = [],
                     value;
 
-                for (value = paramsGame.pointsMin; value <= paramsGame.pointsMax; value += 100) {
-                    if (value > paramsGame.pointsMin) {
+                for (value = paramsGame.points.min; value <= paramsGame.points.max; value += 100) {
+                    if (value > paramsGame.points.min) {
                         pointsMax.push(value);
                     }
-                    if (value < paramsGame.pointsMax) {
+                    if (value < paramsGame.points.max) {
                         pointsMin.push(value);
                     }
                 }
+
                 paramsGame.pointsMin = pointsMin;
                 paramsGame.pointsMax = pointsMax;
             }
