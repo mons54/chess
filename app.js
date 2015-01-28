@@ -21,4 +21,4 @@ require(dirname + '/server/routes/tokenads')(app, mongoose, crypto);
 
 require(dirname + '/server/router')(app);
 
-server.listen(process.env.PORT || 8080);
+server.listen(process.env.PORT || 3000);
