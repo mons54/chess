@@ -7,10 +7,10 @@
     directive('location', ['$location',
         function ($location) {
             return {
-                link: function (scope, element, attr) {
+                link: function (scope, element, attrs) {
                     element.bind('click', function () {
                         scope.$apply(function () {
-                            $location.path(attr.location);
+                            $location.path(attrs.location);
                         });
                     });
                 }
@@ -58,15 +58,13 @@
         }
     ]).
 
-    directive('thSortable', ['$rootScope',
+    directive('sortable', ['$rootScope',
         function ($rootScope) {
             return {
-                scope: {
-                    name: '='
-                },
-                templateUrl: '/app/components/templates/th-sortable.html',
+                scope: {},
+                templateUrl: '/app/components/templates/sortable.html',
                 link: function (scope, element, attrs) {
-                    scope.text = $rootScope.text;
+                    scope.predicate = attrs.sortable;
                     scope.$watch('reverse', function (value) {
                         scope.$parent.predicate = scope.predicate;
                         scope.$parent.reverse = scope.reverse;

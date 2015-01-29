@@ -33,15 +33,16 @@
                     </div>
                 </h2>
                 <section>
-                    <table class="list-user table table-striped">
-                        <thead ng-if="filteredCreatedGames.length">
+                    <table ng-show="filteredCreatedGames.length"
+                           class="list-user table table-striped">
+                        <thead>
                             <tr>
                                 <th class="img"></th>
                                 <th class="name"></th>
-                                <th th-sortable name="'points'" class="info-user"></th>
-                                <th th-sortable name="'ranking'" class="info-user"></th>
-                                <th th-sortable name="'color'" class="info-game"></th>
-                                <th th-sortable name="'time'" class="info-game"></th>
+                                <th sortable="points" class="info-user"></th>
+                                <th sortable="ranking" class="info-user"></th>
+                                <th sortable="color" class="info-game"></th>
+                                <th sortable="time" class="info-game"></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -70,7 +71,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div ng-if="!filteredCreatedGames.length" class="load-spin">
+                    <div ng-show="!filteredCreatedGames.length" class="load-spin">
                         <img src="/img/load-spin.svg">
                     </div>
                 </section>
@@ -89,10 +90,10 @@
                             <tr>
                                 <th class="img"></th>
                                 <th class="name"></th>
-                                <th th-sortable name="'points'" class="info-user"></th>
-                                <th th-sortable name="'ranking'" class="info-user"></th>
-                                <th th-sortable name="'color'" class="info-game"></th>
-                                <th th-sortable name="'time'" class="info-game"></th>
+                                <th sortable="points" class="info-user"></th>
+                                <th sortable="ranking" class="info-user"></th>
+                                <th sortable="color" class="info-game"></th>
+                                <th sortable="time" class="info-game"></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -131,13 +132,14 @@
                     </div>
                 </h2>
                 <section>
-                    <table class="list-user table table-striped">
-                        <thead ng-if="filteredChallengers.length">
+                    <table ng-show="filteredChallengers.length"
+                           class="list-user table table-striped">
+                        <thead>
                             <tr>
                                 <th class="img"></th>
                                 <th class="name"></th>
-                                <th th-sortable name="'points'" class="info-user"></th>
-                                <th th-sortable name="'ranking'" class="info-user"></th>
+                                <th sortable="points" class="info-user"></th>
+                                <th sortable="ranking" class="info-user"></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -159,7 +161,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div ng-if="!filteredChallengers.length" class="load-spin">
+                    <div ng-show="!filteredChallengers.length" class="load-spin">
                         <img src="/img/load-spin.svg">
                     </div>
                 </section>
@@ -178,8 +180,8 @@
                             <tr>
                                 <th class="img"></th>
                                 <th class="name"></th>
-                                <th th-sortable name="'points'" class="info-user"></th>
-                                <th th-sortable name="'ranking'" class="info-user"></th>
+                                <th sortable="points" class="info-user"></th>
+                                <th sortable="ranking" class="info-user"></th>
                                 <th></th>
                             </tr>
                         </thead>
