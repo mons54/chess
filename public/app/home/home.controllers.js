@@ -277,8 +277,6 @@
 
             setPointsMinMax();
 
-            $scope.sound = true;
-
             $scope.paramsGame = angular.copy(paramsGame);
 
             $scope.game = {

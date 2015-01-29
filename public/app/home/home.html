@@ -1,5 +1,4 @@
 <div class="content">
-
     <div class="row">
         <div class="col-md-10">
             <div class="profil element">
@@ -26,7 +25,7 @@
             <div class="element">
                 <h2>
                     <span>{{ text.games }}</span>
-                    <span class="info-tooltip">{{ filteredCreatedGames.length }}</span>
+                    <span class="info-tooltip">{{ filteredCreatedGames.length || 0 }}</span>
                     <div class="navbar-right">
                         <div dropdown-filter-game class="btn-right"></div>
                         <div toggle-element class="btn-right"></div>
@@ -125,7 +124,7 @@
             <div class="element">
                 <h2>
                     <span>{{ text.challengers }}</span>
-                    <span class="info-tooltip">{{ filteredChallengers.length }}</span>
+                    <span class="info-tooltip">{{ filteredChallengers.length || 0 }}</span>
                     <div class="navbar-right">
                         <div dropdown-filter-challenger class="btn-right"></div>
                         <div toggle-element class="btn-right"></div>
@@ -206,7 +205,7 @@
                 </section>
             </div>
         </div>
-        <div col-right></div>
+        <div class="col-md-2" col-right></div>
     </div>
 </div>
 

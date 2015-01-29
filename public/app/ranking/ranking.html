@@ -1,0 +1,31 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="element">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr ng-repeat="rank in ranking">
+                            <td class="text-center">{{ rank.position }}</td>
+                            <td><img class="img" ng-src="https://graph.facebook.com/{{rank.uid}}/picture"></td>
+                            <td>
+                                <span class="user-name">{{ rank.name }}</span>
+                            </td>
+                            <td class="text-center">{{ rank.points }}</td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-2" col-right></div>
+    </div>
+
+    <div>
+        <button ng-click="setPage(page = pagePrev ? pagePrev : page)" class="button button-dark ion-arrow-left-b"></button>
+        <label class="item-input-wrapper label-pagination">
+            <input ng-model="page" type="text" ng-blur="setPage(page)">
+        </label>
+        <span class="text-pagination"> / {{ pageLast }}</span>
+        <button ng-click="setPage(page = pageNext ? pageNext : page)" class="button button-dark ion-arrow-right-b"></button>
+    </div>
+</div>

@@ -12,7 +12,9 @@
                     $rootScope.loading = true;
                 },
                 hide: function () {
-                    $rootScope.loading = false;
+                    $rootScope.$apply(function () {
+                        $rootScope.loading = false;
+                    });
                 }
             };
         }

@@ -40,7 +40,9 @@
                 templateUrl: '/app/components/templates/button-sound.html',
                 link: function (scope, element) {
                     element.bind('click', function () {
-                        $rootScope.sound = !$rootScope.sound;
+                        $rootScope.$apply(function () {
+                            $rootScope.sound = !$rootScope.sound;
+                        });
                     });
                 }
             };

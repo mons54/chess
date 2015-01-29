@@ -9,7 +9,8 @@
         'components.services',
         'components.directives',
         'home.controllers',
-        'home.directives'
+        'home.directives',
+        'ranking.controllers'
     ]).
 
     constant('appId', '466889913406471').
@@ -235,20 +236,11 @@
 
             function ready () {
 
-                $rootScope.ready = true;
-
                 lfstmedia.init();
 
-                $rootScope.getProfil = function (data) {
-                    $rootScope.socket.emit('Profil', data.uid, data.name);
-                };
-
-                $rootScope.closeModalProfil = function() {
-                    $rootScope.modal.remove();
-                    delete $rootScope.modal;
-                };
-
-                $rootScope.$apply();
+                $rootScope.$apply(function () {
+                    $rootScope.ready = true;
+                });
             }
         }
     ]).
@@ -260,6 +252,11 @@
             when('/', {
                 templateUrl: '/app/home/home.html',
                 controller: 'homeCtrl'
+            }).
+
+            when('/ranking', {
+                templateUrl: '/app/ranking/ranking.html',
+                controller: 'rankingCtrl'
             }).
 
             otherwise({
