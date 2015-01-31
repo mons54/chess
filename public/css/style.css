@@ -138,6 +138,7 @@ header #header iframe {
 
 .content .ranking-pagination .form-group .form-control {
     height: 30px;
+    text-align: center;
 }
 
 .content .element section {
