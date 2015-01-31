@@ -380,6 +380,56 @@
 		{
 			"icon": {
 				"paths": [
+					"M0 640l192 192 320-320 320 320 192-192-511.998-512z"
+				],
+				"attrs": [],
+				"tags": [
+					"arrow-up",
+					"upload",
+					"top"
+				],
+				"defaultCode": 58288,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 944,
+				"order": 23,
+				"prevSize": 32,
+				"code": 58288,
+				"name": "arrow-up"
+			},
+			"setIdx": 0,
+			"iconIdx": 944
+		},
+		{
+			"icon": {
+				"paths": [
+					"M384 0l-192 192 320 320-320 320 192 192 512-512z"
+				],
+				"attrs": [],
+				"tags": [
+					"arrow-right",
+					"right",
+					"next"
+				],
+				"defaultCode": 58289,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 945,
+				"order": 22,
+				"prevSize": 32,
+				"code": 58289,
+				"name": "arrow-right"
+			},
+			"setIdx": 0,
+			"iconIdx": 945
+		},
+		{
+			"icon": {
+				"paths": [
 					"M1024 384l-192-192-320 320-320-320-192 192 512 511.998z"
 				],
 				"attrs": [],
