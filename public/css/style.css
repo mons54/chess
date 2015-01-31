@@ -107,6 +107,39 @@ header #header iframe {
     background: #fff;
 }
 
+.content .ranking {
+    height: 536px;
+    margin-bottom: 10px;
+}
+
+.content .ranking-pagination {
+    position: relative;
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.content .ranking-pagination .btn-pagination {
+    position: absolute;
+    top: 8px;
+}
+
+.content .ranking-pagination .btn-pagination-left {
+    left: 10px;
+}
+
+.content .ranking-pagination .btn-pagination-right {
+    right: 10px;
+}
+
+.content .ranking-pagination .form-group {
+    display: inline-block;
+    margin: 3px 0;
+}
+
+.content .ranking-pagination .form-group .form-control {
+    height: 30px;
+}
+
 .content .element section {
     max-height: 225px;
     overflow-x: auto;
