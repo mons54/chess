@@ -4,9 +4,9 @@
 
     angular.module('ranking.controllers', []).
 
-    controller('rankingCtrl', ['$rootScope', '$scope', 'loading',
+    controller('rankingCtrl', ['$rootScope', '$scope',
         
-        function ($rootScope, $scope, loading) {
+        function ($rootScope, $scope) {
             
             $scope.friends = false;
 
@@ -34,7 +34,7 @@
             };
 
             function ranking (page) {
-                loading.show();
+                $scope.loading = true;
                 $rootScope.socket.emit('ranking', {
                     page: page,
                     friends: $scope.friends ? $rootScope.user.friends : false
@@ -61,9 +61,8 @@
                     }
 
                     $scope.ranking = data.ranking;
+                    $scope.loading = false;
                 });
-
-                loading.hide();
             }
 
 
