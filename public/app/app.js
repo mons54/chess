@@ -123,11 +123,11 @@
         }
     ]).
 
-    run(['$rootScope', '$http', 'loading', 'appId', 'lfstmedia',
+    run(['$rootScope', '$http', 'appId', 'lfstmedia',
 
-        function ($rootScope, $http, loading, appId, lfstmedia) {
+        function ($rootScope, $http, appId, lfstmedia) {
             
-            loading.show();
+            $rootScope.loading = true;
 
             $rootScope.user = {
                 uid: null,
@@ -229,7 +229,7 @@
 
                 $rootScope.socket.on('infosUser', function (data) {
                     angular.extend($rootScope.user, data);
-                    loading.hide();
+                    $rootScope.loading = false;
                     ready();
                 });
             }

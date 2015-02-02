@@ -4,6 +4,14 @@
 
     angular.module('components.directives', []).
 
+    directive('loading', [
+        function () {
+            return {
+                templateUrl: '/app/components/templates/loading.html'
+            };
+        }
+    ]).
+
     directive('location', ['$location',
         function ($location) {
             return {

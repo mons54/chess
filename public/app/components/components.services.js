@@ -4,22 +4,6 @@
 
     angular.module('components.services', []).
 
-    factory('loading', ['$rootScope',
-
-        function ($rootScope) {
-            return {
-                show: function () {
-                    $rootScope.loading = true;
-                },
-                hide: function () {
-                    $rootScope.$apply(function () {
-                        $rootScope.loading = false;
-                    });
-                }
-            };
-        }
-    ]).
-
     factory('lfstmedia', function () {
 
         return {
