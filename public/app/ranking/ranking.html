@@ -6,13 +6,12 @@
                     <table class="table table-striped">
                         <tbody>
                             <tr ng-repeat="rank in ranking">
-                                <td class="text-center">{{ rank.position }}</td>
-                                <td><img class="img" ng-src="https://graph.facebook.com/{{rank.uid}}/picture"></td>
-                                <td>
-                                    <span class="user-name">{{ rank.name }}</span>
+                                <td class="position">{{ rank.position }}</td>
+                                <td class="img"><img ng-src="https://graph.facebook.com/{{rank.uid}}/picture"></td>
+                                <td class="name">
+                                    <a href>{{ rank.name }}</a>
                                 </td>
-                                <td class="text-center">{{ rank.points }}</td>
-                                
+                                <td class="points">{{ rank.points }}</td>
                             </tr>
                         </tbody>
                     </table>

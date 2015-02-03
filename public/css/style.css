@@ -114,6 +114,18 @@ header #header iframe {
     margin-bottom: 10px;
 }
 
+.content .ranking tr {
+    height: 67px;
+}
+
+.content .ranking tr .position,
+.content .ranking tr .img,
+.content .ranking tr .points {
+    width: 70px;
+    text-align: center;
+    font-weight: bold;
+}
+
 .content .ranking-pagination {
     position: relative;
     text-align: center;

@@ -61,7 +61,29 @@
                     }
 
                     $scope.ranking = data.ranking;
+                    setUsersName();
                     $scope.loading = false;
+                });
+            }
+
+            function setUsersName () {
+                angular.forEach($scope.ranking, function (value) {
+                    setUserName(value);
+                });
+            }
+
+            function setUserName (data) {
+                FB.api('/' + data.uid + '?fields=name', function (response) {
+                    if (!response || !response.name) {
+                        return;
+                    }
+                    applyUserName(data, response);
+                });
+            }
+
+            function applyUserName (data, response) {
+                $scope.$apply(function () {
+                    data.name = response.name;
                 });
             }
 
@@ -72,10 +94,6 @@
                     return;
                 }
                 ranking(page);
-            }
-
-            function getPages (data) {
-                
             }
 
             ranking();
