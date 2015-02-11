@@ -61,32 +61,40 @@
                     }
 
                     $scope.ranking = data.ranking;
-                    setUsersName();
+                    setRanking();
+                    
                     $scope.loading = false;
                 });
             }
 
-            function setUsersName () {
-                angular.forEach($scope.ranking, function (value) {
-                    setUserName(value);
-                });
-            }
+            function setRanking() {
+                
+                var usersId = [],
+                    usersName;
 
-            function setUserName (data) {
-                FB.api('/' + data.uid + '?fields=name', function (response) {
-                    if (!response || !response.name) {
+                angular.forEach($scope.ranking, function (value) {
+                    usersId.push(value.uid);
+                });
+
+                FB.api('?ids=' + usersId.join() + '&fields=name', function (response) {
+                    if (!response) {
                         return;
                     }
-                    applyUserName(data, response);
+                    $scope.$apply(function () {
+                        setUsersName(response);
+                    });
                 });
             }
 
-            function applyUserName (data, response) {
-                $scope.$apply(function () {
-                    data.name = response.name;
+            function setUsersName (data) {
+
+                angular.forEach($scope.ranking, function (value) {
+                    if (!data[value.uid]) {
+                        return;
+                    }
+                    value.name = data[value.uid].name; 
                 });
             }
-
 
             function setPage (page) {
                 page = parseInt(page);
