@@ -57,12 +57,26 @@
         }
     ]).
 
-    directive('modalShop', ['utils',
-        function (utils) {
+    directive('modalShop', ['$rootScope', 'utils', 'host',
+        function ($rootScope, utils, host) {
             return {
                 templateUrl: '/app/components/templates/modal-shop.html',
                 link: function (scope) {
                     scope.tokens = utils.getTokens();
+
+                    scope.buy = function (token) {
+                        FB.ui({
+                            method: 'pay',
+                            action: 'purchaseitem',
+                            product: 'https://' + host + '/item/' + token.id + '/' + $rootScope.text.tokens + '/' +  $rootScope.text.buyTokens,
+                            quantity: 1
+                        }, function (response) {
+                            if (response.status !== 'completed' || !response.signed_request) {
+                                return;
+                            }
+                            $rootScope.socket.emit('payment', response);
+                        });
+                    };
                 }
             };
         }

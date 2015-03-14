@@ -58,7 +58,7 @@
    "tokens":"Chips",
    "free_tokens":"Free Chips",
    "no_tokens":"You do not have enough chips to play.",
-   "buy_tokens":"Buy chips",
+   "buyTokens":"Buy chips",
    "congratulation":"Congratulation",
    "fanpage":"Fan Page",
    "terms_service":"Terms of Service",

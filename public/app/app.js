@@ -15,6 +15,8 @@
 
     constant('appId', '466889913406471').
 
+    constant('host', 'mons54.parthuisot.fr').
+
     constant('paramsGame', {
         colors: ['white', 'black'],
         times: [300, 600, 1200, 3600, 5400],
@@ -34,26 +36,31 @@
                 getTokens: function () {
                     return [
                         {
+                            id: 5,
                             number: 5000,
                             base: 1000,
                             price: this.convertPrice(20),
                         },
                         {
+                            id: 4,
                             number: 1500,
                             base: 500,
                             price: this.convertPrice(10)
                         },
                         {
+                            id: 3,
                             number: 500,
                             base: 250,
                             price: this.convertPrice(5)
                         },
                         {
+                            id: 2,
                             number: 150,
                             base: 100,
                             price: this.convertPrice(2)
                         },
                         {
+                            id: 1,
                             number: 50,
                             base: 50,
                             price: this.convertPrice(1)

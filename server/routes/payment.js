@@ -5,18 +5,6 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
     var users = mongoose.models.users,
         payments = mongoose.models.payments;
 
-    var items = {}
-
-    for (var item in app.items) {
-        
-        var data = app.items[item];
-        
-        items[data.amount] = {
-            tokens: data.tokens,
-            item: item
-        };
-    }
-
     app.all('/payments', function (req, res) {
 
         var response = 'HTTP/1.0 400 Bad Request';
@@ -80,7 +68,7 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
 
                 var amount = parseInt(data.actions[0].amount);
 
-                if (!items[amount]) {
+                if (!app.itemsAmount[amount]) {
                     res.send(response);
                     return;
                 }
@@ -103,29 +91,29 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
                                 return;
                             }
 
-                            var token = parseInt(_data[0].tokens) + parseInt(items[amount].tokens);
+                            var token = parseInt(_data[0].tokens) + parseInt(app.itemsAmount[amount].tokens);
 
-                            users.update({
-                                uid: data.user.id
-                            }, {
-                                $set: {
-                                    tokens: token
-                                }
-                            }, function (err) {
-
+                            new payments({
+                                id: data.id,
+                                uid: data.user.id,
+                                item: app.itemsAmount[amount].item,
+                                type: 'charge',
+                                status: 'completed',
+                                time: Math.round(new Date() / 1000),
+                            }).save(function (err) {
+                                
                                 if (err) {
                                     res.send(response);
                                     return;
                                 }
 
-                                new payments({
-                                    id: data.id,
-                                    uid: data.user.id,
-                                    item: items[amount].item,
-                                    type: 'charge',
-                                    status: 'completed',
-                                    time: Math.round(new Date() / 1000),
-                                }).save(function (err) {
+                                users.update({
+                                    uid: data.user.id
+                                }, {
+                                    $set: {
+                                        tokens: token
+                                    }
+                                }, function (err) {
 
                                     if (err) {
                                         res.send(response);
@@ -147,13 +135,14 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
                                 return;
                             }
 
-                            var token = parseInt(_data[0].tokens) - parseInt(items[amount].tokens);
+                            var token = parseInt(_data[0].tokens) - parseInt(app.itemsAmount[amount].tokens);
 
-                            users.update({
-                                uid: data.user.id
+                            payments.update({
+                                id: data.id
                             }, {
                                 $set: {
-                                    tokens: token
+                                    type: 'refund',
+                                    status: 'completed'
                                 }
                             }, function (err) {
 
@@ -162,12 +151,11 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
                                     return;
                                 }
 
-                                payments.update({
-                                    id: data.id
+                                users.update({
+                                    uid: data.user.id
                                 }, {
                                     $set: {
-                                        type: 'refund',
-                                        status: 'completed'
+                                        tokens: token
                                     }
                                 }, function (err) {
 
@@ -177,7 +165,6 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
                                     }
 
                                     res.send('HTTP/1.0 200 OK');
-
                                 });
                             });
                         });

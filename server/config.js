@@ -35,4 +35,16 @@ module.exports = function (app, express) {
             amount: 1
         }
     };
+
+    app.itemsAmount = {};
+
+    for (var item in app.items) {
+        
+        var data = app.items[item];
+        
+        app.itemsAmount[data.amount] = {
+            tokens: data.tokens,
+            item: item
+        };
+    }
 };

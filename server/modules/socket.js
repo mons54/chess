@@ -180,6 +180,50 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             }
         });
 
+        socket.on('payment', function (data) {
+
+            if (!checkSocketUid() || !data.signed_request) {
+                return;
+            }
+
+            var request = parseSignedRequest(data.signed_request),
+                item    = app.itemsAmount[parseFloat(request.amount)];
+
+            if (!request || !item) {
+                return;
+            }
+
+            users.findOne({
+                uid: socket.uid
+            }, 'tokens', function (err, data) {
+
+                if (err || !data) {
+                    return;
+                }
+
+                token = parseInt(data.tokens) + parseInt(item.tokens);
+
+                new payments({
+                    id: request.payment_id,
+                    uid: socket.uid,
+                    item: item.item,
+                    type: 'charge',
+                    status: 'completed',
+                    time: request.issued_at,
+                }).save(function (err, res) {
+                    if (err) {
+                        return;
+                    }
+                    users.update({ uid: socket.uid }, { $set: { tokens: token } }, function (err) {
+                        if (err) {
+                            return;
+                        }
+                        initUser();
+                    });
+                });   
+            });
+        });
+
         socket.on('disconnect', function () {
 
             if (checkSocketUid()) {
@@ -490,9 +534,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
             socket.name = data.name;
             Socket.connected[data.uid] = socket.id;
 
-            users.count({
-                uid: data.uid
-            }, function checkUser(err, count) {
+            users.count({ uid: data.uid }, function (err, count) {
 
                 if (err) {
                     disconnectSocket();
@@ -844,6 +886,34 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
 
         function sendHome(name, data) {
             io.sockets.to('home').emit(name, data);
+        }
+
+        function parseSignedRequest(signedRequest) {
+
+            signedRequest = signedRequest.split('.', 2);
+
+            var encodedSig = signedRequest[0],
+                payload = signedRequest[1],
+                sig = base64Decode(encodedSig),
+                data = JSON.parse(base64Decode(payload));
+
+            if (data.algorithm && data.algorithm.toUpperCase() !== 'HMAC-SHA256') {
+                return;
+            }
+
+            var hmac = crypto.createHmac('sha256', app.facebook.secret);
+            hmac.update(payload);
+            var expectedSig = base64Decode(hmac.digest('base64'));
+
+            if (sig !== expectedSig) {
+                return;
+            }
+
+            return data;
+        }
+
+        function base64Decode(data) {
+            return new Buffer(data, 'base64').toString('ascii');
         }
 
         function fn() { };
