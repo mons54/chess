@@ -10,7 +10,8 @@
         'components.directives',
         'home.controllers',
         'home.directives',
-        'ranking.controllers'
+        'ranking.controllers',
+        'trophies.controllers'
     ]).
 
     constant('appId', '466889913406471').
@@ -264,6 +265,11 @@
             when('/ranking', {
                 templateUrl: '/app/ranking/ranking.html',
                 controller: 'rankingCtrl'
+            }).
+
+            when('/trophies', {
+                templateUrl: '/app/trophies/trophies.html',
+                controller: 'trophiesCtrl'
             }).
 
             otherwise({

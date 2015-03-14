@@ -668,7 +668,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
 
         }
 
-        function infosUserRanking(uid, token, freeTime, trophy) {
+        function infosUserRanking(uid, token, freeTime, trophies) {
             users.count({
                 actif: 1,
                 points: {
@@ -691,7 +691,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                     ranking: socket.ranking,
                     tokens: token,
                     freeTime: getFreeTime(freeTime),
-                    trophy: trophy
+                    trophies: trophies
                 });
 
                 socket.emit('listGames', Socket.game.createdGame);
@@ -762,7 +762,9 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 }]
             }, function (err, count) {
 
-                if (err || !count) return;
+                if (err || !count) {
+                    return;
+                }
 
                 if (count >= 1000) {
 
@@ -803,7 +805,9 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 }]
             }, function (err, count) {
 
-                if (err || !count) return;
+                if (err || !count) {
+                    return;
+                }
 
                 if (count >= 500) {
 
@@ -836,7 +840,7 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
                 badge: trophy
             }, function (err, count) {
 
-                if (err || !count) {
+                if (err || count) {
                     return;
                 }
 

@@ -74,107 +74,107 @@
 		"title":"Der Gelbe Zwerg",
 		"text":"Kartenspiel online. Befreien Sie sich von all Ihre Karten und gewinnt die Wette."
 	},
-	"trophy":{
+	"trophies":{
 		"title":"Trophäe",
 		"win":"Sie gewinnen eine Trophäe",
 		"content":{
 			"1":{
-				"_class":"_1_game",
+				"class":"_1_game",
 				"title":"Neuling",
 				"description":"Spielen Sie 1 Spiel"
 			},
 			"2":{
-				"_class":"_100_game",
+				"class":"_100_game",
 				"title":"Anfänger",
 				"description":"Spielen Sie 100 Spiele"
 			},
 			"3":{
-				"_class":"_500_game",
+				"class":"_500_game",
 				"title":"Zwischen-",
 				"description":"Spielen Sie 500 Spiele"
 			},
 			"4":{
-				"_class":"_1000_game",
+				"class":"_1000_game",
 				"title":"fortgeschritten",
 				"description":"Spielen Sie 1000 Spiele"
 			},
 			"5":{
-				"_class":"_5000_game",
+				"class":"_5000_game",
 				"title":"Experte",
 				"description":"Spielen Sie 5000 Spiele"
 			},
 			"6":{
-				"_class":"_1_wins",
+				"class":"_1_wins",
 				"title":"Meister Schokolade",
 				"description":"Gewinnen Sie 1 Spiel"
 			},
 			"7":{
-				"_class":"_50_wins",
+				"class":"_50_wins",
 				"title":"Meister Bronze",
 				"description":"Gewinnen Sie 50 Spiele"
 			},
 			"8":{
-				"_class":"_250_wins",
+				"class":"_250_wins",
 				"title":"Meister Bronze",
 				"description":"Gewinnen Sie 250 Spiele"
 			},
 			"9":{
-				"_class":"_500_wins",
+				"class":"_500_wins",
 				"title":"Meister Gold",
 				"description":"Gewinnen Sie 500 Spiele"
 			},
 			"10":{
-				"_class":"_2000_wins",
+				"class":"_2000_wins",
 				"title":"Meister Platin",
 				"description":"Gewinnen Sie 2000 Spiele"
 			},
 			"11":{
-				"_class":"_5_games_day",
+				"class":"_5_games_day",
 				"title":"Amateur",
 				"description":"Spielen Sie 5 Spiele an einem Tag"
 			},
 			"12":{
-				"_class":"_10_games_day",
+				"class":"_10_games_day",
 				"title":"Enthusiast",
 				"description":"Spielen Sie 10 Spiele an einem Tag"
 			},
 			"13":{
-				"_class":"_25_games_day",
+				"class":"_25_games_day",
 				"title":"Fan",
 				"description":"Spielen Sie 25 Spiele an einem Tag"
 			},
 			"14":{
-				"_class":"_50_games_day",
+				"class":"_50_games_day",
 				"title":"Super Fan",
 				"description":"Spielen Sie 50 Spiele an einem Tag"
 			},
 			"15":{
-				"_class":"_100_games_day",
+				"class":"_100_games_day",
 				"title":"Süchtige",
 				"description":"Spielen Sie 100 Spiele an einem Tag"
 			},
 			"16":{
-				"_class":"_3_wins_cons",
+				"class":"_3_wins_cons",
 				"title":"Gewinner",
 				"description":"Gewinne 3 Spiele in Folge"
 			},
 			"17":{
-				"_class":"_5_wins_cons",
+				"class":"_5_wins_cons",
 				"title":"Eroberer",
 				"description":"Gewinne 5 Spiele in Folge"
 			},
 			"18":{
-				"_class":"_10_wins_cons",
+				"class":"_10_wins_cons",
 				"title":"Killer",
 				"description":"Gewinne 10 Spiele in Folge"
 			},
 			"19":{
-				"_class":"_20_wins_cons",
+				"class":"_20_wins_cons",
 				"title":"unbesiegbar",
 				"description":"Gewinne 20 Spiele in Folge"
 			},
 			"20":{
-				"_class":"_3_loses_cons",
+				"class":"_3_loses_cons",
 				"title":"Verlierer",
 				"description":"Lose 3 Spiele in Folge"
 			}

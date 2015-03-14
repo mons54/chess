@@ -22,7 +22,9 @@
             class="element btn btn-default">
         <span class="icon-right icon-ranking"></span>
     </button>
-    <button class="element btn btn-default">
+    <button ng-show="isCurrentRoute('/trophies')"
+            location="trophies"
+            class="element btn btn-default">
         <span class="icon-right icon-points"></span>
     </button>
     <button apprequests class="element btn btn-default">

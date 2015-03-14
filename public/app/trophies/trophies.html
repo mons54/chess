@@ -1,0 +1,15 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="element trophies">
+                <div ng-repeat="trophy in trophies" class="trophy trophy-{{ trophy.id }} {{ trophy.class }}">
+                    <div class="description description-{{ trophy.id }}">
+                        <h4>{{ trophy.title }}</h4>
+                        <p>{{ trophy.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2" col-right></div>
+    </div>
+</div>

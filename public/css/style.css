@@ -286,6 +286,98 @@ header #header iframe {
     padding-top: 5px;
 }
 
+/********** Trophy ********/
+
+.content .element.trophies {
+    padding: 10px;
+    background: #004F80;
+}
+
+.trophy {
+    display: inline-block;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    margin: 10px;
+}
+
+.trophy .description {
+    display: none;
+    position: absolute;
+    color: #fff;
+    left: 15px;
+    top: -135px;
+    height: 200px;
+    width: 200px;
+    background: url(../img/trophees/description.png) no-repeat;
+    z-index: 10;
+}
+
+.trophy .description h4 {
+    text-align: center;
+    margin: 40px 20px 10px 20px;
+    font-size: 15px;
+}
+
+.trophy .description p {
+    text-align: center;
+    margin: 0 20px;
+}
+
+.trophy.no-trophy { 
+    background-image: url(../img/trophees/no-trophee.png); 
+}
+
+.trophy._1_game { background-image: url(../img/trophees/_1_game.png); }
+.trophy._100_game { background-image: url(../img/trophees/_100_game.png); }
+.trophy._500_game { background-image: url(../img/trophees/_500_game.png); }
+.trophy._1000_game { background-image: url(../img/trophees/_1000_game.png); }
+.trophy._5000_game { background-image: url(../img/trophees/_5000_game.png); }
+
+.trophy._1_wins { background-image: url(../img/trophees/_1_wins.png); }
+.trophy._50_wins { background-image: url(../img/trophees/_50_wins.png); }
+.trophy._250_wins { background-image: url(../img/trophees/_250_wins.png); }
+.trophy._500_wins { background-image: url(../img/trophees/_500_wins.png); }
+.trophy._2000_wins { background-image: url(../img/trophees/_2000_wins.png); }
+
+.trophy._5_games_day { background-image: url(../img/trophees/_5_games_day.png); }
+.trophy._10_games_day { background-image: url(../img/trophees/_10_games_day.png) ; }
+.trophy._25_games_day { background-image: url(../img/trophees/_25_games_day.png); }
+.trophy._50_games_day { background-image: url(../img/trophees/_50_games_day.png) ; }
+.trophy._100_games_day { background-image: url(../img/trophees/_100_games_day.png); }
+
+.trophy._3_wins_cons { background-image: url(../img/trophees/_3_wins_cons.png); }
+.trophy._5_wins_cons { background-image: url(../img/trophees/_5_wins_cons.png); }
+.trophy._10_wins_cons { background-image: url(../img/trophees/_10_wins_cons.png); }
+.trophy._20_wins_cons { background-image: url(../img/trophees/_20_wins_cons.png) ; }
+.trophy._3_loses_cons { background-image: url(../img/trophees/_3_loses_cons.png); }
+
+.trophy-1:hover > .description-1 { display: block;}
+.trophy-2:hover > .description-2 { display: block; }
+.trophy-3:hover > .description-3 { display: block; }
+.trophy-4:hover > .description-4 { display: block; }
+.trophy-5:hover > .description-5 { display: block; }
+
+.trophy-6:hover > .description-6 { display:block;}
+.trophy-7:hover > .description-7 { display:block; }
+.trophy-8:hover > .description-8 { display:block; }
+.trophy-9:hover > .description-9 { display:block; }
+.trophy-10:hover > .description-10 { display:block; }
+
+.trophy-11:hover > .description-11 { display:block;}
+.trophy-12:hover > .description-12 { display:block; }
+.trophy-13:hover > .description-13 { display:block; }
+.trophy-14:hover > .description-14 { display:block; }
+.trophy-15:hover > .description-15 { display:block; }
+
+.trophy-16:hover > .description-16 { display:block;}
+.trophy-17:hover > .description-17 { display:block; }
+.trophy-18:hover > .description-18 { display:block; }
+.trophy-19:hover > .description-19 { display:block; }
+.trophy-20:hover > .description-20 { display:block; }
+
 .table-shop td.icon {
     width: 50px;
 }
