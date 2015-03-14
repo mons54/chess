@@ -286,6 +286,35 @@ header #header iframe {
     padding-top: 5px;
 }
 
+.table-shop td.icon {
+    width: 50px;
+}
+
+.table-shop td.icon > span {
+    font-size: 32px;
+}
+
+.table-shop td div.total {
+    font-size: 20px;
+}
+
+.table-shop td div.total .number  {
+    color: #930;
+}
+
+.table-shop td div.base {
+    color: #555555;
+    text-decoration: line-through; 
+}
+
+.table-shop td.buy {
+    text-align: right;
+}
+
+.table-shop td.buy .btn {
+    width: 150px;
+}
+
 footer {
     position: relative;
     width: 100%;

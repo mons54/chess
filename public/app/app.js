@@ -32,33 +32,33 @@
                     return (value.toString().length == 1 ? '0' : '') + value;
                 },
                 getTokens: function () {
-                    return {
-                        5: {
+                    return [
+                        {
                             number: 5000,
                             base: 1000,
                             price: this.convertPrice(20),
                         },
-                        4: {
+                        {
                             number: 1500,
                             base: 500,
                             price: this.convertPrice(10)
                         },
-                        3: {
+                        {
                             number: 500,
                             base: 250,
                             price: this.convertPrice(5)
                         },
-                        2: {
+                        {
                             number: 150,
                             base: 100,
                             price: this.convertPrice(2)
                         },
-                        1: {
+                        {
                             number: 50,
                             base: 50,
                             price: this.convertPrice(1)
                         }
-                    };
+                    ];
 
 
                 },

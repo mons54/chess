@@ -8,10 +8,25 @@
             <h4 class="modal-title" id="myModalLabel">{{ text.shop }}</h4>
         </div>
         <div class="modal-body">
-            <table class="list-user table table-striped">
+            <table class="list-user table table-striped table-shop">
                 <tbody>
                     <tr ng-repeat="token in tokens">
-                        <td>{{ token.number }}</td>
+                        <td class="icon">
+                            <span class="icon-king"></span>
+                        </td>
+                        <td>
+                            <div class="total">
+                                <span class="number">{{ token.number }}</span>
+                                <span>{{ text.tokens }}</span>
+                            </div>
+                            <div class="base">
+                                <span>{{ token.base }}</span>
+                                <span>{{ text.tokens }}</span>
+                            </div>
+                        </td>
+                        <td class="buy">
+                            <button class="btn btn-primary">{{ token.price }}</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
