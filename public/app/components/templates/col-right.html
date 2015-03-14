@@ -12,11 +12,13 @@
             class="element btn btn-default">
         <span class="icon-right icon-shop"></span>
     </button>
-    <button location=""
+    <button ng-show="isCurrentRoute('/')"
+            location=""
             class="element btn btn-default">
         <span class="icon-right icon-home"></span>
     </button>
-    <button location="ranking"
+    <button ng-show="isCurrentRoute('/ranking')"
+            location="ranking"
             class="element btn btn-default">
         <span class="icon-right icon-ranking"></span>
     </button>

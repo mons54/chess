@@ -99,10 +99,15 @@
         }
     ]).
 
-    directive('colRight', [
-        function () {
+    directive('colRight', ['$route',
+        function ($route) {
             return {
-                templateUrl: '/app/components/templates/col-right.html'
+                templateUrl: '/app/components/templates/col-right.html',
+                link: function (scope) {
+                    scope.isCurrentRoute = function (path) {
+                        return !$route.current.regexp.test(path);
+                    };
+                }
             };
         }
     ]);
