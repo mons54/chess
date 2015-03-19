@@ -4,8 +4,11 @@
             <div class="element trophies">
                 <div ng-repeat="trophy in trophies" class="trophy trophy-{{ trophy.id }} {{ trophy.class }}">
                     <div class="description description-{{ trophy.id }}">
-                        <h4>{{ trophy.title }}</h4>
-                        <p>{{ trophy.description }}</p>
+                        <span class="icon-bubble"></span>
+                        <div class="text">
+                            <h4>{{ trophy.title }}</h4>
+                            <p>{{ trophy.description }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

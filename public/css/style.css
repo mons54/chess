@@ -286,11 +286,11 @@ header #header iframe {
     padding-top: 5px;
 }
 
-/********** Trophy ********/
+/********** Trophies ********/
 
 .content .element.trophies {
     padding: 10px;
-    background: #004F80;
+    background: #9BB0BD;
 }
 
 .trophy {
@@ -306,19 +306,30 @@ header #header iframe {
 .trophy .description {
     display: none;
     position: absolute;
-    color: #fff;
-    left: 15px;
-    top: -135px;
+    color: #000;
+    left: 35px;
+    top: -140px;
     height: 200px;
     width: 200px;
-    background: url(../img/trophees/description.png) no-repeat;
     z-index: 10;
+}
+
+.trophy .description .icon-bubble {
+    font-size: 200px;
+    position: absolute;
+    color: #fff;
+    text-shadow: 0 0 10px #000;
+}
+
+.trophy .description .text {
+    position: relative;
 }
 
 .trophy .description h4 {
     text-align: center;
-    margin: 40px 20px 10px 20px;
+    margin: 60px 20px 20px 20px;
     font-size: 15px;
+    font-weight: bold;
 }
 
 .trophy .description p {
@@ -343,40 +354,39 @@ header #header iframe {
 .trophy._2000_wins { background-image: url(../img/trophees/_2000_wins.png); }
 
 .trophy._5_games_day { background-image: url(../img/trophees/_5_games_day.png); }
-.trophy._10_games_day { background-image: url(../img/trophees/_10_games_day.png) ; }
+.trophy._10_games_day { background-image: url(../img/trophees/_10_games_day.png); }
 .trophy._25_games_day { background-image: url(../img/trophees/_25_games_day.png); }
-.trophy._50_games_day { background-image: url(../img/trophees/_50_games_day.png) ; }
+.trophy._50_games_day { background-image: url(../img/trophees/_50_games_day.png); }
 .trophy._100_games_day { background-image: url(../img/trophees/_100_games_day.png); }
 
 .trophy._3_wins_cons { background-image: url(../img/trophees/_3_wins_cons.png); }
 .trophy._5_wins_cons { background-image: url(../img/trophees/_5_wins_cons.png); }
 .trophy._10_wins_cons { background-image: url(../img/trophees/_10_wins_cons.png); }
-.trophy._20_wins_cons { background-image: url(../img/trophees/_20_wins_cons.png) ; }
+.trophy._20_wins_cons { background-image: url(../img/trophees/_20_wins_cons.png); }
 .trophy._3_loses_cons { background-image: url(../img/trophees/_3_loses_cons.png); }
 
-.trophy-1:hover > .description-1 { display: block;}
-.trophy-2:hover > .description-2 { display: block; }
-.trophy-3:hover > .description-3 { display: block; }
-.trophy-4:hover > .description-4 { display: block; }
-.trophy-5:hover > .description-5 { display: block; }
-
-.trophy-6:hover > .description-6 { display:block;}
-.trophy-7:hover > .description-7 { display:block; }
-.trophy-8:hover > .description-8 { display:block; }
-.trophy-9:hover > .description-9 { display:block; }
-.trophy-10:hover > .description-10 { display:block; }
-
-.trophy-11:hover > .description-11 { display:block;}
-.trophy-12:hover > .description-12 { display:block; }
-.trophy-13:hover > .description-13 { display:block; }
-.trophy-14:hover > .description-14 { display:block; }
-.trophy-15:hover > .description-15 { display:block; }
-
-.trophy-16:hover > .description-16 { display:block;}
-.trophy-17:hover > .description-17 { display:block; }
-.trophy-18:hover > .description-18 { display:block; }
-.trophy-19:hover > .description-19 { display:block; }
-.trophy-20:hover > .description-20 { display:block; }
+.trophy-1:hover  > .description-1,
+.trophy-2:hover  > .description-2,
+.trophy-3:hover  > .description-3,
+.trophy-4:hover  > .description-4,
+.trophy-5:hover  > .description-5,
+.trophy-6:hover  > .description-6,
+.trophy-7:hover  > .description-7,
+.trophy-8:hover  > .description-8,
+.trophy-9:hover  > .description-9,
+.trophy-10:hover > .description-10,
+.trophy-11:hover > .description-11,
+.trophy-12:hover > .description-12,
+.trophy-13:hover > .description-13,
+.trophy-14:hover > .description-14,
+.trophy-15:hover > .description-15,
+.trophy-16:hover > .description-16,
+.trophy-17:hover > .description-17,
+.trophy-18:hover > .description-18,
+.trophy-19:hover > .description-19,
+.trophy-20:hover > .description-20 { 
+    display: block; 
+}
 
 .table-shop td.icon {
     width: 50px;
