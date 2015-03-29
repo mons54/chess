@@ -1,252 +1,4 @@
 var game = {
-    jeu: {
-        resultat: {
-            vainqueur: "",
-            nom: ""
-        },
-        blanc: {
-            roi: {
-                position: 'e1',
-                deplacement_interdit: ""
-            },
-            pieces: 16
-        },
-        noir: {
-            roi: {
-                position: 'e8',
-                deplacement_interdit: ""
-            },
-            pieces: 16
-        },
-        terminer: 0,
-        tour: 'blanc',
-        position: {
-            e1: {
-                nom: 'roi',
-                couleur: 'blanc',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            e8: {
-                nom: 'roi',
-                couleur: 'noir',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            d1: {
-                nom: 'reine',
-                couleur: 'blanc',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            d8: {
-                nom: 'reine',
-                couleur: 'noir',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            c1: {
-                nom: 'fou',
-                couleur: 'blanc',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            f1: {
-                nom: 'fou',
-                couleur: 'blanc',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            c8: {
-                nom: 'fou',
-                couleur: 'noir',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            f8: {
-                nom: 'fou',
-                couleur: 'noir',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            b1: {
-                nom: 'cavalier',
-                couleur: 'blanc',
-                deplacement: 'a3.c3',
-                capture: '',
-                move: 0
-            },
-            g1: {
-                nom: 'cavalier',
-                couleur: 'blanc',
-                deplacement: 'f3.h3',
-                capture: '',
-                move: 0
-            },
-            b8: {
-                nom: 'cavalier',
-                couleur: 'noir',
-                deplacement: 'a6.c6',
-                capture: '',
-                move: 0
-            },
-            g8: {
-                nom: 'cavalier',
-                couleur: 'noir',
-                deplacement: 'f6.h6',
-                capture: '',
-                move: 0
-            },
-            a1: {
-                nom: 'tour',
-                couleur: 'blanc',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            h1: {
-                nom: 'tour',
-                couleur: 'blanc',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            a8: {
-                nom: 'tour',
-                couleur: 'noir',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            h8: {
-                nom: 'tour',
-                couleur: 'noir',
-                deplacement: '',
-                capture: '',
-                move: 0
-            },
-            a2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'a3.a4',
-                capture: '',
-                move: 0
-            },
-            b2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'b3.b4',
-                capture: '',
-                move: 0
-            },
-            c2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'c3.c4',
-                capture: '',
-                move: 0
-            },
-            d2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'd3.d4',
-                capture: '',
-                move: 0
-            },
-            e2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'e3.e4',
-                capture: '',
-                move: 0
-            },
-            f2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'f3.f4',
-                capture: '',
-                move: 0
-            },
-            g2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'g3.g4',
-                capture: '',
-                move: 0
-            },
-            h2: {
-                nom: 'pion',
-                couleur: 'blanc',
-                deplacement: 'h3.h4',
-                capture: '',
-                move: 0
-            },
-            a7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'a6.a5',
-                capture: '',
-                move: 0
-            },
-            b7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'b6.b5',
-                capture: '',
-                move: 0
-            },
-            c7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'c6.c5',
-                capture: '',
-                move: 0
-            },
-            d7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'd6.d5',
-                capture: '',
-                move: 0
-            },
-            e7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'e6.e5',
-                capture: '',
-                move: 0
-            },
-            f7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'f6.f5',
-                capture: '',
-                move: 0
-            },
-            g7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'g6.g5',
-                capture: '',
-                move: 0
-            },
-            h7: {
-                nom: 'pion',
-                couleur: 'noir',
-                deplacement: 'h6.h5',
-                capture: '',
-                move: 0
-            }
-        }
-    },
     options: {
         stop: false,
         blanc: {
@@ -266,9 +18,256 @@ var game = {
             piece_reste: ''
         }
     },
-    newGame: function (jeu) {
+    newGame: function () {
         this.proposer_nul = 0;
-        this.jeu = jeu;
+        this.jeu = {
+            resultat: {
+                vainqueur: "",
+                nom: ""
+            },
+            blanc: {
+                roi: {
+                    position: 'e1',
+                    deplacement_interdit: ""
+                },
+                pieces: 16
+            },
+            noir: {
+                roi: {
+                    position: 'e8',
+                    deplacement_interdit: ""
+                },
+                pieces: 16
+            },
+            terminer: 0,
+            tour: 'blanc',
+            position: {
+                e1: {
+                    nom: 'roi',
+                    couleur: 'blanc',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                e8: {
+                    nom: 'roi',
+                    couleur: 'noir',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                d1: {
+                    nom: 'reine',
+                    couleur: 'blanc',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                d8: {
+                    nom: 'reine',
+                    couleur: 'noir',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                c1: {
+                    nom: 'fou',
+                    couleur: 'blanc',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                f1: {
+                    nom: 'fou',
+                    couleur: 'blanc',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                c8: {
+                    nom: 'fou',
+                    couleur: 'noir',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                f8: {
+                    nom: 'fou',
+                    couleur: 'noir',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                b1: {
+                    nom: 'cavalier',
+                    couleur: 'blanc',
+                    deplacement: 'a3.c3',
+                    capture: '',
+                    move: 0
+                },
+                g1: {
+                    nom: 'cavalier',
+                    couleur: 'blanc',
+                    deplacement: 'f3.h3',
+                    capture: '',
+                    move: 0
+                },
+                b8: {
+                    nom: 'cavalier',
+                    couleur: 'noir',
+                    deplacement: 'a6.c6',
+                    capture: '',
+                    move: 0
+                },
+                g8: {
+                    nom: 'cavalier',
+                    couleur: 'noir',
+                    deplacement: 'f6.h6',
+                    capture: '',
+                    move: 0
+                },
+                a1: {
+                    nom: 'tour',
+                    couleur: 'blanc',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                h1: {
+                    nom: 'tour',
+                    couleur: 'blanc',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                a8: {
+                    nom: 'tour',
+                    couleur: 'noir',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                h8: {
+                    nom: 'tour',
+                    couleur: 'noir',
+                    deplacement: '',
+                    capture: '',
+                    move: 0
+                },
+                a2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'a3.a4',
+                    capture: '',
+                    move: 0
+                },
+                b2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'b3.b4',
+                    capture: '',
+                    move: 0
+                },
+                c2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'c3.c4',
+                    capture: '',
+                    move: 0
+                },
+                d2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'd3.d4',
+                    capture: '',
+                    move: 0
+                },
+                e2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'e3.e4',
+                    capture: '',
+                    move: 0
+                },
+                f2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'f3.f4',
+                    capture: '',
+                    move: 0
+                },
+                g2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'g3.g4',
+                    capture: '',
+                    move: 0
+                },
+                h2: {
+                    nom: 'pion',
+                    couleur: 'blanc',
+                    deplacement: 'h3.h4',
+                    capture: '',
+                    move: 0
+                },
+                a7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'a6.a5',
+                    capture: '',
+                    move: 0
+                },
+                b7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'b6.b5',
+                    capture: '',
+                    move: 0
+                },
+                c7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'c6.c5',
+                    capture: '',
+                    move: 0
+                },
+                d7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'd6.d5',
+                    capture: '',
+                    move: 0
+                },
+                e7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'e6.e5',
+                    capture: '',
+                    move: 0
+                },
+                f7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'f6.f5',
+                    capture: '',
+                    move: 0
+                },
+                g7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'g6.g5',
+                    capture: '',
+                    move: 0
+                },
+                h7: {
+                    nom: 'pion',
+                    couleur: 'noir',
+                    deplacement: 'h6.h5',
+                    capture: '',
+                    move: 0
+                }
+            }
+        };
         this.jeu._50_coup = 0;
     },
     _load_game: function (data) {
@@ -1488,7 +1487,16 @@ global.dirname = __dirname + '/..';
 var moduleGame = require(__dirname + '/game/game')(),
     assert = require(__dirname + '/assert')();
 
-run();
+game.newGame();
+moduleGame.newGame();
+
+setInterval(function() {
+    var test = 1;
+    game.newGame();
+    moduleGame.newGame();
+    run();
+    console.log(Date.now());
+}, 1000);
 
 
 function run() {
@@ -1502,7 +1510,6 @@ function run() {
 
     moduleGame.move(nextMove.start, nextMove.end, nextMove.promotion);
 
-    game.newGame(game.jeu);
     game._load_game({
         pion: game.jeu.position[nextMove.start],
         depart: nextMove.start, 
@@ -1515,9 +1522,8 @@ function run() {
         newGame = assert.setNewGame(JSON.parse(JSON.stringify(moduleGame.game))),
         result  = assert.checkGame(oldGame, newGame);
 
-    console.log(result);
-
     if (result !== true) {
+        console.log(result);
         return;
     }
 
