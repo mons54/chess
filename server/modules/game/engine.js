@@ -331,6 +331,10 @@ Engine.prototype.setMovePiecesKing = function () {
 
             this.setMovePiece();
 
+            if (this.game.turn == this.piece.color && (this.piece.deplace.length > 0 || this.piece.capture.length > 0)) {
+                this.pat = false;
+            }
+
             delete this.piece.position;
 
         } else if (this.pat == true && this.game.turn == this.piece.color && (this.piece.deplace.length || this.piece.capture.length)) {
