@@ -966,7 +966,7 @@ Engine.prototype.isCastling = function (piece, end) {
     return true;
 };
 
-Engine.prototype.getPawnPromotion = function (name, color) {
+Engine.prototype.getPawnPromotion = function (color, name) {
     if (!this.inArray(name, ['queen', 'rook', 'bishop', 'knight'])) {
         name = 'queen';
     }
