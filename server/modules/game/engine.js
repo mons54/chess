@@ -23,6 +23,10 @@ Engine.prototype.init = function (start, end, promotion) {
         return;
     }
 
+    if (this.isPawnPromotion(pieceStart, end)) {
+        pieceStart = this.getPawnPromotion(pieceStart.color, promotion);
+    }
+
     if (typeMove == 'capture') {
         if (!pieceEnd) {
             this.deleteInPassing(end);
@@ -37,10 +41,6 @@ Engine.prototype.init = function (start, end, promotion) {
 
         if (this.isCastling(pieceStart, end)) {
             this.castling(end);
-        }
-
-        if (this.isPawnPromotion(pieceStart, end)) {
-            pieceStart = this.getPawnPromotion(pieceStart.color, promotion);
         }
     }
 
