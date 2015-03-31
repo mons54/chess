@@ -1,12 +1,9 @@
-module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
-
-    moduleGame = require(dirname + '/server/modules/game')(moduleSocket);
-    moduleUtils = require(dirname + '/server/modules/utils');
+module.exports = moduleSocket = function (io, mongoose) {
 
     moduleSocket.connected = {};
 
-    moduleSocket.listGames = function () {
-        this.sendHome('listGames', moduleGame.createdGame);
+    moduleSocket.listGames = function (createdGame) {
+        moduleSocket.sendHome('listGames', createdGame);
     };
 
     moduleSocket.sendHome = function (name, data) {
@@ -107,7 +104,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
             request = moduleSocket.getRequestRankingWithoutUser(friends);
         }
 
-        users.count(request, function (err, count) {
+        mongoose.models.users.count(request, function (err, count) {
 
             if (err) {
                 return;
@@ -134,7 +131,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
                 limit = limit - 1;
             }
 
-            users.find(request).sort({
+            mongoose.models.users.find(request).sort({
                 points: -1
             }).skip(offset).limit(limit).hint({
                 points: 1
@@ -170,7 +167,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
             };
         }
 
-        users.count(request, function (err, count) {
+        mongoose.models.users.count(request, function (err, count) {
 
             var position = count + 1,
                 request = {
@@ -188,7 +185,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
                 };
             }
 
-            users.count(request, function (err, count) {
+            mongoose.models.users.count(request, function (err, count) {
 
                 var current = 0,
                     result = [],
@@ -249,7 +246,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
                 }
 
                 socket.emit('ranking', {
-                    ranking: data,
+                    ranking: ranking,
                     pages: moduleSocket.getPage(total, offset, limit)
                 });
             });
@@ -354,7 +351,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
         socket.name = data.name;
         moduleSocket.connected[data.uid] = socket.id;
 
-        users.count({ uid: data.uid }, function (err, count) {
+        mongoose.models.users.count({ uid: data.uid }, function (err, count) {
 
             if (err) {
                 moduleSocket.disconnectSocket(socket);
@@ -363,7 +360,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
 
             if (count == 0) {
 
-                var user = new users({
+                var user = new mongoose.models.users({
                     uid: data.uid,
                     points: 1500,
                     tokens: 17,
@@ -392,7 +389,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
 
         var uid = socket.uid ? socket.uid : 0;
 
-        users.findOne({
+        mongoose.models.users.findOne({
             uid: uid
         }, function (err, data) {
 
@@ -428,7 +425,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
 
     moduleSocket.infosUserTokens = function (socket, uid, data) {
 
-        freeTokens.findOne({
+        mongoose.models.freeTokens.findOne({
             uid: uid
         }, 'time', function (err, res) {
             
@@ -451,7 +448,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
             if (!res || !res.time) {
                 token += 3;
                 freeTime = time;
-                var freeToken = new freeTokens({
+                var freeToken = new mongoose.models.freeTokens({
                     uid: uid
                 });
                 freeToken.time = time;
@@ -472,7 +469,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
 
     moduleSocket.infosUserBadges = function(socket, uid, token, freeTime) {
 
-        badges.find({
+        mongoose.models.badges.find({
             uid: uid
         }, function (err, data) {
             if (err) {
@@ -485,7 +482,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
     };
 
     moduleSocket.infosUserRanking = function (socket, uid, token, freeTime, trophies) {
-        users.count({
+        mongoose.models.users.count({
             actif: 1,
             points: {
                 $gt: socket.points
@@ -515,7 +512,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
     };
 
     moduleSocket.updateTokens = function (uid, time) {
-        freeTokens.update({
+        mongoose.models.freeTokens.update({
             uid: uid
         }, {
             $set: {
@@ -525,7 +522,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
     };
 
     moduleSocket.updateUserTokens = function (uid, token) {
-        users.update({
+        mongoose.models.users.update({
             uid: uid
         }, {
             $set: {
@@ -535,7 +532,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
     };
 
     moduleSocket.updateUserSponsorship = function (uid, sponsorship) {
-        users.update({
+        mongoose.models.users.update({
             uid: uid
         }, {
             $set: {
@@ -546,7 +543,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
 
     moduleSocket.checkTrophy = function (uid) {
 
-        games.count({
+        mongoose.models.games.count({
             $or: [{
                 blanc: uid
             }, {
@@ -575,7 +572,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
             }
         });
 
-        games.count({
+        mongoose.models.games.count({
             "$or": [{
                 "$and": [{
                     "noir": uid,
@@ -613,7 +610,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
 
     moduleSocket.setTrophy = function (uid, trophy) {
 
-        badges.count({
+        mongoose.models.badges.count({
             uid: uid,
             badge: trophy
         }, function (err, count) {
@@ -622,7 +619,7 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
                 return;
             }
 
-            var badge = new badges({
+            var badge = new mongoose.models.badges({
                 uid: uid
             });
             badge.badge = trophy;
@@ -636,235 +633,5 @@ module.exports = moduleSocket = function (app, io, mongoose, fbgraph, crypto) {
         });
     };
 
-    var users = mongoose.models.users,
-        games = mongoose.models.games,
-        badges = mongoose.models.badges,
-        freeTokens = mongoose.models.freeTokens,
-        payments = mongoose.models.payments;
-
-    io.on('connection', function (socket) {
-
-        socket.on('init', function (data) {
-
-            if (!data.uid || !data.accessToken) {
-                moduleSocket.disconnectSocket(socket);
-                return;
-            }
-
-            fbgraph.post('/' + data.uid + '?access_token=' + data.accessToken, function(err, res) {
-                if (err || !res.success) {
-                    moduleSocket.disconnectSocket(socket);
-                    return;
-                }
-                moduleSocket.init(socket, data, err, res);
-            });
-        });
-
-        socket.on('initUser', function () {
-            moduleSocket.initUser(socket);
-        });
-
-        socket.on('createGame', function (data) {
-
-            if (!data || !moduleSocket.checkSocketUid(socket) || !moduleGame.create(socket, data)) {
-                return;
-            }
-
-            moduleSocket.listGames();
-        });
-
-        socket.on('removeGame', function () {
-            if (!moduleSocket.checkSocketUid(socket)) {
-                return;
-            }
-            
-            moduleGame.deleteCreatedGame(socket.uid);
-        });
-
-        socket.on('startGame', function (uid) {
-            console.log(uid);
-        });
-
-        socket.on('challenge', function (data) {
-
-            var socketOpponent = moduleSocket.getSocket(data.uid),
-                color = data.color,
-                time = moduleGame.getTime(data.time);
-
-            if (!moduleSocket.checkSocketUid(socket) || !socketOpponent || !moduleGame.checkColor(color) || !moduleGame.checkColor(color)) {
-                return;
-            }
-
-            moduleSocket.setChallenges(socketOpponent, socket.uid, {
-                create: false,
-                name: socket.name,
-                points: socket.points,
-                ranking: socket.ranking,
-                color: color,
-                time: time
-            });
-
-            moduleSocket.setChallenges(socket, data.uid, {
-                create: true,
-                name: socketOpponent.name,
-                points: socketOpponent.points,
-                ranking: socketOpponent.ranking,
-                color: color,
-                time: time
-            });
-
-            socketOpponent.emit('challenges', socketOpponent.challenges);
-            socket.emit('challenges', socket.challenges);
-        });
-
-        socket.on('removeChallenge', function (uid) {
-            if (moduleSocket.checkSocketUid(socket)) {
-                moduleSocket.deleteChallenge(moduleSocket.getSocket(uid), socket.uid);
-            }
-            moduleSocket.deleteChallenge(socket, uid);
-        });
-
-        socket.on('newGame', function (data) {
-            var game = moduleGame.start(data.white, data.black, data.time);
-
-            socket.gid = game.id;
-
-            socket.emit('game', game);
-        });
-
-        socket.on('move', function (data) {
-
-            if (!socket.gid) {
-                return;
-            }
-
-            var game = moduleGame.move(socket.gid, data.start, data.end, null);
-            
-            socket.emit('game', game);
-        });
-
-        socket.on('leaveHome', function () {
-
-            if (!moduleSocket.checkSocketUid(socket)) {
-                return;
-            }
-
-            socket.leave('home');
-
-            moduleSocket.listChallengers();
-
-            moduleGame.deleteCreatedGame(socket.uid);
-
-            moduleSocket.deleteChallenges(socket);
-        });
-
-        socket.on('ranking', function (data) {
-            if (!moduleSocket.checkSocketUid(socket)) {
-                return;
-            }
-
-            var uid = socket.uid,
-                limit = 8,
-                page = parseInt(data.page),
-                friends = data.friends;
-
-            if (page) {
-                if (page <= 0) {
-                    page = 1;
-                }
-                moduleSocket.initRanking(socket, friends, page, limit, false);
-            } else {
-                var points = socket.points,
-                    request = {
-                        actif: 1,
-                        points: {
-                            $gt: points
-                        }
-                    };
-
-                if (friends) {
-                    request = {
-                        actif: 1,
-                        uid: {
-                            $in: friends
-                        },
-                        points: {
-                            $gt: points
-                        }
-                    };
-                }
-
-                users.count(request, function (err, count) {
-
-                    if (err) {
-                        return;
-                    }
-
-                    count++;
-
-                    var page = Math.ceil(count / limit);
-
-                    if (page <= 0) {
-                        page = 1;
-                    }
-
-                    moduleSocket.initRanking(socket, friends, page, limit, true);
-                });
-            }
-        });
-
-        socket.on('payment', function (data) {
-
-            if (!moduleSocket.checkSocketUid(socket) || !data.signed_request) {
-                return;
-            }
-
-            var request = moduleUtils.parseSignedRequest(data.signed_request),
-                item    = app.itemsAmount[parseFloat(request.amount)];
-
-            if (!request || !item) {
-                return;
-            }
-
-            users.findOne({
-                uid: socket.uid
-            }, 'tokens', function (err, data) {
-
-                if (err || !data) {
-                    return;
-                }
-
-                token = parseInt(data.tokens) + parseInt(item.tokens);
-
-                new payments({
-                    id: request.payment_id,
-                    uid: socket.uid,
-                    item: item.item,
-                    type: 'charge',
-                    status: 'completed',
-                    time: request.issued_at,
-                }).save(function (err, res) {
-                    if (err) {
-                        return;
-                    }
-                    users.update({ uid: socket.uid }, { $set: { tokens: token } }, function (err) {
-                        if (err) {
-                            return;
-                        }
-                        moduleSocket.initUser(socket);
-                    });
-                });   
-            });
-        });
-
-        socket.on('disconnect', function () {
-
-            if (moduleSocket.checkSocketUid(socket)) {
-                delete moduleSocket.connected[socket.uid];
-                moduleGame.deleteCreatedGame(socket.uid);
-            }
-
-            moduleSocket.deleteChallenges(socket);
-        });
-    });
+    return moduleSocket;
 };

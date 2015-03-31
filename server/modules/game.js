@@ -1,33 +1,33 @@
-module.exports = function (moduleSocket) {
+module.exports = moduleGame = function (moduleSocket) {
 
-    var Engine = require(dirname + '/server/modules/game/engine');
+    var moduleEngine = require(dirname + '/server/modules/game/engine');
 
-    this.options = {
+    moduleGame.options = {
         colors: ['white', 'black'],
         times: [300, 600, 1200, 3600, 5400],
         pointsMin: 1200,
         pointsMax: 3000
     };
     
-    this.createdGame = {};
+    moduleGame.createdGame = {};
 
-    this.games = {
+    moduleGame.games = {
         id: 1,
         data: {}
     };
 
-    this.create = function (socket, data) {
+    moduleGame.create = function (socket, data) {
         
         var color = data.color, 
-            time = this.getTime(data.time), 
+            time = moduleGame.getTime(data.time), 
             pointsMin = parseInt(data.pointsMin) ? data.pointsMin : false,
             pointsMax = parseInt(data.pointsMax) ? data.pointsMax : false;
 
-        if (!this.checkColor(color) || !this.checkTime(time) || !this.checkPoints(pointsMin, pointsMax)) {
+        if (!moduleGame.checkColor(color) || !moduleGame.checkTime(time) || !moduleGame.checkPoints(pointsMin, pointsMax)) {
             return false;
         }
 
-        this.createdGame[socket.uid] = {
+        moduleGame.createdGame[socket.uid] = {
             name: socket.name,
             points: socket.points,
             ranking: socket.ranking,
@@ -41,62 +41,65 @@ module.exports = function (moduleSocket) {
 
     };
 
-    this.deleteCreatedGame = function (uid) {
-        if (!this.createdGame[uid]) {
+    moduleGame.deleteCreatedGame = function (uid) {
+        if (!moduleGame.createdGame[uid]) {
             return;
         }
 
-        delete this.createdGame[uid];
-        moduleSocket.listGames();
-
+        delete moduleGame.createdGame[uid];
+        moduleGame.listGames();
     };
 
-    this.getTime = function (time) {
+    moduleGame.listGames = function () {
+        moduleSocket.listGames(moduleGame.createdGame);
+    };
+
+    moduleGame.getTime = function (time) {
         return parseInt(time);
     };
 
-    this.checkColor = function (color) {
-        if (this.options.colors.indexOf(color) === -1) {
+    moduleGame.checkColor = function (color) {
+        if (moduleGame.options.colors.indexOf(color) === -1) {
             return false;
         }
         return true;
     };
 
-    this.checkTime = function (time) {
-        if (this.options.times.indexOf(time) === -1) {
+    moduleGame.checkTime = function (time) {
+        if (moduleGame.options.times.indexOf(time) === -1) {
             return false;
         }
         return true;
     };
 
-    this.checkPoints = function (pointsMin, pointsMax) {
+    moduleGame.checkPoints = function (pointsMin, pointsMax) {
         if (!pointsMin || !pointsMax) {
             return true;
         }
 
-        if (pointsMin < this.options.pointsMin || pointsMax > this.options.pointsMax) {
+        if (pointsMin < moduleGame.options.pointsMin || pointsMax > moduleGame.options.pointsMax) {
             return false;
         }
 
         return pointsMin < pointsMax;
     };
 
-    this.move = function (id, start, end, promotion) {
+    moduleGame.move = function (id, start, end, promotion) {
         
         // ajouter une vérif si c'est au joueur de jouer (voir si son temps est dépassé)
 
-        var game = this.games[id];
+        var game = moduleGame.games[id];
 
         if (!game || game.finish) {
             return;
         }
 
-        return new Engine(game, start, end, promotion);
+        return new moduleEngine(game, start, end, promotion);
     };
 
-    this.start = function (white, black, time) {
+    moduleGame.start = function (white, black, time) {
 
-        var gid = this.games.id++,
+        var gid = moduleGame.games.id++,
             timeTurn = 120,
             nbPieces = 16;
 
@@ -361,8 +364,8 @@ module.exports = function (moduleSocket) {
             }
         };
 
-        return this.games[gid] = game;
+        return moduleGame.games[gid] = game;
     };
 
-    return this;
+    return moduleGame;
 };
