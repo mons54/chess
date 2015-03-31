@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (moduleSocket) {
 
     var Engine = require(dirname + '/server/modules/game/engine');
 
@@ -38,6 +38,16 @@ module.exports = function () {
         };
 
         return true;
+
+    };
+
+    this.deleteCreatedGame = function (uid) {
+        if (!this.createdGame[uid]) {
+            return;
+        }
+
+        delete this.createdGame[uid];
+        moduleSocket.listGames();
 
     };
 
