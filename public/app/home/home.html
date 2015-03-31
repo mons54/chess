@@ -63,7 +63,7 @@
                                     <button ng-if="game.uid == user.uid" ng-click="removeGame()" class="btn btn-sm btn-icon btn-default">
                                         <span class="icon icon-close"></span>
                                     </button>
-                                    <button ng-if="game.uid != user.uid" class="btn btn-sm btn-icon btn-success">
+                                    <button ng-if="game.uid != user.uid" ng-click="startGame(game.uid)" class="btn btn-sm btn-icon btn-success">
                                         <span class="icon icon-valid"></span>
                                     </button>
                                 </td>
