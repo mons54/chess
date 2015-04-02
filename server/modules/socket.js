@@ -93,219 +93,78 @@ module.exports = moduleSocket = function (io, mongoose) {
         moduleSocket.listChallengers();
     };
 
-    moduleSocket.initRanking = function (socket, friends, page, limit, getUser) {
-
-        var offset = (page * limit) - limit,
-            request;
+    moduleSocket.getRanking = function (data, position, count, getUser, uid, points) {
+        var current = 0,
+            result = [],
+            ranking = {},
+            value;
 
         if (getUser) {
-            request = moduleSocket.getRequestRankingWithUser(socket, friends);
+
+            var saveUser = false;
+
+            for (var i in data) {
+                if (!saveUser && points >= data[i].points) {
+                    result.push({
+                        uid: uid,
+                        points: points,
+                    });
+                    saveUser = true;
+                }
+                result.push(data[i]);
+            }
+
+            if (!saveUser) {
+                result.push({
+                    uid: uid,
+                    points: points,
+                });
+            }
         } else {
-            request = moduleSocket.getRequestRankingWithoutUser(friends);
+            result = data;
         }
 
-        mongoose.models.users.count(request, function (err, count) {
+        for (var i in result) {
 
-            if (err) {
-                return;
-            }
-
-            if (count == 0) {
-
-                var data = [];
-                data.push({
-                    uid: socket.uid,
-                    points: socket.points,
-                    position: 1
-                });
-
-                socket.emit('ranking', {
-                    ranking: data
-                });
-
-                return;
-            }
-
-            if (getUser) {
-                count++;
-                limit = limit - 1;
-            }
-
-            mongoose.models.users.find(request).sort({
-                points: -1
-            }).skip(offset).limit(limit).hint({
-                points: 1
-            }).exec(function (err, data) {
-                if (err || !data[0] || !data[0].points) {
-                    return;
-                }
-
-                moduleSocket.getRanking(socket, data, count, friends, offset, limit, getUser);
-            });
-        });
-    };
-
-    moduleSocket.getRanking = function(socket, data, total, friends, offset, limit, getUser) {
-        
-        var points = (getUser && socket.points > data[0].points) ? socket.points : data[0].points,
-            request = {
-                actif: 1,
-                points: {
-                    $gt: points
-                }
-            };
-
-        if (friends) {
-            request = {
-                actif: 1,
-                uid: {
-                    $in: friends
-                },
-                points: {
-                    $gt: points
-                }
-            };
-        }
-
-        mongoose.models.users.count(request, function (err, count) {
-
-            var position = count + 1,
-                request = {
-                    actif: 1,
-                    points: data[0].points
-                };
-
-            if (friends) {
-                request = {
-                    actif: 1,
-                    uid: {
-                        $in: friends
-                    },
-                    points: data[0].points
-                };
-            }
-
-            mongoose.models.users.count(request, function (err, count) {
-
-                var current = 0,
-                    result = [],
-                    ranking = {},
-                    value;
-
-                if (getUser) {
-
-                    var saveUser = false;
-
-                    for (var i in data) {
-
-                        if (!saveUser && socket.points >= data[i].points) {
-                            result.push({
-                                uid: socket.uid,
-                                points: socket.points,
-                            });
-
-                            saveUser = true;
-                        }
-
-                        result.push(data[i]);
-                    }
-
-                    if (!saveUser) {
-                        result.push({
-                            uid: socket.uid,
-                            points: socket.points,
-                        });
-                    }
+            if (result[i].points < result[current].points) {
+                if (!value) {
+                    position += count;
                 } else {
-                    result = data;
+                    position += value;
                 }
 
-                for (var i in result) {
-
-                    if (result[i].points < result[current].points) {
-                        if (!value) {
-                            position += count;
-                        } else {
-                            position += value;
-                        }
-
-                        value = 1;
-                    } else {
-                        if (value) {
-                            value++;
-                        }
-                    }
-
-                    ranking[i] = {
-                        uid: result[i].uid,
-                        points: result[i].points,
-                        position: position
-                    };
-
-                    current = i;
+                value = 1;
+            } else {
+                if (value) {
+                    value++;
                 }
+            }
 
-                socket.emit('ranking', {
-                    ranking: ranking,
-                    pages: moduleSocket.getPage(total, offset, limit)
-                });
-            });
-        });
-    };
-
-    moduleSocket.getRequestRankingWithUser = function (socket, friends) {
-            
-        var request;
-
-        if (friends) {
-            request = {
-                $and: [{
-                    actif: 1,
-                    uid: {
-                        $in: friends
-                    }
-                }, {
-                    uid: {
-                        $ne: socket.uid
-                    }
-                }]
+            ranking[i] = {
+                uid: result[i].uid,
+                points: result[i].points,
+                position: position
             };
-        } else {
-            request = {
-                $and: [{
-                    actif: 1
-                }, {
-                    uid: {
-                        $ne: socket.uid
-                    }
-                }]
-            };
+
+            current = i;
         }
 
-        return request;
+        return ranking;
     };
 
-    moduleSocket.getRequestRankingWithoutUser = function (friends) {
-            
-        var request;
-
-        if (friends) {
-            request = {
-                actif: 1,
-                uid: {
-                    $in: friends
-                }
-            };
-        } else {
-            request = {
-                actif: 1
-            };
-        }
-
-        return request;
+    moduleSocket.getRequestRankingWithUser = function (uid, friends) {
+        return friends ? { $and: [{ actif: 1, uid: { $in: friends } }, { uid: { $ne: uid } }] } : { $and: [{ actif: 1 }, { uid: { $ne: uid } }] };
     };
 
-    moduleSocket.getPage = function (total, offset, limit) {
+    moduleSocket.getRequestRankingWithoutUser = function (friends) {  
+        return friends ? { actif: 1, uid: { $in: friends } } : { actif: 1 };
+    };
+
+    moduleSocket.formatPage = function (page) {
+        return page <= 0 ? 1 : page;
+    };
+
+    moduleSocket.getPages = function (total, offset, limit) {
         var page = Math.ceil(offset / limit) + 1,
             last = Math.ceil(total / limit);
 

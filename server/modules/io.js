@@ -125,54 +125,25 @@ module.exports = function (app, io, mongoose, fbgraph, crypto) {
                 return;
             }
 
-            var uid = socket.uid,
+            var page = parseInt(data.page),
                 limit = 8,
-                page = parseInt(data.page),
                 friends = data.friends;
 
             if (page) {
-                if (page <= 0) {
-                    page = 1;
-                }
-                moduleSocket.initRanking(socket, friends, page, limit, false);
-            } else {
-                var points = socket.points,
-                    request = {
-                        actif: 1,
-                        points: {
-                            $gt: points
-                        }
-                    };
-
-                if (friends) {
-                    request = {
-                        actif: 1,
-                        uid: {
-                            $in: friends
-                        },
-                        points: {
-                            $gt: points
-                        }
-                    };
-                }
-
-                mongoose.models.users.count(request, function (err, count) {
-
-                    if (err) {
-                        return;
-                    }
-
-                    count++;
-
-                    var page = Math.ceil(count / limit);
-
-                    if (page <= 0) {
-                        page = 1;
-                    }
-
-                    moduleSocket.initRanking(socket, friends, page, limit, true);
-                });
+                page = moduleSocket.formatPage(page);
+                initRanking(friends, page, limit, false);
+                return;
             }
+
+            var points = socket.points,
+                request = friends ? { actif: 1, uid: { $in: friends }, points: { $gt: points } } : { actif: 1, points: { $gt: points } };
+
+            mongoose.promise.count('users', request)
+            .then(function (count) {
+                count++;
+                var page = moduleSocket.formatPage(Math.ceil(count / limit));
+                initRanking(friends, page, limit, true);
+            });
         });
 
         socket.on('payment', function (data) {
@@ -228,5 +199,70 @@ module.exports = function (app, io, mongoose, fbgraph, crypto) {
 
             moduleSocket.deleteChallenges(socket);
         });
+
+        function initRanking (friends, page, limit, getUser) {
+            var offset = (page * limit) - limit,
+                request;
+
+            if (getUser) {
+                request = moduleSocket.getRequestRankingWithUser(socket.uid, friends);
+            } else {
+                request = moduleSocket.getRequestRankingWithoutUser(friends);
+            }
+
+            mongoose.promise.count('users', request)
+            .then(function (count) {
+                if (count === 0) {
+                    socket.emit('ranking', {
+                        ranking:[{
+                            uid: socket.uid,
+                            points: socket.points,
+                            position: 1
+                        }]
+                    });
+                    this.finally;
+                }
+
+                if (getUser) {
+                    count++;
+                    limit = limit - 1;
+                }
+
+                this.total = count;
+
+                return mongoose.promise.exec('users', request, { points: -1 }, offset, limit, { points: 1 });
+            })
+            .then(function (data) {
+                if (typeof data[0] !== 'object' || typeof data[0].points !== 'number') {
+                    this.finally;
+                }
+
+                var points = (getUser && socket.points > data[0].points) ? socket.points : data[0].points,
+                    request = { actif: 1, points: { $gt: points } };
+
+                if (friends) {
+                    request = { actif: 1, uid: { $in: friends }, points: { $gt: points } };
+                }
+
+                this.data = data;
+
+                return mongoose.promise.count('users', request);
+            })
+            .then(function (count) {
+                this.position = count + 1;
+                var request = { actif: 1, points: this.data[0].points };
+                if (friends) {
+                    request = { actif: 1, uid: { $in: friends }, points: this.data[0].points };
+                }
+
+                return mongoose.promise.count('users', request);
+            })
+            .then(function (count) {
+                socket.emit('ranking', {
+                    ranking: moduleSocket.getRanking(this.data, this.position, count, getUser, socket.uid, socket.points),
+                    pages: moduleSocket.getPages(this.total, offset, limit)
+                });
+            });
+        }
     });
 };
