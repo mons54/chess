@@ -1,4 +1,4 @@
-module.exports = function (app, io, mongoose, fbgraph, crypto) {
+module.exports = function (app, io, mongoose, q, fbgraph, crypto) {
 
     var moduleSocket = require(dirname + '/server/modules/socket')(io, mongoose),
         moduleGame = require(dirname + '/server/modules/game')(moduleSocket),
@@ -13,12 +13,42 @@ module.exports = function (app, io, mongoose, fbgraph, crypto) {
                 return;
             }
 
-            fbgraph.post('/' + data.uid + '?access_token=' + data.accessToken, function(err, res) {
-                if (err || !res.success) {
+            deferFbGraph(data.uid, data.accessToken)
+            .then(function (response) {
+                if (!response.success) {
                     moduleSocket.disconnectSocket(socket);
-                    return;
+                    this.finally;
                 }
-                moduleSocket.init(socket, data, err, res);
+
+                var socketConnected = moduleSocket.getSocket(data.uid);
+
+                if (socketConnected) {
+                    socketConnected.disconnect();
+                }
+
+                socket.uid = data.uid;
+                socket.name = data.name;
+                moduleSocket.connected[data.uid] = socket.id;
+
+                return mongoose.promise.count('users', { uid: data.uid });
+            })
+            .then(function (response) {
+                if (response === 0) {
+                    return mongoose.promise.save('users', {
+                        uid: data.uid,
+                        points: 1500,
+                        tokens: 17,
+                        trophy: 1,
+                        parrainage: data.sponsorship,
+                    });
+                }
+                return true;
+            })
+            .then(function (response) {
+                initUser();
+            })
+            .catch(function (error) {
+                moduleSocket.disconnectSocket(socket);
             });
         });
 
@@ -199,6 +229,102 @@ module.exports = function (app, io, mongoose, fbgraph, crypto) {
 
             moduleSocket.deleteChallenges(socket);
         });
+
+        function deferFbGraph (uid, accessToken) {
+            var defer = q.defer();
+            fbgraph.post('/' + uid + '?access_token=' + accessToken, function (error, response) {
+                if (error) {
+                    defer.reject(error);
+                    return;
+                }
+                defer.resolve(response);
+            });
+            return defer.promise;
+        }
+
+        function initUser (sponsorship) {
+
+            if (!moduleSocket.checkSocketUid(socket)) {
+                return;
+            }
+
+            mongoose.promise.findOne('users', { uid: socket.uid }, null)
+            .then(function (response) {
+                if (!response) {
+                    this.finally;
+                }
+
+                if (response.ban) {
+                    moduleSocket.disconnectSocket(socket);
+                    this.finally;
+                }
+
+                socket.moderateur = response.moderateur ? true : false;
+
+                moduleSocket.checkTrophy(socket.uid);
+
+                if (!response.parrainage && sponsorship) {
+                    moduleSocket.updateUserSponsorship(socket.uid, sponsorship);
+                }
+
+                socket.points = response.points;
+
+                this.data = response;
+
+                return mongoose.promise.findOne('freeTokens', { uid: socket.uid }, 'time');
+            })
+            .then(function (response) {
+                this.token = 0;
+                if (!this.data.tokens && this.data.tokens !== 0) {
+                    this.token += 17;
+                    moduleSocket.updateUserTokens(socket.uid, token);
+                } else {
+                    this.token += data.tokens;
+                }
+
+                var time = Math.round(new Date().getTime() / 1000);
+
+                if (!response || !response.time) {
+                    this.token += 3;
+                    this.freeTime = time;
+
+                    var freeToken = new mongoose.models.freeTokens({
+                        uid: socket.uid
+                    });
+                    freeToken.time = time;
+                    freeToken.save();
+                    moduleSocket.updateUserTokens(socket.uid, this.token);
+                } else if (response.time < (time - (24 * 3600))) {
+                    this.freeTime = time;
+                    this.token += 3;
+                    moduleSocket.updateTokens(socket.uid, this.freeTime);   
+                    moduleSocket.updateUserTokens(socket.uid, this.token);
+                } else {
+                    this.freeTime = response.time;
+                }
+
+                return mongoose.promise.find('badges', { uid: socket.uid });
+            })
+            .then(function (response) {
+                this.trophies = response;
+                return mongoose.promise.count('users', { actif: 1, points: { $gt: socket.points } });
+            })
+            .then(function (response) {
+                socket.ranking = response + 1;
+                socket.join('home', function () {
+                    moduleSocket.connected();
+                });
+                socket.emit('infosUser', {
+                    moderateur: socket.moderateur,
+                    points: socket.points,
+                    ranking: socket.ranking,
+                    tokens: this.token,
+                    freeTime: moduleSocket.getFreeTime(this.freeTime),
+                    trophies: this.trophies
+                });
+                socket.emit('listGames', moduleGame.createdGame);
+            });
+        }
 
         function initRanking (friends, page, limit, getUser) {
             var offset = (page * limit) - limit,
