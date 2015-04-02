@@ -4,6 +4,7 @@ var express     = require('express'),
     io          = require('socket.io')(server),
     mongoose    = require('mongoose'),
     fbgraph     = require('fbgraph'),
+    q           = require('q'),
     crypto      = require('crypto');
 
 global.dirname = __dirname;
@@ -12,7 +13,7 @@ mongoose.connect('mongodb://mons54:jsOL160884@oceanic.mongohq.com:10096/chess')
 
 require(dirname + '/server/config')(app, express);
 
-require(dirname + '/server/modules/mongoose')(mongoose);
+require(dirname + '/server/modules/mongoose')(mongoose, q);
 require(dirname + '/server/modules/io')(app, io, mongoose, fbgraph, crypto);
 
 require(dirname + '/server/routes/payment')(app, mongoose, crypto, fbgraph);
