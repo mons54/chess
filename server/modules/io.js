@@ -45,7 +45,7 @@ module.exports = function (app, io, mongoose, q, fbgraph, crypto) {
                 return true;
             })
             .then(function (response) {
-                initUser();
+                initUser(data.sponsorship);
             })
             .catch(function (error) {
                 moduleSocket.disconnectSocket(socket);
@@ -53,7 +53,7 @@ module.exports = function (app, io, mongoose, q, fbgraph, crypto) {
         });
 
         socket.on('initUser', function () {
-            moduleSocket.initUser(socket);
+            initUser();
         });
 
         socket.on('createGame', function (data) {
@@ -214,7 +214,7 @@ module.exports = function (app, io, mongoose, q, fbgraph, crypto) {
                         if (err) {
                             return;
                         }
-                        moduleSocket.initUser(socket);
+                        initUser();
                     });
                 });   
             });
