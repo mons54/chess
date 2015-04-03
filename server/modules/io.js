@@ -7,7 +7,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
     io.on('connection', function (socket) {
 
         socket.on('init', function (data) {
-            if (!data.uid || !data.accessToken) {
+            if (!data || !data.uid || !data.accessToken) {
                 moduleSocket.disconnectSocket(socket);
                 return;
             }
@@ -32,11 +32,25 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             moduleGame.deleteCreatedGame(socket.uid);
         });
 
-        socket.on('startGame', function (uid) {
-            console.log(uid);
+        socket.on('startGame', function (data) {
+            if (!moduleSocket.checkSocketUid(socket) || socket.game || !data || !data.uid || socket.uid === data.uid) {
+                return;
+            }
+
+            var socketOpponent = moduleSocket.getSocket(data.uid);
+
+            if (data.challenge)  {
+                // start challenge
+            } else {
+                moduleSocket.startGame(moduleGame, uid, socket, socketOpponent);
+            }
         });
 
         socket.on('challenge', function (data) {
+
+            if (!data) {
+                return;
+            }
 
             var socketOpponent = moduleSocket.getSocket(data.uid),
                 color = data.color,
@@ -75,20 +89,6 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             moduleSocket.deleteChallenge(socket, uid);
         });
 
-        socket.on('newGame', function (data) {
-            var game = moduleGame.start(data.white, data.black, data.time);
-            socket.gid = game.id;
-            socket.emit('game', game);
-        });
-
-        socket.on('move', function (data) {
-            if (!socket.gid) {
-                return;
-            }
-            var game = moduleGame.move(socket.gid, data.start, data.end, null);
-            socket.emit('game', game);
-        });
-
         socket.on('leaveHome', function () {
             if (!moduleSocket.checkSocketUid(socket)) {
                 return;
@@ -100,15 +100,14 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
         });
 
         socket.on('ranking', function (data) {
-            if (!moduleSocket.checkSocketUid(socket)) {
+            if (!moduleSocket.checkSocketUid(socket) || !data) {
                 return;
             }
             moduleSocket.ranking(socket, data);
         });
 
         socket.on('payment', function (data) {
-
-            if (!moduleSocket.checkSocketUid(socket) || !data.signed_request) {
+            if (!moduleSocket.checkSocketUid(socket) || !data || !data.signed_request) {
                 return;
             }
 

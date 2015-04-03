@@ -63,7 +63,7 @@
                                     <button ng-if="game.uid == user.uid" ng-click="removeGame()" class="btn btn-sm btn-icon btn-default">
                                         <span class="icon icon-close"></span>
                                     </button>
-                                    <button ng-if="game.uid != user.uid" ng-click="startGame(game.uid)" class="btn btn-sm btn-icon btn-success">
+                                    <button ng-if="game.uid != user.uid" ng-click="startGame(game.uid, false)" class="btn btn-sm btn-icon btn-success">
                                         <span class="icon icon-valid"></span>
                                     </button>
                                 </td>
@@ -112,7 +112,7 @@
                                     <button ng-click="removeChallenge(challenge.uid)" class="btn btn-sm btn-icon btn-default">
                                         <span class="icon icon-close"></span>
                                     </button>
-                                    <button ng-if="!challenge.create" class="btn btn-sm btn-icon btn-success">
+                                    <button ng-if="!challenge.create" ng-click="startGame(game.uid, true)" class="btn btn-sm btn-icon btn-success">
                                         <span class="icon icon-valid"></span>
                                     </button>
                                 </td>

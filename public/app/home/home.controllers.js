@@ -152,8 +152,11 @@
                 $rootScope.socket.emit('removeGame');
             };
 
-            $scope.startGame = function (uid) {
-                $rootScope.socket.emit('startGame', uid);
+            $scope.startGame = function (uid, challenge) {
+                $rootScope.socket.emit('startGame', {
+                    uid: uid,
+                    challenge: challenge
+                });
             };
 
             $scope.openModalChallenge = function (challenger) {

@@ -10,6 +10,14 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         io.sockets.to('home').emit(name, data);  
     };
 
+    moduleSocket.startGame = function (moduleGame, uid, socket, socketOpponent) {
+        if (moduleGame.createdGame[uid] && socketOpponent && !socketOpponent.game) {
+            //start game
+        } else {
+            //delete game
+        }
+    };
+
     moduleSocket.setChallenges = function (socket, key, value) {
         if (!socket.challenges) {
             socket.challenges = {};
