@@ -2,9 +2,6 @@ module.exports = function (app, mongoose, fbgraph, crypto) {
 
     var securityToken = '911f3fd471bdb649c9beb94631edf75a';
 
-    var users = mongoose.models.users,
-        payments = mongoose.models.payments;
-
     app.all('/payments', function (req, res) {
 
         var response = 'HTTP/1.0 400 Bad Request';
