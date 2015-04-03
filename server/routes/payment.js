@@ -1,6 +1,6 @@
-module.exports = function (app, mongoose, crypto, fbgraph) {
+module.exports = function (app, mongoose, fbgraph, crypto) {
 
-    var security_token = '911f3fd471bdb649c9beb94631edf75a';
+    var securityToken = '911f3fd471bdb649c9beb94631edf75a';
 
     var users = mongoose.models.users,
         payments = mongoose.models.payments;
@@ -14,7 +14,7 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
             return;
         }
 
-        if (req.query['hub.mode'] == 'subscribe' && req.query['hub.verify_token'] == security_token) {
+        if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === securityToken) {
             response = req.query['hub.challenge'];
             res.send(response);
             return;
@@ -39,140 +39,86 @@ module.exports = function (app, mongoose, crypto, fbgraph) {
             return;
         }
 
-        fbgraph.post('/oauth/access_token?client_id=' + app.facebook.appId + '&client_secret=' + app.facebook.secret + '&grant_type=client_credentials', function (err, data) {
-
+        fbgraph.promise.post('/oauth/access_token?client_id=' + app.facebook.appId + '&client_secret=' + app.facebook.secret + '&grant_type=client_credentials')
+        .then(function (data) {
             if (!data.access_token) {
                 res.send(response);
-                return;
+                this.finally;
             }
 
-            fbgraph.get('/' + paymentId + '?access_token=' + data.access_token, function (err, data) {
+            return fbgraph.promise.get('/' + paymentId + '?access_token=' + data.access_token);
+        })
+        .then(function (data) {
+            if (!data.id || !data.user || !data.actions) {
+                res.send(response);
+                this.finally;
+            }
 
-                if (!data.id || !data.user || !data.actions) {
-                    res.send(response);
-                    return;
-                }
+            this.type = '';
+            this.status = '';
 
-                var type = '',
-                    status = '';
+            for (var i in data.actions) {
+                this.type = data.actions[i].type;
+                this.status = data.actions[i].status;
+            }
 
-                for (var i in data.actions) {
-                    type = data.actions[i].type;
-                    status = data.actions[i].status;
-                }
+            if (this.type == 'charge' && this.status == 'failed') {
+                res.send('HTTP/1.0 200 OK');
+                this.finally;
+            }
 
-                if (type == 'charge' && status == 'failed') {
-                    res.send('HTTP/1.0 200 OK');
-                    return;
-                }
+            this.amount = parseInt(data.actions[0].amount);
 
-                var amount = parseInt(data.actions[0].amount);
+            if (!app.itemsAmount[this.amount]) {
+                res.send(response);
+                this.finally;
+            }
 
-                if (!app.itemsAmount[amount]) {
-                    res.send(response);
-                    return;
-                }
+            this.data = data;
 
-                payments.find({
-                    id: data.id
-                }, function (err, _data) {
+            return mongoose.promise.find('payments', { id: data.id });
+        })
+        .then(function (data) {
+            if (!data[0]) {
+                this.action = 'save';
+            } else if (this.type === 'refund' && this.type !== data[0].type && this.status !== 'completed' && this.status !== data[0].status) {
+                this.action = 'update';
+            } else {
+                res.send('HTTP/1.0 200 OK');
+                this.finally;
+            }
 
-                    if (err) {
-                        res.send(response);
-                        return;
-                    } else if (!_data[0]) {
+            return mongoose.promise.find('users', { uid: this.data.user.id });
+        })
+        .then(function (data) {
+            if (err || !data[0] || !data[0].tokens) {
+                res.send(response);
+                this.finally;
+            }
 
-                        users.find({
-                            uid: data.user.id
-                        }, function (err, _data) {
+            this.tokens = parseInt(data[0].tokens) + parseInt(app.itemsAmount[this.amount].tokens);
 
-                            if (err || !_data[0] || !_data[0].tokens) {
-                                res.send(response);
-                                return;
-                            }
-
-                            var token = parseInt(_data[0].tokens) + parseInt(app.itemsAmount[amount].tokens);
-
-                            new payments({
-                                id: data.id,
-                                uid: data.user.id,
-                                item: app.itemsAmount[amount].item,
-                                type: 'charge',
-                                status: 'completed',
-                                time: Math.round(new Date() / 1000),
-                            }).save(function (err) {
-                                
-                                if (err) {
-                                    res.send(response);
-                                    return;
-                                }
-
-                                users.update({
-                                    uid: data.user.id
-                                }, {
-                                    $set: {
-                                        tokens: token
-                                    }
-                                }, function (err) {
-
-                                    if (err) {
-                                        res.send(response);
-                                        return;
-                                    }
-
-                                    res.send('HTTP/1.0 200 OK');
-                                });
-                            });
-                        });
-                    } else if (type == 'refund' && type != _data[0].type && status != 'completed' && _data[0].status != status) {
-
-                        users.find({
-                            uid: data.user.id
-                        }, function (err, _data) {
-
-                            if (err || !_data[0] || !_data[0].tokens) {
-                                res.send(response);
-                                return;
-                            }
-
-                            var token = parseInt(_data[0].tokens) - parseInt(app.itemsAmount[amount].tokens);
-
-                            payments.update({
-                                id: data.id
-                            }, {
-                                $set: {
-                                    type: 'refund',
-                                    status: 'completed'
-                                }
-                            }, function (err) {
-
-                                if (err) {
-                                    res.send(response);
-                                    return;
-                                }
-
-                                users.update({
-                                    uid: data.user.id
-                                }, {
-                                    $set: {
-                                        tokens: token
-                                    }
-                                }, function (err) {
-
-                                    if (err) {
-                                        res.send(response);
-                                        return;
-                                    }
-
-                                    res.send('HTTP/1.0 200 OK');
-                                });
-                            });
-                        });
-                    } else {
-                        res.send('HTTP/1.0 200 OK');
-                    }
+            if (this.action === 'save') {
+                return mongoose.promise.save('payments', {
+                    id: this.data.id,
+                    uid: this.data.user.id,
+                    item: app.itemsAmount[this.amount].item,
+                    type: 'charge',
+                    status: 'completed',
+                    time: Math.round(new Date() / 1000),
                 });
-            });
+            } else {
+                return mongoose.promise.update('payments', { id: this.data.id }, { type: 'refund', status: 'completed' });
+            }
+        })
+        .then(function (data) {
+            return mongoose.promise.update('users', { uid: this.data.user.id }, { tokens: this.tokens });
+        })
+        .then(function (data)) {
+            res.send('HTTP/1.0 200 OK');
+        })
+        .catch(function (error) {
+            res.send(response);
         });
     });
 };
