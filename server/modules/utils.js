@@ -28,9 +28,5 @@ module.exports = moduleUtils = function () {
         return new Buffer(data, 'base64').toString('ascii');
     };
 
-    moduleUtils.fn = function () {
-
-    };
-
     return moduleUtils;
 };

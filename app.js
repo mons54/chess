@@ -9,9 +9,7 @@ var express     = require('express'),
 
 global.dirname = __dirname;
 
-mongoose.connect('mongodb://mons54:jsOL160884@oceanic.mongohq.com:10096/chess')
-
-require(dirname + '/server/config')(app, express);
+require(dirname + '/server/config')(app, express, mongoose);
 
 require(dirname + '/server/modules/mongoose')(mongoose, q);
 require(dirname + '/server/modules/fbgraph')(fbgraph, q);

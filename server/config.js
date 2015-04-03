@@ -1,4 +1,6 @@
-module.exports = function (app, express) {
+module.exports = function (app, express, mongoose) {
+
+    mongoose.connect('mongodb://mons54:jsOL160884@oceanic.mongohq.com:10096/chess');
 
     var static = dirname + '/public/';
 
