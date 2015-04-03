@@ -17,7 +17,6 @@ require(dirname + '/server/modules/io')(app, io, mongoose, fbgraph, q, crypto);
 
 require(dirname + '/server/routes/payment')(app, mongoose, fbgraph, crypto);
 require(dirname + '/server/routes/sponsorpay')(app, mongoose, crypto);
-require(dirname + '/server/routes/tokenads')(app, mongoose, crypto);
 
 require(dirname + '/server/router')(app);
 
