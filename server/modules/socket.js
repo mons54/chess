@@ -1,6 +1,6 @@
-module.exports = moduleSocket = function (io, mongoose) {
+module.exports = moduleSocket = function (io, mongoose, fbgraph) {
 
-    moduleSocket.connected = {};
+    moduleSocket.socketConnected = {};
 
     moduleSocket.listGames = function (createdGame) {
         moduleSocket.sendHome('listGames', createdGame);
@@ -41,7 +41,7 @@ module.exports = moduleSocket = function (io, mongoose) {
     }
 
     moduleSocket.getSocket = function (uid) {
-        var id = moduleSocket.connected[uid],
+        var id = moduleSocket.socketConnected[uid],
             socket = null;
         if (!id) {
             return socket;
@@ -91,6 +91,213 @@ module.exports = moduleSocket = function (io, mongoose) {
     moduleSocket.connected = function () {
         io.sockets.emit('connected', io.sockets.sockets.length);
         moduleSocket.listChallengers();
+    };
+
+    moduleSocket.init = function (socket, data) {
+
+        fbgraph.promise.post('/' + data.uid + '?access_token=' + data.accessToken)
+        .then(function (response) {
+            if (!response.success) {
+                moduleSocket.disconnectSocket(socket);
+                this.finally;
+            }
+
+            var socketConnected = moduleSocket.getSocket(data.uid);
+
+            if (socketConnected) {
+                socketConnected.disconnect();
+            }
+
+            socket.uid = data.uid;
+            socket.name = data.name;
+            moduleSocket.socketConnected[data.uid] = socket.id;
+
+            return mongoose.promise.count('users', { uid: data.uid });
+        })
+        .then(function (response) {
+            if (response === 0) {
+                return mongoose.promise.save('users', {
+                    uid: data.uid,
+                    points: 1500,
+                    tokens: 17,
+                    trophy: 1,
+                    parrainage: data.sponsorship,
+                });
+            }
+            return true;
+        })
+        .then(function (response) {
+            moduleSocket.initUser(socket, data.sponsorship);
+        })
+        .catch(function (error) {
+            moduleSocket.disconnectSocket(socket);
+        });
+    };
+
+    moduleSocket.initUser = function (socket, sponsorship) {
+
+        if (!moduleSocket.checkSocketUid(socket)) {
+            return;
+        }
+
+        mongoose.promise.findOne('users', { uid: socket.uid }, null)
+        .then(function (response) {
+            if (!response) {
+                this.finally;
+            }
+
+            if (response.ban) {
+                moduleSocket.disconnectSocket(socket);
+                this.finally;
+            }
+
+            socket.moderateur = response.moderateur ? true : false;
+
+            moduleSocket.checkTrophy(socket.uid);
+
+            if (!response.parrainage && sponsorship) {
+                moduleSocket.updateUserSponsorship(socket.uid, sponsorship);
+            }
+
+            socket.points = response.points;
+
+            this.data = response;
+
+            return mongoose.promise.findOne('freeTokens', { uid: socket.uid }, 'time');
+        })
+        .then(function (response) {
+            this.token = 0;
+            if (!this.data.tokens && this.data.tokens !== 0) {
+                this.token += 17;
+                moduleSocket.updateUserTokens(socket.uid, token);
+            } else {
+                this.token += data.tokens;
+            }
+
+            var time = Math.round(new Date().getTime() / 1000);
+
+            if (!response || !response.time) {
+                this.token += 3;
+                this.freeTime = time;
+                mongoose.promise.save('freeTokens', { uid: socket.uid, time: time });
+                moduleSocket.updateUserTokens(socket.uid, this.token);
+            } else if (response.time < (time - (24 * 3600))) {
+                this.freeTime = time;
+                this.token += 3;
+                moduleSocket.updateTokens(socket.uid, this.freeTime);   
+                moduleSocket.updateUserTokens(socket.uid, this.token);
+            } else {
+                this.freeTime = response.time;
+            }
+
+            return mongoose.promise.find('badges', { uid: socket.uid });
+        })
+        .then(function (response) {
+            this.trophies = response;
+            return mongoose.promise.count('users', { actif: 1, points: { $gt: socket.points } });
+        })
+        .then(function (response) {
+            socket.ranking = response + 1;
+            socket.join('home', function () {
+                moduleSocket.connected();
+            });
+            socket.emit('infosUser', {
+                moderateur: socket.moderateur,
+                points: socket.points,
+                ranking: socket.ranking,
+                tokens: this.token,
+                freeTime: moduleSocket.getFreeTime(this.freeTime),
+                trophies: this.trophies
+            });
+            socket.emit('listGames', moduleGame.createdGame);
+        });
+    };
+
+    moduleSocket.ranking = function (socket, data) {
+        var page = parseInt(data.page),
+            limit = 8,
+            friends = data.friends;
+
+        if (page) {
+            page = moduleSocket.formatPage(page);
+            moduleSocket.initRanking(socket, friends, page, limit, false);
+            return;
+        }
+
+        var points = socket.points,
+            request = friends ? { actif: 1, uid: { $in: friends }, points: { $gt: points } } : { actif: 1, points: { $gt: points } };
+
+        mongoose.promise.count('users', request)
+        .then(function (count) {
+            count++;
+            var page = moduleSocket.formatPage(Math.ceil(count / limit));
+            moduleSocket.initRanking(socket, friends, page, limit, true);
+        });
+    };
+
+    moduleSocket.initRanking = function (socket, friends, page, limit, getUser) {
+        var offset = (page * limit) - limit,
+            request;
+
+        if (getUser) {
+            request = moduleSocket.getRequestRankingWithUser(socket.uid, friends);
+        } else {
+            request = moduleSocket.getRequestRankingWithoutUser(friends);
+        }
+
+        mongoose.promise.count('users', request)
+        .then(function (count) {
+            if (count === 0) {
+                socket.emit('ranking', {
+                    ranking:[{
+                        uid: socket.uid,
+                        points: socket.points,
+                        position: 1
+                    }]
+                });
+                this.finally;
+            }
+
+            if (getUser) {
+                count++;
+                limit = limit - 1;
+            }
+
+            this.total = count;
+
+            return mongoose.promise.exec('users', request, { points: -1 }, offset, limit, { points: 1 });
+        })
+        .then(function (data) {
+            if (typeof data[0] !== 'object' || typeof data[0].points !== 'number') {
+                this.finally;
+            }
+
+            var points = (getUser && socket.points > data[0].points) ? socket.points : data[0].points,
+                request = { actif: 1, points: { $gt: points } };
+
+            if (friends) {
+                request = { actif: 1, uid: { $in: friends }, points: { $gt: points } };
+            }
+
+            this.data = data;
+
+            return mongoose.promise.count('users', request);
+        })
+        .then(function (count) {
+            this.position = count + 1;
+            var request = { actif: 1, points: this.data[0].points };
+            if (friends) {
+                request = { actif: 1, uid: { $in: friends }, points: this.data[0].points };
+            }
+
+            return mongoose.promise.count('users', request);
+        })
+        .then(function (count) {
+            socket.emit('ranking', {
+                ranking: moduleSocket.getRanking(this.data, this.position, count, getUser, socket.uid, socket.points),
+                pages: moduleSocket.getPages(this.total, offset, limit)
+            });
+        });
     };
 
     moduleSocket.getRanking = function (data, position, count, getUser, uid, points) {
@@ -199,124 +406,100 @@ module.exports = moduleSocket = function (io, mongoose) {
     };
 
     moduleSocket.updateTokens = function (uid, time) {
-        mongoose.models.freeTokens.update({
-            uid: uid
-        }, {
-            $set: {
-                time: time
-            }
-        }, moduleUtils.fn);
+        mongoose.promise.update('freeTokens' , { uid: uid }, { time: time });
     };
 
-    moduleSocket.updateUserTokens = function (uid, token) {
-        mongoose.models.users.update({
-            uid: uid
-        }, {
-            $set: {
-                tokens: token
-            }
-        }, moduleUtils.fn);
+    moduleSocket.updateUserTokens = function (uid, tokens) {
+        mongoose.promise.update('users' , { uid: uid }, { tokens: tokens });
     };
 
     moduleSocket.updateUserSponsorship = function (uid, sponsorship) {
-        mongoose.models.users.update({
-            uid: uid
-        }, {
-            $set: {
-                parrainage: sponsorship
-            }
-        }, moduleUtils.fn);
+        mongoose.promise.update('users' , { uid: uid }, { parrainage: sponsorship });
     };
 
     moduleSocket.checkTrophy = function (uid) {
-
-        mongoose.models.games.count({
-            $or: [{
-                blanc: uid
-            }, {
-                noir: uid
-            }]
-        }, function (err, count) {
-
-            if (err || !count) {
-                return;
+        mongoose.promise.count('games' , { $or: [{ blanc: uid }, { noir: uid }]})
+        .then(function (response) {
+            if (!response) {
+                this.finally;
             }
-
-            if (count >= 1000) {
+            if (response >= 1000) {
                 moduleSocket.setTrophy(uid, 4);
                 moduleSocket.setTrophy(uid, 3);
                 moduleSocket.setTrophy(uid, 2);
                 moduleSocket.setTrophy(uid, 1);
-            } else if (count >= 500) {
+            } else if (response >= 500) {
                 moduleSocket.setTrophy(uid, 3);
                 moduleSocket.setTrophy(uid, 2);
                 moduleSocket.setTrophy(uid, 1);
-            } else if (count >= 100) {
+            } else if (response >= 100) {
                 moduleSocket.setTrophy(uid, 2);
                 moduleSocket.setTrophy(uid, 1);
-            } else if (count >= 1) {
+            } else if (response >= 1) {
                 moduleSocket.setTrophy(uid, 1);
             }
         });
 
-        mongoose.models.games.count({
-            "$or": [{
-                "$and": [{
-                    "noir": uid,
-                    "resultat": 2
-                }]
-            }, {
-                "$and": [{
-                    "blanc": uid,
-                    "resultat": 1
-                }]
-            }]
-        }, function (err, count) {
-
-            if (err || !count) {
-                return;
+        mongoose.promise.count('games' , { $or: [{ $and: [{ noir: uid, resultat: 2 }] }, { $and: [{ blanc: uid, resultat: 1 }] }] })
+        .then(function (response) {
+            if (!response) {
+                this.finally;
             }
-
-            if (count >= 500) {
+            if (response >= 500) {
                 moduleSocket.setTrophy(uid, 9);
                 moduleSocket.setTrophy(uid, 8);
                 moduleSocket.setTrophy(uid, 7);
                 moduleSocket.setTrophy(uid, 6);
-            } else if (count >= 250) {
+            } else if (response >= 250) {
                 moduleSocket.setTrophy(uid, 8);
                 moduleSocket.setTrophy(uid, 7);
                 moduleSocket.setTrophy(uid, 6);
-            } else if (count >= 50) {
+            } else if (response >= 50) {
                 moduleSocket.setTrophy(uid, 7);
                 moduleSocket.setTrophy(uid, 6);
-            } else if (count >= 1) {
+            } else if (response >= 1) {
                 moduleSocket.setTrophy(uid, 6);
             }
         });
     };
 
     moduleSocket.setTrophy = function (uid, trophy) {
+        mongoose.promise.count('badges', { uid: uid, badge: trophy })
+        .then(function (response) {
+            if (!response) {
+                this.finally;
+            }
+            mongoose.promise.save('badges', { uid: uid, badge: trophy });
+            var socket = moduleSocket.getSocket(uid);
+            if (socket) {
+                socket.emit('trophy', trophy);
+            }
+        });
+    };
 
-        mongoose.models.badges.count({
-            uid: uid,
-            badge: trophy
-        }, function (err, count) {
-
-            if (err || count) {
-                return;
+    moduleSocket.payment = function (socket, request, item) {
+        mongoose.promise.findOne('users', { uid: socket.uid }, 'tokens')
+        .then(function (response) {
+            if (!response) {
+                this.finally;
             }
 
-            var badge = new mongoose.models.badges({
-                uid: uid
+            this.tokens = parseInt(response.tokens) + parseInt(item.tokens);
+
+            return mongoose.promise.save('payments', {
+                id: request.payment_id,
+                uid: socket.uid,
+                item: item.item,
+                type: 'charge',
+                status: 'completed',
+                time: request.issued_at,
             });
-            badge.badge = trophy;
-            badge.save();
-
-            var socketOpponent = moduleSocket.getSocket(uid);
-
-            if (socketOpponent) {
-                socketOpponent.emit('trophy', trophy);
-            }
+        })
+        .then(function (response) {
+            return mongoose.promise.update('users' , { uid: socket.uid }, { tokens: this.tokens });
+        })
+        .then(function (response) {
+            moduleSocket.initUser(socket);
         });
     };
 
