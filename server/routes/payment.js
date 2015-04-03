@@ -111,7 +111,7 @@ module.exports = function (app, mongoose, fbgraph, crypto) {
         .then(function (data) {
             return mongoose.promise.update('users', { uid: this.data.user.id }, { tokens: this.tokens });
         })
-        .then(function (data)) {
+        .then(function (data) {
             res.send('HTTP/1.0 200 OK');
         })
         .catch(function (error) {
