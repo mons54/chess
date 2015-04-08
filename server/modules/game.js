@@ -1,4 +1,4 @@
-module.exports = moduleGame = function (moduleSocket) {
+module.exports = moduleGame = function () {
 
     var moduleEngine = require(dirname + '/server/modules/game/engine');
 

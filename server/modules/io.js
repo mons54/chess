@@ -1,8 +1,8 @@
 module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
 
     var moduleSocket = require(dirname + '/server/modules/socket')(io, mongoose, fbgraph),
-        moduleGame = require(dirname + '/server/modules/game')(moduleSocket),
-        moduleUtils = require(dirname + '/server/modules/utils');
+        moduleGame   = require(dirname + '/server/modules/game')(),
+        moduleUtils  = require(dirname + '/server/modules/utils')();
 
     io.on('connection', function (socket) {
 
