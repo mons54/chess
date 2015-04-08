@@ -8,6 +8,7 @@
         
         function ($rootScope, $scope, utils, paramsGame) {
 
+            // Attention double appel au démarage de l'App
             $rootScope.socket.emit('initUser');
             
             $rootScope.socket.on('listGames', function (data) {

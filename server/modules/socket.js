@@ -265,6 +265,8 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
 
             if (moduleSocket.getUserGame(socket.uid)) {
                 console.log('hasGame');
+            } else {
+                console.log('noGame');
             }
 
             socket.emit('infosUser', {
