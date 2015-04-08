@@ -2,6 +2,8 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
 
     moduleSocket.socketConnected = {};
 
+    moduleSocket.userGames = {};
+
     moduleSocket.listGames = function (createdGame) {
         moduleSocket.sendHome('listGames', createdGame);
     };
@@ -10,12 +12,66 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         io.sockets.to('home').emit(name, data);  
     };
 
-    moduleSocket.startGame = function (moduleGame, uid, socket, socketOpponent) {
-        if (moduleGame.createdGame[uid] && socketOpponent && !socketOpponent.game) {
-            //start game
-        } else {
-            //delete game
+    moduleSocket.getUserGame = function (uid) {
+        return moduleSocket.userGames[uid];
+    };
+
+    moduleSocket.startCreatedGame = function (uid, socket, socketOpponent) {
+        if (!moduleGame.createdGame[uid]) {
+            return;
         }
+
+        if (socketOpponent && !socketOpponent.game) {
+            moduleSocket.startGame(uid, moduleGame.createdGame[uid], socket, socketOpponent);
+        } else {
+            moduleGame.deleteCreatedGame(uid);
+        }
+    };
+
+    moduleSocket.startGame = function (uid, dataGame, socket, socketOpponent) {
+        
+        moduleGame.deleteCreatedGame(uid);
+        moduleGame.deleteCreatedGame(socket.uid);
+        
+        moduleSocket.listGames(moduleGame.createdGame);
+        
+        socket.leave('home');
+        socketOpponent.leave('home');
+        
+        moduleSocket.listChallengers();
+        
+        moduleSocket.deleteChallenges(socket);
+        moduleSocket.deleteChallenges(socketOpponent);
+
+        var white, black;
+
+        if (dataGame.color === 'white') {
+            white = {
+                uid: socketOpponent.uid,
+                name: socketOpponent.name
+            };
+            black = {
+                uid: socket.uid,
+                name: socket.name
+            };
+        } else {
+            white = {
+                uid: socket.uid,
+                name: socket.name
+            };
+            black = {
+                uid: socketOpponent.uid,
+                name: socketOpponent.name
+            };
+        }
+
+        var game = moduleGame.start(white, black, dataGame.time);
+
+        moduleSocket.userGames[socket.uid] = game.id;
+        moduleSocket.userGames[socketOpponent.uid] = game.id;
+
+        socket.emit('game', game);
+        socketOpponent.emit('game', game);
     };
 
     moduleSocket.setChallenges = function (socket, key, value) {
@@ -206,9 +262,11 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         })
         .then(function (response) {
             socket.ranking = response + 1;
-            socket.join('home', function () {
-                moduleSocket.connected();
-            });
+
+            if (moduleSocket.getUserGame(socket.uid)) {
+                console.log('hasGame');
+            }
+
             socket.emit('infosUser', {
                 moderateur: socket.moderateur,
                 points: socket.points,
@@ -216,6 +274,10 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
                 tokens: this.token,
                 freeTime: moduleSocket.getFreeTime(this.freeTime),
                 trophies: this.trophies
+            });
+
+            socket.join('home', function () {
+                moduleSocket.connected();
             });
             socket.emit('listGames', moduleGame.createdGame);
         });

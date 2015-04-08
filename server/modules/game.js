@@ -47,11 +47,6 @@ module.exports = moduleGame = function () {
         }
 
         delete moduleGame.createdGame[uid];
-        moduleGame.listGames();
-    };
-
-    moduleGame.listGames = function () {
-        moduleSocket.listGames(moduleGame.createdGame);
     };
 
     moduleGame.getTime = function (time) {

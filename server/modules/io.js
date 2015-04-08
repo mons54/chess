@@ -19,10 +19,10 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
         });
 
         socket.on('createGame', function (data) {
-            if (!data || !moduleSocket.checkSocketUid(socket) || !moduleGame.create(socket, data)) {
+            if (!data || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid) || !moduleGame.create(socket, data)) {
                 return;
             }
-            moduleGame.listGames();
+            moduleSocket.listGames(moduleGame.createdGame);
         });
 
         socket.on('removeGame', function () {
@@ -30,10 +30,11 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
                 return;
             }
             moduleGame.deleteCreatedGame(socket.uid);
+            moduleSocket.listGames(moduleGame.createdGame);
         });
 
         socket.on('startGame', function (data) {
-            if (!moduleSocket.checkSocketUid(socket) || socket.game || !data || !data.uid || socket.uid === data.uid) {
+            if (!moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid) || !data || !data.uid || socket.uid === data.uid) {
                 return;
             }
 
@@ -42,13 +43,13 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             if (data.challenge)  {
                 // start challenge
             } else {
-                moduleSocket.startGame(moduleGame, uid, socket, socketOpponent);
+                moduleSocket.startCreatedGame(data.uid, socket, socketOpponent);
             }
         });
 
         socket.on('challenge', function (data) {
 
-            if (!data) {
+            if (!data || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid)) {
                 return;
             }
 
@@ -56,7 +57,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
                 color = data.color,
                 time = moduleGame.getTime(data.time);
 
-            if (!moduleSocket.checkSocketUid(socket) || !socketOpponent || !moduleGame.checkColor(color) || !moduleGame.checkColor(color)) {
+            if (!socketOpponent || !moduleGame.checkColor(color) || !moduleGame.checkColor(color)) {
                 return;
             }
 
@@ -96,6 +97,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             socket.leave('home');
             moduleSocket.listChallengers();
             moduleGame.deleteCreatedGame(socket.uid);
+            moduleSocket.listGames(moduleGame.createdGame);
             moduleSocket.deleteChallenges(socket);
         });
 
@@ -125,6 +127,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             if (moduleSocket.checkSocketUid(socket)) {
                 delete moduleSocket.socketConnected[socket.uid];
                 moduleGame.deleteCreatedGame(socket.uid);
+                moduleSocket.listGames(moduleGame.createdGame);
             }
             moduleSocket.deleteChallenges(socket);
         });
