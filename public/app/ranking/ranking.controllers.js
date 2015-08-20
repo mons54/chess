@@ -13,12 +13,17 @@
             $rootScope.socket.emit('leaveHome');
 
             $rootScope.socket.on('ranking', function (data) {
-                getDataRanking(data);
+
+                if (!data) {
+                    return;
+                }
+
+                $scope.$apply(apply(data));
             });
 
             $scope.rankingType = function () {
                 $scope.friends = !$scope.friends;
-                ranking();
+                emit();
             };
 
             $scope.setPagePrev = function () {
@@ -33,7 +38,7 @@
                 setPage(page);
             };
 
-            function ranking (page) {
+            function emit(page) {
                 $scope.loading = true;
                 $rootScope.socket.emit('ranking', {
                     page: page,
@@ -41,36 +46,23 @@
                 });
             }
 
-            function getDataRanking (data) {
-                
-                if (!data) {
-                    return;
-                }
+            function apply(data) {
 
-                $scope.$apply(function () {
-
-                    $scope.pagination = false;
-
-                    if (data.pages) {
-                        $scope.pagination = true;
-                        $scope.currentPage = data.pages.page;
-                        $scope.page = $scope.currentPage;
-                        $scope.pagePrev = data.pages.prev;
-                        $scope.pageNext = data.pages.next;
-                        $scope.pageLast = data.pages.last;
-                    }
-
-                    $scope.ranking = data.ranking;
-                    setRanking();
-                    
-                    $scope.loading = false;
-                });
-            }
-
-            function setRanking() {
-                
                 var usersId = [],
                     usersName;
+                
+                $scope.pagination = false;
+
+                if (data.pages) {
+                    $scope.pagination = true;
+                    $scope.currentPage = data.pages.page;
+                    $scope.page = $scope.currentPage;
+                    $scope.pagePrev = data.pages.prev;
+                    $scope.pageNext = data.pages.next;
+                    $scope.pageLast = data.pages.last;
+                }
+
+                $scope.ranking = data.ranking;
 
                 angular.forEach($scope.ranking, function (value) {
                     usersId.push(value.uid);
@@ -80,10 +72,10 @@
                     if (!response) {
                         return;
                     }
-                    $scope.$apply(function () {
-                        setUsersName(response);
-                    });
+                    $scope.$apply(setUsersName(response));
                 });
+
+                $scope.loading = false;
             }
 
             function setUsersName (data) {
@@ -101,10 +93,10 @@
                 if (!page || page == $scope.currentPage || page < 0 || page > $scope.pageLast) {
                     return;
                 }
-                ranking(page);
+                emit(page);
             }
 
-            ranking();
+            emit();
         }
     ]);
     

@@ -11,58 +11,62 @@
             $rootScope.socket.emit('initUser');
             
             $rootScope.socket.on('listGames', function (data) {
-                
-                $scope.$apply(function () {
-                    $scope.createdGames = [];
-                
-                    angular.forEach(data, function (value, key) {
-                        value.uid = key;
-
-                        if (checkGame(value)) {
-                            $scope.createdGames.push(value);
-                        }
-                    });
-                });
+                $scope.$apply(applyGames(data));
             });
+
+            function applyGames(data) {
+                $scope.createdGames = [];
+                
+                angular.forEach(data, function (value, key) {
+                    value.uid = key;
+
+                    if (checkGame(value)) {
+                        $scope.createdGames.push(value);
+                    }
+                });
+            }
 
             $rootScope.socket.on('challenges', function (data) {
-                $scope.$apply(function () {
-                    $scope.challenges = [];
-                
-                    angular.forEach(data, function (value, key) {
-                        value.uid = key;
-                        $scope.challenges.push(value);
-                    });
-                });
+                $scope.$apply(applyChallenges(data));
             });
+
+            function applyChallenges(data) {
+                $scope.challenges = [];
+                
+                angular.forEach(data, function (value, key) {
+                    value.uid = key;
+                    $scope.challenges.push(value);
+                });
+            }
 
             $rootScope.socket.on('challengers', function (data) {
-                $scope.$apply(function () {
-
-                    $scope.challengers = [];
-                    $scope.friends = [];
-
-                    angular.forEach(data, function (value) {
-                        if ($rootScope.user.uid == value.uid) {
-                            return;
-                        }
-                        
-                        if ($rootScope.user.friends.indexOf(value.uid) !== -1) {
-                            $scope.friends.push(value);
-                        }
-
-                        $scope.challengers.push(value);
-                    });
-                    
-                    $scope.challengers.sort(function (a, b) {
-                        return a.points > b.points;
-                    });
-
-                    $scope.friends.sort(function (a, b) {
-                        return a.points > b.points;
-                    });
-                });
+                $scope.$apply(applyChallenger(data));
             });
+
+            function applyChallenger(data) {
+                $scope.challengers = [];
+                $scope.friends = [];
+
+                angular.forEach(data, function (value) {
+                    if ($rootScope.user.uid == value.uid) {
+                        return;
+                    }
+                    
+                    if ($rootScope.user.friends.indexOf(value.uid) !== -1) {
+                        $scope.friends.push(value);
+                    }
+
+                    $scope.challengers.push(value);
+                });
+                
+                $scope.challengers.sort(function (a, b) {
+                    return a.points > b.points;
+                });
+
+                $scope.friends.sort(function (a, b) {
+                    return a.points > b.points;
+                });
+            }
 
             $scope.resetSearchGame = function () {
                 $scope.searchGame = {
@@ -82,19 +86,13 @@
 
             $scope.filtersGame = function () {
                 return function (game) {
-                    if (filtersGame($scope.searchGame, game)) {
-                        return true;
-                    }
-                    return false;
+                    return !!filtersGame($scope.searchGame, game);
                 };
             };
 
             $scope.filtersChallenger = function () {
                 return function (challenger) {
-                    if (filtersChallenger($scope.searchChallenger, challenger)) {
-                        return true;
-                    }
-                    return false;
+                    return !!filtersChallenger($scope.searchChallenger, challenger);
                 };
             };
 
@@ -308,9 +306,7 @@
             freeTime();
 
             setInterval(function () {
-                $scope.$apply(function () {
-                    freeTime();
-                });
+                $scope.$apply(freeTime);
             }, 1000);     
         }
     ]);
