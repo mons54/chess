@@ -10,6 +10,7 @@
         'components.directives',
         'home.controllers',
         'home.directives',
+        'game.controllers',
         'ranking.controllers',
         'trophies.controllers'
     ]).
@@ -181,28 +182,11 @@
 
                 $rootScope.user.accessToken = res.authResponse.accessToken;
                 
-                FB.api('/me?fields=first_name,name,locale,gender,currency', function (res) {
-                    
-                    $rootScope.user.uid = res.id;
-                    $rootScope.user.firstName = res.first_name;
-                    $rootScope.user.name = res.name.substr(0, 30);
-                    $rootScope.user.lang = res.locale.substr(0, 2);
-                    $rootScope.user.gender = res.gender;
-                    $rootScope.user.currency = res.currency;
-                    $rootScope.user.friends.push($rootScope.user.uid);
-                    
-                    getDictionarie();
-
-                    FB.api('/me/friends?fields=installed,id,name', function (res) {
-                        setFriends(res.data);
-                    });
-                    
-                    socketConnect();
-                });
+                FB.api('/me?fields=first_name,name,locale,gender,currency', socketConnect);
             }
 
-            function setFriends (data) {
-                angular.forEach(data, function (value) {
+            function setFriends (res) {
+                angular.forEach(res.data, function (value) {
                     if (value.installed) {
                         $rootScope.user.friends.push(value.id);
                     }
@@ -220,15 +204,26 @@
                 });
             }
 
-            function socketConnect () {
+            function socketConnect (res) {
+                    
+                $rootScope.user.uid = res.id;
+                $rootScope.user.firstName = res.first_name;
+                $rootScope.user.name = res.name.substr(0, 30);
+                $rootScope.user.lang = res.locale.substr(0, 2);
+                $rootScope.user.gender = res.gender;
+                $rootScope.user.currency = res.currency;
+                $rootScope.user.friends.push($rootScope.user.uid);
+                    
+                getDictionarie();
+
+                FB.api('/me/friends?fields=installed,id,name', setFriends);
+
                 $rootScope.socket = io.connect();
 
-                $rootScope.socket.on('connect', function () {
-                    socketCreate();
-                });
+                $rootScope.socket.on('connect', socketInit);
             }
 
-            function socketCreate () {
+            function socketInit () {
                 $rootScope.socket.emit('init', {
                     uid: $rootScope.user.uid,
                     accessToken: $rootScope.user.accessToken,
@@ -239,6 +234,11 @@
                     angular.extend($rootScope.user, data);
                     $rootScope.loading = false;
                     ready();
+                });
+
+                $rootScope.socket.on('game', function (data) {
+                    console.log(data);
+                    // Redirect game
                 });
             }
 
@@ -255,24 +255,24 @@
 
     config(['$routeProvider',
         function($routeProvider) {
-            $routeProvider.
-            
-            when('/', {
+            $routeProvider
+            .when('/', {
                 templateUrl: '/app/home/home.html',
                 controller: 'homeCtrl'
-            }).
-
-            when('/ranking', {
+            })
+            .when('/ranking', {
                 templateUrl: '/app/ranking/ranking.html',
                 controller: 'rankingCtrl'
-            }).
-
-            when('/trophies', {
+            })
+            .when('/trophies', {
                 templateUrl: '/app/trophies/trophies.html',
                 controller: 'trophiesCtrl'
-            }).
-
-            otherwise({
+            })
+            .when('/game', {
+                templateUrl: 'app/game/game.html',
+                controller: 'gameCtrl'
+            })
+            .otherwise({
                 redirectTo: '/'
             });
         }

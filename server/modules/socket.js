@@ -264,9 +264,9 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             socket.ranking = response + 1;
 
             if (moduleSocket.getUserGame(socket.uid)) {
-                console.log('hasGame');
+                //hasGame;
             } else {
-                console.log('noGame');
+                //noGame;
             }
 
             socket.emit('infosUser', {
