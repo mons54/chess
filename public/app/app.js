@@ -132,9 +132,9 @@
         }
     ]).
 
-    run(['$rootScope', '$http', 'appId', 'lfstmedia',
+    run(['$rootScope', '$http', '$location', 'appId', 'lfstmedia',
 
-        function ($rootScope, $http, appId, lfstmedia) {
+        function ($rootScope, $http, $location, appId, lfstmedia) {
             
             $rootScope.loading = true;
 
@@ -232,23 +232,21 @@
 
                 $rootScope.socket.on('infosUser', function (data) {
                     angular.extend($rootScope.user, data);
-                    $rootScope.loading = false;
-                    ready();
                 });
 
-                $rootScope.socket.on('game', function (data) {
-                    console.log(data);
-                    // Redirect game
+                $rootScope.socket.on('game', function (gid) {
+                    $location.path('/game/' + gid);
                 });
+
+                $rootScope.socket.on('ready', function () {
+                    lfstmedia.init();
+                    $rootScope.$apply(applyReady);
+                })
             }
 
-            function ready () {
-
-                lfstmedia.init();
-
-                $rootScope.$apply(function () {
-                    $rootScope.ready = true;
-                });
+            function applyReady () {
+                $rootScope.ready = true;
+                $rootScope.loading = false;
             }
         }
     ]).
@@ -268,7 +266,7 @@
                 templateUrl: '/app/trophies/trophies.html',
                 controller: 'trophiesCtrl'
             })
-            .when('/game', {
+            .when('/game/:id', {
                 templateUrl: 'app/game/game.html',
                 controller: 'gameCtrl'
             })

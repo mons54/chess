@@ -47,6 +47,10 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             }
         });
 
+        socket.on('initGame', function (gid) {
+            moduleSocket.initGame(gid, socket);
+        });
+
         socket.on('challenge', function (data) {
 
             if (!data || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid)) {

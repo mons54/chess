@@ -22,6 +22,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         }
 
         if (socketOpponent && !socketOpponent.game) {
+            // pareil pour challenge
             moduleSocket.startGame(uid, moduleGame.createdGame[uid], socket, socketOpponent);
         } else {
             moduleGame.deleteCreatedGame(uid);
@@ -65,13 +66,22 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             };
         }
 
-        var game = moduleGame.start(white, black, dataGame.time);
 
-        moduleSocket.userGames[socket.uid] = game.id;
-        moduleSocket.userGames[socketOpponent.uid] = game.id;
+        var gid = moduleGame.start(white, black, dataGame.time),
+            room = moduleGame.getRoom(gid);
 
-        socket.emit('game', game);
-        socketOpponent.emit('game', game);
+        moduleSocket.userGames[socket.uid] = gid;
+        moduleSocket.userGames[socketOpponent.uid] = gid;
+
+        socket.join(room);
+        socketOpponent.join(room);
+
+        io.emit('game', gid);
+    };
+
+    moduleSocket.initGame = function (gid, socket) {
+        var game = moduleGame.getGame(gid);
+        socket.emit('initGame', game);
     };
 
     moduleSocket.setChallenges = function (socket, key, value) {
@@ -261,13 +271,8 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             return mongoose.promise.count('users', { actif: 1, points: { $gt: socket.points } });
         })
         .then(function (response) {
-            socket.ranking = response + 1;
 
-            if (moduleSocket.getUserGame(socket.uid)) {
-                //hasGame;
-            } else {
-                //noGame;
-            }
+            socket.ranking = response + 1;
 
             socket.emit('infosUser', {
                 moderateur: socket.moderateur,
@@ -278,10 +283,20 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
                 trophies: this.trophies
             });
 
-            socket.join('home', function () {
-                moduleSocket.connected();
-            });
-            socket.emit('listGames', moduleGame.createdGame);
+            var gid = moduleSocket.getUserGame(socket.uid);
+
+            if (gid) {
+                socket.join(moduleGame.getRoom(gid));
+                socket.emit('game', gid);
+            } else {
+                socket.join('home', function () {
+                    moduleSocket.connected();
+                });
+                socket.emit('listGames', moduleGame.createdGame);
+            }
+
+            socket.emit('ready');
+
         });
     };
 

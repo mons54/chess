@@ -92,6 +92,14 @@ module.exports = moduleGame = function () {
         return new moduleEngine(game, start, end, promotion);
     };
 
+    moduleGame.getGame = function (gid) {
+        return moduleGame.games.data[gid];
+    };
+
+    moduleGame.getRoom = function (gid) {
+        return 'game' + gid;
+    };
+
     moduleGame.start = function (white, black, time) {
 
         var gid = moduleGame.games.id++,
@@ -359,7 +367,9 @@ module.exports = moduleGame = function () {
             }
         };
 
-        return moduleGame.games[gid] = game;
+        moduleGame.games.data[gid] = game;
+
+        return gid;
     };
 
     return moduleGame;
