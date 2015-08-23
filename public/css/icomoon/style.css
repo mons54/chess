@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?a196tv');
-	src:url('fonts/icomoon.eot?#iefixa196tv') format('embedded-opentype'),
-		url('fonts/icomoon.woff?a196tv') format('woff'),
-		url('fonts/icomoon.ttf?a196tv') format('truetype'),
-		url('fonts/icomoon.svg?a196tv#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?gdb6kz');
+	src:url('fonts/icomoon.eot?#iefixgdb6kz') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?gdb6kz') format('truetype'),
+		url('fonts/icomoon.woff?gdb6kz') format('woff'),
+		url('fonts/icomoon.svg?gdb6kz#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,91 +23,87 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-chess-king:before {
+	content: "\e972";
+}
+.icon-chess-queen:before {
+	content: "\e973";
+}
+.icon-chess-rock:before {
+	content: "\e974";
+}
+.icon-chess-bishop:before {
+	content: "\e975";
+}
+.icon-chess-knight:before {
+	content: "\e976";
+}
+.icon-chess-pawn:before {
+	content: "\e977";
+}
 .icon-bubble:before {
 	content: "\eac1";
 }
-
 .icon-home:before {
 	content: "\e001";
 }
-
 .icon-color:before {
 	content: "\e021";
 }
-
 .icon-king:before {
 	content: "\e058";
 }
-
 .icon-shop:before {
 	content: "\e0c8";
 }
-
 .icon-time:before {
 	content: "\e102";
 }
-
 .icon-invite-friends:before {
 	content: "\e188";
 }
-
 .icon-ranking:before {
 	content: "\e216";
 }
-
 .icon-points:before {
 	content: "\e21f";
 }
-
 .icon-reset:before {
 	content: "\e364";
 }
-
 .icon-close:before {
 	content: "\e36b";
 }
-
 .icon-valid:before {
 	content: "\e370";
 }
-
 .icon-more:before {
 	content: "\e376";
 }
-
 .icon-sound-on:before {
 	content: "\e38f";
 }
-
 .icon-sound-off:before {
 	content: "\e393";
 }
-
 .icon-arrow-up:before {
 	content: "\e3b0";
 }
-
 .icon-arrow-right:before {
 	content: "\e3b1";
 }
-
 .icon-arrow-down:before {
 	content: "\e3b2";
 }
-
 .icon-arrow-left:before {
 	content: "\e3b3";
 }
-
 .icon-sort-up:before {
 	content: "\e3b4";
 }
-
 .icon-sort-down:before {
 	content: "\e3b6";
 }
-
 .icon-filter:before {
 	content: "\e445";
 }
-
