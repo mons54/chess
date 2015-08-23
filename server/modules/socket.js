@@ -81,7 +81,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
 
     moduleSocket.initGame = function (gid, socket) {
         var game = moduleGame.getGame(gid);
-        socket.emit('initGame', game);
+        socket.emit('game', game);
     };
 
     moduleSocket.setChallenges = function (socket, key, value) {

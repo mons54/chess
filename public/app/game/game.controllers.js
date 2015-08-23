@@ -10,17 +10,28 @@
 
             $rootScope.socket.emit('initGame', $routeParams.id);
 
-            $rootScope.socket.on('initGame', function (data) {
+            $rootScope.socket.on('game', function (data) {
                 $scope.$apply(applyGame(data));
             });
 
-            function applyGame(data) {
-                if (!data) {
+            function applyGame(game) {
+                if (!game) {
                     $rootScope.user.gid = null;
                     $location.path('/');
                     return; 
                 }
-                $scope.game = data;
+
+                if ($rootScope.user.uid === game.black.uid) {
+                    $scope.player1 = game.black;
+                    $scope.player2 = game.white;
+                } else {
+                    $scope.player1 = game.white;
+                    $scope.player2 = game.black;
+                }
+
+                console.log($scope.player1);
+
+                $scope.game = game;
             }
 
             $scope.move = function (position) {

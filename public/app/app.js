@@ -246,7 +246,7 @@
                     angular.extend($rootScope.user, data);
                 });
 
-                $rootScope.socket.on('game', function (gid) {
+                $rootScope.socket.on('startGame', function (gid) {
                     $rootScope.$apply(applyUserGid(gid));
                 });
 
