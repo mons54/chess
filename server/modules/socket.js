@@ -76,7 +76,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         socket.join(room);
         socketOpponent.join(room);
 
-        io.emit('game', gid);
+        io.emit('startGame', gid);
     };
 
     moduleSocket.initGame = function (gid, socket) {
@@ -287,7 +287,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
 
             if (gid) {
                 socket.join(moduleGame.getRoom(gid));
-                socket.emit('game', gid);
+                socket.emit('startGame', gid);
             } else {
                 socket.join('home', function () {
                     moduleSocket.connected();
