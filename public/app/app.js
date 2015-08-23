@@ -29,6 +29,7 @@
     }).
 
     factory('utils', ['$rootScope',
+        
         function ($rootScope) {
 
             return {
@@ -135,6 +136,13 @@
     run(['$rootScope', '$http', '$location', 'appId', 'lfstmedia',
 
         function ($rootScope, $http, $location, appId, lfstmedia) {
+
+            $rootScope.$on('$routeChangeStart', function(next, current) { 
+                if (!$rootScope.user.gid) {
+                    return;
+                }
+                redirectToGame();
+            });
             
             $rootScope.loading = true;
 
@@ -160,6 +168,10 @@
 
                 getLoginStatus();
             };
+
+            function redirectToGame() {
+                $location.path('/game/' + $rootScope.user.gid);
+            }
 
             function getLoginStatus () {
                 FB.getLoginStatus(function (res) {
@@ -235,13 +247,18 @@
                 });
 
                 $rootScope.socket.on('game', function (gid) {
-                    $location.path('/game/' + gid);
+                    $rootScope.$apply(applyUserGid(gid));
                 });
 
                 $rootScope.socket.on('ready', function () {
                     lfstmedia.init();
                     $rootScope.$apply(applyReady);
                 })
+            }
+
+            function applyUserGid (gid) {
+                $rootScope.user.gid = gid;
+                redirectToGame();
             }
 
             function applyReady () {
@@ -274,7 +291,7 @@
                 redirectTo: '/'
             });
         }
-    ])
+    ]);
 
 })();
 

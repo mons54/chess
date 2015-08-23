@@ -16,7 +16,8 @@
 
             function applyGame(data) {
                 if (!data) {
-                   $location.path('/');
+                    $rootScope.user.gid = null;
+                    $location.path('/');
                     return; 
                 }
                 $scope.game = data;
