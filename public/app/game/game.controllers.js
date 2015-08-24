@@ -4,9 +4,9 @@
 
     angular.module('game.controllers', []).
 
-    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location',
+    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'utils',
         
-        function ($rootScope, $scope, $routeParams, $location) {
+        function ($rootScope, $scope, $routeParams, $location, utils) {
 
             $rootScope.socket.emit('initGame', $routeParams.id);
 
@@ -29,10 +29,37 @@
                     $scope.player2 = game.black;
                 }
 
-                console.log($scope.player1);
-
                 $scope.game = game;
+
+                countdown();
             }
+
+            function countdown() {
+
+                setTimeout(function() {
+                    $scope.$apply(countdown);
+                }, 1000);
+                
+                if (!$scope.game) {
+                    return;
+                }
+
+                var player = $scope.game[$scope.game.turn];
+
+                if (player.time >= 0) {
+                    player.time--;
+                }
+
+                if (player.timeTurn >= 0) {
+                    player.timeTurn--;
+                }
+            }
+
+            $scope.formatTime = function (time) {
+                var minute = Math.floor(time / 60),
+                    seconde = Math.floor(time - (minute * 60));
+                return utils.sprintf(minute) + ':' + utils.sprintf(seconde);
+            };
 
             $scope.move = function (position) {
                 $rootScope.socket.emit('move', position);

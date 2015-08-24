@@ -1,22 +1,44 @@
 <div class="content">
     <div class="row">
         <div class="col-md-10">
-            <div class="element">
-                <div class="profile">
-                    <img class="img profile-picture" ng-src="//graph.facebook.com/{{ player2.uid }}/picture">
-                    <span>{{ player2.name }}</span>
+            <div class="profile element">
+                <div class="pull-right">
+                    <div class="time">
+                        {{ formatTime(player2.time) }}
+                    </div>
+                    <div class="time-turn">
+                        {{ formatTime(player2.timeTurn) }}
+                    </div>
                 </div>
+                <div class="pull-left img">
+                    <img class="profile-picture" ng-src="//graph.facebook.com/{{ player2.uid }}/picture">
+                </div>
+                <div>
+                    <a href>{{ player2.name }}</a>
+                </div>
+                <div class="clear"></div>
             </div>
             <div class="element">
                 <div class="game">
                 Game...
                 </div>
             </div>
-            <div class="element">
-                <div class="profile">
-                    <img class="img profile-picture" ng-src="//graph.facebook.com/{{ player1.uid }}/picture">
-                    <span>{{ player1.name }}</span>
+            <div class="profile element">
+                <div class="pull-right">
+                    <div class="time">
+                        {{ formatTime(player1.time) }}
+                    </div>
+                    <div class="time-turn">
+                        {{ formatTime(player1.timeTurn) }}
+                    </div>
                 </div>
+                <div class="pull-left img">
+                    <img class="profile-picture" ng-src="//graph.facebook.com/{{ player1.uid }}/picture">
+                </div>
+                <div>
+                    <a href>{{ player1.name }}</a>
+                </div>
+                <div class="clear"></div>
             </div>
         </div>
     </div>

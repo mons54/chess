@@ -1,7 +1,7 @@
 <div class="content">
     <div class="row">
         <div class="col-md-10">
-            <div class="profil element">
+            <div class="profile element">
                 <div class="pull-right">
                     <button data-toggle="modal" data-target="#modal-create-game" class="btn btn-primary">{{ text.create_game }}</button>
                 </div>
@@ -47,7 +47,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="game in filteredCreatedGames = (createdGames | orderBy:predicate:reverse | filter:filtersGame())">
-                                <td><img class="img profile-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture"></td>
+                                <td><img class="profile-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture"></td>
                                 <td>
                                     <span class="user-name">{{ game.name }}</span>
                                 </td>
@@ -98,7 +98,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="challenge in challenges | orderBy:predicate:reverse">
-                                <td><img class="img profile-picture" ng-src="//graph.facebook.com/{{ challenge.uid }}/picture"></td>
+                                <td><img class="profile-picture" ng-src="//graph.facebook.com/{{ challenge.uid }}/picture"></td>
                                 <td>{{ challenge.name }}</td>
                                 <td class="text-center">{{ challenge.points }}</td>
                                 <td class="text-center">{{ challenge.ranking }}</td>
@@ -144,7 +144,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="challenger in filteredChallengers = (challengers | orderBy:predicate:reverse | filter:filtersChallenger())">
-                                <td><img class="img profile-picture" ng-src="//graph.facebook.com/{{ challenger.uid }}/picture"></td>
+                                <td><img class="profile-picture" ng-src="//graph.facebook.com/{{ challenger.uid }}/picture"></td>
                                 <td>{{ challenger.name }}</td>
                                 <td class="text-center">{{ challenger.points }}</td>
                                 <td class="text-center">{{ challenger.ranking }}</td>
@@ -186,7 +186,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="friend in friends | orderBy:predicate:reverse">
-                                <td><img class="img profile-picture" ng-src="//graph.facebook.com/{{ friend.uid }}/picture"></td>
+                                <td><img class="profile-picture" ng-src="//graph.facebook.com/{{ friend.uid }}/picture"></td>
                                 <td>{{ friend.name }}</td>
                                 <td class="text-center">{{ friend.points }}</td>
                                 <td class="text-center">{{ friend.ranking }}</td>
