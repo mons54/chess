@@ -1,0 +1,15 @@
+<div class="pull-right">
+    <div class="time">
+        {{ formatTime(player.time) }}
+    </div>
+    <div class="time time-turn">
+        {{ formatTime(player.timeTurn) }}
+    </div>
+</div>
+<div class="pull-left img">
+    <img class="profile-picture" ng-src="//graph.facebook.com/{{ player.uid }}/picture">
+</div>
+<div>
+    <a href>{{ player.name }}</a>
+</div>
+<div class="clear"></div>

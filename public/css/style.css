@@ -292,7 +292,24 @@ header #header iframe {
     padding-top: 5px;
 }
 
-/********** Trophies ********/
+/******* Game ********/
+
+.game .profile .time {
+    text-align: center;
+    font-size: 12px;
+    background-color: #3A3A3A;
+    color: #fff;
+    width: 50px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 5px;
+}
+
+.game .profile .time-turn {
+    margin-top: 5px;
+}
+
+/******* Trophies ********/
 
 .content .element.trophies {
     padding: 10px;

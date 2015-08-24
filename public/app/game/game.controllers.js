@@ -4,9 +4,9 @@
 
     angular.module('game.controllers', []).
 
-    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'utils',
+    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location',
         
-        function ($rootScope, $scope, $routeParams, $location, utils) {
+        function ($rootScope, $scope, $routeParams, $location) {
 
             $rootScope.socket.emit('initGame', $routeParams.id);
 
@@ -46,23 +46,38 @@
 
                 var player = $scope.game[$scope.game.turn];
 
-                if (player.time >= 0) {
+                if (player.timeTurn > player.time) {
+                    player.timeTurn = player.time;
+                }
+
+                if (player.time > 0) {
                     player.time--;
                 }
 
-                if (player.timeTurn >= 0) {
+                if (player.timeTurn > 0) {
                     player.timeTurn--;
                 }
             }
 
-            $scope.formatTime = function (time) {
-                var minute = Math.floor(time / 60),
-                    seconde = Math.floor(time - (minute * 60));
-                return utils.sprintf(minute) + ':' + utils.sprintf(seconde);
-            };
-
             $scope.move = function (position) {
                 $rootScope.socket.emit('move', position);
+            };
+        }
+    ]).
+    
+    controller('profileGameCtrl', ['$rootScope', '$scope', 'utils',
+        
+        function ($rootScope, $scope, utils) {
+            
+            $scope.formatTime = function (time) {
+                if (typeof time === 'undefined') {
+                    return;
+                }
+
+                var minute = Math.floor(time / 60),
+                    seconde = Math.floor(time - (minute * 60));
+
+                return utils.sprintf(minute) + ':' + utils.sprintf(seconde);
             };
         }
     ]);

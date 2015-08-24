@@ -11,6 +11,7 @@
         'home.controllers',
         'home.directives',
         'game.controllers',
+        'game.directives',
         'ranking.controllers',
         'trophies.controllers'
     ]).
