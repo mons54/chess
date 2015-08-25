@@ -14,6 +14,14 @@
                 $scope.$apply(applyGame(data));
             });
 
+            $scope.getPieceClass = function (position) {
+                console.log(position);
+                if (!$scope.game.pieces[position]) {
+                    return;
+                }
+                return 'icon icon-' + $scope.game.pieces[position].color + ' icon-chess-' + $scope.game.pieces[position].name;
+            };
+
             function applyGame(game) {
                 if (!game) {
                     $rootScope.user.gid = null;
@@ -21,12 +29,17 @@
                     return; 
                 }
 
+                $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+                $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
                 if ($rootScope.user.uid === game.black.uid) {
                     $scope.player1 = game.black;
                     $scope.player2 = game.white;
+                    $scope.orientation = 'black';
                 } else {
                     $scope.player1 = game.white;
                     $scope.player2 = game.black;
+                    $scope.orientation = 'white';
                 }
 
                 $scope.game = game;

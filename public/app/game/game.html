@@ -1,10 +1,14 @@
-<div class="game content">
+<div class="content">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-8">
             <div class="profile element" profile-game player="player2"></div>
             <div class="element">
-                <div class="game">
-                Game...
+                <div class="game" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
+                    <div ng-repeat="number in numbers" class="game-row">
+                        <div ng-repeat="letter in letters" class="game-box">
+                            <span ng-class="getPieceClass('{{letter + number}}')"></span>
+                        </div> 
+                    </div>
                 </div>
             </div>
             <div class="profile element" profile-game player="player1"></div>

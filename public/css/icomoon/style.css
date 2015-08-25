@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?gdb6kz');
-	src:url('fonts/icomoon.eot?#iefixgdb6kz') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?gdb6kz') format('truetype'),
-		url('fonts/icomoon.woff?gdb6kz') format('woff'),
-		url('fonts/icomoon.svg?gdb6kz#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?d5oxer');
+	src:url('fonts/icomoon.eot?#iefixd5oxer') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?d5oxer') format('truetype'),
+		url('fonts/icomoon.woff?d5oxer') format('woff'),
+		url('fonts/icomoon.svg?d5oxer#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -29,7 +29,7 @@
 .icon-chess-queen:before {
 	content: "\e973";
 }
-.icon-chess-rock:before {
+.icon-chess-rook:before {
 	content: "\e974";
 }
 .icon-chess-bishop:before {
