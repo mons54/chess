@@ -18,33 +18,38 @@
         return {
             link: function (scope, element, attr) {
                 var piece = scope.game.pieces[attr.position];
-                if (scope.isPlayerTurn() && piece.color === scope.game.turn && (piece.deplace.length || piece.capture.length)) {
-                    $(element).draggable({
-                        helper: 'clone',
-                        zIndex: '99999',
-                        start: function (event, ui) {
-                            angular.forEach(piece.deplace, function (value) {
-                                if (value) {
-                                    //deplace(position, value, piece);
-                                }
-                            });
-                            angular.forEach(piece.capture, function (value) {
-                                if (value) {
-                                    //capture(position, value, piece);
-                                }
-                            });
-                        },
-                        stop: function (event, ui) {
-                            angular.forEach(piece.deplace, function (value) {
-                                if (value) {
-                                    //destroyDroppable(value);
-                                }
-                            });
-                            angular.forEach(piece.capture, function (value) {
-                                if (value) {
-                                    //destroyDroppable(value);
-                                }
-                            });
+                if (!scope.isPlayerTurn() || piece.color !== scope.game.turn || (!piece.deplace.length && !piece.capture.length)) {
+                    return;
+                }
+                $(element).draggable({
+                    helper: 'clone',
+                    zIndex: '99999',
+                    start: start,
+                    stop: stop
+                });
+
+                function start(event, ui) {
+                    angular.forEach(piece.deplace.concat(piece.capture), function (value) {
+                        droppable(value);
+                    });
+                }
+
+                function stop(event, ui) {
+                    angular.forEach(piece.deplace.concat(piece.capture), function (value) {
+                        angular.element('#' + value).droppable('destroy')
+                    });
+                }
+
+                function droppable(position) {
+                    angular.element('#' + position).droppable({
+                        drop: function (event, ui) {
+                           $('.piece').draggable({
+                                disabled: true
+                            }).removeClass('ui-draggable');
+
+                            $(event.target).append(ui.draggable);
+
+                            scope.move(piece, attr.position, position);
                         }
                     });
                 }

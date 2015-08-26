@@ -18,7 +18,7 @@
                 if (!$scope.game.pieces[position]) {
                     return;
                 }
-                return 'icon icon-' + $scope.game.pieces[position].color + ' icon-chess-' + $scope.game.pieces[position].name;
+                return 'piece icon icon-' + $scope.game.pieces[position].color + ' icon-chess-' + $scope.game.pieces[position].name;
             };
 
             function applyGame(game) {
@@ -76,8 +76,14 @@
                 return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
             }
 
-            $scope.move = function (position) {
-                $rootScope.socket.emit('move', position);
+            $scope.move = function (start, end) {
+                // add promotion if need
+                $rootScope.socket.emit('move', {
+                    id: $scope.game.id,
+                    start: start,
+                    end: end,
+                    //promotion: promotion
+                });
             };
         }
     ]).
