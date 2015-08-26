@@ -15,7 +15,6 @@
             });
 
             $scope.getPieceClass = function (position) {
-                console.log(position);
                 if (!$scope.game.pieces[position]) {
                     return;
                 }
@@ -30,12 +29,13 @@
                 }
 
                 $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-                $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8'];
+                $scope.numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
                 if ($rootScope.user.uid === game.black.uid) {
                     $scope.player1 = game.black;
                     $scope.player2 = game.white;
                     $scope.orientation = 'black';
+                    $scope.numbers.reverse();
                 } else {
                     $scope.player1 = game.white;
                     $scope.player2 = game.black;
@@ -70,6 +70,10 @@
                 if (player.timeTurn > 0) {
                     player.timeTurn--;
                 }
+            }
+
+            $scope.isPlayerTurn = function() {
+                return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
             }
 
             $scope.move = function (position) {
