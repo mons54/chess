@@ -6,7 +6,7 @@
                 <div class="game" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
                     <div ng-repeat="number in numbers" class="game-row">
                         <div ng-repeat="letter in letters" id="{{letter + number}}" class="game-box">
-                            <span ng-if="game.pieces[letter + number]" ng-class="getPieceClass('{{letter + number}}')" draggable data-position="{{letter + number}}"></span>
+                            <span class="piece" ng-class="getPieceClass('{{letter + number}}')" draggable data-position="{{letter + number}}"></span>
                         </div> 
                     </div>
                 </div>

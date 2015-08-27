@@ -43,8 +43,6 @@
                 }
 
                 $scope.game = game;
-
-                countdown();
             }
 
             function countdown() {
@@ -72,13 +70,14 @@
                 }
             }
 
+            countdown();
+
             $scope.isPlayerTurn = function() {
                 return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
             }
 
             $scope.move = function (start, end) {
-                // add promotion if need
-                $rootScope.socket.emit('move', {
+                $rootScope.socket.emit('moveGame', {
                     id: $scope.game.id,
                     start: start,
                     end: end,

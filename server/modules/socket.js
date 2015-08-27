@@ -16,17 +16,8 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         return moduleSocket.userGames[uid];
     };
 
-    moduleSocket.startCreatedGame = function (uid, socket, socketOpponent) {
-        if (!moduleGame.createdGame[uid]) {
-            return;
-        }
-
-        if (socketOpponent && !socketOpponent.game) {
-            // pareil pour challenge
-            moduleSocket.startGame(uid, moduleGame.createdGame[uid], socket, socketOpponent);
-        } else {
-            moduleGame.deleteCreatedGame(uid);
-        }
+    moduleSocket.checkStartGame = function (uid, socket) {
+        return moduleSocket.checkSocketUid(socket) && !moduleSocket.getUserGame(socket.uid) && socket.uid !== uid;
     };
 
     moduleSocket.startGame = function (uid, dataGame, socket, socketOpponent) {
@@ -76,12 +67,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         socket.join(room);
         socketOpponent.join(room);
 
-        io.emit('startGame', gid);
-    };
-
-    moduleSocket.initGame = function (gid, socket) {
-        var game = moduleGame.getGame(gid);
-        socket.emit('game', game);
+        io.to(room).emit('startGame', gid);
     };
 
     moduleSocket.setChallenges = function (socket, key, value) {

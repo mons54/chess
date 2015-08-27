@@ -17,42 +17,52 @@
     .directive('draggable', function () {
         return {
             link: function (scope, element, attr) {
-                var piece = scope.game.pieces[attr.position];
-                if (!scope.isPlayerTurn() || piece.color !== scope.game.turn || (!piece.deplace.length && !piece.capture.length)) {
-                    return;
-                }
-                $(element).draggable({
-                    helper: 'clone',
-                    zIndex: '99999',
-                    start: start,
-                    stop: stop
+
+
+                scope.$watch('game', function (game) {
+
+                    var piece = game.pieces[attr.position];
+
+                    if (!piece || !scope.isPlayerTurn() || piece.color !== game.turn || (!piece.deplace.length && !piece.capture.length)) {
+                        return;
+                    }
+
+                    element.draggable({
+                        disabled: false,
+                        helper: 'clone',
+                        zIndex: '99999',
+                        start: start,
+                        stop: stop
+                    });
+
+                    function start(event, ui) {
+                        angular.forEach(piece.deplace.concat(piece.capture), function (value) {
+                            droppable(value);
+                        });
+                    }
+
+                    function stop(event, ui) {
+                        angular.forEach(piece.deplace.concat(piece.capture), function (value) {
+                            angular.element('#' + value).droppable('destroy')
+                        });
+                    }
+
+                    function droppable(position) {
+                        angular.element('#' + position).droppable({
+                            drop: function (event, ui) {
+                                angular.element('.piece').draggable({
+                                    disabled: true
+                                }).removeClass('ui-draggable');
+
+                                $(this).find('.piece').removeClass().addClass(element.attr('class'));
+
+                                element.removeClass();
+
+                                scope.move(attr.position, position);
+                            }
+                        });
+                    }
                 });
-
-                function start(event, ui) {
-                    angular.forEach(piece.deplace.concat(piece.capture), function (value) {
-                        droppable(value);
-                    });
-                }
-
-                function stop(event, ui) {
-                    angular.forEach(piece.deplace.concat(piece.capture), function (value) {
-                        angular.element('#' + value).droppable('destroy')
-                    });
-                }
-
-                function droppable(position) {
-                    angular.element('#' + position).droppable({
-                        drop: function (event, ui) {
-                           $('.piece').draggable({
-                                disabled: true
-                            }).removeClass('ui-draggable');
-
-                            $(event.target).append(ui.draggable);
-
-                            scope.move(piece, attr.position, position);
-                        }
-                    });
-                }
             }
         };
     });

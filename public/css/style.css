@@ -318,7 +318,6 @@ header #header iframe {
     float: left;
     width: 60px;
     height: 100%;
-    padding: 14px;
 }
 
 .game-white {
@@ -346,7 +345,9 @@ header #header iframe {
 }
 
 .game-box .icon {
+    display: block;
     font-size: 32px;
+    padding: 14px;
 }
 
 .game-box .icon-white {

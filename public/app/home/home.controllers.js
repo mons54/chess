@@ -151,10 +151,8 @@
             };
 
             $scope.startGame = function (uid, challenge) {
-                $rootScope.socket.emit('startGame', {
-                    uid: uid,
-                    challenge: challenge
-                });
+                // todo create startChallenge()
+                $rootScope.socket.emit('startGame', uid);
             };
 
             $scope.openModalChallenge = function (challenger) {
