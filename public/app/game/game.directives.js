@@ -43,7 +43,7 @@
 
                     function stop(event, ui) {
                         angular.forEach(piece.deplace.concat(piece.capture), function (value) {
-                            angular.element('#' + value).droppable('destroy')
+                            angular.element('#' + value).droppable('destroy');
                         });
                     }
 
@@ -54,9 +54,9 @@
                                     disabled: true
                                 }).removeClass('ui-draggable');
 
-                                $(this).find('.piece').removeClass().addClass(element.attr('class'));
+                                angular.element(this).find('.piece').removeClass().addClass(element.attr('class'));
 
-                                element.removeClass();
+                                element.removeClass().addClass('piece');
 
                                 scope.move(attr.position, position);
                             }

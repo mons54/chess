@@ -16,11 +16,11 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         return moduleSocket.userGames[uid];
     };
 
-    moduleSocket.checkStartGame = function (uid, socket) {
+    moduleSocket.checkStartGame = function (socket, uid) {
         return moduleSocket.checkSocketUid(socket) && !moduleSocket.getUserGame(socket.uid) && socket.uid !== uid;
     };
 
-    moduleSocket.startGame = function (uid, dataGame, socket, socketOpponent) {
+    moduleSocket.startGame = function (socket, socketOpponent, uid, dataGame) {
         
         moduleGame.deleteCreatedGame(uid);
         moduleGame.deleteCreatedGame(socket.uid);

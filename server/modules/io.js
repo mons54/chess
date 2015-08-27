@@ -34,7 +34,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
         });
 
         socket.on('startGame', function (uid) {
-            if (!moduleSocket.checkStartGame(uid, socket) || !moduleGame.createdGame[uid]) {
+            if (!moduleSocket.checkStartGame(socket, uid) || !moduleGame.createdGame[uid]) {
                 return;
             }
 
@@ -42,7 +42,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
 
             if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
                 // pareil pour challenge
-                moduleSocket.startGame(uid, moduleGame.createdGame[uid], socket, socketOpponent);
+                moduleSocket.startGame(socket, socketOpponent, uid, moduleGame.createdGame[uid]);
             } else {
                 moduleGame.deleteCreatedGame(uid);
             }
@@ -60,7 +60,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
                 return;
             }
 
-            var game = moduleGame.move(data.id, data.start, data.end, data.promotion, socket);
+            var game = moduleGame.move(socket, data.id, data.start, data.end, data.promotion);
 
             if (game) {
                 io.to(moduleGame.getRoom(data.id)).emit('game', game);

@@ -79,16 +79,12 @@ module.exports = moduleGame = function () {
         return pointsMin < pointsMax;
     };
 
-    moduleGame.isPlayerTurn = function (game, socket) {
-        return game[game.turn].uid === socket.uid;
-    };
-
-    moduleGame.move = function (id, start, end, promotion, socket) {
+    moduleGame.move = function (socket, id, start, end, promotion) {
         
         var game = moduleGame.getGame(id);
 
-        // ajouter une vérif si c'est au joueur de jouer (voir si son temps est dépassé)
-        if (!game || game.finish || !moduleGame.isPlayerTurn(game, socket)) {
+        // voir si son temps est dépassé
+        if (!game || game.finish || game[game.turn].uid !== socket.uid) {
             return;
         }
 
