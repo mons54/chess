@@ -252,7 +252,7 @@
                 });
 
                 $rootScope.socket.on('ready', function () {
-                    lfstmedia.init();
+                    //lfstmedia.init();
                     $rootScope.$apply(applyReady);
                 })
             }
