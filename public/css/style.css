@@ -29,6 +29,14 @@ a:hover, a:active, a:visited, a:focus {
     user-select: none;
 }
 
+.ui-draggable {
+    cursor: move;
+}
+
+.ui-draggable-disabled {
+    cursor: auto;
+}
+
 /*** Bootstrap ***/
 
 .table {
@@ -319,41 +327,60 @@ header #header iframe {
     margin-top: 5px;
 }
 
-.game {
-    background-color: #fff;
+.content .notation {
+    float: right;
+    width: 105px;
+    margin-top: 10px;
+}
+
+.content .notation .element {
+    height: 252px;
+    width: 100%;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.content .game {
+    width: 514px;
 }
 
 .game > .game-row {
     width: 100%;
-    height: 60px;
+    height: 64px;
 }
 
 .game > .game-row > .game-box {
     float: left;
-    width: 60px;
+    width: 64px;
     height: 100%;
+    background-color: rgb(255, 255, 255);
 }
 
-.game-white .game-row:nth-child(odd) .game-box:nth-child(even) {
-    background-color: #7D747A;
+.game > .game-row > .game-box.ui-droppable {
+    background-color: rgb(205, 205, 205);
 }
 
-.game-white .game-row:nth-child(even) .game-box:nth-child(odd) {
-    background-color: #7D747A;
-}
-
-.game-black .game-row:nth-child(even) .game-box:nth-child(odd) {
-    background-color: #7D747A;
-}
-
+.game-white .game-row:nth-child(odd) .game-box:nth-child(even),
+.game-white .game-row:nth-child(even) .game-box:nth-child(odd),
+.game-black .game-row:nth-child(even) .game-box:nth-child(odd),
 .game-black .game-row:nth-child(odd) .game-box:nth-child(even) {
-    background-color: #7D747A;
+    background-color: rgb(120, 120, 120);
+}
+
+.game-white .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(even),
+.game-white .game-row:nth-child(even) .game-box.ui-droppable:nth-child(odd),
+.game-black .game-row:nth-child(even) .game-box.ui-droppable:nth-child(odd),
+.game-black .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(even) {
+    background-color: rgb(80, 80, 80);
 }
 
 .game-box .icon {
     display: block;
     font-size: 32px;
-    padding: 14px;
+    padding: 16px;
 }
 
 .game-box .icon-white {

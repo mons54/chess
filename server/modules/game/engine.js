@@ -27,9 +27,13 @@ Engine.prototype.init = function (start, end, promotion) {
         pieceStart = this.getPawnPromotion(pieceStart.color, promotion);
     }
 
-    if (typeMove == 'capture') {
+    var extension = '',
+        sign = typeMove === 'capture' ? 'x' : ' ';
+
+    if (typeMove === 'capture') {
         if (!pieceEnd) {
             this.deleteInPassing(end);
+            extension += ' e.p.';
         }
 
         if (pieceStart.color == 'white') {
@@ -41,8 +45,11 @@ Engine.prototype.init = function (start, end, promotion) {
 
         if (this.isCastling(pieceStart, end)) {
             this.castling(end);
+            extension += end.charAt(0) === 'c' ? ' 0-0-0' : ' 0-0';
         }
     }
+
+    this.game[this.game.turn].notation.unshift(start + sign + end + extension);
 
     this.positionInPassing = [];
 

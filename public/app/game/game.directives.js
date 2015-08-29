@@ -65,7 +65,7 @@
                     function drop(elementBox, position) {
                         angular.element('.piece').draggable({
                             disabled: true
-                        }).removeClass('ui-draggable');
+                        });
 
                         var classes = element.attr('class');
 

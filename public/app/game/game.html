@@ -1,13 +1,19 @@
 <div class="content no-select">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="profile element" profile-game player="player2"></div>
-            <div class="element">
-                <div class="game" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
-                    <div ng-repeat="number in numbers" class="game-row">
-                        <div ng-repeat="letter in letters" id="{{letter + number}}" class="game-box">
-                            <span class="piece" ng-class="getPieceClass('{{letter + number}}')" draggable data-position="{{letter + number}}"></span>
-                        </div>
+            <div class="notation">
+                <div class="element">
+                    <div ng-repeat="notation in player1.notation">{{ notation }}</div>
+                </div>
+                <div class="element">
+                    <div ng-repeat="notation in player2.notation">{{ notation }}</div>
+                </div>
+            </div>
+            <div class="game element" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
+                <div ng-repeat="number in numbers" class="game-row">
+                    <div ng-repeat="letter in letters" id="{{letter + number}}" class="game-box">
+                        <span class="piece" ng-class="getPieceClass('{{letter + number}}')" draggable data-position="{{letter + number}}"></span>
                     </div>
                 </div>
             </div>

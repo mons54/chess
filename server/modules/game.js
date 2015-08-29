@@ -124,7 +124,8 @@ module.exports = moduleGame = function () {
                     position: 'e1',
                     moveForbidden: []
                 },
-                nbPieces: nbPieces
+                nbPieces: nbPieces,
+                notation: []
             },
             black: {
                 uid: black.uid,
@@ -136,7 +137,8 @@ module.exports = moduleGame = function () {
                     position: 'e8',
                     moveForbidden: []
                 },
-                nbPieces: nbPieces
+                nbPieces: nbPieces,
+                notation: []
             },
             pieces: {
                 e1: {
