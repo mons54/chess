@@ -8,15 +8,15 @@
         return {
             templateUrl: '/app/home/templates/modal-create-game.html'
         };
-    }).
+    })
 
-    directive('modalChallenge', function () {
+    .directive('modalChallenge', function () {
         return {
             templateUrl: '/app/home/templates/modal-challenge.html'
         };
-    }).
+    })
 
-    directive('dropdownFilterGame', function () {
+    .directive('dropdownFilterGame', function () {
         return {
             templateUrl: '/app/home/templates/dropdown-filter-game.html',
             link: function (scope, element) {
@@ -25,9 +25,9 @@
                 };
             }
         };
-    }).
+    })
 
-    directive('dropdownFilterChallenger', function () {
+    .directive('dropdownFilterChallenger', function () {
         return {
             templateUrl: '/app/home/templates/dropdown-filter-challenger.html',
             link: function (scope, element) {

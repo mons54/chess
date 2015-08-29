@@ -318,6 +318,10 @@ header #header iframe {
     margin-top: 5px;
 }
 
+.game {
+    background-color: #fff;
+}
+
 .game > .game-row {
     width: 100%;
     height: 60px;
@@ -329,10 +333,6 @@ header #header iframe {
     height: 100%;
 }
 
-.game-white {
-    background-color: #fff;
-}
-
 .game-white .game-row:nth-child(odd) .game-box:nth-child(even) {
     background-color: #7D747A;
 }
@@ -341,16 +341,12 @@ header #header iframe {
     background-color: #7D747A;
 }
 
-.game-black {
+.game-black .game-row:nth-child(even) .game-box:nth-child(odd) {
     background-color: #7D747A;
 }
 
 .game-black .game-row:nth-child(odd) .game-box:nth-child(even) {
-    background-color: #fff;
-}
-
-.game-black .game-row:nth-child(even) .game-box:nth-child(odd) {
-    background-color: #fff;
+    background-color: #7D747A;
 }
 
 .game-box .icon {
@@ -366,6 +362,17 @@ header #header iframe {
 .game-box .icon-black {
     color: #000;
 }
+
+#modal-promotion .modal-body {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#modal-promotion .piece {
+    font-size: 64px;
+    margin: 0 30px;
+}
+
 /******* Trophies ********/
 
 .content .element.trophies {

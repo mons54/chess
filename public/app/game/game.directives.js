@@ -14,10 +14,17 @@
         }
     ])
 
+    .directive('modalPromotion', function () {
+        return {
+            templateUrl: '/app/game/templates/modal-promotion.html'
+        };
+    })
+
     .directive('draggable', function () {
         return {
             link: function (scope, element, attr) {
 
+                var modalPromotion = angular.element('#modal-promotion');
 
                 scope.$watch('game', function (game) {
 
@@ -50,17 +57,39 @@
                     function droppable(position) {
                         angular.element('#' + position).droppable({
                             drop: function (event, ui) {
-                                angular.element('.piece').draggable({
-                                    disabled: true
-                                }).removeClass('ui-draggable');
-
-                                angular.element(this).find('.piece').removeClass().addClass(element.attr('class'));
-
-                                element.removeClass().addClass('piece');
-
-                                scope.move(attr.position, position);
+                                drop(angular.element(this), position);
                             }
                         });
+                    }
+
+                    function drop(elementBox, position) {
+                        angular.element('.piece').draggable({
+                            disabled: true
+                        }).removeClass('ui-draggable');
+
+                        var classes = element.attr('class');
+
+                        elementBox.children().removeClass();
+                        element.removeClass().addClass('piece');
+
+                        if (isPromotion(position)) {
+                            modalPromotion.modal('show').find('.piece').click(function() {
+                                var promotion = angular.element(this).data('value');
+                                modalPromotion.find('.piece').unbind('click');
+                                move(elementBox, classes.replace('pawn', promotion), position, promotion);
+                            });
+                        } else {
+                            move(elementBox, classes, position);
+                        }
+                    }
+
+                    function move(elementBox, classes, position, promotion) {
+                        elementBox.children().addClass(classes);
+                        scope.move(attr.position, position, promotion);
+                    }
+
+                    function isPromotion(position) {
+                        return piece.name === 'pawn' && (position.substr(-1) === '1' || position.substr(-1) === '8');
                     }
                 });
             }

@@ -76,12 +76,12 @@
                 return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
             }
 
-            $scope.move = function (start, end) {
+            $scope.move = function (start, end, promotion) {
                 $rootScope.socket.emit('moveGame', {
                     id: $scope.game.id,
                     start: start,
                     end: end,
-                    //promotion: promotion
+                    promotion: promotion
                 });
             };
         }

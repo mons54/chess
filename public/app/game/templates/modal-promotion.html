@@ -1,0 +1,11 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <a href 
+            ng-repeat="piece in ['queen', 'rook', 'knight', 'bishop']" 
+            class="piece icon-chess-{{ piece }}" 
+            data-dismiss="modal"
+            data-value="{{ piece }}"></a>
+        </div>
+    </div>
+</div>

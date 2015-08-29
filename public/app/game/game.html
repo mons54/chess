@@ -1,13 +1,13 @@
-<div class="content">
+<div class="content no-select">
     <div class="row">
         <div class="col-md-8">
             <div class="profile element" profile-game player="player2"></div>
             <div class="element">
-                <div class="game no-select" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
+                <div class="game" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
                     <div ng-repeat="number in numbers" class="game-row">
                         <div ng-repeat="letter in letters" id="{{letter + number}}" class="game-box">
                             <span class="piece" ng-class="getPieceClass('{{letter + number}}')" draggable data-position="{{letter + number}}"></span>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -15,3 +15,5 @@
         </div>
     </div>
 </div>
+
+<div modal-promotion class="modal fade" id="modal-promotion"></div>
