@@ -114,6 +114,10 @@ module.exports = moduleGame = function () {
             turn50: 0,
             played: 0,
             saved: {},
+            lastTurn: {
+                start: null,
+                end: null
+            },
             white: {
                 uid: white.uid,
                 name: white.name,

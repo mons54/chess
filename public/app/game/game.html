@@ -12,8 +12,13 @@
             </div>
             <div class="game element" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
                 <div ng-repeat="number in numbers" class="game-row">
-                    <div ng-repeat="letter in letters" id="{{letter + number}}" class="game-box">
-                        <span class="piece" ng-class="getPieceClass('{{letter + number}}')" draggable data-position="{{letter + number}}"></span>
+                    <div 
+                        ng-repeat="letter in letters" 
+                        ng-init="position = letter + number" 
+                        ng-class="isLastTurn(position)" 
+                        id="{{position}}" 
+                        class="game-box">
+                        <span class="piece" ng-class="getPieceClass(position)" draggable data-position="{{position}}"></span>
                     </div>
                 </div>
             </div>

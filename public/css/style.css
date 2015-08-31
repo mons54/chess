@@ -359,21 +359,33 @@ header #header iframe {
     background-color: rgb(255, 255, 255);
 }
 
+.game > .game-row > .game-box.last-turn {
+    background-color: rgb(150, 50, 0);
+}
+
 .game > .game-row > .game-box.ui-droppable {
     background-color: rgb(205, 205, 205);
 }
 
 .game-white .game-row:nth-child(odd) .game-box:nth-child(even),
 .game-white .game-row:nth-child(even) .game-box:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box:nth-child(odd),
-.game-black .game-row:nth-child(odd) .game-box:nth-child(even) {
+.game-black .game-row:nth-child(even) .game-box:nth-child(even),
+.game-black .game-row:nth-child(odd) .game-box:nth-child(odd) {
     background-color: rgb(120, 120, 120);
 }
 
+.game-white .game-row:nth-child(odd) .game-box.last-turn:nth-child(even),
+.game-white .game-row:nth-child(even) .game-box.last-turn:nth-child(odd),
+.game-black .game-row:nth-child(even) .game-box.last-turn:nth-child(even),
+.game-black .game-row:nth-child(odd) .game-box.last-turn:nth-child(odd) {
+    background-color: rgb(150, 50, 0);
+}
+
+
 .game-white .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(even),
 .game-white .game-row:nth-child(even) .game-box.ui-droppable:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box.ui-droppable:nth-child(odd),
-.game-black .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(even) {
+.game-black .game-row:nth-child(even) .game-box.ui-droppable:nth-child(even),
+.game-black .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(odd) {
     background-color: rgb(80, 80, 80);
 }
 
@@ -384,11 +396,11 @@ header #header iframe {
 }
 
 .game-box .icon-white {
-    color: #E1B07E;
+    color: rgb(225, 175, 125);
 }
 
 .game-box .icon-black {
-    color: #000;
+    color: rgb(0, 0, 0);
 }
 
 #modal-promotion .modal-body {

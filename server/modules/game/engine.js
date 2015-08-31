@@ -23,6 +23,11 @@ Engine.prototype.init = function (start, end, promotion) {
         return;
     }
 
+    this.game.lastTurn = {
+        start: start,
+        end: end
+    };
+
     if (this.isPawnPromotion(pieceStart, end)) {
         pieceStart = this.getPawnPromotion(pieceStart.color, promotion);
     }

@@ -21,6 +21,12 @@
                 return 'piece icon icon-' + $scope.game.pieces[position].color + ' icon-chess-' + $scope.game.pieces[position].name;
             };
 
+            $scope.isLastTurn = function (position) {
+                if ($scope.game.lastTurn.start === position || $scope.game.lastTurn.end === position) {
+                    return 'last-turn';
+                }
+            };
+
             function applyGame(game) {
                 if (!game) {
                     $rootScope.user.gid = null;
