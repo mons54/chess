@@ -11,5 +11,9 @@
 </div>
 <div>
     <a href>{{ player.name }}</a>
+    <div ng-if="isPlayerUser()" class="actions">
+        <button ng-click="offerDraw()" type="button" class="btn btn-danger">{{ 'offer_draw'|translate }}</button>
+        <button ng-click="resign()" type="button" class="btn btn-danger">{{ 'resign'|translate }}</button>
+    </div>
 </div>
 <div class="clear"></div>

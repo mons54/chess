@@ -96,6 +96,12 @@
     controller('profileGameCtrl', ['$rootScope', '$scope', 'utils',
         
         function ($rootScope, $scope, utils) {
+
+            $scope.text = $rootScope.text;
+
+            $scope.isPlayerUser = function () {
+                return $scope.player.uid && $scope.player.uid === $rootScope.user.uid;
+            };
             
             $scope.formatTime = function (time) {
                 if (typeof time === 'undefined') {
