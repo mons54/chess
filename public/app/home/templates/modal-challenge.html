@@ -3,7 +3,7 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">
                 <span aria-hidden="true">&times;</span>
-                <span class="sr-only">{{ text.cancel }}</span>
+                <span class="sr-only">{{ 'cancel'|translate }}</span>
             </button>
             <div class="profile">
                 <div class="pull-left img">
@@ -13,11 +13,11 @@
                     <a href>{{ challenger.name }}</a>
                 </div>
                 <div>
-                    <span>{{ text.points }}: </span>
+                    <span>{{ 'points'|translate }}: </span>
                     <strong>{{ challenger.points }}</strong>
                 </div>
                 <div>
-                    <span>{{ text.ranking }}: </span>
+                    <span>{{ 'ranking'|translate }}: </span>
                     <strong>{{ challenger.ranking }}</strong>
                 </div>
             </div>
@@ -25,26 +25,26 @@
         <div class="modal-body">
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label for="create-game-color" class="col-sm-2 control-label">{{ text.color }}</label>
+                    <label for="create-game-color" class="col-sm-2 control-label">{{ 'color'|translate }}</label>
                     <div class="col-sm-8">
                         <select ng-model="game.color" id="create-game-color" class="form-control">
-                            <option ng-repeat="color in paramsGame.colors" value="{{ color }}">{{ text[color] }}</option>
+                            <option ng-repeat="color in paramsGame.colors" value="{{ color }}">{{ color|translate }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="create-game-time" class="col-sm-2 control-label">{{ text.time }}</label>
+                    <label for="create-game-time" class="col-sm-2 control-label">{{ 'time'|translate }}</label>
                     <div class="col-sm-8">
                         <select ng-model="game.time" id="create-game-time" class="form-control">
-                            <option ng-repeat="time in paramsGame.times" value="{{ time }}">{{ time / 60 }} {{ text.minutes }}</option>
+                            <option ng-repeat="time in paramsGame.times" value="{{ time }}">{{ time / 60 }} {{ 'minutes'|translate }}</option>
                         </select>
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ text.cancel }}</button>
-            <button ng-click="challenge(challenger.uid)" type="button" class="btn btn-primary" data-dismiss="modal">{{ text.challenge }}</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'cancel'|translate }}</button>
+            <button ng-click="challenge(challenger.uid)" type="button" class="btn btn-primary" data-dismiss="modal">{{ 'challenge'|translate }}</button>
         </div>
     </div>
 </div>

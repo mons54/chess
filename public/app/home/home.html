@@ -3,7 +3,7 @@
         <div class="col-md-10">
             <div class="profile element">
                 <div class="pull-right">
-                    <button data-toggle="modal" data-target="#modal-create-game" class="btn btn-primary">{{ text.create_game }}</button>
+                    <button data-toggle="modal" data-target="#modal-create-game" class="btn btn-primary">{{ 'create_game' | translate }}</button>
                 </div>
                 <div class="pull-left img">
                     <img class="profile-picture" src="//graph.facebook.com/{{ user.uid }}/picture">
@@ -12,11 +12,11 @@
                     <a href>{{ user.name }}</a>
                 </div>
                 <div>
-                    <span>{{ text.points }}: </span>
-                    <strong>{{ user.points }}</strong>
+                    <span>{{ 'points'|translate }}: </span>
+                    <strong>{{ 'points'|translate }}</strong>
                 </div>
                 <div>
-                    <span>{{ text.ranking }}: </span>
+                    <span>{{ 'ranking'|translate }}: </span>
                     <strong>{{ user.ranking }}</strong>
                 </div>
                 <div class="clear"></div>
@@ -24,7 +24,7 @@
 
             <div class="element">
                 <h2>
-                    <span>{{ text.games }}</span>
+                    <span>{{ 'games'|translate }}</span>
                     <span class="info-tooltip">{{ filteredCreatedGames.length || 0 }}</span>
                     <div class="navbar-right">
                         <div dropdown-filter-game class="btn-right"></div>
@@ -77,7 +77,7 @@
             </div>
             <div ng-if="challenges.length" class="element">
                 <h2>
-                    <span>{{ text.challenges }}</span>
+                    <span>{{ 'challenges'|translate }}</span>
                     <span class="info-tooltip">{{ challenges.length }}</span>
                     <div class="navbar-right">
                         <div toggle-element class="btn-right"></div>
@@ -123,7 +123,7 @@
             </div>
             <div class="element">
                 <h2>
-                    <span>{{ text.challengers }}</span>
+                    <span>{{ 'challengers'|translate }}</span>
                     <span class="info-tooltip">{{ filteredChallengers.length || 0 }}</span>
                     <div class="navbar-right">
                         <div dropdown-filter-challenger class="btn-right"></div>
@@ -154,7 +154,7 @@
                                             data-toggle="modal" 
                                             data-target="#modal-challenge"
                                             class="btn btn-primary btn-sm">
-                                            {{ text.challenge }}
+                                            {{ 'challenge'|translate }}
                                     </button>
                                 </td>
                             </tr>
@@ -167,7 +167,7 @@
             </div>
             <div ng-if="friends.length" class="element">
                 <h2>
-                    <span>{{ text.friends }}</span>
+                    <span>{{ 'friends'|translate }}</span>
                     <span class="info-tooltip">{{ friends.length }}</span>
                     <div class="navbar-right">
                         <div toggle-element class="btn-right"></div>
@@ -196,7 +196,7 @@
                                             data-toggle="modal" 
                                             data-target="#modal-challenge"
                                             class="btn btn-primary btn-sm">
-                                            {{ text.challenge }}
+                                            {{ 'challenge'|translate }}
                                     </button>
                                 </td>
                             </tr>

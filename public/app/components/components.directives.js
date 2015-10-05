@@ -26,15 +26,15 @@
         }
     ]).
 
-    directive('apprequests', ['$rootScope',
-        function ($rootScope) {
+    directive('apprequests', ['$translate',
+        function ($translate) {
             return {
                 link: function (scope, element) {
                     element.bind('click', function () {
                         FB.ui({
                             method: 'apprequests',
-                            title: $rootScope.text.title,
-                            message: $rootScope.text.description,
+                            title: $translate('title'),
+                            message: $translate('description'),
                         });
                     });
                 }
@@ -57,8 +57,8 @@
         }
     ]).
 
-    directive('modalShop', ['$rootScope', 'utils', 'host',
-        function ($rootScope, utils, host) {
+    directive('modalShop', ['$rootScope', '$translate', 'utils', 'host',
+        function ($rootScope, $translate, utils, host) {
             return {
                 templateUrl: '/app/components/templates/modal-shop.html',
                 link: function (scope) {
@@ -68,7 +68,7 @@
                         FB.ui({
                             method: 'pay',
                             action: 'purchaseitem',
-                            product: 'https://' + host + '/item/' + token.id + '/' + $rootScope.text.tokens + '/' +  $rootScope.text.buyTokens,
+                            product: 'https://' + host + '/item/' + token.id + '/' + $translate('tokens') + '/' +  $translate('buyTokens'),
                             quantity: 1
                         }, function (response) {
                             if (response.status !== 'completed' || !response.signed_request) {
