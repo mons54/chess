@@ -305,6 +305,8 @@
                 redirectTo: '/'
             });
 
+            $translateProvider.useSanitizeValueStrategy('escape');
+
             $translateProvider.useStaticFilesLoader({
                 'prefix': 'json/dictionaries/',
                 'suffix': '.json'
