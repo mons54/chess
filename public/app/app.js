@@ -6,6 +6,7 @@
 
     module('app', [
         'ngRoute',
+        'pascalprecht.translate',
         'components.services',
         'components.directives',
         'home.controllers',
@@ -134,9 +135,9 @@
         }
     ]).
 
-    run(['$rootScope', '$http', '$location', 'appId', 'lfstmedia',
+    run(['$rootScope', '$translate', '$http', '$location', 'appId', 'lfstmedia',
 
-        function ($rootScope, $http, $location, appId, lfstmedia) {
+        function ($rootScope, $translate, $http, $location, appId, lfstmedia) {
 
             $rootScope.$on('$routeChangeStart', function(next, current) { 
                 if (!$rootScope.user.gid) {
@@ -206,17 +207,6 @@
                 });
             }
 
-            function getDictionarie () {
-                $http.get('json/dictionaries/' + $rootScope.user.lang + '.json')
-                .success(function(data) {
-                    $rootScope.text = data;
-                })
-                .error(function (err) {
-                    $rootScope.user.lang = 'en';
-                    getDictionarie();
-                });
-            }
-
             function socketConnect (res) {
                     
                 $rootScope.user.uid = res.id;
@@ -226,8 +216,8 @@
                 $rootScope.user.gender = res.gender;
                 $rootScope.user.currency = res.currency;
                 $rootScope.user.friends.push($rootScope.user.uid);
-                    
-                getDictionarie();
+
+                $translate.use($rootScope.user.lang);
 
                 FB.api('/me/friends?fields=installed,id,name', setFriends);
 
@@ -269,8 +259,8 @@
         }
     ]).
 
-    config(['$routeProvider',
-        function($routeProvider) {
+    config(['$routeProvider', '$translateProvider',
+        function($routeProvider, $translateProvider) {
             $routeProvider
             .when('/', {
                 templateUrl: '/app/home/home.html',
@@ -291,6 +281,13 @@
             .otherwise({
                 redirectTo: '/'
             });
+
+            $translateProvider.useStaticFilesLoader({
+                'prefix': 'json/dictionaries/',
+                'suffix': '.json'
+            });
+
+            $translateProvider.preferredLanguage('en');
         }
     ]);
 
