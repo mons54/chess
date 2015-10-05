@@ -4,9 +4,9 @@
 
     angular.module('trophies.controllers', []).
 
-    controller('trophiesCtrl', ['$rootScope', '$scope',
+    controller('trophiesCtrl', ['$rootScope', '$scope', 'trophies',
         
-        function ($rootScope, $scope) {
+        function ($rootScope, $scope, trophies) {
 
             $rootScope.socket.emit('leaveHome');
 
@@ -18,12 +18,11 @@
 
             $scope.trophies = [];
 
-            angular.forEach($rootScope.text.trophies.content, function (trophy, id) {
-                if (!userTrophies[id]) {
-                    trophy.class = 'no-trophy';
-                }
-                trophy.id = id;
-                $scope.trophies.push(trophy);
+            angular.forEach(trophies, function (value, key) {
+                $scope.trophies.push({
+                    id: key,
+                    css: userTrophies[key] ? value : 'no-trophy'
+                });
             });
         }
     ]);

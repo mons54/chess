@@ -30,6 +30,29 @@
         }
     }).
 
+    constant('trophies', {
+        1: '_1_game',
+        2: '_100_game',
+        3: '_500_game',
+        4: '_1000_game',
+        5: '_5000_game',
+        6: '_1_wins',
+        7: '_50_wins',
+        8: '_250_wins',
+        9: '_500_wins',
+        10: '_2000_wins',
+        11: '_5_games_day',
+        12: '_10_games_day',
+        13: '_25_games_day',
+        14: '_50_games_day',
+        15: '_100_games_day',
+        16: '_3_wins_cons',
+        17: '_5_wins_cons',
+        18: '_10_wins_cons',
+        19: '_20_wins_cons',
+        20: '_3_loses_cons'
+    }).
+
     factory('utils', ['$rootScope',
         
         function ($rootScope) {

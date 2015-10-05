@@ -79,102 +79,82 @@
       "win":"Bir kupa kazanmak",
       "content":{
          "1":{
-            "class":"_1_game",
             "title":"Acemi",
             "description":"1 oyunu oyna"
          },
          "2":{
-            "class":"_100_game",
             "title":"Yeni",
             "description":"100 oyna"
          },
          "3":{
-            "class":"_500_game",
             "title":"Ara",
             "description":"500 oyna"
          },
          "4":{
-            "class":"_1000_game",
             "title":"Gelişmiş",
             "description":"1000 oyna"
          },
          "5":{
-            "class":"_5000_game",
             "title":"Uzman",
             "description":"5000 oyna"
          },
          "6":{
-            "class":"_1_wins",
             "title":"Şampiyon Çikolata",
             "description":"1 oyunu kazanın"
          },
          "7":{
-            "class":"_50_wins",
             "title":"Şampiyon bronz",
             "description":"50 oyun kazan"
          },
          "8":{
-            "class":"_250_wins",
             "title":"Şampiyon gümüş",
             "description":"250 oyun kazan"
          },
          "9":{
-            "class":"_500_wins",
             "title":"Şampiyon altın",
             "description":"500 oyun kazan"
          },
          "10":{
-            "class":"_2000_wins",
             "title":"Şampiyon platin",
             "description":"2000 oyun kazan"
          },
          "11":{
-            "class":"_5_games_day",
             "title":"Amatör",
             "description":"Bir günde 5 oyna"
          },
          "12":{
-            "class":"_10_games_day",
             "title":"Tutkunları",
             "description":"Bir günde 10 oyna"
          },
          "13":{
-            "class":"_25_games_day",
             "title":"Fan",
             "description":"Bir günde 25 oyna"
          },
          "14":{
-            "class":"_50_games_day",
             "title":"Hayran",
             "description":"Bir günde 50 oyna"
          },
          "15":{
-            "class":"_100_games_day",
             "title":"Bağımlı",
             "description":"Bir günde 100 oyna"
          },
          "16":{
-            "class":"_3_wins_cons",
             "title":"Kazanan",
             "description":"3 ardışık oyunlar Win"
          },
          "17":{
-            "class":"_5_wins_cons",
             "title":"Fatih",
             "description":"5 ardışık oyunlar Win"
          },
          "18":{
-            "class":"_10_wins_cons",
             "title":"Katil",
             "description":"10 ardışık oyunlar Win"
          },
          "19":{
-            "class":"_20_wins_cons",
             "title":"Yenilmez",
             "description":"20 ardışık oyunlar Win"
          },
          "20":{
-            "class":"_3_loses_cons",
             "title":"Mağlup",
             "description":"3 ardışık oyunlar Lose"
          }
