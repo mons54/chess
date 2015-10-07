@@ -48,6 +48,11 @@ a:hover, a:active, a:visited, a:focus {
     line-height: 1.2;
 }
 
+.modal-content-no-body .modal-footer {
+    border-top: 0;
+    padding-top: 0;
+}
+
 /*** Icomoon ***/
 
 [class^="icon-"], [class*=" icon-"] {
@@ -232,6 +237,10 @@ header #header iframe {
 
 .profile .img {
     padding-right: 10px;
+}
+
+.profile-game .actions {
+    margin-right: 20px;
 }
 
 .content .dropdown-filter {
