@@ -91,8 +91,39 @@ module.exports = moduleGame = function () {
         return game = new moduleEngine(game, start, end, promotion);
     };
 
+    moduleGame.resign = function (socket, id) {
+        
+        var game = moduleGame.getGame(id);
+
+        if (!game || game.finish || !moduleGame.isPlayer(game, socket.uid)) {
+            return;
+        }
+
+        game.finish = true;
+
+        if (game.white.uid === socket.uid) {
+            game.result.winner = 2;
+        } else {
+            game.result.winner = 1;
+        }
+
+        game.result.name = 'resign';
+
+        moduleGame.deleteGame(game.id);
+
+        return game;
+    };
+
+    moduleGame.isPlayer = function (game, uid) {
+        return game.white.uid === uid || game.black.uid === uid;
+    };
+
     moduleGame.getGame = function (gid) {
         return moduleGame.games.data[gid];
+    };
+
+    moduleGame.deleteGame = function (gid) {
+        delete moduleGame.games.data[gid];
     };
 
     moduleGame.getRoom = function (gid) {
@@ -114,6 +145,7 @@ module.exports = moduleGame = function () {
             turn50: 0,
             played: 0,
             saved: {},
+            result: {},
             lastTurn: {
                 start: null,
                 end: null

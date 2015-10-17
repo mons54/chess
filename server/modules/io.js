@@ -18,58 +18,9 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             moduleSocket.initUser(socket);
         });
 
-        socket.on('createGame', function (data) {
-            if (!data || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid) || !moduleGame.create(socket, data)) {
-                return;
-            }
-            moduleSocket.listGames(moduleGame.createdGame);
-        });
-
-        socket.on('removeGame', function () {
-            if (!moduleSocket.checkSocketUid(socket)) {
-                return;
-            }
-            moduleGame.deleteCreatedGame(socket.uid);
-            moduleSocket.listGames(moduleGame.createdGame);
-        });
-
-        socket.on('startGame', function (uid) {
-            if (!moduleSocket.checkStartGame(socket, uid) || !moduleGame.createdGame[uid]) {
-                return;
-            }
-
-            var socketOpponent = moduleSocket.getSocket(uid);
-
-            if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
-                // pareil pour challenge
-                moduleSocket.startGame(socket, socketOpponent, uid, moduleGame.createdGame[uid]);
-            } else {
-                moduleGame.deleteCreatedGame(uid);
-            }
-        });
-
-        socket.on('initGame', function (gid) {
-            if (!moduleSocket.checkSocketUid(socket)) {
-                return;
-            }
-            socket.emit('game', moduleGame.getGame(gid));
-        });
-
-        socket.on('moveGame', function (data) {
-            if (!moduleSocket.checkSocketUid(socket) || !moduleGame.getGame(data.id)) {
-                return;
-            }
-
-            var game = moduleGame.move(socket, data.id, data.start, data.end, data.promotion);
-
-            if (game) {
-                io.to(moduleGame.getRoom(data.id)).emit('game', game);
-            }
-        });
-
         socket.on('challenge', function (data) {
 
-            if (!data || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid)) {
+            if (!data || !data.uid || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid)) {
                 return;
             }
 
@@ -120,6 +71,91 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             moduleSocket.listGames(moduleGame.createdGame);
             moduleSocket.deleteChallenges(socket);
         });
+
+        socket.on('createGame', function (data) {
+            if (!data || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid) || !moduleGame.create(socket, data)) {
+                return;
+            }
+            moduleSocket.listGames(moduleGame.createdGame);
+        });
+
+        socket.on('removeGame', function () {
+            if (!moduleSocket.checkSocketUid(socket)) {
+                return;
+            }
+            moduleGame.deleteCreatedGame(socket.uid);
+            moduleSocket.listGames(moduleGame.createdGame);
+        });
+
+        socket.on('startGame', function (uid) {
+            if (!moduleSocket.checkStartGame(socket, uid) || !moduleGame.createdGame[uid]) {
+                return;
+            }
+
+            var socketOpponent = moduleSocket.getSocket(uid);
+
+            if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
+                // pareil pour challenge
+                moduleSocket.startGame(socket, socketOpponent, uid, moduleGame.createdGame[uid]);
+            } else {
+                moduleGame.deleteCreatedGame(uid);
+            }
+        });
+
+        socket.on('initGame', function (gid) {
+            if (!moduleSocket.checkSocketUid(socket)) {
+                return;
+            }
+            socket.emit('game', moduleGame.getGame(gid));
+        });
+
+        socket.on('moveGame', function (data) {
+            if (!moduleSocket.checkSocketUid(socket) || !data.id) {
+                return;
+            }
+
+            var game = moduleGame.move(socket, data.id, data.start, data.end, data.promotion);
+
+            if (game) {
+                io.to(moduleGame.getRoom(data.id)).emit('game', game);
+            }
+        });
+
+        socket.on('resign', function (gid) {
+
+            if (!moduleSocket.checkSocketUid(socket) || !gid) {
+                return;
+            }
+
+            var game = moduleGame.resign(socket, gid);
+
+            if (game) {
+                moduleSocket.saveGame(game);
+                io.to(moduleGame.getRoom(gid)).emit('game', game);
+            }
+        });
+
+        /*socket.on('offerDraw', function (data) {
+            
+            if (!moduleSocket.checkSocketUid(socket) || !data.id) {
+                return;
+            }
+
+            // save demande offer draw
+            var game = moduleGame.getGame(data.id);
+
+            if (!game) {
+                return;
+            }
+
+            var socketOpponent = moduleSocket.getSocket(game.white.uid === socket.uid ? game.white.uid : game.black.uid);
+            
+            if (!socketOpponent) {
+                return
+            }
+
+            socketOpponent.emit('offerDraw');
+        });*/
 
         socket.on('ranking', function (data) {
             if (!moduleSocket.checkSocketUid(socket) || !data) {

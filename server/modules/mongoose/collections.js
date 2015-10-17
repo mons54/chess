@@ -7,18 +7,18 @@ module.exports = function (mongoose) {
             },
             points: Number,
             tokens: Number,
-            cons_game: Number,
-            actif: Number,
+            consWin: Number,
+            active: Boolean,
             trophy: Number,
             parrainage: Number,
             ban: Boolean,
             moderateur: Boolean
         }),
         games: new mongoose.Schema({
-            blanc: Number,
-            noir: Number,
-            resultat: Number,
-            time: Number
+            white: Number,
+            black: Number,
+            result: Number,
+            date: Date
         }),
         badges: new mongoose.Schema({
             uid: Number,

@@ -70,6 +70,149 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         io.to(room).emit('startGame', gid);
     };
 
+    moduleSocket.getDataGame = function (winner, position, consWin) {
+        
+        var coefGame;
+
+        if (!consWin) {
+            consWin = 0;
+        }
+
+        if (winner === 0) {
+            coefGame = 0.5;
+            consWin = 0;
+        } else if (winner === position) {
+            coefGame = 1;
+            if (consWin < 0) {
+                consWin = 0;
+            }
+            consWin++;
+        } else {
+            coefGame = 0;
+            if (consWin > 0) {
+                consWin = 0;
+            }
+            consWin--;
+        }
+
+        return {
+            coefGame: coefGame,
+            consWin: consWin
+        };
+    };
+
+    moduleSocket.getPointsGame = function (player1, player2) {
+
+        var points = player1.points - player2.points;
+
+        if (points > 400) {
+            points = 400;
+        } else if (points < -400) {
+            points = -400;
+        }
+
+        points = points / 400;
+        points = Math.pow(10, points);
+        points = 1 + points;
+        points = 1 / points;
+        points = 1 - points;
+
+        var k = 20;
+
+        if (player1.points > 2400) {
+            k = 10;
+        } else if (player1.countGame <= 30) {
+            k = 40;
+        }
+
+        return Math.round(k * (player1.coefGame - points));
+    };
+
+    moduleSocket.saveGame = function (game) {
+
+        var uidWhite = game.white.uid,
+            uidBlack = game.black.uid,
+            result = game.result.winner;
+
+        delete moduleSocket.userGames[uidWhite];
+        delete moduleSocket.userGames[uidBlack];
+
+        mongoose.promise.findOne('users', { uid: uidWhite }, null)
+        .then(function (response) {
+            
+            var data = moduleSocket.getDataGame(result, 1, response.consWin);
+
+            this.data = {
+                white: {
+                    points: response.points,
+                    coefGame: data.coefGame,
+                    consWin: data.consWin,
+                }
+            };
+
+
+            return mongoose.promise.count('games', { $or: [{ white: uidWhite }, { black: uidWhite }] }, null);
+        })
+        .then(function (response) {
+
+            this.data.white.countGame = response;
+
+            return mongoose.promise.findOne('users', { uid: uidBlack }, null);
+        })
+        .then(function (response) {
+
+            var data = moduleSocket.getDataGame(result, 2, response.consWin);
+            
+            this.data.black = {
+                points: response.points,
+                coefGame: data.coefGame,
+                consWin: data.consWin,
+            };
+
+            return mongoose.promise.count('games', { $or: [{ white: uidBlack }, { black: uidBlack }] }, null);
+        })
+        .then(function (response) {
+
+            this.data.black.countGame = response;
+
+            mongoose.promise.save('games', {
+                result: result,
+                white: uidWhite,
+                black: uidBlack,
+                date: new Date()
+            });
+
+            var pointsWhite = moduleSocket.getPointsGame(this.data.white, this.data.black),
+                pointsBlack = moduleSocket.getPointsGame(this.data.black, this.data.white);
+
+            this.data.white.points += moduleSocket.getPointsGame(this.data.white, this.data.black);
+            this.data.black.points += moduleSocket.getPointsGame(this.data.black, this.data.white);
+
+            moduleSocket.updateUserGame(uidWhite, result, this.data.white);
+            moduleSocket.updateUserGame(uidBlack, result, this.data.black);
+        });
+    };
+
+    moduleSocket.updateUserGame = function (uid, result, data) {
+        mongoose.promise.update('users', { uid: uid }, {
+            points: data.points,
+            consWin: data.consWin,
+            active: true
+        })
+        .then(function (response) {
+            data.countGame++;
+
+            moduleSocket.setTrophyGame(uid, data.countGame);
+
+            if (result === 1) {
+                moduleSocket.setTrophyWin(uid);
+            }
+
+            moduleSocket.setTrophyDay(uid);
+            moduleSocket.setTrophyConsWin(uid, data.consWin);
+        });
+    };
+
     moduleSocket.setChallenges = function (socket, key, value) {
         if (!socket.challenges) {
             socket.challenges = {};
@@ -534,6 +677,106 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
                 moduleSocket.setTrophy(uid, 6);
             }
         });
+    };
+
+    moduleSocket.setTrophyGame = function (uid, games) {
+
+        switch (games) {
+            case 1:
+                moduleSocket.setTrophy(uid, 1);
+                break;
+            case 100:
+                moduleSocket.setTrophy(uid, 2);
+                break;
+            case 500:
+                moduleSocket.setTrophy(uid, 3);
+                break;
+            case 1000:
+                moduleSocket.setTrophy(uid, 4);
+                break;
+            case 5000:
+                moduleSocket.setTrophy(uid, 5);
+                break;
+        }
+    };
+
+    moduleSocket.setTrophyWin = function (uid) {
+
+        mongoose.promise.count('games', { 
+            $or: [{ 
+                $and: [{ black: uid, result: 2 }] 
+            }, { 
+                $and: [{ white: uid, result: 1 }]
+            }] 
+        })
+        .then(function (response) {
+            
+            switch (response) {
+
+                case 1:
+                    moduleSocket.setTrophy(uid, 6);
+                    break;
+                case 50:
+                    moduleSocket.setTrophy(uid, 7);
+                    break;
+                case 250:
+                    moduleSocket.setTrophy(uid, 8);
+                    break;
+                case 500:
+                    moduleSocket.setTrophy(uid, 9);
+                    break;
+                case 2000:
+                    moduleSocket.setTrophy(uid, 10);
+                    break;
+            }
+        });
+    };
+
+    moduleSocket.setTrophyDay = function (uid) {
+
+        var time = (new Date().getTime() / 1000) - (3600 * 24);
+
+        mongoose.promise.count('games', { time: { $gt: time }, white: uid })
+        .then(function (response) {
+            this.game = response;
+            return mongoose.promise.count('games', { time: { $gt: time }, black: uid });
+        })
+        .then(function (response) {
+            this.game += response;
+            if (this.game >= 100) {
+                moduleSocket.setTrophy(uid, 15);
+            } else if (this.game >= 50) {
+                moduleSocket.setTrophy(uid, 14);
+            } else if (this.game >= 25) {
+                moduleSocket.setTrophy(uid, 13);
+            } else if (this.game >= 10) {
+                moduleSocket.setTrophy(uid, 12);
+            } else if (this.game >= 5) {
+                moduleSocket.setTrophy(uid, 11);
+            }
+        });
+    };
+
+    moduleSocket.setTrophyConsWin = function (uid, consWin) {
+        
+        switch (consWin) {
+
+            case 3:
+                moduleSocket.setTrophy(uid, 16);
+                break;
+            case 5:
+                moduleSocket.setTrophy(uid, 17);
+                break;
+            case 10:
+                moduleSocket.setTrophy(uid, 18);
+                break;
+            case 20:
+                moduleSocket.setTrophy(uid, 19);
+                break;
+            case -3:
+                moduleSocket.setTrophy(uid, 20);
+                break;
+        }
     };
 
     moduleSocket.setTrophy = function (uid, trophy) {
