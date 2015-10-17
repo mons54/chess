@@ -27,6 +27,19 @@
                 }
             };
 
+            $scope.move = function (start, end, promotion) {
+                $rootScope.socket.emit('moveGame', {
+                    id: $scope.game.id,
+                    start: start,
+                    end: end,
+                    promotion: promotion
+                });
+            };
+
+            $scope.isPlayerTurn = function() {
+                return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
+            };
+
             function applyGame(game) {
                 if (!game) {
                     $rootScope.user.gid = null;
@@ -77,19 +90,6 @@
             }
 
             countdown();
-
-            $scope.isPlayerTurn = function() {
-                return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
-            }
-
-            $scope.move = function (start, end, promotion) {
-                $rootScope.socket.emit('moveGame', {
-                    id: $scope.game.id,
-                    start: start,
-                    end: end,
-                    promotion: promotion
-                });
-            };
         }
     ]).
     
@@ -97,10 +97,12 @@
         
         function ($rootScope, $scope, utils) {
 
-            $scope.text = $rootScope.text;
+            $scope.resign = function () {
+                $rootScope.socket.emit('resign', $scope.$parent.game.id);
+            };
 
             $scope.isPlayerUser = function () {
-                return $scope.player.uid && $scope.player.uid === $rootScope.user.uid;
+                return $scope.player && $scope.player.uid && $scope.player.uid === $rootScope.user.uid;
             };
             
             $scope.formatTime = function (time) {
