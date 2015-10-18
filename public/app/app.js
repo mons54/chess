@@ -60,99 +60,6 @@
             return {
                 sprintf: function(value) {
                     return (value.toString().length == 1 ? '0' : '') + value;
-                },
-                getTokens: function () {
-                    return [
-                        {
-                            id: 5,
-                            number: 5000,
-                            base: 1000,
-                            price: this.convertPrice(20),
-                        },
-                        {
-                            id: 4,
-                            number: 1500,
-                            base: 500,
-                            price: this.convertPrice(10)
-                        },
-                        {
-                            id: 3,
-                            number: 500,
-                            base: 250,
-                            price: this.convertPrice(5)
-                        },
-                        {
-                            id: 2,
-                            number: 150,
-                            base: 100,
-                            price: this.convertPrice(2)
-                        },
-                        {
-                            id: 1,
-                            number: 50,
-                            base: 50,
-                            price: this.convertPrice(1)
-                        }
-                    ];
-
-
-                },
-                convertPrice: function (price) {
-
-                    var userCurrency = $rootScope.user.currency,
-                        currency = this.getCurrency(userCurrency.user_currency),
-                        rate = userCurrency.usd_exchange_inverse,
-                        newPrice = Math.round((price * rate) * 100) / 100,
-                        localPrice = String(newPrice).split('.'),
-                        minorUnits = localPrice[1] ? localPrice[1].substr(0, 2) : '',
-                        majorUnits = localPrice[0] || "0",
-                        separator = (1.1).toLocaleString()[1];
-
-                    return currency + ' ' + String(majorUnits) + (minorUnits ? separator + minorUnits : '') + ' ' + userCurrency.user_currency;
-                },
-                getCurrency: function (currency) {
-
-                    switch (currency) {
-                        case 'BOB': return 'Bs';
-                        case 'BRL': return 'R$';
-                        case 'GBP': return '£';
-                        case 'CAD': return 'C$';
-                        case 'CZK': return 'Kc';
-                        case 'DKK': return 'kr';
-                        case 'EUR': return '€';
-                        case 'GTQ': return 'Q';
-                        case 'HNL': return 'L';
-                        case 'HKD': return 'HK$';
-                        case 'HUF': return 'Ft';
-                        case 'ISK': return 'kr';
-                        case 'INR': return 'Rs.';
-                        case 'IDR': return 'Rp';
-                        case 'ILS': return '₪';
-                        case 'JPY': return '¥';
-                        case 'KRW': return 'W';
-                        case 'MYR': return 'RM';
-                        case 'NIO': return 'C$';
-                        case 'NOK': return 'kr';
-                        case 'PEN': return 'S/.';
-                        case 'PHP': return 'P';
-                        case 'PLN': return 'zł';
-                        case 'QAR': return 'ر.ق';
-                        case 'RON': return 'L';
-                        case 'RUB': return 'руб';
-                        case 'SAR': return 'ر.س';
-                        case 'SGD': return 'S$';
-                        case 'ZAR': return 'R';
-                        case 'SEK': return 'kr';
-                        case 'CHF': return 'CHF';
-                        case 'TWD': return 'NT$';
-                        case 'THB': return 'B';
-                        case 'TRY': return 'YTL';
-                        case 'AED': return 'د.إ';
-                        case 'UYU': return 'UYU';
-                        case 'VEF': return 'VEF';
-                        case 'VND': return '₫';
-                        default: return '$';
-                    }
                 }
             };
         }
@@ -179,8 +86,7 @@
                 gender: 'male',
                 moderateur: false,
                 currency: null,
-                friends: [],
-                sponsorship: null
+                friends: []
             };
 
             window.fbAsyncInit = function () {

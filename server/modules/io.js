@@ -1,8 +1,7 @@
 module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
 
     var moduleSocket = require(dirname + '/server/modules/socket')(io, mongoose, fbgraph),
-        moduleGame   = require(dirname + '/server/modules/game')(),
-        moduleUtils  = require(dirname + '/server/modules/utils')();
+        moduleGame   = require(dirname + '/server/modules/game')();
 
     io.on('connection', function (socket) {
 
@@ -162,21 +161,6 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
                 return;
             }
             moduleSocket.ranking(socket, data);
-        });
-
-        socket.on('payment', function (data) {
-            if (!moduleSocket.checkSocketUid(socket) || !data || !data.signed_request) {
-                return;
-            }
-
-            var request = moduleUtils.parseSignedRequest(data.signed_request),
-                item    = app.itemsAmount[parseFloat(request.amount)];
-
-            if (!request || !item) {
-                return;
-            }
-
-            moduleSocket.payment(socket, request, item);
         });
 
         socket.on('disconnect', function () {

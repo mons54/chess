@@ -353,23 +353,20 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             if (response === 0) {
                 return mongoose.promise.save('users', {
                     uid: data.uid,
-                    points: 1500,
-                    tokens: 17,
-                    trophy: 1,
-                    parrainage: data.sponsorship,
+                    points: 1500
                 });
             }
             return true;
         })
         .then(function (response) {
-            moduleSocket.initUser(socket, data.sponsorship);
+            moduleSocket.initUser(socket);
         })
         .catch(function (error) {
             moduleSocket.disconnectSocket(socket);
         });
     };
 
-    moduleSocket.initUser = function (socket, sponsorship) {
+    moduleSocket.initUser = function (socket) {
 
         if (!moduleSocket.checkSocketUid(socket)) {
             return;
@@ -390,41 +387,10 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
 
             moduleSocket.checkTrophy(socket.uid);
 
-            if (!response.parrainage && sponsorship) {
-                moduleSocket.updateUserSponsorship(socket.uid, sponsorship);
-            }
-
             socket.points = response.points;
+            socket.blackListGame = response.blackListGame;
 
             this.data = response;
-
-            return mongoose.promise.findOne('freeTokens', { uid: socket.uid }, 'time');
-        })
-        .then(function (response) {
-            this.token = 0;
-            if (!this.data.tokens && this.data.tokens !== 0) {
-                this.token += 17;
-                moduleSocket.updateUserTokens(socket.uid, token);
-            } else {
-                this.token += data.tokens;
-            }
-
-            var time = Math.round(new Date().getTime() / 1000);
-
-            if (!response || !response.time) {
-                this.token += 3;
-                this.freeTime = time;
-                mongoose.promise.save('freeTokens', { uid: socket.uid, time: time });
-                moduleSocket.updateUserTokens(socket.uid, this.token);
-            } else if (response.time < (time - (24 * 3600))) {
-                this.freeTime = time;
-                this.token += 3;
-                moduleSocket.updateTokens(socket.uid, this.freeTime);   
-                moduleSocket.updateUserTokens(socket.uid, this.token);
-            } else {
-                this.freeTime = response.time;
-            }
-
             return mongoose.promise.find('badges', { uid: socket.uid });
         })
         .then(function (response) {
@@ -439,8 +405,6 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
                 moderateur: socket.moderateur,
                 points: socket.points,
                 ranking: socket.ranking,
-                tokens: this.token,
-                freeTime: moduleSocket.getFreeTime(this.freeTime),
                 trophies: this.trophies
             });
 
@@ -635,10 +599,6 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         };
     };
 
-    moduleSocket.getFreeTime = function (time) {
-        return (3600 * 24) - (Math.round(new Date().getTime() / 1000) - time);
-    };
-
     moduleSocket.getPageNext = function (page, last) {
         if (page != last) {
             return page + 1;
@@ -651,18 +611,6 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             return page - 1;
         }
         return false;
-    };
-
-    moduleSocket.updateTokens = function (uid, time) {
-        mongoose.promise.update('freeTokens' , { uid: uid }, { time: time });
-    };
-
-    moduleSocket.updateUserTokens = function (uid, tokens) {
-        mongoose.promise.update('users' , { uid: uid }, { tokens: tokens });
-    };
-
-    moduleSocket.updateUserSponsorship = function (uid, sponsorship) {
-        mongoose.promise.update('users' , { uid: uid }, { parrainage: sponsorship });
     };
 
     moduleSocket.checkTrophy = function (uid) {
@@ -822,32 +770,6 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             if (socket) {
                 socket.emit('trophy', trophy);
             }
-        });
-    };
-
-    moduleSocket.payment = function (socket, request, item) {
-        mongoose.promise.findOne('users', { uid: socket.uid }, 'tokens')
-        .then(function (response) {
-            if (!response) {
-                this.finally;
-            }
-
-            this.tokens = parseInt(response.tokens) + parseInt(item.tokens);
-
-            return mongoose.promise.save('payments', {
-                id: request.payment_id,
-                uid: socket.uid,
-                item: item.item,
-                type: 'charge',
-                status: 'completed',
-                time: request.issued_at,
-            });
-        })
-        .then(function (response) {
-            return mongoose.promise.update('users' , { uid: socket.uid }, { tokens: this.tokens });
-        })
-        .then(function (response) {
-            moduleSocket.initUser(socket);
         });
     };
 

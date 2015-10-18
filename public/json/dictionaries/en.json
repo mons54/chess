@@ -54,26 +54,10 @@
    "quick_game":"game",
    "partager":"Share",
    "friends":"Friends",
-   "shop":"Shop",
-   "tokens":"Chips",
-   "free_tokens":"Free Chips",
-   "no_tokens":"You do not have enough chips to play.",
-   "buyTokens":"Buy chips",
    "congratulation":"Congratulation",
    "fanpage":"Fan Page",
    "terms_service":"Terms of Service",
    "privacy_policy":"Privacy Policy",
-   "invite_friends":{
-      "title":"Invite your friends (30 max)",
-      "infos":"And earn 10% of the chips played by invitation accepted",
-      "send":"Send requests",
-      "max_requests":"You have already sent 30 invitations today.",
-      "all":"All friends"
-   },
-   "pub":{
-      "title":"Pope Joan",
-      "text":"Card game online. Rid yourself of all your cards and wins the bet."
-   },
    "trophies":{
       "title":"Trophy",
       "win":"You win a trophy",

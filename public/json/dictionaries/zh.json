@@ -54,26 +54,10 @@
    "quick_game":"遊戲",
    "partager":"分享",
    "friends":"朋友",
-   "shop":"鋪",
-   "tokens":"芯片",
-   "free_tokens":"免費籌碼",
-   "no_tokens":"您沒有足夠的籌碼玩。",
-   "buy_tokens":"购买芯片",
    "congratulation":"祝賀",
    "fanpage":"粉絲專頁",
    "terms_service":"服務條款",
    "privacy_policy":"隱私權政策",
-   "invite_friends":{
-      "title":"邀請您的朋友（30最高）",
-      "infos":"賺取10％的芯片扮演的邀請接受",
-      "send":"發送請求",
-      "max_requests":"您今天已經派出30名邀請。",
-      "all":"所有的朋友"
-   },
-   "pub":{
-      "title":"黃矮病",
-      "text":"卡在線遊戲。擺脫所有的卡和贏得的賭注。"
-   },
    "trophies":{
       "title":"杯",
       "win":"你贏得獎杯",

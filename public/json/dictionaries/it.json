@@ -54,26 +54,10 @@
    "quick_game":"gioco",
    "partager":"Condividi",
    "friends":"Amici",
-   "shop":"Acquista",
-   "tokens":"Chips",
-   "free_tokens":"Chips gratuito",
-   "no_tokens":"Non hai abbastanza chips per giocare.",
-   "buyTokens":"Acquista chips",
    "congratulation":"Congratulazione",
    "fanpage":"Fan Page",
    "terms_service":"Termini di servizio",
    "privacy_policy":"Informativa sulla privacy",
-   "invite_friends":{
-      "title":"Invita i tuoi amici (30 max)",
-      "infos":"E guadagnare il 10% delle chips giocate su invito accettato",
-      "send":"Invia inviti",
-      "max_requests":"Hai già inviato 30 inviti oggi.",
-      "all":"Tutti gli amici"
-   },
-   "pub":{
-      "title":"Nano Giallo",
-      "text":"Gioco di carte online. Sbarazzarsi di tutte le carte e vince la scommessa."
-   },
    "trophies":{
       "title":"Trofeo",
       "win":"Si vince un trofeo",

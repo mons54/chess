@@ -54,26 +54,10 @@
    "quick_game":"partie",
    "partager":"Partager",
    "friends":"Amis",
-   "shop":"Boutique",
-   "tokens":"Jetons",
-   "free_tokens":"Jetons gratuits",
-   "no_tokens":"Vous n'avez pas assez de jetons pour jouer.",
-   "buyTokens":"Acheter des jetons",
    "congratulation":"Félicitation",
    "fanpage":"Fan Page",
    "terms_service":"Conditions d'utilisation",
    "privacy_policy":"Politique de confidentialité",
-   "invite_friends":{
-      "title":"Invitez vos amis (30 max)",
-      "infos":"Et gagnez 10% des jetons joués par invitation acceptée",
-      "send":"Envoyer les invitations",
-      "max_requests":"Vous avez déjà envoyé 30 invitations aujourd'hui.",
-      "all":"Tous les amis"
-   },
-   "pub":{
-      "title":"Nain Jaune",
-      "text":"Jeu de cartes en ligne. Débarrasse toi de toutes tes cartes et remporte les mises."
-   },
    "trophies":{
       "title":"Trophées",
       "win":"Vous gagnez un trophée.",

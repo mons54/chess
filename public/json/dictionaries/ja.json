@@ -54,26 +54,10 @@
    "quick_game":"ゲーム",
    "partager":"シェア",
    "friends":"フレンズ",
-   "shop":"ショップ",
-   "tokens":"チップ",
-   "free_tokens":"フリーチップ",
-   "no_tokens":"あなたが再生するのに十分なチップを持っていない",
-   "buyTokens":"チップを購入",
    "congratulation":"祝賀",
    "fanpage":"ファンページ",
    "terms_service":"利用規約",
    "privacy_policy":"個人情報保護方針",
-   "invite_friends":{
-      "title":"あなたの友人（最大30）を招待",
-      "infos":"と受け入れ招待によって演じチップの10％を獲得",
-      "send":"招待状を送る",
-      "max_requests":"あなたは既に今日30招待状を送信しました。",
-      "all":"すべての友達"
-   },
-   "pub":{
-      "title":"黄萎病",
-      "text":"カードゲームは、オンライン。全てのカードから自分自身を取り除くと賭けに勝つ。"
-   },
    "trophies":{
       "title":"トロフィー",
       "win":"あなたは、トロフィーを獲得",

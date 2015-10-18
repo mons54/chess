@@ -54,26 +54,10 @@
    "quick_game":"jogo",
    "partager":"Compartilhar",
    "friends":"Amigos",
-   "shop":"Loja",
-   "tokens":"Fichas",
-   "free_tokens":"Fichas Grátis",
-   "no_tokens":"Você não tem fichas suficientes para jogar.",
-   "buyTokens":"Comprar Fichas",
    "congratulation":"Parabéns",
    "fanpage":"Fan Page",
    "terms_service":"Termos de Serviço",
    "privacy_policy":"Política de Privacidade",
-   "invite_friends":{
-      "title":"Convide seus amigos (30 max)",
-      "infos":"E ganhe 10% das fichas jogadas por convite aceito",
-      "send":"Enviar convites",
-      "max_requests":"Você já enviou 30 convites hoje.",
-      "all":"Todos os amigos"
-   },
-   "pub":{
-      "title":"Anão amarelo",
-      "text":"Jogo de cartas online. Livre-se de todas as suas cartas e ganha a aposta."
-   },
    "trophies":{
       "title":"Troféu",
       "win":"Você ganha um troféu",

@@ -54,26 +54,10 @@
    "quick_game":"oyun",
    "partager":"Paylaş",
    "friends":"Arkadaşlar",
-   "shop":"Dükkan",
-   "tokens":"Tokens",
-   "free_tokens":"Ücretsiz Tokens",
-   "no_tokens":"Sen oynamak için yeterli tokens yok.",
-   "buyTokens":"Tokens al",
    "congratulation":"Kutlama",
    "fanpage":"Fan Page",
    "terms_service":"Hizmet Şartları",
    "privacy_policy":"Gizlilik Politikası",
-   "invite_friends":{
-      "title":"Arkadaşlarınızı davet edin (30 max)",
-      "infos":"Ve davetiye ile Tokens fiş% 10 kazanın kabul",
-      "send":"istek gönder",
-      "max_requests":"Zaten bugün 30 davetiye gönderdik.",
-      "all":"Tüm arkadaşlar"
-   },
-   "pub":{
-      "title":"Sarı Cüce",
-      "text":"Kart oyunu online. Tüm kartları kurtulun ve bahis kazanır."
-   },
    "trophies":{
       "title":"Ganimet",
       "win":"Bir kupa kazanmak",

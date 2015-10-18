@@ -54,26 +54,10 @@
    "quick_game":"juego",
    "partager":"Compartir",
    "friends":"Amigos",
-   "shop":"Tienda",
-   "tokens":"Fichas",
-   "free_tokens":"Fichas gratis",
-   "no_tokens":"Usted no tiene suficientes fichas para jugar.",
-   "buyTokens":"Compra fichas",
    "congratulation":"Felicitación",
    "fanpage":"Fan Page",
    "terms_service":"Condiciones del servicio",
    "privacy_policy":"Política de privacidad",
-   "invite_friends":{
-      "title":"Invite a sus amigos (30 max)",
-      "infos":"Y ganar el 10% de las fichas jugadas por invitación aceptada",
-      "send":"Enviar invitaciones",
-      "max_requests":"Usted ya ha enviado 30 invitaciones hoy.",
-      "all":"Todos los amigos"
-   },
-   "pub":{
-      "title":"Enano Amarillo",
-      "text":"Juego de cartas en línea. Librarse de todas tus cartas y gana la apuesta."
-   },
    "trophies":{
       "title":"Trofeo",
       "win":"Usted gana un trofeo",

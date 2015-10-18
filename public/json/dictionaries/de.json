@@ -54,26 +54,10 @@
 	"quick_game":"Spiel",
 	"partager":"Teilen",
 	"friends":"Freunde",
-	"shop":"Shop",
-	"tokens":"Chips",
-	"free_tokens":"Free Chips",
-	"no_tokens":"Sie haben noch genug Chips, um zu spielen.",
-	"buyTokens":"Chips kaufen",
 	"congratulation":"Glückwunsch",
 	"fanpage":"Fan Page",
 	"terms_service":"Nutzungsbedingungen",
 	"privacy_policy":"Datenschutz",
-	"invite_friends":{
-		"title":"Laden Sie Ihre Freunde (30 max)",
-		"infos":"Und verdienen 10% der Chips auf Einladung spielte akzeptiert",
-		"send":"Einladungen senden",
-		"max_requests":"Sie haben bereits 30 Einladungen verschickt heute.",
-		"all":"Alle Freunde"
-	},
-	"pub":{
-		"title":"Der Gelbe Zwerg",
-		"text":"Kartenspiel online. Befreien Sie sich von all Ihre Karten und gewinnt die Wette."
-	},
 	"trophies":{
 		"title":"Trophäe",
 		"win":"Sie gewinnen eine Trophäe",

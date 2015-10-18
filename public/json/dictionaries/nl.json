@@ -54,26 +54,10 @@
    "quick_game":"spel",
    "partager":"delen",
    "friends":"vrienden",
-   "shop":"Winkel",
-   "tokens":"Chips",
-   "free_tokens":"Gratis Chips",
-   "no_tokens":"Je hoeft niet genoeg chips om mee te spelen.",
-   "buyTokens":"Koop Chips",
    "congratulation":"Felicitatie",
    "fanpage":"Fan Page",
    "terms_service":"Gebruiksvoorwaarden",
    "privacy_policy":"Privacy Policy",
-   "invite_friends":{
-      "title":"Nodig je vrienden uit (30 max)",
-      "infos":"En verdien 10% van de chips gespeeld op uitnodiging geaccepteerd",
-      "send":"Stuur uitnodigingen",
-      "max_requests":"Je hebt al verzonden 30 uitnodigingen vandaag.",
-      "all":"Alle vrienden"
-   },
-   "pub":{
-      "title":"Gele Dwerg",
-      "text":"Kaartspel online. Bevrijd jezelf van al uw kaarten en wint de weddenschap."
-   },
    "trophies":{
       "title":"Trofee",
       "win":"Je wint een trofee",
