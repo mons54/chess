@@ -98,9 +98,6 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
     };
 
     moduleSocket.getBlackListGame = function (blackListGame, game, color) {
-        if (game.result.name !== 'resign' || !moduleSocket.checkBlackListGame(game)) {
-            return blackListGame;
-        }
 
         if (!(blackListGame instanceof Object)) {
             blackListGame = {};
@@ -113,7 +110,9 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             };
         }
 
-        blackListGame[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+        if (game.result.name === 'resign' && moduleSocket.checkBlackListGame(game)) {
+            blackListGame[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+        }
 
         return blackListGame;
     };
