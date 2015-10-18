@@ -12,7 +12,8 @@ module.exports = function (mongoose) {
             trophy: Number,
             parrainage: Number,
             ban: Boolean,
-            moderateur: Boolean
+            moderateur: Boolean,
+            blackListGame: Object
         }),
         games: new mongoose.Schema({
             white: Number,

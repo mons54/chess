@@ -70,37 +70,6 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         io.to(room).emit('startGame', gid);
     };
 
-    moduleSocket.getDataGame = function (winner, position, consWin) {
-        
-        var coefGame;
-
-        if (!consWin) {
-            consWin = 0;
-        }
-
-        if (winner === 0) {
-            coefGame = 0.5;
-            consWin = 0;
-        } else if (winner === position) {
-            coefGame = 1;
-            if (consWin < 0) {
-                consWin = 0;
-            }
-            consWin++;
-        } else {
-            coefGame = 0;
-            if (consWin > 0) {
-                consWin = 0;
-            }
-            consWin--;
-        }
-
-        return {
-            coefGame: coefGame,
-            consWin: consWin
-        };
-    };
-
     moduleSocket.getPointsGame = function (player1, player2) {
 
         var points = player1.points - player2.points;
@@ -128,6 +97,59 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         return Math.round(k * (player1.coefGame - points));
     };
 
+    moduleSocket.getBlackListGame = function (blackList, game, color) {
+        if (game.result.name !== 'resign' || !moduleSocket.checkBlackListGame(game)) {
+            return blackList;
+        }
+
+        if (!blackList) {
+            blackList = {};
+        }
+
+        blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date();
+
+        return blackList;
+    };
+
+    moduleSocket.checkBlackListGame = function (game) {
+        var maxTime = 10,
+            time = game.time,
+            timeWhite = game.white.time,
+            timeBlack = game.black.time;
+        
+        return timeWhite + maxTime > time || timeBlack + maxTime > time;
+    };
+
+    moduleSocket.getDataPlayerGame = function (data, game, result, color) {
+        
+        var coefGame,
+            position = color === 'white' ? 1 : 2;
+            consWin  = data.consWin ? data.consWin : 0;
+
+        if (result === 0) {
+            coefGame = 0.5;
+            consWin = 0;
+        } else if (result === position) {
+            coefGame = 1;
+            if (consWin < 0) {
+                consWin = 0;
+            }
+            consWin++;
+        } else {
+            coefGame = 0;
+            if (consWin > 0) {
+                consWin = 0;
+            }
+            consWin--;
+        }
+
+        return {
+            coefGame: coefGame,
+            consWin: consWin,
+            blackList: moduleSocket.getBlackListGame(data.blackList, game, color)
+        };
+    };
+
     moduleSocket.saveGame = function (game) {
 
         var uidWhite = game.white.uid,
@@ -140,13 +162,14 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         mongoose.promise.findOne('users', { uid: uidWhite }, null)
         .then(function (response) {
             
-            var data = moduleSocket.getDataGame(result, 1, response.consWin);
+            var data = moduleSocket.getDataPlayerGame(response, game, result, 'white');
 
             this.data = {
                 white: {
                     points: response.points,
                     coefGame: data.coefGame,
                     consWin: data.consWin,
+                    blackList: data.blackList
                 }
             };
 
@@ -161,12 +184,13 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         })
         .then(function (response) {
 
-            var data = moduleSocket.getDataGame(result, 2, response.consWin);
+            var data = moduleSocket.getDataPlayerGame(response, game, result, 'black');
             
             this.data.black = {
                 points: response.points,
                 coefGame: data.coefGame,
                 consWin: data.consWin,
+                blackList: data.blackList
             };
 
             return mongoose.promise.count('games', { $or: [{ white: uidBlack }, { black: uidBlack }] }, null);
@@ -197,6 +221,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         mongoose.promise.update('users', { uid: uid }, {
             points: data.points,
             consWin: data.consWin,
+            blackList: data.blackList,
             active: true
         })
         .then(function (response) {
