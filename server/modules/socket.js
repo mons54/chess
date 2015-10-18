@@ -106,7 +106,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             blackList = {};
         }
 
-        blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date();
+        blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
 
         return blackList;
     };
