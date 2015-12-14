@@ -2,11 +2,13 @@ module.exports = function (app, express, mongoose) {
 
     mongoose.connect('mongodb://mons54:jsOL160884@oceanic.mongohq.com:10096/chess');
 
-    var static = dirname + '/public/';
+    var staticPath = dirname + '/public/',
+        bodyParser = require('body-parser');
 
-    app.use(express.static(static));
-    app.use(require('body-parser').json());
-    app.set('views', static);
+    app.use(express.static(staticPath));
+    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.json());
+    app.set('views', staticPath);
     app.engine('html', require('ejs').renderFile);
 
     app.facebook = {

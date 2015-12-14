@@ -15,4 +15,4 @@ require(dirname + '/server/modules/mongoose')(mongoose, q);
 require(dirname + '/server/modules/fbgraph')(fbgraph, q);
 require(dirname + '/server/modules/io')(app, io, mongoose, fbgraph, q, crypto);
 
-server.listen(process.env.PORT || 3000);
+server.listen(3000);
