@@ -6,7 +6,7 @@ module.exports = function (app, express, mongoose) {
         bodyParser = require('body-parser');
 
     app.use(express.static(staticPath));
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.set('views', staticPath);
     app.engine('html', require('ejs').renderFile);
