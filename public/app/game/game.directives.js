@@ -20,6 +20,12 @@
         };
     })
 
+    .directive('modalResponseDraw', function () {
+        return {
+            templateUrl: '/app/game/templates/modal-response-draw.html'
+        };
+    })
+
     .directive('modalOfferDraw', function () {
         return {
             templateUrl: '/app/game/templates/modal-offer-draw.html'

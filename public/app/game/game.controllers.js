@@ -14,6 +14,10 @@
                 $scope.$apply(applyGame(data));
             });
 
+            $rootScope.socket.on('offerDraw', function (data) {
+                angular.element('#modal-response-draw').modal('show');
+            });
+
             $scope.getPieceClass = function (position) {
                 if (!$scope.game.pieces[position]) {
                     return;
@@ -25,6 +29,10 @@
                 if ($scope.game.lastTurn.start === position || $scope.game.lastTurn.end === position) {
                     return 'last-turn';
                 }
+            };
+
+            $scope.acceptDraw = function () {
+                $rootScope.socket.emit('acceptDraw', $scope.game.id);
             };
 
             $scope.move = function (start, end, promotion) {
@@ -99,6 +107,10 @@
 
             $scope.resign = function () {
                 $rootScope.socket.emit('resign', $scope.$parent.game.id);
+            };
+
+            $scope.offerDraw = function () {
+                $rootScope.socket.emit('offerDraw', $scope.$parent.game.id);
             };
 
             $scope.isPlayerUser = function () {

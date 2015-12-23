@@ -134,27 +134,33 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             }
         });
 
-        /*socket.on('offerDraw', function (data) {
+        socket.on('offerDraw', function (gid) {
             
-            if (!moduleSocket.checkSocketUid(socket) || !data.id) {
+            if (!moduleSocket.checkSocketUid(socket) || !gid) {
                 return;
             }
 
-            // save demande offer draw
-            var game = moduleGame.getGame(data.id);
+            var player = moduleGame.offerDraw(socket, gid);
 
-            if (!game) {
+            if (player) {
+                var socketOpponent = moduleSocket.getSocket(player.uid);
+                if (socketOpponent) {
+                    socketOpponent.emit('offerDraw');
+                }
+            }
+        });
+
+        socket.on('acceptDraw', function (gid) {
+            if (!moduleSocket.checkSocketUid(socket)) {
                 return;
             }
 
-            var socketOpponent = moduleSocket.getSocket(game.white.uid === socket.uid ? game.white.uid : game.black.uid);
-            
-            if (!socketOpponent) {
-                return
+            var game = moduleGame.acceptDraw(socket, gid);
+            if (game) {
+                moduleSocket.saveGame(game);
+                io.to(moduleGame.getRoom(gid)).emit('game', game);
             }
-
-            socketOpponent.emit('offerDraw');
-        });*/
+        });
 
         socket.on('ranking', function (data) {
             if (!moduleSocket.checkSocketUid(socket) || !data) {

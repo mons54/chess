@@ -101,7 +101,7 @@ module.exports = moduleGame = function () {
 
         game.finish = true;
 
-        if (game.white.uid === socket.uid) {
+        if (moduleGame.getColorPlayer(game, socket.uid) === 'white') {
             game.result.winner = 2;
         } else {
             game.result.winner = 1;
@@ -114,8 +114,71 @@ module.exports = moduleGame = function () {
         return game;
     };
 
+    moduleGame.offerDraw = function (socket, id) {
+
+        var game = moduleGame.getGame(id);
+
+        if (!game || game.finish || !moduleGame.isPlayer(game, socket.uid)) {
+            return;
+        }
+
+        var player = moduleGame.getPlayer(game, socket.uid);
+
+        if (player.offerDraw >= 3) {
+            return;
+        }
+
+        player.offerDraw++;
+
+        var opponent = moduleGame.getOpponent(game, socket.uid);
+
+        opponent.canDraw = true;
+
+        console.log(opponent)
+
+        return opponent;
+    };
+
+    moduleGame.acceptDraw = function (socket, id) {
+        var game = moduleGame.getGame(id);
+
+        if (!game || game.finish || !moduleGame.isPlayer(game, socket.uid)) {
+            return;
+        }
+
+        var player = moduleGame.getPlayer(game, socket.uid);
+
+        if (!player.canDraw) {
+            return;
+        }
+
+        game.finish = true;
+        game.result.winner = 0;
+        game.result.name = 'draw';
+
+        moduleGame.deleteGame(game.id);
+
+        return game;
+    };
+
     moduleGame.isPlayer = function (game, uid) {
         return game.white.uid === uid || game.black.uid === uid;
+    };
+
+    moduleGame.getColorPlayer = function (game, uid) {
+        return game.white.uid === uid ? 'white' : 'black';
+    };
+
+    moduleGame.getPlayer = function (game, uid) {
+        return game.white.uid === uid ? game.white : game.black;
+    };
+
+    moduleGame.getColorOpponent = function (game, uid) {
+        return game.white.uid === uid ? 'black' : 'white';
+    };
+
+    moduleGame.getOpponent = function (game, uid) {
+        return game.white.uid === uid ? game.black : game.white;
     };
 
     moduleGame.getGame = function (gid) {
@@ -161,6 +224,7 @@ module.exports = moduleGame = function () {
                     moveForbidden: []
                 },
                 nbPieces: nbPieces,
+                offerDraw: 0,
                 notation: []
             },
             black: {
@@ -174,6 +238,7 @@ module.exports = moduleGame = function () {
                     moveForbidden: []
                 },
                 nbPieces: nbPieces,
+                offerDraw: 0,
                 notation: []
             },
             pieces: {
