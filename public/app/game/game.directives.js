@@ -38,6 +38,12 @@
         };
     })
 
+    .directive('modalFinishGame', function () {
+        return {
+            templateUrl: '/app/game/templates/modal-finish-game.html'
+        };
+    })
+
     .directive('draggable', function () {
         return {
             link: function (scope, element, attr) {

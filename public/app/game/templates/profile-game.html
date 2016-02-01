@@ -12,7 +12,7 @@
 <div>
     <a href>{{ player.name }}</a>
 </div>
-<div ng-if="isPlayerUser()" class="pull-right actions">
+<div ng-if="isPlayerUser() && !isFinish()" class="pull-right actions">
     <button data-toggle="modal" data-target="#modal-offer-draw" type="button" class="btn btn-primary btn-sm" ng-disabled="!canOfferDraw()">{{ 'offer_draw'|translate }}</button>
     <button data-toggle="modal" data-target="#modal-resign" type="button" class="btn btn-danger btn-sm">{{ 'resign'|translate }}</button>
 </div>

@@ -4,9 +4,9 @@
 
     angular.module('game.controllers', []).
 
-    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location',
+    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', 'utils',
         
-        function ($rootScope, $scope, $routeParams, $location) {
+        function ($rootScope, $scope, $routeParams, $location, $filter, utils) {
 
             $rootScope.socket.emit('initGame', $routeParams.id);
 
@@ -48,11 +48,31 @@
                 return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
             };
 
+            $scope.shareResult = function () {
+                if (!$scope.game.finish) {
+                    return;
+                }
+
+                var caption = $scope.game.white.name + ' VS ' + $scope.game.black.name + ' - ' + $filter('translate')($scope.game.result.name);
+
+                if ($scope.game.result.winner === 1) {
+                    caption += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.white.name;
+                } else if ($scope.game.result.winner === 2) {
+                    caption += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.black.name;
+                }
+
+                utils.share(caption);
+            };
+
             function applyGame(game) {
                 if (!game) {
                     $rootScope.user.gid = null;
                     $location.path('/');
                     return; 
+                }
+
+                if (game.finish) {
+                    angular.element('#modal-finish-game').modal('show');
                 }
 
                 $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -117,7 +137,11 @@
             $scope.isPlayerUser = function () {
                 return $scope.player && $scope.player.uid && $scope.player.uid === $rootScope.user.uid;
             };
-            
+
+            $scope.isFinish = function () {
+                return $scope.$parent.game.finish;
+            };
+
             $scope.canOfferDraw = function () {
                 return !$scope.player.disableOfferDraw && $scope.player.offerDraw < $scope.$parent.game.maxOfferDraw;
             };

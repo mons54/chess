@@ -21,6 +21,8 @@
 
     constant('host', 'mons54.parthuisot.fr').
 
+    constant('redirectUri', 'https://apps.facebook.com/the-chess-game/').
+
     constant('paramsGame', {
         colors: ['white', 'black'],
         times: [300, 600, 1200, 3600, 5400],
@@ -53,13 +55,24 @@
         20: '_3_loses_cons'
     }).
 
-    factory('utils', ['$rootScope',
+    factory('utils', ['$rootScope', '$filter', 'redirectUri', 'host',
         
-        function ($rootScope) {
+        function ($rootScope, $filter, redirectUri, host) {
 
             return {
                 sprintf: function(value) {
                     return (value.toString().length == 1 ? '0' : '') + value;
+                },
+                share: function (caption) {
+                    FB.ui({
+                        method: 'feed',
+                        redirect_uri: redirectUri,
+                        link: redirectUri,
+                        picture: 'https://' + host + '/img/mini-logo.png',
+                        name: $filter('translate')('title'),
+                        caption: caption,
+                        description: $filter('translate')('description')
+                    });
                 }
             };
         }
