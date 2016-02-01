@@ -124,7 +124,7 @@ module.exports = moduleGame = function () {
 
         var player = moduleGame.getPlayer(game, socket.uid);
 
-        if (player.offerDraw >= 3) {
+        if (player.offerDraw >= game.maxOfferDraw) {
             return;
         }
 
@@ -205,6 +205,7 @@ module.exports = moduleGame = function () {
             turn: 'white',
             turn50: 0,
             played: 0,
+            maxOfferDraw: 3,
             saved: {},
             result: {},
             lastTurn: {

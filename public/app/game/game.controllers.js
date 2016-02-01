@@ -110,11 +110,16 @@
             };
 
             $scope.offerDraw = function () {
+                $scope.player.disableOfferDraw = true;
                 $rootScope.socket.emit('offerDraw', $scope.$parent.game.id);
             };
 
             $scope.isPlayerUser = function () {
                 return $scope.player && $scope.player.uid && $scope.player.uid === $rootScope.user.uid;
+            };
+            
+            $scope.canOfferDraw = function () {
+                return !$scope.player.disableOfferDraw && $scope.player.offerDraw < $scope.$parent.game.maxOfferDraw;
             };
             
             $scope.formatTime = function (time) {
