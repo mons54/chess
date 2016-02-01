@@ -134,8 +134,6 @@ module.exports = moduleGame = function () {
 
         opponent.canDraw = true;
 
-        console.log(opponent)
-
         return opponent;
     };
 
