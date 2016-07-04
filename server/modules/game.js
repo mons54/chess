@@ -88,7 +88,13 @@ module.exports = moduleGame = function () {
             return;
         }
 
-        return game = new moduleEngine(game, start, end, promotion);
+        game = new moduleEngine(game, start, end, promotion);
+
+        if (game.finish) {
+            moduleGame.deleteGame(game.id);
+        }
+
+        return game;
     };
 
     moduleGame.resign = function (socket, id) {

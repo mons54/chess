@@ -116,6 +116,9 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             var game = moduleGame.move(socket, data.id, data.start, data.end, data.promotion);
 
             if (game) {
+                if (game.finish) {
+                    moduleSocket.saveGame(game);
+                }
                 io.to(moduleGame.getRoom(data.id)).emit('game', game);
             }
         });

@@ -72,6 +72,7 @@
                 }
 
                 if (game.finish) {
+                    $rootScope.user.gid = null;
                     angular.element('#modal-finish-game').modal('show');
                 }
 
