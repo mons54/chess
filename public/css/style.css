@@ -129,8 +129,8 @@ header #header iframe {
     margin: 10px 0 20px 0;
 }
 
-.content .element:nth-child(n+2) {
-    margin-top: 10px;
+.content .element:not(:last-child) {
+    margin-bottom: 10px;
 }
 
 .content .element {
@@ -338,7 +338,6 @@ header #header iframe {
 .content .notation {
     float: right;
     width: 105px;
-    margin-top: 10px;
 }
 
 .content .notation .element {
