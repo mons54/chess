@@ -1,19 +1,19 @@
 <div class="col-right">
-    <button ng-show="isCurrentRoute('/')"
-            location=""
-            class="element btn btn-default">
+    <a ng-show="!isCurrentRoute('/')"
+       href="#/"
+       class="element btn btn-default">
         <span class="icon-right icon-home"></span>
-    </button>
-    <button ng-show="isCurrentRoute('/ranking')"
-            location="ranking"
-            class="element btn btn-default">
+    </a>
+    <a ng-show="!isCurrentRoute('/ranking')"
+       href="#/ranking"
+       class="element btn btn-default">
         <span class="icon-right icon-ranking"></span>
-    </button>
-    <button ng-show="isCurrentRoute('/trophies')"
-            location="trophies"
-            class="element btn btn-default">
+    </a>
+    <a ng-show="!isCurrentRoute('/trophies')"
+       href="#/trophies"
+       class="element btn btn-default">
         <span class="icon-right icon-points"></span>
-    </button>
+    </a>
     <button apprequests class="element btn btn-default">
         <span class="icon-right icon-invite-friends"></span>
     </button>

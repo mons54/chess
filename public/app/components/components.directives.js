@@ -12,20 +12,6 @@
         }
     ]).
 
-    directive('location', ['$location',
-        function ($location) {
-            return {
-                link: function (scope, element, attrs) {
-                    element.bind('click', function () {
-                        scope.$apply(function () {
-                            $location.path(attrs.location);
-                        });
-                    });
-                }
-            };
-        }
-    ]).
-
     directive('apprequests', ['$translate',
         function ($translate) {
             return {
@@ -94,7 +80,7 @@
                 templateUrl: '/app/components/templates/col-right.html',
                 link: function (scope) {
                     scope.isCurrentRoute = function (path) {
-                        return !$route.current.regexp.test(path);
+                        return $route.current.regexp.test(path);
                     };
                 }
             };
