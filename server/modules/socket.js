@@ -20,10 +20,10 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         return moduleSocket.checkSocketUid(socket) && !moduleSocket.getUserGame(socket.uid) && socket.uid !== uid;
     };
 
-    moduleSocket.startGame = function (socket, socketOpponent, uid, dataGame) {
+    moduleSocket.startGame = function (socket, socketOpponent, dataGame) {
         
-        moduleGame.deleteCreatedGame(uid);
         moduleGame.deleteCreatedGame(socket.uid);
+        moduleGame.deleteCreatedGame(socketOpponent.uid);
         
         moduleSocket.listGames(moduleGame.createdGame);
         
@@ -265,14 +265,21 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
     };
 
     moduleSocket.deleteChallenge = function (socket, uid) {
-
         if (!socket || !socket.challenges || !socket.challenges[uid]) {
             return;
         }
 
         delete socket.challenges[uid];
         socket.emit('challenges', socket.challenges);
-    }
+    };
+
+    moduleSocket.getChallenge = function (socket, uid) {
+        if (!socket.challenges || !socket.challenges[uid]) {
+            return;
+        }
+
+        return socket.challenges[uid];
+    };
 
     moduleSocket.getSocket = function (uid) {
         var id = moduleSocket.socketConnected[uid],

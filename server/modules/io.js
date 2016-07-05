@@ -94,10 +94,31 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             var socketOpponent = moduleSocket.getSocket(uid);
 
             if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
-                // pareil pour challenge
-                moduleSocket.startGame(socket, socketOpponent, uid, moduleGame.createdGame[uid]);
+                moduleSocket.startGame(socket, socketOpponent, moduleGame.createdGame[uid]);
             } else {
                 moduleGame.deleteCreatedGame(uid);
+            }
+        });
+
+        socket.on('startChallenge', function (uid) {
+            if (!moduleSocket.checkStartGame(socket, uid)) {
+                return;
+            }
+
+            var socketOpponent = moduleSocket.getSocket(uid);
+
+            if (!socketOpponent) {
+                moduleSocket.deleteChallenge(socket, uid);
+                return;
+            }
+
+            if (moduleSocket.getUserGame(socketOpponent.uid)) {
+                moduleSocket.deleteChallenges(socketOpponent);
+                return;
+            }
+
+            if (challenge = moduleSocket.getChallenge(socketOpponent, socket.uid)) {
+                moduleSocket.startGame(socket, socketOpponent, challenge);
             }
         });
 
