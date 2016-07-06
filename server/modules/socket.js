@@ -401,7 +401,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         })
         .then(function (response) {
             this.trophies = response;
-            return mongoose.promise.count('users', { actif: 1, points: { $gt: socket.points } });
+            return mongoose.promise.count('users', { active: 1, points: { $gt: socket.points } });
         })
         .then(function (response) {
 
@@ -431,6 +431,55 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         });
     };
 
+    moduleSocket.profil = function (socket, uid) {
+        var data = {};
+        mongoose.promise.findOne('users', { uid: uid }, 'points')
+        .then(function (response) {
+            data.points = response.points;
+            return mongoose.promise.all([
+                mongoose.promise.count('users', {
+                    active: 1,
+                    points: {
+                        $gt: data.points
+                    }
+                }),
+                mongoose.promise.count('games', {
+                    $or: [{
+                        white: uid
+                    }, {
+                        black: uid
+                    }]
+                }), 
+                mongoose.promise.count('games', {
+                    $or: [{
+                        white: uid,
+                        result: 1
+                    }, {
+                        black: uid,
+                        result: 2
+                    }]
+                }),
+                mongoose.promise.count('games', {
+                    $or: [{
+                        whitse: uid,
+                        result: 0
+                    }, {
+                        black: uid,
+                        result: 0
+                    }]
+                })
+            ]);
+        })
+        .then(function (response) {
+            data.ranking = response[0] + 1;
+            data.games = response[1];
+            data.win = response[2];
+            data.draw = response[3];
+            data.lose = data.games - (data.win + data.draw);
+            socket.emit('profil', data);
+        });
+    };
+
     moduleSocket.ranking = function (socket, data) {
         var page = parseInt(data.page),
             limit = 8,
@@ -443,7 +492,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         }
 
         var points = socket.points,
-            request = friends ? { actif: 1, uid: { $in: friends }, points: { $gt: points } } : { actif: 1, points: { $gt: points } };
+            request = friends ? { active: 1, uid: { $in: friends }, points: { $gt: points } } : { active: 1, points: { $gt: points } };
 
         mongoose.promise.count('users', request)
         .then(function (count) {
@@ -491,10 +540,10 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             }
 
             var points = (getUser && socket.points > data[0].points) ? socket.points : data[0].points,
-                request = { actif: 1, points: { $gt: points } };
+                request = { active: 1, points: { $gt: points } };
 
             if (friends) {
-                request = { actif: 1, uid: { $in: friends }, points: { $gt: points } };
+                request = { active: 1, uid: { $in: friends }, points: { $gt: points } };
             }
 
             this.data = data;
@@ -503,9 +552,9 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         })
         .then(function (count) {
             this.position = count + 1;
-            var request = { actif: 1, points: this.data[0].points };
+            var request = { active: 1, points: this.data[0].points };
             if (friends) {
-                request = { actif: 1, uid: { $in: friends }, points: this.data[0].points };
+                request = { active: 1, uid: { $in: friends }, points: this.data[0].points };
             }
 
             return mongoose.promise.count('users', request);
@@ -578,11 +627,11 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
     };
 
     moduleSocket.getRequestRankingWithUser = function (uid, friends) {
-        return friends ? { $and: [{ actif: 1, uid: { $in: friends } }, { uid: { $ne: uid } }] } : { $and: [{ actif: 1 }, { uid: { $ne: uid } }] };
+        return friends ? { $and: [{ active: 1, uid: { $in: friends } }, { uid: { $ne: uid } }] } : { $and: [{ active: 1 }, { uid: { $ne: uid } }] };
     };
 
     moduleSocket.getRequestRankingWithoutUser = function (friends) {  
-        return friends ? { actif: 1, uid: { $in: friends } } : { actif: 1 };
+        return friends ? { active: 1, uid: { $in: friends } } : { active: 1 };
     };
 
     moduleSocket.formatPage = function (page) {

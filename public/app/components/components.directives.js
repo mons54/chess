@@ -4,6 +4,37 @@
 
     angular.module('components.directives', []).
 
+    directive('profil', ['$rootScope',
+        function ($rootScope) {
+            return {
+                link: function (scope, element) {
+                    element.bind('click', function () {
+                        $rootScope.socket.emit('profil', $rootScope.user.uid);
+                    });
+                } 
+            }
+        }
+    ]).
+
+    directive('modalProfil', ['$rootScope',
+        function ($rootScope) {
+            return {
+                templateUrl: '/app/components/templates/modal-profil.html',
+                link: function (scope, element) {
+                    $rootScope.$watch('socket', function (socket) {
+                        if (!socket) {
+                            return;
+                        }
+                        socket.on('profil', function (data) {
+                            scope.data = data;
+                            element.modal('show');
+                        });
+                    });
+                }
+            }
+        }
+    ]).
+
     directive('loading', [
         function () {
             return {

@@ -186,6 +186,14 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             }
         });
 
+        socket.on('profil', function (uid) {
+            if (!moduleSocket.checkSocketUid(socket) || !uid) {
+                return;
+            }
+
+            moduleSocket.profil(socket, uid);
+        });
+
         socket.on('ranking', function (data) {
             if (!moduleSocket.checkSocketUid(socket) || !data) {
                 return;

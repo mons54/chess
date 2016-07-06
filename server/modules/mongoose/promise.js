@@ -1,6 +1,9 @@
 module.exports = function (mongoose, q) {
 
     return {
+        all: function (promises) {
+            return q.all(promises);
+        },
         findOne: function (model, request, fields) {
             var defer = q.defer();
             mongoose.models[model]

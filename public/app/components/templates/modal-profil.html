@@ -1,0 +1,42 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">{{ 'cancel'|translate }}</span>
+            </button>
+            <div class="profile">
+            	<div class="pull-left img">
+                	<img class="profile-picture" src="//graph.facebook.com/{{ user.uid }}/picture">
+                </div>
+                <h4 class="modal-title" id="myModalLabel">
+                     {{ user.name }}
+                </h4>
+                <table class="profile-details">
+                    <tr>
+                        <td>{{ 'ranking'|translate }}</td>
+                        <td><strong>{{ data.ranking }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'points'|translate }}</td>
+                        <td><strong>{{ data.points }}</strong></td>
+                    </tr>
+                    <tr>
+                        <!-- green ? -->
+                        <td>{{ 'win'|translate }}</td>
+                        <td><strong>{{ data.win }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'draw'|translate }}</td>
+                        <td><strong>{{ data.draw }}</strong></td>
+                    </tr>
+                    <tr>
+                        <!-- red ? -->
+                        <td>{{ 'lose'|translate }}</td>
+                        <td><strong>{{ data.lose }}</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
