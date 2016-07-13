@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
 
     var moduleSocket = require(dirname + '/server/modules/socket')(io, mongoose, fbgraph),
