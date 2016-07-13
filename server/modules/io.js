@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
 
     var moduleSocket = require(dirname + '/server/modules/socket')(io, mongoose, fbgraph),
@@ -210,4 +212,24 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             moduleSocket.deleteChallenges(socket);
         });
     });
+
+    setInterval(function () {
+        for (var key in moduleGame.games.data) {
+            timer(moduleGame.games.data[key]);
+        }
+    }, 1000);
+
+    function timer(game) {
+        if (game.finish) {
+            moduleGame.deleteGame(game.id);
+            return;
+        }
+
+        var game = moduleGame.timer(game);
+
+        if (game) {
+            moduleSocket.saveGame(game);
+            io.to(moduleGame.getRoom(game.id)).emit('game', game);
+        }
+    }
 };

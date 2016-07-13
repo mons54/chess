@@ -479,5 +479,24 @@ module.exports = moduleGame = function () {
         return gid;
     };
 
+    moduleGame.timer = function (game) {
+
+        var time = game[game.turn].time,
+            timeTurn = game[game.turn].timeTurn;
+
+        if (time >= 0 && timeTurn >= 0) {
+            game[game.turn].time--;
+            game[game.turn].timeTurn--;
+        } else {
+            var color = game.turn === 'white' ? 'black' : 'white';
+            game.finish = true;
+            game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
+            game.result.name = game.result.winner === 0 ? 'draw' : 'time';
+            return game;
+        }
+
+        return false;
+    };
+
     return moduleGame;
 };
