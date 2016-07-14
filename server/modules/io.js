@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
 
     var moduleSocket = require(dirname + '/server/modules/socket')(io, mongoose, fbgraph),
@@ -65,10 +67,7 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
                 return;
             }
             socket.leave('home');
-            moduleSocket.listChallengers();
-            moduleGame.deleteCreatedGame(socket.uid);
-            moduleSocket.listGames(moduleGame.createdGame);
-            moduleSocket.deleteChallenges(socket);
+            leaveHome();
         });
 
         socket.on('createGame', function (data) {
@@ -202,13 +201,19 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
         });
 
         socket.on('disconnect', function () {
-            if (moduleSocket.checkSocketUid(socket)) {
-                delete moduleSocket.socketConnected[socket.uid];
-                moduleGame.deleteCreatedGame(socket.uid);
-                moduleSocket.listGames(moduleGame.createdGame);
+            if (!moduleSocket.checkSocketUid(socket)) {
+                return;
             }
-            moduleSocket.deleteChallenges(socket);
+            delete moduleSocket.socketConnected[socket.uid];
+            leaveHome();
         });
+
+        function leaveHome() {
+            moduleSocket.listChallengers();
+            moduleSocket.deleteChallenges(socket);
+            moduleGame.deleteCreatedGame(socket.uid);
+            moduleSocket.listGames(moduleGame.createdGame);
+        }
     });
 
     setInterval(function () {
