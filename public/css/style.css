@@ -242,6 +242,61 @@ header #header iframe {
     margin-right: 20px;
 }
 
+[profile] {
+    cursor: pointer;
+}
+
+.profile-stats {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #171b22;
+}
+
+.profile-stat {
+    position: relative;
+    height: 150px;
+    float: left;
+    width: 33%;
+    margin: 30px 0;
+}
+
+.profile-stat-win {
+    color: #54c08b;
+}
+
+.profile-stat-draw {
+    color: #565d6d;
+}
+
+.profile-stat-lose {
+    color: #f5716e;
+}
+
+.profile-stat-chart {
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+
+.profile-stat-number {
+    display: block;
+    margin-top: 45px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.profile-stat-text {
+    display: block;
+    margin-bottom: 42px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+}
+
 .content .dropdown-filter {
     width:300px; 
     padding:20px;

@@ -185,12 +185,12 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
             }
         });
 
-        socket.on('profil', function (uid) {
-            if (!moduleSocket.checkSocketUid(socket) || !uid) {
+        socket.on('profile', function (data) {
+            if (!moduleSocket.checkSocketUid(socket) || !data || !data.uid) {
                 return;
             }
 
-            moduleSocket.profil(socket, uid);
+            moduleSocket.profile(socket, data);
         });
 
         socket.on('ranking', function (data) {

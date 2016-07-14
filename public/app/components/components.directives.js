@@ -4,33 +4,74 @@
 
     angular.module('components.directives', []).
 
-    directive('profil', ['$rootScope',
+    directive('profile', ['$rootScope',
         function ($rootScope) {
             return {
+                scope: {
+                    'user': '='
+                },
                 link: function (scope, element) {
                     element.bind('click', function () {
-                        $rootScope.socket.emit('profil', $rootScope.user.uid);
+                        $rootScope.socket.emit('profile', {
+                            uid: scope.user.uid,
+                            name: scope.user.name
+                        });
                     });
                 } 
             }
         }
     ]).
 
-    directive('modalProfil', ['$rootScope',
+    directive('modalProfile', ['$rootScope',
         function ($rootScope) {
             return {
-                templateUrl: '/app/components/templates/modal-profil.html',
+                scope: true,
+                templateUrl: '/app/components/templates/modal-profile.html',
                 link: function (scope, element) {
                     $rootScope.$watch('socket', function (socket) {
                         if (!socket) {
                             return;
                         }
-                        socket.on('profil', function (data) {
-                            scope.data = data;
+                        socket.on('profile', function (data) {
+                            scope.$apply(function () {
+                                scope.data = data;
+                            });
                             element.modal('show');
                         });
                     });
-                }
+                },
+                controller: ['$scope', function ($scope) {
+                    var options = {
+                        animate:{
+                            duration: 0,
+                            enabled: false
+                        },
+                        size: 150,
+                        trackColor: '#2E3138',
+                        scaleColor: false,
+                        lineWidth: 10,
+                        lineCap: 'circle'
+                    };
+
+                    $scope.options = {
+                        win: angular.extend({
+                            barColor: '#54c08b'
+                        }, options),
+                        draw: angular.extend({
+                            barColor: '#565d6d'
+                        }, options),
+                        lose: angular.extend({
+                            barColor: '#f5716e'
+                        }, options),
+                    };
+
+                    $scope.getPercent = function(data) {
+                        if (!$scope.data) {
+                            return;
+                        }
+                        return 100 * data / $scope.data.games;
+                    };
+                }]
             }
         }
     ]).

@@ -5,19 +5,21 @@
                 <div class="pull-right">
                     <button data-toggle="modal" data-target="#modal-create-game" class="btn btn-primary">{{ 'create_game' | translate }}</button>
                 </div>
-                <div profil class="pull-left img">
-                    <img class="profile-picture" src="//graph.facebook.com/{{ user.uid }}/picture">
-                </div>
-                <div>
-                    <a profil href>{{ user.name }}</a>
-                </div>
-                <div>
-                    <span>{{ 'points'|translate }}: </span>
-                    <strong>{{ user.points }}</strong>
-                </div>
-                <div>
-                    <span>{{ 'ranking'|translate }}: </span>
-                    <strong>{{ user.ranking }}</strong>
+                <div profile user="user">
+                    <div class="pull-left img">
+                        <img class="profile-picture" src="//graph.facebook.com/{{ user.uid }}/picture">
+                    </div>
+                    <div>
+                        <a href>{{ user.name }}</a>
+                    </div>
+                    <div>
+                        <span>{{ 'points'|translate }}: </span>
+                        <strong>{{ user.points }}</strong>
+                    </div>
+                    <div>
+                        <span>{{ 'ranking'|translate }}: </span>
+                        <strong>{{ user.ranking }}</strong>
+                    </div>
                 </div>
                 <div class="clear"></div>
             </div>

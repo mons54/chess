@@ -5,7 +5,7 @@
                 <div class="element">
                     <table class="table table-striped">
                         <tbody>
-                            <tr ng-repeat="rank in ranking">
+                            <tr ng-repeat="rank in ranking" profile user="rank">
                                 <td class="position">{{ rank.position }}</td>
                                 <td class="img"><img class="profile-picture" ng-src="https://graph.facebook.com/{{rank.uid}}/picture"></td>
                                 <td class="name">

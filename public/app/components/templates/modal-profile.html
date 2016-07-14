@@ -1,0 +1,41 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">{{ 'cancel'|translate }}</span>
+            </button>
+            <div class="profile" ng-if="data">
+            	<div class="pull-left img">
+                	<img class="profile-picture" ng-src="//graph.facebook.com/{{ data.uid }}/picture">
+                </div>
+                <h4 class="modal-title" id="myModalLabel">
+                     {{ data.name }}
+                </h4>
+                <div>
+                    <span>{{ 'points'|translate }}: </span>
+                    <strong>{{ data.points }}</strong>
+                </div>
+                <div>
+                    <span>{{ 'ranking'|translate }}: </span>
+                    <strong>{{ data.ranking }}</strong>
+                </div>
+                <div class="clear"></div>
+                <div class="profile-stats">
+                    <div ng-repeat="name in ['win', 'draw', 'lose']" class="profile-stat profile-stat-{{ name }}">
+                        <div easypiechart
+                             options="options[name]" 
+                             percent="getPercent(data[name])"
+                             class="profile-stat-chart"></div>
+                        <span class="profile-stat-number">
+                            {{ data[name] }}
+                        </span>
+                        <span class="profile-stat-text profile-stat-text-{{ name }}">
+                            {{ name|translate }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

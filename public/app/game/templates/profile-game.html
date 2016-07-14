@@ -6,11 +6,13 @@
         {{ formatTime(player.timeTurn) }}
     </div>
 </div>
-<div class="pull-left img">
-    <img class="profile-picture" ng-src="//graph.facebook.com/{{ player.uid }}/picture">
-</div>
-<div>
-    <a href>{{ player.name }}</a>
+<div profile user="player">
+    <div class="pull-left img">
+        <img class="profile-picture" ng-src="//graph.facebook.com/{{ player.uid }}/picture">
+    </div>
+    <div>
+        <a href>{{ player.name }}</a>
+    </div>
 </div>
 <div ng-if="isPlayerUser() && !isFinish()" class="pull-right actions">
     <button data-toggle="modal" data-target="#modal-offer-draw" type="button" class="btn btn-primary btn-sm" ng-disabled="!canOfferDraw()">{{ 'offer_draw'|translate }}</button>

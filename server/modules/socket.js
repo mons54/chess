@@ -431,9 +431,8 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
         });
     };
 
-    moduleSocket.profil = function (socket, uid) {
-        var data = {};
-        mongoose.promise.findOne('users', { uid: uid }, 'points')
+    moduleSocket.profile = function (socket, data) {
+        mongoose.promise.findOne('users', { uid: data.uid }, 'points')
         .then(function (response) {
             data.points = response.points;
             return mongoose.promise.all([
@@ -445,26 +444,26 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
                 }),
                 mongoose.promise.count('games', {
                     $or: [{
-                        white: uid
+                        white: data.uid
                     }, {
-                        black: uid
+                        black: data.uid
                     }]
                 }), 
                 mongoose.promise.count('games', {
                     $or: [{
-                        white: uid,
+                        white: data.uid,
                         result: 1
                     }, {
-                        black: uid,
+                        black: data.uid,
                         result: 2
                     }]
                 }),
                 mongoose.promise.count('games', {
                     $or: [{
-                        whitse: uid,
+                        whitse: data.uid,
                         result: 0
                     }, {
-                        black: uid,
+                        black: data.uid,
                         result: 0
                     }]
                 })
@@ -476,7 +475,7 @@ module.exports = moduleSocket = function (io, mongoose, fbgraph) {
             data.win = response[2];
             data.draw = response[3];
             data.lose = data.games - (data.win + data.draw);
-            socket.emit('profil', data);
+            socket.emit('profile', data);
         });
     };
 
