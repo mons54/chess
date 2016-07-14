@@ -484,7 +484,7 @@ module.exports = moduleGame = function () {
         var time = game[game.turn].time,
             timeTurn = game[game.turn].timeTurn;
 
-        if (time >= 0 && timeTurn >= 0) {
+        if (time > 0 && timeTurn > 0) {
             game[game.turn].time--;
             game[game.turn].timeTurn--;
         } else {

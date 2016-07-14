@@ -219,7 +219,6 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
 
     function timer(game) {
         if (game.finish) {
-            moduleGame.deleteGame(game.id);
             return;
         }
 

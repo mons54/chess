@@ -99,15 +99,11 @@
                     $scope.$apply(countdown);
                 }, 1000);
                 
-                if (!$scope.game) {
+                if (!$scope.game || $scope.game.finish) {
                     return;
                 }
 
                 var player = $scope.game[$scope.game.turn];
-
-                if (player.timeTurn > player.time) {
-                    player.timeTurn = player.time;
-                }
 
                 if (player.time > 0) {
                     player.time--;
