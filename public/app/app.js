@@ -6,6 +6,7 @@
 
     module('app', [
         'ngRoute',
+        'easypiechart',
         'pascalprecht.translate',
         'components.services',
         'components.directives',
