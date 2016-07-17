@@ -12,8 +12,8 @@
 
             var userTrophies = {};
 
-            angular.forEach($rootScope.user.trophies, function (trophy) {
-                userTrophies[trophy.badge] = true;
+            angular.forEach($rootScope.user.trophies, function (data) {
+                userTrophies[data.trophy] = true;
             });
 
             $scope.trophies = [];

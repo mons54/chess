@@ -1,9 +1,9 @@
 'use strict';
 
-module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
+module.exports = function (app, io) {
 
-    var moduleSocket = require(dirname + '/server/modules/socket')(io, mongoose, fbgraph),
-        moduleGame   = require(dirname + '/server/modules/game')();
+    const moduleSocket = require(dirname + '/server/modules/socket')(io);
+    const moduleGame   = require(dirname + '/server/modules/game');
 
     io.on('connection', function (socket) {
 
@@ -115,6 +115,8 @@ module.exports = function (app, io, mongoose, fbgraph, q, crypto) {
                 moduleSocket.deleteChallenges(socketOpponent);
                 return;
             }
+
+            var challenge;
 
             if (challenge = moduleSocket.getChallenge(socketOpponent, socket.uid)) {
                 moduleSocket.startGame(socket, socketOpponent, challenge);

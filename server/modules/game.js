@@ -1,502 +1,507 @@
-module.exports = moduleGame = function () {
+'use strict';
 
-    var moduleEngine = require(dirname + '/server/modules/game/engine');
+const Engine = require(dirname + '/server/modules/game/engine');
 
-    moduleGame.options = {
+module.exports = new Game();
+
+function Game() {
+    this.options = {
         colors: ['white', 'black'],
         times: [300, 600, 1200, 3600, 5400],
         pointsMin: 1200,
         pointsMax: 3000
     };
     
-    moduleGame.createdGame = {};
+    this.createdGame = {};
 
-    moduleGame.games = {
+    this.games = {
         id: 1,
         data: {}
     };
+};
 
-    moduleGame.create = function (socket, data) {
-        
-        var color = data.color, 
-            time = moduleGame.getTime(data.time), 
-            pointsMin = parseInt(data.pointsMin) ? data.pointsMin : false,
-            pointsMax = parseInt(data.pointsMax) ? data.pointsMax : false;
+Game.prototype.getGames = function () {
+    return this.games.data;
+};
 
-        if (!moduleGame.checkColor(color) || !moduleGame.checkTime(time) || !moduleGame.checkPoints(pointsMin, pointsMax)) {
-            return false;
-        }
+Game.prototype.create = function (socket, data) {
+    
+    var color = data.color, 
+        time = this.getTime(data.time), 
+        pointsMin = parseInt(data.pointsMin) ? data.pointsMin : false,
+        pointsMax = parseInt(data.pointsMax) ? data.pointsMax : false;
 
-        moduleGame.createdGame[socket.uid] = {
-            name: socket.name,
-            points: socket.points,
-            ranking: socket.ranking,
-            color: color,
-            time: time,
-            pointsMin: pointsMin,
-            pointsMax: pointsMax,
-        };
+    if (!this.checkColor(color) || !this.checkTime(time) || !this.checkPoints(pointsMin, pointsMax)) {
+        return false;
+    }
 
+    this.createdGame[socket.uid] = {
+        name: socket.name,
+        points: socket.points,
+        ranking: socket.ranking,
+        color: color,
+        time: time,
+        pointsMin: pointsMin,
+        pointsMax: pointsMax,
+    };
+
+    return true;
+
+};
+
+Game.prototype.deleteCreatedGame = function (uid) {
+    if (!this.createdGame[uid]) {
+        return;
+    }
+
+    delete this.createdGame[uid];
+};
+
+Game.prototype.getTime = function (time) {
+    return parseInt(time);
+};
+
+Game.prototype.checkColor = function (color) {
+    if (this.options.colors.indexOf(color) === -1) {
+        return false;
+    }
+    return true;
+};
+
+Game.prototype.checkTime = function (time) {
+    if (this.options.times.indexOf(time) === -1) {
+        return false;
+    }
+    return true;
+};
+
+Game.prototype.checkPoints = function (pointsMin, pointsMax) {
+    if (!pointsMin || !pointsMax) {
         return true;
+    }
 
-    };
+    if (pointsMin < this.options.pointsMin || pointsMax > this.options.pointsMax) {
+        return false;
+    }
 
-    moduleGame.deleteCreatedGame = function (uid) {
-        if (!moduleGame.createdGame[uid]) {
-            return;
-        }
+    return pointsMin < pointsMax;
+};
 
-        delete moduleGame.createdGame[uid];
-    };
+Game.prototype.move = function (socket, id, start, end, promotion) {
+    
+    var game = this.getGame(id);
 
-    moduleGame.getTime = function (time) {
-        return parseInt(time);
-    };
+    // voir si son temps est dépassé
+    if (!game || game.finish || game[game.turn].uid !== socket.uid) {
+        return;
+    }
 
-    moduleGame.checkColor = function (color) {
-        if (moduleGame.options.colors.indexOf(color) === -1) {
-            return false;
-        }
-        return true;
-    };
+    game = new Engine(game, start, end, promotion);
 
-    moduleGame.checkTime = function (time) {
-        if (moduleGame.options.times.indexOf(time) === -1) {
-            return false;
-        }
-        return true;
-    };
+    if (game.finish) {
+        this.deleteGame(game.id);
+    }
 
-    moduleGame.checkPoints = function (pointsMin, pointsMax) {
-        if (!pointsMin || !pointsMax) {
-            return true;
-        }
+    return game;
+};
 
-        if (pointsMin < moduleGame.options.pointsMin || pointsMax > moduleGame.options.pointsMax) {
-            return false;
-        }
+Game.prototype.resign = function (socket, id) {
+    
+    var game = this.getGame(id);
 
-        return pointsMin < pointsMax;
-    };
+    if (!game || game.finish || !this.isPlayer(game, socket.uid)) {
+        return;
+    }
 
-    moduleGame.move = function (socket, id, start, end, promotion) {
-        
-        var game = moduleGame.getGame(id);
+    game.finish = true;
 
-        // voir si son temps est dépassé
-        if (!game || game.finish || game[game.turn].uid !== socket.uid) {
-            return;
-        }
+    if (this.getColorPlayer(game, socket.uid) === 'white') {
+        game.result.winner = 2;
+    } else {
+        game.result.winner = 1;
+    }
 
-        game = new moduleEngine(game, start, end, promotion);
+    game.result.name = 'resign';
 
-        if (game.finish) {
-            moduleGame.deleteGame(game.id);
-        }
+    this.deleteGame(game.id);
 
-        return game;
-    };
+    return game;
+};
 
-    moduleGame.resign = function (socket, id) {
-        
-        var game = moduleGame.getGame(id);
+Game.prototype.offerDraw = function (socket, id) {
 
-        if (!game || game.finish || !moduleGame.isPlayer(game, socket.uid)) {
-            return;
-        }
+    var game = this.getGame(id);
 
-        game.finish = true;
+    if (!game || game.finish || !this.isPlayer(game, socket.uid)) {
+        return;
+    }
 
-        if (moduleGame.getColorPlayer(game, socket.uid) === 'white') {
-            game.result.winner = 2;
-        } else {
-            game.result.winner = 1;
-        }
+    var player = this.getPlayer(game, socket.uid);
 
-        game.result.name = 'resign';
+    if (player.offerDraw >= game.maxOfferDraw) {
+        return;
+    }
 
-        moduleGame.deleteGame(game.id);
+    player.offerDraw++;
 
-        return game;
-    };
+    var opponent = this.getOpponent(game, socket.uid);
 
-    moduleGame.offerDraw = function (socket, id) {
+    opponent.canDraw = true;
 
-        var game = moduleGame.getGame(id);
+    return opponent;
+};
 
-        if (!game || game.finish || !moduleGame.isPlayer(game, socket.uid)) {
-            return;
-        }
+Game.prototype.acceptDraw = function (socket, id) {
+    var game = this.getGame(id);
 
-        var player = moduleGame.getPlayer(game, socket.uid);
+    if (!game || game.finish || !this.isPlayer(game, socket.uid)) {
+        return;
+    }
 
-        if (player.offerDraw >= game.maxOfferDraw) {
-            return;
-        }
+    var player = this.getPlayer(game, socket.uid);
 
-        player.offerDraw++;
+    if (!player.canDraw) {
+        return;
+    }
 
-        var opponent = moduleGame.getOpponent(game, socket.uid);
+    game.finish = true;
+    game.result.winner = 0;
+    game.result.name = 'draw';
 
-        opponent.canDraw = true;
+    this.deleteGame(game.id);
 
-        return opponent;
-    };
+    return game;
+};
 
-    moduleGame.acceptDraw = function (socket, id) {
-        var game = moduleGame.getGame(id);
+Game.prototype.isPlayer = function (game, uid) {
+    return game.white.uid === uid || game.black.uid === uid;
+};
 
-        if (!game || game.finish || !moduleGame.isPlayer(game, socket.uid)) {
-            return;
-        }
+Game.prototype.getColorPlayer = function (game, uid) {
+    return game.white.uid === uid ? 'white' : 'black';
+};
 
-        var player = moduleGame.getPlayer(game, socket.uid);
+Game.prototype.getPlayer = function (game, uid) {
+    return game.white.uid === uid ? game.white : game.black;
+};
 
-        if (!player.canDraw) {
-            return;
-        }
+Game.prototype.getColorOpponent = function (game, uid) {
+    return game.white.uid === uid ? 'black' : 'white';
+};
 
-        game.finish = true;
-        game.result.winner = 0;
-        game.result.name = 'draw';
+Game.prototype.getOpponent = function (game, uid) {
+    return game.white.uid === uid ? game.black : game.white;
+};
 
-        moduleGame.deleteGame(game.id);
+Game.prototype.getGame = function (gid) {
+    return this.games.data[gid];
+};
 
-        return game;
-    };
+Game.prototype.deleteGame = function (gid) {
+    delete this.games.data[gid];
+};
 
-    moduleGame.isPlayer = function (game, uid) {
-        return game.white.uid === uid || game.black.uid === uid;
-    };
+Game.prototype.getRoom = function (gid) {
+    return 'game' + gid;
+};
 
-    moduleGame.getColorPlayer = function (game, uid) {
-        return game.white.uid === uid ? 'white' : 'black';
-    };
+Game.prototype.start = function (white, black, time) {
 
-    moduleGame.getPlayer = function (game, uid) {
-        return game.white.uid === uid ? game.white : game.black;
-    };
+    var gid = this.games.id++,
+        timeTurn = 120,
+        nbPieces = 16;
 
-    moduleGame.getColorOpponent = function (game, uid) {
-        return game.white.uid === uid ? 'black' : 'white';
-    };
-
-    moduleGame.getOpponent = function (game, uid) {
-        return game.white.uid === uid ? game.black : game.white;
-    };
-
-    moduleGame.getGame = function (gid) {
-        return moduleGame.games.data[gid];
-    };
-
-    moduleGame.deleteGame = function (gid) {
-        delete moduleGame.games.data[gid];
-    };
-
-    moduleGame.getRoom = function (gid) {
-        return 'game' + gid;
-    };
-
-    moduleGame.start = function (white, black, time) {
-
-        var gid = moduleGame.games.id++,
-            timeTurn = 120,
-            nbPieces = 16;
-
-        var game = {
-            id: gid,
+    var game = {
+        id: gid,
+        time: time,
+        timeTurn: timeTurn,
+        finish: false,
+        turn: 'white',
+        turn50: 0,
+        played: 0,
+        maxOfferDraw: 3,
+        saved: {},
+        result: {},
+        lastTurn: {
+            start: null,
+            end: null
+        },
+        white: {
+            uid: white.uid,
+            name: white.name,
             time: time,
             timeTurn: timeTurn,
-            finish: false,
-            turn: 'white',
-            turn50: 0,
-            played: 0,
-            maxOfferDraw: 3,
-            saved: {},
-            result: {},
-            lastTurn: {
-                start: null,
-                end: null
+            canDraw: false,
+            king: {
+                position: 'e1',
+                moveForbidden: []
             },
-            white: {
-                uid: white.uid,
-                name: white.name,
-                time: time,
-                timeTurn: timeTurn,
-                canDraw: false,
-                king: {
-                    position: 'e1',
-                    moveForbidden: []
-                },
-                nbPieces: nbPieces,
-                offerDraw: 0,
-                notation: []
+            nbPieces: nbPieces,
+            offerDraw: 0,
+            notation: []
+        },
+        black: {
+            uid: black.uid,
+            name: black.name,
+            time: time,
+            timeTurn: timeTurn,
+            canDraw: false,
+            king: {
+                position: 'e8',
+                moveForbidden: []
             },
-            black: {
-                uid: black.uid,
-                name: black.name,
-                time: time,
-                timeTurn: timeTurn,
-                canDraw: false,
-                king: {
-                    position: 'e8',
-                    moveForbidden: []
-                },
-                nbPieces: nbPieces,
-                offerDraw: 0,
-                notation: []
+            nbPieces: nbPieces,
+            offerDraw: 0,
+            notation: []
+        },
+        pieces: {
+            e1: {
+                name: 'king',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
             },
-            pieces: {
-                e1: {
-                    name: 'king',
-                    color: 'white',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                e8: {
-                    name: 'king',
-                    color: 'black',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                d1: {
-                    name: 'queen',
-                    color: 'white',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                d8: {
-                    name: 'queen',
-                    color: 'black',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                a1: {
-                    name: 'rook',
-                    color: 'white',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                h1: {
-                    name: 'rook',
-                    color: 'white',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                a8: {
-                    name: 'rook',
-                    color: 'black',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                h8: {
-                    name: 'rook',
-                    color: 'black',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                c1: {
-                    name: 'bishop',
-                    color: 'white',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                f1: {
-                    name: 'bishop',
-                    color: 'white',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                c8: {
-                    name: 'bishop',
-                    color: 'black',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                f8: {
-                    name: 'bishop',
-                    color: 'black',
-                    deplace: [],
-                    capture: [],
-                    moved: false
-                },
-                b1: {
-                    name: 'knight',
-                    color: 'white',
-                    deplace: ['a3', 'c3'],
-                    capture: [],
-                    moved: false
-                },
-                g1: {
-                    name: 'knight',
-                    color: 'white',
-                    deplace: ['f3', 'h3'],
-                    capture: [],
-                    moved: false
-                },
-                b8: {
-                    name: 'knight',
-                    color: 'black',
-                    deplace: ['a6', 'c6'],
-                    capture: [],
-                    moved: false
-                },
-                g8: {
-                    name: 'knight',
-                    color: 'black',
-                    deplace: ['f6', 'h6'],
-                    capture: [],
-                    moved: false
-                },
-                a2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['a3', 'a4'],
-                    capture: [],
-                    moved: false
-                },
-                b2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['b3', 'b4'],
-                    capture: [],
-                    moved: false
-                },
-                c2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['c3', 'c4'],
-                    capture: [],
-                    moved: false
-                },
-                d2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['d3', 'd4'],
-                    capture: [],
-                    moved: false
-                },
-                e2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['e3', 'e4'],
-                    capture: [],
-                    moved: false
-                },
-                f2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['f3', 'f4'],
-                    capture: [],
-                    moved: false
-                },
-                g2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['g3', 'g4'],
-                    capture: [],
-                    moved: false
-                },
-                h2: {
-                    name: 'pawn',
-                    color: 'white',
-                    deplace: ['h3', 'h4'],
-                    capture: [],
-                    moved: false
-                },
-                a7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['a6', 'a5'],
-                    capture: [],
-                    moved: false
-                },
-                b7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['b6', 'b5'],
-                    capture: [],
-                    moved: false
-                },
-                c7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['c6', 'c5'],
-                    capture: [],
-                    moved: false
-                },
-                d7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['d6', 'd5'],
-                    capture: [],
-                    moved: false
-                },
-                e7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['e6', 'e5'],
-                    capture: [],
-                    moved: false
-                },
-                f7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['f6', 'f5'],
-                    capture: [],
-                    moved: false
-                },
-                g7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['g6', 'g5'],
-                    capture: [],
-                    moved: false
-                },
-                h7: {
-                    name: 'pawn',
-                    color: 'black',
-                    deplace: ['h6', 'h5'],
-                    capture: [],
-                    moved: false
-                }
+            e8: {
+                name: 'king',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            d1: {
+                name: 'queen',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            d8: {
+                name: 'queen',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            a1: {
+                name: 'rook',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            h1: {
+                name: 'rook',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            a8: {
+                name: 'rook',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            h8: {
+                name: 'rook',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            c1: {
+                name: 'bishop',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            f1: {
+                name: 'bishop',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            c8: {
+                name: 'bishop',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            f8: {
+                name: 'bishop',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            b1: {
+                name: 'knight',
+                color: 'white',
+                deplace: ['a3', 'c3'],
+                capture: [],
+                moved: false
+            },
+            g1: {
+                name: 'knight',
+                color: 'white',
+                deplace: ['f3', 'h3'],
+                capture: [],
+                moved: false
+            },
+            b8: {
+                name: 'knight',
+                color: 'black',
+                deplace: ['a6', 'c6'],
+                capture: [],
+                moved: false
+            },
+            g8: {
+                name: 'knight',
+                color: 'black',
+                deplace: ['f6', 'h6'],
+                capture: [],
+                moved: false
+            },
+            a2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['a3', 'a4'],
+                capture: [],
+                moved: false
+            },
+            b2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['b3', 'b4'],
+                capture: [],
+                moved: false
+            },
+            c2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['c3', 'c4'],
+                capture: [],
+                moved: false
+            },
+            d2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['d3', 'd4'],
+                capture: [],
+                moved: false
+            },
+            e2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['e3', 'e4'],
+                capture: [],
+                moved: false
+            },
+            f2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['f3', 'f4'],
+                capture: [],
+                moved: false
+            },
+            g2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['g3', 'g4'],
+                capture: [],
+                moved: false
+            },
+            h2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['h3', 'h4'],
+                capture: [],
+                moved: false
+            },
+            a7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['a6', 'a5'],
+                capture: [],
+                moved: false
+            },
+            b7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['b6', 'b5'],
+                capture: [],
+                moved: false
+            },
+            c7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['c6', 'c5'],
+                capture: [],
+                moved: false
+            },
+            d7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['d6', 'd5'],
+                capture: [],
+                moved: false
+            },
+            e7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['e6', 'e5'],
+                capture: [],
+                moved: false
+            },
+            f7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['f6', 'f5'],
+                capture: [],
+                moved: false
+            },
+            g7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['g6', 'g5'],
+                capture: [],
+                moved: false
+            },
+            h7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['h6', 'h5'],
+                capture: [],
+                moved: false
             }
-        };
-
-        moduleGame.games.data[gid] = game;
-
-        return gid;
-    };
-
-    moduleGame.timer = function (game) {
-
-        var time = game[game.turn].time,
-            timeTurn = game[game.turn].timeTurn;
-
-        if (time > 0 && timeTurn > 0) {
-            game[game.turn].time--;
-            game[game.turn].timeTurn--;
-        } else {
-            var color = game.turn === 'white' ? 'black' : 'white';
-            game.finish = true;
-            game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
-            game.result.name = game.result.winner === 0 ? 'draw' : 'time';
-            return game;
         }
-
-        return false;
     };
 
-    return moduleGame;
+    this.games.data[gid] = game;
+
+    return gid;
+};
+
+Game.prototype.timer = function (game) {
+
+    var time = game[game.turn].time,
+        timeTurn = game[game.turn].timeTurn;
+
+    if (time > 0 && timeTurn > 0) {
+        game[game.turn].time--;
+        game[game.turn].timeTurn--;
+    } else {
+        var color = game.turn === 'white' ? 'black' : 'white';
+        game.finish = true;
+        game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
+        game.result.name = game.result.winner === 0 ? 'draw' : 'time';
+        return game;
+    }
+
+    return false;
 };

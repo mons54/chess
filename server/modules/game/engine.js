@@ -1,8 +1,10 @@
-module.exports = Engine = function (game, start, end, promotion) {
+'use strict';
+
+module.exports = Engine;
+
+function Engine(game, start, end, promotion) {
     
     this.game = game;
-    delete game;
-
     this.init(start, end, promotion);
 
     return this.game;

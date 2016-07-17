@@ -1,6 +1,12 @@
-module.exports = function (app, express, mongoose) {
+'use strict';
 
-    mongoose.connect('mongodb://mons54:jsOL160884@oceanic.mongohq.com:10096/chess');
+const express = require('express');
+const mongoose = require('mongoose');
+
+module.exports = function (app) {
+
+    mongoose.connect('mongodb://mons54:jsOL160884@ds011321.mlab.com:11321/chess');
+
 
     var staticPath = dirname + '/public/',
         bodyParser = require('body-parser');
