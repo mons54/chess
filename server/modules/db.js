@@ -7,28 +7,40 @@ module.exports = new Module();
 
 function Module() {
     this.models = {
-        users: mongoose.model('users', new mongoose.Schema({
-            uid: {
-                type: Number,
-                unique: true
-            },
-            points: Number,
-            consWin: Number,
-            active: Boolean,
-            ban: Boolean,
-            moderateur: Boolean,
-            blackListGame: Object
-        })),
-        games: mongoose.model('games', new mongoose.Schema({
-            white: Number,
-            black: Number,
-            result: Number,
-            date: Date
-        })),
-        trophies: mongoose.model('trophies', new mongoose.Schema({
-            uid: Number,
-            trophy: Number,
-        }).index({uid: 1, trophy: 1}, {unique: true}))
+        users: mongoose.model('users', 
+            new mongoose.Schema({
+                uid: {
+                    type: Number,
+                    unique: true
+                },
+                points: Number,
+                consWin: Number,
+                active: Boolean,
+                ban: Boolean,
+                moderateur: Boolean,
+                blackListGame: Object
+            })
+            .index({active: 1})
+            .index({points: 1})
+            .index({uid: 1, points: 1})
+            .index({uid: 1, active: 1})
+            .index({active: 1, points: 1})
+        ),
+        games: mongoose.model('games', 
+            new mongoose.Schema({
+                white: Number,
+                black: Number,
+                result: Number,
+                date: Date
+            })
+        ),
+        trophies: mongoose.model('trophies', 
+            new mongoose.Schema({
+                uid: Number,
+                trophy: Number,
+            })
+            .index({uid: 1, trophy: 1}, {unique: true})
+        )
     };
 
 }
