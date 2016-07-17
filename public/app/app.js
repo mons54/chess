@@ -185,9 +185,12 @@
                 });
 
                 $rootScope.socket.on('ready', function () {
-                    //lfstmedia.init();
                     $rootScope.$apply(applyReady);
-                })
+                });
+
+                $rootScope.socket.on('trophy', function (data) {
+                    console.log(data);
+                });
             }
 
             function applyUserGid (gid) {
