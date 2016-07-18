@@ -838,7 +838,7 @@ module.exports = function (io) {
         .then(function (response) {
             var socket = self.getSocket(uid);
             if (socket) {
-                socket.emit('trophy', trophy);
+                socket.emit('trophy', response);
             }
         });
     };

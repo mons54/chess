@@ -1,32 +1,67 @@
-* {
-    margin: 0;
-    padding: 0;
+.demo-layout .mdl-layout__header .mdl-layout__drawer-button {
+  color: rgba(0, 0, 0, 0.54);
 }
 
-html, body {
-    margin-top: 20px;
-    background-color: #E9EAED;
-    font-size: 13px;
+.app-drawer {
+  border: none;
 }
 
-a {
-    cursor:pointer;
-    font-weight:bold;
-    text-decoration: none;
-    color: #3b5998
+.app-drawer-footer {
+  text-align: center;
+  padding: 20px 0;
 }
 
-a:hover, a:active, a:visited, a:focus {
-    text-decoration: none;
+.app-drawer-footer .mdl-button {
+  margin-right: 20px;
 }
 
-.no-select {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.app-drawer-footer .mdl-button:last-child {
+  margin-right: 0;
+}
+
+/* iOS Safari specific workaround */
+.app-drawer .app-navigation {
+  z-index: -2;
+}
+/* END iOS Safari specific workaround */
+
+.app-navigation {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.app-layout .app-navigation .mdl-navigation__link {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: rgba(255, 255, 255, 0.56);
+  font-weight: 500;
+}
+.app-layout .app-navigation .mdl-navigation__link:hover {
+  background-color: #5F7C8A;
+}
+.app-navigation .mdl-navigation__link .material-icons {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.56);
+  margin-right: 32px;
+}
+
+.app-content {
+  max-width: 760px;
+}
+
+@media screen and (min-width: 1024px) {
+  .mdl-layout--fixed-header>.mdl-layout__header {
+    display: -webkit-none;
+    display: -ms-none;
+    display: none;
+  }
 }
 
 .ui-draggable {
@@ -36,23 +71,6 @@ a:hover, a:active, a:visited, a:focus {
 .ui-draggable-disabled {
     cursor: auto;
 }
-
-/*** Bootstrap ***/
-
-.table {
-    margin-bottom: 0;
-}
-
-.table > tbody > tr > td {
-    vertical-align: middle;
-    line-height: 1.2;
-}
-
-.modal-content-no-body .modal-footer {
-    border-top: 0;
-}
-
-/*** Icomoon ***/
 
 [class^="icon-"], [class*=" icon-"] {
     font-size: 16px;
@@ -83,563 +101,9 @@ a:hover, a:active, a:visited, a:focus {
     color: #fff;
 }
 
-.clear {
-    clear: both;
-}
-
-.element {
-    background: #fff;
-    border: 1px solid;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-    -webkit-border-radius: 3px;
-}
-
-.profile-picture {
-    width: 50px;
-    height: 50px;
-    border-radius: 3px;
-}
-
-header {
-    padding: 10px 0;
-}
-
-header #header {
-    position: relative;
-    width: 728px;
-    height: 90px;
-    margin: 0 auto;
-    background-color: #002D40;
-}
-
-
-header #header iframe {
-    width: 728px;
-    height: 90px;
-    padding: 0;
-    overflow: hidden;
-}
-
-.app {
-    width: 760px;
-    margin: 0 auto;
-}
-
-.content {
-    margin: 10px 0 20px 0;
-}
-
-.content .element:not(:last-child) {
-    margin-bottom: 10px;
-}
-
-.content .element {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.content .ranking {
-    position: relative;
-    height: 536px;
-    margin-bottom: 10px;
-}
-
-.content .ranking tr {
-    height: 67px;
-}
-
-.content .ranking tr .position,
-.content .ranking tr .img,
-.content .ranking tr .points {
-    width: 70px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.content .ranking-pagination {
-    position: relative;
-    text-align: center;
-    padding: 5px 10px;
-}
-
-.content .ranking-pagination .btn-pagination {
-    position: absolute;
-    top: 8px;
-}
-
-.content .ranking-pagination .btn-pagination-left {
-    left: 10px;
-}
-
-.content .ranking-pagination .btn-pagination-right {
-    right: 10px;
-}
-
-.content .ranking-pagination .form-group {
-    display: inline-block;
-    margin: 3px 0;
-}
-
-.content .ranking-pagination .form-group .form-control {
-    height: 30px;
-    text-align: center;
-}
-
-.content .element section {
-    max-height: 225px;
-    overflow-x: auto;
-}
-
-.content .element h2 {
-    margin: 0;
-    padding: 10px;
-    background-color: #eef5f9;
-    border-bottom: 1px solid #dadede;
-    border-radius: 3px 3px 0 0;
-    color: #446479;
-    font-size: 18px;
-}
-
-.content .element .info-tooltip {
-    display: inline-block;
-    padding: 3px 5px 1px;
-    background-color: #446479;
-    color: #EEF5F9;
-    text-align: center;
-    border-radius: 3px;
-    font-size: 13px;
-    font-weight: bold;
-    margin-left: 3px;
-}
-
-.content .element .btn-right {
-    display: inline-block;
-    position: relative;
-    top: -2px;
-}
-
-.content .element .load-spin {
-    padding: 20px 0;
-    text-align: center;
-}
-
-.content .element .load-spin img {
-    height: 25px;
-}
-
-.content .profile {
-    position: relative;
-    padding: 10px;
-    height: 70px;
-}
-
-.profile .img {
-    padding-right: 10px;
-}
-
-.profile-game .actions {
-    margin-right: 20px;
-}
-
-[profile] {
-    cursor: pointer;
-}
-
-.profile-stats {
-    margin-top: 10px;
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-    border-radius: 5px;
-    background-color: #171b22;
-}
-
-.profile-stat {
-    position: relative;
-    height: 150px;
-    float: left;
-    width: 33%;
-    margin: 30px 0;
-}
-
-.profile-stat-win {
-    color: #54c08b;
-}
-
-.profile-stat-draw {
-    color: #565d6d;
-}
-
-.profile-stat-lose {
-    color: #f5716e;
-}
-
-.profile-stat-chart {
-    position: absolute;
-    top: 0;
-    left: 20px;
-}
-
-.profile-stat-number {
-    display: block;
-    margin-top: 45px;
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.profile-stat-text {
-    display: block;
-    margin-bottom: 42px;
-    text-transform: uppercase;
-    color: #fff;
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.content .dropdown-filter {
-    width:300px; 
-    padding:20px;
-}
-
-.content .dropdown-filter label {
-    font-size: 12px;
-}
-
-.content table.list-user tr .profile-picture {
-    width: 30px;
-    height: 30px;
-}
-
-.content table.list-user tr .name {
-    width: 200px;
-}
-
-.content table.list-user tr td .user-name {
-    display: block;
-    max-width: 180px;
-    max-height: 30px;
-    overflow: hidden;
-}
-
-.content table.list-user tr .info-user {
-    text-align: center;
-    width: 75px;
-}
-
-.content table.list-user tr .info-game {
-    text-align: center;
-    width: 55px;
-}
-
-.content table.list-user tr td .color {
-    display: inline-block;
-    background-color: #999999;
-    padding: 3px 5px;
-    border-radius: 3px;
-}
-
-.content table.list-user tr td .icon-white {
-    color: #fff;
-}
-
-.content table.list-user tr td .icon-black {
-    color: #000;
-}
-
-.content .col-right .element {
-    color: #362F2D;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 5px 0;
-}
-
-.content .col-right .icon-right {
-    font-size: 32px;
-}
-
-.content .clock {
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 40px;
-    height: 40px;
-    background-color: #362F2D;
-    color: #fff;
-    text-align: center;
-}
-
-.content .free-token {
-    padding-top: 5px;
-}
-
-/******* Game ********/
-
-.profile .time {
-    text-align: center;
-    font-size: 12px;
-    background-color: #3A3A3A;
-    color: #fff;
-    width: 50px;
-    height: 20px;
-    line-height: 20px;
-    border-radius: 5px;
-}
-
-.profile .time-turn {
-    margin-top: 5px;
-}
-
-.content .notation {
-    float: right;
-    width: 105px;
-}
-
-.content .notation .element {
-    height: 252px;
-    width: 100%;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    overflow-x: auto;
-}
-
-.content .game {
-    width: 514px;
-}
-
-.game > .game-row {
-    width: 100%;
-    height: 64px;
-}
-
-.game > .game-row > .game-box {
-    float: left;
-    width: 64px;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
-}
-
-.game > .game-row > .game-box.last-turn {
-    background-color: rgb(50, 50, 50);
-}
-
-.game > .game-row > .game-box.ui-droppable {
-    background-color: rgb(205, 205, 205);
-}
-
-.game-white .game-row:nth-child(odd) .game-box:nth-child(even),
-.game-white .game-row:nth-child(even) .game-box:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box:nth-child(even),
-.game-black .game-row:nth-child(odd) .game-box:nth-child(odd) {
-    background-color: rgb(120, 120, 120);
-}
-
-.game-white .game-row:nth-child(odd) .game-box.last-turn:nth-child(even),
-.game-white .game-row:nth-child(even) .game-box.last-turn:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box.last-turn:nth-child(even),
-.game-black .game-row:nth-child(odd) .game-box.last-turn:nth-child(odd) {
-    background-color: rgb(50, 50, 50);
-}
-
-
-.game-white .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(even),
-.game-white .game-row:nth-child(even) .game-box.ui-droppable:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box.ui-droppable:nth-child(even),
-.game-black .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(odd) {
-    background-color: rgb(80, 80, 80);
-}
-
-.game-box .icon {
-    display: block;
-    font-size: 32px;
-    padding: 16px;
-}
-
-.game-box .icon-white {
-    color: rgb(225, 175, 125);
-}
-
-.game-box .icon-black {
-    color: rgb(0, 0, 0);
-}
-
-#modal-promotion .modal-body {
-    padding: 50px 20px;
-    text-align: center;
-}
-
-#modal-promotion .piece {
-    font-size: 64px;
-    margin: 0 30px;
-}
-
-/******* Trophies ********/
-
-.content .element.trophies {
-    padding: 10px;
-}
-
-.trophy {
-    display: inline-block;
-    position: relative;
-    width: 100px;
-    height: 100px;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    margin: 10px;
-}
-
-.trophy .description {
-    display: none;
-    position: absolute;
-    color: #000;
-    left: 35px;
-    top: -140px;
-    height: 200px;
-    width: 200px;
-    z-index: 10;
-}
-
-.trophy .description .icon-bubble {
-    font-size: 200px;
-    position: absolute;
-    color: #fff;
-    text-shadow: 0 0 10px #000;
-}
-
-.trophy .description .text {
-    position: relative;
-}
-
-.trophy .description h4 {
-    text-align: center;
-    margin: 60px 20px 20px 20px;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.trophy .description p {
-    text-align: center;
-    margin: 0 20px;
-}
-
-.trophy.no-trophy { 
-    background-image: url(../img/trophees/no-trophee.png); 
-}
-
-.trophy._1_game { background-image: url(../img/trophees/_1_game.png); }
-.trophy._100_game { background-image: url(../img/trophees/_100_game.png); }
-.trophy._500_game { background-image: url(../img/trophees/_500_game.png); }
-.trophy._1000_game { background-image: url(../img/trophees/_1000_game.png); }
-.trophy._5000_game { background-image: url(../img/trophees/_5000_game.png); }
-
-.trophy._1_wins { background-image: url(../img/trophees/_1_wins.png); }
-.trophy._50_wins { background-image: url(../img/trophees/_50_wins.png); }
-.trophy._250_wins { background-image: url(../img/trophees/_250_wins.png); }
-.trophy._500_wins { background-image: url(../img/trophees/_500_wins.png); }
-.trophy._2000_wins { background-image: url(../img/trophees/_2000_wins.png); }
-
-.trophy._5_games_day { background-image: url(../img/trophees/_5_games_day.png); }
-.trophy._10_games_day { background-image: url(../img/trophees/_10_games_day.png); }
-.trophy._25_games_day { background-image: url(../img/trophees/_25_games_day.png); }
-.trophy._50_games_day { background-image: url(../img/trophees/_50_games_day.png); }
-.trophy._100_games_day { background-image: url(../img/trophees/_100_games_day.png); }
-
-.trophy._3_wins_cons { background-image: url(../img/trophees/_3_wins_cons.png); }
-.trophy._5_wins_cons { background-image: url(../img/trophees/_5_wins_cons.png); }
-.trophy._10_wins_cons { background-image: url(../img/trophees/_10_wins_cons.png); }
-.trophy._20_wins_cons { background-image: url(../img/trophees/_20_wins_cons.png); }
-.trophy._3_loses_cons { background-image: url(../img/trophees/_3_loses_cons.png); }
-
-.trophy-1:hover  > .description-1,
-.trophy-2:hover  > .description-2,
-.trophy-3:hover  > .description-3,
-.trophy-4:hover  > .description-4,
-.trophy-5:hover  > .description-5,
-.trophy-6:hover  > .description-6,
-.trophy-7:hover  > .description-7,
-.trophy-8:hover  > .description-8,
-.trophy-9:hover  > .description-9,
-.trophy-10:hover > .description-10,
-.trophy-11:hover > .description-11,
-.trophy-12:hover > .description-12,
-.trophy-13:hover > .description-13,
-.trophy-14:hover > .description-14,
-.trophy-15:hover > .description-15,
-.trophy-16:hover > .description-16,
-.trophy-17:hover > .description-17,
-.trophy-18:hover > .description-18,
-.trophy-19:hover > .description-19,
-.trophy-20:hover > .description-20 { 
-    display: block; 
-}
-
-.table-shop td.icon {
-    width: 50px;
-}
-
-.table-shop td.icon > span {
-    font-size: 32px;
-}
-
-.table-shop td div.total {
-    font-size: 20px;
-}
-
-.table-shop td div.total .number  {
-    color: #930;
-}
-
-.table-shop td div.base {
-    color: #555555;
-    text-decoration: line-through; 
-}
-
-.table-shop td.buy {
-    text-align: right;
-}
-
-.table-shop td.buy .btn {
-    width: 150px;
-}
-
-footer {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-footer .footer {
-    position: relative;
-    width: 760px;
-    height: 300px;
-    margin: 20px auto;
-}
-
-footer .footer #pub {
-    float: right;
-    width: 300px;
-    height: 250px;
-}
-
-footer .footer .fb-like-box {
-    width: 428px;
-    height: 250px;
-}
-
-footer .footer .link {
-    margin-top: 20px;
-    text-align: center;
-}
-
-footer .footer .link a {
-    font-weight: normal;
-    padding: 0 5px;
-}
 
 .loading {
+    z-index: 9;
     position: absolute;
     top: 0;
     left: 0;
@@ -654,6 +118,6 @@ footer .footer .link a {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url(/img/loading.gif) #fff no-repeat center;
+    background: url(/images/loading.gif) #fff no-repeat center;
     opacity: 0.7;
 }

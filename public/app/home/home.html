@@ -1,3 +1,27 @@
+<div class="mdl-grid app-content">
+    <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+        <div class="pull-right">
+            <button data-toggle="modal" data-target="#modal-create-game" class="btn btn-primary">{{ 'create_game' | translate }}</button>
+        </div>
+        <div profile user="user">
+            <div class="pull-left img">
+                <img class="profile-picture" src="//graph.facebook.com/{{ user.uid }}/picture">
+            </div>
+            <div>
+                <a href>{{ user.name }}</a>
+            </div>
+            <div>
+                <span>{{ 'points'|translate }}: </span>
+                <strong>{{ user.points }}</strong>
+            </div>
+            <div>
+                <span>{{ 'ranking'|translate }}: </span>
+                <strong>{{ user.ranking }}</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="content">
     <div class="row">
         <div class="col-md-10">
@@ -73,7 +97,7 @@
                         </tbody>
                     </table>
                     <div ng-show="!filteredCreatedGames.length" class="load-spin">
-                        <img src="/img/load-spin.svg">
+                        <img src="/images/load-spin.svg">
                     </div>
                 </section>
             </div>
@@ -163,7 +187,7 @@
                         </tbody>
                     </table>
                     <div ng-show="!filteredChallengers.length" class="load-spin">
-                        <img src="/img/load-spin.svg">
+                        <img src="/images/load-spin.svg">
                     </div>
                 </section>
             </div>

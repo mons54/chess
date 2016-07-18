@@ -69,7 +69,7 @@
                         method: 'feed',
                         redirect_uri: redirectUri,
                         link: redirectUri,
-                        picture: 'https://' + host + '/img/mini-logo.png',
+                        picture: 'https://' + host + '/images/mini-icon.png',
                         name: $filter('translate')('title'),
                         caption: caption,
                         description: $filter('translate')('description')
@@ -79,15 +79,19 @@
         }
     ]).
 
-    run(['$rootScope', '$translate', '$http', '$location', 'appId', 'lfstmedia',
+    run(['$rootScope', '$route', '$translate', '$http', '$location', 'appId', 'lfstmedia',
 
-        function ($rootScope, $translate, $http, $location, appId, lfstmedia) {
+        function ($rootScope, $route, $translate, $http, $location, appId, lfstmedia) {
 
-            $rootScope.$on('$routeChangeStart', function(next, current) { 
+            $rootScope.$on('$routeChangeStart', function(next, current) {
                 if (!$rootScope.user.gid) {
                     return;
                 }
                 redirectToGame();
+            });
+
+            $rootScope.$on('$routeChangeSuccess', function() {
+                $rootScope.title = $route.current.title;
             });
             
             $rootScope.loading = true;
@@ -190,6 +194,8 @@
 
                 $rootScope.socket.on('trophy', function (data) {
                     console.log(data);
+                    console.log($rootScope.user.trophies);
+                    angular.extend({}, $rootScope.user.trophies, data);
                 });
             }
 
@@ -209,18 +215,22 @@
         function($routeProvider, $translateProvider) {
             $routeProvider
             .when('/', {
+                title : 'home',
                 templateUrl: '/app/home/home.html',
                 controller: 'homeCtrl'
             })
             .when('/ranking', {
+                title : 'ranking',
                 templateUrl: '/app/ranking/ranking.html',
                 controller: 'rankingCtrl'
             })
             .when('/trophies', {
+                title : 'trophies',
                 templateUrl: '/app/trophies/trophies.html',
                 controller: 'trophiesCtrl'
             })
             .when('/game/:id', {
+                title : 'game',
                 templateUrl: 'app/game/game.html',
                 controller: 'gameCtrl'
             })

@@ -103,6 +103,7 @@
     directive('buttonSound', ['$rootScope',
         function ($rootScope) {
             return {
+                replace: true,
                 templateUrl: '/app/components/templates/button-sound.html',
                 link: function (scope, element) {
                     element.bind('click', function () {

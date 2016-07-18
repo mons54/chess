@@ -1,32 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ user.lang }}" ng-app="app">
     <head>
         <meta charset="utf-8">
-        <title>Chess</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="{{ 'description' | translate }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <title>{{ 'title' | translate }}</title>
+
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes">
+
+        <!-- Add to homescreen for Safari on iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="{{ 'title' | translate }}">
+        <link rel="apple-touch-icon-precomposed" href="images/icon.png">
+
+        <!-- Tile icon for Win8 (144x144 + tile color) -->
+        <meta name="msapplication-TileImage" content="images/icon.png">
+        <meta name="msapplication-TileColor" content="#3372DF">
+
+        <link rel="shortcut icon" href="images/favicon.png">
+
+        <link href="css/material/material.min.css" rel="stylesheet">
+        <link href="css/material/icon.css" rel="stylesheet" >
         <link href="css/icomoon/style.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link ng-if="user.lang == 'ar'" ng-href="css/style.ar.css" rel="stylesheet">
     </head>
-    
     <body>
-
-        <div ng-if="ready" ng-view class="app"></div>
-
-        <div modal-profile class="modal fade"></div>
+        <div class="app-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header" ng-show="ready">
+            <header class="app-header mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">{{ title | translate }}</span>
+                </div>
+            </header>
+            <div class="app-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+                <nav ng-hide="hideNav" class="app-navigation mdl-navigation mdl-color--blue-grey-800">
+                    <a class="mdl-navigation__link" href="#/">
+                        <i class="material-icons" role="presentation">home</i>
+                        {{ 'home' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" href="#/ranking">
+                        <i class="material-icons" role="presentation">looks_one</i>
+                        {{ 'ranking' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" href="#/trophies">
+                        <i class="material-icons" role="presentation">star</i>
+                        {{ 'trophies.title' | translate }}
+                    </a>
+                </nav>
+                <footer class="app-drawer-footer">
+                    <button apprequests class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+                        <i class="material-icons">person_add</i>
+                    </button>
+                    <button-sound></button-sound>
+                </footer>
+            </div>
+            <main class="mdl-layout__content" ng-if="ready" ng-view></main>
+        </div>
 
         <loading></loading>
-
+      
         <div id="fb-root"></div>
 
         <script src="socket.io/socket.io.js"></script>
 
         <script src="lib/jquery.min.js"></script>
         <script src="lib/jquery-ui.min.js"></script>
-        
-        <script src="lib/bootstrap.min.js"></script>
-        
+
+        <script src="lib/material.min.js"></script>
+
         <script src="lib/angular.min.js"></script>
         <script src="lib/angular-route.min.js"></script>
         <script src="lib/angular-translate.min.js"></script>
