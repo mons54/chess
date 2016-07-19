@@ -16,8 +16,13 @@
         <link ng-if="user.lang == 'ar'" ng-href="css/style.ar.css" rel="stylesheet">
   </head>
   <body>
+
+    <div ng-class="{'hidden': !loading}" class="app-loading">
+        <div id="p2" class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+    </div>
+    
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-show="ready">
-        <div class="app-header mdl-layout__header mdl-layout__header--waterfall">
+        <header class="app-header mdl-layout__header">
             <div class="app-header-row mdl-layout__header-row">
                 <span class="app-title mdl-layout-title">
                     <img class="app-logo-image" src="images/app-logo.png">
@@ -28,25 +33,41 @@
                 <!-- Navigation -->
                 <div class="app-navigation-container">
                     <nav class="app-navigation mdl-navigation">
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/">{{ 'home' | translate }}</a>
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/ranking">{{ 'ranking' | translate }}</a>
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/trophies">{{ 'trophies.title' | translate }}</a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/">
+                            {{ 'home' | translate }}
+                        </a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/ranking">
+                            {{ 'ranking' | translate }}
+                        </a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/trophies">
+                            {{ 'trophies.title' | translate }}
+                        </a>
                     </nav>
                 </div>
                 <span class="app-mobile-title mdl-layout-title">
                     <img class="app-logo-image" src="images/app-logo.png">
                 </span>
             </div>
-        </div>
+        </header>
+
 
         <div class="app-drawer mdl-layout__drawer">
             <span class="mdl-layout-title">
                 <img class="app-logo-image" src="images/app-logo-white.png">
             </span>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="#/">{{ 'home' | translate }}</a>
-                <a class="mdl-navigation__link" href="#/ranking">{{ 'ranking' | translate }}</a>
-                <a class="mdl-navigation__link" href="#/trophies">{{ 'trophies.title' | translate }}</a>
+                <a class="mdl-navigation__link" href="#/">
+                    <i class="material-icons" role="presentation">home</i>
+                    {{ 'home' | translate }}
+                </a>
+                <a class="mdl-navigation__link" href="#/ranking">
+                    <i class="material-icons" role="presentation">looks_one</i>
+                    {{ 'ranking' | translate }}
+                </a>
+                <a class="mdl-navigation__link" href="#/trophies">
+                    <i class="material-icons" role="presentation">star</i>
+                    {{ 'trophies.title' | translate }}
+                </a>
             </nav>
         </div>
 
@@ -55,8 +76,8 @@
             <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
         </div>
     </div>
+
     <button-sound></button-sound>
-    <loading></loading>
       
     <div id="fb-root"></div>
 

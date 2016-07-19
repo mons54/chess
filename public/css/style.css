@@ -1,5 +1,6 @@
 body {
-  margin: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 /* Disable ugly boxes around images in IE10 */
@@ -111,6 +112,12 @@ a img{
 
 .app-drawer span.mdl-navigation__link.mdl-navigation__link {
   color: #8bc34a;
+}
+
+.app-drawer .mdl-navigation__link .material-icons {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.56);
+    margin-right: 32px;
 }
 
 .app-drawer .mdl-layout-title {
@@ -238,23 +245,32 @@ a img{
     color: #362F2D;
 }
 
-.loading {
-    z-index: 9;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
+.app-loading {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 }
 
-.loading .loader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(/images/loading.gif) #fff no-repeat center;
+.app-loader {
+    width: 50vw;
+    max-width: 260px;
+    text-align: center;
     opacity: 0.7;
 }
 
@@ -265,5 +281,5 @@ a img{
   bottom: 0;
   margin-right: 40px;
   margin-bottom: 40px;
-  z-index: 900;
+  z-index: 9;
 }

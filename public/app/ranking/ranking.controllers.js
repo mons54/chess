@@ -39,7 +39,7 @@
             };
 
             function emit(page) {
-                $scope.loading = true;
+                $rootScope.loading = true;
                 $rootScope.socket.emit('ranking', {
                     page: page,
                     friends: $scope.friends ? $rootScope.user.friends : false
@@ -75,7 +75,7 @@
                     $scope.$apply(setUsersName(response));
                 });
 
-                $scope.loading = false;
+                $rootScope.loading = false;
             }
 
             function setUsersName (data) {

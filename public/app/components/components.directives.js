@@ -110,14 +110,6 @@
         }
     ]).
 
-    directive('loading', [
-        function () {
-            return {
-                templateUrl: '/app/components/templates/loading.html'
-            };
-        }
-    ]).
-
     directive('apprequests', ['$translate',
         function ($translate) {
             return {
