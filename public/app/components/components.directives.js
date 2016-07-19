@@ -4,6 +4,40 @@
 
     angular.module('components.directives', []).
 
+    directive('showModal', [ 
+        function () {
+            return {
+                restrict: 'A',
+                scope: {
+                    dialog: '='
+                },
+                link: function (scope, element, attrs) {
+                    
+                    var modal = $('#' + attrs.modal);
+                    
+                    element.on('click', function(event) {
+                        modal.addClass('modal--active');
+                    });
+
+                    modal.find('[modal-close]').on('click', closeModal);
+
+                    $('.modal__bg').on('click', function close(event) {
+                        if (!this || event.target !== this) {
+                            return;
+                        }
+                        closeModal(event);
+                    });
+
+                    function closeModal(event) {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        modal.removeClass('modal--active');
+                    }
+                }
+            };
+        }
+    ]).
+
     directive('profile', ['$rootScope',
         function ($rootScope) {
             return {
