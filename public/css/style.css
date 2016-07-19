@@ -1,67 +1,228 @@
-.demo-layout .mdl-layout__header .mdl-layout__drawer-button {
-  color: rgba(0, 0, 0, 0.54);
+body {
+  margin: 0;
 }
 
-.app-drawer {
-  border: none;
+/* Disable ugly boxes around images in IE10 */
+a img{
+  border: 0px;
 }
 
-.app-drawer-footer {
-  text-align: center;
-  padding: 20px 0;
+::-moz-selection {
+  background-color: #6ab344;
+  color: #fff;
 }
 
-.app-drawer-footer .mdl-button {
-  margin-right: 20px;
+::selection {
+  background-color: #6ab344;
+  color: #fff;
 }
 
-.app-drawer-footer .mdl-button:last-child {
-  margin-right: 0;
+.app-header .mdl-menu__container {
+  z-index: 50;
+  margin: 0 !important;
 }
 
-/* iOS Safari specific workaround */
-.app-drawer .app-navigation {
-  z-index: -2;
+
+.mdl-textfield--expandable {
+  width: auto;
 }
-/* END iOS Safari specific workaround */
+
+.app-mobile-title {
+  display: none !important;
+}
+
+
+.app-logo-image {
+  height: 28px;
+  width: 140px;
+}
+
+
+.app-header {
+  overflow: visible;
+  background-color: white;
+}
+
+.app-header-row {
+  padding: 0 40px 0 60px;
+}
+
+.app-header .material-icons {
+  color: #767777 !important;
+}
+
+.app-header .mdl-layout__drawer-button {
+  background: transparent;
+  color: #767777;
+}
+
+.app-header .mdl-navigation__link {
+  color: #757575;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.app-navigation-container {
+  /* Simple hack to make the overflow happen to the left instead... */
+  direction: rtl;
+  -webkit-order: 1;
+      -ms-flex-order: 1;
+          order: 1;
+  width: 500px;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 .app-navigation {
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  /* ... and now make sure the content is actually LTR */
+  direction: ltr;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: 800px;
 }
-.app-layout .app-navigation .mdl-navigation__link {
-  display: -webkit-flex !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: rgba(255, 255, 255, 0.56);
-  font-weight: 500;
+
+.app-navigation .mdl-navigation__link {
+  display: inline-block;
+  height: 60px;
+  line-height: 68px;
+  background-color: transparent !important;
+  border-bottom: 4px solid transparent;
 }
-.app-layout .app-navigation .mdl-navigation__link:hover {
-  background-color: #5F7C8A;
+
+.app-navigation .mdl-navigation__link:hover {
+  border-bottom: 4px solid #8bc34a;
 }
-.app-navigation .mdl-navigation__link .material-icons {
-  font-size: 24px;
-  color: rgba(255, 255, 255, 0.56);
-  margin-right: 32px;
+ 
+.app-drawer {
+  border-right: none;
+}
+
+.app-drawer-separator {
+  height: 1px;
+  background-color: #dcdcdc;
+  margin: 8px 0;
+}
+
+.app-drawer .mdl-navigation__link.mdl-navigation__link {
+  font-size: 14px;
+  color: #757575;
+}
+
+.app-drawer span.mdl-navigation__link.mdl-navigation__link {
+  color: #8bc34a;
+}
+
+.app-drawer .mdl-layout-title {
+  position: relative;
+  background: #6ab344;
+  height: 160px;
+}
+
+.app-drawer .app-logo-image {
+  position: absolute;
+  bottom: 16px;
+}
+  
+.app-link-menu:hover {
+  cursor: pointer;
 }
 
 .app-content {
+  background-color: #f3f3f3;
+}
+
+.app-grid {
   max-width: 760px;
 }
 
-@media screen and (min-width: 1024px) {
-  .mdl-layout--fixed-header>.mdl-layout__header {
-    display: -webkit-none;
-    display: -ms-none;
+@media screen and (max-width: 1024px) {
+  .app-header-row {
+    padding: 0 16px;
+  }
+}
+
+@media (min-width: 901px) {
+  .mdl-layout__drawer-button {
     display: none;
   }
+}
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+  .app-navigation-container {
+    display: none;
+  }
+
+  .app-title {
+    display: none !important;
+  }
+
+  .app-mobile-title {
+    display: block !important;
+    position: absolute;
+    left: calc(50% - 70px);
+    top: 12px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+
+.modal {
+  will-change: visibility, opacity;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-delay: $modal-delay;
+          transition-delay: $modal-delay;
+}
+.modal--active {
+  visibility: visible;
+  opacity: 1;
+}
+.modal--align-top {
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+.modal__bg {
+  background: transparent;
+}
+.modal__dialog {
+  max-width: 600px;
+  padding: 1.2rem;
+}
+.modal__content {
+  will-change: transform, opacity;
+  position: relative;
+  padding: 2.4rem;
+  background: #fff;
+  background-clip: padding-box;
+  box-shadow: 0 12px 15px 0 rgba(0,0,0,0.25);
+  opacity: 1;
+  -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .ui-draggable {
@@ -76,31 +237,6 @@
     font-size: 16px;
     color: #362F2D;
 }
-
-.icon-table-sortable {
-    position: relative;
-    top: 3px;
-}
-
-.btn .icon {
-    position: relative;
-    top: 2px;
-}
-
-.btn-icon {
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-.btn-danger .icon,
-.btn-success .icon {
-    color: #fff;
-}
-
-.icon-white {
-    color: #fff;
-}
-
 
 .loading {
     z-index: 9;
@@ -120,4 +256,14 @@
     height: 100%;
     background: url(/images/loading.gif) #fff no-repeat center;
     opacity: 0.7;
+}
+
+.button-sound {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  z-index: 900;
 }
