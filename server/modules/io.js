@@ -2,8 +2,8 @@
 
 module.exports = function (app, io) {
 
-    const moduleSocket = require(dirname + '/server/modules/socket')(io);
-    const moduleGame   = require(dirname + '/server/modules/game');
+    var moduleSocket = require(dirname + '/server/modules/socket')(io),
+        moduleGame   = require(dirname + '/server/modules/game');
 
     io.on('connection', function (socket) {
 

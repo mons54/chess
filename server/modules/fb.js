@@ -1,7 +1,7 @@
 'use strict';
 
-const fbgraph = require('fbgraph');
-const q = require('q');
+var fbgraph = require('fbgraph'),
+    q = require('q');
 
 var Module = {};
 

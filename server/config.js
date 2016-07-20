@@ -1,7 +1,7 @@
 'use strict';
 
-const express = require('express');
-const mongoose = require('mongoose');
+var express = require('express'),
+    mongoose = require('mongoose');
 
 module.exports = function (app) {
 

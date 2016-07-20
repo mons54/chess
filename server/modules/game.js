@@ -1,7 +1,5 @@
 'use strict';
 
-const Engine = require(dirname + '/server/modules/game/engine');
-
 module.exports = new Game();
 
 function Game() {
@@ -19,6 +17,8 @@ function Game() {
         data: {}
     };
 };
+
+var Engine = require(dirname + '/server/modules/game/engine');
 
 Game.prototype.getGames = function () {
     return this.games.data;

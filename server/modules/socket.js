@@ -1,6 +1,8 @@
-const fb = require(dirname + '/server/modules/fb');
-const db = require(dirname + '/server/modules/db');
-const moduleGame = require(dirname + '/server/modules/game');
+'use strict';
+
+var fb = require(dirname + '/server/modules/fb'),
+    db = require(dirname + '/server/modules/db'),
+    moduleGame = require(dirname + '/server/modules/game');
 
 module.exports = function (io) {
 
