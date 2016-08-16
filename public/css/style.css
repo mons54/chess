@@ -8,6 +8,10 @@ a img{
   border: 0px;
 }
 
+a {
+  text-decoration: none;
+}
+
 ::-moz-selection {
   background-color: #6ab344;
   color: #fff;
@@ -16,6 +20,14 @@ a img{
 ::selection {
   background-color: #6ab344;
   color: #fff;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
 }
 
 .app-header .mdl-menu__container {
@@ -142,6 +154,56 @@ a img{
   max-width: 760px;
 }
 
+.app-home-head {
+  position: relative;
+  padding: 10px;
+}
+
+.app-home-head .button-create-game {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.app-profile-image {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.app-profile-name {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 20px;
+  margin-bottom: 7px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.app-profile-info {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.app-profile-info .icon {
+  font-size: 24px;
+}
+
+.app-profile-info .icon-ranking {
+  position: relative;
+  top: 2px;
+  margin-right: 3px;
+}
+
+.app-profile-info .icon-points {
+  font-size: 20px;
+}
+
+.app-profile-info:last-child {
+  margin-right: 0;
+}
+
 @media screen and (max-width: 1024px) {
   .app-header-row {
     padding: 0 16px;
@@ -153,7 +215,7 @@ a img{
     display: none;
   }
 }
-/**** Mobile layout ****/
+/**** MobileLayout:start; ****/
 @media (max-width: 900px) {
   .app-navigation-container {
     display: none;
@@ -170,9 +232,17 @@ a img{
     top: 12px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  .app-home-head .button-create-game {
+    margin-top: 10px;
+    position: relative;
+    right: auto;
+    bottom: auto;
+  }
 }
+/**** MobileLayout:end ****/
 
-
+/**** Modal:start ****/
 .modal {
   will-change: visibility, opacity;
   display: -webkit-box;
@@ -213,11 +283,12 @@ a img{
           align-items: flex-start;
 }
 .modal__bg {
-  background: transparent;
+  background: rgba(0,0,0,.5);
+  width: 100%;
 }
 .modal__dialog {
   max-width: 600px;
-  padding: 1.2rem;
+  width: 100%;
 }
 .modal__content {
   will-change: transform, opacity;
@@ -230,6 +301,329 @@ a img{
   -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
   transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
+
+.modal__actions {
+  text-align: right;
+}
+
+.modal__actions button {
+  margin-right: 2%;
+}
+
+.modal__actions button:last-child {
+  margin-right: 0;
+}
+
+/**** Modal:end ****/
+
+/**** Form:start ****/
+
+.mui-textfield {
+  display: block;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  position: relative
+}
+
+.mui-textfield>label {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.mui-textfield>textarea {
+  padding-top: 5px
+}
+
+.mui-textfield>input,.mui-textfield>textarea {
+  display: block
+}
+
+.mui-textfield>input:focus~label,.mui-textfield>textarea:focus~label {
+  color: #2196F3
+}
+
+.mui-textfield--float-label>label {
+  position: absolute;
+  transform: translate(0,15px);
+  font-size: 16px;
+  line-height: 32px;
+  color: rgba(0,0,0,.26);
+  text-overflow: clip;
+  cursor: text;
+  pointer-events: none
+}
+
+.mui-textfield--float-label>input:focus~label,.mui-textfield--float-label>textarea:focus~label {
+  transform: translate(0,0);
+  font-size: 12px;
+  line-height: 15px;
+  text-overflow: ellipsis
+}
+
+.mui-textfield--float-label>input:not(:focus).mui--is-not-empty~label,.mui-textfield--float-label>input:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield--float-label>input:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield--float-label>textarea:not(:focus).mui--is-not-empty~label,.mui-textfield--float-label>textarea:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield--float-label>textarea:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  line-height: 15px;
+  transform: translate(0,0);
+  text-overflow: ellipsis
+}
+
+.mui-textfield--wrap-label {
+  display: table;
+  width: 100%;
+  padding-top: 0
+}
+
+.mui-textfield--wrap-label:not(.mui-textfield--float-label)>label {
+  display: table-header-group;
+  position: static;
+  white-space: normal;
+  overflow-x: visible
+}
+
+.mui-textfield>input,.mui-textfield>textarea {
+  animation-duration: .1ms;
+  animation-name: mui-node-inserted;
+  display: block;
+  background-color: transparent;
+  color: rgba(0,0,0,.87);
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.26);
+  outline: 0;
+  width: 100%;
+  font-size: 16px;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  background-image: none
+}
+
+.mui-textfield>input:focus,.mui-textfield>textarea:focus {
+  border-color: #2196F3;
+  border-width: 2px
+}
+
+.mui-textfield>input:-moz-read-only,.mui-textfield>input:disabled,.mui-textfield>textarea:-moz-read-only,.mui-textfield>textarea:disabled {
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1
+}
+
+.mui-textfield>input:disabled,.mui-textfield>input:read-only,.mui-textfield>textarea:disabled,.mui-textfield>textarea:read-only {
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1
+}
+
+.mui-textfield>input::-webkit-input-placeholder,.mui-textfield>textarea::-webkit-input-placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.mui-textfield>input::-moz-placeholder,.mui-textfield>textarea::-moz-placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.mui-textfield>input:-ms-input-placeholder,.mui-textfield>textarea:-ms-input-placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.mui-textfield>input::placeholder,.mui-textfield>textarea::placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.mui-textfield>input {
+  height: 32px
+}
+
+.mui-textfield>input:focus {
+  height: 33px;
+  margin-bottom: -1px
+}
+
+.mui-textfield>textarea {
+  min-height: 64px
+}
+
+.mui-textfield>textarea[rows]:not([rows="2"]):focus {
+  margin-bottom: -1px
+}
+
+.mui-textfield>input:focus {
+  height: 33px;
+  margin-bottom: -1px
+}
+
+.mui-textfield>input:invalid:not(:focus):not(:required),.mui-textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.mui-textfield>input:invalid:not(:focus):required.mui--is-not-empty,.mui-textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:not(:required),.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.mui-textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:invalid:not(:focus):not(:required),.mui-textfield>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.mui-textfield>textarea:invalid:not(:focus):required.mui--is-not-empty,.mui-textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:not(:focus).mui--is-invalid:not(:required),.mui-textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.mui-textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,.mui-textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
+  border-color: #F44336;
+  border-width: 2px
+}
+
+.mui-textfield>input:invalid:not(:focus):not(:required),.mui-textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.mui-textfield>input:invalid:not(:focus):required.mui--is-not-empty,.mui-textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:not(:required),.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.mui-textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
+  height: 33px;
+  margin-bottom: -1px
+}
+
+.mui-textfield>input:invalid:not(:focus):not(:required)~label,.mui-textfield>input:invalid:not(:focus):required.mui--is-not-empty~label,.mui-textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>input:not(:focus).mui--is-invalid:not(:required)~label,.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.mui-textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:invalid:not(:focus):not(:required)~label,.mui-textfield>textarea:invalid:not(:focus):required.mui--is-not-empty~label,.mui-textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:not(:required)~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
+  color: #F44336
+}
+
+.mui-textfield:not(.mui-textfield--float-label)>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.mui-textfield:not(.mui-textfield--float-label)>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label,.mui-textfield:not(.mui-textfield--float-label)>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.mui-textfield:not(.mui-textfield--float-label)>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label {
+  color: #F44336
+}
+
+@keyframes mui-node-inserted {
+  from {
+    opacity: .99
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+.mui-select {
+  display: block;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  position: relative
+}
+
+.mui-select:focus {
+  outline: 0
+}
+
+.mui-select:focus select {
+  height: 33px;
+  margin-bottom: -1px;
+  border-color: #2196F3;
+  border-width: 2px
+}
+
+.mui-select select {
+  animation-duration: .1ms;
+  animation-name: mui-node-inserted;
+  display: block;
+  height: 32px;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: 0;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.26);
+  border-radius: 0;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  background-position: right center;
+  cursor: pointer;
+  color: rgba(0,0,0,.87);
+  font-size: 16px;
+  padding: 0 25px 0 0
+}
+
+.mui-select .mdl-grid {
+  padding: 0;
+}
+
+.mui-select .mdl-grid select.mdl-cell--6-col {
+  display: inline-block;
+  width: 48%;
+  margin-right: 4%;
+}
+
+.mui-select .mdl-grid select.mdl-cell--6-col:last-child {
+  margin-right: 0;
+}
+
+.mui-select select::-ms-expand {
+  display: none
+}
+
+.mui-select select:focus {
+  outline: 0;
+  height: 33px;
+  margin-bottom: -1px;
+  border-color: #2196F3;
+  border-width: 2px
+}
+
+.mui-select select:disabled {
+  color: rgba(0,0,0,.38);
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1
+}
+
+.mui-select label {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.mui-select:focus label,
+.mui-select select:focus~label {
+  color: #2196F3
+}
+
+@media (min-width: 544px) {
+  .mui-form--inline .mui-textfield {
+    display:inline-block;
+    margin-bottom: 0
+  }
+
+  .mui-form--inline .mui-checkbox, 
+  .mui-form--inline .mui-radio {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle
+  }
+
+  .mui-form--inline .mui-checkbox label,
+  .mui-form--inline .mui-radio label {
+    padding-left: 0
+  }
+
+  .mui-form--inline .mui-checkbox label input[type=checkbox], 
+  .mui-form--inline .mui-radio label input[type=radio] {
+    position: relative;
+    margin-left: 0
+  }
+
+  .mui-form--inline .mui-select {
+    display: inline-block
+  }
+
+  .mui-form--inline .mui-btn {
+    margin-bottom: 0;
+    margin-top: 0;
+    vertical-align: bottom
+  }
+}
+/**** Form:end ****/
 
 .ui-draggable {
     cursor: move;
@@ -282,3 +676,5 @@ a img{
   margin-bottom: 40px;
   z-index: 9;
 }
+
+

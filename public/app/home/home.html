@@ -1,54 +1,31 @@
 
-    <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-        <div class="pull-right">
-            <button show-modal modal="modal-create-game" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-                {{ 'create_game' | translate }}
-            </button>
+<div class="app-home-head mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div profile user="user" class="app-profile">
+        <div class="pull-left">
+            <img class="app-profile-image" src="//graph.facebook.com/{{ user.uid }}/picture">
         </div>
-        <div profile user="user" class="app-profile">
-            <div class="pull-left app-profile-image">
-                <img class="profile-picture" src="//graph.facebook.com/{{ user.uid }}/picture">
-            </div>
-            <div>
-                <a href>{{ user.name }}</a>
-            </div>
-            <div>
-                <span>{{ 'points'|translate }}: </span>
-                <strong>{{ user.points }}</strong>
-            </div>
-            <div>
-                <span>{{ 'ranking'|translate }}: </span>
-                <strong>{{ user.ranking }}</strong>
-            </div>
+        <div class="app-profile-name">
+            <a class="app-profile-name" href>{{ user.name }}</a>
+        </div>
+        <div class="app-profile-info">
+            <span class="icon icon-ranking"></span>
+            <span>{{ user.ranking }}</span>
+        </div>
+        <div class="app-profile-info">
+            <span class="icon icon-points"></span>
+            <span>{{ user.points }}</span>
         </div>
     </div>
+    <div class="button-create-game">
+        <button show-modal modal="modal-create-game" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+            {{ 'create_game' | translate }}
+        </button>
+    </div>
+</div>
 
 <div class="content">
     <div class="row">
         <div class="col-md-10">
-            <div class="profile element">
-                <div class="pull-right">
-                    <button data-toggle="modal" data-target="#modal-create-game" class="btn btn-primary">{{ 'create_game' | translate }}</button>
-                </div>
-                <div profile user="user">
-                    <div class="pull-left img">
-                        <img class="profile-picture" src="//graph.facebook.com/{{ user.uid }}/picture">
-                    </div>
-                    <div>
-                        <a href>{{ user.name }}</a>
-                    </div>
-                    <div>
-                        <span>{{ 'points'|translate }}: </span>
-                        <strong>{{ user.points }}</strong>
-                    </div>
-                    <div>
-                        <span>{{ 'ranking'|translate }}: </span>
-                        <strong>{{ user.ranking }}</strong>
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-
             <div class="element">
                 <h2>
                     <span>{{ 'games'|translate }}</span>
@@ -238,45 +215,46 @@
 
 <div id="modal-create-game" class="modal modal__bg" role="dialog" aria-hidden="true">
     <div class="modal__dialog">
-      <div class="modal__content">
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="create-game-color" class="col-sm-2 control-label">{{ 'color'|translate }}</label>
-                <div class="col-sm-8">
-                    <select ng-model="game.color" id="create-game-color" class="form-control">
-                        <option ng-repeat="color in paramsGame.colors" value="{{ color }}">{{ color|translate }}</option>
+        <div class="modal__content">
+            <form role="form">
+                <div class="mui-select">
+                    <select ng-model="game.color" 
+                            ng-options="value as value|translate for (key, value) in paramsGame.colors" 
+                            id="create-game-color">
                     </select>
+                    <label for="create-game-color">{{ 'color'|translate }}</label>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="create-game-time" class="col-sm-2 control-label">{{ 'time'|translate }}</label>
-                <div class="col-sm-8">
-                    <select ng-model="game.time" id="create-game-time" class="form-control">
-                        <option ng-repeat="time in paramsGame.times" value="{{ time }}">{{ time / 60 }} {{ 'minutes'|translate }}</option>
+                <div class="mui-select">
+                    <select ng-model="game.time"
+                            ng-options="value as (value / 60) + ' ' + 'minutes'|translate for (key, value) in paramsGame.times" 
+                            id="create-game-time">
                     </select>
+                    <label for="create-game-time">{{ 'time'|translate }}</label>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="create-game-points-min" class="col-sm-2 control-label">{{ 'points'|translate }}</label>
-                <div class="col-sm-4">
-                    <select ng-model="game.pointsMin" id="create-game-points-min" class="form-control">
-                        <option value="0">{{ 'min'|translate }}</option>
-                        <option ng-repeat="pointsMin in paramsGame.pointsMin" value="{{ pointsMin }}">{{ pointsMin }}</option>
-                    </select>
+                <div class="mui-select">
+                    <div class="mdl-grid">
+                        <select ng-model="game.pointsMin"
+                                ng-init="paramsGame.pointsMin[] = " 
+                                ng-options="value as value for (key, value) in paramsGame.pointsMin" 
+                                id="create-game-points" 
+                                class="mdl-cell--6-col">
+                            <option value="">{{ 'min'|translate }}</option>
+                        </select>
+                        <select ng-model="game.pointsMax"
+                                ng-options="value as value for (key, value) in paramsGame.pointsMax"
+                                class="mdl-cell--6-col">
+                            <option value="">{{ 'max'|translate }}</option>
+                        </select>
+                    </div>
+                    <label for="create-game-points">{{ 'points'|translate }}</label>
                 </div>
-                <div class="col-sm-4">
-                    <select ng-model="game.pointsMax" id="create-game-points-max" class="form-control">
-                        <option value="0">{{ 'max'|translate }}</option>
-                        <option ng-repeat="pointsMax in paramsGame.pointsMax" value="{{ pointsMax }}">{{ pointsMax }}</option>
-                    </select>
+                <div class="modal__actions">
+                    <button modal-close type="reset" class="mdl-button mdl-button--raised close">{{ 'cancel'|translate }}</button>
+                    <button modal-close type="submit" class="mdl-button mdl-button--raised mdl-button--colored close">{{ 'ok'|translate }}</button>
                 </div>
-            </div>
-        </form>
-        <div class="mdl-dialog__actions">
-            <button modal-close type="button" class="mdl-button mdl-button--raised mdl-button--colored close">{{ 'create_game'|translate }}</button>
-            <button modal-close type="button" class="mdl-button mdl-button--raised close">{{ 'cancel'|translate }}</button>
+            </form>
         </div>
-      </div>
     </div>
 </div>
+
 <div modal-challenge class="modal fade" id="modal-challenge"></div>

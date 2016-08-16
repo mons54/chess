@@ -288,8 +288,8 @@
             $scope.game = {
                 color: $scope.paramsGame.colors[0],
                 time: $scope.paramsGame.times[0],
-                pointsMin: 0,
-                pointsMax: 0
+                pointsMin: null,
+                pointsMax: null
             };
 
             $scope.paramsSearchGame = angular.copy(paramsGame);
