@@ -158,15 +158,16 @@
         }
     ]).
 
-    directive('toggleElement', [
+    directive('elementToggle', [
         function () {
             return {
+                restrict: 'E',
                 scope: {},
-                templateUrl: '/app/components/templates/toggle-element.html',
+                templateUrl: '/app/components/templates/element-toggle.html',
                 link: function (scope, element, attrs) {
-                    scope.showHide = function () {
+                    scope.toggle = function () {
                         scope.open = !scope.open;
-                        element.parents('.element').find('section').toggle();
+                        element.parents('[element]').find('[element-content]').toggle();
                     }
                 }
             };
