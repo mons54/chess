@@ -143,10 +143,11 @@
     directive('sortable', ['$rootScope',
         function ($rootScope) {
             return {
-                scope: {},
+                scope: true,
                 templateUrl: '/app/components/templates/sortable.html',
                 link: function (scope, element, attrs) {
-                    scope.predicate = attrs.sortable;
+                    scope.predicate = attrs.predicate;
+                    scope.icon = attrs.icon;
                     scope.$watch('reverse', function (value) {
                         scope.$parent.predicate = scope.predicate;
                         scope.$parent.reverse = scope.reverse;

@@ -32,45 +32,42 @@
         </div>
     </div>
     <div element-content class="app-element-body">
-        <table ng-show="filteredCreatedGames.length"
-               class="list-user table table-striped">
+        <table ng-show="createdGames.length"
+               class="app-element-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
-                    <th class="img"></th>
-                    <th class="name"></th>
-                    <th sortable="points" class="info-user"></th>
-                    <th sortable="ranking" class="info-user"></th>
-                    <th sortable="color" class="info-game"></th>
-                    <th sortable="time" class="info-game"></th>
                     <th></th>
+                    <th sortable predicate="points" icon="points" class="app-table-game-points"></th>
+                    <th sortable predicate="color" icon="king" class="app-table-game-color"></th>
+                    <th sortable predicate="time" icon="time" class="app-table-game-time"></th>
+                    <th class="app-table-game-action"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="game in filteredCreatedGames = (createdGames | orderBy:predicate:reverse | filter:filtersGame())">
-                    <td><img class="profile-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture"></td>
+                <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
+                    <td class="app-table-game-user mdl-data-table__cell--non-numeric">
+                        <img class="app-table-game-user-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
+                        <span class="app-table-game-user-name">{{ game.name }}</span>
+                    </td>
+                    <td>{{ game.points }}</td>
+                    <td>{{ game.color | translate }}</td>
+                    <td>{{ game.time / 60 }}:00</td>
                     <td>
-                        <span class="user-name">{{ game.name }}</span>
-                    </td>
-                    <td class="text-center">{{ game.points }}</td>
-                    <td class="text-center">{{ game.ranking }}</td>
-                    <td class="text-center">
-                        <span class="color">
-                            <span class="icon-{{ game.color }} icon-king"></span>
-                        </span>
-                    </td>
-                    <td class="text-center">{{ game.time / 60 }}:00</td>
-                    <td class="text-right">
-                        <button ng-if="game.uid == user.uid" ng-click="removeGame()" class="btn btn-sm btn-icon btn-default">
-                            <span class="icon icon-close"></span>
+                        <button ng-if="game.uid == user.uid" 
+                                ng-click="removeGame()" 
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                            <i class="material-icons">close</i>
                         </button>
-                        <button ng-if="game.uid != user.uid" ng-click="startGame(game.uid)" class="btn btn-sm btn-icon btn-success">
-                            <span class="icon icon-valid"></span>
+                        <button ng-if="game.uid != user.uid" 
+                                ng-click="startGame(game.uid)" 
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                            <i class="material-icons">check</i>
                         </button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div ng-show="!filteredCreatedGames.length" class="load-spin">
+        <div ng-show="!createdGames.length" class="load-spin">
             <img src="/images/load-spin.svg">
         </div>
     </div>

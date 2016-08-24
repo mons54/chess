@@ -30,6 +30,18 @@ a {
   float: right;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .app-header .mdl-menu__container {
   z-index: 50;
   margin: 0 !important;
@@ -175,6 +187,11 @@ a {
   overflow-x: auto;
 }
 
+.app-element .app-element-table {
+  width: 100%;
+  border: none;
+}
+
 .app-element .info-tooltip {
   display: inline-block;
   padding: 3px 5px 1px;
@@ -203,6 +220,27 @@ a {
 }
 /**** Element:end ****/
 
+/**** Table:start ****/
+
+.app-element-table {
+  font-size: 18px;
+}
+
+.app-table-game-user {
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app-table-game-user-picture {
+  margin-right: 10px;
+  width: 40px;
+  border-radius: 3px;
+}
+
+/**** Table:end ****/
+
 .app-home-head {
   position: relative;
   padding: 10px;
@@ -225,6 +263,7 @@ a {
   font-size: 20px;
   margin-bottom: 7px;
   overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -287,6 +326,9 @@ a {
     position: relative;
     right: auto;
     bottom: auto;
+  }
+  .app-table-game-user-name {
+    display: none;
   }
 }
 /**** MobileLayout:end ****/
