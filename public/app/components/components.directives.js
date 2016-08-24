@@ -29,8 +29,6 @@
                     });
 
                     function closeModal(event) {
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
                         modal.removeClass('modal--active');
                     }
                 }
@@ -132,7 +130,7 @@
                 replace: true,
                 templateUrl: '/app/components/templates/button-sound.html',
                 link: function (scope, element) {
-                    element.bind('click', function () {
+                    element.on('click', function () {
                         $rootScope.$apply(function () {
                             $rootScope.sound = !$rootScope.sound;
                         });
@@ -162,7 +160,8 @@
         function () {
             return {
                 restrict: 'E',
-                scope: {},
+                replace: true,
+                scope: true,
                 templateUrl: '/app/components/templates/element-toggle.html',
                 link: function (scope, element, attrs) {
                     scope.toggle = function () {

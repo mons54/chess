@@ -157,12 +157,17 @@ a {
 /**** Element:start ****/
 .app-element .app-element-head {
   margin: 0;
-  padding: 10px;
+  padding: 20px;
   background-color: #eef5f9;
   border-bottom: 1px solid #dadede;
   border-radius: 3px 3px 0 0;
   color: #446479;
   font-size: 18px;
+}
+
+.app-element .app-element-tools {
+  float: right;
+  margin-top: -10px;
 }
 
 .app-element .app-element-body {
@@ -358,14 +363,6 @@ a {
   margin-right: 0;
 }
 /**** Modal:end ****/
-
-/**** Dropdown:start ****/
-.dropdown {
-  display: none;
-}
-/**** Dropdown:end ****/
-
-
 
 /**** Form:start ****/
 .mui-textfield {

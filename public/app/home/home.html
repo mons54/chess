@@ -26,9 +26,8 @@
 <div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div class="app-element-head">
         <span>{{ 'games'|translate }}</span>
-        <span class="info-tooltip">{{ filteredCreatedGames.length || 0 }}</span>
-        <div class="pull-right">
-            <dropdown-filter-game></dropdown-filter-game>
+        <span class="info-tooltip">{{ createdGames.length || 0 }}</span>
+        <div class="app-element-tools">
             <element-toggle></element-toggle>
         </div>
     </div>
@@ -80,7 +79,7 @@
 <div id="modal-create-game" class="modal modal__bg" role="dialog" aria-hidden="true">
     <div class="modal__dialog">
         <div class="modal__content">
-            <form role="form">
+            <form ng-submit="createGame()" role="form">
                 <div class="mui-select">
                     <select ng-model="game.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 

@@ -68,80 +68,6 @@
                 });
             }
 
-            $scope.resetSearchGame = function () {
-                $scope.searchGame = {
-                    color: '',
-                    time: '',
-                    pointsMin: 0,
-                    pointsMax: 0
-                };
-            };
-
-            $scope.resetSearchChallenger = function () {
-                $scope.searchChallenger = {
-                    pointsMin: 0,
-                    pointsMax: 0
-                };
-            };
-
-            $scope.filtersGame = function () {
-                return function (game) {
-                    return !!filtersGame($scope.searchGame, game);
-                };
-            };
-
-            $scope.filtersChallenger = function () {
-                return function (challenger) {
-                    return !!filtersChallenger($scope.searchChallenger, challenger);
-                };
-            };
-
-            $scope.hasFiltersGame = function () {
-                return $scope.searchGame.color || $scope.searchGame.time || $scope.searchGame.pointsMin || $scope.searchGame.pointsMax;
-            };
-
-            $scope.hasFiltersChallenger = function () {
-                return $scope.searchChallenger.pointsMin || $scope.searchChallenger.pointsMax;
-            };
-
-            function filtersGame(search, game) {
-
-                if ($rootScope.user.uid == game.uid) {
-                    return true;
-                }
-
-                if (search.color && search.color != game.color) {
-                    return false;
-                }
-
-                if (search.time && search.time != game.time) {
-                    return false;
-                }
-
-                if (search.pointsMin > 0 && search.pointsMin > game.points) {
-                    return false;
-                }
-
-                if (search.pointsMax > 0 && search.pointsMax < game.points) {
-                    return false;
-                }
-
-                return true;
-            }
-
-            function filtersChallenger(search, challenger) {
-
-                if (search.pointsMin > 0 && search.pointsMin > challenger.points) {
-                    return false;
-                }
-
-                if (search.pointsMax > 0 && search.pointsMax < challenger.points) {
-                    return false;
-                }
-
-                return true;
-            }
-
             $scope.createGame = function () {
                 $rootScope.socket.emit('createGame', $scope.game);
             };
@@ -180,22 +106,6 @@
 
             $scope.$watch('game.pointsMax', function (value) {
                 $scope.paramsGame.pointsMin = getPointsMin(value);
-            });
-
-            $scope.$watch('searchGame.pointsMin', function (value) {
-                $scope.paramsSearchGame.pointsMax = getPointsMax(value);
-            });
-
-            $scope.$watch('searchGame.pointsMax', function (value) {
-                $scope.paramsSearchGame.pointsMin = getPointsMin(value);
-            });
-
-            $scope.$watch('searchChallenger.pointsMin', function (value) {
-                $scope.paramsSearchChallenger.pointsMax = getPointsMax(value);
-            });
-
-            $scope.$watch('searchChallenger.pointsMax', function (value) {
-                $scope.paramsSearchChallenger.pointsMin = getPointsMin(value);
             });
 
             function checkGame (game) {
@@ -254,33 +164,6 @@
                 return data;
             }
 
-            function freeTime() {
-
-                if (($rootScope.user.freeTime != 0 && !$rootScope.user.freeTime) || $rootScope.user.freeTime < 0) {
-                    return;
-                }
-
-                if ($rootScope.user.freeTime == 0) {
-                    $rootScope.socket.emit('initUser');
-                }
-
-                var time = $rootScope.user.freeTime,
-                    hour = Math.floor(time / 3600);
-
-                time -= (hour * 3600);
-
-                var minute = Math.floor(time / 60),
-                    seconde = Math.floor(time - (minute * 60));
-
-                $scope.freeTime = {
-                    hour: utils.sprintf(hour),
-                    minute: utils.sprintf(minute),
-                    seconde: utils.sprintf(seconde)
-                };
-
-                $rootScope.user.freeTime--;
-            }
-
             setPointsMinMax();
 
             $scope.paramsGame = angular.copy(paramsGame);
@@ -292,23 +175,7 @@
                 pointsMax: null
             };
 
-            $scope.paramsSearchGame = angular.copy(paramsGame);
-
-            $scope.paramsSearchChallenger = {
-                pointsMin: angular.copy(paramsGame.pointsMin),
-                pointsMax: angular.copy(paramsGame.pointsMax)
-            };
-
-            $scope.resetSearchGame();
-            $scope.resetSearchChallenger();
-
-            $scope.challenges = [];
-
-            freeTime();
-
-            setInterval(function () {
-                $scope.$apply(freeTime);
-            }, 1000);     
+            $scope.challenges = [];    
         }
     ]);
 })();
