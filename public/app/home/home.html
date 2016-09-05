@@ -37,17 +37,17 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable predicate="points" icon="points" class="app-table-game-points"></th>
-                    <th sortable predicate="color" icon="king" class="app-table-game-color"></th>
-                    <th sortable predicate="time" icon="time" class="app-table-game-time"></th>
-                    <th class="app-table-game-action"></th>
+                    <th sortable predicate="points" icon="points"></th>
+                    <th sortable predicate="color" icon="king"></th>
+                    <th sortable predicate="time" icon="time"></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
-                    <td class="app-table-game-user mdl-data-table__cell--non-numeric">
-                        <img class="app-table-game-user-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
-                        <span class="app-table-game-user-name">{{ game.name }}</span>
+                    <td class="app-element-table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
+                        <span class="app-element-table-user-name">{{ game.name }}</span>
                     </td>
                     <td>{{ game.points }}</td>
                     <td>{{ game.color | translate }}</td>
@@ -68,6 +68,96 @@
             </tbody>
         </table>
         <div ng-show="!createdGames.length" class="load-spin">
+            <img src="/images/load-spin.svg">
+        </div>
+    </div>
+</div>
+
+<div element 
+     ng-if="challenges.length"
+     class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div class="app-element-head">
+        <span>{{ 'challenges'|translate }}</span>
+        <span class="info-tooltip">{{ challenges.length }}</span>
+        <div class="app-element-tools">
+            <element-toggle></element-toggle>
+        </div>
+    </div>
+    <div element-content class="app-element-body">
+        <table class="app-element-table mdl-data-table mdl-js-data-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th sortable predicate="points" icon="points"></th>
+                    <th sortable predicate="color" icon="king"></th>
+                    <th sortable predicate="time" icon="time"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="challenge in challenges | orderBy:predicate:reverse">
+                    <td class="app-element-table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{challenge.uid}}/picture">
+                        <span class="app-element-table-user-name">{{ challenge.name }}</span>
+                    </td>
+                    <td>{{ challenge.points }}</td>
+                    <td>{{ challenge.color | translate }}</td>
+                    <td>{{ challenge.time / 60 }}:00</td>
+                    <td>
+                        <button ng-click="removeChallenge(challenge.uid)" 
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <button ng-if="!challenge.create" 
+                                ng-click="startChallenge(challenge.uid)" 
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                            <i class="material-icons">check</i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div class="app-element-head">
+        <span>{{ 'challengers'|translate }}</span>
+        <span class="info-tooltip">{{ challengers.length || 0 }}</span>
+        <div class="app-element-tools">
+            <element-toggle></element-toggle>
+        </div>
+    </div>
+    <div element-content class="app-element-body">
+        <table class="app-element-table mdl-data-table mdl-js-data-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th sortable predicate="points" icon="points"></th>
+                    <th sortable predicate="ranking" icon="ranking"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="challenger in challengers | orderBy:predicate:reverse">
+                    <td class="app-element-table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{challenger.uid}}/picture">
+                        <span class="app-element-table-user-name">{{ challenger.name }}</span>
+                    </td>
+                    <td>{{ challenger.points }}</td>
+                    <td>{{ challenger.ranking }}</td>
+                    <td>
+                        <button ng-if="challenger.uid != user.uid"
+                                ng-click="openModalChallenge(challenger)"
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                            <i class="material-icons">check</i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-show="!challengers.length" class="load-spin">
             <img src="/images/load-spin.svg">
         </div>
     </div>

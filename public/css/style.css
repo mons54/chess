@@ -226,14 +226,14 @@ a {
   font-size: 18px;
 }
 
-.app-table-game-user {
+.app-element-table-user {
   max-width: 250px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.app-table-game-user-picture {
+.app-element-table-user-picture {
   margin-right: 10px;
   width: 40px;
   border-radius: 3px;
@@ -327,8 +327,21 @@ a {
     right: auto;
     bottom: auto;
   }
-  .app-table-game-user-name {
+
+  .app-element-table {
+    font-size: 15px;
+  }
+
+  .app-element-table-user {
+    width: 82px;
+  }
+
+  .app-element-table-user-name {
     display: none;
+  }
+
+  .app-element-table-user-picture {
+    margin-right: 0;
   }
 }
 /**** MobileLayout:end ****/
