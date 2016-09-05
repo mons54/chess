@@ -252,6 +252,10 @@ a {
   bottom: 10px;
 }
 
+.app-profile--challenger {
+  margin-bottom: 30px;
+}
+
 .app-profile-image {
   border-radius: 5px;
   margin-right: 10px;
