@@ -140,20 +140,19 @@
         }
     ]).
 
-    directive('sortable', ['$rootScope',
-        function ($rootScope) {
+    directive('sortable', ['$rootScope', 'orderByFilter',
+        function ($rootScope, orderBy) {
             return {
                 scope: {
-                    predicate: '='
+                    expression: '='
                 },
                 templateUrl: '/app/components/templates/sortable.html',
                 link: function (scope, element, attrs) {
-                    scope.predicate = attrs.predicate;
+                    var collection = scope.$parent[attrs.collection];
                     scope.icon = attrs.icon;
                     scope.sort = function () {
                         scope.reverse = !scope.reverse;
-                        scope.$parent.predicate = scope.predicate;
-                        scope.$parent.reverse = scope.reverse;
+                        scope.$parent[attrs.collection] = orderBy(collection, scope.expression, scope.reverse);
                     };
                 }
             };

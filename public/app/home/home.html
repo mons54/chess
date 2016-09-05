@@ -37,14 +37,14 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable predicate="points" icon="points"></th>
-                    <th sortable predicate="color" icon="king"></th>
-                    <th sortable predicate="time" icon="time"></th>
+                    <th sortable collection="createdGames" expression="['points', 'time', 'color']" icon="points"></th>
+                    <th sortable collection="createdGames" expression="['color', 'points', 'time']" icon="king"></th>
+                    <th sortable collection="createdGames" expression="['time', 'points', 'color']" icon="time"></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="game in createdGames | orderBy:predicate:reverse">
+                <tr ng-repeat="game in createdGames">
                     <td class="app-element-table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
                         <span class="app-element-table-user-name">{{ game.name }}</span>
@@ -88,14 +88,14 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable predicate="points" icon="points"></th>
-                    <th sortable predicate="color" icon="king"></th>
-                    <th sortable predicate="time" icon="time"></th>
+                    <th sortable collection="challenges" expression="['points', 'time', 'color']" icon="points"></th>
+                    <th sortable collection="challenges" expression="['color', 'points', 'time']" icon="king"></th>
+                    <th sortable collection="challenges" expression="['time', 'points', 'color']" icon="time"></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="challenge in challenges | orderBy:predicate:reverse">
+                <tr ng-repeat="challenge in challenges | orderBy:orderByChallenges">
                     <td class="app-element-table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{challenge.uid}}/picture">
                         <span class="app-element-table-user-name">{{ challenge.name }}</span>
@@ -134,13 +134,13 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable predicate="points" icon="points"></th>
-                    <th sortable predicate="ranking" icon="ranking"></th>
+                    <th sortable collection="challengers" expression="['points', 'ranking']" icon="points"></th>
+                    <th sortable collection="challengers" expression="['ranking', 'points']" icon="ranking"></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="challenger in challengers | orderBy:predicate:reverse">
+                <tr ng-repeat="challenger in challengers | orderBy:orderByChallengers">
                     <td class="app-element-table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{challenger.uid}}/picture">
                         <span class="app-element-table-user-name">{{ challenger.name }}</span>
