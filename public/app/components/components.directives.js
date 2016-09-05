@@ -4,6 +4,17 @@
 
     angular.module('components.directives', []).
 
+    directive('button', function () {
+        return {
+            restrict: 'E',
+            link: function (scope, element, attrs) {
+                element.on('click', function () {
+                    element.blur();
+                });
+            }
+          };
+    }).
+
     directive('showModal', [ 
         function () {
             return {
