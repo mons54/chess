@@ -15,17 +15,21 @@
     </div>
 </div>
 
-<div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div element
+     ng-show="pages" 
+     class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div element-content class="app-element__body">
-        <button ng-click="setPage(page = pagePrev ? pagePrev : page)"
+        <button ng-show="pages.prev"
+                ng-click="setPage(pages.prev)"
                 class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
             <i class="material-icons">keyboard_arrow_left</i>
         </button>
          <div class="mui-input">
             <input ng-model="page" type="text" ng-blur="setPage(page)">
         </div>
-        <span> / {{ pageLast }}</span>
-        <button ng-click="setPage(page = pageNext ? pageNext : page)"
+        <span> / {{ pages.last }}</span>
+        <button ng-show="pages.next"
+                ng-click="setPage(pages.next)"
                 class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
             <i class="material-icons">keyboard_arrow_right</i>
         </button>

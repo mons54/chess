@@ -540,15 +540,15 @@ module.exports = function (io) {
 
             if (getUser) {
                 count++;
-                limit = limit - 1;
             }
 
             total = count;
 
-            return db.exec('users', request, { points: -1 }, offset, limit, { points: 1 });
+            return db.exec('users', request, { points: -1 }, offset, getUser ? limit - 1 : limit, { points: 1 });
         })
         .then(function (response) {
             if (typeof response[0] !== 'object' || typeof response[0].points !== 'number') {
+                socket.emit('ranking', false);
                 this.finally;
             }
 
