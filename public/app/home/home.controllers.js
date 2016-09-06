@@ -84,7 +84,7 @@
                 $rootScope.socket.emit('startChallenge', uid);
             };
 
-            $scope.openModalChallenge = function (challenger) {
+            $scope.setChallenger = function (challenger) {
                 $scope.challenger = challenger;
             };
 

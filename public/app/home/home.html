@@ -1,21 +1,21 @@
-<div class="app-home-head mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-home__head mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile user="user" class="app-profile">
         <div class="pull-left">
-            <img class="app-profile-image" src="//graph.facebook.com/{{ user.uid }}/picture">
+            <img class="app-profile__image" src="//graph.facebook.com/{{ user.uid }}/picture">
         </div>
-        <div class="app-profile-name">
-            <a class="app-profile-name" href>{{ user.name }}</a>
+        <div class="app-profile__name">
+            <a class="app-profile__name" href>{{ user.name }}</a>
         </div>
-        <div class="app-profile-info">
-            <span class="icon icon-ranking"></span>
+        <div class="app-profile__info">
+            <span class="app-icon app-icon__ranking"></span>
             <span>{{ user.ranking }}</span>
         </div>
-        <div class="app-profile-info">
-            <span class="icon icon-points"></span>
+        <div class="app-profile__info">
+            <span class="app-icon app-icon__points"></span>
             <span>{{ user.points }}</span>
         </div>
     </div>
-    <div class="button-create-game">
+    <div class="app-button__create-game">
         <button show-modal modal="modal-create-game" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             {{ 'create_game' | translate }}
         </button>
@@ -23,16 +23,16 @@
 </div>
 
 <div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div class="app-element-head">
+    <div class="app-element__head">
         <span>{{ 'games'|translate }}</span>
-        <span class="info-tooltip">{{ createdGames.length || 0 }}</span>
-        <div class="app-element-tools">
+        <span class="app-element__badge">{{ createdGames.length || 0 }}</span>
+        <div class="app-element__tools">
             <element-toggle></element-toggle>
         </div>
     </div>
-    <div element-content class="app-element-body">
+    <div element-content class="app-element__body">
         <table ng-show="createdGames.length"
-               class="app-element-table mdl-data-table mdl-js-data-table">
+               class="app-element__table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -44,9 +44,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="game in createdGames">
-                    <td class="app-element-table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
-                        <span class="app-element-table-user-name">{{ game.name }}</span>
+                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
+                        <span class="app-element__table-user-name">{{ game.name }}</span>
                     </td>
                     <td>{{ game.points }}</td>
                     <td>{{ game.color | translate }}</td>
@@ -66,8 +66,8 @@
                 </tr>
             </tbody>
         </table>
-        <div ng-show="!createdGames.length" class="load-spin">
-            <img src="/images/load-spin.svg">
+        <div ng-show="!createdGames.length" class="app-element__loading">
+            <img src="/images/spin.svg">
         </div>
     </div>
 </div>
@@ -75,15 +75,15 @@
 <div element 
      ng-if="challenges.length"
      class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div class="app-element-head">
+    <div class="app-element__head">
         <span>{{ 'challenges'|translate }}</span>
-        <span class="info-tooltip">{{ challenges.length }}</span>
-        <div class="app-element-tools">
+        <span class="app-element__badge">{{ challenges.length }}</span>
+        <div class="app-element__tools">
             <element-toggle></element-toggle>
         </div>
     </div>
-    <div element-content class="app-element-body">
-        <table class="app-element-table mdl-data-table mdl-js-data-table">
+    <div element-content class="app-element__body">
+        <table class="app-element__table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -95,9 +95,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="challenge in challenges">
-                    <td class="app-element-table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{challenge.uid}}/picture">
-                        <span class="app-element-table-user-name">{{ challenge.name }}</span>
+                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{challenge.uid}}/picture">
+                        <span class="app-element__table-user-name">{{ challenge.name }}</span>
                     </td>
                     <td>{{ challenge.points }}</td>
                     <td>{{ challenge.color | translate }}</td>
@@ -120,16 +120,16 @@
 </div>
 
 <div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div class="app-element-head">
+    <div class="app-element__head">
         <span>{{ 'challengers'|translate }}</span>
-        <span class="info-tooltip">{{ challengers.length || 0 }}</span>
-        <div class="app-element-tools">
+        <span class="app-element__badge">{{ challengers.length || 0 }}</span>
+        <div class="app-element__tools">
             <element-toggle></element-toggle>
         </div>
     </div>
-    <div element-content class="app-element-body">
+    <div element-content class="app-element__body">
         <table ng-show="challengers.length"
-               class="app-element-table mdl-data-table mdl-js-data-table">
+               class="app-element__table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -140,9 +140,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="challenger in challengers">
-                    <td class="app-element-table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{challenger.uid}}/picture">
-                        <span class="app-element-table-user-name">{{ challenger.name }}</span>
+                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{challenger.uid}}/picture">
+                        <span class="app-element__table-user-name">{{ challenger.name }}</span>
                     </td>
                     <td>{{ challenger.points }}</td>
                     <td>{{ challenger.ranking }}</td>
@@ -157,8 +157,8 @@
                 </tr>
             </tbody>
         </table>
-        <div ng-show="!challengers.length" class="load-spin">
-            <img src="/images/load-spin.svg">
+        <div ng-show="!challengers.length" class="app-element__loading">
+            <img src="/images/spin.svg">
         </div>
     </div>
 </div>
@@ -166,15 +166,15 @@
 <div element 
      ng-if="friends.length"
      class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div class="app-element-head">
+    <div class="app-element__head">
         <span>{{ 'friends'|translate }}</span>
-        <span class="info-tooltip">{{ friends.length }}</span>
-        <div class="app-element-tools">
+        <span class="app-element__badge">{{ friends.length }}</span>
+        <div class="app-element__tools">
             <element-toggle></element-toggle>
         </div>
     </div>
-    <div element-content class="app-element-body">
-        <table class="app-element-table mdl-data-table mdl-js-data-table">
+    <div element-content class="app-element__body">
+        <table class="app-element__table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -185,9 +185,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="friend in friends">
-                    <td class="app-element-table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element-table-user-picture" ng-src="//graph.facebook.com/{{friend.uid}}/picture">
-                        <span class="app-element-table-user-name">{{ friend.name }}</span>
+                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{friend.uid}}/picture">
+                        <span class="app-element__table-user-name">{{ friend.name }}</span>
                     </td>
                     <td>{{ friend.points }}</td>
                     <td>{{ friend.ranking }}</td>
@@ -205,26 +205,26 @@
     </div>
 </div>
 
-<div id="modal-create-game" class="modal modal__bg" role="dialog" aria-hidden="true">
-    <div class="modal__dialog">
-        <div class="modal__content">
+<div id="modal-create-game" class="app-modal app-modal__bg" role="dialog" aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content">
             <form ng-submit="createGame()" role="form">
-                <div class="mui-select">
+                <div class="app-form__select">
                     <select ng-model="game.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 
                             id="create-game-color">
                     </select>
                     <label for="create-game-color">{{ 'color'|translate }}</label>
                 </div>
-                <div class="mui-select">
+                <div class="app-form__select">
                     <select ng-model="game.time"
                             ng-options="value as (value / 60) + ' ' + 'minutes'|translate for (key, value) in paramsGame.times" 
                             id="create-game-time">
                     </select>
                     <label for="create-game-time">{{ 'time'|translate }}</label>
                 </div>
-                <div class="mui-select">
-                    <div class="mdl-grid">
+                <div class="app-form__select">
+                    <div class="app-form__select-grid mdl-grid">
                         <select ng-model="game.pointsMin"
                                 ng-options="value as value for (key, value) in paramsGame.pointsMin" 
                                 id="create-game-points" 
@@ -239,7 +239,7 @@
                     </div>
                     <label for="create-game-points">{{ 'points'|translate }}</label>
                 </div>
-                <div class="modal__actions">
+                <div class="app-modal__actions">
                     <button modal-close type="reset" class="mdl-button mdl-button--raised close">{{ 'cancel'|translate }}</button>
                     <button modal-close type="submit" class="mdl-button mdl-button--raised mdl-button--colored close">{{ 'ok'|translate }}</button>
                 </div>
@@ -248,41 +248,41 @@
     </div>
 </div>
 
-<div id="modal-challenger" class="modal modal__bg" role="dialog" aria-hidden="true">
-    <div class="modal__dialog">
-        <div class="modal__content">
+<div id="modal-challenger" class="app-modal app-modal__bg" role="dialog" aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content">
             <div class="app-profile app-profile--challenger">
                 <div class="pull-left">
-                    <img class="app-profile-image" src="//graph.facebook.com/{{ challenger.uid }}/picture">
+                    <img class="app-profile__image" src="//graph.facebook.com/{{ challenger.uid }}/picture">
                 </div>
-                <div class="app-profile-name">
-                    <a class="app-profile-name" href>{{ challenger.name }}</a>
+                <div class="app-profile__name">
+                    <a class="app-profile__name" href>{{ challenger.name }}</a>
                 </div>
-                <div class="app-profile-info">
-                    <span class="icon icon-ranking"></span>
+                <div class="app-profile__info">
+                    <span class="app-icon app-icon__ranking"></span>
                     <span>{{ challenger.ranking }}</span>
                 </div>
-                <div class="app-profile-info">
-                    <span class="icon icon-points"></span>
+                <div class="app-profile__info">
+                    <span class="app-icon app-icon__points"></span>
                     <span>{{ challenger.points }}</span>
                 </div>
             </div>
             <form ng-submit="challenge(challenger.uid)" role="form">
-                <div class="mui-select">
+                <div class="app-form__select">
                     <select ng-model="game.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 
                             id="create-game-color">
                     </select>
                     <label for="create-game-color">{{ 'color'|translate }}</label>
                 </div>
-                <div class="mui-select">
+                <div class="app-form__select">
                     <select ng-model="game.time"
                             ng-options="value as (value / 60) + ' ' + 'minutes'|translate for (key, value) in paramsGame.times" 
                             id="create-game-time">
                     </select>
                     <label for="create-game-time">{{ 'time'|translate }}</label>
                 </div>
-                <div class="modal__actions">
+                <div class="app-modal__actions">
                     <button modal-close type="reset" class="mdl-button mdl-button--raised close">{{ 'cancel'|translate }}</button>
                     <button modal-close type="submit" class="mdl-button mdl-button--raised mdl-button--colored close">{{ 'ok'|translate }}</button>
                 </div>

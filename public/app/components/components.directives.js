@@ -27,12 +27,12 @@
                     var modal = $('#' + attrs.modal);
                     
                     element.on('click', function(event) {
-                        modal.addClass('modal--active');
+                        modal.addClass('app-modal--active');
                     });
 
                     modal.find('[modal-close]').on('click', closeModal);
 
-                    $('.modal__bg').on('click', function close(event) {
+                    $('.app-modal__bg').on('click', function close(event) {
                         if (!this || event.target !== this) {
                             return;
                         }
@@ -40,7 +40,7 @@
                     });
 
                     function closeModal(event) {
-                        modal.removeClass('modal--active');
+                        modal.removeClass('app-modal--active');
                     }
                 }
             };

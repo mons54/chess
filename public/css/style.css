@@ -52,12 +52,12 @@ a {
   width: auto;
 }
 
-.app-mobile-title {
+.app-mobile__title {
   display: none !important;
 }
 
 
-.app-logo-image {
+.app-logo__image {
   height: 28px;
   width: 140px;
 }
@@ -68,7 +68,7 @@ a {
   background-color: white;
 }
 
-.app-header-row {
+.app-header__row {
   padding: 0 40px 0 60px;
 }
 
@@ -87,7 +87,16 @@ a {
   font-size: 14px;
 }
 
-.app-navigation-container {
+.app-navigation {
+  /* ... and now make sure the content is actually LTR */
+  direction: ltr;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: 800px;
+}
+
+.app-navigation__container {
   /* Simple hack to make the overflow happen to the left instead... */
   direction: rtl;
   -webkit-order: 1;
@@ -96,15 +105,6 @@ a {
   width: 500px;
   transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
       width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.app-navigation {
-  /* ... and now make sure the content is actually LTR */
-  direction: ltr;
-  -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  width: 800px;
 }
 
 .app-navigation .mdl-navigation__link {
@@ -121,12 +121,6 @@ a {
  
 .app-drawer {
   border-right: none;
-}
-
-.app-drawer-separator {
-  height: 1px;
-  background-color: #dcdcdc;
-  margin: 8px 0;
 }
 
 .app-drawer .mdl-navigation__link.mdl-navigation__link {
@@ -149,13 +143,9 @@ a {
   height: 160px;
 }
 
-.app-drawer .app-logo-image {
+.app-drawer .app-logo__image {
   position: absolute;
   bottom: 16px;
-}
-  
-.app-link-menu:hover {
-  cursor: pointer;
 }
 
 .app-content {
@@ -167,7 +157,7 @@ a {
 }
 
 /**** Element:start ****/
-.app-element .app-element-head {
+.app-element .app-element__head {
   margin: 0;
   padding: 20px;
   background-color: #eef5f9;
@@ -177,22 +167,22 @@ a {
   font-size: 18px;
 }
 
-.app-element .app-element-tools {
+.app-element .app-element__tools {
   float: right;
   margin-top: -10px;
 }
 
-.app-element .app-element-body {
+.app-element .app-element__body {
   max-height: 243px;
   overflow-x: auto;
 }
 
-.app-element .app-element-table {
+.app-element .app-element__table {
   width: 100%;
   border: none;
 }
 
-.app-element .info-tooltip {
+.app-element .app-element__badge {
   display: inline-block;
   padding: 3px 5px 1px;
   background-color: #446479;
@@ -204,49 +194,47 @@ a {
   margin-left: 3px;
 }
 
-.app-element .btn-right {
-  display: inline-block;
-  position: relative;
-  top: -2px;
-}
-
-.app-element .load-spin {
+.app-element .app-element__loading {
   padding: 20px 0;
   text-align: center;
 }
 
-.app-element .load-spin img {
+.app-element .app-element__loading img {
   height: 25px;
 }
 /**** Element:end ****/
 
 /**** Table:start ****/
 
-.app-element-table {
+.app-element__table {
   font-size: 18px;
 }
 
-.app-element-table-user {
+.app-element__table-user {
   max-width: 250px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.app-element-table-user-picture {
+.app-element__table-user__picture {
   margin-right: 10px;
   width: 40px;
   border-radius: 3px;
 }
 
+.app-element__table-rank {
+  width: 50px;
+}
+
 /**** Table:end ****/
 
-.app-home-head {
+.app-home__head {
   position: relative;
   padding: 10px;
 }
 
-.app-home-head .button-create-game {
+.app-home__head .app-button__create-game {
   position: absolute;
   right: 10px;
   bottom: 10px;
@@ -256,12 +244,12 @@ a {
   margin-bottom: 30px;
 }
 
-.app-profile-image {
+.app-profile__image {
   border-radius: 5px;
   margin-right: 10px;
 }
 
-.app-profile-name {
+.app-profile__name {
   text-transform: uppercase;
   font-weight: 800;
   font-size: 20px;
@@ -271,33 +259,33 @@ a {
   white-space: nowrap;
 }
 
-.app-profile-info {
+.app-profile__info {
   display: inline-block;
   margin-right: 10px;
   font-size: 15px;
   font-weight: 800;
 }
 
-.app-profile-info .icon {
+.app-profile__info .app-icon {
   font-size: 24px;
 }
 
-.app-profile-info .icon-ranking {
+.app-profile__info .app-icon__ranking {
   position: relative;
   top: 2px;
   margin-right: 3px;
 }
 
-.app-profile-info .icon-points {
+.app-profile__info .app-icon__points {
   font-size: 20px;
 }
 
-.app-profile-info:last-child {
+.app-profile__info:last-child {
   margin-right: 0;
 }
 
 @media screen and (max-width: 1024px) {
-  .app-header-row {
+  .app-header__row {
     padding: 0 16px;
   }
 }
@@ -309,7 +297,7 @@ a {
 }
 /**** MobileLayout:start; ****/
 @media (max-width: 900px) {
-  .app-navigation-container {
+  .app-navigation__container {
     display: none;
   }
 
@@ -317,7 +305,7 @@ a {
     display: none !important;
   }
 
-  .app-mobile-title {
+  .app-mobile__title {
     display: block !important;
     position: absolute;
     left: calc(50% - 70px);
@@ -325,33 +313,33 @@ a {
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .app-home-head .button-create-game {
+  .app-home__head .app-button__create-game {
     margin-top: 10px;
     position: relative;
     right: auto;
     bottom: auto;
   }
 
-  .app-element-table {
+  .app-element__table {
     font-size: 15px;
   }
 
-  .app-element-table-user {
+  .app-element__table-user {
     width: 82px;
   }
 
-  .app-element-table-user-name {
+  .app-element__table-user-name {
     display: none;
   }
 
-  .app-element-table-user-picture {
+  .app-element__table-user__picture {
     margin-right: 0;
   }
 }
 /**** MobileLayout:end ****/
 
 /**** Modal:start ****/
-.modal {
+.app-modal {
   will-change: visibility, opacity;
   display: -webkit-box;
   display: -webkit-flex;
@@ -380,25 +368,22 @@ a {
   -webkit-transition-delay: $modal-delay;
           transition-delay: $modal-delay;
 }
-.modal--active {
+.app-modal--active {
   visibility: visible;
   opacity: 1;
 }
-.modal--align-top {
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-.modal__bg {
+
+.app-modal__bg {
   background: rgba(0,0,0,.5);
   width: 100%;
 }
-.modal__dialog {
+
+.app-modal__dialog {
   max-width: 600px;
   width: 100%;
 }
-.modal__content {
+
+.app-modal__content {
   will-change: transform, opacity;
   position: relative;
   padding: 2.4rem;
@@ -410,28 +395,28 @@ a {
   transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.modal__actions {
+.app-modal__actions {
   text-align: right;
 }
 
-.modal__actions button {
+.app-modal__actions button {
   margin-right: 2%;
 }
 
-.modal__actions button:last-child {
+.app-modal__actions button:last-child {
   margin-right: 0;
 }
 /**** Modal:end ****/
 
 /**** Form:start ****/
-.mui-textfield {
+.app-form__textfield {
   display: block;
   padding-top: 15px;
   margin-bottom: 20px;
   position: relative
 }
 
-.mui-textfield>label {
+.app-form__textfield>label {
   position: absolute;
   top: 0;
   display: block;
@@ -445,19 +430,19 @@ a {
   white-space: nowrap
 }
 
-.mui-textfield>textarea {
+.app-form__textfield>textarea {
   padding-top: 5px
 }
 
-.mui-textfield>input,.mui-textfield>textarea {
+.app-form__textfield>input,.app-form__textfield>textarea {
   display: block
 }
 
-.mui-textfield>input:focus~label,.mui-textfield>textarea:focus~label {
+.app-form__textfield>input:focus~label,.app-form__textfield>textarea:focus~label {
   color: #2196F3
 }
 
-.mui-textfield--float-label>label {
+.app-form__textfield--float-label>label {
   position: absolute;
   transform: translate(0,15px);
   font-size: 16px;
@@ -468,14 +453,14 @@ a {
   pointer-events: none
 }
 
-.mui-textfield--float-label>input:focus~label,.mui-textfield--float-label>textarea:focus~label {
+.app-form__textfield--float-label>input:focus~label,.app-form__textfield--float-label>textarea:focus~label {
   transform: translate(0,0);
   font-size: 12px;
   line-height: 15px;
   text-overflow: ellipsis
 }
 
-.mui-textfield--float-label>input:not(:focus).mui--is-not-empty~label,.mui-textfield--float-label>input:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield--float-label>input:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield--float-label>textarea:not(:focus).mui--is-not-empty~label,.mui-textfield--float-label>textarea:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield--float-label>textarea:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
+.app-form__textfield--float-label>input:not(:focus).mui--is-not-empty~label,.app-form__textfield--float-label>input:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>input:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>textarea:not(:focus).mui--is-not-empty~label,.app-form__textfield--float-label>textarea:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>textarea:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
   color: rgba(0,0,0,.54);
   font-size: 12px;
   line-height: 15px;
@@ -483,20 +468,20 @@ a {
   text-overflow: ellipsis
 }
 
-.mui-textfield--wrap-label {
+.app-form__textfield--wrap-label {
   display: table;
   width: 100%;
   padding-top: 0
 }
 
-.mui-textfield--wrap-label:not(.mui-textfield--float-label)>label {
+.app-form__textfield--wrap-label:not(.app-form__textfield--float-label)>label {
   display: table-header-group;
   position: static;
   white-space: normal;
   overflow-x: visible
 }
 
-.mui-textfield>input,.mui-textfield>textarea {
+.app-form__textfield>input,.app-form__textfield>textarea {
   animation-duration: .1ms;
   animation-name: mui-node-inserted;
   display: block;
@@ -513,80 +498,80 @@ a {
   background-image: none
 }
 
-.mui-textfield>input:focus,.mui-textfield>textarea:focus {
+.app-form__textfield>input:focus,.app-form__textfield>textarea:focus {
   border-color: #2196F3;
   border-width: 2px
 }
 
-.mui-textfield>input:-moz-read-only,.mui-textfield>input:disabled,.mui-textfield>textarea:-moz-read-only,.mui-textfield>textarea:disabled {
+.app-form__textfield>input:-moz-read-only,.app-form__textfield>input:disabled,.app-form__textfield>textarea:-moz-read-only,.app-form__textfield>textarea:disabled {
   cursor: not-allowed;
   background-color: transparent;
   opacity: 1
 }
 
-.mui-textfield>input:disabled,.mui-textfield>input:read-only,.mui-textfield>textarea:disabled,.mui-textfield>textarea:read-only {
+.app-form__textfield>input:disabled,.app-form__textfield>input:read-only,.app-form__textfield>textarea:disabled,.app-form__textfield>textarea:read-only {
   cursor: not-allowed;
   background-color: transparent;
   opacity: 1
 }
 
-.mui-textfield>input::-webkit-input-placeholder,.mui-textfield>textarea::-webkit-input-placeholder {
+.app-form__textfield>input::-webkit-input-placeholder,.app-form__textfield>textarea::-webkit-input-placeholder {
   color: rgba(0,0,0,.26);
   opacity: 1
 }
 
-.mui-textfield>input::-moz-placeholder,.mui-textfield>textarea::-moz-placeholder {
+.app-form__textfield>input::-moz-placeholder,.app-form__textfield>textarea::-moz-placeholder {
   color: rgba(0,0,0,.26);
   opacity: 1
 }
 
-.mui-textfield>input:-ms-input-placeholder,.mui-textfield>textarea:-ms-input-placeholder {
+.app-form__textfield>input:-ms-input-placeholder,.app-form__textfield>textarea:-ms-input-placeholder {
   color: rgba(0,0,0,.26);
   opacity: 1
 }
 
-.mui-textfield>input::placeholder,.mui-textfield>textarea::placeholder {
+.app-form__textfield>input::placeholder,.app-form__textfield>textarea::placeholder {
   color: rgba(0,0,0,.26);
   opacity: 1
 }
 
-.mui-textfield>input {
+.app-form__textfield>input {
   height: 32px
 }
 
-.mui-textfield>input:focus {
+.app-form__textfield>input:focus {
   height: 33px;
   margin-bottom: -1px
 }
 
-.mui-textfield>textarea {
+.app-form__textfield>textarea {
   min-height: 64px
 }
 
-.mui-textfield>textarea[rows]:not([rows="2"]):focus {
+.app-form__textfield>textarea[rows]:not([rows="2"]):focus {
   margin-bottom: -1px
 }
 
-.mui-textfield>input:focus {
+.app-form__textfield>input:focus {
   height: 33px;
   margin-bottom: -1px
 }
 
-.mui-textfield>input:invalid:not(:focus):not(:required),.mui-textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.mui-textfield>input:invalid:not(:focus):required.mui--is-not-empty,.mui-textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:not(:required),.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.mui-textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:invalid:not(:focus):not(:required),.mui-textfield>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.mui-textfield>textarea:invalid:not(:focus):required.mui--is-not-empty,.mui-textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:not(:focus).mui--is-invalid:not(:required),.mui-textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.mui-textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,.mui-textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
+.app-form__textfield>input:invalid:not(:focus):not(:required),.app-form__textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:invalid:not(:focus):not(:required),.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
   border-color: #F44336;
   border-width: 2px
 }
 
-.mui-textfield>input:invalid:not(:focus):not(:required),.mui-textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.mui-textfield>input:invalid:not(:focus):required.mui--is-not-empty,.mui-textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:not(:required),.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.mui-textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.mui-textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
+.app-form__textfield>input:invalid:not(:focus):not(:required),.app-form__textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
   height: 33px;
   margin-bottom: -1px
 }
 
-.mui-textfield>input:invalid:not(:focus):not(:required)~label,.mui-textfield>input:invalid:not(:focus):required.mui--is-not-empty~label,.mui-textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>input:not(:focus).mui--is-invalid:not(:required)~label,.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.mui-textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:invalid:not(:focus):not(:required)~label,.mui-textfield>textarea:invalid:not(:focus):required.mui--is-not-empty~label,.mui-textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:not(:required)~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.mui-textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
+.app-form__textfield>input:invalid:not(:focus):not(:required)~label,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty~label,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:invalid:not(:focus):not(:required)~label,.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-not-empty~label,.app-form__textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:not(:required)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
   color: #F44336
 }
 
-.mui-textfield:not(.mui-textfield--float-label)>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.mui-textfield:not(.mui-textfield--float-label)>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label,.mui-textfield:not(.mui-textfield--float-label)>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.mui-textfield:not(.mui-textfield--float-label)>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label {
+.app-form__textfield:not(.app-form__textfield--float-label)>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label {
   color: #F44336
 }
 
@@ -600,25 +585,25 @@ a {
   }
 }
 
-.mui-select {
+.app-form__select {
   display: block;
   padding-top: 15px;
   margin-bottom: 20px;
   position: relative
 }
 
-.mui-select:focus {
+.app-form__select:focus {
   outline: 0
 }
 
-.mui-select:focus select {
+.app-form__select:focus select {
   height: 33px;
   margin-bottom: -1px;
   border-color: #2196F3;
   border-width: 2px
 }
 
-.mui-select select {
+.app-form__select select {
   animation-duration: .1ms;
   animation-name: mui-node-inserted;
   display: block;
@@ -642,25 +627,25 @@ a {
   padding: 0 25px 0 0
 }
 
-.mui-select .mdl-grid {
+.app-form__select-grid {
   padding: 0;
 }
 
-.mui-select .mdl-grid select.mdl-cell--6-col {
+.app-form__select-grid select.mdl-cell--6-col {
   display: inline-block;
   width: 48%;
   margin-right: 4%;
 }
 
-.mui-select .mdl-grid select.mdl-cell--6-col:last-child {
+.app-form__select-grid select.mdl-cell--6-col:last-child {
   margin-right: 0;
 }
 
-.mui-select select::-ms-expand {
+.app-form__select select::-ms-expand {
   display: none
 }
 
-.mui-select select:focus {
+.app-form__select select:focus {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
@@ -668,14 +653,14 @@ a {
   border-width: 2px
 }
 
-.mui-select select:disabled {
+.app-form__select select:disabled {
   color: rgba(0,0,0,.38);
   cursor: not-allowed;
   background-color: transparent;
   opacity: 1
 }
 
-.mui-select label {
+.app-form__select label {
   position: absolute;
   top: 0;
   display: block;
@@ -689,41 +674,41 @@ a {
   white-space: nowrap
 }
 
-.mui-select:focus label,
-.mui-select select:focus~label {
+.app-form__select:focus label,
+.app-form__select select:focus~label {
   color: #2196F3
 }
 
 @media (min-width: 544px) {
-  .mui-form--inline .mui-textfield {
+  .app-form--inline .app-form__textfield {
     display:inline-block;
     margin-bottom: 0
   }
 
-  .mui-form--inline .mui-checkbox, 
-  .mui-form--inline .mui-radio {
+  .app-form--inline .app-form__checkbox, 
+  .app-form--inline .app-form__radio {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     vertical-align: middle
   }
 
-  .mui-form--inline .mui-checkbox label,
-  .mui-form--inline .mui-radio label {
+  .app-form--inline .app-form__checkbox label,
+  .app-form--inline .app-form__radio label {
     padding-left: 0
   }
 
-  .mui-form--inline .mui-checkbox label input[type=checkbox], 
-  .mui-form--inline .mui-radio label input[type=radio] {
+  .app-form--inline .app-form__checkbox label input[type=checkbox], 
+  .app-form--inline .app-form__radio label input[type=radio] {
     position: relative;
     margin-left: 0
   }
 
-  .mui-form--inline .mui-select {
+  .app-form--inline .app-form__select {
     display: inline-block
   }
 
-  .mui-form--inline .mui-btn {
+  .app-form--inline .app-form__btn {
     margin-bottom: 0;
     margin-top: 0;
     vertical-align: bottom
@@ -773,7 +758,7 @@ a {
     opacity: 0.7;
 }
 
-.button-sound {
+.app-button__sound {
   position: fixed;
   display: block;
   right: 0;
@@ -782,5 +767,3 @@ a {
   margin-bottom: 40px;
   z-index: 9;
 }
-
-
