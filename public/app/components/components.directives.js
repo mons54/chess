@@ -162,8 +162,11 @@
                     var collection = scope.$parent[attrs.collection];
                     scope.icon = attrs.icon;
                     scope.sort = function () {
+                        if (!scope.$parent[attrs.collection]) {
+                            return;
+                        }
                         scope.reverse = !scope.reverse;
-                        scope.$parent[attrs.collection] = orderBy(collection, scope.expression, scope.reverse);
+                        scope.$parent[attrs.collection] = orderBy(scope.$parent[attrs.collection], scope.expression, scope.reverse);
                     };
                 }
             };

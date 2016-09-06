@@ -490,7 +490,7 @@ module.exports = function (io) {
 
     Module.prototype.ranking = function (socket, data) {
         var page = parseInt(data.page),
-            limit = 8,
+            limit = 10,
             friends = data.friends;
 
         if (page) {

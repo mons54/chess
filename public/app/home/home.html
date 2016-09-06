@@ -1,6 +1,6 @@
 <div class="app-home__head mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile user="user" class="app-profile">
-        <div class="pull-left">
+        <div class="app__pull-left">
             <img class="app-profile__image" src="//graph.facebook.com/{{ user.uid }}/picture">
         </div>
         <div class="app-profile__name">
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div element class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div class="app-element__head">
         <span>{{ 'games'|translate }}</span>
         <span class="app-element__badge">{{ createdGames.length || 0 }}</span>
@@ -54,12 +54,12 @@
                     <td>
                         <button ng-if="game.uid == user.uid" 
                                 ng-click="removeGame()" 
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                             <i class="material-icons">close</i>
                         </button>
                         <button ng-if="game.uid != user.uid" 
                                 ng-click="startGame(game.uid)" 
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>
                     </td>
@@ -74,7 +74,7 @@
 
 <div element 
      ng-if="challenges.length"
-     class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+     class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div class="app-element__head">
         <span>{{ 'challenges'|translate }}</span>
         <span class="app-element__badge">{{ challenges.length }}</span>
@@ -104,12 +104,12 @@
                     <td>{{ challenge.time / 60 }}:00</td>
                     <td>
                         <button ng-click="removeChallenge(challenge.uid)" 
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                             <i class="material-icons">close</i>
                         </button>
                         <button ng-if="!challenge.create" 
                                 ng-click="startChallenge(challenge.uid)" 
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>
                     </td>
@@ -119,7 +119,7 @@
     </div>
 </div>
 
-<div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div element class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div class="app-element__head">
         <span>{{ 'challengers'|translate }}</span>
         <span class="app-element__badge">{{ challengers.length || 0 }}</span>
@@ -150,7 +150,7 @@
                         <button ng-if="challenger.uid !== user.uid"
                                 ng-click="setChallenger(challenger)"
                                 show-modal modal="modal-challenger"
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>
                     </td>
@@ -165,7 +165,7 @@
 
 <div element 
      ng-if="friends.length"
-     class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+     class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div class="app-element__head">
         <span>{{ 'friends'|translate }}</span>
         <span class="app-element__badge">{{ friends.length }}</span>
@@ -195,7 +195,7 @@
                         <button ng-if="friend.uid !== user.uid"
                                 ng-click="setChallenger(friend)"
                                 show-modal modal="modal-challenger"
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>
                     </td>
@@ -252,7 +252,7 @@
     <div class="app-modal__dialog">
         <div class="app-modal__content">
             <div class="app-profile app-profile--challenger">
-                <div class="pull-left">
+                <div class="app__pull-left">
                     <img class="app-profile__image" src="//graph.facebook.com/{{ challenger.uid }}/picture">
                 </div>
                 <div class="app-profile__name">

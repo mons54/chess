@@ -23,7 +23,8 @@
 
             $scope.setPage = function (page) {
                 page = parseInt(page);
-                if (!page || page < 0 || !$scope.pages || page === $scope.pages.page || page > $scope.pages.last) {
+                if (!page || page < 0 || page === $scope.pages.page || page > $scope.pages.last) {
+                    $scope.page = $scope.pages.page;
                     return;
                 }
                 emit(page);
