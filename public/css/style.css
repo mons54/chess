@@ -42,6 +42,10 @@ a {
   text-align: right;
 }
 
+.app__clickable {
+  cursor: pointer;
+}
+
 .app-header .mdl-menu__container {
   z-index: 50;
   margin: 0 !important;
@@ -247,41 +251,58 @@ a {
   text-align: center;
 }
 
-.app-trophy {
-  display: inline-block;
-  position: relative;
-  width: 100px;
-  height: 100px;
-  background-position: bottom;
-  background-repeat: no-repeat;
-  margin: 24px;
+.app-trophies {
+  padding: 9px;
 }
 
-.app-trophy__no-trophy { background-image: url(../images/trophies/no-trophy.png); }
+.app-trophy__title {
+  font-family: 'Prompt';
+  font-size: 40px;
+  margin: 0;
+  text-shadow: 0px 1px 1px rgba(0,0,0,.2);
+  color: rgb(139,195,74);
+}
 
-.app-trophy__game-1 { background-image: url(../images/trophies/game-1.png); }
-.app-trophy__game-100 { background-image: url(../images/trophies/game-100.png); }
-.app-trophy__game-500 { background-image: url(../images/trophies/game-500.png); }
-.app-trophy__game-1000 { background-image: url(../images/trophies/game-1000.png); }
-.app-trophy__game-5000 { background-image: url(../images/trophies/game-5000.png); }
+.app-trophy__badge {
+  display: inline-block;
+  position: relative;
+  width: 75px;
+  height: 75px;
+  padding: 25px;
+  margin: 10px;
+  background-size: 75%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-color: #8bc34a;
+  border-radius: 100px;
+  box-shadow: -0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+}
 
-.app-trophy__win-1 { background-image: url(../images/trophies/win-1.png); }
-.app-trophy__win-50 { background-image: url(../images/trophies/win-50.png); }
-.app-trophy__win-250 { background-image: url(../images/trophies/win-250.png); }
-.app-trophy__win-500 { background-image: url(../images/trophies/win-500.png); }
-.app-trophy__win-2000 { background-image: url(../images/trophies/win-2000.png); }
+.app-trophy__badge-unknown { background-image: url(../images/trophies/no-trophy.png); }
 
-.app-trophy__game-day-5 { background-image: url(../images/trophies/game-day-5.png); }
-.app-trophy__game-day-10 { background-image: url(../images/trophies/game-day-10.png); }
-.app-trophy__game-day-25 { background-image: url(../images/trophies/game-day-25.png); }
-.app-trophy__game-day-50 { background-image: url(../images/trophies/game-day-50.png); }
-.app-trophy__game-day-100 { background-image: url(../images/trophies/game-day-100.png); }
+.app-trophy__badge-game-1 { background-image: url(../images/trophies/game-1.png); }
+.app-trophy__badge-game-100 { background-image: url(../images/trophies/game-100.png); }
+.app-trophy__badge-game-500 { background-image: url(../images/trophies/game-500.png); }
+.app-trophy__badge-game-1000 { background-image: url(../images/trophies/game-1000.png); }
+.app-trophy__badge-game-5000 { background-image: url(../images/trophies/game-5000.png); }
 
-.app-trophy__win-cons-3 { background-image: url(../images/trophies/win-cons-3.png); }
-.app-trophy__win-cons-5 { background-image: url(../images/trophies/win-cons-5.png); }
-.app-trophy__win-cons-10 { background-image: url(../images/trophies/win-cons-10.png); }
-.app-trophy__win-cons-20 { background-image: url(../images/trophies/win-cons-20.png); }
-.app-trophy__lose-cons-3 { background-image: url(../images/trophies/lose-cons-3.png); }
+.app-trophy__badge-win-1 { background-image: url(../images/trophies/win-1.png); }
+.app-trophy__badge-win-50 { background-image: url(../images/trophies/win-50.png); }
+.app-trophy__badge-win-250 { background-image: url(../images/trophies/win-250.png); }
+.app-trophy__badge-win-500 { background-image: url(../images/trophies/win-500.png); }
+.app-trophy__badge-win-2000 { background-image: url(../images/trophies/win-2000.png); }
+
+.app-trophy__badge-game-day-5 { background-image: url(../images/trophies/game-day-5.png); }
+.app-trophy__badge-game-day-10 { background-image: url(../images/trophies/game-day-10.png); }
+.app-trophy__badge-game-day-25 { background-image: url(../images/trophies/game-day-25.png); }
+.app-trophy__badge-game-day-50 { background-image: url(../images/trophies/game-day-50.png); }
+.app-trophy__badge-game-day-100 { background-image: url(../images/trophies/game-day-100.png); }
+
+.app-trophy__badge-win-cons-3 { background-image: url(../images/trophies/win-cons-3.png); }
+.app-trophy__badge-win-cons-5 { background-image: url(../images/trophies/win-cons-5.png); }
+.app-trophy__badge-win-cons-10 { background-image: url(../images/trophies/win-cons-10.png); }
+.app-trophy__badge-win-cons-20 { background-image: url(../images/trophies/win-cons-20.png); }
+.app-trophy__badge-lose-cons-3 { background-image: url(../images/trophies/lose-cons-3.png); }
 
 
 @media screen and (max-width: 1024px) {

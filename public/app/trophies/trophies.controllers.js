@@ -21,9 +21,13 @@
             angular.forEach(trophies, function (value, key) {
                 $scope.trophies.push({
                     id: key,
-                    css: userTrophies[key] ? value : 'no-trophy'
+                    css: userTrophies[key] ? value : 'unknown'
                 });
             });
+
+            $scope.setTrophy = function (trophy) {
+                $scope.trophy = trophy;
+            }
         }
     ]);
 

@@ -12,7 +12,8 @@
                 </tr>
             </tbody>
         </table>
-        <div class="app-ranking__pagination">
+        <div ng-if="pages"
+             class="app-ranking__pagination">
             <div class="app-ranking__pagination-content">
                 <form ng-submit="setPage(page)" 
                       name="pagination"

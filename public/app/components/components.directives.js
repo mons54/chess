@@ -15,13 +15,10 @@
           };
     }).
 
-    directive('showModal', [ 
+    directive('modal', [ 
         function () {
             return {
                 restrict: 'A',
-                scope: {
-                    dialog: '='
-                },
                 link: function (scope, element, attrs) {
                     
                     var modal = $('#' + attrs.modal);
