@@ -1,18 +1,5 @@
-<div class="content">
-    <div class="row">
-        <div class="col-md-10">
-            <div class="element trophies">
-                <div ng-repeat="trophy in trophies" class="trophy trophy-{{ trophy.id }} {{ trophy.css }}">
-                    <div class="description description-{{ trophy.id }}">
-                        <span class="icon-bubble"></span>
-                        <div class="text">
-                            <h4>{{ 'trophies.content.' + trophy.id + '.title'|translate }}</h4>
-                            <p>{{ 'trophies.content.' + trophy.id + '.description'|translate }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2" col-right></div>
+<div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div element-content class="app-element__body">
+        <span ng-repeat="trophy in trophies" class="app-trophy app-trophy__{{ trophy.css }}"></span>
     </div>
 </div>

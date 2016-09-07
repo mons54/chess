@@ -247,6 +247,43 @@ a {
   text-align: center;
 }
 
+.app-trophy {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  margin: 24px;
+}
+
+.app-trophy__no-trophy { background-image: url(../images/trophies/no-trophy.png); }
+
+.app-trophy__game-1 { background-image: url(../images/trophies/game-1.png); }
+.app-trophy__game-100 { background-image: url(../images/trophies/game-100.png); }
+.app-trophy__game-500 { background-image: url(../images/trophies/game-500.png); }
+.app-trophy__game-1000 { background-image: url(../images/trophies/game-1000.png); }
+.app-trophy__game-5000 { background-image: url(../images/trophies/game-5000.png); }
+
+.app-trophy__win-1 { background-image: url(../images/trophies/win-1.png); }
+.app-trophy__win-50 { background-image: url(../images/trophies/win-50.png); }
+.app-trophy__win-250 { background-image: url(../images/trophies/win-250.png); }
+.app-trophy__win-500 { background-image: url(../images/trophies/win-500.png); }
+.app-trophy__win-2000 { background-image: url(../images/trophies/win-2000.png); }
+
+.app-trophy__game-day-5 { background-image: url(../images/trophies/game-day-5.png); }
+.app-trophy__game-day-10 { background-image: url(../images/trophies/game-day-10.png); }
+.app-trophy__game-day-25 { background-image: url(../images/trophies/game-day-25.png); }
+.app-trophy__game-day-50 { background-image: url(../images/trophies/game-day-50.png); }
+.app-trophy__game-day-100 { background-image: url(../images/trophies/game-day-100.png); }
+
+.app-trophy__win-cons-3 { background-image: url(../images/trophies/win-cons-3.png); }
+.app-trophy__win-cons-5 { background-image: url(../images/trophies/win-cons-5.png); }
+.app-trophy__win-cons-10 { background-image: url(../images/trophies/win-cons-10.png); }
+.app-trophy__win-cons-20 { background-image: url(../images/trophies/win-cons-20.png); }
+.app-trophy__lose-cons-3 { background-image: url(../images/trophies/lose-cons-3.png); }
+
+
 @media screen and (max-width: 1024px) {
   .app-header__row {
     padding: 0 16px;
