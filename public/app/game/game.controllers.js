@@ -4,9 +4,9 @@
 
     angular.module('game.controllers', []).
 
-    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', 'utils',
+    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'utils',
         
-        function ($rootScope, $scope, $routeParams, $location, $filter, utils) {
+        function ($rootScope, $scope, $routeParams, $location, $filter, $interval, utils) {
 
             $rootScope.socket.emit('initGame', $routeParams.id);
 
@@ -93,12 +93,7 @@
                 $scope.game = game;
             }
 
-            function countdown() {
-
-                setTimeout(function() {
-                    $scope.$apply(countdown);
-                }, 1000);
-                
+            $interval(function () {
                 if (!$scope.game || $scope.game.finish) {
                     return;
                 }
@@ -112,9 +107,7 @@
                 if (player.timeTurn > 0) {
                     player.timeTurn--;
                 }
-            }
-
-            countdown();
+            }, 1000);
         }
     ]).
     
