@@ -46,6 +46,13 @@ a {
   cursor: pointer;
 }
 
+.app__button--small {
+  height: 24px;
+  font-size: 12px;
+  padding: 0 4px;
+  line-height: 26px;
+}
+
 .app-header .mdl-menu__container {
   z-index: 50;
   margin: 0 !important;
@@ -183,7 +190,7 @@ a {
 .app-profile__name {
   text-transform: uppercase;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 7px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -409,4 +416,40 @@ a {
   margin-right: 40px;
   margin-bottom: 40px;
   z-index: 9;
+}
+
+.app-game__time {
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+  background-color: #3A3A3A;
+  color: #fff;
+  width: 60px;
+  height: 24px;
+  line-height: 24px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+.app-game__time--danger {
+  background-color: #c9302c;
+}
+
+.app-game__time:last-child {
+  margin-bottom: 0;
+}
+
+.app-game__action {
+  width: 150px;
+  margin-right: 20px;
+}
+
+.app-game__action-button {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.app-game__action-button:last-child {
+  margin-bottom: 0;
 }

@@ -47,20 +47,28 @@ module.exports = function (io) {
         if (dataGame.color === 'white') {
             white = {
                 uid: socketOpponent.uid,
-                name: socketOpponent.name
+                name: socketOpponent.name,
+                points: socketOpponent.points,
+                ranking: socketOpponent.ranking
             };
             black = {
                 uid: socket.uid,
-                name: socket.name
+                name: socket.name,
+                points: socket.points,
+                ranking: socket.ranking
             };
         } else {
             white = {
                 uid: socket.uid,
-                name: socket.name
+                name: socket.name,
+                points: socket.points,
+                ranking: socket.ranking
             };
             black = {
                 uid: socketOpponent.uid,
-                name: socketOpponent.name
+                name: socketOpponent.name,
+                points: socketOpponent.points,
+                ranking: socketOpponent.ranking
             };
         }
 

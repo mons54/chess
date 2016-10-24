@@ -7,7 +7,10 @@
     directive('profileGame', ['utils',
         function (utils) {
             return {
-                scope: { player: '=' },
+                scope: { 
+                    player: '=' 
+                },
+                replace: true,
                 templateUrl: '/app/game/templates/profile-game.html',
                 controller: 'profileGameCtrl'
             };
@@ -23,18 +26,6 @@
     .directive('modalResponseDraw', function () {
         return {
             templateUrl: '/app/game/templates/modal-response-draw.html'
-        };
-    })
-
-    .directive('modalOfferDraw', function () {
-        return {
-            templateUrl: '/app/game/templates/modal-offer-draw.html'
-        };
-    })
-
-    .directive('modalResign', function () {
-        return {
-            templateUrl: '/app/game/templates/modal-resign.html'
         };
     })
 

@@ -120,6 +120,12 @@
   transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+.app-modal__title {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+}
+
 .app-modal__actions {
   text-align: right;
 }
