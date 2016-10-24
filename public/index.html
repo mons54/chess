@@ -34,7 +34,7 @@
                 <div class="app-header-spacer mdl-layout-spacer"></div>
           
                 <!-- Navigation -->
-                <div class="app-navigation__container">
+                <div class="app-navigation__container" ng-hide="user.gid">
                     <nav class="app-navigation mdl-navigation">
                         <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/">
                             {{ 'home' | translate }}
@@ -58,7 +58,7 @@
             <span class="mdl-layout-title">
                 <img class="app-logo__image" src="images/app-logo-white.png">
             </span>
-            <nav class="mdl-navigation">
+            <nav class="mdl-navigation" ng-hide="user.gid">
                 <a class="mdl-navigation__link" href="#/">
                     <i class="material-icons" role="presentation">home</i>
                     {{ 'home' | translate }}
