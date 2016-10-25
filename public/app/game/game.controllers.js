@@ -4,9 +4,9 @@
 
     angular.module('game.controllers', []).
 
-    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'utils',
+    controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'utils', 'modal',
         
-        function ($rootScope, $scope, $routeParams, $location, $filter, $interval, utils) {
+        function ($rootScope, $scope, $routeParams, $location, $filter, $interval, utils, modalService) {
 
             $rootScope.socket.emit('initGame', $routeParams.id);
 
@@ -15,7 +15,7 @@
             });
 
             $rootScope.socket.on('offerDraw', function (data) {
-                angular.element('#modal-response-draw').modal('show');
+                modalService('modal-response-draw').open();
             });
 
             $scope.getPieceClass = function (position) {
@@ -73,7 +73,7 @@
 
                 if (game.finish) {
                     $rootScope.user.gid = null;
-                    angular.element('#modal-finish-game').modal('show');
+                    modalService('modal-finish-game').open();
                 }
 
                 $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];

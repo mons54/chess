@@ -4,6 +4,34 @@
 
     angular.module('components.services', []).
 
+    service('modal', function () {
+        return function (id) {
+            var modal = angular.element('#' + id);
+            return {
+                open: function () {
+
+                    var self = this;
+
+                    modal.addClass('app-modal--active');
+
+                    modal.find('[modal-close]').on('click', function (event) {
+                        self.close()
+                    });
+
+                    angular.element('.app-modal__bg').on('click', function (event) {
+                        if (!this || event.target !== this) {
+                            return;
+                        }
+                        self.close();
+                    });
+                },
+                close: function () {
+                    modal.removeClass('app-modal--active');
+                }
+            }
+        };
+    }).
+
     factory('lfstmedia', function () {
 
         return {

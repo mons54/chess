@@ -15,30 +15,17 @@
           };
     }).
 
-    directive('modal', [ 
-        function () {
+    directive('modal', ['modal',
+        function (modalService) {
             return {
                 restrict: 'A',
                 link: function (scope, element, attrs) {
                     
-                    var modal = $('#' + attrs.modal);
+                    var modal = modalService(attrs.modal);
                     
-                    element.on('click', function(event) {
-                        modal.addClass('app-modal--active');
+                    element.on('click', function (event) {
+                        modal.open();
                     });
-
-                    modal.find('[modal-close]').on('click', closeModal);
-
-                    $('.app-modal__bg').on('click', function close(event) {
-                        if (!this || event.target !== this) {
-                            return;
-                        }
-                        closeModal(event);
-                    });
-
-                    function closeModal(event) {
-                        modal.removeClass('app-modal--active');
-                    }
                 }
             };
         }

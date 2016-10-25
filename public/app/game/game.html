@@ -6,7 +6,48 @@
     <div profile-game player="player1"></div>
 </div>
 
+<div id="modal-response-draw" 
+     class="app-modal app-modal__bg" 
+     role="dialog" 
+     aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content">
+            <h4 class="app-modal__title">{{ player2.name }} {{ 'offers_a_draw'|translate }} ?</h4>
+            <div class="app-modal__actions">
+                <button modal-close 
+                        type="reset" 
+                        class="mdl-button mdl-button--raised close">
+                        {{ 'cancel'|translate }}
+                </button>
+                <button modal-close 
+                        ng-click="acceptDraw()"
+                        type="button" 
+                        class="mdl-button mdl-button--raised mdl-button--colored close">
+                        {{ 'ok'|translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div id="modal-finish-game" 
+     class="app-modal app-modal__bg"
+     role="dialog" 
+     aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content app__text-center">
+            <h4 class="app-modal__title">{{ 'game_over'|translate }}</h4>
+            <h5 class="app-game-over__result-name">{{ game.result.name|translate }}</h5>
+            <h6 class="app-game-over__result-winner" ng-if="game.result.winner === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
+            <h6 class="app-game-over__result-winner" ng-if="game.result.winner === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
+            <button ng-click="shareResult()"
+                    type="button" 
+                    class="mdl-button mdl-button--raised">
+                    {{ 'share'|translate }}
+            </button>
+        </div>
+    </div>
+</div>
 
 <!--
 <div class="content no-select">
