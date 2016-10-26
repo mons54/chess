@@ -2,11 +2,29 @@
     
     'use strict';
 
+
+    /**
+     * @ngdoc overview
+     * @name components
+     * @description Components global services
+     */
     angular.module('components.services', []).
 
+    /**
+     * @ngdoc service
+     * @name components.service:modal
+     * @description Modal service
+     */
     service('modal', function () {
         return function (id) {
             var modal = angular.element('#' + id);
+
+            /**
+             * @ngdoc function
+             * @name #open
+             * @methodOf components.service:modal
+             * @description Open the modal
+             */
             return {
                 open: function () {
 
