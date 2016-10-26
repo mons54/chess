@@ -1,13 +1,9 @@
-(function () {
+'use strict';
 
-    'use strict';
+angular.module('home.directives', [])
 
-    angular.module('home.directives', [])
-
-    .directive('modalChallenge', function () {
-        return {
-            templateUrl: '/app/home/templates/modal-challenge.html'
-        };
-    })
-
-})();
+.directive('modalChallenge', function () {
+    return {
+        templateUrl: '/app/home/templates/modal-challenge.html'
+    };
+});
