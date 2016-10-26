@@ -16,6 +16,8 @@
         "q": "1.4.1"
     },
     "devDependencies": {
+        "gulp": "3.9.1",
+        "gulp-ngdocs": "^0.3.0",
         "supervisor": "x.x.x"
     }
 }
