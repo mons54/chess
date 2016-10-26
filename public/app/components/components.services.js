@@ -1,77 +1,78 @@
-(function () {
-    
-    'use strict';
+'use strict';
 
+/**
+ * @ngdoc overview
+ * @name components
+ * @description Global components
+ */
+angular.module('components').
+
+/**
+ * @ngdoc service
+ * @name components.service:modal
+ * @description Modal service
+ */
+service('modal', function () {
 
     /**
-     * @ngdoc overview
-     * @name components
-     * @description Components global services
+     * Show modal
+     * @param {object} modal Modal element
      */
-    angular.module('components.services', []).
+    function showModal(modal) {
+        modal.addClass('app-modal--active');
+    }
 
     /**
-     * @ngdoc service
-     * @name components.service:modal
-     * @description Modal service
+     * Hide modal
+     * @param {object} modal Modal element
      */
-    service('modal', function () {
-        return function (id) {
-            var modal = angular.element('#' + id);
+    function hideModal(modal) {
+        modal.removeClass('app-modal--active');
+    }
 
-            /**
-             * @ngdoc function
-             * @name #open
-             * @methodOf components.service:modal
-             * @description Open the modal
-             */
-            return {
-                open: function () {
+    return {
+        /**
+         * @ngdoc function
+         * @name #get
+         * @methodOf components.service:modal
+         * @description Get modal element
+         * @param {string} id Id of modal
+         * @return {object} Modal element
+         */
+        get: function (id) {
+            return angular.element('#' + id);
+        },
 
-                    var self = this;
+        /**
+         * @ngdoc function
+         * @name #show
+         * @methodOf components.service:modal
+         * @description Show modal
+         * @param {object} modal Modal element
+         */
+        show: function (modal) {
 
-                    modal.addClass('app-modal--active');
+            showModal(modal);
 
-                    modal.find('[modal-close]').on('click', function (event) {
-                        self.close()
-                    });
+            modal.find('[modal-close]').on('click', function (event) {
+                hideModal(modal);
+            });
 
-                    angular.element('.app-modal__bg').on('click', function (event) {
-                        if (!this || event.target !== this) {
-                            return;
-                        }
-                        self.close();
-                    });
-                },
-                close: function () {
-                    modal.removeClass('app-modal--active');
-                }
-            }
-        };
-    }).
-
-    factory('lfstmedia', function () {
-
-        return {
-            init: function () {
-                if (typeof (LSM_Slot) === 'undefined') {
+            angular.element('.app-modal__bg').on('click', function (event) {
+                if (!this || event.target !== this) {
                     return;
                 }
+                hideModal(modal);
+            });
+        },
 
-                LSM_Slot({
-                    adkey: '826',
-                    ad_size: '728x90',
-                    slot: 'slot64668',
-                    _render_div_id: 'header'
-                });
-
-                LSM_Slot({
-                    adkey: '467',
-                    ad_size: '300x250',
-                    slot: 'slot61890',
-                    _render_div_id: 'pub'
-                });
-            }
-        };
-    });
-})();
+        /**
+         * @ngdoc function
+         * @name #hide
+         * @methodOf components.service:modal
+         * @description Hide modal
+         * @param {object} modal Modal element
+         */
+        hide: hideModal
+    };
+});

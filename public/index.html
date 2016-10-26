@@ -23,6 +23,8 @@
     <div ng-show="loading" class="app-loading">
         <div class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
     </div>
+
+    <modal-profile></modal-profile>
     
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-show="ready">
         <header class="app-header mdl-layout__header">
@@ -101,6 +103,7 @@
 
     <script src="app/app.js"></script>
 
+    <script src="app/components/components.module.js"></script>
     <script src="app/components/components.services.js"></script>
     <script src="app/components/components.directives.js"></script>
 

@@ -11,11 +11,11 @@
     <div class="app__pull-right app-game__action"
          ng-if="isPlayerUser() && !isFinish()">
         <button ng-disabled="!canOfferDraw()"
-                modal="modal-offer-draw" 
+                show-modal="modal-offer-draw" 
                 class="app__button--small app-game__action-button mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             {{ 'offer_draw'|translate }}
         </button>
-        <button modal="modal-resign" 
+        <button show-modal="modal-resign" 
                 class="app__button--small app-game__action-button mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             {{ 'resign'|translate }}
         </button>
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div profile user="player">
+    <div show-profile user="player">
         <div class="app__pull-left">
             <img class="app-profile__image" src="//graph.facebook.com/{{ player.uid }}/picture">
         </div>

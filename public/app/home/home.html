@@ -1,5 +1,5 @@
 <div class="app-home__head mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div profile user="user" class="app-profile">
+    <div show-profile user="user" class="app-profile">
         <div class="app__pull-left">
             <img class="app-profile__image" src="//graph.facebook.com/{{ user.uid }}/picture">
         </div>
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="app-button__create-game">
-        <button modal="modal-create-game" 
+        <button show-modal="modal-create-game" 
                 class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             {{ 'create_game' | translate }}
         </button>
@@ -150,7 +150,7 @@
                     <td>
                         <button ng-if="challenger.uid !== user.uid"
                                 ng-click="setChallenger(challenger)"
-                                modal="modal-challenger"
+                                show-modal="modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>
@@ -195,7 +195,7 @@
                     <td>
                         <button ng-if="friend.uid !== user.uid"
                                 ng-click="setChallenger(friend)"
-                                modal="modal-challenger"
+                                show-modal="modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>

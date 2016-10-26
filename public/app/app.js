@@ -8,8 +8,7 @@
         'ngRoute',
         'easypiechart',
         'pascalprecht.translate',
-        'components.services',
-        'components.directives',
+        'components',
         'home.controllers',
         'home.directives',
         'game.controllers',
@@ -79,9 +78,9 @@
         }
     ]).
 
-    run(['$rootScope', '$route', '$translate', '$http', '$location', 'appId', 'lfstmedia',
+    run(['$rootScope', '$route', '$translate', '$http', '$location', 'appId',
 
-        function ($rootScope, $route, $translate, $http, $location, appId, lfstmedia) {
+        function ($rootScope, $route, $translate, $http, $location, appId) {
 
             $rootScope.$on('$routeChangeStart', function(next, current) {
                 if (!$rootScope.user.gid) {
