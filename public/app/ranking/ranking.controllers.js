@@ -1,7 +1,15 @@
 'use strict';
 
-angular.module('ranking.controllers', []).
+angular.module('ranking').
 
+/**
+ * @ngdoc controller
+ * @name ranking.controller:rankingCtrl
+ * @description 
+ * The ranking controller.
+ * @requires $rootScope
+ * @requires $scope
+ */
 controller('rankingCtrl', ['$rootScope', '$scope',
     
     function ($rootScope, $scope) {

@@ -1,7 +1,17 @@
 'use strict';
 
-angular.module('home.controllers', []).
+angular.module('home').
 
+/**
+ * @ngdoc controller
+ * @name home.controller:homeCtrl
+ * @description 
+ * The home controller.
+ * @requires $rootScope
+ * @requires $scope
+ * @requires app.service:utils
+ * @requires app.constant:paramsGame
+ */
 controller('homeCtrl', ['$rootScope', '$scope', 'utils', 'paramsGame',
     
     function ($rootScope, $scope, utils, paramsGame) {

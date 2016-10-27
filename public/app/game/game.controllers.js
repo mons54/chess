@@ -1,7 +1,21 @@
 'use strict';
 
-angular.module('game.controllers', []).
+angular.module('game').
 
+/**
+ * @ngdoc controller
+ * @name game.controller:gameCtrl
+ * @description 
+ * The game controller.
+ * @requires $rootScope
+ * @requires $scope
+ * @requires $routeParams
+ * @requires $location
+ * @requires $filter
+ * @requires $interval
+ * @requires app.service:utils
+ * @requires components.service:modal
+ */
 controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'utils', 'modal',
     
     function ($rootScope, $scope, $routeParams, $location, $filter, $interval, utils, modal) {
@@ -109,6 +123,15 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
     }
 ]).
 
+/**
+ * @ngdoc controller
+ * @name game.controller:profileGameCtrl
+ * @description 
+ * The profile game controller.
+ * @requires $rootScope
+ * @requires $scope
+ * @requires app.service:utils
+ */
 controller('profileGameCtrl', ['$rootScope', '$scope', 'utils',
     
     function ($rootScope, $scope, utils) {

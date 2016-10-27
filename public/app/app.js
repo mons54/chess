@@ -4,25 +4,61 @@
 
     angular.
 
+    /**
+     * @ngdoc overview
+     * @name app
+     * @description
+     * The module of app.
+     * @requires ngRoute
+     * @requires easypiechart
+     * @requires pascalprecht.translate
+     * @requires components
+     * @requires game
+     * @requires home
+     * @requires ranking
+     * @requires trophies
+     */
     module('app', [
         'ngRoute',
         'easypiechart',
         'pascalprecht.translate',
         'components',
-        'home.controllers',
-        'home.directives',
-        'game.controllers',
-        'game.directives',
-        'ranking.controllers',
-        'trophies.controllers'
+        'game',
+        'home',
+        'ranking',
+        'trophies'
     ]).
 
+    /**
+     * @ngdoc parameters
+     * @name app.constant:appId
+     * @description
+     * The app Id.
+     */
     constant('appId', '466889913406471').
 
+    /**
+     * @ngdoc parameters
+     * @name app.constant:host
+     * @description
+     * The host.
+     */
     constant('host', 'mons54.parthuisot.fr').
 
+    /**
+     * @ngdoc parameters
+     * @name app.constant:redirectUri
+     * @description
+     * The redirect uri.
+     */
     constant('redirectUri', 'https://apps.facebook.com/the-chess-game/').
 
+    /**
+     * @ngdoc parameters
+     * @name app.constant:paramsGame
+     * @description
+     * The params games data
+     */
     constant('paramsGame', {
         colors: ['white', 'black'],
         times: [300, 600, 1200, 3600, 5400],
@@ -32,6 +68,12 @@
         }
     }).
 
+    /**
+     * @ngdoc parameters
+     * @name app.constant:trophies
+     * @description
+     * The list of trophies
+     */
     constant('trophies', {
         1: 'game-1',
         2: 'game-10',
@@ -55,14 +97,43 @@
         20: 'lose-cons-3'
     }).
 
+    /**
+     * @ngdoc service
+     * @name app.service:utils
+     * @description
+     * Utils methods
+     * @requires $rootScope
+     * @requires $filter
+     * @requires app.constant:redirectUri
+     * @requires app.constant:host
+     */
     factory('utils', ['$rootScope', '$filter', 'redirectUri', 'host',
         
         function ($rootScope, $filter, redirectUri, host) {
 
             return {
+
+                /**
+                 * @ngdoc function
+                 * @name #sprintf
+                 * @methodOf app.service:utils
+                 * @description
+                 * Return a string formatted.
+                 * @param {float} value The value
+                 * @returns {string} The value formatted
+                 */
                 sprintf: function(value) {
                     return (value.toString().length == 1 ? '0' : '') + value;
                 },
+
+                /**
+                 * @ngdoc function
+                 * @name #share
+                 * @methodOf app.service:utils
+                 * @description
+                 * Share on facebook
+                 * @param {string} caption The description to share
+                 */
                 share: function (caption) {
                     FB.ui({
                         method: 'feed',
@@ -210,32 +281,34 @@
         }
     ]).
 
-    config(['$routeProvider', '$translateProvider',
-        function($routeProvider, $translateProvider) {
+    config(['$routeProvider', '$locationProvider', '$translateProvider',
+        function($routeProvider, $locationProvider, $translateProvider) {
             $routeProvider
+            .when('/game/:id', {
+                title : 'game',
+                templateUrl: 'app/game/templates/game.html',
+                controller: 'gameCtrl'
+            })
             .when('/', {
                 title : 'home',
-                templateUrl: '/app/home/home.html',
+                templateUrl: '/app/home/templates/home.html',
                 controller: 'homeCtrl'
             })
             .when('/ranking', {
                 title : 'ranking',
-                templateUrl: '/app/ranking/ranking.html',
+                templateUrl: '/app/ranking/templates/ranking.html',
                 controller: 'rankingCtrl'
             })
             .when('/trophies', {
                 title : 'trophies',
-                templateUrl: '/app/trophies/trophies.html',
+                templateUrl: '/app/trophies/templates/trophies.html',
                 controller: 'trophiesCtrl'
-            })
-            .when('/game/:id', {
-                title : 'game',
-                templateUrl: 'app/game/game.html',
-                controller: 'gameCtrl'
             })
             .otherwise({
                 redirectTo: '/'
             });
+
+            $locationProvider.html5Mode(true);
 
             $translateProvider.useSanitizeValueStrategy('escape');
 

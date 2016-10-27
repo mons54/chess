@@ -1,10 +1,20 @@
 'use strict';
 
-angular.module('game.directives', []).
+angular.module('game').
 
+/**
+ * @ngdoc directive
+ * @name game.directive:profileGame
+ * @description 
+ * Shows the profile of a player.
+ * @restrict A
+ * @scope
+ * @param {object} player Object with the data of the player.
+ */
 directive('profileGame', ['utils',
     function (utils) {
         return {
+            restrict: 'A',
             scope: { 
                 player: '=' 
             },
@@ -15,26 +25,18 @@ directive('profileGame', ['utils',
     }
 ])
 
-.directive('modalPromotion', function () {
+/**
+ * @ngdoc directive
+ * @name game.directive:pieceDraggable
+ * @description 
+ * Makes a piece draggable piece.
+ * @restrict A
+ * @scope
+ * @param {string} position The position of the piece.
+ */
+.directive('pieceDraggable', function () {
     return {
-        templateUrl: '/app/game/templates/modal-promotion.html'
-    };
-})
-
-.directive('modalResponseDraw', function () {
-    return {
-        templateUrl: '/app/game/templates/modal-response-draw.html'
-    };
-})
-
-.directive('modalFinishGame', function () {
-    return {
-        templateUrl: '/app/game/templates/modal-finish-game.html'
-    };
-})
-
-.directive('draggable', function () {
-    return {
+        restrict: 'A',
         link: function (scope, element, attr) {
 
             var modalPromotion = angular.element('#modal-promotion');

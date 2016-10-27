@@ -1,7 +1,15 @@
 'use strict';
 
-angular.module('trophies.controllers', []).
+angular.module('trophies').
 
+/**
+ * @ngdoc controller
+ * @name trophies.controller:trophiesCtrl
+ * @description 
+ * The trophies controller.
+ * @requires $rootScope
+ * @requires $scope
+ */
 controller('trophiesCtrl', ['$rootScope', '$scope', 'trophies',
     
     function ($rootScope, $scope, trophies) {

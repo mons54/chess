@@ -1,16 +1,12 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name components
- * @description Global components
- */
 angular.module('components').
 
 /**
  * @ngdoc service
  * @name components.service:modal
- * @description Modal service
+ * @description 
+ * Modal service management.
  */
 service('modal', function () {
 
@@ -35,7 +31,8 @@ service('modal', function () {
          * @ngdoc function
          * @name #get
          * @methodOf components.service:modal
-         * @description Get modal element
+         * @description 
+         * Get the modal element by id.
          * @param {string} id Id of modal
          * @return {object} Modal element
          */
@@ -47,7 +44,8 @@ service('modal', function () {
          * @ngdoc function
          * @name #show
          * @methodOf components.service:modal
-         * @description Show modal
+         * @description 
+         * Show modal.
          * @param {object} modal Modal element
          */
         show: function (modal) {
@@ -70,7 +68,8 @@ service('modal', function () {
          * @ngdoc function
          * @name #hide
          * @methodOf components.service:modal
-         * @description Hide modal
+         * @description 
+         * Hide modal.
          * @param {object} modal Modal element
          */
         hide: hideModal

@@ -5,6 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="{{ 'description' | translate }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+        <base href="/">
         
         <title>{{ 'title' | translate }}</title>
 
@@ -38,13 +40,13 @@
                 <!-- Navigation -->
                 <div class="app-navigation__container" ng-hide="user.gid">
                     <nav class="app-navigation mdl-navigation">
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/">
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">
                             {{ 'home' | translate }}
                         </a>
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/ranking">
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/ranking">
                             {{ 'ranking' | translate }}
                         </a>
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/trophies">
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/trophies">
                             {{ 'trophies.title' | translate }}
                         </a>
                     </nav>
@@ -61,15 +63,15 @@
                 <img class="app-logo__image" src="images/app-logo-white.png">
             </span>
             <nav class="mdl-navigation" ng-hide="user.gid">
-                <a class="mdl-navigation__link" href="#/">
+                <a class="mdl-navigation__link" href="/">
                     <i class="material-icons" role="presentation">home</i>
                     {{ 'home' | translate }}
                 </a>
-                <a class="mdl-navigation__link" href="#/ranking">
+                <a class="mdl-navigation__link" href="/ranking">
                     <i class="material-icons" role="presentation">looks_one</i>
                     {{ 'ranking' | translate }}
                 </a>
-                <a class="mdl-navigation__link" href="#/trophies">
+                <a class="mdl-navigation__link" href="/trophies">
                     <i class="material-icons" role="presentation">star</i>
                     {{ 'trophies.title' | translate }}
                 </a>
@@ -107,14 +109,17 @@
     <script src="app/components/components.services.js"></script>
     <script src="app/components/components.directives.js"></script>
 
-    <script src="app/home/home.controllers.js"></script>
-    <script src="app/home/home.directives.js"></script>
-
+    <script src="app/game/game.module.js"></script>
     <script src="app/game/game.controllers.js"></script>
     <script src="app/game/game.directives.js"></script>
 
+    <script src="app/home/home.module.js"></script>
+    <script src="app/home/home.controllers.js"></script>
+
+    <script src="app/ranking/ranking.module.js"></script>
     <script src="app/ranking/ranking.controllers.js"></script>
 
+    <script src="app/trophies/trophies.module.js"></script>
     <script src="app/trophies/trophies.controllers.js"></script>
   </body>
 </html>

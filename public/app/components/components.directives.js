@@ -5,7 +5,8 @@ angular.module('components').
 /**
  * @ngdoc directive
  * @name components.directive:button
- * @description Disable blur after clicking a button
+ * @description 
+ * Disable blur after clicking a button.
  * @restrict E
  */
 directive('button', function () {
@@ -22,7 +23,8 @@ directive('button', function () {
 /**
  * @ngdoc directive
  * @name components.directive:showModal
- * @description Add a click event to an item to show a modal
+ * @description 
+ * Add a click event to an item to show a modal.
  * @requires components.service:modal
  * @restrict A
  * @param {string} showModal Id of modal
@@ -44,7 +46,8 @@ directive('showModal', ['modal',
 /**
  * @ngdoc directive
  * @name components.directive:showProfile
- * @description Add an click event to the directive element to show modal profile
+ * @description 
+ * Add an click event to the directive element to show modal profile.
  * @requires $rootScope
  * @restrict A
  * @scope
@@ -71,7 +74,8 @@ directive('showProfile', ['$rootScope',
 /**
  * @ngdoc directive
  * @name components.directive:modalProfile
- * @description Show modal profile when receives an socket event
+ * @description 
+ * Show modal profile when receives an socket event.
  * @requires $rootScope
  * @requires components.service:modal
  * @restrict E
@@ -136,7 +140,8 @@ directive('modalProfile', ['$rootScope', 'modal',
 /**
  * @ngdoc directive
  * @name components.directive:friendsRequests
- * @description Add an click event to the directive element to invite friends facebook
+ * @description 
+ * Add an click event to the directive element to invite friends facebook.
  * @requires $translate
  * @restrict A
  */
@@ -160,7 +165,8 @@ directive('friendsRequests', ['$translate',
 /**
  * @ngdoc directive
  * @name components.directive:buttonSound
- * @description Add an click event to the directive element to manage sound
+ * @description 
+ * Add an click event to the directive element to manage sound
  * @requires $rootScope
  * @restrict E
  */
@@ -184,7 +190,8 @@ directive('buttonSound', ['$rootScope',
 /**
  * @ngdoc directive
  * @name components.directive:sortable
- * @description Use this directive to make a sortable column
+ * @description 
+ * Use this directive to make a sortable column
  * @requires $rootScope
  * @requires orderByFilter
  * @restrict A
@@ -218,7 +225,8 @@ directive('sortable', ['$rootScope', 'orderByFilter',
 /**
  * @ngdoc directive
  * @name components.directive:elementToggle
- * @description Use this directive to make a toggle element
+ * @description 
+ * Use this directive to make a toggle element
  * @requires $rootScope
  * @requires orderByFilter
  * @restrict E

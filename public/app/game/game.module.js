@@ -4,6 +4,6 @@
  * @ngdoc overview
  * @name components
  * @description 
- * Management of generic components.
+ * Management of a chess game.
  */
-angular.module('components', []);
+angular.module('game', []);
