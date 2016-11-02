@@ -151,21 +151,44 @@
 
     run(['$rootScope', '$route', '$translate', '$http', '$location', 'appId',
 
+        /**
+         * @param {object} $rootScope Global scope
+         * @param {object} $route Service route
+         * @param {object} $translate Service translator
+         * @param {object} $http Service http
+         * @param {object} $location Service location
+         * @param {string} appId App Id
+         */
         function ($rootScope, $route, $translate, $http, $location, appId) {
 
-            $rootScope.$on('$routeChangeStart', function(next, current) {
+            $rootScope.$on('$routeChangeStart', function() {
+                /**
+                 * Check if the user has a game in progress.
+                 */
                 if (!$rootScope.user.gid) {
                     return;
                 }
+                /**
+                 * If the user has a game in progress redirect to this game
+                 */
                 redirectToGame();
             });
 
             $rootScope.$on('$routeChangeSuccess', function() {
+                /**
+                 * Set the title of the page.
+                 */
                 $rootScope.title = $route.current.title;
             });
             
+            /**
+             * Start the loader
+             */
             $rootScope.loading = true;
 
+            /**
+             * Set the user default values.
+             */
             $rootScope.user = {
                 uid: null,
                 accessToken: null,
@@ -177,54 +200,64 @@
                 friends: []
             };
 
+            /**
+             * Facebook is loaded
+             */
             window.fbAsyncInit = function () {
 
                 FB.init({
                     appId: appId,
                     xfbml: true,
-                    version: 'v2.2'
+                    version: 'v2.8'
                 });
 
                 getLoginStatus();
             };
 
-            function redirectToGame() {
+            /**
+             * Redirect to the game in progress of the user.
+             */
+            function redirectToGame () {
                 $location.path('/game/' + $rootScope.user.gid);
             }
 
+            /**
+             * Get the user login status.
+             */
             function getLoginStatus () {
                 FB.getLoginStatus(function (res) {
                     if (res.status !== 'connected') {
                         return login();
                     }
-                    getMe(res);
+                    getUser(res);
                 });
             }
 
+            /**
+             * User login
+             */
             function login () {
                 FB.login(function (res) {
-                    getMe(res);
+                    getUser(res);
                 }, {
                     scope: 'user_friends'
                 });
             }
 
-            function getMe (res) {
+            /**
+             * Get the user data
+             */
+            function getUser (res) {
 
                 $rootScope.user.accessToken = res.authResponse.accessToken;
                 
-                FB.api('/me?fields=first_name,name,locale,gender,currency', socketConnect);
+                FB.api('/me?fields=first_name,name,locale,gender,currency', setUser);
             }
 
-            function setFriends (res) {
-                angular.forEach(res.data, function (value) {
-                    if (value.installed) {
-                        $rootScope.user.friends.push(value.id);
-                    }
-                });
-            }
-
-            function socketConnect (res) {
+            /**
+             * Set user data and socket
+             */
+            function setUser (res) {
                     
                 $rootScope.user.uid = res.id;
                 $rootScope.user.firstName = res.first_name;
@@ -243,6 +276,20 @@
                 $rootScope.socket.on('connect', socketInit);
             }
 
+            /**
+             * Set the friends list of user
+             */
+            function setFriends (res) {
+                angular.forEach(res.data, function (value) {
+                    if (value.installed) {
+                        $rootScope.user.friends.push(value.id);
+                    }
+                });
+            }
+
+            /**
+             * Init the user socket
+             */
             function socketInit () {
                 $rootScope.socket.emit('init', {
                     uid: $rootScope.user.uid,
@@ -255,34 +302,28 @@
                 });
 
                 $rootScope.socket.on('startGame', function (gid) {
-                    $rootScope.$apply(applyUserGid(gid));
+                    $rootScope.$apply(function () {
+                        $rootScope.user.gid = gid;
+                        redirectToGame();
+                    });
                 });
 
                 $rootScope.socket.on('ready', function () {
-                    $rootScope.$apply(applyReady);
+                    $rootScope.$apply(function () {
+                        $rootScope.ready = true;
+                        $rootScope.loading = false;
+                    });
                 });
 
                 $rootScope.socket.on('trophy', function (data) {
-                    console.log(data);
-                    console.log($rootScope.user.trophies);
                     angular.extend({}, $rootScope.user.trophies, data);
                 });
-            }
-
-            function applyUserGid (gid) {
-                $rootScope.user.gid = gid;
-                redirectToGame();
-            }
-
-            function applyReady () {
-                $rootScope.ready = true;
-                $rootScope.loading = false;
             }
         }
     ]).
 
     config(['$routeProvider', '$locationProvider', '$translateProvider',
-        function($routeProvider, $locationProvider, $translateProvider) {
+        function ($routeProvider, $locationProvider, $translateProvider) {
             $routeProvider
             .when('/game/:id', {
                 title : 'game',
@@ -323,6 +364,9 @@
 
 })();
 
+/**
+ * Init the SDK Facebook
+ */
 (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {return;}
