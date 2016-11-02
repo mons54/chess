@@ -304,13 +304,12 @@ module.exports = function (io) {
         if (!id) {
             return socket;
         }
-        
-        io.sockets.sockets.forEach(function (value) {
-            if (id === value.id) {
-                socket = value;
-                return;
+
+        for (var socketId in io.sockets.sockets) {
+            if (id === socketId) {
+                socket = io.sockets.connected[socketId];
             }
-        });
+        };
 
         return socket;
     };
@@ -325,19 +324,23 @@ module.exports = function (io) {
 
     Module.prototype.listChallengers = function () {
 
-        var challengers = [];
+        var challengers = [],
+            room = io.sockets.adapter.rooms['home'];
 
-        io.sockets.sockets.forEach(function (socket) {
-            if (!socket.uid || !socket.rooms || socket.rooms.indexOf('home') === -1) {
-                return;
-            }
-            challengers.push({
-                uid: socket.uid,
-                name: socket.name,
-                ranking: socket.ranking,
-                points: socket.points
-            });
-        });
+        if (room && room.sockets) {
+            for (var socketId in room.sockets) {
+                var user = io.sockets.connected[socketId];
+                if (!user || !user.uid) {
+                    return;
+                }
+                challengers.push({
+                    uid: user.uid,
+                    name: user.name,
+                    ranking: user.ranking,
+                    points: user.points
+                });
+            };
+        }
 
         io.sockets.to('home').emit('challengers', challengers);
     };
