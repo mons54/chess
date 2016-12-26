@@ -480,7 +480,7 @@ module.exports = function (io) {
                 }),
                 db.count('games', {
                     $or: [{
-                        whitse: data.uid,
+                        white: data.uid,
                         result: 0
                     }, {
                         black: data.uid,

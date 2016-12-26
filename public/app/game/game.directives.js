@@ -43,20 +43,14 @@ directive('profileGame', ['utils',
 
             scope.$watch('game', function (game) {
 
+                if (game.finish && element.draggable) {
+                    element.draggable('destroy');
+                    return;
+                }
+
                 var piece = game.pieces[attr.position];
 
-                if (!piece) {
-                    return;
-                }
-
-                if (game.finish && piece.draggable) {
-                    piece.draggable({
-                        disabled: true
-                    });
-                    return;
-                }
-
-                if (!scope.isPlayerTurn() || piece.color !== game.turn || (!piece.deplace.length && !piece.capture.length)) {
+                if (!piece || !scope.isPlayerTurn() || piece.color !== game.turn || (!piece.deplace.length && !piece.capture.length)) {
                     return;
                 }
 
@@ -92,7 +86,7 @@ directive('profileGame', ['utils',
 
                     var classes = element.attr('class');
 
-                    elementBox.children().removeClass();
+                    elementBox.find('[piece-draggable]').removeClass();
 
                     if (isPromotion(position)) {
                         modal.show(modalPromotion);
@@ -111,7 +105,7 @@ directive('profileGame', ['utils',
                 }
 
                 function move(elementBox, classes, position, promotion) {
-                    elementBox.children().addClass(classes);
+                    elementBox.find('[piece-draggable]').addClass(classes);
                     scope.move(attr.position, position, promotion);
                 }
 

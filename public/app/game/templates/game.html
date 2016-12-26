@@ -4,23 +4,25 @@
 
 <div class="app-game__content app-element mdl-shadow--2dp mdl-cell mdl-cell--10-col mdl-cell--12-col-tablet" 
      ng-class="{'app-game--white': orientation == 'white', 'app-game--black': orientation == 'black'}">
-    <div ng-repeat="number in numbers" class="app-game__content-row">
+    <div ng-repeat="number in numbers" class="app-game__row">
         <div 
             ng-repeat="letter in letters" 
             ng-init="position = letter + number" 
             ng-class="isLastTurn(position)" 
             id="{{position}}" 
-            class="app-game__content-box">
-            <span ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
+            class="app-game__box">
+            <div class="app-game__box-content">
+                <span ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="app-game__notation app-element mdl-shadow--2dp mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet">
-    <div class="app-element">
+<div class="mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet">
+    <div class="app-game__notation app-element mdl-shadow--2dp">
         <div ng-repeat="notation in player1.notation track by $index">{{ notation }}</div>
     </div>
-    <div class="app-element">
+    <div class="app-game__notation app-element mdl-shadow--2dp">
         <div ng-repeat="notation in player2.notation track by $index">{{ notation }}</div>
     </div>
 </div>
@@ -80,11 +82,13 @@
         <div class="app-modal__content">
             <div class="app-promotion__icon"
                  ng-repeat="piece in ['queen', 'rook', 'knight', 'bishop']">
-                <a href 
-                   class="app-game__icon app-game__icon--{{ piece }}" 
-                   modal-close 
-                   data-icon="{{ piece }}">
-                </a>
+                <div class="app-game__box-content">
+                    <a href 
+                       class="app-game__icon app-game__icon--{{ piece }}" 
+                       modal-close 
+                       data-icon="{{ piece }}">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
