@@ -552,7 +552,7 @@ a {
   background-color: rgb(50, 50, 50);
 }
 
-.app-game__content-box..ui-droppable {
+.app-game__content-box.ui-droppable {
   background-color: rgb(205, 205, 205);
 }
 
@@ -580,11 +580,12 @@ a {
 
 .app-game__icon {
   position: absolute;
+  display: block;
   top: 12.5%;
   right: 12.5%;
   left: 12.5%;
   bottom: 12.5%;
-  display: block;
+  background-color: rgb(120, 120, 120);
   -webkit-mask-size: 100%;
   mask-size: 100%;
 }
@@ -627,3 +628,14 @@ a {
   mask-image: url(../images/game/rook.svg);
 }
 
+.app-promotion__icon {
+  position: relative;
+  display: inline-block;
+  width: 25%;
+}
+
+.app-promotion__icon:before {
+  display: block;
+  content:'';
+  padding-top: 100%;
+}

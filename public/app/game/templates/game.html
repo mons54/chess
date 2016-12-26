@@ -11,7 +11,7 @@
             ng-class="isLastTurn(position)" 
             id="{{position}}" 
             class="app-game__content-box">
-            <span class="app-game__icon" ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
+            <span ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
         </div>
     </div>
 </div>
@@ -39,13 +39,13 @@
             <div class="app-modal__actions">
                 <button modal-close 
                         type="reset" 
-                        class="mdl-button mdl-button--raised close">
+                        class="mdl-button mdl-button--raised">
                         {{ 'cancel'|translate }}
                 </button>
                 <button modal-close 
                         ng-click="acceptDraw()"
                         type="button" 
-                        class="mdl-button mdl-button--raised mdl-button--colored close">
+                        class="mdl-button mdl-button--raised mdl-button--colored">
                         {{ 'ok'|translate }}
                 </button>
             </div>
@@ -68,6 +68,24 @@
                     class="mdl-button mdl-button--raised">
                     {{ 'share'|translate }}
             </button>
+        </div>
+    </div>
+</div>
+
+<div id="modal-promotion" 
+     class="app-modal app-modal__bg"
+     role="dialog" 
+     aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content">
+            <div class="app-promotion__icon"
+                 ng-repeat="piece in ['queen', 'rook', 'knight', 'bishop']">
+                <a href 
+                   class="app-game__icon app-game__icon--{{ piece }}" 
+                   modal-close 
+                   data-icon="{{ piece }}">
+                </a>
+            </div>
         </div>
     </div>
 </div>

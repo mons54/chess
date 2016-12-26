@@ -34,18 +34,29 @@ directive('profileGame', ['utils',
  * @scope
  * @param {string} position The position of the piece.
  */
-.directive('pieceDraggable', function () {
+.directive('pieceDraggable', ['modal', function (modal) {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
 
-            var modalPromotion = angular.element('#modal-promotion');
+            var modalPromotion = modal.get('modal-promotion');
 
             scope.$watch('game', function (game) {
 
                 var piece = game.pieces[attr.position];
 
-                if (!piece || !scope.isPlayerTurn() || piece.color !== game.turn || (!piece.deplace.length && !piece.capture.length)) {
+                if (!piece) {
+                    return;
+                }
+
+                if (game.finish && piece.draggable) {
+                    piece.draggable({
+                        disabled: true
+                    });
+                    return;
+                }
+
+                if (!scope.isPlayerTurn() || piece.color !== game.turn || (!piece.deplace.length && !piece.capture.length)) {
                     return;
                 }
 
@@ -78,24 +89,25 @@ directive('profileGame', ['utils',
                 }
 
                 function drop(elementBox, position) {
-                    angular.element('.piece').draggable({
-                        disabled: true
-                    });
 
                     var classes = element.attr('class');
 
                     elementBox.children().removeClass();
-                    element.removeClass().addClass('piece');
 
                     if (isPromotion(position)) {
-                        modalPromotion.modal('show').find('.piece').click(function() {
-                            var promotion = angular.element(this).data('value');
-                            modalPromotion.find('.piece').unbind('click');
+                        modal.show(modalPromotion);
+                        modalPromotion.find('[data-icon]').click(function() {
+                            var promotion = angular.element(this).data('icon');
+                            modalPromotion.find('[data-icon]').unbind('click');
                             move(elementBox, classes.replace('pawn', promotion), position, promotion);
                         });
                     } else {
                         move(elementBox, classes, position);
                     }
+
+                    angular.element('[piece-draggable]').draggable({
+                        disabled: true
+                    });
                 }
 
                 function move(elementBox, classes, position, promotion) {
@@ -109,4 +121,4 @@ directive('profileGame', ['utils',
             });
         }
     };
-});
+}]);

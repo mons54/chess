@@ -144,7 +144,7 @@ module.exports = function (io) {
     Module.prototype.getDataPlayerGame = function (data, game, result, color) {
         
         var coefGame,
-            position = color === 'white' ? 1 : 2;
+            position = color === 'white' ? 1 : 2,
             consWin  = data.consWin ? data.consWin : 0;
 
         if (result === 0) {

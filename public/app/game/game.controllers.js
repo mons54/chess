@@ -34,7 +34,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             if (!$scope.game.pieces[position]) {
                 return;
             }
-            return 'app-game__icon--' + $scope.game.pieces[position].color + ' app-game__icon--' + $scope.game.pieces[position].name;
+            return 'app-game__icon app-game__icon--' + $scope.game.pieces[position].color + ' app-game__icon--' + $scope.game.pieces[position].name;
         };
 
         $scope.isLastTurn = function (position) {
