@@ -222,6 +222,64 @@ a {
   margin-right: 0;
 }
 
+.app-profile__stats {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #171B22;
+}
+
+.app-profile__stat {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.app-profile__stat:last-child {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 597px) {
+  .app-profile__stat {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .app-profile__stat:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.app-profile__stat-text {
+  position: absolute;
+  top: 50px;
+  display: block;
+  width: 100%;
+}
+
+.app-profile__stat-value {
+  font-size: 25px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.app-profile__stat-desc {
+    text-transform: uppercase;
+}
+
+.app-profile__stat--win .app-profile__stat-value {
+  color: #54c08b;
+}
+
+.app-profile__stat--draw .app-profile__stat-value {
+  color: #565d6d;
+}
+
+.app-profile__stat--lose .app-profile__stat-value {
+  color: #f5716e;
+}
+
 .app-ranking__pagination {
   width: 100%;
   text-align: center;
@@ -253,7 +311,7 @@ a {
   margin-bottom: 0;
 }
 
-.app-ranking__pagination-textfield>input {
+.app-ranking__pagination-textfield > input {
   width: 50px;
   text-align: center;
 }

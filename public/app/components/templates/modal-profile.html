@@ -26,12 +26,14 @@
                          options="options[name]" 
                          percent="getPercent(data[name])"
                          class="app-profile__stat-chart"></div>
-                    <span class="app-profile__stat-number">
-                        {{ data[name] }}
-                    </span>
-                    <span class="app-profile__stat-text app-profile__stat-text--{{ name }}">
-                        {{ name|translate }}
-                    </span>
+                    <div class="app-profile__stat-text">
+                        <span class="app-profile__stat-value">
+                            {{ data[name] }}
+                        </span>
+                        <span class="app-profile__stat-desc">
+                            {{ name|translate }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
