@@ -260,10 +260,11 @@ a {
 
 .app-trophies {
   padding: 9px;
+  text-align: center;
 }
 
 .app-trophy__title {
-  font-family: 'Prompt';
+  text-transform: uppercase;
   font-size: 40px;
   margin: 0;
   text-shadow: 0px 1px 1px rgba(0,0,0,.2);
@@ -283,6 +284,10 @@ a {
   background-color: #8bc34a;
   border-radius: 100px;
   box-shadow: -0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+}
+
+.app-trophy__badge--modal {
+  margin: 20px 10px;
 }
 
 .app-trophy__badge-unknown { background-image: url(../images/trophies/no-trophy.png); }
