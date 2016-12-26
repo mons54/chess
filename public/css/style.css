@@ -167,12 +167,12 @@ a {
   max-width: 760px;
 }
 
-.app-home__head {
+.app-head {
   position: relative;
   padding: 10px;
 }
 
-.app-home__head .app-button__create-game {
+.app-head .app-button__create-game {
   position: absolute;
   right: 10px;
   bottom: 10px;
@@ -519,4 +519,78 @@ a {
 
 .app-game__action-button:last-child {
   margin-bottom: 0;
+}
+
+.app-game__notation {
+  height: 252px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.app-game__content-row {
+  width: 100%;
+}
+
+.app-game__content-box {
+  position: relative;
+  float: left;
+  display: block;
+  width: 12.5%;
+  background-color: rgb(255, 255, 255);
+}
+
+.app-game__content-box:before {
+  display: block;
+  content:'';
+  padding-top: 100%;
+}
+
+.app-game__content-box.last-turn {
+  background-color: rgb(50, 50, 50);
+}
+
+.app-game__content-box..ui-droppable {
+  background-color: rgb(205, 205, 205);
+}
+
+.app-game--white .app-game__content-row:nth-child(odd) .app-game__content-box:nth-child(even),
+.app-game--white .app-game__content-row:nth-child(even) .app-game__content-box:nth-child(odd),
+.app-game--black .app-game__content-row:nth-child(even) .app-game__content-box:nth-child(even),
+.app-game--black .app-game__content-row:nth-child(odd) .app-game__content-box:nth-child(odd) {
+  background-color: rgb(120, 120, 120);
+}
+
+.app-game--white .app-game__content-row:nth-child(odd) .app-game__content-box.last-turn:nth-child(even),
+.app-game--white .app-game__content-row:nth-child(even) .app-game__content-box.last-turn:nth-child(odd),
+.app-game--black .app-game__content-row:nth-child(even) .app-game__content-box.last-turn:nth-child(even),
+.app-game--black .app-game__content-row:nth-child(odd) .app-game__content-box.last-turn:nth-child(odd) {
+  background-color: rgb(50, 50, 50);
+}
+
+
+.app-game--white .app-game__content-row:nth-child(odd) .app-game__content-box.ui-droppable:nth-child(even),
+.app-game--white .app-game__content-row:nth-child(even) .app-game__content-box.ui-droppable:nth-child(odd),
+.app-game--black .app-game__content-row:nth-child(even) .app-game__content-box.ui-droppable:nth-child(even),
+.app-game--black .app-game__content-row:nth-child(odd) .app-game__content-box.ui-droppable:nth-child(odd) {
+  background-color: rgb(80, 80, 80);
+}
+
+.app-game__icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  font-size: 32px;
+  padding: 16px;
+}
+
+.app-game__icon--white {
+  color: rgb(225, 175, 125);
+}
+
+.app-game__icon--black {
+  color: rgb(0, 0, 0);
 }
