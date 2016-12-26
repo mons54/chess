@@ -580,17 +580,50 @@ a {
 
 .app-game__icon {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 12.5%;
+  right: 12.5%;
+  left: 12.5%;
+  bottom: 12.5%;
   display: block;
-  font-size: 32px;
-  padding: 16px;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
 }
 
 .app-game__icon--white {
-  color: rgb(225, 175, 125);
+  background-color: rgb(225, 175, 125);
 }
 
 .app-game__icon--black {
-  color: rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0);
 }
+
+.app-game__icon--bishop {
+  -webkit-mask-image: url(../images/game/bishop.svg);
+  mask-image: url(../images/game/bishop.svg);
+}
+
+.app-game__icon--king {
+  -webkit-mask-image: url(../images/game/king.svg);
+  mask-image: url(../images/game/king.svg);
+}
+
+.app-game__icon--knight {
+  -webkit-mask-image: url(../images/game/knight.svg);
+  mask-image: url(../images/game/knight.svg);
+}
+
+.app-game__icon--pawn {
+  -webkit-mask-image: url(../images/game/pawn.svg);
+  mask-image: url(../images/game/pawn.svg);
+}
+
+.app-game__icon--queen {
+  -webkit-mask-image: url(../images/game/queen.svg);
+  mask-image: url(../images/game/queen.svg);
+}
+
+.app-game__icon--rook {
+  -webkit-mask-image: url(../images/game/rook.svg);
+  mask-image: url(../images/game/rook.svg);
+}
+
