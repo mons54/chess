@@ -179,7 +179,22 @@
                  * Set the title of the page.
                  */
                 $rootScope.title = $route.current.title;
+                
+                closeDrawer();
             });
+
+            function closeDrawer() {
+                var drawer = angular.element('.mdl-layout__drawer');
+                if (!drawer || !drawer.hasClass('is-visible')) {
+                  return;
+                }
+
+                var layout = document.querySelector('.mdl-layout.is-small-screen').MaterialLayout;
+                if (!layout) {
+                  return;
+                }
+                layout.toggleDrawer();
+            }
             
             /**
              * Start the loader
