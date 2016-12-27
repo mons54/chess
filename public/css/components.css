@@ -24,13 +24,15 @@
 }
 
 .app-element .app-element__badge {
+  position: relative;
   display: inline-block;
-  padding: 3px 5px 1px;
-  background-color: #446479;
+  top: -1px;
+  margin-top: -5px;
+  padding: 0px 5px;
+  background-color: #795548;
   color: #EEF5F9;
   text-align: center;
-  border-radius: 3px;
-  font-size: 13px;
+  font-size: 12px;
   margin-left: 3px;
 }
 
@@ -168,7 +170,7 @@
 }
 
 .app-form__textfield>input:focus~label,.app-form__textfield>textarea:focus~label {
-  color: #2196F3
+  color: #FF5252
 }
 
 .app-form__textfield--float-label>label {
@@ -228,7 +230,7 @@
 }
 
 .app-form__textfield>input:focus,.app-form__textfield>textarea:focus {
-  border-color: #2196F3;
+  border-color: #FF5252;
   border-width: 2px
 }
 
@@ -328,7 +330,7 @@
 .app-form__select:focus select {
   height: 33px;
   margin-bottom: -1px;
-  border-color: #2196F3;
+  border-color: #FF5252;
   border-width: 2px
 }
 
@@ -378,7 +380,7 @@
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #2196F3;
+  border-color: #FF5252;
   border-width: 2px
 }
 
@@ -401,11 +403,6 @@
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap
-}
-
-.app-form__select:focus label,
-.app-form__select select:focus~label {
-  color: #2196F3
 }
 
 @media (min-width: 544px) {
