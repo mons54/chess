@@ -20,6 +20,16 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
     
     function ($rootScope, $scope, $routeParams, $location, $filter, $interval, utils, modal) {
 
+        var sounds;
+
+        if (typeof Audio === 'function') {
+            sounds = {
+                timer: new Audio('/sounds/timer.mp3'),
+                deplace: new Audio('/sounds/deplace.mp3'),
+                capture: new Audio('/sounds/capture.mp3')
+            };
+        }
+
         $rootScope.socket.emit('initGame', $routeParams.id);
 
         $rootScope.socket.on('game', function (data) {
@@ -48,6 +58,17 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.move = function (start, end, promotion) {
+
+            soundStop('timer');
+
+            if ($scope.game.pieces[end]) {
+                var sound = 'capture';
+            } else {
+                var sound = 'deplace';
+            }
+
+            soundPlay(sound);
+
             $rootScope.socket.emit('moveGame', {
                 id: $scope.game.id,
                 start: start,
@@ -75,6 +96,22 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             utils.share(caption);
         };
+
+        function soundPlay(sound) {
+            if (!sounds || !sounds[sound] || !sounds[sound].paused) {
+                return;
+            }
+
+            sounds[sound].play();
+        }
+
+        function soundStop(sound) {
+            if (!sounds || !sounds[sound] || sounds[sound].paused) {
+                return;
+            }
+
+            sounds[sound].pause();
+        }
 
         function applyGame(game) {
             if (!game) {
@@ -107,6 +144,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $interval(function () {
             if (!$scope.game || $scope.game.finish) {
+                soundStop('timer');
                 return;
             }
 
@@ -119,6 +157,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             if (player.timeTurn > 0) {
                 player.timeTurn--;
             }
+
+            if (player.time < 10 || player.timeTurn < 10) {
+                soundPlay('timer');
+            }
+
         }, 1000);
     }
 ]).
