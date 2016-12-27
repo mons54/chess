@@ -44,7 +44,9 @@ directive('profileGame', ['utils',
             scope.$watch('game', function (game) {
 
                 if (game.finish && element.draggable) {
-                    element.draggable('destroy');
+                    element.draggable({
+                        disabled: true
+                    });
                     return;
                 }
 
