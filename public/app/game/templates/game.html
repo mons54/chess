@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet">
+<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
     <div class="app-game__notation app-element mdl-shadow--2dp">
         <div ng-repeat="notation in player1.notation track by $index">{{ notation }}</div>
     </div>
@@ -96,36 +96,3 @@
         </div>
     </div>
 </div>
-
-<!--
-<div class="content no-select">
-    <div class="row">
-        <div class="col-md-10">
-            <div class="notation">
-                <div class="element">
-                    <div ng-repeat="notation in player1.notation track by $index">{{ notation }}</div>
-                </div>
-                <div class="element">
-                    <div ng-repeat="notation in player2.notation track by $index">{{ notation }}</div>
-                </div>
-            </div>
-            <div class="game element" ng-class="{'game-white': orientation == 'white', 'game-black': orientation == 'black'}">
-                <div ng-repeat="number in numbers" class="game-row">
-                    <div 
-                        ng-repeat="letter in letters" 
-                        ng-init="position = letter + number" 
-                        ng-class="isLastTurn(position)" 
-                        id="{{position}}" 
-                        class="game-box">
-                        <span class="piece" ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div ng-show="game.finish" class="col-md-2" col-right></div>
-    </div>
-</div>
-
-<div modal-promotion class="modal fade" id="modal-promotion"></div>
-
--->

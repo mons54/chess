@@ -150,7 +150,7 @@ a {
 
 .app-drawer .mdl-layout-title {
   position: relative;
-  background: #6ab344;
+  background: #795548;
   height: 160px;
 }
 
@@ -411,29 +411,6 @@ a {
     top: 12px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
-  .app-home__head .app-button__create-game {
-    margin-top: 10px;
-    position: relative;
-    right: auto;
-    bottom: auto;
-  }
-
-  .app-element__table {
-    font-size: 15px;
-  }
-
-  .app-element__table-user {
-    width: 82px;
-  }
-
-  .app-element__table-user-name {
-    display: none;
-  }
-
-  .app-element__table-user__picture {
-    margin-right: 0;
-  }
 }
 /**** MobileLayout:end ****/
 
@@ -650,4 +627,76 @@ a {
   display: block;
   content:'';
   padding-top: 100%;
+}
+
+.mdl-layout--fixed-header > .mdl-layout__header.is-game .app-navigation__container {
+  display: none;
+}
+
+@media (max-width: 479px) {
+
+  .mdl-data-table th {
+    padding: 0 6px 12px 6px;
+  }
+
+  .mdl-data-table td {
+    padding: 12px 6px;
+  }
+
+  .mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
+    padding-left: 12px;
+  }
+
+  .app-button--phone {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 5px;
+  }
+
+  .app-profile__name {
+    font-style: 15px;
+  }
+
+  .app-profile--player .app-profile__name,
+  .app-profile--player .app-profile__info{
+    display: none;
+  }
+
+  .app-game__action {
+    width: auto;
+  }
+
+  .app-head .app-button__create-game {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-top: 20px;
+    margin-bottom: -10px;
+  }
+
+  .app-element__table {
+    font-size: 15px;
+  }
+
+  .app-element__table-user {
+    width: 82px;
+  }
+
+  .app-element__table-user-name {
+    display: none;
+  }
+
+  .app-element__table-user__picture {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .mdl-layout--fixed-header > .mdl-layout__header.is-game {
+    display: none;
+  }
+
+  .app-button__sound {
+    display: none;
+  }
 }
