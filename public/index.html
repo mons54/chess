@@ -29,30 +29,39 @@
         <modal-profile></modal-profile>
         
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-show="ready">
-            <header class="app-header mdl-layout__header">
+            <header class="app-header mdl-layout__header" ng-class="{'is-game': user.gid }">
                 <div class="app-header__row mdl-layout__header-row">
                     <span class="app-title mdl-layout-title">
-                        <img class="app-logo__image" src="images/app-logo.png">
+                        <span class="app-logo">
+                            <span class="app-logo__icon"></span>
+                            <span class="app-logo__text" ng-bind="'title'|translate"></span>
+                        </span>
                     </span>
                     <!-- Add spacer, to align navigation to the right in desktop -->
                     <div class="app-header-spacer mdl-layout-spacer"></div>
               
                     <!-- Navigation -->
-                    <div class="app-navigation__container" ng-hide="user.gid">
+                    <div class="app-navigation__container">
                         <nav class="app-navigation mdl-navigation">
-                            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">
-                                {{ 'home' | translate }}
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href="/"
+                               ng-bind="'home'|translate">
                             </a>
-                            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/ranking">
-                                {{ 'ranking' | translate }}
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href="/ranking"
+                               ng-bind="'ranking'|translate">
                             </a>
-                            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/trophies">
-                                {{ 'trophies.title' | translate }}
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href="/trophies"
+                               ng-bind="'trophies.title'|translate">
                             </a>
                         </nav>
                     </div>
                     <span class="app-mobile__title mdl-layout-title">
-                        <img class="app-logo__image" src="images/app-logo.png">
+                        <span class="app-logo">
+                            <span class="app-logo__icon"></span>
+                            <span class="app-logo__text" ng-bind="'title'|translate"></span>
+                        </span>
                     </span>
                 </div>
             </header>
@@ -60,9 +69,12 @@
 
             <div class="app-drawer mdl-layout__drawer">
                 <span class="mdl-layout-title">
-                    <img class="app-logo__image" src="images/app-logo-white.png">
+                    <span class="app-logo">
+                        <span class="app-logo__icon"></span>
+                        <span class="app-logo__text" ng-bind="'title'|translate"></span>
+                    </span>
                 </span>
-                <nav class="mdl-navigation" ng-hide="user.gid">
+                <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="/">
                         <i class="material-icons" role="presentation">home</i>
                         {{ 'home' | translate }}

@@ -67,12 +67,36 @@ a {
   display: none !important;
 }
 
-
-.app-logo__image {
-  height: 28px;
-  width: 140px;
+.app-logo {
+  position: relative;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
+  background-color: #795548;
+  color: #fafafa;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  border-radius: 20px;
 }
 
+.app-logo__icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 7px;
+  left: 11px;
+  background-color: #fafafa;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
+  -webkit-mask-image: url(../images/game/king.svg);
+  mask-image: url(../images/game/king.svg);
+}
+
+.app-logo__text {
+  text-transform: uppercase;
+  padding-left: 30px;
+  font-size: 24px;
+}
 
 .app-header {
   overflow: visible;
@@ -151,12 +175,9 @@ a {
 .app-drawer .mdl-layout-title {
   position: relative;
   background: #795548;
-  height: 160px;
-}
-
-.app-drawer .app-logo__image {
-  position: absolute;
-  bottom: 16px;
+  line-height: 24px;
+  padding-left: 12px;
+  padding: 10px;
 }
 
 .app-content {
@@ -407,8 +428,8 @@ a {
   .app-mobile__title {
     display: block !important;
     position: absolute;
-    left: calc(50% - 70px);
-    top: 12px;
+    left: 60px;
+    top: 8px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
@@ -503,12 +524,17 @@ a {
 }
 
 .app-game__notation {
-  height: 252px;
+  height: calc(50% - 24px);
+  padding: 10px 0;
+  margin-bottom: 8px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
-  padding: 10px;
   overflow-x: auto;
+}
+
+.app-game__notation:last-child {
+  margin-bottom: 0;
 }
 
 .app-game__row {
@@ -697,6 +723,10 @@ a {
   }
 
   .app-button__sound {
-    display: none;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    height: 42px;
+    min-width: 42px;
+    width: 42px;
   }
 }
