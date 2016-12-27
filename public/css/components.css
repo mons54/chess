@@ -122,6 +122,12 @@
   transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+.app-modal__close {
+  position: absolute;
+  right: 2.4em;
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .app-modal__title {
   margin: 0 0 20px 0;
   padding: 0;

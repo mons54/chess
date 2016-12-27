@@ -61,6 +61,9 @@
      aria-hidden="true">
     <div class="app-modal__dialog">
         <div class="app-modal__content app__text-center">
+            <a href modal-close class="app-modal__close">
+                <i class="material-icons">clear</i>
+            </a>
             <h4 class="app-modal__title">{{ 'game_over'|translate }}</h4>
             <h5 class="app-game-over__result-name">{{ game.result.name|translate }}</h5>
             <h6 class="app-game-over__result-winner" ng-if="game.result.winner === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
