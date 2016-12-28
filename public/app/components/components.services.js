@@ -56,7 +56,7 @@ service('modal', function () {
                 hideModal(modal);
             });
 
-            angular.element('.app-modal__bg').on('click', function (event) {
+            angular.element('[modal-close-bg]').on('click', function (event) {
                 if (!this || event.target !== this) {
                     return;
                 }
