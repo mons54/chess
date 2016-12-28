@@ -34,7 +34,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             });
         }
 
-        socket.on('challenges', function (data) {
+        socket.on('listChallenges', function (data) {
             $scope.$apply(applyChallenges(data));
         });
 

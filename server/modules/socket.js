@@ -287,7 +287,7 @@ module.exports = function (io) {
         }
 
         delete socket.challenges[uid];
-        socket.emit('challenges', socket.challenges);
+        socket.emit('listChallenges', socket.challenges);
     };
 
     Module.prototype.getChallenge = function (socket, uid) {
@@ -331,7 +331,7 @@ module.exports = function (io) {
             for (var socketId in room.sockets) {
                 var user = io.sockets.connected[socketId];
                 if (!user || !user.uid) {
-                    return;
+                    continue;
                 }
                 challengers.push({
                     uid: user.uid,
@@ -343,11 +343,6 @@ module.exports = function (io) {
         }
 
         io.sockets.to('home').emit('challengers', challengers);
-    };
-
-    Module.prototype.connected = function () {
-        io.sockets.emit('connected', io.sockets.sockets.length);
-        this.listChallengers();
     };
 
     Module.prototype.init = function (socket, data) {
@@ -440,10 +435,9 @@ module.exports = function (io) {
                 socket.join(moduleGame.getRoom(gid));
                 socket.emit('startGame', gid);
             } else {
-                socket.join('home', function () {
-                    self.connected();
-                });
+                socket.join('home', self.listChallengers);
                 socket.emit('listGames', moduleGame.createdGame);
+                socket.emit('listChallenges', socket.challenges);
             }
 
             socket.emit('ready');

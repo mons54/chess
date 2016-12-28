@@ -45,8 +45,8 @@ service('socket', ['$rootScope', function ($rootScope) {
         socket.on('listGames', function (data) {
             $rootScope.$emit('listGames', data);
         });
-        socket.on('challenges', function (data) {
-            $rootScope.$emit('challenges', data);
+        socket.on('listChallenges', function (data) {
+            $rootScope.$emit('listChallenges', data);
         });
         socket.on('challengers', function (data) {
             $rootScope.$emit('challengers', data);

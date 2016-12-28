@@ -51,8 +51,8 @@ module.exports = function (app, io) {
                 time: time
             });
 
-            socketOpponent.emit('challenges', socketOpponent.challenges);
-            socket.emit('challenges', socket.challenges);
+            socketOpponent.emit('listChallenges', socketOpponent.challenges);
+            socket.emit('listChallenges', socket.challenges);
         });
 
         socket.on('removeChallenge', function (uid) {
