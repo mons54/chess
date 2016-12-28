@@ -10,15 +10,15 @@ angular.module('ranking').
  * @requires $rootScope
  * @requires $scope
  */
-controller('rankingCtrl', ['$rootScope', '$scope',
+controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
     
-    function ($rootScope, $scope) {
+    function ($rootScope, $scope, socket) {
         
         $scope.friends = false;
 
-        $rootScope.socket.emit('leaveHome');
+        socket.emit('leaveHome');
 
-        $rootScope.socket.on('ranking', function (data) {
+        socket.on('ranking', function (data) {
             $scope.$apply(apply(data));
         });
 
@@ -38,7 +38,7 @@ controller('rankingCtrl', ['$rootScope', '$scope',
 
         function emit(page) {
             $rootScope.loading = true;
-            $rootScope.socket.emit('ranking', {
+            socket.emit('ranking', {
                 page: page,
                 friends: $scope.friends ? $rootScope.user.friends : false
             });

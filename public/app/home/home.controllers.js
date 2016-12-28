@@ -12,13 +12,13 @@ angular.module('home').
  * @requires app.service:utils
  * @requires app.constant:paramsGame
  */
-controller('homeCtrl', ['$rootScope', '$scope', 'utils', 'paramsGame',
+controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
     
-    function ($rootScope, $scope, utils, paramsGame) {
+    function ($rootScope, $scope, socket, utils, paramsGame) {
 
-        $rootScope.socket.emit('initUser');
+        socket.emit('initUser');
         
-        $rootScope.socket.on('listGames', function (data) {
+        socket.on('listGames', function (data) {
             $scope.$apply(applyGames(data));
         });
 
@@ -34,7 +34,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'utils', 'paramsGame',
             });
         }
 
-        $rootScope.socket.on('challenges', function (data) {
+        socket.on('challenges', function (data) {
             $scope.$apply(applyChallenges(data));
         });
 
@@ -47,7 +47,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'utils', 'paramsGame',
             });
         }
 
-        $rootScope.socket.on('challengers', function (data) {
+        socket.on('challengers', function (data) {
             $scope.$apply(applyChallenger(data));
         });
 
@@ -77,19 +77,19 @@ controller('homeCtrl', ['$rootScope', '$scope', 'utils', 'paramsGame',
         }
 
         $scope.createGame = function () {
-            $rootScope.socket.emit('createGame', $scope.game);
+            socket.emit('createGame', $scope.game);
         };
 
         $scope.removeGame = function () {
-            $rootScope.socket.emit('removeGame');
+            socket.emit('removeGame');
         };
 
         $scope.startGame = function (uid) {
-            $rootScope.socket.emit('startGame', uid);
+            socket.emit('startGame', uid);
         };
 
         $scope.startChallenge = function (uid) {
-            $rootScope.socket.emit('startChallenge', uid);
+            socket.emit('startChallenge', uid);
         };
 
         $scope.setChallenger = function (challenger) {
@@ -97,7 +97,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'utils', 'paramsGame',
         };
 
         $scope.challenge = function (uid) {
-            $rootScope.socket.emit('challenge', {
+            socket.emit('challenge', {
                 uid: uid,
                 color: $scope.game.color,
                 time: $scope.game.time
@@ -105,7 +105,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'utils', 'paramsGame',
         };
 
         $scope.removeChallenge = function (uid) {
-            $rootScope.socket.emit('removeChallenge', uid);
+            socket.emit('removeChallenge', uid);
         };
 
         $scope.$watch('game.pointsMin', function (value) {

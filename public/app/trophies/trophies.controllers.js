@@ -10,11 +10,11 @@ angular.module('trophies').
  * @requires $rootScope
  * @requires $scope
  */
-controller('trophiesCtrl', ['$rootScope', '$scope', 'trophies',
+controller('trophiesCtrl', ['$rootScope', '$scope', 'socket', 'trophies',
     
-    function ($rootScope, $scope, trophies) {
+    function ($rootScope, $scope, socket, trophies) {
 
-        $rootScope.socket.emit('leaveHome');
+        socket.emit('leaveHome');
 
         var userTrophies = {};
 

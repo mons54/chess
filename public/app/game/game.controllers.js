@@ -16,9 +16,9 @@ angular.module('game').
  * @requires app.service:utils
  * @requires components.service:modal
  */
-controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'utils', 'modal',
+controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'socket', 'utils', 'modal',
     
-    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, utils, modal) {
+    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, socket, utils, modal) {
 
         var sounds;
 
@@ -30,13 +30,13 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             };
         }
 
-        $rootScope.socket.emit('initGame', $routeParams.id);
+        socket.emit('initGame', $routeParams.id);
 
-        $rootScope.socket.on('game', function (data) {
+        socket.on('game', function (data) {
             $scope.$apply(applyGame(data));
         });
 
-        $rootScope.socket.on('offerDraw', function (data) {
+        socket.on('offerDraw', function (data) {
             modal.show(modal.get('modal-response-draw'));
         });
 
@@ -54,7 +54,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.acceptDraw = function () {
-            $rootScope.socket.emit('acceptDraw', $scope.game.id);
+            socket.emit('acceptDraw', $scope.game.id);
         };
 
         $scope.move = function (start, end, promotion) {
@@ -69,7 +69,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             soundPlay(sound);
 
-            $rootScope.socket.emit('moveGame', {
+            socket.emit('moveGame', {
                 id: $scope.game.id,
                 start: start,
                 end: end,
@@ -175,17 +175,17 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
  * @requires $scope
  * @requires app.service:utils
  */
-controller('profileGameCtrl', ['$rootScope', '$scope', 'utils',
+controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
     
-    function ($rootScope, $scope, utils) {
+    function ($rootScope, $scope, socket, utils) {
 
         $scope.resign = function () {
-            $rootScope.socket.emit('resign', $scope.$parent.game.id);
+            socket.emit('resign', $scope.$parent.game.id);
         };
 
         $scope.offerDraw = function () {
             $scope.player.disableOfferDraw = true;
-            $rootScope.socket.emit('offerDraw', $scope.$parent.game.id);
+            socket.emit('offerDraw', $scope.$parent.game.id);
         };
 
         $scope.isPlayerUser = function () {

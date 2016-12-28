@@ -149,7 +149,7 @@
         }
     ]).
 
-    run(['$rootScope', '$route', '$translate', '$http', '$location', 'appId',
+    run(['$rootScope', '$route', '$translate', '$http', '$location', 'socket', 'modal', 'appId',
 
         /**
          * @param {object} $rootScope Global scope
@@ -159,7 +159,7 @@
          * @param {object} $location Service location
          * @param {string} appId App Id
          */
-        function ($rootScope, $route, $translate, $http, $location, appId) {
+        function ($rootScope, $route, $translate, $http, $location, socket, modal, appId) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
@@ -284,56 +284,55 @@
 
                 $translate.use($rootScope.user.lang);
 
-                FB.api('/me/friends?fields=installed,id,name', setFriends);
-
-                $rootScope.socket = io.connect();
-
-                $rootScope.socket.on('connect', socketInit);
-            }
-
-            /**
-             * Set the friends list of user
-             */
-            function setFriends (res) {
-                angular.forEach(res.data, function (value) {
-                    if (value.installed) {
-                        $rootScope.user.friends.push(value.id);
-                    }
+                FB.api('/me/friends?fields=installed,id,name', function (res) {
+                    angular.forEach(res.data, function (value) {
+                        if (value.installed) {
+                            $rootScope.user.friends.push(value.id);
+                        }
+                    });
                 });
+
+                socket.connect();
             }
 
-            /**
-             * Init the user socket
-             */
-            function socketInit () {
-                $rootScope.socket.emit('init', {
+            $rootScope.connect = function () {
+                socket.connect();
+            };
+
+            socket.on('connect', function () {
+                modal.hide(modal.get('modal-disconnect'));
+                socket.emit('init', {
                     uid: $rootScope.user.uid,
                     accessToken: $rootScope.user.accessToken,
                     name: $rootScope.user.name
                 });
+            });
 
-                $rootScope.socket.on('infosUser', function (data) {
-                    angular.extend($rootScope.user, data);
-                });
+            socket.on('disconnect', function () {
+                modal.show(modal.get('modal-disconnect'));
+            });
 
-                $rootScope.socket.on('startGame', function (gid) {
-                    $rootScope.$apply(function () {
-                        $rootScope.user.gid = gid;
-                        redirectToGame();
-                    });
-                });
+            socket.on('infosUser', function (data) {
+                angular.extend($rootScope.user, data);
+            });
 
-                $rootScope.socket.on('ready', function () {
-                    $rootScope.$apply(function () {
-                        $rootScope.ready = true;
-                        $rootScope.loading = false;
-                    });
+            socket.on('startGame', function (gid) {
+                $rootScope.$apply(function () {
+                    $rootScope.user.gid = gid;
+                    redirectToGame();
                 });
+            });
 
-                $rootScope.socket.on('trophy', function (data) {
-                    angular.extend({}, $rootScope.user.trophies, data);
+            socket.on('ready', function () {
+                $rootScope.$apply(function () {
+                    $rootScope.ready = true;
+                    $rootScope.loading = false;
                 });
-            }
+            });
+
+            socket.on('trophy', function (data) {
+                angular.extend({}, $rootScope.user.trophies, data);
+            });
         }
     ]).
 

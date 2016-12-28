@@ -48,20 +48,20 @@ directive('showModal', ['modal',
  * @name components.directive:showProfile
  * @description 
  * Add an click event to the directive element to show modal profile.
- * @requires $rootScope
+ * @requires socket
  * @restrict A
  * @scope
  * @param {object} user User data {uid: uid, name: name}
  */
-directive('showProfile', ['$rootScope',
-    function ($rootScope) {
+directive('showProfile', ['socket',
+    function (socket) {
         return {
             scope: {
                 'user': '='
             },
             link: function (scope, element) {
                 element.bind('click', function () {
-                    $rootScope.socket.emit('profile', {
+                    socket.emit('profile', {
                         uid: scope.user.uid,
                         name: scope.user.name
                     });
@@ -76,29 +76,24 @@ directive('showProfile', ['$rootScope',
  * @name components.directive:modalProfile
  * @description 
  * Show modal profile when receives an socket event.
- * @requires $rootScope
+ * @requires socket
  * @requires components.service:modal
  * @restrict E
  * @scope
  */
-directive('modalProfile', ['$rootScope', 'modal',
-    function ($rootScope, modal) {
+directive('modalProfile', ['socket', 'modal',
+    function (socket, modal) {
         return {
             restrict: 'E',
             replace: true,
             scope: true,
             templateUrl: '/app/components/templates/modal-profile.html',
             link: function (scope, element) {
-                $rootScope.$watch('socket', function (socket) {
-                    if (!socket) {
-                        return;
-                    }
-                    socket.on('profile', function (data) {
-                        scope.$apply(function () {
-                            scope.data = data;
-                        });
-                        modal.show(element);
+                socket.on('profile', function (data) {
+                    scope.$apply(function () {
+                        scope.data = data;
                     });
+                    modal.show(element);
                 });
             },
             controller: ['$scope', function ($scope) {

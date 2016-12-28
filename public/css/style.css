@@ -46,11 +46,19 @@ a {
   cursor: pointer;
 }
 
+.app__action {
+  color: #ff5252;
+}
+
 .app__button--small {
   height: 24px;
   font-size: 12px;
   padding: 0 4px;
   line-height: 26px;
+}
+
+.app__action--connect {
+  font-size: 10vw;
 }
 
 .app-header .mdl-menu__container {

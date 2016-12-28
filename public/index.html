@@ -27,6 +27,16 @@
         </div>
 
         <modal-profile></modal-profile>
+
+        <div id="modal-disconnect" 
+             class="app-modal app-modal__bg" 
+             role="dialog" 
+             aria-hidden="true">
+            <div class="app__clickable app-modal__content" ng-click="connect()">
+                <i class="app__action app__action--connect material-icons">play_arrow</i>
+            </div>
+        </div>
+
         
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-show="ready">
             <header class="app-header mdl-layout__header" ng-class="{'is-game': user.gid }">
