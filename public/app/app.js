@@ -206,38 +206,46 @@
         if (typeof Audio === 'function') {
             sounds = {
                 timer: new Audio('/sounds/timer.mp3'),
-                deplace: new Audio('/sounds/deplace.mp3'),
-                capture: new Audio('/sounds/capture.mp3')
+                deplace: new Audio('/sounds/deplace.wav'),
+                capture: new Audio('/sounds/capture.wav')
             };
         };
 
         this.play = function (sound) {
             if (!sounds || 
-                !sounds[sound] || 
-                !sounds[sound].paused) {
+                !sounds[sound]) {
                 return;
             }
 
             sounds[sound].play();
         };
 
-        this.stop = function(sound) {
+        this.pause = function(sound) {
             if (!sounds ||
-                !sounds[sound] || 
-                !sounds[sound].played) {
+                !sounds[sound]) {
                 return;
             }
 
             sounds[sound].pause();
         };
 
-        this.stopAll = function () {
-            
+        this.load = function(sound) {
+            if (!sounds ||
+                !sounds[sound]) {
+                return;
+            }
+
+            sounds[sound].load();
+        };
+
+        this.loadAll = function () {
             if (!sounds) {
                 return;
             }
 
-            angular.forEach(sounds, this.stop);
+            angular.forEach(sounds, function (value, name) {
+                this.load(name);
+            }.bind(this));
         };
 
         this.$get = ['$cookies', function ($cookies) {
@@ -254,7 +262,7 @@
                 $cookies.putObject('sound', sound);
 
                 if (!sound) {
-                    self.stopAll();
+                    self.loadAll();
                 }
 
                 return sound;
@@ -267,18 +275,26 @@
                 self.play(name);
             }
 
-            function stop(name) {
+            function pause(name) {
                 if (!sound) {
                     return;
                 }
-                self.stop();
+                self.pause(name);
+            }
+
+            function load(name) {
+                if (!sound) {
+                    return;
+                }
+                self.load();
             }
 
             return {
                 sound: sound,
                 change: change,
                 play: play,
-                stop: stop
+                pause: pause,
+                load: load
             };
         }];
     }).

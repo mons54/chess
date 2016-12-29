@@ -49,7 +49,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.move = function (start, end, promotion) {
 
-            sound.stop('timer');
+            sound.load('timer');
             sound.play($scope.game.pieces[end] ? 'capture' : 'deplace');
 
             socket.emit('moveGame', {
@@ -92,6 +92,15 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 modal.show(modal.get('modal-finish-game'));
             }
 
+            /**
+             * Play sound if not user has play and has last turn
+             */
+            if ($scope.game &&
+                !$scope.isPlayerTurn() &&
+                game.lastTurn) {
+                sound.play($scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace');
+            }
+
             $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
             $scope.numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
@@ -111,7 +120,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $interval(function () {
             if (!$scope.game || $scope.game.finish) {
-                sound.stop('timer');
+                sound.load('timer');
                 return;
             }
 
