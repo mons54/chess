@@ -99,6 +99,106 @@
 
     /**
      * @ngdoc service
+     * @name app.service:socket
+     * @description 
+     * Socket management.
+     */
+    provider('socket', function () {
+
+        var socket,
+            deferedEvents = {};
+
+        /**
+         * @ngdoc function
+         * @name #connect
+         * @methodOf app.service:socket
+         * @description 
+         * Connect the socket.
+         */
+        this.connect = function () {
+            if (!socket) {
+                socket = io.connect();
+            } else {
+                socket.connect();
+            }
+
+            angular.forEach(deferedEvents, function (callback, event) {
+                this.on(event, callback)
+            }.bind(this));
+
+            deferedEvents = {};
+        };
+
+        /**
+         * @ngdoc function
+         * @name #disconnect
+         * @methodOf app.service:socket
+         * @description 
+         * Disconnect the socket.
+         */
+        this.disconnect = function () {
+            if (!socket) {
+                return;
+            }
+            socket.disconnect();
+        };
+
+        /**
+         * @ngdoc function
+         * @name #emit
+         * @methodOf app.service:socket
+         * @description 
+         * Emit one event.
+         * @param {string} event The event name
+         * @param {object=} data The data
+         */
+        this.emit = function (event, data) {
+            if (!socket) {
+                return;
+            }
+            socket.emit(event, data);
+        };
+
+        /**
+         * @ngdoc function
+         * @name #emit
+         * @methodOf app.service:socket
+         * @description 
+         * Subscribe on event.
+         * @param {string} event The event name
+         * @param {function} callback The callback
+         */
+        this.on = function (event, callback) {
+            if (!socket) {
+                deferedEvents[event] = callback;
+                return;
+            }
+            socket.on(event, callback);
+        };
+
+        /**
+         * @ngdoc function
+         * @name #once
+         * @methodOf app.service:socket
+         * @description 
+         * Subscribe once event.
+         * @param {string} event The event name
+         * @param {function} callback The callback
+         */
+        this.once = function (event, callback) {
+            if (!socket) {
+                return;
+            }
+            socket.once(event, callback);
+        };
+            
+        this.$get = function () {
+            return this;
+        };
+    }).
+
+    /**
+     * @ngdoc service
      * @name app.service:utils
      * @description
      * Utils methods
