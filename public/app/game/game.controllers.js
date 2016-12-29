@@ -97,6 +97,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
              */
             if (!$scope.isPlayerTurn() &&
                 $scope.game &&
+                game.lastTurn &&
                 game.lastTurn !== $scope.game.lastTurn) {
                 sound.play($scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace');
             }
