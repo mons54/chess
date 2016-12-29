@@ -93,11 +93,8 @@ a {
   height: 24px;
   top: 7px;
   left: 11px;
-  background-color: #fafafa;
-  -webkit-mask-size: 100%;
-  mask-size: 100%;
-  -webkit-mask-image: url(../images/game/king.svg);
-  mask-image: url(../images/game/king.svg);
+  background-size: cover;
+  background-image: url(../images/logo.svg);
 }
 
 .app-logo__text {
@@ -112,6 +109,7 @@ a {
 }
 
 .app-header__row {
+  position: relative;
   padding: 0 40px 0 60px;
 }
 
@@ -608,47 +606,56 @@ a {
 }
 
 .app-game__icon {
-  background-color: rgb(120, 120, 120);
-  -webkit-mask-size: 100%;
-  mask-size: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.app-game__icon--white {
-  background-color: rgb(225, 175, 125);
+.app-game__icon--bishop.app-game__icon--white {
+  background-image: url(../images/game/bishop-white.svg);
 }
 
-.app-game__icon--black {
-  background-color: rgb(0, 0, 0);
+.app-game__icon--king.app-game__icon--white {
+  background-image: url(../images/game/king-white.svg);
 }
 
-.app-game__icon--bishop {
-  -webkit-mask-image: url(../images/game/bishop.svg);
-  mask-image: url(../images/game/bishop.svg);
+.app-game__icon--knight.app-game__icon--white {
+  background-image: url(../images/game/knight-white.svg);
 }
 
-.app-game__icon--king {
-  -webkit-mask-image: url(../images/game/king.svg);
-  mask-image: url(../images/game/king.svg);
+.app-game__icon--pawn.app-game__icon--white {
+  background-image: url(../images/game/pawn-white.svg);
 }
 
-.app-game__icon--knight {
-  -webkit-mask-image: url(../images/game/knight.svg);
-  mask-image: url(../images/game/knight.svg);
+.app-game__icon--queen.app-game__icon--white {
+  background-image: url(../images/game/queen-white.svg);
 }
 
-.app-game__icon--pawn {
-  -webkit-mask-image: url(../images/game/pawn.svg);
-  mask-image: url(../images/game/pawn.svg);
+.app-game__icon--rook.app-game__icon--white {
+  background-image: url(../images/game/rook-white.svg);
 }
 
-.app-game__icon--queen {
-  -webkit-mask-image: url(../images/game/queen.svg);
-  mask-image: url(../images/game/queen.svg);
+.app-game__icon--bishop.app-game__icon--black {
+  background-image: url(../images/game/bishop-black.svg);
 }
 
-.app-game__icon--rook {
-  -webkit-mask-image: url(../images/game/rook.svg);
-  mask-image: url(../images/game/rook.svg);
+.app-game__icon--king.app-game__icon--black {
+  background-image: url(../images/game/king-black.svg);
+}
+
+.app-game__icon--knight.app-game__icon--black {
+  background-image: url(../images/game/knight-black.svg);
+}
+
+.app-game__icon--pawn.app-game__icon--black {
+  background-image: url(../images/game/pawn-black.svg);
+}
+
+.app-game__icon--queen.app-game__icon--black {
+  background-image: url(../images/game/queen-black.svg);
+}
+
+.app-game__icon--rook.app-game__icon--black {
+  background-image: url(../images/game/rook-black.svg);
 }
 
 .app-promotion__icon {
