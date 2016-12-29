@@ -10,6 +10,7 @@
      * @description
      * The module of app.
      * @requires ngRoute
+     * @requires ngCookies
      * @requires easypiechart
      * @requires pascalprecht.translate
      * @requires components
@@ -20,6 +21,7 @@
      */
     module('app', [
         'ngRoute',
+        'ngCookies',
         'easypiechart',
         'pascalprecht.translate',
         'components',
@@ -195,6 +197,90 @@
         this.$get = function () {
             return this;
         };
+    }).
+
+    provider('sound', function () {
+
+        var sounds;
+
+        if (typeof Audio === 'function') {
+            sounds = {
+                timer: new Audio('/sounds/timer.mp3'),
+                deplace: new Audio('/sounds/deplace.mp3'),
+                capture: new Audio('/sounds/capture.mp3')
+            };
+        };
+
+        this.play = function (sound) {
+            if (!sounds || 
+                !sounds[sound] || 
+                !sounds[sound].paused) {
+                return;
+            }
+
+            sounds[sound].play();
+        };
+
+        this.stop = function(sound) {
+            if (!sounds ||
+                !sounds[sound] || 
+                !sounds[sound].played) {
+                return;
+            }
+
+            sounds[sound].pause();
+        };
+
+        this.stopAll = function () {
+            
+            if (!sounds) {
+                return;
+            }
+
+            angular.forEach(sounds, this.stop);
+        };
+
+        this.$get = ['$cookies', function ($cookies) {
+
+            var self = this,
+                sound = getSound();
+
+            function getSound() {
+                return !!$cookies.getObject('sound');
+            }
+
+            function change() {
+                sound = !getSound();
+                $cookies.putObject('sound', sound);
+
+                if (!sound) {
+                    self.stopAll();
+                }
+
+                return sound;
+            }
+
+            function play(name) {
+                if (!sound) {
+                    return;
+                }
+                self.play(name);
+            }
+
+            function stop(name) {
+                if (!sound) {
+                    return;
+                }
+                self.stop();
+            }
+
+            return {
+                sound: sound,
+                change: change,
+                play: play,
+                stop: stop
+            };
+        }];
     }).
 
     /**

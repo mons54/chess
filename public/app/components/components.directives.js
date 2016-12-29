@@ -159,25 +159,24 @@ directive('friendsRequests', ['$translate',
 
 /**
  * @ngdoc directive
- * @name components.directive:buttonSound
+ * @name components.directive:sound
  * @description 
  * Add an click event to the directive element to manage sound
- * @requires $rootScope
+ * @requires sound Sound provider
  * @restrict E
  */
-directive('buttonSound', ['$rootScope',
-    function ($rootScope) {
+directive('buttonSound', ['sound',
+    function (sound) {
         return {
             restrict: 'E',
             replace: true,
             templateUrl: '/app/components/templates/button-sound.html',
-            link: function (scope, element) {
-                element.on('click', function () {
-                    $rootScope.$apply(function () {
-                        $rootScope.sound = !$rootScope.sound;
-                    });
-                });
-            }
+            controller: ['$scope', function ($scope) {
+                $scope.sound = sound.sound;
+                $scope.change = function () {
+                    $scope.sound = sound.change();
+                };
+            }]
         };
     }
 ]).
