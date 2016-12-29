@@ -57,13 +57,13 @@ directive('showProfile', ['socket',
     function (socket) {
         return {
             scope: {
-                'user': '='
+                showProfile: '='
             },
             link: function (scope, element) {
                 element.bind('click', function () {
                     socket.emit('profile', {
-                        uid: scope.user.uid,
-                        name: scope.user.name
+                        uid: scope.showProfile.uid,
+                        name: scope.showProfile.name
                     });
                 });
             } 

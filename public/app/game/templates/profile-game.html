@@ -71,12 +71,14 @@
         </div>
     </div>
 
-    <div show-profile user="player">
+    <div>
         <div class="app__pull-left">
-            <img class="app-profile__image" src="//graph.facebook.com/{{ player.uid }}/picture">
+            <a show-profile="player" href>
+                <img show-profile="player" class="app-profile__image" src="//graph.facebook.com/{{ player.uid }}/picture">
+            </a>
         </div>
         <div class="app-profile__name">
-            <a class="app-profile__name" href>{{ player.name }}</a>
+            <a show-profile="player" class="app-profile__name" href>{{ player.name }}</a>
         </div>
         <div class="app-profile__info">
             <span class="app-icon app-icon__ranking"></span>

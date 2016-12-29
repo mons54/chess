@@ -27,6 +27,7 @@ service('modal', function () {
     }
 
     return {
+        
         /**
          * @ngdoc function
          * @name #get

@@ -2,7 +2,7 @@
     <div element-content class="app-element__body">
         <table class="app-element__table app-element__table--ranking mdl-data-table mdl-js-data-table">
             <tbody>
-                <tr ng-repeat="rank in ranking" show-profile user="rank">
+                <tr ng-repeat="rank in ranking" show-profile="rank">
                     <td class="app-element__table-rank mdl-data-table__cell--non-numeric">{{ rank.position }}</td>
                     <td class="app-element__table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{rank.uid}}/picture">

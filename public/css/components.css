@@ -177,7 +177,7 @@
 }
 
 .app-form__textfield>input:focus~label,.app-form__textfield>textarea:focus~label {
-  color: #FF5252
+  color: #795548
 }
 
 .app-form__textfield--float-label>label {
@@ -237,7 +237,7 @@
 }
 
 .app-form__textfield>input:focus,.app-form__textfield>textarea:focus {
-  border-color: #FF5252;
+  border-color: #795548;
   border-width: 2px
 }
 
@@ -337,7 +337,7 @@
 .app-form__select:focus select {
   height: 33px;
   margin-bottom: -1px;
-  border-color: #FF5252;
+  border-color: #795548;
   border-width: 2px
 }
 
@@ -387,7 +387,7 @@
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #FF5252;
+  border-color: #795548;
   border-width: 2px
 }
 

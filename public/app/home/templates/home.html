@@ -1,10 +1,12 @@
 <div class="app-head mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div show-profile user="user" class="app-profile">
+    <div class="app-profile">
         <div class="app__pull-left">
-            <img class="app-profile__image" src="//graph.facebook.com/{{ user.uid }}/picture">
+            <a show-profile="user" href>
+                <img class="app-profile__image" src="//graph.facebook.com/{{ user.uid }}/picture">
+            </a>
         </div>
         <div class="app-profile__name">
-            <a class="app-profile__name" href>{{ user.name }}</a>
+            <a show-profile="user" class="app-profile__name" href>{{ user.name }}</a>
         </div>
         <div class="app-profile__info">
             <span class="app-icon app-icon__ranking"></span>
@@ -245,7 +247,7 @@
                     <label for="create-game-points">{{ 'points'|translate }}</label>
                 </div>
                 <div class="app-modal__actions">
-                    <button modal-close type="reset" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
+                    <button modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
                     <button modal-close type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'ok'|translate }}</button>
                 </div>
             </form>
@@ -292,7 +294,7 @@
                     <label for="create-game-time">{{ 'time'|translate }}</label>
                 </div>
                 <div class="app-modal__actions">
-                    <button modal-close type="reset" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
+                    <button modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
                     <button modal-close type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'ok'|translate }}</button>
                 </div>
             </form>
