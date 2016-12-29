@@ -61,7 +61,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.isPlayerTurn = function() {
-            return $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
+            return $scope.game && $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
         };
 
         $scope.shareResult = function () {
@@ -95,9 +95,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             /**
              * Play sound if not user has play and has last turn
              */
-            if ($scope.game &&
-                !$scope.isPlayerTurn() &&
-                game.lastTurn) {
+            if (!$scope.isPlayerTurn() &&
+                $scope.game &&
+                game.lastTurn !== $scope.game.lastTurn) {
                 sound.play($scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace');
             }
 
