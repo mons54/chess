@@ -199,6 +199,12 @@
         };
     }).
 
+    service('isTouch', [function() {
+        return function () {
+            'ontouchstart' in window || navigator.msMaxTouchPoints;
+        }
+    }]).
+
     /**
      * @ngdoc service
      * @name app.service:sound
