@@ -199,6 +199,13 @@
         };
     }).
 
+    /**
+     * @ngdoc service
+     * @name app.service:sound
+     * @description 
+     * Sound management.
+     * Name of sounds: ['timer', 'deplace', 'capture']
+     */
     provider('sound', function () {
 
         var sounds;
@@ -213,11 +220,24 @@
 
         this.play = function (sound) {
             if (!sounds || 
-                !sounds[sound]) {
+                !sounds[sound] ||
+                !sounds[sound].paused) {
                 return;
             }
 
             sounds[sound].play();
+        };
+
+        /**
+         * @ngdoc function
+         * @name #isPlayed
+         * @methodOf app.service:sound
+         * @description 
+         * Check if sound is played
+         * @returns {bool} sound is played
+         */
+        this.isPlayed = function (sound) {
+            return sounds && sounds[sound] && !sounds[sound].paused;
         };
 
         this.pause = function(sound) {
@@ -257,6 +277,14 @@
                 return !!$cookies.getObject('sound');
             }
 
+            /**
+             * @ngdoc function
+             * @name #change
+             * @methodOf app.service:sound
+             * @description 
+             * Change on/off sound
+             * @returns {bool} true (on) / false (off)
+             */
             function change() {
                 sound = !getSound();
                 $cookies.putObject('sound', sound);
@@ -268,6 +296,14 @@
                 return sound;
             }
 
+            /**
+             * @ngdoc function
+             * @name #play
+             * @methodOf app.service:sound
+             * @description 
+             * Play sound.
+             * @param {string} name The name of sound
+             */
             function play(name) {
                 if (!sound) {
                     return;
@@ -275,6 +311,14 @@
                 self.play(name);
             }
 
+            /**
+             * @ngdoc function
+             * @name #pause
+             * @methodOf app.service:sound
+             * @description 
+             * Pause sound.
+             * @param {string} name The name of sound
+             */
             function pause(name) {
                 if (!sound) {
                     return;
@@ -282,6 +326,14 @@
                 self.pause(name);
             }
 
+            /**
+             * @ngdoc function
+             * @name #load
+             * @methodOf app.service:sound
+             * @description 
+             * Re-load sound.
+             * @param {string} name The name of sound
+             */
             function load(name) {
                 if (!sound) {
                     return;
@@ -294,7 +346,8 @@
                 change: change,
                 play: play,
                 pause: pause,
-                load: load
+                load: load,
+                isPlayed: self.isPlayed
             };
         }];
     }).

@@ -87,6 +87,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return; 
             }
 
+            if (sound.isPlayed('timer')) {
+                sound.load('timer');
+            }
+
             if (game.finish) {
                 $rootScope.user.gid = null;
                 modal.show(modal.get('modal-finish-game'));
@@ -95,10 +99,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             /**
              * Play sound if not user has play and has last turn
              */
-            if (!$scope.isPlayerTurn() &&
+            if ($scope.isPlayerTurn() &&
                 $scope.game &&
-                game.lastTurn &&
-                game.lastTurn !== $scope.game.lastTurn) {
+                game.lastTurn && 
+                JSON.stringify(game.lastTurn) !== JSON.stringify($scope.game.lastTurn)) {
                 sound.play($scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace');
             }
 
@@ -119,9 +123,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.game = game;
         }
 
-        $interval(function () {
+        $interval.cancel($interval.stopTimeGame);
+        $interval.stopTimeGame = $interval(function () {
             if (!$scope.game || $scope.game.finish) {
-                sound.load('timer');
                 return;
             }
 
@@ -135,7 +139,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 player.timeTurn--;
             }
 
-            if (player.time < 10 || player.timeTurn < 10) {
+            if ($scope.isPlayerTurn() && (player.time < 10 || player.timeTurn < 10)) {
                 sound.play('timer');
             }
 
