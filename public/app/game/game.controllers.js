@@ -97,12 +97,13 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
 
             /**
-             * Play sound if not user has play and has last turn
+             * Play sound if is not player turn and has last turn
              */
-            if ($scope.isPlayerTurn() &&
+            if (!$scope.isPlayerTurn() &&
                 $scope.game &&
                 game.lastTurn && 
-                JSON.stringify(game.lastTurn) !== JSON.stringify($scope.game.lastTurn)) {
+                game.lastTurn.start &&
+                game.lastTurn.start !== $scope.game.lastTurn.start) {
                 sound.play($scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace');
             }
 
