@@ -140,7 +140,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 player.timeTurn--;
             }
 
-            if ($scope.isPlayerTurn() && (player.time < 10000 || player.timeTurn < 10)) {
+            if ($scope.isPlayerTurn() && (player.time < 10 || player.timeTurn < 10)) {
                 sound.timer.play();
             }
 
