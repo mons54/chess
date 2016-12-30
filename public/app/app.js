@@ -204,11 +204,11 @@
      * @name app.service:sound
      * @description 
      * Sound management.
-     * Name of sounds: ['timer', 'deplace', 'capture']
      */
-    provider('sound', function () {
+    service('sound', ['$cookies', function ($cookies) {
 
-        var sounds;
+        var sounds,
+            sound = getSound();
 
         if (typeof Audio === 'function') {
             sounds = {
@@ -218,65 +218,69 @@
             };
         };
 
-        this.play = function (sound) {
-            if (!sounds || 
-                !sounds[sound] ||
-                !sounds[sound].paused) {
-                return;
-            }
+        function getSound() {
+            return !!$cookies.getObject('sound');
+        }
 
-            sounds[sound].play();
-        };
-
-        /**
-         * @ngdoc function
-         * @name #isPlayed
-         * @methodOf app.service:sound
-         * @description 
-         * Check if sound is played
-         * @returns {bool} sound is played
-         */
-        this.isPlayed = function (sound) {
-            return sounds && sounds[sound] && !sounds[sound].paused;
-        };
-
-        this.pause = function(sound) {
-            if (!sounds ||
-                !sounds[sound]) {
-                return;
-            }
-
-            sounds[sound].pause();
-        };
-
-        this.load = function(sound) {
-            if (!sounds ||
-                !sounds[sound]) {
-                return;
-            }
-
-            sounds[sound].load();
-        };
-
-        this.loadAll = function () {
+        function loadAll() {
             if (!sounds) {
                 return;
             }
 
             angular.forEach(sounds, function (value, name) {
-                this.load(name);
-            }.bind(this));
-        };
+                value.load();
+            });
+        }
 
-        this.$get = ['$cookies', function ($cookies) {
+        function change() {
+            sound = !getSound();
+            $cookies.putObject('sound', sound);
 
-            var self = this,
-                sound = getSound();
-
-            function getSound() {
-                return !!$cookies.getObject('sound');
+            if (!sound) {
+                loadAll();
             }
 
+            return sound;
+        }
+
+        function Sound(name) {
+            if (sounds &&
+                sounds[name]) {
+                this.sound = sounds[name];
+            }
+
+            this.play = function () {
+                if (sound && this.isPaused()) {
+                    this.sound.play();
+                }
+                return this;
+            };
+
+            this.pause = function () {
+                if (sound && this.isPlayed()) {
+                    this.sound.pause();
+                }
+                return this;
+            };
+
+            this.load = function () {
+                if (sound && this.sound) {
+                    this.sound.load();
+                }
+                return this;
+            };
+
+            this.isPlayed = function () {
+                return this.sound && !this.sound.paused;
+            };
+
+            this.isPaused = function () {
+                return this.sound && this.sound.paused;
+            };
+        }
+
+        return {
+            sound: sound,
             /**
              * @ngdoc function
              * @name #change
@@ -285,72 +289,36 @@
              * Change on/off sound
              * @returns {bool} true (on) / false (off)
              */
-            function change() {
-                sound = !getSound();
-                $cookies.putObject('sound', sound);
-
-                if (!sound) {
-                    self.loadAll();
-                }
-
-                return sound;
-            }
-
+            change: change,
             /**
              * @ngdoc function
-             * @name #play
+             * @name #timer
              * @methodOf app.service:sound
              * @description 
-             * Play sound.
-             * @param {string} name The name of sound
+             * Manage sound timer
+             * @returns {object} soundService
              */
-            function play(name) {
-                if (!sound) {
-                    return;
-                }
-                self.play(name);
-            }
-
+            timer: new Sound('timer'),
             /**
              * @ngdoc function
-             * @name #pause
+             * @name #capture
              * @methodOf app.service:sound
              * @description 
-             * Pause sound.
-             * @param {string} name The name of sound
+             * Manage sound capture
+             * @returns {object} soundService
              */
-            function pause(name) {
-                if (!sound) {
-                    return;
-                }
-                self.pause(name);
-            }
-
+            capture: new Sound('capture'),
             /**
              * @ngdoc function
-             * @name #load
+             * @name #deplace
              * @methodOf app.service:sound
              * @description 
-             * Re-load sound.
-             * @param {string} name The name of sound
+             * Manage sound deplace
+             * @returns {object} soundService
              */
-            function load(name) {
-                if (!sound) {
-                    return;
-                }
-                self.load();
-            }
-
-            return {
-                sound: sound,
-                change: change,
-                play: play,
-                pause: pause,
-                load: load,
-                isPlayed: self.isPlayed
-            };
-        }];
-    }).
+            deplace: new Sound('deplace')
+        };
+    }]).
 
     /**
      * @ngdoc service

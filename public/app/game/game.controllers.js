@@ -49,8 +49,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.move = function (start, end, promotion) {
 
-            sound.load('timer');
-            sound.play($scope.game.pieces[end] ? 'capture' : 'deplace');
+            sound.timer.load();
+            sound[$scope.game.pieces[end] ? 'capture' : 'deplace'].load().play();
 
             socket.emit('moveGame', {
                 id: $scope.game.id,
@@ -87,8 +87,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return; 
             }
 
-            if (sound.isPlayed('timer')) {
-                sound.load('timer');
+            if (sound.timer.played) {
+                sound.timer.load();
             }
 
             if (game.finish) {
@@ -104,7 +104,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 game.lastTurn && 
                 game.lastTurn.start &&
                 game.lastTurn.start !== $scope.game.lastTurn.start) {
-                sound.play($scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace');
+                sound[$scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace'].load().play();
             }
 
             $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -140,8 +140,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 player.timeTurn--;
             }
 
-            if ($scope.isPlayerTurn() && (player.time < 10 || player.timeTurn < 10)) {
-                sound.play('timer');
+            if ($scope.isPlayerTurn() && (player.time < 10000 || player.timeTurn < 10)) {
+                sound.timer.play();
             }
 
         }, 1000);
