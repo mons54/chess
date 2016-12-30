@@ -179,6 +179,8 @@ module.exports = function (io) {
             result = game.result.winner,
             data;
 
+        moduleGame.deleteGame(game.id);
+
         delete this.userGames[uidWhite];
         delete this.userGames[uidBlack];
 

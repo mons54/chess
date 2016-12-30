@@ -98,10 +98,6 @@ Game.prototype.move = function (socket, id, start, end, promotion) {
 
     game = new Engine(game, start, end, promotion);
 
-    if (game.finish) {
-        this.deleteGame(game.id);
-    }
-
     return game;
 };
 
@@ -122,8 +118,6 @@ Game.prototype.resign = function (socket, id) {
     }
 
     game.result.name = 'resign';
-
-    this.deleteGame(game.id);
 
     return game;
 };
@@ -167,8 +161,6 @@ Game.prototype.acceptDraw = function (socket, id) {
     game.finish = true;
     game.result.winner = 0;
     game.result.name = 'draw';
-
-    this.deleteGame(game.id);
 
     return game;
 };
