@@ -610,6 +610,30 @@ a {
   background-repeat: no-repeat;
 }
 
+.app-game__icon--bishop {
+  background-image: url(../images/game/bishop.svg);
+}
+
+.app-game__icon--king {
+  background-image: url(../images/game/king.svg);
+}
+
+.app-game__icon--knight {
+  background-image: url(../images/game/knight.svg);
+}
+
+.app-game__icon--pawn {
+  background-image: url(../images/game/pawn.svg);
+}
+
+.app-game__icon--queen {
+  background-image: url(../images/game/queen.svg);
+}
+
+.app-game__icon--rook {
+  background-image: url(../images/game/rook.svg);
+}
+
 .app-game__icon--bishop.app-game__icon--white {
   background-image: url(../images/game/bishop-white.svg);
 }
