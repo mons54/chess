@@ -48,8 +48,8 @@
             <tbody>
                 <tr ng-repeat="game in createdGames">
                     <td class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
-                        <span class="app-element__table-user-name">{{ game.name }}</span>
+                        <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
+                        <span class="app-element__table-name">{{ game.name }}</span>
                     </td>
                     <td>{{ game.points }}</td>
                     <td>{{ game.color | translate }}</td>
@@ -99,8 +99,8 @@
             <tbody>
                 <tr ng-repeat="challenge in challenges">
                     <td class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{challenge.uid}}/picture">
-                        <span class="app-element__table-user-name">{{ challenge.name }}</span>
+                        <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{challenge.uid}}/picture">
+                        <span class="app-element__table-name">{{ challenge.name }}</span>
                     </td>
                     <td>{{ challenge.points }}</td>
                     <td>{{ challenge.color | translate }}</td>
@@ -144,8 +144,8 @@
             <tbody>
                 <tr ng-repeat="challenger in challengers">
                     <td class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{challenger.uid}}/picture">
-                        <span class="app-element__table-user-name">{{ challenger.name }}</span>
+                        <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{challenger.uid}}/picture">
+                        <span class="app-element__table-name">{{ challenger.name }}</span>
                     </td>
                     <td>{{ challenger.points }}</td>
                     <td>{{ challenger.ranking }}</td>
@@ -189,8 +189,8 @@
             <tbody>
                 <tr ng-repeat="friend in friends">
                     <td class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{friend.uid}}/picture">
-                        <span class="app-element__table-user-name">{{ friend.name }}</span>
+                        <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{friend.uid}}/picture">
+                        <span class="app-element__table-name">{{ friend.name }}</span>
                     </td>
                     <td>{{ friend.points }}</td>
                     <td>{{ friend.ranking }}</td>
