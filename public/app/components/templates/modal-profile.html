@@ -1,36 +1,39 @@
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-body">
-            <button type="button" class="close" data-dismiss="modal">
-                <span aria-hidden="true">&times;</span>
-                <span class="sr-only">{{ 'cancel'|translate }}</span>
-            </button>
-            <div class="profile" ng-if="data">
-            	<div class="pull-left img">
-                	<img class="profile-picture" ng-src="//graph.facebook.com/{{ data.uid }}/picture">
+<div id="modal-profile" 
+     class="app-modal app-modal__bg" 
+     role="dialog" 
+     aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content" ng-if="data">
+            <a href modal-close class="app-modal__close">
+                <i class="material-icons">clear</i>
+            </a>
+            <div class="app-profile">
+                <div class="app__pull-left">
+                    <img class="app-profile__image" src="//graph.facebook.com/{{ data.uid }}/picture">
                 </div>
-                <h4 class="modal-title" id="myModalLabel">
-                     {{ data.name }}
-                </h4>
-                <div>
-                    <span>{{ 'points'|translate }}: </span>
-                    <strong>{{ data.points }}</strong>
+                <div class="app-profile__name">
+                    <a class="app-profile__name" href>{{ data.name }}</a>
                 </div>
-                <div>
-                    <span>{{ 'ranking'|translate }}: </span>
-                    <strong>{{ data.ranking }}</strong>
+                <div class="app-profile__info">
+                    <span class="app-icon app-icon__ranking"></span>
+                    <span>{{ data.ranking }}</span>
                 </div>
-                <div class="clear"></div>
-                <div class="profile-stats">
-                    <div ng-repeat="name in ['win', 'draw', 'lose']" class="profile-stat profile-stat-{{ name }}">
-                        <div easypiechart
-                             options="options[name]" 
-                             percent="getPercent(data[name])"
-                             class="profile-stat-chart"></div>
-                        <span class="profile-stat-number">
+                <div class="app-profile__info">
+                    <span class="app-icon app-icon__points"></span>
+                    <span>{{ data.points }}</span>
+                </div>
+            </div>
+            <div class="app-profile__stats">
+                <div ng-repeat="name in ['win', 'draw', 'lose']" class="app-profile__stat app-profile__stat--{{ name }}">
+                    <div easypiechart
+                         options="options[name]" 
+                         percent="getPercent(data[name])"
+                         class="app-profile__stat-chart"></div>
+                    <div class="app-profile__stat-text">
+                        <span class="app-profile__stat-value">
                             {{ data[name] }}
                         </span>
-                        <span class="profile-stat-text profile-stat-text-{{ name }}">
+                        <span class="app-profile__stat-desc">
                             {{ name|translate }}
                         </span>
                     </div>

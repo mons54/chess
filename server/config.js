@@ -1,7 +1,7 @@
 'use strict';
 
-const express = require('express');
-const mongoose = require('mongoose');
+var express = require('express'),
+    mongoose = require('mongoose');
 
 module.exports = function (app) {
 
@@ -17,9 +17,11 @@ module.exports = function (app) {
     app.set('views', staticPath);
     app.engine('html', require('ejs').renderFile);
 
-    app.facebook = {
-        appId: '459780557396952',
-        secret: 'ffba6ba90d75f0e2ffd73d946fd5f1bd',
-        redirectUri: 'https://apps.facebook.com/the-chess-game/'
-    };
+    app.all('/docs/*', function (req, res) {
+        res.sendFile(staticPath + 'docs/index.html');
+    });
+
+    app.all('/*', function (req, res) {
+        res.sendFile(staticPath + 'index.html');
+    });
 };

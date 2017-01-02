@@ -1,6 +1,8 @@
-const fb = require(dirname + '/server/modules/fb');
-const db = require(dirname + '/server/modules/db');
-const moduleGame = require(dirname + '/server/modules/game');
+'use strict';
+
+var fb = require(dirname + '/server/modules/fb'),
+    db = require(dirname + '/server/modules/db'),
+    moduleGame = require(dirname + '/server/modules/game');
 
 module.exports = function (io) {
 
@@ -45,20 +47,28 @@ module.exports = function (io) {
         if (dataGame.color === 'white') {
             white = {
                 uid: socketOpponent.uid,
-                name: socketOpponent.name
+                name: socketOpponent.name,
+                points: socketOpponent.points,
+                ranking: socketOpponent.ranking
             };
             black = {
                 uid: socket.uid,
-                name: socket.name
+                name: socket.name,
+                points: socket.points,
+                ranking: socket.ranking
             };
         } else {
             white = {
                 uid: socket.uid,
-                name: socket.name
+                name: socket.name,
+                points: socket.points,
+                ranking: socket.ranking
             };
             black = {
                 uid: socketOpponent.uid,
-                name: socketOpponent.name
+                name: socketOpponent.name,
+                points: socketOpponent.points,
+                ranking: socketOpponent.ranking
             };
         }
 
@@ -134,7 +144,7 @@ module.exports = function (io) {
     Module.prototype.getDataPlayerGame = function (data, game, result, color) {
         
         var coefGame,
-            position = color === 'white' ? 1 : 2;
+            position = color === 'white' ? 1 : 2,
             consWin  = data.consWin ? data.consWin : 0;
 
         if (result === 0) {
@@ -168,6 +178,8 @@ module.exports = function (io) {
             uidBlack = game.black.uid,
             result = game.result.winner,
             data;
+
+        moduleGame.deleteGame(game.id);
 
         delete this.userGames[uidWhite];
         delete this.userGames[uidBlack];
@@ -277,7 +289,7 @@ module.exports = function (io) {
         }
 
         delete socket.challenges[uid];
-        socket.emit('challenges', socket.challenges);
+        socket.emit('listChallenges', socket.challenges);
     };
 
     Module.prototype.getChallenge = function (socket, uid) {
@@ -294,13 +306,12 @@ module.exports = function (io) {
         if (!id) {
             return socket;
         }
-        
-        io.sockets.sockets.forEach(function (value) {
-            if (id === value.id) {
-                socket = value;
-                return;
+
+        for (var socketId in io.sockets.sockets) {
+            if (id === socketId) {
+                socket = io.sockets.connected[socketId];
             }
-        });
+        };
 
         return socket;
     };
@@ -315,26 +326,25 @@ module.exports = function (io) {
 
     Module.prototype.listChallengers = function () {
 
-        var challengers = [];
+        var challengers = [],
+            room = io.sockets.adapter.rooms['home'];
 
-        io.sockets.sockets.forEach(function (socket) {
-            if (!socket.uid || !socket.rooms || socket.rooms.indexOf('home') === -1) {
-                return;
-            }
-            challengers.push({
-                uid: socket.uid,
-                name: socket.name,
-                ranking: socket.ranking,
-                points: socket.points
-            });
-        });
+        if (room && room.sockets) {
+            for (var socketId in room.sockets) {
+                var user = io.sockets.connected[socketId];
+                if (!user || !user.uid) {
+                    continue;
+                }
+                challengers.push({
+                    uid: user.uid,
+                    name: user.name,
+                    ranking: user.ranking,
+                    points: user.points
+                });
+            };
+        }
 
         io.sockets.to('home').emit('challengers', challengers);
-    };
-
-    Module.prototype.connected = function () {
-        io.sockets.emit('connected', io.sockets.sockets.length);
-        this.listChallengers();
     };
 
     Module.prototype.init = function (socket, data) {
@@ -427,10 +437,9 @@ module.exports = function (io) {
                 socket.join(moduleGame.getRoom(gid));
                 socket.emit('startGame', gid);
             } else {
-                socket.join('home', function () {
-                    self.connected();
-                });
+                socket.join('home', self.listChallengers);
                 socket.emit('listGames', moduleGame.createdGame);
+                socket.emit('listChallenges', socket.challenges);
             }
 
             socket.emit('ready');
@@ -467,7 +476,7 @@ module.exports = function (io) {
                 }),
                 db.count('games', {
                     $or: [{
-                        whitse: data.uid,
+                        white: data.uid,
                         result: 0
                     }, {
                         black: data.uid,
@@ -488,7 +497,7 @@ module.exports = function (io) {
 
     Module.prototype.ranking = function (socket, data) {
         var page = parseInt(data.page),
-            limit = 8,
+            limit = 10,
             friends = data.friends;
 
         if (page) {
@@ -538,15 +547,15 @@ module.exports = function (io) {
 
             if (getUser) {
                 count++;
-                limit = limit - 1;
             }
 
             total = count;
 
-            return db.exec('users', request, { points: -1 }, offset, limit, { points: 1 });
+            return db.exec('users', request, { points: -1 }, offset, getUser ? limit - 1 : limit, { points: 1 });
         })
         .then(function (response) {
             if (typeof response[0] !== 'object' || typeof response[0].points !== 'number') {
+                socket.emit('ranking', false);
                 this.finally;
             }
 
@@ -838,7 +847,7 @@ module.exports = function (io) {
         .then(function (response) {
             var socket = self.getSocket(uid);
             if (socket) {
-                socket.emit('trophy', trophy);
+                socket.emit('trophy', response);
             }
         });
     };

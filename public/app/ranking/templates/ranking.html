@@ -1,0 +1,39 @@
+<div element class="app-element app-ranking mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div element-content class="app-element__body">
+        <table class="app-element__table app-element__table--ranking mdl-data-table mdl-js-data-table">
+            <tbody>
+                <tr ng-repeat="rank in ranking" show-profile="rank">
+                    <td class="app-element__table-rank mdl-data-table__cell--non-numeric">{{ rank.position }}</td>
+                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                        <img class="app-element__table-user__picture" ng-src="//graph.facebook.com/{{rank.uid}}/picture">
+                        <span class="app-element__table-user-name">{{ rank.name }}</span>
+                    </td>
+                    <td class="points">{{ rank.points }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="pages"
+             class="app-ranking__pagination">
+            <div class="app-ranking__pagination-content">
+                <form ng-submit="setPage(page)" 
+                      name="pagination"
+                      class="app-ranking__pagination-form">
+                    <div class="app-form__textfield app-ranking__pagination-textfield">
+                        <input ng-model="page" type="text" ng-blur="setPage(page)">
+                    </div>
+                    <span class="app-ranking__pagination-count"> / {{ pages.last }}</span>
+                </form>
+                <button ng-show="pages.prev"
+                    ng-click="setPage(pages.prev)"
+                    class="app-ranking__pagination-prev mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                    <i class="material-icons">navigate_before</i>
+                </button>
+                <button ng-show="pages.next"
+                        ng-click="setPage(pages.next)"
+                        class="app-ranking__pagination-next mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                    <i class="material-icons">navigate_next</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

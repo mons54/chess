@@ -1,52 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ user.lang }}" ng-app="app">
     <head>
         <meta charset="utf-8">
-        <title>Chess</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="{{ 'description' | translate }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <base href="/">
+        
+        <title ng-bind="'title'|translate"></title>
+
+        <link rel="shortcut icon" href="/images/favicon.ico">
+
+        <!-- Page styles -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium">
+        <link href="css/material/material.min.css" rel="stylesheet">
+        <link href="css/material/icon.css" rel="stylesheet" >
         <link href="css/icomoon/style.css" rel="stylesheet">
+        <link href="css/fonts.css" rel="stylesheet">
+        <link href="css/components.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link ng-if="user.lang == 'ar'" ng-href="css/style.ar.css" rel="stylesheet">
     </head>
-    
     <body>
 
-        <div ng-if="ready" ng-view class="app"></div>
+        <div ng-show="loading" class="app-loading">
+            <div class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        </div>
 
-        <div modal-profile class="modal fade"></div>
+        <modal-profile></modal-profile>
 
-        <loading></loading>
+        <div id="modal-disconnect" 
+             class="app-modal app-modal__bg" 
+             role="dialog" 
+             aria-hidden="true">
+            <div class="app__clickable app-modal__content" ng-click="connect()">
+                <i class="app__action app__action--connect material-icons">play_arrow</i>
+            </div>
+        </div>
 
+        
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-show="ready">
+            <header class="app-header mdl-layout__header" ng-class="{'is-game': user.gid }">
+                <div class="app-header__row mdl-layout__header-row">
+                    <span class="app-title mdl-layout-title">
+                        <span class="app-logo">
+                            <span class="app-logo__icon"></span>
+                            <span class="app-logo__text" ng-bind="'title'|translate"></span>
+                        </span>
+                    </span>
+                    <!-- Add spacer, to align navigation to the right in desktop -->
+                    <div class="app-header-spacer mdl-layout-spacer"></div>
+              
+                    <!-- Navigation -->
+                    <div class="app-navigation__container">
+                        <nav class="app-navigation mdl-navigation">
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href="/"
+                               ng-bind="'home'|translate">
+                            </a>
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href="/ranking"
+                               ng-bind="'ranking'|translate">
+                            </a>
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href="/trophies"
+                               ng-bind="'trophies.title'|translate">
+                            </a>
+                        </nav>
+                    </div>
+                    <span class="app-mobile__title mdl-layout-title">
+                        <span class="app-logo">
+                            <span class="app-logo__icon"></span>
+                            <span class="app-logo__text" ng-bind="'title'|translate"></span>
+                        </span>
+                    </span>
+                </div>
+            </header>
+
+
+            <div class="app-drawer mdl-layout__drawer">
+                <span class="mdl-layout-title">
+                    <span class="app-logo">
+                        <span class="app-logo__icon"></span>
+                        <span class="app-logo__text" ng-bind="'title'|translate"></span>
+                    </span>
+                </span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="/">
+                        <i class="material-icons" role="presentation">home</i>
+                        {{ 'home' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" href="/ranking">
+                        <i class="material-icons" role="presentation">looks_one</i>
+                        {{ 'ranking' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" href="/trophies">
+                        <i class="material-icons" role="presentation">star</i>
+                        {{ 'trophies.title' | translate }}
+                    </a>
+                </nav>
+            </div>
+
+            <div class="app-content mdl-layout__content">
+                <a name="top"></a>
+                <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
+            </div>
+        </div>
+
+        <button-sound></button-sound>
+          
         <div id="fb-root"></div>
 
         <script src="socket.io/socket.io.js"></script>
 
         <script src="lib/jquery.min.js"></script>
         <script src="lib/jquery-ui.min.js"></script>
-        
-        <script src="lib/bootstrap.min.js"></script>
-        
+
+        <script src="lib/material.min.js"></script>
+
         <script src="lib/angular.min.js"></script>
         <script src="lib/angular-route.min.js"></script>
+        <script src="lib/angular-cookies.min.js"></script>
         <script src="lib/angular-translate.min.js"></script>
         <script src="lib/angular-translate-loader-static-files.min.js"></script>
         <script src="lib/angular-easypiechart.min.js"></script>
 
         <script src="app/app.js"></script>
 
+        <script src="app/components/components.module.js"></script>
         <script src="app/components/components.services.js"></script>
         <script src="app/components/components.directives.js"></script>
 
-        <script src="app/home/home.controllers.js"></script>
-        <script src="app/home/home.directives.js"></script>
-
+        <script src="app/game/game.module.js"></script>
         <script src="app/game/game.controllers.js"></script>
         <script src="app/game/game.directives.js"></script>
 
+        <script src="app/home/home.module.js"></script>
+        <script src="app/home/home.controllers.js"></script>
+
+        <script src="app/ranking/ranking.module.js"></script>
         <script src="app/ranking/ranking.controllers.js"></script>
 
+        <script src="app/trophies/trophies.module.js"></script>
         <script src="app/trophies/trophies.controllers.js"></script>
-
     </body>
 </html>

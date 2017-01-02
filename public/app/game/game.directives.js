@@ -1,123 +1,155 @@
-(function () {
+'use strict';
 
-    'use strict';
+angular.module('game').
 
-    angular.module('game.directives', []).
-
-    directive('profileGame', ['utils',
-        function (utils) {
-            return {
-                scope: { player: '=' },
-                templateUrl: '/app/game/templates/profile-game.html',
-                controller: 'profileGameCtrl'
-            };
-        }
-    ])
-
-    .directive('modalPromotion', function () {
+/**
+ * @ngdoc directive
+ * @name game.directive:profileGame
+ * @description 
+ * Shows the profile of a player.
+ * @restrict A
+ * @scope
+ * @param {object} player Object with the data of the player.
+ */
+directive('profileGame', ['utils',
+    function (utils) {
         return {
-            templateUrl: '/app/game/templates/modal-promotion.html'
+            restrict: 'A',
+            scope: { 
+                player: '=' 
+            },
+            replace: true,
+            templateUrl: '/app/game/templates/profile-game.html',
+            controller: 'profileGameCtrl'
         };
-    })
+    }
+]).
 
-    .directive('modalResponseDraw', function () {
-        return {
-            templateUrl: '/app/game/templates/modal-response-draw.html'
-        };
-    })
+/**
+ * @ngdoc directive
+ * @name game.directive:pieceDraggable
+ * @description 
+ * Makes a piece draggable piece.
+ * @restrict A
+ * @scope
+ * @param {string} position The position of the piece.
+ */
+directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
 
-    .directive('modalOfferDraw', function () {
-        return {
-            templateUrl: '/app/game/templates/modal-offer-draw.html'
-        };
-    })
+            var modalPromotion = modal.get('modal-promotion'),
+                touch = utils.isTouch(),
+                selectedClass = 'selected',
+                droppableClass =  'ui-droppable';
 
-    .directive('modalResign', function () {
-        return {
-            templateUrl: '/app/game/templates/modal-resign.html'
-        };
-    })
+            scope.$watch('game', function (game) {
 
-    .directive('modalFinishGame', function () {
-        return {
-            templateUrl: '/app/game/templates/modal-finish-game.html'
-        };
-    })
+                if (game.finish) {
+                    if (touch) {
+                        element.unbind('click');
+                    } else if (element.draggable) {
+                        element.draggable({
+                            disabled: true
+                        });
+                    } 
+                    return;
+                }
 
-    .directive('draggable', function () {
-        return {
-            link: function (scope, element, attr) {
+                var piece = game.pieces[attr.position];
 
-                var modalPromotion = angular.element('#modal-promotion');
+                if (!piece || 
+                    !scope.isPlayerTurn() || 
+                    piece.color !== game.turn || 
+                    (!piece.deplace.length && !piece.capture.length)) {
+                    return;
+                }
 
-                scope.$watch('game', function (game) {
-
-                    var piece = game.pieces[attr.position];
-
-                    if (!piece || !scope.isPlayerTurn() || piece.color !== game.turn || (!piece.deplace.length && !piece.capture.length)) {
-                        return;
-                    }
-
+                if (touch) {
+                    element.click(function () {
+                        var isOpen = $(this).data('open');
+                        stopClickable($('[piece-draggable]'));
+                        $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                        if (isOpen) {
+                            stopClickable($(this));
+                            $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                        } else {
+                            $(this).data('open', true).closest('[data-game-box]').addClass(selectedClass);
+                            getMovements(function (position) {
+                                $('#' + position).addClass(droppableClass).click(function () {
+                                    stopClickable(element);
+                                    $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                                    move($(this), position);
+                                });
+                            });
+                        }
+                    });
+                } else {
                     element.draggable({
                         disabled: false,
                         helper: 'clone',
                         zIndex: '99999',
-                        start: start,
-                        stop: stop
-                    });
-
-                    function start(event, ui) {
-                        angular.forEach(piece.deplace.concat(piece.capture), function (value) {
-                            droppable(value);
-                        });
-                    }
-
-                    function stop(event, ui) {
-                        angular.forEach(piece.deplace.concat(piece.capture), function (value) {
-                            angular.element('#' + value).droppable('destroy');
-                        });
-                    }
-
-                    function droppable(position) {
-                        angular.element('#' + position).droppable({
-                            drop: function (event, ui) {
-                                drop(angular.element(this), position);
-                            }
-                        });
-                    }
-
-                    function drop(elementBox, position) {
-                        angular.element('.piece').draggable({
-                            disabled: true
-                        });
-
-                        var classes = element.attr('class');
-
-                        elementBox.children().removeClass();
-                        element.removeClass().addClass('piece');
-
-                        if (isPromotion(position)) {
-                            modalPromotion.modal('show').find('.piece').click(function() {
-                                var promotion = angular.element(this).data('value');
-                                modalPromotion.find('.piece').unbind('click');
-                                move(elementBox, classes.replace('pawn', promotion), position, promotion);
+                        start: function (event, ui) {
+                            getMovements(function (position) {
+                                $('#' + position).droppable({
+                                    drop: function (event, ui) {
+                                        move($(this), position);
+                                    }
+                                });
                             });
-                        } else {
-                            move(elementBox, classes, position);
+                        },
+                        stop: function (event, ui) {
+                            getMovements(function (position) {
+                                $('#' + position).droppable('destroy');
+                            });
                         }
+                    });
+                }
+
+                function stopClickable (element) {
+                    element.data('open', false).closest('[data-game-box]').removeClass(selectedClass);
+                }
+
+                function getMovements (callback) {
+                    angular.forEach(piece.deplace.concat(piece.capture), callback);
+                }
+
+                function move(elementBox, position) {
+
+                    var classes = element.attr('class');
+
+                    elementBox.find('[piece-draggable]').removeClass();
+
+                    if (isPromotion(position)) {
+                        modal.show(modalPromotion);
+                        modalPromotion.find('[data-icon]').click(function() {
+                            var promotion = $(this).data('icon');
+                            modalPromotion.find('[data-icon]').unbind('click');
+                            sendMove(elementBox, classes.replace('pawn', promotion), position, promotion);
+                        });
+                    } else {
+                        sendMove(elementBox, classes, position);
                     }
 
-                    function move(elementBox, classes, position, promotion) {
-                        elementBox.children().addClass(classes);
-                        scope.move(attr.position, position, promotion);
+                    if (touch) {
+                        $('[piece-draggable]').unbind('click'); 
+                    } else {
+                        $('[piece-draggable]').draggable({
+                            disabled: true
+                        }); 
                     }
+                }
 
-                    function isPromotion(position) {
-                        return piece.name === 'pawn' && (position.substr(-1) === '1' || position.substr(-1) === '8');
-                    }
-                });
-            }
-        };
-    });
-    
-})();
+                function sendMove(elementBox, classes, position, promotion) {
+                    elementBox.find('[piece-draggable]').addClass(classes);
+                    scope.move(attr.position, position, promotion);
+                }
+
+                function isPromotion(position) {
+                    return piece.name === 'pawn' && (position.substr(-1) === '1' || position.substr(-1) === '8');
+                }
+            });
+        }
+    };
+}]);

@@ -1,7 +1,5 @@
 'use strict';
 
-const Engine = require(dirname + '/server/modules/game/engine');
-
 module.exports = new Game();
 
 function Game() {
@@ -19,6 +17,8 @@ function Game() {
         data: {}
     };
 };
+
+var Engine = require(dirname + '/server/modules/game/engine');
 
 Game.prototype.getGames = function () {
     return this.games.data;
@@ -98,10 +98,6 @@ Game.prototype.move = function (socket, id, start, end, promotion) {
 
     game = new Engine(game, start, end, promotion);
 
-    if (game.finish) {
-        this.deleteGame(game.id);
-    }
-
     return game;
 };
 
@@ -122,8 +118,6 @@ Game.prototype.resign = function (socket, id) {
     }
 
     game.result.name = 'resign';
-
-    this.deleteGame(game.id);
 
     return game;
 };
@@ -167,8 +161,6 @@ Game.prototype.acceptDraw = function (socket, id) {
     game.finish = true;
     game.result.winner = 0;
     game.result.name = 'draw';
-
-    this.deleteGame(game.id);
 
     return game;
 };
@@ -229,6 +221,8 @@ Game.prototype.start = function (white, black, time) {
         white: {
             uid: white.uid,
             name: white.name,
+            points: white.points,
+            ranking: white.ranking,
             time: time,
             timeTurn: timeTurn,
             canDraw: false,
@@ -243,6 +237,8 @@ Game.prototype.start = function (white, black, time) {
         black: {
             uid: black.uid,
             name: black.name,
+            points: black.points,
+            ranking: black.ranking,
             time: time,
             timeTurn: timeTurn,
             canDraw: false,

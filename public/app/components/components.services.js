@@ -1,31 +1,78 @@
-(function () {
-    
-    'use strict';
+'use strict';
 
-    angular.module('components.services', []).
+angular.module('components').
 
-    factory('lfstmedia', function () {
+/**
+ * @ngdoc service
+ * @name components.service:modal
+ * @description 
+ * Modal service management.
+ */
+service('modal', function () {
 
-        return {
-            init: function () {
-                if (typeof (LSM_Slot) === 'undefined') {
+    /**
+     * Show modal
+     * @param {object} modal Modal element
+     */
+    function showModal(modal) {
+        modal.addClass('app-modal--active');
+    }
+
+    /**
+     * Hide modal
+     * @param {object} modal Modal element
+     */
+    function hideModal(modal) {
+        modal.removeClass('app-modal--active');
+    }
+
+    return {
+        
+        /**
+         * @ngdoc function
+         * @name #get
+         * @methodOf components.service:modal
+         * @description 
+         * Get the modal element by id.
+         * @param {string} id Id of modal
+         * @return {object} Modal element
+         */
+        get: function (id) {
+            return angular.element('#' + id);
+        },
+
+        /**
+         * @ngdoc function
+         * @name #show
+         * @methodOf components.service:modal
+         * @description 
+         * Show modal.
+         * @param {object} modal Modal element
+         */
+        show: function (modal) {
+
+            showModal(modal);
+
+            modal.find('[modal-close]').on('click', function (event) {
+                hideModal(modal);
+            });
+
+            angular.element('[modal-close-bg]').on('click', function (event) {
+                if (!this || event.target !== this) {
                     return;
                 }
+                hideModal(modal);
+            });
+        },
 
-                LSM_Slot({
-                    adkey: '826',
-                    ad_size: '728x90',
-                    slot: 'slot64668',
-                    _render_div_id: 'header'
-                });
-
-                LSM_Slot({
-                    adkey: '467',
-                    ad_size: '300x250',
-                    slot: 'slot61890',
-                    _render_div_id: 'pub'
-                });
-            }
-        };
-    });
-})();
+        /**
+         * @ngdoc function
+         * @name #hide
+         * @methodOf components.service:modal
+         * @description 
+         * Hide modal.
+         * @param {object} modal Modal element
+         */
+        hide: hideModal
+    };
+});

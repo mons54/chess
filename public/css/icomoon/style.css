@@ -9,7 +9,7 @@
 	font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="app-icon__"], [class*=" app-icon__"] {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -23,87 +23,87 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chess-king:before {
+.app-icon__chess-king:before {
 	content: "\e972";
 }
-.icon-chess-queen:before {
+.app-icon__chess-queen:before {
 	content: "\e973";
 }
-.icon-chess-rook:before {
+.app-icon__chess-rook:before {
 	content: "\e974";
 }
-.icon-chess-bishop:before {
+.app-icon__chess-bishop:before {
 	content: "\e975";
 }
-.icon-chess-knight:before {
+.app-icon__chess-knight:before {
 	content: "\e976";
 }
-.icon-chess-pawn:before {
+.app-icon__chess-pawn:before {
 	content: "\e977";
 }
-.icon-bubble:before {
+.app-icon__bubble:before {
 	content: "\eac1";
 }
-.icon-home:before {
+.app-icon__home:before {
 	content: "\e001";
 }
-.icon-color:before {
+.app-icon__color:before {
 	content: "\e021";
 }
-.icon-king:before {
+.app-icon__king:before {
 	content: "\e058";
 }
-.icon-shop:before {
+.app-icon__shop:before {
 	content: "\e0c8";
 }
-.icon-time:before {
+.app-icon__time:before {
 	content: "\e102";
 }
-.icon-invite-friends:before {
+.app-icon__invite-friends:before {
 	content: "\e188";
 }
-.icon-ranking:before {
+.app-icon__ranking:before {
 	content: "\e216";
 }
-.icon-points:before {
+.app-icon__points:before {
 	content: "\e21f";
 }
-.icon-reset:before {
+.app-icon__reset:before {
 	content: "\e364";
 }
-.icon-close:before {
+.app-icon__close:before {
 	content: "\e36b";
 }
-.icon-valid:before {
+.app-icon__valid:before {
 	content: "\e370";
 }
-.icon-more:before {
+.app-icon__more:before {
 	content: "\e376";
 }
-.icon-sound-on:before {
+.app-icon__sound-on:before {
 	content: "\e38f";
 }
-.icon-sound-off:before {
+.app-icon__sound-off:before {
 	content: "\e393";
 }
-.icon-arrow-up:before {
+.app-icon__arrow-up:before {
 	content: "\e3b0";
 }
-.icon-arrow-right:before {
+.app-icon__arrow-right:before {
 	content: "\e3b1";
 }
-.icon-arrow-down:before {
+.app-icon__arrow-down:before {
 	content: "\e3b2";
 }
-.icon-arrow-left:before {
+.app-icon__arrow-left:before {
 	content: "\e3b3";
 }
-.icon-sort-up:before {
+.app-icon__sort-up:before {
 	content: "\e3b4";
 }
-.icon-sort-down:before {
+.app-icon__sort-down:before {
 	content: "\e3b6";
 }
-.icon-filter:before {
+.app-icon__filter:before {
 	content: "\e445";
 }

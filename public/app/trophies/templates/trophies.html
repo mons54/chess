@@ -1,0 +1,26 @@
+<div element class="app-element app-trophies mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div element-content class="app-element__body">
+        <span ng-repeat="trophy in trophies"
+              ng-click="setTrophy(trophy)"
+              show-modal="modal-challenger"
+              class="app-trophy__badge app-trophy__badge-{{ trophy.css }} app__clickable"></span>
+    </div>
+</div>
+
+
+<div id="modal-challenger" 
+     class="app-modal app-modal__bg" 
+     role="dialog" 
+     aria-hidden="true"
+     modal-close-bg>
+    <div class="app-modal__dialog">
+        <div class="app-modal__content app__text-center">
+            <a href modal-close class="app-modal__close">
+                <i class="material-icons">clear</i>
+            </a>
+            <h3 class="app-trophy__title">{{ 'trophies.content.' + trophy.id + '.title' | translate }}</h3>
+            <span class="app-trophy__badge app-trophy__badge--modal app-trophy__badge-{{ trophy.css }}"></span>
+            <p class="app-trophy__desc">{{ 'trophies.content.' + trophy.id + '.description' | translate }}</p>
+        </div>
+    </div>
+</div>

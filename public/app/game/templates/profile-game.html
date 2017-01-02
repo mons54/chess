@@ -1,24 +1,92 @@
-<div class="pull-right">
-    <div class="time">
-        {{ formatTime(player.time) }}
+<div class="app-profile app-profile--game element" ng-class="{'app-profile--player': isPlayerUser()}">
+    <div class="app__pull-right">
+        <div class="app-game__time" ng-class="{'app-game__time--danger': player.time < 10}">
+            {{ formatTime(player.time) }}
+        </div>
+        <div class="app-game__time" ng-class="{'app-game__time--danger': player.timeTurn < 10}">
+            {{ formatTime(player.timeTurn) }}
+        </div>
     </div>
-    <div class="time time-turn">
-        {{ formatTime(player.timeTurn) }}
-    </div>
-</div>
-<div profile user="player">
-    <div class="pull-left img">
-        <img class="profile-picture" ng-src="//graph.facebook.com/{{ player.uid }}/picture">
-    </div>
-    <div>
-        <a href>{{ player.name }}</a>
-    </div>
-</div>
-<div ng-if="isPlayerUser() && !isFinish()" class="pull-right actions">
-    <button data-toggle="modal" data-target="#modal-offer-draw" type="button" class="btn btn-primary btn-sm" ng-disabled="!canOfferDraw()">{{ 'offer_draw'|translate }}</button>
-    <button data-toggle="modal" data-target="#modal-resign" type="button" class="btn btn-danger btn-sm">{{ 'resign'|translate }}</button>
-</div>
-<div class="clear"></div>
 
-<div ng-if="isPlayerUser()" modal-offer-draw class="modal fade" id="modal-offer-draw"></div>
-<div ng-if="isPlayerUser()" modal-resign class="modal fade" id="modal-resign"></div>
+    <div class="app__pull-right app-game__action"
+         ng-if="isPlayerUser() && !isFinish()">
+        <button ng-disabled="!canOfferDraw()"
+                show-modal="modal-offer-draw" 
+                class="app-button app-button--phone app__button--small app-game__action-button mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+            {{ 'offer_draw'|translate }}
+        </button>
+        <button show-modal="modal-resign" 
+                class="app-button app-button--phone app__button--small app-game__action-button mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+            {{ 'resign'|translate }}
+        </button>
+
+        <div id="modal-offer-draw" 
+             class="app-modal app-modal__bg" 
+             role="dialog" 
+             aria-hidden="true"
+             modal-close-bg>
+            <div class="app-modal__dialog">
+                <div class="app-modal__content">
+                    <h4 class="app-modal__title">{{ 'offer_draw'|translate }} ?</h4>
+                    <div class="app-modal__actions">
+                        <button modal-close 
+                                type="reset" 
+                                class="mdl-button mdl-button--raised">
+                                {{ 'cancel'|translate }}
+                        </button>
+                        <button modal-close 
+                                ng-click="offerDraw()"
+                                type="button" 
+                                class="mdl-button mdl-button--raised mdl-button--colored">
+                                {{ 'ok'|translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-resign" 
+             class="app-modal app-modal__bg" 
+             role="dialog" 
+             aria-hidden="true"
+             modal-close-bg>
+            <div class="app-modal__dialog">
+                <div class="app-modal__content">
+                    <h4 class="app-modal__title">{{ 'resign'|translate }} ?</h4>
+                    <div class="app-modal__actions">
+                        <button modal-close 
+                                type="reset" 
+                                class="mdl-button mdl-button--raised">
+                                {{ 'cancel'|translate }}
+                        </button>
+                        <button modal-close 
+                                ng-click="resign()" 
+                                type="button" 
+                                class="mdl-button mdl-button--raised mdl-button--colored">
+                                {{ 'ok'|translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="app__pull-left">
+            <a show-profile="player" href>
+                <img show-profile="player" class="app-profile__image" src="//graph.facebook.com/{{ player.uid }}/picture">
+            </a>
+        </div>
+        <div class="app-profile__name">
+            <a show-profile="player" class="app-profile__name" href>{{ player.name }}</a>
+        </div>
+        <div class="app-profile__info">
+            <span class="app-icon app-icon__ranking"></span>
+            <span>{{ player.ranking }}</span>
+        </div>
+        <div class="app-profile__info">
+            <span class="app-icon app-icon__points"></span>
+            <span>{{ player.points }}</span>
+        </div>
+    </div>
+</div>

@@ -1,33 +1,445 @@
-* {
-    margin: 0;
-    padding: 0;
+body {
+  width: 100%;
+  min-height: 100%;
 }
 
-html, body {
-    margin-top: 20px;
-    background-color: #E9EAED;
-    font-size: 13px;
+/* Disable ugly boxes around images in IE10 */
+a img{
+  border: 0px;
 }
 
 a {
-    cursor:pointer;
-    font-weight:bold;
-    text-decoration: none;
-    color: #3b5998
+  text-decoration: none;
 }
 
-a:hover, a:active, a:visited, a:focus {
-    text-decoration: none;
+::-moz-selection {
+  background-color: #6ab344;
+  color: #fff;
 }
 
-.no-select {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+::selection {
+  background-color: #6ab344;
+  color: #fff;
 }
+
+.app__pull-left {
+  float: left;
+}
+
+.app__pull-right {
+  float: right;
+}
+
+.app__text-left {
+  text-align: left;
+}
+
+.app__text-center {
+  text-align: center;
+}
+
+.app__text-right {
+  text-align: right;
+}
+
+.app__clickable {
+  cursor: pointer;
+}
+
+.app__action {
+  color: #ff5252;
+}
+
+.app__button--small {
+  height: 24px;
+  font-size: 12px;
+  padding: 0 4px;
+  line-height: 26px;
+}
+
+.app__action--connect {
+  font-size: 10vw;
+}
+
+.app-header .mdl-menu__container {
+  z-index: 50;
+  margin: 0 !important;
+}
+
+
+.mdl-textfield--expandable {
+  width: auto;
+}
+
+.app-mobile__title {
+  display: none !important;
+}
+
+.app-logo {
+  position: relative;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
+  background-color: #795548;
+  color: #fafafa;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  border-radius: 20px;
+}
+
+.app-logo__icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 7px;
+  left: 11px;
+  background-size: cover;
+  background-image: url(../images/logo.svg);
+}
+
+.app-logo__text {
+  text-transform: uppercase;
+  padding-left: 30px;
+  font-size: 24px;
+}
+
+.app-header {
+  overflow: visible;
+  background-color: white;
+}
+
+.app-header__row {
+  position: relative;
+  padding: 0 40px 0 60px;
+}
+
+.app-header .material-icons {
+  color: #767777 !important;
+}
+
+.app-header .mdl-layout__drawer-button {
+  background: transparent;
+  color: #767777;
+}
+
+.app-header .mdl-navigation__link {
+  color: #757575;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.app-navigation {
+  /* ... and now make sure the content is actually LTR */
+  direction: ltr;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: 800px;
+}
+
+.app-navigation__container {
+  /* Simple hack to make the overflow happen to the left instead... */
+  direction: rtl;
+  -webkit-order: 1;
+      -ms-flex-order: 1;
+          order: 1;
+  width: 500px;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-navigation .mdl-navigation__link {
+  display: inline-block;
+  height: 60px;
+  line-height: 68px;
+  background-color: transparent !important;
+  border-bottom: 4px solid transparent;
+}
+
+.app-navigation .mdl-navigation__link:hover {
+  border-bottom: 4px solid #ff5252;
+}
+ 
+.app-drawer {
+  border-right: none;
+}
+
+.app-drawer .mdl-navigation__link.mdl-navigation__link {
+  font-size: 14px;
+  color: #757575;
+}
+
+.app-drawer span.mdl-navigation__link.mdl-navigation__link {
+  color: #8bc34a;
+}
+
+.app-drawer .mdl-navigation__link .material-icons {
+    font-size: 24px;
+    margin-right: 32px;
+}
+
+.app-drawer .mdl-layout-title {
+  position: relative;
+  background: #795548;
+  line-height: 24px;
+  padding-left: 12px;
+  padding: 10px;
+}
+
+.app-content {
+  background-color: #f3f3f3;
+}
+
+.app-grid {
+  max-width: 760px;
+}
+
+.app-head {
+  position: relative;
+  padding: 10px;
+}
+
+.app-head .app-button__create-game {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.app-profile--challenger {
+  margin-bottom: 30px;
+}
+
+.app-profile__image {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.app-profile__name {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 18px;
+  margin-bottom: 7px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-profile__info {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.app-profile__info .app-icon {
+  font-size: 24px;
+}
+
+.app-profile__info .app-icon__ranking {
+  position: relative;
+  top: 2px;
+  margin-right: 3px;
+}
+
+.app-profile__info .app-icon__points {
+  font-size: 20px;
+}
+
+.app-profile__info:last-child {
+  margin-right: 0;
+}
+
+.app-profile__stats {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #171B22;
+}
+
+.app-profile__stat {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.app-profile__stat:last-child {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 597px) {
+  .app-profile__stat {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .app-profile__stat:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.app-profile__stat-text {
+  position: absolute;
+  top: 50px;
+  display: block;
+  width: 100%;
+}
+
+.app-profile__stat-value {
+  font-size: 25px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.app-profile__stat-desc {
+    text-transform: uppercase;
+}
+
+.app-profile__stat--win .app-profile__stat-value {
+  color: #54c08b;
+}
+
+.app-profile__stat--draw .app-profile__stat-value {
+  color: #565d6d;
+}
+
+.app-profile__stat--lose .app-profile__stat-value {
+  color: #f5716e;
+}
+
+.app-element__table--ranking tbody tr {
+  cursor: pointer;
+}
+
+.app-ranking__pagination {
+  width: 100%;
+  text-align: center;
+}
+
+.app-ranking__pagination-content {
+  padding: 8px;
+}
+
+.app-ranking__pagination-form {
+  display: inline-block;
+}
+
+.app-ranking__pagination-prev {
+  float: left;
+}
+
+.app-ranking__pagination-next {
+  float: right;
+}
+
+.app-ranking__pagination-count {
+  font-size: 16px;
+}
+
+.app-ranking__pagination-textfield {
+  display: inline-block;
+  padding-top: 0;
+  margin-bottom: 0;
+}
+
+.app-ranking__pagination-textfield > input {
+  width: 50px;
+  text-align: center;
+}
+
+.app-trophies {
+  padding: 9px;
+  text-align: center;
+}
+
+.app-trophy__title {
+  text-transform: uppercase;
+  font-size: 40px;
+  margin: 0;
+  text-shadow: 0px 1px 1px rgba(0,0,0,.2);
+  color: #795548;
+}
+
+.app-trophy__badge {
+  display: inline-block;
+  position: relative;
+  width: 75px;
+  height: 75px;
+  padding: 25px;
+  margin: 10px;
+  background-size: 75%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-color: #FF5252;
+  border-radius: 100px;
+  box-shadow: -0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+}
+
+.app-trophy__badge--modal {
+  margin: 20px 0;
+}
+
+.app-trophy__desc {
+  font-size: 24px;
+}
+
+.app-trophy__badge-unknown { background-image: url(../images/trophies/no-trophy.png); }
+
+.app-trophy__badge-game-1 { background-image: url(../images/trophies/game-1.png); }
+.app-trophy__badge-game-100 { background-image: url(../images/trophies/game-100.png); }
+.app-trophy__badge-game-500 { background-image: url(../images/trophies/game-500.png); }
+.app-trophy__badge-game-1000 { background-image: url(../images/trophies/game-1000.png); }
+.app-trophy__badge-game-5000 { background-image: url(../images/trophies/game-5000.png); }
+
+.app-trophy__badge-win-1 { background-image: url(../images/trophies/win-1.png); }
+.app-trophy__badge-win-50 { background-image: url(../images/trophies/win-50.png); }
+.app-trophy__badge-win-250 { background-image: url(../images/trophies/win-250.png); }
+.app-trophy__badge-win-500 { background-image: url(../images/trophies/win-500.png); }
+.app-trophy__badge-win-2000 { background-image: url(../images/trophies/win-2000.png); }
+
+.app-trophy__badge-game-day-5 { background-image: url(../images/trophies/game-day-5.png); }
+.app-trophy__badge-game-day-10 { background-image: url(../images/trophies/game-day-10.png); }
+.app-trophy__badge-game-day-25 { background-image: url(../images/trophies/game-day-25.png); }
+.app-trophy__badge-game-day-50 { background-image: url(../images/trophies/game-day-50.png); }
+.app-trophy__badge-game-day-100 { background-image: url(../images/trophies/game-day-100.png); }
+
+.app-trophy__badge-win-cons-3 { background-image: url(../images/trophies/win-cons-3.png); }
+.app-trophy__badge-win-cons-5 { background-image: url(../images/trophies/win-cons-5.png); }
+.app-trophy__badge-win-cons-10 { background-image: url(../images/trophies/win-cons-10.png); }
+.app-trophy__badge-win-cons-20 { background-image: url(../images/trophies/win-cons-20.png); }
+.app-trophy__badge-lose-cons-3 { background-image: url(../images/trophies/lose-cons-3.png); }
+
+
+@media screen and (max-width: 1024px) {
+  .app-header__row {
+    padding: 0 16px;
+  }
+}
+
+@media (min-width: 901px) {
+  .mdl-layout__drawer-button {
+    display: none;
+  }
+}
+/**** MobileLayout:start; ****/
+@media (max-width: 900px) {
+  .app-navigation__container {
+    display: none;
+  }
+
+  .app-title {
+    display: none !important;
+  }
+
+  .app-mobile__title {
+    display: block !important;
+    position: absolute;
+    left: 60px;
+    top: 8px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+/**** MobileLayout:end ****/
 
 .ui-draggable {
     cursor: move;
@@ -37,623 +449,322 @@ a:hover, a:active, a:visited, a:focus {
     cursor: auto;
 }
 
-/*** Bootstrap ***/
-
-.table {
-    margin-bottom: 0;
-}
-
-.table > tbody > tr > td {
-    vertical-align: middle;
-    line-height: 1.2;
-}
-
-.modal-content-no-body .modal-footer {
-    border-top: 0;
-}
-
-/*** Icomoon ***/
-
-[class^="icon-"], [class*=" icon-"] {
+[class^="app-icon__"], [class*=" app-icon__"] {
     font-size: 16px;
     color: #362F2D;
 }
 
-.icon-table-sortable {
-    position: relative;
-    top: 3px;
+.app-loading {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 }
 
-.btn .icon {
-    position: relative;
-    top: 2px;
-}
-
-.btn-icon {
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-.btn-danger .icon,
-.btn-success .icon {
-    color: #fff;
-}
-
-.icon-white {
-    color: #fff;
-}
-
-.clear {
-    clear: both;
-}
-
-.element {
-    background: #fff;
-    border: 1px solid;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-    -webkit-border-radius: 3px;
-}
-
-.profile-picture {
-    width: 50px;
-    height: 50px;
-    border-radius: 3px;
-}
-
-header {
-    padding: 10px 0;
-}
-
-header #header {
-    position: relative;
-    width: 728px;
-    height: 90px;
-    margin: 0 auto;
-    background-color: #002D40;
-}
-
-
-header #header iframe {
-    width: 728px;
-    height: 90px;
-    padding: 0;
-    overflow: hidden;
-}
-
-.app {
-    width: 760px;
-    margin: 0 auto;
-}
-
-.content {
-    margin: 10px 0 20px 0;
-}
-
-.content .element:not(:last-child) {
-    margin-bottom: 10px;
-}
-
-.content .element {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.content .ranking {
-    position: relative;
-    height: 536px;
-    margin-bottom: 10px;
-}
-
-.content .ranking tr {
-    height: 67px;
-}
-
-.content .ranking tr .position,
-.content .ranking tr .img,
-.content .ranking tr .points {
-    width: 70px;
+.app-loader {
+    width: 50vw;
+    max-width: 260px;
     text-align: center;
-    font-weight: bold;
-}
-
-.content .ranking-pagination {
-    position: relative;
-    text-align: center;
-    padding: 5px 10px;
-}
-
-.content .ranking-pagination .btn-pagination {
-    position: absolute;
-    top: 8px;
-}
-
-.content .ranking-pagination .btn-pagination-left {
-    left: 10px;
-}
-
-.content .ranking-pagination .btn-pagination-right {
-    right: 10px;
-}
-
-.content .ranking-pagination .form-group {
-    display: inline-block;
-    margin: 3px 0;
-}
-
-.content .ranking-pagination .form-group .form-control {
-    height: 30px;
-    text-align: center;
-}
-
-.content .element section {
-    max-height: 225px;
-    overflow-x: auto;
-}
-
-.content .element h2 {
-    margin: 0;
-    padding: 10px;
-    background-color: #eef5f9;
-    border-bottom: 1px solid #dadede;
-    border-radius: 3px 3px 0 0;
-    color: #446479;
-    font-size: 18px;
-}
-
-.content .element .info-tooltip {
-    display: inline-block;
-    padding: 3px 5px 1px;
-    background-color: #446479;
-    color: #EEF5F9;
-    text-align: center;
-    border-radius: 3px;
-    font-size: 13px;
-    font-weight: bold;
-    margin-left: 3px;
-}
-
-.content .element .btn-right {
-    display: inline-block;
-    position: relative;
-    top: -2px;
-}
-
-.content .element .load-spin {
-    padding: 20px 0;
-    text-align: center;
-}
-
-.content .element .load-spin img {
-    height: 25px;
-}
-
-.content .profile {
-    position: relative;
-    padding: 10px;
-    height: 70px;
-}
-
-.profile .img {
-    padding-right: 10px;
-}
-
-.profile-game .actions {
-    margin-right: 20px;
-}
-
-[profile] {
-    cursor: pointer;
-}
-
-.profile-stats {
-    margin-top: 10px;
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-    border-radius: 5px;
-    background-color: #171b22;
-}
-
-.profile-stat {
-    position: relative;
-    height: 150px;
-    float: left;
-    width: 33%;
-    margin: 30px 0;
-}
-
-.profile-stat-win {
-    color: #54c08b;
-}
-
-.profile-stat-draw {
-    color: #565d6d;
-}
-
-.profile-stat-lose {
-    color: #f5716e;
-}
-
-.profile-stat-chart {
-    position: absolute;
-    top: 0;
-    left: 20px;
-}
-
-.profile-stat-number {
-    display: block;
-    margin-top: 45px;
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.profile-stat-text {
-    display: block;
-    margin-bottom: 42px;
-    text-transform: uppercase;
-    color: #fff;
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.content .dropdown-filter {
-    width:300px; 
-    padding:20px;
-}
-
-.content .dropdown-filter label {
-    font-size: 12px;
-}
-
-.content table.list-user tr .profile-picture {
-    width: 30px;
-    height: 30px;
-}
-
-.content table.list-user tr .name {
-    width: 200px;
-}
-
-.content table.list-user tr td .user-name {
-    display: block;
-    max-width: 180px;
-    max-height: 30px;
-    overflow: hidden;
-}
-
-.content table.list-user tr .info-user {
-    text-align: center;
-    width: 75px;
-}
-
-.content table.list-user tr .info-game {
-    text-align: center;
-    width: 55px;
-}
-
-.content table.list-user tr td .color {
-    display: inline-block;
-    background-color: #999999;
-    padding: 3px 5px;
-    border-radius: 3px;
-}
-
-.content table.list-user tr td .icon-white {
-    color: #fff;
-}
-
-.content table.list-user tr td .icon-black {
-    color: #000;
-}
-
-.content .col-right .element {
-    color: #362F2D;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 5px 0;
-}
-
-.content .col-right .icon-right {
-    font-size: 32px;
-}
-
-.content .clock {
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 40px;
-    height: 40px;
-    background-color: #362F2D;
-    color: #fff;
-    text-align: center;
-}
-
-.content .free-token {
-    padding-top: 5px;
-}
-
-/******* Game ********/
-
-.profile .time {
-    text-align: center;
-    font-size: 12px;
-    background-color: #3A3A3A;
-    color: #fff;
-    width: 50px;
-    height: 20px;
-    line-height: 20px;
-    border-radius: 5px;
-}
-
-.profile .time-turn {
-    margin-top: 5px;
-}
-
-.content .notation {
-    float: right;
-    width: 105px;
-}
-
-.content .notation .element {
-    height: 252px;
-    width: 100%;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    overflow-x: auto;
-}
-
-.content .game {
-    width: 514px;
-}
-
-.game > .game-row {
-    width: 100%;
-    height: 64px;
-}
-
-.game > .game-row > .game-box {
-    float: left;
-    width: 64px;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
-}
-
-.game > .game-row > .game-box.last-turn {
-    background-color: rgb(50, 50, 50);
-}
-
-.game > .game-row > .game-box.ui-droppable {
-    background-color: rgb(205, 205, 205);
-}
-
-.game-white .game-row:nth-child(odd) .game-box:nth-child(even),
-.game-white .game-row:nth-child(even) .game-box:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box:nth-child(even),
-.game-black .game-row:nth-child(odd) .game-box:nth-child(odd) {
-    background-color: rgb(120, 120, 120);
-}
-
-.game-white .game-row:nth-child(odd) .game-box.last-turn:nth-child(even),
-.game-white .game-row:nth-child(even) .game-box.last-turn:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box.last-turn:nth-child(even),
-.game-black .game-row:nth-child(odd) .game-box.last-turn:nth-child(odd) {
-    background-color: rgb(50, 50, 50);
-}
-
-
-.game-white .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(even),
-.game-white .game-row:nth-child(even) .game-box.ui-droppable:nth-child(odd),
-.game-black .game-row:nth-child(even) .game-box.ui-droppable:nth-child(even),
-.game-black .game-row:nth-child(odd) .game-box.ui-droppable:nth-child(odd) {
-    background-color: rgb(80, 80, 80);
-}
-
-.game-box .icon {
-    display: block;
-    font-size: 32px;
-    padding: 16px;
-}
-
-.game-box .icon-white {
-    color: rgb(225, 175, 125);
-}
-
-.game-box .icon-black {
-    color: rgb(0, 0, 0);
-}
-
-#modal-promotion .modal-body {
-    padding: 50px 20px;
-    text-align: center;
-}
-
-#modal-promotion .piece {
-    font-size: 64px;
-    margin: 0 30px;
-}
-
-/******* Trophies ********/
-
-.content .element.trophies {
-    padding: 10px;
-}
-
-.trophy {
-    display: inline-block;
-    position: relative;
-    width: 100px;
-    height: 100px;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    margin: 10px;
-}
-
-.trophy .description {
-    display: none;
-    position: absolute;
-    color: #000;
-    left: 35px;
-    top: -140px;
-    height: 200px;
-    width: 200px;
-    z-index: 10;
-}
-
-.trophy .description .icon-bubble {
-    font-size: 200px;
-    position: absolute;
-    color: #fff;
-    text-shadow: 0 0 10px #000;
-}
-
-.trophy .description .text {
-    position: relative;
-}
-
-.trophy .description h4 {
-    text-align: center;
-    margin: 60px 20px 20px 20px;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.trophy .description p {
-    text-align: center;
-    margin: 0 20px;
-}
-
-.trophy.no-trophy { 
-    background-image: url(../img/trophees/no-trophee.png); 
-}
-
-.trophy._1_game { background-image: url(../img/trophees/_1_game.png); }
-.trophy._100_game { background-image: url(../img/trophees/_100_game.png); }
-.trophy._500_game { background-image: url(../img/trophees/_500_game.png); }
-.trophy._1000_game { background-image: url(../img/trophees/_1000_game.png); }
-.trophy._5000_game { background-image: url(../img/trophees/_5000_game.png); }
-
-.trophy._1_wins { background-image: url(../img/trophees/_1_wins.png); }
-.trophy._50_wins { background-image: url(../img/trophees/_50_wins.png); }
-.trophy._250_wins { background-image: url(../img/trophees/_250_wins.png); }
-.trophy._500_wins { background-image: url(../img/trophees/_500_wins.png); }
-.trophy._2000_wins { background-image: url(../img/trophees/_2000_wins.png); }
-
-.trophy._5_games_day { background-image: url(../img/trophees/_5_games_day.png); }
-.trophy._10_games_day { background-image: url(../img/trophees/_10_games_day.png); }
-.trophy._25_games_day { background-image: url(../img/trophees/_25_games_day.png); }
-.trophy._50_games_day { background-image: url(../img/trophees/_50_games_day.png); }
-.trophy._100_games_day { background-image: url(../img/trophees/_100_games_day.png); }
-
-.trophy._3_wins_cons { background-image: url(../img/trophees/_3_wins_cons.png); }
-.trophy._5_wins_cons { background-image: url(../img/trophees/_5_wins_cons.png); }
-.trophy._10_wins_cons { background-image: url(../img/trophees/_10_wins_cons.png); }
-.trophy._20_wins_cons { background-image: url(../img/trophees/_20_wins_cons.png); }
-.trophy._3_loses_cons { background-image: url(../img/trophees/_3_loses_cons.png); }
-
-.trophy-1:hover  > .description-1,
-.trophy-2:hover  > .description-2,
-.trophy-3:hover  > .description-3,
-.trophy-4:hover  > .description-4,
-.trophy-5:hover  > .description-5,
-.trophy-6:hover  > .description-6,
-.trophy-7:hover  > .description-7,
-.trophy-8:hover  > .description-8,
-.trophy-9:hover  > .description-9,
-.trophy-10:hover > .description-10,
-.trophy-11:hover > .description-11,
-.trophy-12:hover > .description-12,
-.trophy-13:hover > .description-13,
-.trophy-14:hover > .description-14,
-.trophy-15:hover > .description-15,
-.trophy-16:hover > .description-16,
-.trophy-17:hover > .description-17,
-.trophy-18:hover > .description-18,
-.trophy-19:hover > .description-19,
-.trophy-20:hover > .description-20 { 
-    display: block; 
-}
-
-.table-shop td.icon {
-    width: 50px;
-}
-
-.table-shop td.icon > span {
-    font-size: 32px;
-}
-
-.table-shop td div.total {
-    font-size: 20px;
-}
-
-.table-shop td div.total .number  {
-    color: #930;
-}
-
-.table-shop td div.base {
-    color: #555555;
-    text-decoration: line-through; 
-}
-
-.table-shop td.buy {
-    text-align: right;
-}
-
-.table-shop td.buy .btn {
-    width: 150px;
-}
-
-footer {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-footer .footer {
-    position: relative;
-    width: 760px;
-    height: 300px;
-    margin: 20px auto;
-}
-
-footer .footer #pub {
-    float: right;
-    width: 300px;
-    height: 250px;
-}
-
-footer .footer .fb-like-box {
-    width: 428px;
-    height: 250px;
-}
-
-footer .footer .link {
-    margin-top: 20px;
-    text-align: center;
-}
-
-footer .footer .link a {
-    font-weight: normal;
-    padding: 0 5px;
-}
-
-.loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-}
-
-.loading .loader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(/img/loading.gif) #fff no-repeat center;
     opacity: 0.7;
+}
+
+.app-button__sound {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  z-index: 9;
+}
+
+.app-game__time {
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+  background-color: #3A3A3A;
+  color: #fff;
+  width: 60px;
+  height: 24px;
+  line-height: 24px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+.app-game__time--danger {
+  background-color: #c9302c;
+}
+
+.app-game__time:last-child {
+  margin-bottom: 0;
+}
+
+.app-game__action {
+  width: 150px;
+  margin-right: 20px;
+}
+
+.app-game__action-button {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.app-game__action-button:last-child {
+  margin-bottom: 0;
+}
+
+.app-game__notation {
+  height: calc(50% - 24px);
+  padding: 10px 0;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.app-game__notation:last-child {
+  margin-bottom: 0;
+}
+
+.app-game__row {
+  width: 100%;
+}
+
+.app-game__box {
+  position: relative;
+  float: left;
+  display: block;
+  width: 12.5%;
+  background-color: rgb(255, 255, 255);
+}
+
+.app-game__box:before {
+  display: block;
+  content:'';
+  padding-top: 100%;
+}
+
+.app-game__box.last-turn,
+.app-game__box.ui-droppable,
+.app-game__box.selected {
+  border-style: solid;
+  border-width: 3px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.app-game__box.last-turn {
+  border-color: #4CAF50;
+}
+
+.app-game__box.ui-droppable {
+  border-color: #3F51B5;
+}
+
+.app-game__box.selected {
+  border-color: #F44336;
+}
+
+.app-game--white .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
+.app-game--white .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
+.app-game--black .app-game__row:nth-child(even) .app-game__box:nth-child(even),
+.app-game--black .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+  background-color: rgb(120, 120, 120);
+}
+
+.app-game__box-content {
+  position: absolute;
+  top: 12.5%;
+  right: 12.5%;
+  left: 12.5%;
+  bottom: 12.5%;
+}
+
+.app-game__box-content .app-game__icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.app-game__icon {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.app-game__icon--bishop {
+  background-image: url(../images/game/bishop.svg);
+}
+
+.app-game__icon--king {
+  background-image: url(../images/game/king.svg);
+}
+
+.app-game__icon--knight {
+  background-image: url(../images/game/knight.svg);
+}
+
+.app-game__icon--pawn {
+  background-image: url(../images/game/pawn.svg);
+}
+
+.app-game__icon--queen {
+  background-image: url(../images/game/queen.svg);
+}
+
+.app-game__icon--rook {
+  background-image: url(../images/game/rook.svg);
+}
+
+.app-game__icon--bishop.app-game__icon--white {
+  background-image: url(../images/game/bishop-white.svg);
+}
+
+.app-game__icon--king.app-game__icon--white {
+  background-image: url(../images/game/king-white.svg);
+}
+
+.app-game__icon--knight.app-game__icon--white {
+  background-image: url(../images/game/knight-white.svg);
+}
+
+.app-game__icon--pawn.app-game__icon--white {
+  background-image: url(../images/game/pawn-white.svg);
+}
+
+.app-game__icon--queen.app-game__icon--white {
+  background-image: url(../images/game/queen-white.svg);
+}
+
+.app-game__icon--rook.app-game__icon--white {
+  background-image: url(../images/game/rook-white.svg);
+}
+
+.app-game__icon--bishop.app-game__icon--black {
+  background-image: url(../images/game/bishop-black.svg);
+}
+
+.app-game__icon--king.app-game__icon--black {
+  background-image: url(../images/game/king-black.svg);
+}
+
+.app-game__icon--knight.app-game__icon--black {
+  background-image: url(../images/game/knight-black.svg);
+}
+
+.app-game__icon--pawn.app-game__icon--black {
+  background-image: url(../images/game/pawn-black.svg);
+}
+
+.app-game__icon--queen.app-game__icon--black {
+  background-image: url(../images/game/queen-black.svg);
+}
+
+.app-game__icon--rook.app-game__icon--black {
+  background-image: url(../images/game/rook-black.svg);
+}
+
+.app-promotion__icon {
+  position: relative;
+  display: inline-block;
+  width: 25%;
+}
+
+.app-promotion__icon:before {
+  display: block;
+  content:'';
+  padding-top: 100%;
+}
+
+.mdl-layout--fixed-header > .mdl-layout__header.is-game .app-navigation__container {
+  display: none;
+}
+
+@media (max-width: 479px) {
+
+  .mdl-data-table th {
+    padding: 0 6px 12px 6px;
+  }
+
+  .mdl-data-table td {
+    padding: 12px 6px;
+  }
+
+  .mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
+    padding-left: 12px;
+  }
+
+  .app-button--phone {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 5px;
+  }
+
+  .app-profile__name {
+    font-style: 15px;
+  }
+
+  .app-profile--player .app-profile__name,
+  .app-profile--player .app-profile__info{
+    display: none;
+  }
+
+  .app-game__action {
+    width: auto;
+  }
+
+  .app-head .app-button__create-game {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-top: 20px;
+    margin-bottom: -10px;
+  }
+
+  .app-element__table {
+    font-size: 15px;
+  }
+
+  .app-element__table-user {
+    width: 82px;
+  }
+
+  .app-element__table-user-name {
+    display: none;
+  }
+
+  .app-element__table-user__picture {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .mdl-layout--fixed-header > .mdl-layout__header.is-game {
+    display: none;
+  }
+
+  .app-button__sound {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    height: 42px;
+    min-width: 42px;
+    width: 42px;
+  }
 }
