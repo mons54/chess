@@ -307,6 +307,74 @@ a {
   color: #f5716e;
 }
 
+.app-element .app-element__head {
+  margin: 0;
+  padding: 10px;
+  background-color: #eef5f9;
+  border-bottom: 1px solid #dadede;
+  border-radius: 3px 3px 0 0;
+  color: #446479;
+  font-size: 18px;
+}
+
+.app-element .app-element__tools {
+  float: right;
+  margin-top: -5px;
+}
+
+.app-element--small .app-element__body {
+  max-height: 243px;
+  overflow-x: auto;
+}
+
+.app-element .app-element__table {
+  width: 100%;
+  border: none;
+}
+
+.app-element .app-element__badge {
+  position: relative;
+  display: inline-block;
+  top: -1px;
+  margin-top: -5px;
+  padding: 0px 5px;
+  background-color: #795548;
+  color: #EEF5F9;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 3px;
+}
+
+.app-element .app-element__loading {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.app-element .app-element__loading img {
+  height: 25px;
+}
+
+.app-element__table {
+  font-size: 18px;
+}
+
+.app-element__table-user {
+  max-width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app-element__table-picture {
+  margin-right: 10px;
+  width: 40px;
+  border-radius: 3px;
+}
+
+.app-element__table-rank {
+  width: 50px;
+}
+
 .app-element__table--ranking tbody tr {
   cursor: pointer;
 }
@@ -736,7 +804,7 @@ a {
   }
 
   .app-profile--player .app-profile__name,
-  .app-profile--player .app-profile__info{
+  .app-profile--player .app-profile__info {
     display: none;
   }
 
