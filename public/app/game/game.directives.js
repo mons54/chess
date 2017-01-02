@@ -41,6 +41,7 @@ directive('pieceDraggable', ['modal', 'isTouch', function (modal, isTouch) {
 
             var modalPromotion = modal.get('modal-promotion'),
                 touch = isTouch(),
+                selectedClass = 'selected',
                 droppableClass =  'ui-droppable';
 
             scope.$watch('game', function (game) {
@@ -68,16 +69,16 @@ directive('pieceDraggable', ['modal', 'isTouch', function (modal, isTouch) {
                 if (touch) {
                     element.click(function () {
                         var isOpen = $(this).data('open');
-                        $('[piece-draggable]').data('open', false);
+                        stopClickable($('[piece-draggable]'));
                         $('.' + droppableClass).removeClass(droppableClass).unbind('click');
                         if (isOpen) {
-                            $(this).data('open', false);
+                            stopClickable($(this));
                             $('.' + droppableClass).removeClass(droppableClass).unbind('click');
                         } else {
-                            $(this).data('open', true);
+                            $(this).data('open', true).closest('[data-game-box]').addClass(selectedClass);
                             getMovements(function (position) {
                                 $('#' + position).addClass(droppableClass).click(function () {
-                                    element.data('open', false);
+                                    stopClickable(element);
                                     $('.' + droppableClass).removeClass(droppableClass).unbind('click');
                                     move($(this), position);
                                 });
@@ -104,6 +105,10 @@ directive('pieceDraggable', ['modal', 'isTouch', function (modal, isTouch) {
                             });
                         }
                     });
+                }
+
+                function stopClickable (element) {
+                    element.data('open', false).closest('[data-game-box]').removeClass(selectedClass);
                 }
 
                 function getMovements (callback) {

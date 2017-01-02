@@ -10,7 +10,8 @@
             ng-init="position = letter + number" 
             ng-class="isLastTurn(position)" 
             id="{{position}}" 
-            class="app-game__box">
+            class="app-game__box"
+            data-game-box>
             <div class="app-game__box-content">
                 <span ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
             </div>
