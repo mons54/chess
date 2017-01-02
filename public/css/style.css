@@ -311,6 +311,20 @@ a {
   cursor: pointer;
 }
 
+.app-element__table--ranking tbody tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-element__table--ranking .app-element__table-rank {
+  max-width: 150px;
+}
+
+.app-element__table--ranking .app-element__table-points {
+  max-width: 100px;
+}
+
 .app-ranking__pagination {
   width: 100%;
   text-align: center;
@@ -740,18 +754,6 @@ a {
 
   .app-element__table {
     font-size: 15px;
-  }
-
-  .app-element__table-user {
-    width: 82px;
-  }
-
-  .app-element__table-user-name {
-    display: none;
-  }
-
-  .app-element__table-user__picture {
-    margin-right: 0;
   }
 }
 
