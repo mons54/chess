@@ -40,51 +40,67 @@ directive('pieceDraggable', ['modal', 'isTouch', function (modal, isTouch) {
         link: function (scope, element, attr) {
 
             var modalPromotion = modal.get('modal-promotion'),
-                touch = isTouch();
+                touch = isTouch(),
+                droppableClass =  'ui-droppable';
 
             scope.$watch('game', function (game) {
 
                 if (game.finish) {
-                    if (!touch && element.draggable) {
+                    if (touch) {
+                        element.unbind('click');
+                    } else if (element.draggable) {
                         element.draggable({
                             disabled: true
                         });
-                    }
+                    } 
                     return;
                 }
 
                 var piece = game.pieces[attr.position];
 
-                if (!piece || !scope.isPlayerTurn() || piece.color !== game.turn || (!piece.deplace.length && !piece.capture.length)) {
+                if (!piece || 
+                    !scope.isPlayerTurn() || 
+                    piece.color !== game.turn || 
+                    (!piece.deplace.length && !piece.capture.length)) {
                     return;
                 }
 
                 if (touch) {
+                    element.click(function () {
+                        var isOpen = $(this).data('open');
+                        $('[piece-draggable]').data('open', false);
+                        $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                        if (isOpen) {
+                            $(this).data('open', false);
+                            $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                        } else {
+                            $(this).data('open', true);
+                            getMovements(function (position) {
+                                $('#' + position).addClass(droppableClass).click(function () {
+                                    element.data('open', false);
+                                    $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                                    move($(this), position);
+                                });
+                            });
+                        }
+                    });
+                } else {
                     element.draggable({
                         disabled: false,
                         helper: 'clone',
                         zIndex: '99999',
-                        start: start,
-                        stop: stop
-                    });
-                } else {
-                    element.click(function () {
-                        console.log($(this).data('open'))
-                        if ($(this).data('open')) {
-                            $(this).data('open', false);
+                        start: function (event, ui) {
                             getMovements(function (position) {
-                                $('#' + position).removeClass('ui-droppable', false);
-                            });
-                        } else {
-                            $(this).data('open', true);
-                            getMovements(function (position) {
-                                $('#' + position).addClass('ui-droppable', true).click(function () {
-                                    element.data('open', false);
-                                    getMovements(function (position) {
-                                        $('#' + position).data('draggable', false)
-                                    });
-                                    scope.move(attr.position, position);
+                                $('#' + position).droppable({
+                                    drop: function (event, ui) {
+                                        move($(this), position);
+                                    }
                                 });
+                            });
+                        },
+                        stop: function (event, ui) {
+                            getMovements(function (position) {
+                                $('#' + position).droppable('destroy');
                             });
                         }
                     });
@@ -94,27 +110,7 @@ directive('pieceDraggable', ['modal', 'isTouch', function (modal, isTouch) {
                     angular.forEach(piece.deplace.concat(piece.capture), callback);
                 }
 
-                function start(event, ui) {
-                    getMovements(function (position) {
-                        droppable(position);
-                    });
-                }
-
-                function stop(event, ui) {
-                    getMovements(function (position) {
-                        angular.element('#' + position).droppable('destroy');
-                    });
-                }
-
-                function droppable(position) {
-                    angular.element('#' + position).droppable({
-                        drop: function (event, ui) {
-                            drop(angular.element(this), position);
-                        }
-                    });
-                }
-
-                function drop(elementBox, position) {
+                function move(elementBox, position) {
 
                     var classes = element.attr('class');
 
@@ -123,20 +119,24 @@ directive('pieceDraggable', ['modal', 'isTouch', function (modal, isTouch) {
                     if (isPromotion(position)) {
                         modal.show(modalPromotion);
                         modalPromotion.find('[data-icon]').click(function() {
-                            var promotion = angular.element(this).data('icon');
+                            var promotion = $(this).data('icon');
                             modalPromotion.find('[data-icon]').unbind('click');
-                            move(elementBox, classes.replace('pawn', promotion), position, promotion);
+                            sendMove(elementBox, classes.replace('pawn', promotion), position, promotion);
                         });
                     } else {
-                        move(elementBox, classes, position);
+                        sendMove(elementBox, classes, position);
                     }
 
-                    angular.element('[piece-draggable]').draggable({
-                        disabled: true
-                    });
+                    if (touch) {
+                        $('[piece-draggable]').unbind('click'); 
+                    } else {
+                        $('[piece-draggable]').draggable({
+                            disabled: true
+                        }); 
+                    }
                 }
 
-                function move(elementBox, classes, position, promotion) {
+                function sendMove(elementBox, classes, position, promotion) {
                     elementBox.find('[piece-draggable]').addClass(classes);
                     scope.move(attr.position, position, promotion);
                 }
