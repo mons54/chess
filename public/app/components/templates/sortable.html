@@ -1,4 +1,4 @@
-<a href ng-click="reverse = !reverse">
-    <span class="icon-{{ predicate }}"></span>
-    <span ng-class="{'icon-sort-down': reverse, 'icon-sort-up': !reverse}" class="icon-table-sortable"></span>
+<a href ng-click="sort()">
+    <span class="app-icon__{{ icon }}"></span>
+    <span ng-class="{'app-icon__sort-down': reverse, 'app-icon__sort-up': !reverse}" class="app-icon__table-sortable"></span>
 </a>

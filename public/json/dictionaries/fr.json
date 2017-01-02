@@ -52,129 +52,93 @@
    "game":"Jeu",
    "connected":"connectés",
    "quick_game":"partie",
-   "partager":"Partager",
+   "share":"Partager",
    "friends":"Amis",
-   "shop":"Boutique",
-   "tokens":"Jetons",
-   "free_tokens":"Jetons gratuits",
-   "no_tokens":"Vous n'avez pas assez de jetons pour jouer.",
-   "buyTokens":"Acheter des jetons",
    "congratulation":"Félicitation",
    "fanpage":"Fan Page",
    "terms_service":"Conditions d'utilisation",
    "privacy_policy":"Politique de confidentialité",
-   "invite_friends":{
-      "title":"Invitez vos amis (30 max)",
-      "infos":"Et gagnez 10% des jetons joués par invitation acceptée",
-      "send":"Envoyer les invitations",
-      "max_requests":"Vous avez déjà envoyé 30 invitations aujourd'hui.",
-      "all":"Tous les amis"
-   },
-   "pub":{
-      "title":"Nain Jaune",
-      "text":"Jeu de cartes en ligne. Débarrasse toi de toutes tes cartes et remporte les mises."
-   },
    "trophies":{
       "title":"Trophées",
       "win":"Vous gagnez un trophée.",
       "content":{
          "1":{
-            "class":"_1_game",
             "title":"Débutant",
             "description":"Jouer 1 partie"
          },
          "2":{
-            "class":"_100_game",
             "title":"Apprenti",
             "description":"Jouer 100 parties"
          },
          "3":{
-            "class":"_500_game",
             "title":"Intermédiaire",
             "description":"Jouer 500 parties"
          },
          "4":{
-            "class":"_1000_game",
             "title":"Confirmé",
             "description":"Jouer 1000 parties"
          },
          "5":{
-            "class":"_5000_game",
             "title":"Expert",
             "description":"Jouer 5000 parties"
          },
          "6":{
-            "class":"_1_wins",
             "title":"Champion de Chocolat",
             "description":"Gagner 1 partie"
          },
          "7":{
-            "class":"_50_wins",
             "title":"Champion de Bronze",
             "description":"Gagner 50 parties"
          },
          "8":{
-            "class":"_250_wins",
             "title":"Champion d'Argent",
             "description":"Gagner 250 parties"
          },
          "9":{
-            "class":"_500_wins",
             "title":"Champion d'Or",
             "description":"Gagner 500 parties"
          },
          "10":{
-            "class":"_2000_wins",
             "title":"Champion de platine",
             "description":"Gagner 2000 parties"
          },
          "11":{
-            "class":"_5_games_day",
             "title":"Amateur",
             "description":"Jouer 5 parties en une journée"
          },
          "12":{
-            "class":"_10_games_day",
             "title":"Passionné",
             "description":"Jouer 10 parties en une journée"
          },
          "13":{
-            "class":"_25_games_day",
             "title":"Fan",
             "description":"Jouer 25 parties en une journée"
          },
          "14":{
-            "class":"_50_games_day",
             "title":"Super Fan",
             "description":"Jouer 50 parties en une journée"
          },
          "15":{
-            "class":"_100_games_day",
             "title":"Accro",
             "description":"Jouer 100 parties en une journée"
          },
          "16":{
-            "class":"_3_wins_cons",
             "title":"Vainqueur",
             "description":"Gagner 3 parties à la suite"
          },
          "17":{
-            "class":"_5_wins_cons",
             "title":"Conquérant",
             "description":"Gagner 5 parties à la suite"
          },
          "18":{
-            "class":"_10_wins_cons",
             "title":"Killer",
             "description":"Gagner 10 parties à la suite"
          },
          "19":{
-            "class":"_20_wins_cons",
             "title":"Invincible",
             "description":"Gagner 20 parties à la suite"
          },
          "20":{
-            "class":"_3_loses_cons",
             "title":"Loser",
             "description":"Perdre 3 parties à la suite"
          }

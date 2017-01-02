@@ -52,129 +52,93 @@
 	"game":"Spiel",
 	"connected":"verbunden",
 	"quick_game":"Spiel",
-	"partager":"Teilen",
+	"share":"Teilen",
 	"friends":"Freunde",
-	"shop":"Shop",
-	"tokens":"Chips",
-	"free_tokens":"Free Chips",
-	"no_tokens":"Sie haben noch genug Chips, um zu spielen.",
-	"buyTokens":"Chips kaufen",
 	"congratulation":"Glückwunsch",
 	"fanpage":"Fan Page",
 	"terms_service":"Nutzungsbedingungen",
 	"privacy_policy":"Datenschutz",
-	"invite_friends":{
-		"title":"Laden Sie Ihre Freunde (30 max)",
-		"infos":"Und verdienen 10% der Chips auf Einladung spielte akzeptiert",
-		"send":"Einladungen senden",
-		"max_requests":"Sie haben bereits 30 Einladungen verschickt heute.",
-		"all":"Alle Freunde"
-	},
-	"pub":{
-		"title":"Der Gelbe Zwerg",
-		"text":"Kartenspiel online. Befreien Sie sich von all Ihre Karten und gewinnt die Wette."
-	},
 	"trophies":{
 		"title":"Trophäe",
 		"win":"Sie gewinnen eine Trophäe",
 		"content":{
 			"1":{
-				"class":"_1_game",
 				"title":"Neuling",
 				"description":"Spielen Sie 1 Spiel"
 			},
 			"2":{
-				"class":"_100_game",
 				"title":"Anfänger",
 				"description":"Spielen Sie 100 Spiele"
 			},
 			"3":{
-				"class":"_500_game",
 				"title":"Zwischen-",
 				"description":"Spielen Sie 500 Spiele"
 			},
 			"4":{
-				"class":"_1000_game",
 				"title":"fortgeschritten",
 				"description":"Spielen Sie 1000 Spiele"
 			},
 			"5":{
-				"class":"_5000_game",
 				"title":"Experte",
 				"description":"Spielen Sie 5000 Spiele"
 			},
 			"6":{
-				"class":"_1_wins",
 				"title":"Meister Schokolade",
 				"description":"Gewinnen Sie 1 Spiel"
 			},
 			"7":{
-				"class":"_50_wins",
 				"title":"Meister Bronze",
 				"description":"Gewinnen Sie 50 Spiele"
 			},
 			"8":{
-				"class":"_250_wins",
 				"title":"Meister Bronze",
 				"description":"Gewinnen Sie 250 Spiele"
 			},
 			"9":{
-				"class":"_500_wins",
 				"title":"Meister Gold",
 				"description":"Gewinnen Sie 500 Spiele"
 			},
 			"10":{
-				"class":"_2000_wins",
 				"title":"Meister Platin",
 				"description":"Gewinnen Sie 2000 Spiele"
 			},
 			"11":{
-				"class":"_5_games_day",
 				"title":"Amateur",
 				"description":"Spielen Sie 5 Spiele an einem Tag"
 			},
 			"12":{
-				"class":"_10_games_day",
 				"title":"Enthusiast",
 				"description":"Spielen Sie 10 Spiele an einem Tag"
 			},
 			"13":{
-				"class":"_25_games_day",
 				"title":"Fan",
 				"description":"Spielen Sie 25 Spiele an einem Tag"
 			},
 			"14":{
-				"class":"_50_games_day",
 				"title":"Super Fan",
 				"description":"Spielen Sie 50 Spiele an einem Tag"
 			},
 			"15":{
-				"class":"_100_games_day",
 				"title":"Süchtige",
 				"description":"Spielen Sie 100 Spiele an einem Tag"
 			},
 			"16":{
-				"class":"_3_wins_cons",
 				"title":"Gewinner",
 				"description":"Gewinne 3 Spiele in Folge"
 			},
 			"17":{
-				"class":"_5_wins_cons",
 				"title":"Eroberer",
 				"description":"Gewinne 5 Spiele in Folge"
 			},
 			"18":{
-				"class":"_10_wins_cons",
 				"title":"Killer",
 				"description":"Gewinne 10 Spiele in Folge"
 			},
 			"19":{
-				"class":"_20_wins_cons",
 				"title":"unbesiegbar",
 				"description":"Gewinne 20 Spiele in Folge"
 			},
 			"20":{
-				"class":"_3_loses_cons",
 				"title":"Verlierer",
 				"description":"Lose 3 Spiele in Folge"
 			}

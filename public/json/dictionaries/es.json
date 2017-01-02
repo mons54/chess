@@ -52,129 +52,93 @@
    "game":"Juego",
    "connected":"conectado",
    "quick_game":"juego",
-   "partager":"Compartir",
+   "share":"Compartir",
    "friends":"Amigos",
-   "shop":"Tienda",
-   "tokens":"Fichas",
-   "free_tokens":"Fichas gratis",
-   "no_tokens":"Usted no tiene suficientes fichas para jugar.",
-   "buyTokens":"Compra fichas",
    "congratulation":"Felicitación",
    "fanpage":"Fan Page",
    "terms_service":"Condiciones del servicio",
    "privacy_policy":"Política de privacidad",
-   "invite_friends":{
-      "title":"Invite a sus amigos (30 max)",
-      "infos":"Y ganar el 10% de las fichas jugadas por invitación aceptada",
-      "send":"Enviar invitaciones",
-      "max_requests":"Usted ya ha enviado 30 invitaciones hoy.",
-      "all":"Todos los amigos"
-   },
-   "pub":{
-      "title":"Enano Amarillo",
-      "text":"Juego de cartas en línea. Librarse de todas tus cartas y gana la apuesta."
-   },
    "trophies":{
       "title":"Trofeo",
       "win":"Usted gana un trofeo",
       "content":{
          "1":{
-            "class":"_1_game",
             "title":"Principiante",
             "description":"Juega 1 juego"
          },
          "2":{
-            "class":"_100_game",
             "title":"Novicio",
             "description":"Juega 100 juegos"
          },
          "3":{
-            "class":"_500_game",
             "title":"Intermedio",
             "description":"Juega 500 juegos"
          },
          "4":{
-            "class":"_1000_game",
             "title":"Avanzado",
             "description":"Juega 1000 juegos"
          },
          "5":{
-            "class":"_5000_game",
             "title":"Experto",
             "description":"Juega 5000 juegos"
          },
          "6":{
-            "class":"_1_wins",
             "title":"Campeón del chocolate",
             "description":"Gana 1 juego"
          },
          "7":{
-            "class":"_50_wins",
             "title":"Campeón de bronce",
             "description":"Gana 50 juegos"
          },
          "8":{
-            "class":"_250_wins",
             "title":"Campeón de plata",
             "description":"Gana 250 juegos"
          },
          "9":{
-            "class":"_500_wins",
             "title":"Campeón de oro",
             "description":"Gana 500 juegos"
          },
          "10":{
-            "class":"_2000_wins",
             "title":"Campeón del platino",
             "description":"Gana 2000 juegos"
          },
          "11":{
-            "class":"_5_games_day",
             "title":"Aficionado",
             "description":"Juega 5 juegos en un día"
          },
          "12":{
-            "class":"_10_games_day",
             "title":"Entusiasta",
             "description":"Juega 10 juegos en un día"
          },
          "13":{
-            "class":"_25_games_day",
             "title":"Fan",
             "description":"Juega 25 juegos en un día"
          },
          "14":{
-            "class":"_50_games_day",
             "title":"Super Fan",
             "description":"Juega 50 juegos en un día"
          },
          "15":{
-            "class":"_100_games_day",
             "title":"Adicto",
             "description":"Juega 100 juegos en un día"
          },
          "16":{
-            "class":"_3_wins_cons",
             "title":"Ganador",
             "description":"Gana 3 juegos consecutivos"
          },
          "17":{
-            "class":"_5_wins_cons",
             "title":"Conquistador",
             "description":"Gana 5 juegos consecutivos"
          },
          "18":{
-            "class":"_10_wins_cons",
             "title":"Asesino",
             "description":"Gana 10 juegos consecutivos"
          },
          "19":{
-            "class":"_20_wins_cons",
             "title":"Invencible",
             "description":"Gana 250 juegos consecutivos"
          },
          "20":{
-            "class":"_3_loses_cons",
             "title":"Perdedor",
             "description":"Perder 3 juegos consecutivos"
          }

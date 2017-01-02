@@ -1,31 +1,38 @@
-(function () {
+'use strict';
 
-    'use strict';
+angular.module('trophies').
 
-    angular.module('trophies.controllers', []).
+/**
+ * @ngdoc controller
+ * @name trophies.controller:trophiesCtrl
+ * @description 
+ * The trophies controller.
+ * @requires $rootScope
+ * @requires $scope
+ */
+controller('trophiesCtrl', ['$rootScope', '$scope', 'socket', 'trophies',
+    
+    function ($rootScope, $scope, socket, trophies) {
 
-    controller('trophiesCtrl', ['$rootScope', '$scope',
-        
-        function ($rootScope, $scope) {
+        socket.emit('leaveHome');
 
-            $rootScope.socket.emit('leaveHome');
+        var userTrophies = {};
 
-            var userTrophies = {};
+        angular.forEach($rootScope.user.trophies, function (data) {
+            userTrophies[data.trophy] = true;
+        });
 
-            angular.forEach($rootScope.user.trophies, function (trophy) {
-                userTrophies[trophy.badge] = true;
+        $scope.trophies = [];
+
+        angular.forEach(trophies, function (value, key) {
+            $scope.trophies.push({
+                id: key,
+                css: userTrophies[key] ? value : 'unknown'
             });
+        });
 
-            $scope.trophies = [];
-
-            angular.forEach($rootScope.text.trophies.content, function (trophy, id) {
-                if (!userTrophies[id]) {
-                    trophy.class = 'no-trophy';
-                }
-                trophy.id = id;
-                $scope.trophies.push(trophy);
-            });
+        $scope.setTrophy = function (trophy) {
+            $scope.trophy = trophy;
         }
-    ]);
-
-})();
+    }
+]);

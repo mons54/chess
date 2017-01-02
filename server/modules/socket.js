@@ -1,530 +1,364 @@
-module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
+'use strict';
 
-    Socket.game = require(dirname + '/server/modules/game')();  
+var fb = require(dirname + '/server/modules/fb'),
+    db = require(dirname + '/server/modules/db'),
+    moduleGame = require(dirname + '/server/modules/game');
 
-    Socket.connected = {};
+module.exports = function (io) {
 
-    var users = mongoose.models.users,
-        games = mongoose.models.games,
-        badges = mongoose.models.badges,
-        freeTokens = mongoose.models.freeTokens,
-        payments = mongoose.models.payments;
+    function Module() {
+        this.socketConnected = {};
+        this.userGames = {};
+    }
 
-    io.on('connection', function (socket) {
+    Module.prototype.listGames = function (createdGame) {
+        this.sendHome('listGames', createdGame);
+    };
 
-        socket.on('init', function (data) {
+    Module.prototype.sendHome = function (name, data) {
+        io.sockets.to('home').emit(name, data);  
+    };
 
-            if (!data.uid || !data.accessToken) {
-                disconnectSocket();
-                return;
-            }
+    Module.prototype.getUserGame = function (uid) {
+        return this.userGames[uid];
+    };
 
-            fbgraph.post('/' + data.uid + '?access_token=' + data.accessToken, function(err, res) {
-                if (err || !res.success) {
-                    disconnectSocket();
-                    return;
-                }
-                init(data, err, res);
-            });
-        });
+    Module.prototype.checkStartGame = function (socket, uid) {
+        return this.checkSocketUid(socket) && !this.getUserGame(socket.uid) && socket.uid !== uid;
+    };
 
-        socket.on('initUser', function () {
-            initUser();
-        });
+    Module.prototype.startGame = function (socket, socketOpponent, dataGame) {
+        
+        moduleGame.deleteCreatedGame(socket.uid);
+        moduleGame.deleteCreatedGame(socketOpponent.uid);
+        
+        this.listGames(moduleGame.createdGame);
+        
+        socket.leave('home');
+        socketOpponent.leave('home');
+        
+        this.listChallengers();
+        
+        this.deleteChallenges(socket);
+        this.deleteChallenges(socketOpponent);
 
-        socket.on('createGame', function (data) {
+        var white, black;
 
-            if (!data || !checkSocketUid() || !Socket.game.create(socket, data)) {
-                return;
-            }
-
-            listGames();
-        });
-
-        socket.on('removeGame', function () {
-            if (!checkSocketUid()) {
-                return;
-            }
-            
-            removeGame(socket.uid);
-        });
-
-        socket.on('challenge', function (data) {
-
-            var socketOpponent = getSocket(data.uid),
-                color = data.color,
-                time = Socket.game.getTime(data.time);
-
-            if (!checkSocketUid() || !socketOpponent || !Socket.game.checkColor(color) || !Socket.game.checkColor(color)) {
-                return;
-            }
-
-            initChallenges(socketOpponent);
-
-            socketOpponent.challenges[socket.uid] = {
-                create: false,
-                name: socket.name,
-                points: socket.points,
-                ranking: socket.ranking,
-                color: color,
-                time: time
-            };
-
-            initChallenges(socket);
-
-            socket.challenges[data.uid] = {
-                create: true,
+        if (dataGame.color === 'white') {
+            white = {
+                uid: socketOpponent.uid,
                 name: socketOpponent.name,
                 points: socketOpponent.points,
-                ranking: socketOpponent.ranking,
-                color: color,
-                time: time
+                ranking: socketOpponent.ranking
             };
-
-            socketOpponent.emit('challenges', socketOpponent.challenges);
-            socket.emit('challenges', socket.challenges);
-        });
-
-        socket.on('removeChallenge', function (uid) {
-            if (checkSocketUid()) {
-                removeChallenge(getSocket(uid), socket.uid);
-            }
-            removeChallenge(socket, uid);
-        });
-
-        socket.on('newGame', function (data) {
-            var game = Socket.game.start(data.white, data.black, data.time);
-
-            socket.gid = game.id;
-
-            socket.emit('game', game);
-        });
-
-        socket.on('move', function (data) {
-
-            if (!socket.gid) {
-                return;
-            }
-
-            var game = Socket.game.move(socket.gid, data.start, data.end, null);
-            
-            socket.emit('game', game);
-        });
-
-        socket.on('leaveHome', function () {
-
-            if (!checkSocketUid()) {
-                return;
-            }
-
-            socket.leave('home');
-            listChallengers();
-
-            removeGame(socket.uid);
-
-            removeChallenges(socket);
-        });
-
-        socket.on('ranking', function (data) {
-            if (!checkSocketUid()) {
-                return;
-            }
-
-            var uid = socket.uid,
-                limit = 8,
-                page = parseInt(data.page),
-                friends = data.friends;
-
-            if (page) {
-                if (page <= 0) {
-                    page = 1;
-                }
-                initRanking(friends, page, limit, false);
-            } else {
-                var points = socket.points,
-                    request = {
-                        actif: 1,
-                        points: {
-                            $gt: points
-                        }
-                    };
-
-                if (friends) {
-                    request = {
-                        actif: 1,
-                        uid: {
-                            $in: friends
-                        },
-                        points: {
-                            $gt: points
-                        }
-                    };
-                }
-
-                users.count(request, function (err, count) {
-
-                    if (err) {
-                        return;
-                    }
-
-                    count++;
-
-                    var page = Math.ceil(count / limit);
-
-                    if (page <= 0) {
-                        page = 1;
-                    }
-
-                    initRanking(friends, page, limit, true);
-                });
-            }
-        });
-
-        socket.on('payment', function (data) {
-
-            if (!checkSocketUid() || !data.signed_request) {
-                return;
-            }
-
-            var request = parseSignedRequest(data.signed_request),
-                item    = app.itemsAmount[parseFloat(request.amount)];
-
-            if (!request || !item) {
-                return;
-            }
-
-            users.findOne({
-                uid: socket.uid
-            }, 'tokens', function (err, data) {
-
-                if (err || !data) {
-                    return;
-                }
-
-                token = parseInt(data.tokens) + parseInt(item.tokens);
-
-                new payments({
-                    id: request.payment_id,
-                    uid: socket.uid,
-                    item: item.item,
-                    type: 'charge',
-                    status: 'completed',
-                    time: request.issued_at,
-                }).save(function (err, res) {
-                    if (err) {
-                        return;
-                    }
-                    users.update({ uid: socket.uid }, { $set: { tokens: token } }, function (err) {
-                        if (err) {
-                            return;
-                        }
-                        initUser();
-                    });
-                });   
-            });
-        });
-
-        socket.on('disconnect', function () {
-
-            if (checkSocketUid()) {
-                delete Socket.connected[socket.uid];
-                removeGame(socket.uid);
-            }
-
-            removeChallenges(socket);
-            
-        });
-
-        function removeGame(uid) {
-
-            if (!Socket.game.createdGame[uid]) {
-                return;
-            }
-
-            delete Socket.game.createdGame[uid];
-            listGames();
+            black = {
+                uid: socket.uid,
+                name: socket.name,
+                points: socket.points,
+                ranking: socket.ranking
+            };
+        } else {
+            white = {
+                uid: socket.uid,
+                name: socket.name,
+                points: socket.points,
+                ranking: socket.ranking
+            };
+            black = {
+                uid: socketOpponent.uid,
+                name: socketOpponent.name,
+                points: socketOpponent.points,
+                ranking: socketOpponent.ranking
+            };
         }
 
-        function listGames() {
-            sendHome('listGames', Socket.game.createdGame);
+
+        var gid = moduleGame.start(white, black, dataGame.time),
+            room = moduleGame.getRoom(gid);
+
+        this.userGames[socket.uid] = gid;
+        this.userGames[socketOpponent.uid] = gid;
+
+        socket.join(room);
+        socketOpponent.join(room);
+
+        io.to(room).emit('startGame', gid);
+    };
+
+    Module.prototype.getPointsGame = function (player1, player2) {
+
+        var points = player1.points - player2.points;
+
+        if (points > 400) {
+            points = 400;
+        } else if (points < -400) {
+            points = -400;
         }
 
-        function initChallenges(socket) {
-            if (!socket.challenges) {
-                socket.challenges = {};
-            }
+        points = points / 400;
+        points = Math.pow(10, points);
+        points = 1 + points;
+        points = 1 / points;
+        points = 1 - points;
+
+        var k = 20;
+
+        if (player1.points > 2400) {
+            k = 10;
+        } else if (player1.countGame <= 30) {
+            k = 40;
         }
 
-        function removeChallenges(socket) {
+        return Math.round(k * (player1.coefGame - points));
+    };
 
-            if (!checkSocketUid() || !socket.challenges) {
-                return;
-            }
+    Module.prototype.getBlackListGame = function (blackListGame, game, color) {
 
-            for (var uid in socket.challenges) {
-                removeChallenge(getSocket(uid), socket.uid);
-            }
-
-            delete socket.challenges;
-        }
-
-        function removeChallenge(socket, uid) {
-
-            if (!socket || !socket.challenges || !socket.challenges[uid]) {
-                return;
-            }
-
-            delete socket.challenges[uid];
-            socket.emit('challenges', socket.challenges);
-        }
-
-        function initRanking(friends, page, limit, getUser) {
-
-            var offset = (page * limit) - limit,
-                request;
-
-            if (getUser) {
-                request = getRequestRankingWithUser(friends);
-            } else {
-                request = getRequestRankingWithoutUser(friends);
-            }
-
-            users.count(request, function (err, count) {
-
-                if (err) {
-                    return;
+        if (!(blackListGame instanceof Object)) {
+            blackListGame = {};
+        } else {
+            var maxTime = Math.round(new Date().getTime()) - (3600 * 1000);
+            for (var uid in blackListGame) {
+                if (maxTime > blackListGame[uid]) {
+                    delete blackListGame[uid];
                 }
-
-                if (count == 0) {
-
-                    var data = [];
-                    data.push({
-                        uid: socket.uid,
-                        points: socket.points,
-                        position: 1
-                    });
-
-                    emitRanking(data);
-
-                    return;
-                }
-
-                if (getUser) {
-                    count++;
-                    limit = limit - 1;
-                }
-
-                users.find(request).sort({
-                    points: -1
-                }).skip(offset).limit(limit).hint({
-                    points: 1
-                }).exec(function (err, data) {
-                    if (err || !data[0] || !data[0].points) {
-                        return;
-                    }
-
-                    getRanking(data, count, friends, offset, limit, getUser);
-                });
-            });
+            };
         }
 
-        function getRanking(data, total, friends, offset, limit, getUser) {
+        if (game.result.name === 'resign' && this.checkBlackListGame(game)) {
+            blackListGame[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+        }
+
+        return blackListGame;
+    };
+
+    Module.prototype.checkBlackListGame = function (game) {
+        var maxTime = 10,
+            time = game.time,
+            timeWhite = game.white.time,
+            timeBlack = game.black.time;
         
-            var points = (getUser && socket.points > data[0].points) ? socket.points : data[0].points,
-                request = {
-                    actif: 1,
-                    points: {
-                        $gt: points
-                    }
-                };
+        return timeWhite + maxTime > time || timeBlack + maxTime > time;
+    };
 
-            if (friends) {
-                request = {
-                    actif: 1,
-                    uid: {
-                        $in: friends
-                    },
-                    points: {
-                        $gt: points
-                    }
-                };
+    Module.prototype.getDataPlayerGame = function (data, game, result, color) {
+        
+        var coefGame,
+            position = color === 'white' ? 1 : 2,
+            consWin  = data.consWin ? data.consWin : 0;
+
+        if (result === 0) {
+            coefGame = 0.5;
+            consWin = 0;
+        } else if (result === position) {
+            coefGame = 1;
+            if (consWin < 0) {
+                consWin = 0;
             }
+            consWin++;
+        } else {
+            coefGame = 0;
+            if (consWin > 0) {
+                consWin = 0;
+            }
+            consWin--;
+        }
 
-            users.count(request, function (err, count) {
+        return {
+            coefGame: coefGame,
+            consWin: consWin,
+            blackListGame: this.getBlackListGame(data.blackListGame, game, color)
+        };
+    };
 
-                var position = count + 1,
-                    request = {
-                        actif: 1,
-                        points: data[0].points
-                    };
+    Module.prototype.saveGame = function (game) {
 
-                if (friends) {
-                    request = {
-                        actif: 1,
-                        uid: {
-                            $in: friends
-                        },
-                        points: data[0].points
-                    };
+        var self = this,
+            uidWhite = game.white.uid,
+            uidBlack = game.black.uid,
+            result = game.result.winner,
+            data;
+
+        moduleGame.deleteGame(game.id);
+
+        delete this.userGames[uidWhite];
+        delete this.userGames[uidBlack];
+
+        db.findOne('users', { uid: uidWhite }, null)
+        .then(function (response) {
+            
+            var player = self.getDataPlayerGame(response, game, result, 'white');
+
+            data = {
+                white: {
+                    points: response.points,
+                    coefGame: player.coefGame,
+                    consWin: player.consWin,
+                    blackListGame: player.blackListGame
                 }
+            };
 
-                users.count(request, function (err, count) {
+            return db.count('games', { $or: [{ white: uidWhite }, { black: uidWhite }] }, null);
+        })
+        .then(function (response) {
 
-                    var current = 0,
-                        result = [],
-                        ranking = {},
-                        value;
+            data.white.countGame = response;
 
-                    if (getUser) {
+            return db.findOne('users', { uid: uidBlack }, null);
+        })
+        .then(function (response) {
 
-                        var saveUser = false;
+            var player = self.getDataPlayerGame(response, game, result, 'black');
+            
+            data.black = {
+                points: response.points,
+                coefGame: player.coefGame,
+                consWin: player.consWin,
+                blackListGame: player.blackListGame
+            };
 
-                        for (var i in data) {
+            return db.count('games', { $or: [{ white: uidBlack }, { black: uidBlack }] }, null);
+        })
+        .then(function (response) {
 
-                            if (!saveUser && socket.points >= data[i].points) {
-                                result.push({
-                                    uid: socket.uid,
-                                    points: socket.points,
-                                });
+            data.black.countGame = response;
 
-                                saveUser = true;
-                            }
+            db.save('games', {
+                result: result,
+                white: uidWhite,
+                black: uidBlack,
+                date: new Date()
+            });
 
-                            result.push(data[i]);
-                        }
+            var pointsWhite = self.getPointsGame(data.white, data.black),
+                pointsBlack = self.getPointsGame(data.black, data.white);
 
-                        if (!saveUser) {
-                            result.push({
-                                uid: socket.uid,
-                                points: socket.points,
-                            });
-                        }
-                    } else {
-                        result = data;
-                    }
+            data.white.points += self.getPointsGame(data.white, data.black);
+            data.black.points += self.getPointsGame(data.black, data.white);
 
-                    for (var i in result) {
+            self.updateUserGame(uidWhite, result, data.white);
+            self.updateUserGame(uidBlack, result, data.black);
+        });
+    };
 
-                        if (result[i].points < result[current].points) {
-                            if (!value) {
-                                position += count;
-                            } else {
-                                position += value;
-                            }
+    Module.prototype.updateUserGame = function (uid, result, data) {
+        var self = this;
+        db.update('users', { uid: uid }, {
+            points: data.points,
+            consWin: data.consWin,
+            blackListGame: data.blackListGame,
+            active: true
+        })
+        .then(function (response) {
+            data.countGame++;
 
-                            value = 1;
-                        } else {
-                            if (value) {
-                                value++;
-                            }
-                        }
+            self.setTrophyGame(uid, data.countGame);
 
-                        ranking[i] = {
-                            uid: result[i].uid,
-                            points: result[i].points,
-                            position: position
-                        };
+            if (result === 1) {
+                self.setTrophyWin(uid);
+            }
 
-                        current = i;
-                    }
+            self.setTrophyDay(uid);
+            self.setTrophyConsWin(uid, data.consWin);
+        });
+    };
 
-                    emitRanking(ranking, getPage(total, offset, limit));
+    Module.prototype.setChallenges = function (socket, key, value) {
+        if (!socket.challenges) {
+            socket.challenges = {};
+        }
+
+        socket.challenges[key] = value;
+    };
+
+    Module.prototype.deleteChallenges = function (socket) {
+        if (!this.checkSocketUid(socket) || !socket.challenges) {
+            return;
+        }
+
+        for (var uid in socket.challenges) {
+            this.deleteChallenge(this.getSocket(uid), socket.uid);
+        }
+
+        delete socket.challenges;
+    };
+
+    Module.prototype.deleteChallenge = function (socket, uid) {
+        if (!socket || !socket.challenges || !socket.challenges[uid]) {
+            return;
+        }
+
+        delete socket.challenges[uid];
+        socket.emit('listChallenges', socket.challenges);
+    };
+
+    Module.prototype.getChallenge = function (socket, uid) {
+        if (!socket.challenges || !socket.challenges[uid]) {
+            return;
+        }
+
+        return socket.challenges[uid];
+    };
+
+    Module.prototype.getSocket = function (uid) {
+        var id = this.socketConnected[uid],
+            socket = null;
+        if (!id) {
+            return socket;
+        }
+
+        for (var socketId in io.sockets.sockets) {
+            if (id === socketId) {
+                socket = io.sockets.connected[socketId];
+            }
+        };
+
+        return socket;
+    };
+
+    Module.prototype.checkSocketUid = function (socket) {
+        if (!socket.uid) {
+            socket.disconnect();
+            return false;
+        }
+        return true;
+    };
+
+    Module.prototype.listChallengers = function () {
+
+        var challengers = [],
+            room = io.sockets.adapter.rooms['home'];
+
+        if (room && room.sockets) {
+            for (var socketId in room.sockets) {
+                var user = io.sockets.connected[socketId];
+                if (!user || !user.uid) {
+                    continue;
+                }
+                challengers.push({
+                    uid: user.uid,
+                    name: user.name,
+                    ranking: user.ranking,
+                    points: user.points
                 });
-            });
-        }
-
-        function getRequestRankingWithUser(friends) {
-            
-            var request;
-
-            if (friends) {
-                request = {
-                    $and: [{
-                        actif: 1,
-                        uid: {
-                            $in: friends
-                        }
-                    }, {
-                        uid: {
-                            $ne: socket.uid
-                        }
-                    }]
-                };
-            } else {
-                request = {
-                    $and: [{
-                        actif: 1
-                    }, {
-                        uid: {
-                            $ne: socket.uid
-                        }
-                    }]
-                };
-            }
-
-            return request;
-        }
-
-        function getRequestRankingWithoutUser(friends) {
-            
-            var request;
-
-            if (friends) {
-                request = {
-                    actif: 1,
-                    uid: {
-                        $in: friends
-                    }
-                };
-            } else {
-                request = {
-                    actif: 1
-                };
-            }
-
-            return request;
-        }
-
-        function emitRanking(data, pages) {
-            socket.emit('ranking', {
-                ranking: data,
-                pages: pages
-            });
-        }
-
-        function getPage(total, offset, limit) {
-            var page = Math.ceil(offset / limit) + 1,
-                last = Math.ceil(total / limit);
-
-            if (last <= 1) {
-                return;
-            }
-
-            return {
-                page: page,
-                prev: getPagePrev(page, offset, limit),
-                next: getPageNext(page, last),
-                last: last
             };
         }
 
-        function getPageNext(page, last) {
-            if (page != last) {
-                return page + 1;
+        io.sockets.to('home').emit('challengers', challengers);
+    };
+
+    Module.prototype.init = function (socket, data) {
+
+        var self = this;
+
+        fb.post('/' + data.uid + '?access_token=' + data.accessToken)
+        .then(function (response) {
+            if (!response.success) {
+                socket.disconnect();
+                this.finally;
             }
-            return false;
-        }
 
-        function getPagePrev(page, offset, limit) {
-            if (offset >= limit) {
-                return page - 1;
-            }
-            return false;
-        }
-
-        function init(data) {
-
-            var socketConnected = getSocket(data.uid);
+            var socketConnected = self.getSocket(data.uid);
 
             if (socketConnected) {
                 socketConnected.disconnect();
@@ -532,394 +366,491 @@ module.exports = Socket = function (app, io, mongoose, fbgraph, crypto) {
 
             socket.uid = data.uid;
             socket.name = data.name;
-            Socket.connected[data.uid] = socket.id;
+            self.socketConnected[data.uid] = socket.id;
 
-            users.count({ uid: data.uid }, function (err, count) {
-
-                if (err) {
-                    disconnectSocket();
-                    return;
-                }
-
-                if (count == 0) {
-
-                    var user = new users({
-                        uid: data.uid,
-                        points: 1500,
-                        tokens: 17,
-                        trophy: 1,
-                        parrainage: data.sponsorship,
-                    });
-
-                    user.save(saveUser);
-                } else {
-                    initUser(data.sponsorship);
-                }
-            });
-        }
-
-        function saveUser(err) {
-
-            if (err) {
-                disconnectSocket();
-                return;
-            }
-
-            initUser();
-        }
-
-        function initUser(sponsorship) {
-
-            if (!checkSocketUid()) {
-                return;
-            }
-
-            var uid = socket.uid ? socket.uid : 0;
-
-            users.findOne({
-                uid: uid
-            }, function (err, data) {
-
-                if (err || !data) {
-                    return;
-                }
-
-                if (data.ban) {
-                    disconnectSocket();
-                    return;
-                }
-
-                infosUser(uid, sponsorship, data);
-            });
-        }
-
-        function infosUser(uid, sponsorship, data) {
-
-            socket.moderateur = data.moderateur ? true : false;
-
-            checkTrophy(uid);
-
-            if (!data.parrainage && sponsorship) {
-                updateUserSponsorship(uid, sponsorship);
-            }
-
-            var points = data.points;
-            
-            socket.points = points;
-
-            infosUserTokens(uid, data);
-        }
-
-        function infosUserTokens(uid, data) {
-
-            freeTokens.findOne({
-                uid: uid
-            }, 'time', function (err, res) {
-                
-                if (err) {
-                    return;
-                }
-
-                var token = 0;
-
-                if (!data.tokens && data.tokens != 0) {
-                    token += 17;
-                    updateUserTokens(uid, token);
-                } else {
-                    token += data.tokens;
-                }
-
-                var time = Math.round(new Date().getTime() / 1000),
-                    freeTime;
-
-                if (!res || !res.time) {
-                    token += 3;
-                    freeTime = time;
-                    var freeToken = new freeTokens({
-                        uid: uid
-                    });
-                    freeToken.time = time;
-                    freeToken.save();
-                    updateUserTokens(uid, token);
-                } else if (res.time < (time - (24 * 3600))) {
-                    freeTime = time;
-                    token += 3;
-                    updateTokens(uid, time);   
-                    updateUserTokens(uid, token);
-                } else {
-                    freeTime = res.time;
-                }
-
-                infosUserBadges(uid, token, freeTime);
-            });
-        }
-
-        function infosUserBadges(uid, token, freeTime) {
-
-            badges.find({
-                uid: uid
-            }, function (err, data) {
-                if (err) {
-                    return;
-                }
-
-                infosUserRanking(uid, token, freeTime, data);
-            });
-
-        }
-
-        function infosUserRanking(uid, token, freeTime, trophies) {
-            users.count({
-                actif: 1,
-                points: {
-                    $gt: socket.points
-                }
-            }, function (err, count) {
-
-                if (err) {
-                    return;
-                }
-
-                socket.ranking = count + 1;
-                socket.join('home', function () {
-                    connected();
+            return db.count('users', { uid: data.uid });
+        })
+        .then(function (response) {
+            if (response === 0) {
+                return db.save('users', {
+                    uid: data.uid,
+                    points: 1500
                 });
-
-                socket.emit('infosUser', {
-                    moderateur: socket.moderateur,
-                    points: socket.points,
-                    ranking: socket.ranking,
-                    tokens: token,
-                    freeTime: getFreeTime(freeTime),
-                    trophies: trophies
-                });
-
-                socket.emit('listGames', Socket.game.createdGame);
-            });
-        }
-
-        function connected() {
-            io.sockets.emit('connected', io.sockets.sockets.length);
-            listChallengers();
-        }
-
-        function listChallengers() {
-
-            var challengers = [];
-
-            io.sockets.sockets.forEach(function (socket) {
-                if (!socket.uid || !socket.rooms || socket.rooms.indexOf('home') === -1) {
-                    return;
-                }
-                challengers.push({
-                    uid: socket.uid,
-                    name: socket.name,
-                    ranking: socket.ranking,
-                    points: socket.points
-                });
-            });
-
-            io.sockets.to('home').emit('challengers', challengers);
-        }
-
-        function updateTokens(uid, time) {
-            freeTokens.update({
-                uid: uid
-            }, {
-                $set: {
-                    time: time
-                }
-            }, fn);
-        }
-
-        function updateUserTokens(uid, token) {
-            users.update({
-                uid: uid
-            }, {
-                $set: {
-                    tokens: token
-                }
-            }, fn);
-        }
-
-        function updateUserSponsorship(uid, sponsorship) {
-            users.update({
-                uid: uid
-            }, {
-                $set: {
-                    parrainage: sponsorship
-                }
-            }, fn);
-        }
-
-        function checkTrophy(uid) {
-
-            games.count({
-                $or: [{
-                    blanc: uid
-                }, {
-                    noir: uid
-                }]
-            }, function (err, count) {
-
-                if (err || !count) {
-                    return;
-                }
-
-                if (count >= 1000) {
-
-                    setTrophy(uid, 4);
-                    setTrophy(uid, 3);
-                    setTrophy(uid, 2);
-                    setTrophy(uid, 1);
-
-                } else if (count >= 500) {
-
-                    setTrophy(uid, 3);
-                    setTrophy(uid, 2);
-                    setTrophy(uid, 1);
-
-                } else if (count >= 100) {
-
-                    setTrophy(uid, 2);
-                    setTrophy(uid, 1);
-
-                } else if (count >= 1) {
-
-                    setTrophy(uid, 1);
-
-                }
-            });
-
-            games.count({
-                "$or": [{
-                    "$and": [{
-                        "noir": uid,
-                        "resultat": 2
-                    }]
-                }, {
-                    "$and": [{
-                        "blanc": uid,
-                        "resultat": 1
-                    }]
-                }]
-            }, function (err, count) {
-
-                if (err || !count) {
-                    return;
-                }
-
-                if (count >= 500) {
-
-                    setTrophy(uid, 9);
-                    setTrophy(uid, 8);
-                    setTrophy(uid, 7);
-                    setTrophy(uid, 6);
-
-                } else if (count >= 250) {
-
-                    setTrophy(uid, 8);
-                    setTrophy(uid, 7);
-                    setTrophy(uid, 6);
-                } else if (count >= 50) {
-
-                    setTrophy(uid, 7);
-                    setTrophy(uid, 6);
-                } else if (count >= 1) {
-
-                    setTrophy(uid, 6);
-                }
-
-            });
-        }
-
-        function setTrophy(uid, trophy) {
-
-            badges.count({
-                uid: uid,
-                badge: trophy
-            }, function (err, count) {
-
-                if (err || count) {
-                    return;
-                }
-
-                var badge = new badges({
-                    uid: uid
-                });
-                badge.badge = trophy;
-                badge.save();
-
-                var socketOpponent = getSocket(uid);
-
-                if (socketOpponent) {
-                    socketOpponent.emit('trophy', trophy);
-                }
-            });
-        }
-
-        function getFreeTime (time) {
-            return (3600 * 24) - (Math.round(new Date().getTime() / 1000) - time);
-        }
-
-        function checkSocketUid() {
-            if (!socket.uid) {
-                disconnectSocket();
-                return false;
             }
             return true;
-        }
-
-        function disconnectSocket() {
+        })
+        .then(function (response) {
+            self.initUser(socket);
+        })
+        .catch(function (error) {
             socket.disconnect();
+        });
+    };
+
+    Module.prototype.initUser = function (socket) {
+
+        if (!this.checkSocketUid(socket)) {
+            return;
         }
 
-        function getSocket(uid) {
-            var id = Socket.connected[uid];
-            if (!id) {
-                return null;
+        var self = this,
+            trophies;
+
+        db.findOne('users', { uid: socket.uid }, null)
+        .then(function (response) {
+            if (!response) {
+                this.finally;
             }
-            var socket = null;
-            io.sockets.sockets.forEach(function (value) {
-                if (id == value.id) {
-                    socket = value;
-                }
+
+            if (response.ban) {
+                socket.disconnect();
+                this.finally;
+            }
+
+            socket.moderateur = response.moderateur ? true : false;
+
+            self.checkTrophies(socket.uid);
+
+            socket.points = response.points;
+            socket.blackListGame = response.blackListGame;
+
+            return db.find('trophies', { uid: socket.uid });
+        })
+        .then(function (response) {
+            trophies = response;
+            return db.count('users', { active: 1, points: { $gt: socket.points } });
+        })
+        .then(function (response) {
+
+            socket.ranking = response + 1;
+
+            socket.emit('infosUser', {
+                moderateur: socket.moderateur,
+                points: socket.points,
+                ranking: socket.ranking,
+                trophies: trophies
             });
-            return socket;
-        }
 
-        function sendHome(name, data) {
-            io.sockets.to('home').emit(name, data);
-        }
+            var gid = self.getUserGame(socket.uid);
 
-        function parseSignedRequest(signedRequest) {
-
-            signedRequest = signedRequest.split('.', 2);
-
-            var encodedSig = signedRequest[0],
-                payload = signedRequest[1],
-                sig = base64Decode(encodedSig),
-                data = JSON.parse(base64Decode(payload));
-
-            if (data.algorithm && data.algorithm.toUpperCase() !== 'HMAC-SHA256') {
-                return;
+            if (gid) {
+                socket.join(moduleGame.getRoom(gid));
+                socket.emit('startGame', gid);
+            } else {
+                socket.join('home', self.listChallengers);
+                socket.emit('listGames', moduleGame.createdGame);
+                socket.emit('listChallenges', socket.challenges);
             }
 
-            var hmac = crypto.createHmac('sha256', app.facebook.secret);
-            hmac.update(payload);
-            var expectedSig = base64Decode(hmac.digest('base64'));
+            socket.emit('ready');
 
-            if (sig !== expectedSig) {
-                return;
+        });
+    };
+
+    Module.prototype.profile = function (socket, data) {
+        db.findOne('users', { uid: data.uid }, 'points')
+        .then(function (response) {
+            data.points = response.points;
+            return db.all([
+                db.count('users', {
+                    active: 1,
+                    points: {
+                        $gt: data.points
+                    }
+                }),
+                db.count('games', {
+                    $or: [{
+                        white: data.uid
+                    }, {
+                        black: data.uid
+                    }]
+                }), 
+                db.count('games', {
+                    $or: [{
+                        white: data.uid,
+                        result: 1
+                    }, {
+                        black: data.uid,
+                        result: 2
+                    }]
+                }),
+                db.count('games', {
+                    $or: [{
+                        white: data.uid,
+                        result: 0
+                    }, {
+                        black: data.uid,
+                        result: 0
+                    }]
+                })
+            ]);
+        })
+        .then(function (response) {
+            data.ranking = response[0] + 1;
+            data.games = response[1];
+            data.win = response[2];
+            data.draw = response[3];
+            data.lose = data.games - (data.win + data.draw);
+            socket.emit('profile', data);
+        });
+    };
+
+    Module.prototype.ranking = function (socket, data) {
+        var page = parseInt(data.page),
+            limit = 10,
+            friends = data.friends;
+
+        if (page) {
+            page = this.formatPage(page);
+            this.initRanking(socket, friends, page, limit, false);
+            return;
+        }
+
+        var self = this,
+            points = socket.points,
+            request = friends ? { active: 1, uid: { $in: friends }, points: { $gt: points } } : { active: 1, points: { $gt: points } };
+
+        db.count('users', request)
+        .then(function (count) {
+            count++;
+            var page = self.formatPage(Math.ceil(count / limit));
+            self.initRanking(socket, friends, page, limit, true);
+        });
+    };
+
+    Module.prototype.initRanking = function (socket, friends, page, limit, getUser) {
+        var self = this,
+            offset = (page * limit) - limit,
+            request,
+            total,
+            data,
+            position;
+
+        if (getUser) {
+            request = this.getRequestRankingWithUser(socket.uid, friends);
+        } else {
+            request = this.getRequestRankingWithoutUser(friends);
+        }
+
+        db.count('users', request)
+        .then(function (count) {
+            if (count === 0) {
+                socket.emit('ranking', {
+                    ranking:[{
+                        uid: socket.uid,
+                        points: socket.points,
+                        position: 1
+                    }]
+                });
+                this.finally;
             }
 
-            return data;
+            if (getUser) {
+                count++;
+            }
+
+            total = count;
+
+            return db.exec('users', request, { points: -1 }, offset, getUser ? limit - 1 : limit, { points: 1 });
+        })
+        .then(function (response) {
+            if (typeof response[0] !== 'object' || typeof response[0].points !== 'number') {
+                socket.emit('ranking', false);
+                this.finally;
+            }
+
+            var points = (getUser && socket.points > response[0].points) ? socket.points : response[0].points,
+                request = { active: 1, points: { $gt: points } };
+
+            if (friends) {
+                request = { active: 1, uid: { $in: friends }, points: { $gt: points } };
+            }
+
+            data = response;
+
+            return db.count('users', request);
+        })
+        .then(function (count) {
+            position = count + 1;
+            var request = { active: 1, points: data[0].points };
+            if (friends) {
+                request = { active: 1, uid: { $in: friends }, points: data[0].points };
+            }
+
+            return db.count('users', request);
+        })
+        .then(function (count) {
+            socket.emit('ranking', {
+                ranking: self.getRanking(data, position, count, getUser, socket.uid, socket.points),
+                pages: self.getPages(total, offset, limit)
+            });
+        });
+    };
+
+    Module.prototype.getRanking = function (data, position, count, getUser, uid, points) {
+        var current = 0,
+            result = [],
+            ranking = {},
+            value;
+
+        if (getUser) {
+
+            var saveUser = false;
+
+            for (var i in data) {
+                if (!saveUser && points >= data[i].points) {
+                    result.push({
+                        uid: uid,
+                        points: points,
+                    });
+                    saveUser = true;
+                }
+                result.push(data[i]);
+            }
+
+            if (!saveUser) {
+                result.push({
+                    uid: uid,
+                    points: points,
+                });
+            }
+        } else {
+            result = data;
         }
 
-        function base64Decode(data) {
-            return new Buffer(data, 'base64').toString('ascii');
+        for (var i in result) {
+
+            if (result[i].points < result[current].points) {
+                if (!value) {
+                    position += count;
+                } else {
+                    position += value;
+                }
+
+                value = 1;
+            } else {
+                if (value) {
+                    value++;
+                }
+            }
+
+            ranking[i] = {
+                uid: result[i].uid,
+                points: result[i].points,
+                position: position
+            };
+
+            current = i;
         }
 
-        function fn() { };
-    });
+        return ranking;
+    };
+
+    Module.prototype.getRequestRankingWithUser = function (uid, friends) {
+        return friends ? { $and: [{ active: 1, uid: { $in: friends } }, { uid: { $ne: uid } }] } : { $and: [{ active: 1 }, { uid: { $ne: uid } }] };
+    };
+
+    Module.prototype.getRequestRankingWithoutUser = function (friends) {  
+        return friends ? { active: 1, uid: { $in: friends } } : { active: 1 };
+    };
+
+    Module.prototype.formatPage = function (page) {
+        return page <= 0 ? 1 : page;
+    };
+
+    Module.prototype.getPages = function (total, offset, limit) {
+        var page = Math.ceil(offset / limit) + 1,
+            last = Math.ceil(total / limit);
+
+        if (last <= 1) {
+            return;
+        }
+
+        return {
+            page: page,
+            prev: this.getPagePrev(page, offset, limit),
+            next: this.getPageNext(page, last),
+            last: last
+        };
+    };
+
+    Module.prototype.getPageNext = function (page, last) {
+        if (page != last) {
+            return page + 1;
+        }
+        return false;
+    };
+
+    Module.prototype.getPagePrev = function (page, offset, limit) {
+        if (offset >= limit) {
+            return page - 1;
+        }
+        return false;
+    };
+
+    Module.prototype.checkTrophies = function (uid) {
+        var self = this;
+        db.count('games' , { $or: [{ white: uid }, { black: uid }]})
+        .then(function (response) {
+            if (!response) {
+                this.finally;
+            }
+            if (response >= 1000) {
+                self.setTrophy(uid, 4);
+                self.setTrophy(uid, 3);
+                self.setTrophy(uid, 2);
+                self.setTrophy(uid, 1);
+            } else if (response >= 500) {
+                self.setTrophy(uid, 3);
+                self.setTrophy(uid, 2);
+                self.setTrophy(uid, 1);
+            } else if (response >= 100) {
+                self.setTrophy(uid, 2);
+                self.setTrophy(uid, 1);
+            } else if (response >= 1) {
+                self.setTrophy(uid, 1);
+            }
+        });
+
+        db.count('games' , { $or: [{ $and: [{ black: uid, result: 2 }] }, { $and: [{ white: uid, result: 1 }] }] })
+        .then(function (response) {
+            if (!response) {
+                this.finally;
+            }
+            if (response >= 500) {
+                self.setTrophy(uid, 9);
+                self.setTrophy(uid, 8);
+                self.setTrophy(uid, 7);
+                self.setTrophy(uid, 6);
+            } else if (response >= 250) {
+                self.setTrophy(uid, 8);
+                self.setTrophy(uid, 7);
+                self.setTrophy(uid, 6);
+            } else if (response >= 50) {
+                self.setTrophy(uid, 7);
+                self.setTrophy(uid, 6);
+            } else if (response >= 1) {
+                self.setTrophy(uid, 6);
+            }
+        });
+    };
+
+    Module.prototype.setTrophyGame = function (uid, games) {
+
+        switch (games) {
+            case 1:
+                this.setTrophy(uid, 1);
+                break;
+            case 100:
+                this.setTrophy(uid, 2);
+                break;
+            case 500:
+                this.setTrophy(uid, 3);
+                break;
+            case 1000:
+                this.setTrophy(uid, 4);
+                break;
+            case 5000:
+                this.setTrophy(uid, 5);
+                break;
+        }
+    };
+
+    Module.prototype.setTrophyWin = function (uid) {
+
+        var self = this;
+
+        db.count('games', { 
+            $or: [{ 
+                $and: [{ black: uid, result: 2 }] 
+            }, { 
+                $and: [{ white: uid, result: 1 }]
+            }] 
+        })
+        .then(function (response) {
+            
+            switch (response) {
+
+                case 1:
+                    self.setTrophy(uid, 6);
+                    break;
+                case 50:
+                    self.setTrophy(uid, 7);
+                    break;
+                case 250:
+                    self.setTrophy(uid, 8);
+                    break;
+                case 500:
+                    self.setTrophy(uid, 9);
+                    break;
+                case 2000:
+                    self.setTrophy(uid, 10);
+                    break;
+            }
+        });
+    };
+
+    Module.prototype.setTrophyDay = function (uid) {
+
+        var self = this,
+            date = new Date(),
+            game;
+
+        date.setDate(date.getDate() - 1);
+
+        db.count('games', { date: { $gt: date }, white: uid })
+        .then(function (response) {
+            game = response;
+            return db.count('games', { date: { $gt: date }, black: uid })
+        })
+        .then(function (response) {
+            game += response;
+            if (game >= 100) {
+                self.setTrophy(uid, 15);
+            } else if (game >= 50) {
+                self.setTrophy(uid, 14);
+            } else if (game >= 25) {
+                self.setTrophy(uid, 13);
+            } else if (game >= 10) {
+                self.setTrophy(uid, 12);
+            } else if (game >= 5) {
+                self.setTrophy(uid, 11);
+            }
+        });
+    };
+
+    Module.prototype.setTrophyConsWin = function (uid, consWin) {
+        
+        switch (consWin) {
+
+            case 3:
+                this.setTrophy(uid, 16);
+                break;
+            case 5:
+                this.setTrophy(uid, 17);
+                break;
+            case 10:
+                this.setTrophy(uid, 18);
+                break;
+            case 20:
+                this.setTrophy(uid, 19);
+                break;
+            case -3:
+                this.setTrophy(uid, 20);
+                break;
+        }
+    };
+
+    Module.prototype.setTrophy = function (uid, trophy) {
+        var self = this;
+        db.save('trophies', { uid: uid, trophy: trophy })
+        .then(function (response) {
+            var socket = self.getSocket(uid);
+            if (socket) {
+                socket.emit('trophy', response);
+            }
+        });
+    };
+
+    return new Module();
 };

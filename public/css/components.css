@@ -1,0 +1,449 @@
+.app-element .app-element__head {
+  margin: 0;
+  padding: 10px;
+  background-color: #eef5f9;
+  border-bottom: 1px solid #dadede;
+  border-radius: 3px 3px 0 0;
+  color: #446479;
+  font-size: 18px;
+}
+
+.app-element .app-element__tools {
+  float: right;
+  margin-top: -5px;
+}
+
+.app-element--small .app-element__body {
+  max-height: 243px;
+  overflow-x: auto;
+}
+
+.app-element .app-element__table {
+  width: 100%;
+  border: none;
+}
+
+.app-element .app-element__badge {
+  position: relative;
+  display: inline-block;
+  top: -1px;
+  margin-top: -5px;
+  padding: 0px 5px;
+  background-color: #795548;
+  color: #EEF5F9;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 3px;
+}
+
+.app-element .app-element__loading {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.app-element .app-element__loading img {
+  height: 25px;
+}
+
+.app-element__table {
+  font-size: 18px;
+}
+
+.app-element__table-user {
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app-element__table-user__picture {
+  margin-right: 10px;
+  width: 40px;
+  border-radius: 3px;
+}
+
+.app-element__table-rank {
+  width: 50px;
+}
+
+.app-modal {
+  will-change: visibility, opacity;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition-delay: $modal-delay;
+          transition-delay: $modal-delay;
+}
+.app-modal--active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.app-modal__bg {
+  background: rgba(0,0,0,.5);
+  width: 100%;
+}
+
+.app-modal__dialog {
+  max-width: 600px;
+  max-height: 100%;
+  width: 100%;
+}
+
+.app-modal__content {
+  will-change: transform, opacity;
+  position: relative;
+  padding: 2.4rem;
+  background: #fff;
+  background-clip: padding-box;
+  box-shadow: 0 12px 15px 0 rgba(0,0,0,0.25);
+  opacity: 1;
+  -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.app-modal__close {
+  position: absolute;
+  right: 2.4em;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.app-modal__title {
+  margin: 0 0 20px 0;
+  padding: 0;
+  font-size: 24px;
+}
+
+.app-modal__actions {
+  text-align: right;
+}
+
+.app-modal__actions button {
+  margin-right: 2%;
+}
+
+.app-modal__actions button:last-child {
+  margin-right: 0;
+}
+
+.app-form__textfield {
+  display: block;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  position: relative
+}
+
+.app-form__textfield>label {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.app-form__textfield>textarea {
+  padding-top: 5px
+}
+
+.app-form__textfield>input,.app-form__textfield>textarea {
+  display: block
+}
+
+.app-form__textfield>input:focus~label,.app-form__textfield>textarea:focus~label {
+  color: #795548
+}
+
+.app-form__textfield--float-label>label {
+  position: absolute;
+  transform: translate(0,15px);
+  font-size: 16px;
+  line-height: 32px;
+  color: rgba(0,0,0,.26);
+  text-overflow: clip;
+  cursor: text;
+  pointer-events: none
+}
+
+.app-form__textfield--float-label>input:focus~label,.app-form__textfield--float-label>textarea:focus~label {
+  transform: translate(0,0);
+  font-size: 12px;
+  line-height: 15px;
+  text-overflow: ellipsis
+}
+
+.app-form__textfield--float-label>input:not(:focus).mui--is-not-empty~label,.app-form__textfield--float-label>input:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>input:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>textarea:not(:focus).mui--is-not-empty~label,.app-form__textfield--float-label>textarea:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>textarea:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  line-height: 15px;
+  transform: translate(0,0);
+  text-overflow: ellipsis
+}
+
+.app-form__textfield--wrap-label {
+  display: table;
+  width: 100%;
+  padding-top: 0
+}
+
+.app-form__textfield--wrap-label:not(.app-form__textfield--float-label)>label {
+  display: table-header-group;
+  position: static;
+  white-space: normal;
+  overflow-x: visible
+}
+
+.app-form__textfield>input,.app-form__textfield>textarea {
+  animation-duration: .1ms;
+  animation-name: mui-node-inserted;
+  display: block;
+  background-color: transparent;
+  color: rgba(0,0,0,.87);
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.26);
+  outline: 0;
+  width: 100%;
+  font-size: 16px;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  background-image: none
+}
+
+.app-form__textfield>input:focus,.app-form__textfield>textarea:focus {
+  border-color: #795548;
+  border-width: 2px
+}
+
+.app-form__textfield>input:-moz-read-only,.app-form__textfield>input:disabled,.app-form__textfield>textarea:-moz-read-only,.app-form__textfield>textarea:disabled {
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1
+}
+
+.app-form__textfield>input:disabled,.app-form__textfield>input:read-only,.app-form__textfield>textarea:disabled,.app-form__textfield>textarea:read-only {
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1
+}
+
+.app-form__textfield>input::-webkit-input-placeholder,.app-form__textfield>textarea::-webkit-input-placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.app-form__textfield>input::-moz-placeholder,.app-form__textfield>textarea::-moz-placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.app-form__textfield>input:-ms-input-placeholder,.app-form__textfield>textarea:-ms-input-placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.app-form__textfield>input::placeholder,.app-form__textfield>textarea::placeholder {
+  color: rgba(0,0,0,.26);
+  opacity: 1
+}
+
+.app-form__textfield>input {
+  height: 32px
+}
+
+.app-form__textfield>input:focus {
+  height: 33px;
+  margin-bottom: -1px
+}
+
+.app-form__textfield>textarea {
+  min-height: 64px
+}
+
+.app-form__textfield>textarea[rows]:not([rows="2"]):focus {
+  margin-bottom: -1px
+}
+
+.app-form__textfield>input:focus {
+  height: 33px;
+  margin-bottom: -1px
+}
+
+.app-form__textfield>input:invalid:not(:focus):not(:required),.app-form__textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:invalid:not(:focus):not(:required),.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
+  border-color: #F44336;
+  border-width: 2px
+}
+
+.app-form__textfield>input:invalid:not(:focus):not(:required),.app-form__textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
+  height: 33px;
+  margin-bottom: -1px
+}
+
+.app-form__textfield>input:invalid:not(:focus):not(:required)~label,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty~label,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:invalid:not(:focus):not(:required)~label,.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-not-empty~label,.app-form__textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:not(:required)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
+  color: #F44336
+}
+
+.app-form__textfield:not(.app-form__textfield--float-label)>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label {
+  color: #F44336
+}
+
+@keyframes mui-node-inserted {
+  from {
+    opacity: .99
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+.app-form__select {
+  display: block;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  position: relative
+}
+
+.app-form__select:focus {
+  outline: 0
+}
+
+.app-form__select:focus select {
+  height: 33px;
+  margin-bottom: -1px;
+  border-color: #795548;
+  border-width: 2px
+}
+
+.app-form__select select {
+  animation-duration: .1ms;
+  animation-name: mui-node-inserted;
+  display: block;
+  height: 32px;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: 0;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.26);
+  border-radius: 0;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  background-position: right center;
+  cursor: pointer;
+  color: rgba(0,0,0,.87);
+  font-size: 16px;
+  padding: 0 25px 0 0
+}
+
+.app-form__select-grid {
+  padding: 0;
+}
+
+.app-form__select-grid select.mdl-cell--6-col {
+  display: inline-block;
+  width: 48%;
+  margin-right: 4%;
+}
+
+.app-form__select-grid select.mdl-cell--6-col:last-child {
+  margin-right: 0;
+}
+
+.app-form__select select::-ms-expand {
+  display: none
+}
+
+.app-form__select select:focus {
+  outline: 0;
+  height: 33px;
+  margin-bottom: -1px;
+  border-color: #795548;
+  border-width: 2px
+}
+
+.app-form__select select:disabled {
+  color: rgba(0,0,0,.38);
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 1
+}
+
+.app-form__select label {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+@media (min-width: 544px) {
+  .app-form--inline .app-form__textfield {
+    display:inline-block;
+    margin-bottom: 0
+  }
+
+  .app-form--inline .app-form__checkbox, 
+  .app-form--inline .app-form__radio {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle
+  }
+
+  .app-form--inline .app-form__checkbox label,
+  .app-form--inline .app-form__radio label {
+    padding-left: 0
+  }
+
+  .app-form--inline .app-form__checkbox label input[type=checkbox], 
+  .app-form--inline .app-form__radio label input[type=radio] {
+    position: relative;
+    margin-left: 0
+  }
+
+  .app-form--inline .app-form__select {
+    display: inline-block
+  }
+
+  .app-form--inline .app-form__btn {
+    margin-bottom: 0;
+    margin-top: 0;
+    vertical-align: bottom
+  }
+}

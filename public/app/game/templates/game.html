@@ -1,0 +1,101 @@
+<div class="app-head mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div profile-game player="player2"></div>
+</div>
+
+<div class="app-game__content app-element mdl-shadow--2dp mdl-cell mdl-cell--10-col mdl-cell--12-col-tablet" 
+     ng-class="{'app-game--white': orientation == 'white', 'app-game--black': orientation == 'black'}">
+    <div ng-repeat="number in numbers" class="app-game__row">
+        <div 
+            ng-repeat="letter in letters" 
+            ng-init="position = letter + number" 
+            ng-class="isLastTurn(position)" 
+            id="{{position}}" 
+            class="app-game__box"
+            data-game-box>
+            <div class="app-game__box-content">
+                <span ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
+    <div class="app-game__notation app-element mdl-shadow--2dp">
+        <div ng-repeat="notation in player1.notation track by $index">{{ notation }}</div>
+    </div>
+    <div class="app-game__notation app-element mdl-shadow--2dp">
+        <div ng-repeat="notation in player2.notation track by $index">{{ notation }}</div>
+    </div>
+</div>
+
+<div class="app-head mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div profile-game player="player1"></div>
+</div>
+
+<div id="modal-response-draw" 
+     class="app-modal app-modal__bg" 
+     role="dialog" 
+     aria-hidden="true"
+     modal-close-bg>
+    <div class="app-modal__dialog">
+        <div class="app-modal__content">
+            <h4 class="app-modal__title">{{ player2.name }} {{ 'offers_a_draw'|translate }} ?</h4>
+            <div class="app-modal__actions">
+                <button modal-close 
+                        type="reset" 
+                        class="mdl-button mdl-button--raised">
+                        {{ 'cancel'|translate }}
+                </button>
+                <button modal-close 
+                        ng-click="acceptDraw()"
+                        type="button" 
+                        class="mdl-button mdl-button--raised mdl-button--colored">
+                        {{ 'ok'|translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-finish-game" 
+     class="app-modal app-modal__bg"
+     role="dialog" 
+     aria-hidden="true"
+     modal-close-bg>
+    <div class="app-modal__dialog">
+        <div class="app-modal__content app__text-center">
+            <a href modal-close class="app-modal__close">
+                <i class="material-icons">clear</i>
+            </a>
+            <h4 class="app-modal__title">{{ 'game_over'|translate }}</h4>
+            <h5 class="app-game-over__result-name">{{ game.result.name|translate }}</h5>
+            <h6 class="app-game-over__result-winner" ng-if="game.result.winner === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
+            <h6 class="app-game-over__result-winner" ng-if="game.result.winner === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
+            <button ng-click="shareResult()"
+                    type="button" 
+                    class="mdl-button mdl-button--raised">
+                    {{ 'share'|translate }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modal-promotion" 
+     class="app-modal app-modal__bg"
+     role="dialog" 
+     aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content">
+            <div class="app-promotion__icon"
+                 ng-repeat="piece in ['queen', 'rook', 'knight', 'bishop']">
+                <div class="app-game__box-content">
+                    <a href 
+                       class="app-game__icon app-game__icon--{{ piece }}" 
+                       modal-close 
+                       data-icon="{{ piece }}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

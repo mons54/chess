@@ -52,129 +52,93 @@
    "game":"遊戲",
    "connected":"連接的",
    "quick_game":"遊戲",
-   "partager":"分享",
+   "share":"分享",
    "friends":"朋友",
-   "shop":"鋪",
-   "tokens":"芯片",
-   "free_tokens":"免費籌碼",
-   "no_tokens":"您沒有足夠的籌碼玩。",
-   "buy_tokens":"购买芯片",
    "congratulation":"祝賀",
    "fanpage":"粉絲專頁",
    "terms_service":"服務條款",
    "privacy_policy":"隱私權政策",
-   "invite_friends":{
-      "title":"邀請您的朋友（30最高）",
-      "infos":"賺取10％的芯片扮演的邀請接受",
-      "send":"發送請求",
-      "max_requests":"您今天已經派出30名邀請。",
-      "all":"所有的朋友"
-   },
-   "pub":{
-      "title":"黃矮病",
-      "text":"卡在線遊戲。擺脫所有的卡和贏得的賭注。"
-   },
    "trophies":{
       "title":"杯",
       "win":"你贏得獎杯",
       "content":{
          "1":{
-            "class":"_1_game",
             "title":"初學者",
             "description":"播放1個遊戲"
          },
          "2":{
-            "class":"_100_game",
             "title":"初學者",
             "description":"播放100個遊戲"
          },
          "3":{
-            "class":"_500_game",
             "title":"中間",
             "description":"播放500個遊戲"
          },
          "4":{
-            "class":"_1000_game",
             "title":"先進",
             "description":"播放1000個遊戲"
          },
          "5":{
-            "class":"_5000_game",
             "title":"專家",
             "description":"播放5000個遊戲"
          },
          "6":{
-            "class":"_1_wins",
             "title":"冠軍巧克力",
             "description":"獨贏1場比賽"
          },
          "7":{
-            "class":"_50_wins",
             "title":"冠軍青銅",
             "description":"獨贏50場比賽"
          },
          "8":{
-            "class":"_250_wins",
             "title":"冠軍銀",
             "description":"獨贏250場比賽"
          },
          "9":{
-            "class":"_500_wins",
             "title":"冠軍金",
             "description":"獨贏500場比賽"
          },
          "10":{
-            "class":"_2000_wins",
             "title":"冠軍鉑",
             "description":"獨贏2000場比賽"
          },
          "11":{
-            "class":"_5_games_day",
             "title":"業餘",
             "description":"在一天之內打5場比賽"
          },
          "12":{
-            "class":"_10_games_day",
             "title":"愛好者",
             "description":"在一天之內打10場比賽"
          },
          "13":{
-            "class":"_25_games_day",
             "title":"風扇",
             "description":"在一天之內打25場比賽"
          },
          "14":{
-            "class":"_50_games_day",
             "title":"超級球迷，",
             "description":"在一天之內打50場比賽"
          },
          "15":{
-            "class":"_100_games_day",
             "title":"有藥癮者",
             "description":"在一天之內打100場比賽"
          },
          "16":{
-            "class":"_3_wins_cons",
             "title":"勝利者",
             "description":"連續贏3場比賽"
          },
          "17":{
-            "class":"_5_wins_cons",
             "title":"征服者",
             "description":"連續贏5場比賽"
          },
          "18":{
-            "class":"_10_wins_cons",
             "title":"兇手",
             "description":"連續贏10場比賽"
          },
          "19":{
-            "class":"_20_wins_cons",
             "title":"不可戰勝的",
             "description":"連續贏20場比賽"
          },
          "20":{
-            "class":"_3_loses_cons",
             "title":"失敗者",
             "description":"失去連續3場比賽"
          }
