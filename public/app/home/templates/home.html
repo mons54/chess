@@ -47,7 +47,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="game in createdGames">
-                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                    <td show-profile="game" class="app-element__table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{game.uid}}/picture">
                         <span class="app-element__table-name">{{ game.name }}</span>
                     </td>
@@ -98,7 +98,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="challenge in challenges">
-                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                    <td show-profile="challenge" class="app-element__table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{challenge.uid}}/picture">
                         <span class="app-element__table-name">{{ challenge.name }}</span>
                     </td>
@@ -143,7 +143,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="challenger in challengers">
-                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                    <td show-profile="challenger" class="app-element__table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{challenger.uid}}/picture">
                         <span class="app-element__table-name">{{ challenger.name }}</span>
                     </td>
@@ -188,7 +188,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="friend in friends">
-                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
+                    <td show-profile="friend" class="app-element__table-user mdl-data-table__cell--non-numeric">
                         <img class="app-element__table-picture" ng-src="//graph.facebook.com/{{friend.uid}}/picture">
                         <span class="app-element__table-name">{{ friend.name }}</span>
                     </td>

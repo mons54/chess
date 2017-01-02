@@ -22,6 +22,10 @@ a {
   color: #fff;
 }
 
+[show-profile] {
+  cursor: pointer;
+}
+
 .app__pull-left {
   float: left;
 }
@@ -822,6 +826,14 @@ a {
 
   .app-element__table {
     font-size: 15px;
+  }
+
+  .app-element__table-name {
+    display: none;
+  }
+
+  .app-element__table--ranking .app-element__table-name {
+    display: initial;
   }
 }
 
