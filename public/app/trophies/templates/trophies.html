@@ -1,9 +1,11 @@
 <div element class="app-element app-trophies mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div element-content class="app-element__body">
-        <span ng-repeat="trophy in trophies"
-              ng-click="setTrophy(trophy)"
-              show-modal="modal-challenger"
-              class="app-trophy__badge app-trophy__badge-{{ trophy.css }} app__clickable"></span>
+        <a href
+           ng-repeat="trophy in trophies"
+           ng-click="setTrophy(trophy)"
+           show-modal="modal-challenger"
+           class="app-trophy__badge app-trophy__badge-{{ trophy.css }}">
+        </a>
     </div>
 </div>
 
