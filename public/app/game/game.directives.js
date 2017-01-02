@@ -34,13 +34,13 @@ directive('profileGame', ['utils',
  * @scope
  * @param {string} position The position of the piece.
  */
-directive('pieceDraggable', ['modal', 'isTouch', function (modal, isTouch) {
+directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
 
             var modalPromotion = modal.get('modal-promotion'),
-                touch = isTouch(),
+                touch = utils.isTouch(),
                 selectedClass = 'selected',
                 droppableClass =  'ui-droppable';
 

@@ -45,7 +45,7 @@
      * @description
      * The host.
      */
-    constant('host', 'mons54.parthuisot.fr').
+    constant('host', 'chess-game.herokuapp.com').
 
     /**
      * @ngdoc parameters
@@ -53,7 +53,7 @@
      * @description
      * The redirect uri.
      */
-    constant('redirectUri', 'https://apps.facebook.com/the-chess-game/').
+    constant('redirectUri', 'https://apps.facebook.com/____test/').
 
     /**
      * @ngdoc parameters
@@ -198,12 +198,6 @@
             return this;
         };
     }).
-
-    service('isTouch', [function() {
-        return function () {
-            'ontouchstart' in window || navigator.msMaxTouchPoints;
-        }
-    }]).
 
     /**
      * @ngdoc service
@@ -373,6 +367,10 @@
                         caption: caption,
                         description: $filter('translate')('description')
                     });
+                },
+
+                isTouch: function () {
+                    return 'ontouchstart' in window || navigator.msMaxTouchPoints;
                 }
             };
         }
