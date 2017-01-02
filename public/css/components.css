@@ -125,7 +125,8 @@
 
 .app-modal__close {
   position: absolute;
-  right: 2.4em;
+  top: 1em;
+  right: 1em;
   color: rgba(0, 0, 0, 0.5);
 }
 
