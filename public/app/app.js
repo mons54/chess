@@ -558,6 +558,9 @@
             });
 
             socket.on('trophy', function (data) {
+                $rootScope.$emit('trophy', {
+                    id: data.trophy
+                });
                 angular.extend({}, $rootScope.user.trophies, data);
             });
         }

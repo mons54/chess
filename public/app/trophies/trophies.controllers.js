@@ -31,8 +31,8 @@ controller('trophiesCtrl', ['$rootScope', '$scope', 'socket', 'trophies',
             });
         });
 
-        $scope.setTrophy = function (trophy) {
-            $scope.trophy = trophy;
-        }
+        $scope.openTrophy = function (trophy) {
+            $rootScope.$emit('trophy', trophy);
+        };
     }
 ]);
