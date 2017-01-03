@@ -48,7 +48,7 @@ angular.module('trophies', [])
          * @returns {bool} Response
          */
         hasTrophy: function (id) {
-            return $rootScope.user && $rootScope.user.trophies.indexOf(parseInt(id)) !== -1;
+            return $rootScope.user && $rootScope.user.trophies && $rootScope.user.trophies.indexOf(parseInt(id)) !== -1;
         },
         /**
          * @ngdoc function
