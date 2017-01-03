@@ -37,7 +37,7 @@
      * @description
      * The app Id.
      */
-    constant('appId', '738045286230106').
+    constant('appId', '466889913406471').
 
     /**
      * @ngdoc parameters
