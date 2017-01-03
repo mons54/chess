@@ -69,15 +69,18 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return;
             }
 
-            var caption = $scope.game.white.name + ' VS ' + $scope.game.black.name + ' - ' + $filter('translate')($scope.game.result.name);
+            var description = $filter('translate')($scope.game.result.name);
 
             if ($scope.game.result.winner === 1) {
-                caption += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.white.name;
+                description += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.white.name;
             } else if ($scope.game.result.winner === 2) {
-                caption += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.black.name;
+                description += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.black.name;
             }
 
-            utils.share(caption);
+            utils.share({
+                name: $scope.game.white.name + ' VS ' + $scope.game.black.name,
+                description: description,
+            });
         };
 
         function applyGame(game) {

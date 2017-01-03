@@ -40,15 +40,39 @@ angular.module('trophies', [])
         },
         /**
          * @ngdoc function
+         * @name #hasTrophy
+         * @methodOf trophies.service:trophies
+         * @description 
+         * Check if user has trophy
+         * @param {string} id Id of trophy
+         * @returns {bool} Response
+         */
+        hasTrophy: function (id) {
+            return $rootScope.user.trophies.indexOf(parseInt(id)) !== -1;
+        },
+        /**
+         * @ngdoc function
          * @name #getUserClass
          * @methodOf trophies.service:trophies
          * @description 
-         * If user has trophy display class
+         * If user has trophy return image
          * @param {string} id Id of trophy
-         * @returns {string} Class to display to the user
+         * @returns {string} Class
          */
         getUserClass: function (id) {
-            return 'app-trophy__badge-' + ($rootScope.user.trophies.indexOf(parseInt(id)) !== -1 ? this.trophies[id] : 'unknown');
+            return 'app-trophy__badge-' + (this.hasTrophy(id) ? this.trophies[id] : 'unknown');
+        },
+        /**
+         * @ngdoc function
+         * @name #getUserImage
+         * @methodOf trophies.service:trophies
+         * @description 
+         * If user has trophy return class
+         * @param {string} id Id of trophy
+         * @returns {string} Image
+         */
+        getUserImage: function (id) {
+            return 'trophies/' + (this.hasTrophy(id) ? this.trophies[id] : 'unknown') + '.png';
         }
     };
 }]).
@@ -64,8 +88,8 @@ angular.module('trophies', [])
  * @restrict E
  * @scope
  */
-directive('modalTrophy', ['$rootScope', 'modal', 'trophies',
-    function ($rootScope, modal, trophies) {
+directive('modalTrophy', ['$rootScope', 'modal',
+    function ($rootScope, modal) {
         return {
             restrict: 'E',
             replace: true,
@@ -91,14 +115,35 @@ directive('modalTrophy', ['$rootScope', 'modal', 'trophies',
                     scope.data = data;
                     show();
                 });
+            },
+            controller: ['$scope', '$filter', 'utils', 'trophies',
 
-                scope.getUserClass = function () {
-                    if (!scope.trophy) {
-                        return;
-                    }
-                    return trophies.getUserClass(scope.trophy);
-                };
-            }
+                function ($scope, $filter, utils, trophies) {
+
+                    $scope.getUserClass = function (id) {
+                        if (!id) {
+                            return;
+                        }
+                        return trophies.getUserClass(id);
+                    };
+
+                    $scope.hasTrophy = function (id) {
+                        return trophies.hasTrophy(id);
+                    };
+
+                    $scope.shareTrophy = function (id) {
+                        if (!id || !trophies.hasTrophy(id)) {
+                            return;
+                        }
+
+                        utils.share({
+                            name: $filter('translate')('trophies.content.' + id + '.title'),
+                            description: $filter('translate')('trophies.content.' + id + '.description'),
+                            picture: trophies.getUserImage(id)
+                        });
+                    };
+                }
+            ]
         };
     }
 ]);

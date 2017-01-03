@@ -485,7 +485,7 @@ a {
   font-size: 24px;
 }
 
-.app-trophy__badge-unknown { background-image: url(../images/trophies/no-trophy.png); }
+.app-trophy__badge-unknown { background-image: url(../images/trophies/unknown.png); }
 
 .app-trophy__badge-game-1 { background-image: url(../images/trophies/game-1.png); }
 .app-trophy__badge-game-100 { background-image: url(../images/trophies/game-100.png); }

@@ -328,22 +328,39 @@
                  * Share on facebook
                  * @param {string} caption The description to share
                  */
-                share: function (caption) {
+                share: function (data) {
+
+                    if (!data.picture) {
+                        data.picture = 'logo.png';
+                    }
+
+                    if (!data.name) {
+                        data.name = $filter('translate')('title');
+                    }
+
+                    if (!data.description) {
+                        data.description = $filter('translate')('description');
+                    }
+
+                    if (!data.caption) {
+                        data.caption = $filter('translate')('title');
+                    }
+
                     FB.ui({
                         method: 'feed',
                         redirect_uri: redirectUri,
                         link: redirectUri,
-                        picture: 'https://' + host + '/images/mini-icon.png',
-                        name: $filter('translate')('title'),
-                        caption: caption,
-                        description: $filter('translate')('description')
+                        picture: 'https://' + host + '/images/' + data.picture,
+                        name: data.name,
+                        caption: data.caption,
+                        description: data.description
                     });
                 },
 
                 /**
                  * @ngdoc function
-                 * @name #share
-                 * @methodOf app.service:isTouch
+                 * @name #isTouch
+                 * @methodOf app.service:utils
                  * @description
                  * Check if device has touch
                  * @returns {bool} has touch
