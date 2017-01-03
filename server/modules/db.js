@@ -17,8 +17,8 @@ function Module() {
                 consWin: Number,
                 active: Boolean,
                 ban: Boolean,
-                moderateur: Boolean,
-                blackListGame: Object
+                blackListGame: Object,
+                trophies: Array
             })
             .index({active: 1})
             .index({points: 1})
@@ -33,13 +33,6 @@ function Module() {
                 result: Number,
                 date: Date
             })
-        ),
-        trophies: mongoose.model('trophies', 
-            new mongoose.Schema({
-                uid: Number,
-                trophy: Number,
-            })
-            .index({uid: 1, trophy: 1}, {unique: true})
         )
     };
 

@@ -37,7 +37,7 @@
      * @description
      * The app Id.
      */
-    constant('appId', '466889913406471').
+    constant('appId', '738045286230106').
 
     /**
      * @ngdoc parameters
@@ -68,35 +68,6 @@
             min: 1200,
             max: 3000
         }
-    }).
-
-    /**
-     * @ngdoc parameters
-     * @name app.constant:trophies
-     * @description
-     * The list of trophies
-     */
-    constant('trophies', {
-        1: 'game-1',
-        2: 'game-10',
-        3: 'game-500',
-        4: 'game-1000',
-        5: 'game-5000',
-        6: 'win-1',
-        7: 'win-50',
-        8: 'win-250',
-        9: 'win-500',
-        10: 'win-2000',
-        11: 'game-day-5',
-        12: 'game-day-10',
-        13: 'game-day-25',
-        14: 'game-day-50',
-        15: 'game-day-100',
-        16: 'win-cons-3',
-        17: 'win-cons-5',
-        18: 'win-cons-10',
-        19: 'win-cons-20',
-        20: 'lose-cons-3'
     }).
 
     /**
@@ -369,6 +340,14 @@
                     });
                 },
 
+                /**
+                 * @ngdoc function
+                 * @name #share
+                 * @methodOf app.service:isTouch
+                 * @description
+                 * Check if device has touch
+                 * @returns {bool} has touch
+                 */
                 isTouch: function () {
                     return 'ontouchstart' in window || navigator.msMaxTouchPoints;
                 }
@@ -437,7 +416,6 @@
                 name: 'User',
                 lang: 'en',
                 gender: 'male',
-                moderateur: false,
                 currency: null,
                 friends: []
             };
@@ -557,11 +535,11 @@
                 });
             });
 
-            socket.on('trophy', function (data) {
-                $rootScope.$emit('trophy', {
-                    id: data.trophy
+            socket.on('trophies', function (data) {
+                $rootScope.$apply(function () {
+                    $rootScope.user.trophies = data.trophies;
+                    $rootScope.$emit('trophies', data.newTrophies)
                 });
-                angular.extend({}, $rootScope.user.trophies, data);
             });
         }
     ]).

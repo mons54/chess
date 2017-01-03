@@ -134,38 +134,6 @@ directive('modalProfile', ['socket', 'modal',
 
 /**
  * @ngdoc directive
- * @name components.directive:modalTrophy
- * @description 
- * Show modal trophy.
- * @requires $rootScope
- * @requires components.service:modal
- * @requires trophies
- * @restrict E
- * @scope
- */
-directive('modalTrophy', ['$rootScope', 'modal', 'trophies',
-    function ($rootScope, modal, trophies) {
-        return {
-            restrict: 'E',
-            replace: true,
-            scope: true,
-            templateUrl: '/app/components/templates/modal-trophy.html',
-            link: function (scope, element) {
-                $rootScope.$on('trophy', function (event, trophy) {
-                    // @todo When has new trophy
-                    if (!trophy.css) {
-                        trophy.css = trophies[trophy.id];
-                    }
-                    scope.trophy = trophy;
-                    modal.show(element);
-                });
-            }
-        };
-    }
-]).
-
-/**
- * @ngdoc directive
  * @name components.directive:friendsRequests
  * @description 
  * Add an click event to the directive element to invite friends facebook.

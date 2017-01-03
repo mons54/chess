@@ -251,15 +251,7 @@ module.exports = function (io) {
         })
         .then(function (response) {
             data.countGame++;
-
-            self.setTrophyGame(uid, data.countGame);
-
-            if (result === 1) {
-                self.setTrophyWin(uid);
-            }
-
-            self.setTrophyDay(uid);
-            self.setTrophyConsWin(uid, data.consWin);
+            self.setTrophies(uid, data);
         });
     };
 
@@ -407,17 +399,10 @@ module.exports = function (io) {
                 this.finally;
             }
 
-            socket.moderateur = response.moderateur ? true : false;
-
-            self.checkTrophies(socket.uid);
-
             socket.points = response.points;
             socket.blackListGame = response.blackListGame;
+            socket.trophies = response.trophies;
 
-            return db.find('trophies', { uid: socket.uid });
-        })
-        .then(function (response) {
-            trophies = response;
             return db.count('users', { active: 1, points: { $gt: socket.points } });
         })
         .then(function (response) {
@@ -425,10 +410,9 @@ module.exports = function (io) {
             socket.ranking = response + 1;
 
             socket.emit('infosUser', {
-                moderateur: socket.moderateur,
                 points: socket.points,
                 ranking: socket.ranking,
-                trophies: trophies
+                trophies: socket.trophies
             });
 
             var gid = self.getUserGame(socket.uid);
@@ -688,77 +672,29 @@ module.exports = function (io) {
         return false;
     };
 
-    Module.prototype.checkTrophies = function (uid) {
-        var self = this;
-        db.count('games' , { $or: [{ white: uid }, { black: uid }]})
-        .then(function (response) {
-            if (!response) {
-                this.finally;
-            }
-            if (response >= 1000) {
-                self.setTrophy(uid, 4);
-                self.setTrophy(uid, 3);
-                self.setTrophy(uid, 2);
-                self.setTrophy(uid, 1);
-            } else if (response >= 500) {
-                self.setTrophy(uid, 3);
-                self.setTrophy(uid, 2);
-                self.setTrophy(uid, 1);
-            } else if (response >= 100) {
-                self.setTrophy(uid, 2);
-                self.setTrophy(uid, 1);
-            } else if (response >= 1) {
-                self.setTrophy(uid, 1);
-            }
-        });
+    Module.prototype.setTrophies = function (uid, data) {
 
-        db.count('games' , { $or: [{ $and: [{ black: uid, result: 2 }] }, { $and: [{ white: uid, result: 1 }] }] })
-        .then(function (response) {
-            if (!response) {
-                this.finally;
-            }
-            if (response >= 500) {
-                self.setTrophy(uid, 9);
-                self.setTrophy(uid, 8);
-                self.setTrophy(uid, 7);
-                self.setTrophy(uid, 6);
-            } else if (response >= 250) {
-                self.setTrophy(uid, 8);
-                self.setTrophy(uid, 7);
-                self.setTrophy(uid, 6);
-            } else if (response >= 50) {
-                self.setTrophy(uid, 7);
-                self.setTrophy(uid, 6);
-            } else if (response >= 1) {
-                self.setTrophy(uid, 6);
-            }
-        });
-    };
+        var socket = this.getSocket(uid);
 
-    Module.prototype.setTrophyGame = function (uid, games) {
-
-        switch (games) {
-            case 1:
-                this.setTrophy(uid, 1);
-                break;
-            case 100:
-                this.setTrophy(uid, 2);
-                break;
-            case 500:
-                this.setTrophy(uid, 3);
-                break;
-            case 1000:
-                this.setTrophy(uid, 4);
-                break;
-            case 5000:
-                this.setTrophy(uid, 5);
-                break;
+        if (!socket ||
+            !socket.trophies || 
+            !socket.trophies.indexOf) {
+            return;
         }
-    };
 
-    Module.prototype.setTrophyWin = function (uid) {
+        var trophies = [];
 
-        var self = this;
+        if (data.countGame >= 5000) {
+            trophies = trophies.concat([1, 2, 3, 4, 5]);
+        } else if (data.countGame >= 1000) {
+            trophies = trophies.concat([1, 2, 3, 4]);
+        } else if (data.countGame >= 500) {
+            trophies = trophies.concat([1, 2, 3]);
+        } else if (data.countGame >= 100) {
+            trophies = trophies.concat([1, 2]);
+        } else if (data.countGame >= 1) {
+            trophies = trophies.concat([1]);
+        }
 
         db.count('games', { 
             $or: [{ 
@@ -768,87 +704,76 @@ module.exports = function (io) {
             }] 
         })
         .then(function (response) {
-            
-            switch (response) {
 
-                case 1:
-                    self.setTrophy(uid, 6);
-                    break;
-                case 50:
-                    self.setTrophy(uid, 7);
-                    break;
-                case 250:
-                    self.setTrophy(uid, 8);
-                    break;
-                case 500:
-                    self.setTrophy(uid, 9);
-                    break;
-                case 2000:
-                    self.setTrophy(uid, 10);
-                    break;
+            if (response >= 2000) {
+                trophies = trophies.concat([6, 7, 8, 9, 10]);
+            } else if (response >= 500) {
+                trophies = trophies.concat([6, 7, 8, 9]);
+            } else if (response >= 250) {
+                trophies = trophies.concat([6, 7, 8]);
+            } else if (response >= 50) {
+                trophies = trophies.concat([6, 7]);
+            } else if (response >= 1) {
+                trophies = trophies.concat([6]);
             }
-        });
-    };
 
-    Module.prototype.setTrophyDay = function (uid) {
+            var date = new Date();
 
-        var self = this,
-            date = new Date(),
-            game;
+            date.setDate(date.getDate() - 1);
 
-        date.setDate(date.getDate() - 1);
-
-        db.count('games', { date: { $gt: date }, white: uid })
-        .then(function (response) {
-            game = response;
-            return db.count('games', { date: { $gt: date }, black: uid })
+            return db.count('games', { $and: [{date: { $gt: date }}, { $or: [{white: uid}, {black: uid}] } ]});
         })
         .then(function (response) {
-            game += response;
-            if (game >= 100) {
-                self.setTrophy(uid, 15);
-            } else if (game >= 50) {
-                self.setTrophy(uid, 14);
-            } else if (game >= 25) {
-                self.setTrophy(uid, 13);
-            } else if (game >= 10) {
-                self.setTrophy(uid, 12);
-            } else if (game >= 5) {
-                self.setTrophy(uid, 11);
+            if (response >= 100) {
+                trophies = trophies.concat([11, 12, 13, 14, 15]);
+            } else if (response >= 50) {
+                trophies = trophies.concat([11, 12, 13, 14]);
+            } else if (response >= 25) {
+                trophies = trophies.concat([11, 12, 13]);
+            } else if (response >= 10) {
+                trophies = trophies.concat([11, 12]);
+            } else if (response >= 5) {
+                trophies = trophies.concat([11]);
             }
-        });
-    };
+        })
+        .finally(function () {
 
-    Module.prototype.setTrophyConsWin = function (uid, consWin) {
-        
-        switch (consWin) {
-
-            case 3:
-                this.setTrophy(uid, 16);
-                break;
-            case 5:
-                this.setTrophy(uid, 17);
-                break;
-            case 10:
-                this.setTrophy(uid, 18);
-                break;
-            case 20:
-                this.setTrophy(uid, 19);
-                break;
-            case -3:
-                this.setTrophy(uid, 20);
-                break;
-        }
-    };
-
-    Module.prototype.setTrophy = function (uid, trophy) {
-        var self = this;
-        db.save('trophies', { uid: uid, trophy: trophy })
-        .then(function (response) {
-            var socket = self.getSocket(uid);
-            if (socket) {
-                socket.emit('trophy', response);
+            if (data.consWin >= 20) {
+                trophies = trophies.concat([16, 17, 18, 19]);
+            } else if (data.consWin >= 10) {
+                trophies = trophies.concat([16, 17, 18]);
+            } else if (data.consWin >= 5) {
+                trophies = trophies.concat([16, 17]);
+            } else if (data.consWin >= 3) {
+                trophies = trophies.concat([16]);
+            } else if (data.consWin <= -3) {
+                trophies = trophies.concat([20]);
             }
+
+            if (!trophies.length) {
+                return;
+            }
+
+            var newTrophies = [];
+
+            trophies.forEach(function (value) {
+                if (socket.trophies.indexOf(value) === -1) {
+                    newTrophies.push(value);
+                    socket.trophies.push(value);
+                }
+            });
+
+            if (!newTrophies.length) {
+                return;
+            }
+
+            db.update('users', { uid: uid }, { trophies: socket.trophies })
+            .then(function (response) {
+                socket.emit('trophies', {
+                    newTrophies: newTrophies,
+                    trophies: socket.trophies
+                });
+            });
         });
     };
 

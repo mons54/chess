@@ -15,7 +15,7 @@ service('modal', function () {
      * @param {object} modal Modal element
      */
     function showModal(modal) {
-        modal.addClass('app-modal--active');
+        modal.addClass('app-modal--active').trigger('show');
     }
 
     /**
@@ -23,7 +23,7 @@ service('modal', function () {
      * @param {object} modal Modal element
      */
     function hideModal(modal) {
-        modal.removeClass('app-modal--active');
+        modal.removeClass('app-modal--active').trigger('hide');
     }
 
     return {
@@ -35,7 +35,7 @@ service('modal', function () {
          * @description 
          * Get the modal element by id.
          * @param {string} id Id of modal
-         * @return {object} Modal element
+         * @returns {object} Modal element
          */
         get: function (id) {
             return angular.element('#' + id);
@@ -53,16 +53,18 @@ service('modal', function () {
 
             showModal(modal);
 
-            modal.find('[modal-close]').on('click', function (event) {
+            modal.find('[modal-close]').one('click', function (event) {
                 hideModal(modal);
             });
 
-            angular.element('[modal-close-bg]').on('click', function (event) {
+            angular.element('[modal-close-bg]').one('click', function (event) {
                 if (!this || event.target !== this) {
                     return;
                 }
                 hideModal(modal);
             });
+
+            return this;
         },
 
         /**

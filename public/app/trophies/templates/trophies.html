@@ -1,9 +1,10 @@
 <div element class="app-element app-trophies mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div element-content class="app-element__body">
         <a href
-           ng-repeat="trophy in trophies"
-           ng-click="openTrophy(trophy)"
-           class="app-trophy__badge app-trophy__badge-{{ trophy.css }}">
+           ng-repeat="(key, value) in trophies"
+           ng-click="openTrophy(key)"
+           class="app-trophy__badge"
+           ng-class="getUserClass(key)">
         </a>
     </div>
 </div>
