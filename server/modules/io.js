@@ -21,7 +21,11 @@ module.exports = function (app, io) {
 
         socket.on('challenge', function (data) {
 
-            if (!data || !data.uid || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid)) {
+            if (!data || 
+                !data.uid || 
+                !moduleSocket.checkSocket(socket) || 
+                moduleSocket.isBlackListed(socket, data.uid) ||
+                moduleSocket.getUserGame(socket.uid)) {
                 return;
             }
 
@@ -56,14 +60,14 @@ module.exports = function (app, io) {
         });
 
         socket.on('removeChallenge', function (uid) {
-            if (moduleSocket.checkSocketUid(socket)) {
+            if (moduleSocket.checkSocket(socket)) {
                 moduleSocket.deleteChallenge(moduleSocket.getSocket(uid), socket.uid);
             }
             moduleSocket.deleteChallenge(socket, uid);
         });
 
         socket.on('leaveHome', function () {
-            if (!moduleSocket.checkSocketUid(socket)) {
+            if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
             socket.leave('home');
@@ -71,14 +75,14 @@ module.exports = function (app, io) {
         });
 
         socket.on('createGame', function (data) {
-            if (!data || !moduleSocket.checkSocketUid(socket) || moduleSocket.getUserGame(socket.uid) || !moduleGame.create(socket, data)) {
+            if (!data || !moduleSocket.checkSocket(socket) || moduleSocket.getUserGame(socket.uid) || !moduleGame.create(socket, data)) {
                 return;
             }
             moduleSocket.listGames(moduleGame.createdGame);
         });
 
         socket.on('removeGame', function () {
-            if (!moduleSocket.checkSocketUid(socket)) {
+            if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
             moduleGame.deleteCreatedGame(socket.uid);
@@ -124,14 +128,14 @@ module.exports = function (app, io) {
         });
 
         socket.on('initGame', function (gid) {
-            if (!moduleSocket.checkSocketUid(socket)) {
+            if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
             socket.emit('game', moduleGame.getGame(gid));
         });
 
         socket.on('moveGame', function (data) {
-            if (!moduleSocket.checkSocketUid(socket) || !data.id) {
+            if (!moduleSocket.checkSocket(socket) || !data.id) {
                 return;
             }
 
@@ -147,7 +151,7 @@ module.exports = function (app, io) {
 
         socket.on('resign', function (gid) {
 
-            if (!moduleSocket.checkSocketUid(socket) || !gid) {
+            if (!moduleSocket.checkSocket(socket) || !gid) {
                 return;
             }
 
@@ -161,7 +165,7 @@ module.exports = function (app, io) {
 
         socket.on('offerDraw', function (gid) {
             
-            if (!moduleSocket.checkSocketUid(socket) || !gid) {
+            if (!moduleSocket.checkSocket(socket) || !gid) {
                 return;
             }
 
@@ -176,7 +180,7 @@ module.exports = function (app, io) {
         });
 
         socket.on('acceptDraw', function (gid) {
-            if (!moduleSocket.checkSocketUid(socket)) {
+            if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
 
@@ -188,7 +192,7 @@ module.exports = function (app, io) {
         });
 
         socket.on('profile', function (data) {
-            if (!moduleSocket.checkSocketUid(socket) || !data || !data.uid) {
+            if (!moduleSocket.checkSocket(socket) || !data || !data.uid) {
                 return;
             }
 
@@ -196,14 +200,14 @@ module.exports = function (app, io) {
         });
 
         socket.on('ranking', function (data) {
-            if (!moduleSocket.checkSocketUid(socket) || !data) {
+            if (!moduleSocket.checkSocket(socket) || !data) {
                 return;
             }
             moduleSocket.ranking(socket, data);
         });
 
         socket.on('disconnect', function () {
-            if (!moduleSocket.checkSocketUid(socket)) {
+            if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
             delete moduleSocket.socketConnected[socket.uid];

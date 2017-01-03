@@ -23,8 +23,15 @@ module.exports = function (io) {
         return this.userGames[uid];
     };
 
+    Module.prototype.isBlackListed = function (socket, uid) {
+        return socket.blackList && socket.blackList[uid];
+    };
+
     Module.prototype.checkStartGame = function (socket, uid) {
-        return this.checkSocketUid(socket) && !this.getUserGame(socket.uid) && socket.uid !== uid;
+        return this.checkSocket(socket) && 
+               !this.getUserGame(socket.uid) && 
+               socket.uid !== uid && 
+               !this.isBlackListed(socket, uid);
     };
 
     Module.prototype.startGame = function (socket, socketOpponent, dataGame) {
@@ -112,33 +119,24 @@ module.exports = function (io) {
         return Math.round(k * (player1.coefGame - points));
     };
 
-    Module.prototype.getBlackListGame = function (blackListGame, game, color) {
+    Module.prototype.getBlackList = function (blackList, game, color) {
 
-        if (!(blackListGame instanceof Object)) {
-            blackListGame = {};
+        if (!(blackList instanceof Object)) {
+            blackList = {};
         } else {
             var maxTime = Math.round(new Date().getTime()) - (3600 * 1000);
-            for (var uid in blackListGame) {
-                if (maxTime > blackListGame[uid]) {
-                    delete blackListGame[uid];
+            for (var uid in blackList) {
+                if (maxTime > blackList[uid]) {
+                    delete blackList[uid];
                 }
             };
         }
 
-        if (game.result.name === 'resign' && this.checkBlackListGame(game)) {
-            blackListGame[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+        if (game.result.name === 'resign' && (game.played < 4 || game.white.time + game.black.time + 30 > game.time * 2)) {
+            blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
         }
 
-        return blackListGame;
-    };
-
-    Module.prototype.checkBlackListGame = function (game) {
-        var maxTime = 10,
-            time = game.time,
-            timeWhite = game.white.time,
-            timeBlack = game.black.time;
-        
-        return timeWhite + maxTime > time || timeBlack + maxTime > time;
+        return blackList;
     };
 
     Module.prototype.getDataPlayerGame = function (data, game, result, color) {
@@ -167,7 +165,7 @@ module.exports = function (io) {
         return {
             coefGame: coefGame,
             consWin: consWin,
-            blackListGame: this.getBlackListGame(data.blackListGame, game, color)
+            blackList: this.getBlackList(data.blackList, game, color)
         };
     };
 
@@ -194,7 +192,7 @@ module.exports = function (io) {
                     points: response.points,
                     coefGame: player.coefGame,
                     consWin: player.consWin,
-                    blackListGame: player.blackListGame
+                    blackList: player.blackList
                 }
             };
 
@@ -214,7 +212,7 @@ module.exports = function (io) {
                 points: response.points,
                 coefGame: player.coefGame,
                 consWin: player.consWin,
-                blackListGame: player.blackListGame
+                blackList: player.blackList
             };
 
             return db.count('games', { $or: [{ white: uidBlack }, { black: uidBlack }] }, null);
@@ -246,12 +244,18 @@ module.exports = function (io) {
         db.update('users', { uid: uid }, {
             points: data.points,
             consWin: data.consWin,
-            blackListGame: data.blackListGame,
+            blackList: data.blackList,
             active: true
         })
         .then(function (response) {
+            var socket = self.getSocket(uid);
+            if (!socket) {
+                return;
+            }
+            socket.points = data.points;
+            socket.blackList = data.blackList;
             data.countGame++;
-            self.setTrophies(uid, data);
+            self.setTrophies(socket, data);
         });
     };
 
@@ -264,7 +268,7 @@ module.exports = function (io) {
     };
 
     Module.prototype.deleteChallenges = function (socket) {
-        if (!this.checkSocketUid(socket) || !socket.challenges) {
+        if (!this.checkSocket(socket) || !socket.challenges) {
             return;
         }
 
@@ -308,7 +312,7 @@ module.exports = function (io) {
         return socket;
     };
 
-    Module.prototype.checkSocketUid = function (socket) {
+    Module.prototype.checkSocket = function (socket) {
         if (!socket.uid) {
             socket.disconnect();
             return false;
@@ -366,7 +370,8 @@ module.exports = function (io) {
             if (response === 0) {
                 return db.save('users', {
                     uid: data.uid,
-                    points: 1500
+                    points: 1500,
+                    trophies: []
                 });
             }
             return true;
@@ -381,12 +386,11 @@ module.exports = function (io) {
 
     Module.prototype.initUser = function (socket) {
 
-        if (!this.checkSocketUid(socket)) {
+        if (!this.checkSocket(socket)) {
             return;
         }
 
-        var self = this,
-            trophies;
+        var self = this;
 
         db.findOne('users', { uid: socket.uid }, null)
         .then(function (response) {
@@ -400,7 +404,7 @@ module.exports = function (io) {
             }
 
             socket.points = response.points;
-            socket.blackListGame = response.blackListGame;
+            socket.blackList = response.blackList;
             socket.trophies = response.trophies;
 
             return db.count('users', { active: 1, points: { $gt: socket.points } });
@@ -412,7 +416,8 @@ module.exports = function (io) {
             socket.emit('infosUser', {
                 points: socket.points,
                 ranking: socket.ranking,
-                trophies: socket.trophies
+                trophies: socket.trophies,
+                blackList: socket.blackList
             });
 
             var gid = self.getUserGame(socket.uid);
@@ -427,7 +432,6 @@ module.exports = function (io) {
             }
 
             socket.emit('ready');
-
         });
     };
 
@@ -672,15 +676,7 @@ module.exports = function (io) {
         return false;
     };
 
-    Module.prototype.setTrophies = function (uid, data) {
-
-        var socket = this.getSocket(uid);
-
-        if (!socket ||
-            !socket.trophies || 
-            !socket.trophies.indexOf) {
-            return;
-        }
+    Module.prototype.setTrophies = function (socket, data) {
 
         var trophies = [];
 
@@ -698,9 +694,9 @@ module.exports = function (io) {
 
         db.count('games', { 
             $or: [{ 
-                $and: [{ black: uid, result: 2 }] 
+                $and: [{ black: socket.uid, result: 2 }] 
             }, { 
-                $and: [{ white: uid, result: 1 }]
+                $and: [{ white: socket.uid, result: 1 }]
             }] 
         })
         .then(function (response) {
@@ -721,7 +717,11 @@ module.exports = function (io) {
 
             date.setDate(date.getDate() - 1);
 
-            return db.count('games', { $and: [{date: { $gt: date }}, { $or: [{white: uid}, {black: uid}] } ]});
+            return db.count('games', { $and: [{
+                date: { $gt: date }
+            }, { 
+                $or: [{white: socket.uid}, {black: socket.uid}] 
+            } ]});
         })
         .then(function (response) {
             if (response >= 100) {
@@ -767,7 +767,7 @@ module.exports = function (io) {
                 return;
             }
 
-            db.update('users', { uid: uid }, { trophies: socket.trophies })
+            db.update('users', { uid: socket.uid }, { trophies: socket.trophies })
             .then(function (response) {
                 socket.emit('trophies', {
                     newTrophies: newTrophies,

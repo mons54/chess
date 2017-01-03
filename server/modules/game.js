@@ -105,7 +105,7 @@ Game.prototype.resign = function (socket, id) {
     
     var game = this.getGame(id);
 
-    if (!game || game.finish || !this.isPlayer(game, socket.uid)) {
+    if (!game || game.finish || !this.isPlayer(game, socket.uid) || !game.played) {
         return;
     }
 

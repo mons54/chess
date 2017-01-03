@@ -56,7 +56,8 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             $scope.friends = [];
 
             angular.forEach(data, function (value) {
-                if ($rootScope.user.uid == value.uid) {
+                if ($rootScope.user.uid == value.uid ||
+                    blackList(value.uid)) {
                     return;
                 }
                 
@@ -116,8 +117,13 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             $scope.paramsGame.pointsMin = getPointsMin(value);
         });
 
+        function blackList (uid) {
+            return $rootScope.user.blackList && $rootScope.user.blackList[uid];
+        }
+
         function checkGame (game) {
-            return game.uid == $rootScope.user.uid || 
+            return game.uid === $rootScope.user.uid || 
+                   !blackList(game.uid) &&
                    ((!game.pointsMin || $rootScope.user.points >= game.pointsMin) && 
                    (!game.pointsMax || $rootScope.user.points <= game.pointsMax));
         }

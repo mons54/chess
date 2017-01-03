@@ -178,6 +178,10 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
             return $scope.$parent.game.finish;
         };
 
+        $scope.isStarted = function () {
+            return $scope.$parent.game.played;
+        };
+
         $scope.canOfferDraw = function () {
             return !$scope.player.disableOfferDraw && $scope.player.offerDraw < $scope.$parent.game.maxOfferDraw;
         };

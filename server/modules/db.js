@@ -17,7 +17,7 @@ function Module() {
                 consWin: Number,
                 active: Boolean,
                 ban: Boolean,
-                blackListGame: Object,
+                blackList: Object,
                 trophies: Array
             })
             .index({active: 1})
