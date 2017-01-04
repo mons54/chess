@@ -16,7 +16,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
     
     function ($rootScope, $scope, socket, utils, paramsGame) {
 
-        socket.emit('initUser');
+        socket.emit('refresh');
         
         socket.on('listGames', function (data) {
             $scope.$apply(applyGames(data));

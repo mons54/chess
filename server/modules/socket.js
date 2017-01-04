@@ -1,6 +1,6 @@
 'use strict';
 
-var fb = require(dirname + '/server/modules/fb'),
+var request = require('request'),
     db = require(dirname + '/server/modules/db'),
     moduleGame = require(dirname + '/server/modules/game');
 
@@ -10,6 +10,117 @@ module.exports = function (io) {
         this.socketConnected = {};
         this.userGames = {};
     }
+
+    Module.prototype.facebookConnect = function (socket, data) {
+
+        var self = this;
+
+        request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=email,name', 
+            function (error, response, data) {
+                try {
+                    self.create(socket, JSON.parse(data));
+                } catch (Error) {
+                    socket.disconnect();
+                }
+            }
+        );
+    };
+
+    Module.prototype.create = function (socket, data) {
+        
+        if (!data.email) {
+            socket.disconnect();
+            return;
+        }
+
+        var self = this;
+
+        db.findOne('users', { email: data.email })
+        .then(function (response) {
+            if (!response) {
+                return db.save('users', {
+                    email: data.email,
+                    points: 1500,
+                    trophies: []
+                });
+            }
+            return response;
+        })
+        .then(function (response) {
+
+            var socketConnected = self.getSocket(response._id);
+
+            if (socketConnected) {
+                socketConnected.disconnect();
+            }
+
+            socket.uid = response._id;
+            socket.name = data.name;
+
+            self.socketConnected[socket.uid] = socket.id;
+
+            self.init(socket, response);
+        });
+    };
+
+    Module.prototype.refresh = function (socket) {
+
+        if (!this.checkSocket(socket)) {
+            return;
+        }
+
+        var self = this;
+
+        db.findOne('users', { _id: socket.uid })
+        .then(function (response) {
+            
+            if (!response) {
+                return;
+            }
+
+            self.init(socket, response);
+        });
+    };
+
+    Module.prototype.init = function (socket, data) {
+
+        if (data.ban) {
+            socket.disconnect();
+            return;
+        }
+
+        socket.points = data.points;
+        socket.blackList = data.blackList;
+        socket.trophies = data.trophies;
+
+        var self = this;
+
+        db.count('users', { active: 1, points: { $gt: socket.points } })
+        .then(function (response) {
+
+            socket.ranking = response + 1;
+
+            socket.emit('user', {
+                points: socket.points,
+                ranking: socket.ranking,
+                trophies: socket.trophies,
+                blackList: socket.blackList
+            });
+
+            var gid = self.getUserGame(socket.uid);
+
+            if (gid) {
+                socket.join(moduleGame.getRoom(gid));
+                socket.emit('startGame', gid);
+            } else {
+                socket.join('home', self.listChallengers);
+                socket.emit('listGames', moduleGame.createdGame);
+                socket.emit('listChallenges', socket.challenges);
+            }
+
+            socket.emit('ready');
+        });
+    };
 
     Module.prototype.listGames = function (createdGame) {
         this.sendHome('listGames', createdGame);
@@ -182,7 +293,7 @@ module.exports = function (io) {
         delete this.userGames[uidWhite];
         delete this.userGames[uidBlack];
 
-        db.findOne('users', { uid: uidWhite }, null)
+        db.findOne('users', { _id: uidWhite }, null)
         .then(function (response) {
             
             var player = self.getDataPlayerGame(response, game, result, 'white');
@@ -202,7 +313,7 @@ module.exports = function (io) {
 
             data.white.countGame = response;
 
-            return db.findOne('users', { uid: uidBlack }, null);
+            return db.findOne('users', { _id: uidBlack }, null);
         })
         .then(function (response) {
 
@@ -241,7 +352,7 @@ module.exports = function (io) {
 
     Module.prototype.updateUserGame = function (uid, result, data) {
         var self = this;
-        db.update('users', { uid: uid }, {
+        db.update('users', { _id: uid }, {
             points: data.points,
             consWin: data.consWin,
             blackList: data.blackList,
@@ -297,8 +408,10 @@ module.exports = function (io) {
     };
 
     Module.prototype.getSocket = function (uid) {
+
         var id = this.socketConnected[uid],
             socket = null;
+
         if (!id) {
             return socket;
         }
@@ -343,100 +456,8 @@ module.exports = function (io) {
         io.sockets.to('home').emit('challengers', challengers);
     };
 
-    Module.prototype.init = function (socket, data) {
-
-        var self = this;
-
-        fb.post('/' + data.uid + '?access_token=' + data.accessToken)
-        .then(function (response) {
-            if (!response.success) {
-                socket.disconnect();
-                this.finally;
-            }
-
-            var socketConnected = self.getSocket(data.uid);
-
-            if (socketConnected) {
-                socketConnected.disconnect();
-            }
-
-            socket.uid = data.uid;
-            socket.name = data.name;
-            self.socketConnected[data.uid] = socket.id;
-
-            return db.count('users', { uid: data.uid });
-        })
-        .then(function (response) {
-            if (response === 0) {
-                return db.save('users', {
-                    uid: data.uid,
-                    points: 1500,
-                    trophies: []
-                });
-            }
-            return true;
-        })
-        .then(function (response) {
-            self.initUser(socket);
-        })
-        .catch(function (error) {
-            socket.disconnect();
-        });
-    };
-
-    Module.prototype.initUser = function (socket) {
-
-        if (!this.checkSocket(socket)) {
-            return;
-        }
-
-        var self = this;
-
-        db.findOne('users', { uid: socket.uid }, null)
-        .then(function (response) {
-            if (!response) {
-                this.finally;
-            }
-
-            if (response.ban) {
-                socket.disconnect();
-                this.finally;
-            }
-
-            socket.points = response.points;
-            socket.blackList = response.blackList;
-            socket.trophies = response.trophies;
-
-            return db.count('users', { active: 1, points: { $gt: socket.points } });
-        })
-        .then(function (response) {
-
-            socket.ranking = response + 1;
-
-            socket.emit('infosUser', {
-                points: socket.points,
-                ranking: socket.ranking,
-                trophies: socket.trophies,
-                blackList: socket.blackList
-            });
-
-            var gid = self.getUserGame(socket.uid);
-
-            if (gid) {
-                socket.join(moduleGame.getRoom(gid));
-                socket.emit('startGame', gid);
-            } else {
-                socket.join('home', self.listChallengers);
-                socket.emit('listGames', moduleGame.createdGame);
-                socket.emit('listChallenges', socket.challenges);
-            }
-
-            socket.emit('ready');
-        });
-    };
-
     Module.prototype.profile = function (socket, data) {
-        db.findOne('users', { uid: data.uid }, 'points')
+        db.findOne('users', { _id: data.uid }, 'points')
         .then(function (response) {
             data.points = response.points;
             return db.all([
@@ -496,7 +517,7 @@ module.exports = function (io) {
 
         var self = this,
             points = socket.points,
-            request = friends ? { active: 1, uid: { $in: friends }, points: { $gt: points } } : { active: 1, points: { $gt: points } };
+            request = friends ? { active: 1, _id: { $in: friends }, points: { $gt: points } } : { active: 1, points: { $gt: points } };
 
         db.count('users', request)
         .then(function (count) {
@@ -551,7 +572,7 @@ module.exports = function (io) {
                 request = { active: 1, points: { $gt: points } };
 
             if (friends) {
-                request = { active: 1, uid: { $in: friends }, points: { $gt: points } };
+                request = { active: 1, _id: { $in: friends }, points: { $gt: points } };
             }
 
             data = response;
@@ -562,7 +583,7 @@ module.exports = function (io) {
             position = count + 1;
             var request = { active: 1, points: data[0].points };
             if (friends) {
-                request = { active: 1, uid: { $in: friends }, points: data[0].points };
+                request = { active: 1, _id: { $in: friends }, points: data[0].points };
             }
 
             return db.count('users', request);
@@ -635,7 +656,7 @@ module.exports = function (io) {
     };
 
     Module.prototype.getRequestRankingWithUser = function (uid, friends) {
-        return friends ? { $and: [{ active: 1, uid: { $in: friends } }, { uid: { $ne: uid } }] } : { $and: [{ active: 1 }, { uid: { $ne: uid } }] };
+        return friends ? { $and: [{ active: 1, _id: { $in: friends } }, { _id: { $ne: uid } }] } : { $and: [{ active: 1 }, { _id: { $ne: uid } }] };
     };
 
     Module.prototype.getRequestRankingWithoutUser = function (friends) {  
@@ -767,7 +788,7 @@ module.exports = function (io) {
                 return;
             }
 
-            db.update('users', { uid: socket.uid }, { trophies: socket.trophies })
+            db.update('users', { _id: socket.uid }, { trophies: socket.trophies })
             .then(function (response) {
                 socket.emit('trophies', {
                     newTrophies: newTrophies,

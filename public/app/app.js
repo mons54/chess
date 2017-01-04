@@ -33,19 +33,19 @@
 
     /**
      * @ngdoc parameters
-     * @name app.constant:appId
-     * @description
-     * The app Id.
-     */
-    constant('appId', '466889913406471').
-
-    /**
-     * @ngdoc parameters
      * @name app.constant:host
      * @description
      * The host.
      */
     constant('host', 'chess-game.herokuapp.com').
+
+    /**
+     * @ngdoc parameters
+     * @name app.constant:appId
+     * @description
+     * The app Id.
+     */
+    constant('appId', '738045286230106').
 
     /**
      * @ngdoc parameters
@@ -477,7 +477,7 @@
                 FB.login(function (res) {
                     getUser(res);
                 }, {
-                    scope: 'user_friends'
+                    scope: 'user_friends, email'
                 });
             }
 
@@ -496,13 +496,13 @@
              */
             function setUser (res) {
                     
-                $rootScope.user.uid = res.id;
+                $rootScope.user.id = res.id;
                 $rootScope.user.firstName = res.first_name;
                 $rootScope.user.name = res.name.substr(0, 30);
                 $rootScope.user.lang = res.locale.substr(0, 2);
                 $rootScope.user.gender = res.gender;
                 $rootScope.user.currency = res.currency;
-                $rootScope.user.friends.push($rootScope.user.uid);
+                $rootScope.user.friends.push($rootScope.user.id);
 
                 $translate.use($rootScope.user.lang);
 
@@ -523,8 +523,8 @@
 
             socket.on('connect', function () {
                 modal.hide(modal.get('modal-disconnect'));
-                socket.emit('init', {
-                    uid: $rootScope.user.uid,
+                socket.emit('facebookConnect', {
+                    id: $rootScope.user.id,
                     accessToken: $rootScope.user.accessToken,
                     name: $rootScope.user.name
                 });
@@ -534,7 +534,7 @@
                 modal.show(modal.get('modal-disconnect'));
             });
 
-            socket.on('infosUser', function (data) {
+            socket.on('user', function (data) {
                 angular.extend($rootScope.user, data);
             });
 

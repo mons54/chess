@@ -7,16 +7,18 @@ module.exports = function (app, io) {
 
     io.on('connection', function (socket) {
 
-        socket.on('init', function (data) {
-            if (!data || !data.uid || !data.accessToken) {
-                moduleSocket.disconnectSocket(socket);
+        socket.on('facebookConnect', function (data) {
+            if (!data || 
+                !data.id || 
+                !data.accessToken) {
+                socket.disconnect();
                 return;
             }
-            moduleSocket.init(socket, data);
+            moduleSocket.facebookConnect(socket, data);
         });
 
-        socket.on('initUser', function () {
-            moduleSocket.initUser(socket);
+        socket.on('refresh', function () {
+            moduleSocket.refresh(socket);
         });
 
         socket.on('challenge', function (data) {

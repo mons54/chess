@@ -9,8 +9,8 @@ function Module() {
     this.models = {
         users: mongoose.model('users', 
             new mongoose.Schema({
-                uid: {
-                    type: Number,
+                email: {
+                    type: String,
                     unique: true
                 },
                 points: Number,
@@ -22,14 +22,14 @@ function Module() {
             })
             .index({active: 1})
             .index({points: 1})
-            .index({uid: 1, points: 1})
-            .index({uid: 1, active: 1})
+            .index({_id: 1, points: 1})
+            .index({_id: 1, active: 1})
             .index({active: 1, points: 1})
         ),
         games: mongoose.model('games', 
             new mongoose.Schema({
-                white: Number,
-                black: Number,
+                white: String,
+                black: String,
                 result: Number,
                 date: Date
             })
