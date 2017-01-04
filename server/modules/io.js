@@ -41,6 +41,7 @@ module.exports = function (app, io) {
 
             moduleSocket.setChallenges(socketOpponent, socket.uid, {
                 create: false,
+                avatar: socket.avatar,
                 name: socket.name,
                 points: socket.points,
                 ranking: socket.ranking,
@@ -50,6 +51,7 @@ module.exports = function (app, io) {
 
             moduleSocket.setChallenges(socket, data.uid, {
                 create: true,
+                avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
                 points: socketOpponent.points,
                 ranking: socketOpponent.ranking,

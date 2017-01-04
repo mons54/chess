@@ -15,10 +15,10 @@ module.exports = function (io) {
 
         var self = this;
 
-        request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=email,name', 
-            function (error, response, data) {
+        request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,email,name,picture', 
+            function (error, response, body) {
                 try {
-                    self.create(socket, JSON.parse(data));
+                    self.create(socket, Object.assign(data, JSON.parse(body)));
                 } catch (Error) {
                     socket.disconnect();
                 }
@@ -28,8 +28,7 @@ module.exports = function (io) {
 
     Module.prototype.create = function (socket, data) {
         
-        if (!data.email) {
-            socket.disconnect();
+        if (!data.email || socket.uid) {
             return;
         }
 
@@ -37,14 +36,7 @@ module.exports = function (io) {
 
         db.findOne('users', { email: data.email })
         .then(function (response) {
-            if (!response) {
-                return db.save('users', {
-                    email: data.email,
-                    points: 1500,
-                    trophies: []
-                });
-            }
-            return response;
+            return self.saveUser(data, response);
         })
         .then(function (response) {
 
@@ -55,12 +47,46 @@ module.exports = function (io) {
             }
 
             socket.uid = response._id;
+            socket.avatar = data.avatar;
             socket.name = data.name;
 
             self.socketConnected[socket.uid] = socket.id;
 
             self.init(socket, response);
         });
+    };
+
+    Module.prototype.saveUser = function (data, userData) {
+        
+        var saveData = {};
+        
+        if (data.facebookId) {
+            saveData.facebookId = data.facebookId;
+        }
+
+        if (data.googleId) {
+            saveData.googleId = data.googleId;
+        }
+
+        if (data.twitterId) {
+            saveData.twitterId = data.twitterId;
+        }
+
+        if (!userData) {
+            return db.save('users', Object.assign(saveData, {
+                email: data.email,
+                points: 1500,
+                trophies: []
+            }));
+        }
+
+        if (Object.keys(saveData).length) {
+            return db.update('users', { _id: userData._id }, saveData).then(function () {
+                return Object.assign(userData, saveData);
+            });
+        }
+
+        return userData;
     };
 
     Module.prototype.refresh = function (socket) {
@@ -165,12 +191,14 @@ module.exports = function (io) {
         if (dataGame.color === 'white') {
             white = {
                 uid: socketOpponent.uid,
+                avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
                 points: socketOpponent.points,
                 ranking: socketOpponent.ranking
             };
             black = {
                 uid: socket.uid,
+                avatar: socket.avatar,
                 name: socket.name,
                 points: socket.points,
                 ranking: socket.ranking
@@ -178,12 +206,14 @@ module.exports = function (io) {
         } else {
             white = {
                 uid: socket.uid,
+                avatar: socket.avatar,
                 name: socket.name,
                 points: socket.points,
                 ranking: socket.ranking
             };
             black = {
                 uid: socketOpponent.uid,
+                avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
                 points: socketOpponent.points,
                 ranking: socketOpponent.ranking
@@ -517,7 +547,7 @@ module.exports = function (io) {
 
         var self = this,
             points = socket.points,
-            request = friends ? { active: 1, _id: { $in: friends }, points: { $gt: points } } : { active: 1, points: { $gt: points } };
+            request = friends ? { active: 1, facebookId: { $in: friends }, points: { $gt: points } } : { active: 1, points: { $gt: points } };
 
         db.count('users', request)
         .then(function (count) {
@@ -572,7 +602,7 @@ module.exports = function (io) {
                 request = { active: 1, points: { $gt: points } };
 
             if (friends) {
-                request = { active: 1, _id: { $in: friends }, points: { $gt: points } };
+                request = { active: 1, facebookId: { $in: friends }, points: { $gt: points } };
             }
 
             data = response;
@@ -583,7 +613,7 @@ module.exports = function (io) {
             position = count + 1;
             var request = { active: 1, points: data[0].points };
             if (friends) {
-                request = { active: 1, _id: { $in: friends }, points: data[0].points };
+                request = { active: 1, facebookId: { $in: friends }, points: data[0].points };
             }
 
             return db.count('users', request);
@@ -656,11 +686,11 @@ module.exports = function (io) {
     };
 
     Module.prototype.getRequestRankingWithUser = function (uid, friends) {
-        return friends ? { $and: [{ active: 1, _id: { $in: friends } }, { _id: { $ne: uid } }] } : { $and: [{ active: 1 }, { _id: { $ne: uid } }] };
+        return friends ? { $and: [{ active: 1, facebookId: { $in: friends } }, { _id: { $ne: uid } }] } : { $and: [{ active: 1 }, { _id: { $ne: uid } }] };
     };
 
     Module.prototype.getRequestRankingWithoutUser = function (friends) {  
-        return friends ? { active: 1, uid: { $in: friends } } : { active: 1 };
+        return friends ? { active: 1, facebookId: { $in: friends } } : { active: 1 };
     };
 
     Module.prototype.formatPage = function (page) {

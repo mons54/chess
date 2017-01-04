@@ -36,6 +36,7 @@ Game.prototype.create = function (socket, data) {
     }
 
     this.createdGame[socket.uid] = {
+        avatar: socket.avatar,
         name: socket.name,
         points: socket.points,
         ranking: socket.ranking,

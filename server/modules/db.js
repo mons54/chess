@@ -13,6 +13,9 @@ function Module() {
                     type: String,
                     unique: true
                 },
+                facebookId: Number,
+                googleId: Number,
+                twitterId: Number, 
                 points: Number,
                 consWin: Number,
                 active: Boolean,
