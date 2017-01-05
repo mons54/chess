@@ -63,7 +63,8 @@ directive('showProfile', ['socket',
                 element.bind('click', function () {
                     socket.emit('profile', {
                         uid: scope.showProfile.uid,
-                        name: scope.showProfile.name
+                        name: scope.showProfile.name,
+                        avatar: scope.showProfile.avatar
                     });
                 });
             } 

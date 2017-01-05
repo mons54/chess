@@ -15,10 +15,15 @@ module.exports = function (io) {
 
         var self = this;
 
-        request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,email,name,picture', 
+        request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,name,picture', 
             function (error, response, body) {
                 try {
-                    self.create(socket, Object.assign(data, JSON.parse(body)));
+                    body = JSON.parse(body);
+                    self.create(socket, {
+                        facebookId: body.id,
+                        name: body.name,
+                        avatar: body.picture.data.url
+                    }, { facebookId: body.id });
                 } catch (Error) {
                     socket.disconnect();
                 }
@@ -26,15 +31,15 @@ module.exports = function (io) {
         );
     };
 
-    Module.prototype.create = function (socket, data) {
+    Module.prototype.create = function (socket, data, request) {
         
-        if (!data.email || socket.uid) {
+        if (socket.uid) {
             return;
         }
 
         var self = this;
 
-        db.findOne('users', { email: data.email })
+        db.findOne('users', request)
         .then(function (response) {
             return self.saveUser(data, response);
         })
@@ -49,6 +54,7 @@ module.exports = function (io) {
             socket.uid = response._id;
             socket.avatar = data.avatar;
             socket.name = data.name;
+            socket.facebookId = data.facebookId;
 
             self.socketConnected[socket.uid] = socket.id;
 
@@ -60,21 +66,28 @@ module.exports = function (io) {
         
         var saveData = {};
         
-        if (data.facebookId) {
+        if (data.facebookId && (!userData || userData.facebookId !== data.facebookId)) {
             saveData.facebookId = data.facebookId;
         }
 
-        if (data.googleId) {
+        if (data.googleId && (!userData || userData.googleId !== data.googleId)) {
             saveData.googleId = data.googleId;
         }
 
-        if (data.twitterId) {
+        if (data.twitterId && (!userData || userData.twitterId !== data.twitterId)) {
             saveData.twitterId = data.twitterId;
+        }
+
+        if (data.name && (!userData || userData.name !== data.name)) {
+            saveData.name = data.name;
+        }
+
+        if (data.avatar && (!userData || userData.avatar !== data.avatar)) {
+            saveData.avatar = data.avatar;
         }
 
         if (!userData) {
             return db.save('users', Object.assign(saveData, {
-                email: data.email,
                 points: 1500,
                 trophies: []
             }));
@@ -127,6 +140,9 @@ module.exports = function (io) {
             socket.ranking = response + 1;
 
             socket.emit('user', {
+                uid: socket.uid,
+                name: socket.name,
+                avatar: socket.avatar,
                 points: socket.points,
                 ranking: socket.ranking,
                 trophies: socket.trophies,
@@ -470,15 +486,17 @@ module.exports = function (io) {
 
         if (room && room.sockets) {
             for (var socketId in room.sockets) {
-                var user = io.sockets.connected[socketId];
-                if (!user || !user.uid) {
+                var socket = io.sockets.connected[socketId];
+                if (!socket || !socket.facebookId) {
                     continue;
                 }
                 challengers.push({
-                    uid: user.uid,
-                    name: user.name,
-                    ranking: user.ranking,
-                    points: user.points
+                    uid: socket.uid,
+                    facebookId: socket.facebookId,
+                    avatar: socket.avatar,
+                    name: socket.name,
+                    ranking: socket.ranking,
+                    points: socket.points
                 });
             };
         }
@@ -577,6 +595,8 @@ module.exports = function (io) {
                 socket.emit('ranking', {
                     ranking:[{
                         uid: socket.uid,
+                        name: socket.name,
+                        avatar: socket.avatar,
                         points: socket.points,
                         position: 1
                     }]
@@ -620,13 +640,13 @@ module.exports = function (io) {
         })
         .then(function (count) {
             socket.emit('ranking', {
-                ranking: self.getRanking(data, position, count, getUser, socket.uid, socket.points),
+                ranking: self.getRanking(socket, data, position, count, getUser),
                 pages: self.getPages(total, offset, limit)
             });
         });
     };
 
-    Module.prototype.getRanking = function (data, position, count, getUser, uid, points) {
+    Module.prototype.getRanking = function (socket, data, position, count, getUser) {
         var current = 0,
             result = [],
             ranking = {},
@@ -637,10 +657,12 @@ module.exports = function (io) {
             var saveUser = false;
 
             for (var i in data) {
-                if (!saveUser && points >= data[i].points) {
+                if (!saveUser && socket.points >= data[i].points) {
                     result.push({
-                        uid: uid,
-                        points: points,
+                        _id: socket.uid,
+                        name: socket.name,
+                        avatar: socket.avatar,
+                        points: socket.points
                     });
                     saveUser = true;
                 }
@@ -649,8 +671,10 @@ module.exports = function (io) {
 
             if (!saveUser) {
                 result.push({
-                    uid: uid,
-                    points: points,
+                    _id: socket.uid,
+                    name: socket.name,
+                    avatar: socket.avatar,
+                    points: socket.points,
                 });
             }
         } else {
@@ -674,7 +698,9 @@ module.exports = function (io) {
             }
 
             ranking[i] = {
-                uid: result[i].uid,
+                uid: result[i]._id,
+                name: result[i].name,
+                avatar: result[i].avatar,
                 points: result[i].points,
                 position: position
             };

@@ -9,10 +9,8 @@ function Module() {
     this.models = {
         users: mongoose.model('users', 
             new mongoose.Schema({
-                email: {
-                    type: String,
-                    unique: true
-                },
+                name: String,
+                avatar: String,
                 facebookId: Number,
                 googleId: Number,
                 twitterId: Number, 

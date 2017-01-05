@@ -68,13 +68,6 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
                 usersId.push(value.uid);
             });
 
-            FB.api('?ids=' + usersId.join() + '&fields=name', function (response) {
-                if (!response) {
-                    return;
-                }
-                $scope.$apply(setUsersName(response));
-            });
-
             $rootScope.loading = false;
         }
 
