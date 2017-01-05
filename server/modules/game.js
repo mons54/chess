@@ -222,6 +222,7 @@ Game.prototype.start = function (white, black, time) {
         white: {
             uid: white.uid,
             name: white.name,
+            avatar: white.avatar,
             points: white.points,
             ranking: white.ranking,
             time: time,
@@ -238,6 +239,7 @@ Game.prototype.start = function (white, black, time) {
         black: {
             uid: black.uid,
             name: black.name,
+            avatar: black.avatar,
             points: black.points,
             ranking: black.ranking,
             time: time,

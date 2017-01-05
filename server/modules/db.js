@@ -11,9 +11,18 @@ function Module() {
             new mongoose.Schema({
                 name: String,
                 avatar: String,
-                facebookId: Number,
-                googleId: Number,
-                twitterId: Number, 
+                facebookId: {
+                    type: Number,
+                    unique: true
+                },
+                googleId: {
+                    type: Number,
+                    unique: true
+                },
+                tiwtterId: {
+                    type: Number,
+                    unique: true
+                },
                 points: Number,
                 consWin: Number,
                 active: Boolean,
