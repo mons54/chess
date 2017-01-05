@@ -198,13 +198,40 @@ Game.prototype.getRoom = function (gid) {
     return 'game' + gid;
 };
 
+Game.prototype.timer = function (game) {
+
+    var time = game[game.turn].time,
+        timeTurn = game[game.turn].timeTurn;
+
+    if (time > 0 && timeTurn > 0) {
+        game[game.turn].time--;
+        game[game.turn].timeTurn--;
+    } else {
+        var color = game.turn === 'white' ? 'black' : 'white';
+        game.finish = true;
+        game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
+        game.result.name = game.result.winner === 0 ? 'draw' : 'time';
+        return game;
+    }
+
+    return false;
+};
+
 Game.prototype.start = function (white, black, time) {
 
-    var gid = this.games.id++,
-        timeTurn = 120,
+    var gid = this.games.id++;
+
+    this.games.data[gid] = this.get(gid, white, black, time);
+
+    return gid;
+};
+
+Game.prototype.get = function (gid, white, black, time) {
+    
+    var timeTurn = 120,
         nbPieces = 16;
 
-    var game = {
+    return {
         id: gid,
         time: time,
         timeTurn: timeTurn,
@@ -480,27 +507,4 @@ Game.prototype.start = function (white, black, time) {
             }
         }
     };
-
-    this.games.data[gid] = game;
-
-    return gid;
-};
-
-Game.prototype.timer = function (game) {
-
-    var time = game[game.turn].time,
-        timeTurn = game[game.turn].timeTurn;
-
-    if (time > 0 && timeTurn > 0) {
-        game[game.turn].time--;
-        game[game.turn].timeTurn--;
-    } else {
-        var color = game.turn === 'white' ? 'black' : 'white';
-        game.finish = true;
-        game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
-        game.result.name = game.result.winner === 0 ? 'draw' : 'time';
-        return game;
-    }
-
-    return false;
 };

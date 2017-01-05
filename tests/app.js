@@ -1485,24 +1485,20 @@ function getNextMove(game) {
 global.dirname = __dirname + '/..';
 
 var moduleGame = require(__dirname + '/game/game')(),
-    assert = require(__dirname + '/assert')();
-
-game.newGame();
-moduleGame.newGame();
+    assert = require(__dirname + '/assert')(),
+    gid = 1;
 
 setInterval(function() {
-    var test = 1;
     game.newGame();
-    moduleGame.newGame();
-    run();
-    console.log(Date.now());
-}, 1000);
+    moduleGame.newGame(gid);
+    run(gid++);
+}, 500);
 
 
-function run() {
+function run(gid) {
 
     if (moduleGame.game.finish) {
-        console.log('finish');
+        console.log('success', gid);
         return;
     }
 
@@ -1523,9 +1519,9 @@ function run() {
         result  = assert.checkGame(oldGame, newGame);
 
     if (result !== true) {
-        console.log(result);
+        console.log('error', result);
         return;
     }
 
-    return run();
+    return run(gid);
 }
