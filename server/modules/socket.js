@@ -94,10 +94,6 @@ module.exports = function (io) {
             saveData.googleId = data.googleId;
         }
 
-        if (data.twitterId && (!userData || userData.twitterId !== data.twitterId)) {
-            saveData.twitterId = data.twitterId;
-        }
-
         if (data.name && (!userData || userData.name !== data.name)) {
             saveData.name = data.name;
         }

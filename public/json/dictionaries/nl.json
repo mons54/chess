@@ -58,6 +58,8 @@
    "fanpage":"Fan Page",
    "terms_service":"Gebruiksvoorwaarden",
    "privacy_policy":"Privacy Policy",
+   "login_with_facebook": "Log in met Facebook",
+   "login_with_google": "Log in met Google",
    "trophies":{
       "title":"Trofee",
       "win":"Je wint een trofee",

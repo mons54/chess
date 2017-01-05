@@ -58,6 +58,8 @@
    "fanpage":"Fan Page",
    "terms_service":"Условия предоставления услуг",
    "privacy_policy":"Политика конфиденциальности",
+   "login_with_facebook": "Войти через Facebook",
+   "login_with_google": "Войти через Google",
    "trophies":{
       "title":"Трофей",
       "win":"Вы выиграли трофей",

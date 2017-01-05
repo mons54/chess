@@ -58,11 +58,13 @@ service('google', ['$q', 'user', 'socket', function ($q, user, socket) {
             clientId: '695464964183-2cofi6rshusga6ojnocqubdf124eg7oh.apps.googleusercontent.com',
             scope: 'profile'
         }).then(function(response) {
-            gapi.auth2.getAuthInstance().isSignedIn.listen(self.handleLogin);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(function() {
+                self.setLoginStatus(self.handleLogin);
+            });
         });
     }
 
-    this.getLoginStatus = function (callback) {
+    this.setLoginStatus = function (callback) {
         var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
         if (!isSignedIn) {
             this.status = 'unknown';
@@ -73,6 +75,7 @@ service('google', ['$q', 'user', 'socket', function ($q, user, socket) {
                 accessToken: gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token
             };
         }
+        callback();
     };
 
     this.handleLogin = function () {

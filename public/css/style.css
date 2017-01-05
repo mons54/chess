@@ -70,6 +70,9 @@ a {
   margin: 0 !important;
 }
 
+.app-login__content-button {
+  display: inline;
+}
 
 .mdl-textfield--expandable {
   width: auto;
@@ -77,6 +80,11 @@ a {
 
 .app-mobile__title {
   display: none !important;
+}
+
+.app-modal__logo {
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .app-logo {
@@ -851,6 +859,21 @@ a {
 
   .app-element__table--ranking .app-element__table-name {
     display: initial;
+  }
+
+  .app-login__content-button {
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .app-login__content-button:last-child {
+    margin-bottom: 0;
+  }
+
+  .app-login__content-button button {
+    width: 300px;
+    text-align: center;
   }
 }
 

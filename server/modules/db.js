@@ -23,13 +23,6 @@ function Module() {
                     unique: true, 
                     sparse: true
                 },
-                tiwtterId: {
-                    type: String,
-                    trim: true, 
-                    index: true, 
-                    unique: true, 
-                    sparse: true
-                },
                 name: String,
                 avatar: String,
                 points: Number,

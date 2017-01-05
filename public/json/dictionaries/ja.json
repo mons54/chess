@@ -58,6 +58,8 @@
    "fanpage":"ファンページ",
    "terms_service":"利用規約",
    "privacy_policy":"個人情報保護方針",
+   "login_with_facebook": "Facebookアカウントでログインする",
+   "login_with_google": "Googleアカウントでログインする",
    "trophies":{
       "title":"トロフィー",
       "win":"あなたは、トロフィーを獲得",

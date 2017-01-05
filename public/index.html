@@ -31,6 +31,30 @@
         <modal-profile></modal-profile>
         <modal-trophy></modal-trophy>
 
+        <div id="modal-connect" 
+             class="app-modal app-modal__bg" 
+             role="dialog" 
+             aria-hidden="true">
+            <div class="app-modal__content">
+                <div class="app-modal__logo">
+                    <span class="app-logo">
+                        <span class="app-logo__icon"></span>
+                        <span class="app-logo__text" ng-bind="'title'|translate"></span>
+                    </span>
+                </div>
+                <div class="app-login__content-button">
+                    <button class="app-login__button app-login__button--facebook" ng-click="facebookLogin()">
+                        {{ 'login_with_facebook' | translate }}
+                    </button>
+                </div>
+                <div class="app-login__content-button">
+                    <button class="app-login__button app-login__button--google" ng-click="googleLogin()">
+                        {{ 'login_with_google' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div id="modal-disconnect" 
              class="app-modal app-modal__bg" 
              role="dialog" 

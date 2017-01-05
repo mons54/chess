@@ -40,7 +40,7 @@ service('facebook', ['user', 'socket', function (user, socket) {
         });
     };
 
-    this.getLoginStatus = function (callback) {
+    this.setLoginStatus = function (callback) {
         FB.getLoginStatus(function (response) {
             setLoginStatus(response);
             callback();

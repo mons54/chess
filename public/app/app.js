@@ -86,17 +86,17 @@
                 $location.path('/game/' + $rootScope.user.gid);
             }
 
-            function getLoginStatus() {
-                facebookGetLoginStatus();
-                googleGetLoginStatus();
+            function setLoginStatus() {
+                facebookSetLoginStatus();
+                googleSetLoginStatus();
             }
 
-            function facebookGetLoginStatus () {
-                facebook.getLoginStatus(callBackLoginStatus);
+            function facebookSetLoginStatus () {
+                facebook.setLoginStatus(callBackLoginStatus);
             }
 
-            function googleGetLoginStatus () {
-                google.getLoginStatus(callBackLoginStatus);
+            function googleSetLoginStatus () {
+                google.setLoginStatus(callBackLoginStatus);
             }
 
             function callBackLoginStatus() {
@@ -106,26 +106,39 @@
 
                 if (facebook.status === 'connected') {
                     facebook.handleLogin();
-                } else if (isFacebook) {
-                    facebook.login();
-                } 
-
-                if (!google.status) {
                     return;
                 } 
 
+                if (isFacebook) {
+                    facebook.login();
+                    return;
+                }
+
+                if (!google.status) {
+                    return;
+                }
+
                 if (google.status === 'connected') {
                     google.handleLogin();
-                } else {
-                    console.log('openModal');
+                    return;
                 }
+
+                modal.show(modal.get('modal-connect'));
             }
+
+            $rootScope.facebookLogin = function () {
+                facebook.login();
+            };
+
+            $rootScope.googleLogin = function () {
+                google.login();
+            };
 
             $rootScope.connect = function () {
                 if (isFacebook) {
                     socket.connect();
                 } else {
-                    getLoginStatus();
+                    setLoginStatus();
                 }
             };
 
@@ -153,6 +166,7 @@
             });
 
             socket.on('connected', function () {
+                modal.hide(modal.get('modal-connect'));
                 modal.hide(modal.get('modal-disconnect'));
                 $rootScope.$apply(function () {
                     $rootScope.loading = false;
@@ -170,7 +184,7 @@
 
                 facebook.init();
 
-                facebookGetLoginStatus();
+                facebookSetLoginStatus();
             };
 
             var isFacebook = $location.search().facebook;
@@ -178,7 +192,7 @@
             if (!isFacebook && gapi && gapi.load) {
 
                 gapi.load('client', function () {
-                    google.init().then(googleGetLoginStatus);
+                    google.init().then(googleSetLoginStatus);
                 });
             }
 

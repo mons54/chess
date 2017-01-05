@@ -58,6 +58,8 @@
    "fanpage":"粉絲專頁",
    "terms_service":"服務條款",
    "privacy_policy":"隱私權政策",
+   "login_with_facebook": "与Facebook登录",
+   "login_with_google": "与Google登录",
    "trophies":{
       "title":"杯",
       "win":"你贏得獎杯",

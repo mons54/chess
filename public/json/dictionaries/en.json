@@ -58,6 +58,8 @@
    "fanpage":"Fan Page",
    "terms_service":"Terms of Service",
    "privacy_policy":"Privacy Policy",
+   "login_with_facebook": "Login with Facebook",
+   "login_with_google": "Login with Google",
    "trophies":{
       "title":"Trophy",
       "win":"You win a trophy",
