@@ -9,20 +9,29 @@ function Module() {
     this.models = {
         users: mongoose.model('users', 
             new mongoose.Schema({
-                name: String,
-                avatar: String,
                 facebookId: {
-                    type: Number,
-                    unique: true
+                    type: String,
+                    trim: true, 
+                    index: true, 
+                    unique: true, 
+                    sparse: true
                 },
                 googleId: {
-                    type: Number,
-                    unique: true
+                    type: String,
+                    trim: true, 
+                    index: true, 
+                    unique: true, 
+                    sparse: true
                 },
                 tiwtterId: {
-                    type: Number,
-                    unique: true
+                    type: String,
+                    trim: true, 
+                    index: true, 
+                    unique: true, 
+                    sparse: true
                 },
+                name: String,
+                avatar: String,
                 points: Number,
                 consWin: Number,
                 active: Boolean,

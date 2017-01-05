@@ -13,7 +13,7 @@ angular.module('game').
  * @requires $location
  * @requires $filter
  * @requires $interval
- * @requires app.service:utils
+ * @requires global.service:utils
  * @requires components.service:modal
  */
 controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'socket', 'utils', 'modal', 'sound',
@@ -158,7 +158,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
  * The profile game controller.
  * @requires $rootScope
  * @requires $scope
- * @requires app.service:utils
+ * @requires global.service:utils
  */
 controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
     

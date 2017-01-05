@@ -9,8 +9,8 @@ angular.module('home').
  * The home controller.
  * @requires $rootScope
  * @requires $scope
- * @requires app.service:utils
- * @requires app.constant:paramsGame
+ * @requires global.service:utils
+ * @requires global.constant:paramsGame
  */
 controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
     

@@ -41,7 +41,7 @@
         </div>
 
         
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-show="ready">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-show="!loading">
             <header class="app-header mdl-layout__header" ng-class="{'is-game': user.gid }">
                 <div class="app-header__row mdl-layout__header-row">
                     <span class="app-title mdl-layout-title">
@@ -105,7 +105,7 @@
 
             <div class="app-content mdl-layout__content">
                 <a name="top"></a>
-                <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
+                <div class="app-grid mdl-grid" ng-view></div>
                 <footer class="app-footer">
                     <a id="fanpage" href="https://www.facebook.com/ChessCommunity" target="_blank">{{ 'fanpage' | translate }}</a>
                 </footer>
@@ -115,6 +115,8 @@
         <button-sound></button-sound>
           
         <div id="fb-root"></div>
+
+         <script src="https://apis.google.com/js/api.js"></script>
 
         <script src="socket.io/socket.io.js"></script>
 
@@ -131,6 +133,12 @@
         <script src="lib/angular-easypiechart.min.js"></script>
 
         <script src="app/app.js"></script>
+
+        <script src="app/global/global.module.js"></script>
+
+        <script src="app/facebook/facebook.module.js"></script>
+
+        <script src="app/google/google.module.js"></script>
 
         <script src="app/components/components.module.js"></script>
         <script src="app/components/components.services.js"></script>

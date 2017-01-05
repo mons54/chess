@@ -19,7 +19,6 @@ controller('trophiesCtrl', ['$rootScope', '$scope', 'socket', 'trophies',
         $scope.trophies = trophies.trophies;
 
         $scope.getUserClass = function (id) {
-            console.log(trophies.getUserClass(id));
             return trophies.getUserClass(id);
         };
 

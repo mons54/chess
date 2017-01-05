@@ -17,6 +17,15 @@ module.exports = function (app, io) {
             moduleSocket.facebookConnect(socket, data);
         });
 
+        socket.on('googleConnect', function (data) {
+            if (!data ||
+                !data.accessToken) {
+                socket.disconnect();
+                return;
+            }
+            moduleSocket.googleConnect(socket, data);
+        });
+
         socket.on('refresh', function () {
             moduleSocket.refresh(socket);
         });

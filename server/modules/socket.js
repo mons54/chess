@@ -31,6 +31,26 @@ module.exports = function (io) {
         );
     };
 
+    Module.prototype.googleConnect = function (socket, data) {
+        
+        var self = this;
+
+        request.get('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + data.accessToken, 
+            function (error, response, body) {
+                try {
+                    body = JSON.parse(body);
+                    self.create(socket, {
+                        googleId: body.user_id,
+                        name: data.name,
+                        avatar: data.avatar
+                    }, { googleId: body.user_id });
+                } catch (Error) {
+                    socket.disconnect();
+                }
+            }
+        );
+    };
+
     Module.prototype.create = function (socket, data, request) {
         
         if (socket.uid) {
@@ -160,7 +180,7 @@ module.exports = function (io) {
                 socket.emit('listChallenges', socket.challenges);
             }
 
-            socket.emit('ready');
+            socket.emit('connected');
         });
     };
 

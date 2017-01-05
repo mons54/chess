@@ -8,7 +8,7 @@
      * @ngdoc overview
      * @name app
      * @description
-     * The module of app.
+     * App module.
      * @requires ngRoute
      * @requires ngCookies
      * @requires easypiechart
@@ -24,6 +24,9 @@
         'ngCookies',
         'easypiechart',
         'pascalprecht.translate',
+        'global',
+        'facebook',
+        'google',
         'components',
         'game',
         'home',
@@ -31,348 +34,7 @@
         'trophies'
     ]).
 
-    /**
-     * @ngdoc parameters
-     * @name app.constant:host
-     * @description
-     * The host.
-     */
-    constant('host', 'chess-game.herokuapp.com').
-
-    /**
-     * @ngdoc parameters
-     * @name app.constant:appId
-     * @description
-     * The app Id.
-     */
-    constant('appId', '738045286230106').
-
-    /**
-     * @ngdoc parameters
-     * @name app.constant:redirectUri
-     * @description
-     * The redirect uri.
-     */
-    constant('redirectUri', 'https://apps.facebook.com/____test/').
-
-    /**
-     * @ngdoc parameters
-     * @name app.constant:paramsGame
-     * @description
-     * The params games data
-     */
-    constant('paramsGame', {
-        colors: ['white', 'black'],
-        times: [300, 600, 1200, 3600, 5400],
-        points: {
-            min: 1200,
-            max: 3000
-        }
-    }).
-
-    /**
-     * @ngdoc service
-     * @name app.service:socket
-     * @description 
-     * Socket management.
-     */
-    provider('socket', function () {
-
-        var socket,
-            deferedEvents = {};
-
-        /**
-         * @ngdoc function
-         * @name #connect
-         * @methodOf app.service:socket
-         * @description 
-         * Connect the socket.
-         */
-        this.connect = function () {
-            if (!socket) {
-                socket = io.connect();
-            } else {
-                socket.connect();
-            }
-
-            angular.forEach(deferedEvents, function (callback, event) {
-                this.on(event, callback)
-            }.bind(this));
-
-            deferedEvents = {};
-        };
-
-        /**
-         * @ngdoc function
-         * @name #disconnect
-         * @methodOf app.service:socket
-         * @description 
-         * Disconnect the socket.
-         */
-        this.disconnect = function () {
-            if (!socket) {
-                return;
-            }
-            socket.disconnect();
-        };
-
-        /**
-         * @ngdoc function
-         * @name #emit
-         * @methodOf app.service:socket
-         * @description 
-         * Emit one event.
-         * @param {string} event The event name
-         * @param {object=} data The data
-         */
-        this.emit = function (event, data) {
-            if (!socket) {
-                return;
-            }
-            socket.emit(event, data);
-        };
-
-        /**
-         * @ngdoc function
-         * @name #emit
-         * @methodOf app.service:socket
-         * @description 
-         * Subscribe on event.
-         * @param {string} event The event name
-         * @param {function} callback The callback
-         */
-        this.on = function (event, callback) {
-            if (!socket) {
-                deferedEvents[event] = callback;
-                return;
-            }
-            socket.on(event, callback);
-        };
-
-        /**
-         * @ngdoc function
-         * @name #once
-         * @methodOf app.service:socket
-         * @description 
-         * Subscribe once event.
-         * @param {string} event The event name
-         * @param {function} callback The callback
-         */
-        this.once = function (event, callback) {
-            if (!socket) {
-                return;
-            }
-            socket.once(event, callback);
-        };
-            
-        this.$get = function () {
-            return this;
-        };
-    }).
-
-    /**
-     * @ngdoc service
-     * @name app.service:sound
-     * @description 
-     * Sound management.
-     */
-    service('sound', ['$cookies', function ($cookies) {
-
-        var sounds,
-            sound = getSound();
-
-        if (typeof Audio === 'function') {
-            sounds = {
-                timer: new Audio('/sounds/timer.mp3'),
-                deplace: new Audio('/sounds/deplace.wav'),
-                capture: new Audio('/sounds/capture.wav')
-            };
-        };
-
-        function getSound() {
-            return !!$cookies.getObject('sound');
-        }
-
-        function loadAll() {
-            if (!sounds) {
-                return;
-            }
-
-            angular.forEach(sounds, function (value, name) {
-                value.load();
-            });
-        }
-
-        function change() {
-            sound = !getSound();
-            $cookies.putObject('sound', sound);
-
-            if (!sound) {
-                loadAll();
-            }
-
-            return sound;
-        }
-
-        function Sound(name) {
-            if (sounds &&
-                sounds[name]) {
-                this.sound = sounds[name];
-            }
-
-            this.play = function () {
-                if (sound && this.isPaused()) {
-                    this.sound.play();
-                }
-                return this;
-            };
-
-            this.pause = function () {
-                if (sound && this.isPlayed()) {
-                    this.sound.pause();
-                }
-                return this;
-            };
-
-            this.load = function () {
-                if (sound && this.sound) {
-                    this.sound.load();
-                }
-                return this;
-            };
-
-            this.isPlayed = function () {
-                return this.sound && !this.sound.paused;
-            };
-
-            this.isPaused = function () {
-                return this.sound && this.sound.paused;
-            };
-        }
-
-        return {
-            sound: sound,
-            /**
-             * @ngdoc function
-             * @name #change
-             * @methodOf app.service:sound
-             * @description 
-             * Change on/off sound
-             * @returns {bool} true (on) / false (off)
-             */
-            change: change,
-            /**
-             * @ngdoc function
-             * @name #timer
-             * @methodOf app.service:sound
-             * @description 
-             * Manage sound timer
-             * @returns {object} soundService
-             */
-            timer: new Sound('timer'),
-            /**
-             * @ngdoc function
-             * @name #capture
-             * @methodOf app.service:sound
-             * @description 
-             * Manage sound capture
-             * @returns {object} soundService
-             */
-            capture: new Sound('capture'),
-            /**
-             * @ngdoc function
-             * @name #deplace
-             * @methodOf app.service:sound
-             * @description 
-             * Manage sound deplace
-             * @returns {object} soundService
-             */
-            deplace: new Sound('deplace')
-        };
-    }]).
-
-    /**
-     * @ngdoc service
-     * @name app.service:utils
-     * @description
-     * Utils methods
-     * @requires $rootScope
-     * @requires $filter
-     * @requires app.constant:redirectUri
-     * @requires app.constant:host
-     */
-    factory('utils', ['$rootScope', '$filter', 'redirectUri', 'host',
-        
-        function ($rootScope, $filter, redirectUri, host) {
-
-            return {
-
-                /**
-                 * @ngdoc function
-                 * @name #sprintf
-                 * @methodOf app.service:utils
-                 * @description
-                 * Return a string formatted.
-                 * @param {float} value The value
-                 * @returns {string} The value formatted
-                 */
-                sprintf: function(value) {
-                    return (value.toString().length == 1 ? '0' : '') + value;
-                },
-
-                /**
-                 * @ngdoc function
-                 * @name #share
-                 * @methodOf app.service:utils
-                 * @description
-                 * Share on facebook
-                 * @param {string} caption The description to share
-                 */
-                share: function (data) {
-
-                    if (!data.picture) {
-                        data.picture = 'logo.png';
-                    }
-
-                    if (!data.name) {
-                        data.name = $filter('translate')('title');
-                    }
-
-                    if (!data.description) {
-                        data.description = $filter('translate')('description');
-                    }
-
-                    if (!data.caption) {
-                        data.caption = $filter('translate')('title');
-                    }
-
-                    FB.ui({
-                        method: 'feed',
-                        redirect_uri: redirectUri,
-                        link: redirectUri,
-                        picture: 'https://' + host + '/images/' + data.picture,
-                        name: data.name,
-                        caption: data.caption,
-                        description: data.description
-                    });
-                },
-
-                /**
-                 * @ngdoc function
-                 * @name #isTouch
-                 * @methodOf app.service:utils
-                 * @description
-                 * Check if device has touch
-                 * @returns {bool} has touch
-                 */
-                isTouch: function () {
-                    return 'ontouchstart' in window || navigator.msMaxTouchPoints;
-                }
-            };
-        }
-    ]).
-
-    run(['$rootScope', '$route', '$translate', '$http', '$location', 'socket', 'modal', 'appId',
+    run(['$rootScope', '$route', '$translate', '$http', '$location', 'user', 'socket', 'modal', 'facebook', 'google',
 
         /**
          * @param {object} $rootScope Global scope
@@ -380,21 +42,20 @@
          * @param {object} $translate Service translator
          * @param {object} $http Service http
          * @param {object} $location Service location
-         * @param {string} appId App Id
+         * @param {string} facebookAppId Facebook app Id
          */
-        function ($rootScope, $route, $translate, $http, $location, socket, modal, appId) {
+        function ($rootScope, $route, $translate, $http, $location, user, socket, modal, facebook, google) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
                  * Check if the user has a game in progress.
                  */
-                if (!$rootScope.user.gid) {
-                    return;
+                if ($rootScope.user && $rootScope.user.gid) {
+                    /**
+                     * If the user has a game in progress redirect to this game
+                     */
+                    redirectToGame();
                 }
-                /**
-                 * If the user has a game in progress redirect to this game
-                 */
-                redirectToGame();
             });
 
             $rootScope.$on('$routeChangeSuccess', function() {
@@ -418,38 +79,6 @@
                 }
                 layout.toggleDrawer();
             }
-            
-            /**
-             * Start the loader
-             */
-            $rootScope.loading = true;
-
-            /**
-             * Set the user default values.
-             */
-            $rootScope.user = {
-                uid: null,
-                accessToken: null,
-                name: 'User',
-                lang: 'en',
-                gender: 'male',
-                currency: null,
-                friends: []
-            };
-
-            /**
-             * Facebook is loaded
-             */
-            window.fbAsyncInit = function () {
-
-                FB.init({
-                    appId: appId,
-                    xfbml: true,
-                    version: 'v2.8'
-                });
-
-                getLoginStatus();
-            };
 
             /**
              * Redirect to the game in progress of the user.
@@ -458,76 +87,75 @@
                 $location.path('/game/' + $rootScope.user.gid);
             }
 
+            var isFacebook = $location.search().facebook;
+
+
             /**
-             * Get the user login status.
+             * Facebook is loaded
              */
-            function getLoginStatus () {
-                FB.getLoginStatus(function (res) {
-                    if (res.status !== 'connected') {
-                        return login();
-                    }
-                    getUser(res);
+            window.fbAsyncInit = function () {
+
+                facebook.init();
+
+                facebookGetLoginStatus();
+            };
+
+            if (!isFacebook && gapi && gapi.load) {
+
+                gapi.load('client', function () {
+                    google.init().then(googleGetLoginStatus);
                 });
             }
 
-            /**
-             * User login
-             */
-            function login () {
-                FB.login(function (res) {
-                    getUser(res);
-                }, {
-                    scope: 'user_friends, email'
-                });
+            function getLoginStatus() {
+                facebookGetLoginStatus();
+                googleGetLoginStatus();
             }
 
-            /**
-             * Get the user data
-             */
-            function getUser (res) {
-
-                $rootScope.user.accessToken = res.authResponse.accessToken;
-                
-                FB.api('/me?fields=first_name,name,locale,gender,currency', setUser);
+            function facebookGetLoginStatus () {
+                facebook.getLoginStatus(callBackLoginStatus);
             }
 
-            /**
-             * Set user data and socket
-             */
-            function setUser (res) {
-                    
-                $rootScope.user.id = res.id;
-                $rootScope.user.firstName = res.first_name;
-                $rootScope.user.name = res.name.substr(0, 30);
-                $rootScope.user.lang = res.locale.substr(0, 2);
-                $rootScope.user.gender = res.gender;
-                $rootScope.user.currency = res.currency;
-                $rootScope.user.friends.push($rootScope.user.id);
+            function googleGetLoginStatus () {
+                google.getLoginStatus(callBackLoginStatus);
+            }
 
-                $translate.use($rootScope.user.lang);
+            function callBackLoginStatus() {
+                if (!facebook.status) {
+                    return;
+                }
 
-                FB.api('/me/friends?fields=installed,id,name', function (res) {
-                    angular.forEach(res.data, function (value) {
-                        if (value.installed) {
-                            $rootScope.user.friends.push(value.id);
-                        }
-                    });
-                });
+                if (facebook.status === 'connected') {
+                    facebook.handleLogin();
+                } else if (isFacebook) {
+                    facebook.login();
+                } 
 
-                socket.connect();
+                if (!google.status) {
+                    return;
+                } 
+
+                if (google.status === 'connected') {
+                    google.handleLogin();
+                } else {
+                    console.log('openModal');
+                }
             }
 
             $rootScope.connect = function () {
-                socket.connect();
+                if (isFacebook) {
+                    socket.connect();
+                } else {
+                    getLoginStatus();
+                }
             };
 
             socket.on('connect', function () {
-                modal.hide(modal.get('modal-disconnect'));
-                socket.emit('facebookConnect', {
-                    id: $rootScope.user.id,
-                    accessToken: $rootScope.user.accessToken,
-                    name: $rootScope.user.name
-                });
+                if (facebook.auth) {
+                    socket.emit('facebookConnect', facebook.auth);
+                } else if (google.auth) {
+                    socket.emit('googleConnect', google.auth);
+                }
             });
 
             socket.on('disconnect', function () {
@@ -545,9 +173,9 @@
                 });
             });
 
-            socket.on('ready', function () {
+            socket.on('connected', function () {
+                modal.hide(modal.get('modal-disconnect'));
                 $rootScope.$apply(function () {
-                    $rootScope.ready = true;
                     $rootScope.loading = false;
                 });
             });
@@ -558,21 +186,25 @@
                     $rootScope.$emit('trophies', data.newTrophies)
                 });
             });
+
+            $rootScope.loading = true;
+
+            user.init();
         }
     ]).
 
     config(['$routeProvider', '$locationProvider', '$translateProvider',
         function ($routeProvider, $locationProvider, $translateProvider) {
             $routeProvider
-            .when('/game/:id', {
-                title : 'game',
-                templateUrl: 'app/game/templates/game.html',
-                controller: 'gameCtrl'
-            })
             .when('/', {
                 title : 'home',
                 templateUrl: '/app/home/templates/home.html',
                 controller: 'homeCtrl'
+            })
+            .when('/game/:id', {
+                title : 'game',
+                templateUrl: 'app/game/templates/game.html',
+                controller: 'gameCtrl'
             })
             .when('/ranking', {
                 title : 'ranking',
