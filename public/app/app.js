@@ -34,17 +34,16 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$translate', '$http', '$location', 'user', 'socket', 'modal', 'facebook', 'google',
+    run(['$rootScope', '$route', '$http', '$location', 'user', 'socket', 'modal', 'facebook', 'google',
 
         /**
          * @param {object} $rootScope Global scope
          * @param {object} $route Service route
-         * @param {object} $translate Service translator
          * @param {object} $http Service http
          * @param {object} $location Service location
          * @param {string} facebookAppId Facebook app Id
          */
-        function ($rootScope, $route, $translate, $http, $location, user, socket, modal, facebook, google) {
+        function ($rootScope, $route, $http, $location, user, socket, modal, facebook, google) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
@@ -85,26 +84,6 @@
              */
             function redirectToGame () {
                 $location.path('/game/' + $rootScope.user.gid);
-            }
-
-            var isFacebook = $location.search().facebook;
-
-
-            /**
-             * Facebook is loaded
-             */
-            window.fbAsyncInit = function () {
-
-                facebook.init();
-
-                facebookGetLoginStatus();
-            };
-
-            if (!isFacebook && gapi && gapi.load) {
-
-                gapi.load('client', function () {
-                    google.init().then(googleGetLoginStatus);
-                });
             }
 
             function getLoginStatus() {
@@ -187,6 +166,22 @@
                 });
             });
 
+            window.fbAsyncInit = function () {
+
+                facebook.init();
+
+                facebookGetLoginStatus();
+            };
+
+            var isFacebook = $location.search().facebook;
+
+            if (!isFacebook && gapi && gapi.load) {
+
+                gapi.load('client', function () {
+                    google.init().then(googleGetLoginStatus);
+                });
+            }
+
             $rootScope.loading = true;
 
             user.init();
@@ -229,7 +224,7 @@
                 'suffix': '.json'
             });
 
-            $translateProvider.preferredLanguage('en');
+            $translateProvider.preferredLanguage(navigator.language || navigator.userLanguage || 'en');
         }
     ]);
 

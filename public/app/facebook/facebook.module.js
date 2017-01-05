@@ -58,7 +58,6 @@ service('facebook', ['user', 'socket', function (user, socket) {
 
     this.logout = function () {
         FB.logout(function () {
-            user.init();
             socket.disconnect();
         });
     };

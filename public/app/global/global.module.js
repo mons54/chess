@@ -333,15 +333,16 @@ provider('socket', function () {
     };
 }).
 
-provider('user', function () {
+service('user', ['$rootScope', '$translate',
 
-    var defaultData = {
-        lang: 'en',
-        gender: 1,
-        friends: []
-    };
+    function ($rootScope, $translate) {
 
-    this.$get = ['$rootScope', '$translate', function ($rootScope, $translate) {
+        var defaultData = {
+            lang: $translate.use(),
+            gender: 1,
+            friends: []
+        };
+
         return {
             init: function () {
                 $rootScope.user = defaultData;
@@ -349,10 +350,12 @@ provider('user', function () {
             set: function (data) {
                 if (data.lang) {
                     data.lang = data.lang.substr(0, 2);
-                    $translate.use(data.lang);
+                    if (data.lang !== defaultData.lang) {
+                        $translate.use(data.lang);
+                    }
                 }
                 angular.extend($rootScope.user, data);
             },
         };
-    }];
-});
+    }
+]);

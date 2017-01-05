@@ -21,7 +21,7 @@ service('google', ['$q', 'user', 'socket', function ($q, user, socket) {
         var data = {};
 
         angular.forEach(response.locales, function (value) {
-            if (!data.lang) {
+            if (value.value.substr(0, 2) !== 'en') {
                 data.lang = value.value;
             }
         });
