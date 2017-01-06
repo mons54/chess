@@ -34,16 +34,19 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', 'user', 'socket', 'modal', 'facebook', 'google',
+    run(['$rootScope', '$route', '$http', '$location', 'socket', 'modal', 'facebook', 'google',
 
         /**
          * @param {object} $rootScope Global scope
          * @param {object} $route Service route
          * @param {object} $http Service http
          * @param {object} $location Service location
-         * @param {string} facebookAppId Facebook app Id
+         * @param {object} socket Socket service
+         * @param {object} modal Modal service
+         * @param {object} facebook Facebook service
+         * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, user, socket, modal, facebook, google) {
+        function ($rootScope, $route, $http, $location, socket, modal, facebook, google) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
@@ -62,11 +65,12 @@
                  * Set the title of the page.
                  */
                 $rootScope.title = $route.current.title;
-                
-                closeDrawer();
             });
 
-            function closeDrawer() {
+            /**
+             * Close mobile menu.
+             */
+            $rootScope.closeDrawer = function () {
                 var drawer = angular.element('.mdl-layout__drawer');
                 if (!drawer || !drawer.hasClass('is-visible')) {
                   return;
@@ -77,7 +81,23 @@
                   return;
                 }
                 layout.toggleDrawer();
-            }
+            };
+
+            $rootScope.facebookLogin = function () {
+                facebook.login();
+            };
+
+            $rootScope.googleLogin = function () {
+                google.login();
+            };
+
+            $rootScope.connect = function () {
+                if (isFacebook) {
+                    facebookSetLoginStatus();
+                } else {
+                    setLoginStatus();
+                }
+            };
 
             /**
              * Redirect to the game in progress of the user.
@@ -126,22 +146,6 @@
                 modal.show(modal.get('modal-connect'));
             }
 
-            $rootScope.facebookLogin = function () {
-                facebook.login();
-            };
-
-            $rootScope.googleLogin = function () {
-                google.login();
-            };
-
-            $rootScope.connect = function () {
-                if (isFacebook) {
-                    socket.connect();
-                } else {
-                    setLoginStatus();
-                }
-            };
-
             socket.on('connect', function () {
                 if (facebook.auth) {
                     socket.emit('facebookConnect', facebook.auth);
@@ -159,25 +163,20 @@
             });
 
             socket.on('startGame', function (gid) {
-                $rootScope.$apply(function () {
-                    $rootScope.user.gid = gid;
-                    redirectToGame();
-                });
+                $rootScope.user.gid = gid;
+                redirectToGame();
             });
 
             socket.on('connected', function () {
                 modal.hide(modal.get('modal-connect'));
                 modal.hide(modal.get('modal-disconnect'));
-                $rootScope.$apply(function () {
-                    $rootScope.loading = false;
-                });
+                $rootScope.loading = false;
+                $rootScope.ready = true;
             });
 
             socket.on('trophies', function (data) {
-                $rootScope.$apply(function () {
-                    $rootScope.user.trophies = data.trophies;
-                    $rootScope.$emit('trophies', data.newTrophies)
-                });
+                $rootScope.user.trophies = data.trophies;
+                $rootScope.$emit('trophies', data.newTrophies);
             });
 
             window.fbAsyncInit = function () {
@@ -198,7 +197,10 @@
 
             $rootScope.loading = true;
 
-            user.init();
+            $rootScope.user = {
+                gender: 1,
+                friends: []
+            };
         }
     ]).
 
@@ -243,14 +245,3 @@
     ]);
 
 })();
-
-/**
- * Init the SDK Facebook
- */
-(function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));

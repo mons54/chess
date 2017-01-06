@@ -106,9 +106,7 @@ directive('modalTrophy', ['$rootScope', 'modal',
                     scope.trophy = scope.data.shift();
                     modal.show(element);
 
-                    element.one('hide', function () {
-                        scope.$apply(show);
-                    });
+                    element.one('hide', show);
                 }
 
                 $rootScope.$on('trophies', function (event, data) {

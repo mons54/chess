@@ -90,15 +90,8 @@ directive('modalProfile', ['socket', 'modal',
             scope: true,
             templateUrl: '/app/components/templates/modal-profile.html',
             link: function (scope, element) {
-                socket.on('profile', function (data) {
-                    scope.$apply(function () {
-                        scope.data = data;
-                    });
-                    modal.show(element);
-                });
-            },
-            controller: ['$scope', function ($scope) {
-                var options = {
+
+                var defaultOptions = {
                     animate:{
                         duration: 0,
                         enabled: false
@@ -110,25 +103,36 @@ directive('modalProfile', ['socket', 'modal',
                     lineCap: 'circle'
                 };
 
-                $scope.options = {
+                var options = {
                     win: angular.extend({
                         barColor: '#54c08b'
-                    }, options),
+                    }, defaultOptions),
                     draw: angular.extend({
                         barColor: '#565d6d'
-                    }, options),
+                    }, defaultOptions),
                     lose: angular.extend({
                         barColor: '#f5716e'
-                    }, options),
+                    }, defaultOptions),
                 };
 
-                $scope.getPercent = function(data) {
-                    if (!$scope.data) {
-                        return;
-                    }
-                    return 100 * data / $scope.data.games;
-                };
-            }]
+                socket.on('profile', function (data) {
+
+                    scope.charts = [];
+
+                    angular.forEach(['win', 'draw', 'lose'], function (name) {
+                        scope.charts.push({
+                            name: name,
+                            value: data[name],
+                            percent: 100 * data[name] / data.games,
+                            options: options[name]
+                        });
+                    });
+
+                    scope.data = data;
+
+                    modal.show(element);
+                });
+            }
         }
     }
 ]).

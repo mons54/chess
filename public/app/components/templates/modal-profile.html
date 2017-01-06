@@ -1,9 +1,10 @@
 <div id="modal-profile" 
      class="app-modal app-modal__bg" 
      role="dialog" 
-     aria-hidden="true">
+     aria-hidden="true"
+     modal-close-bg>
     <div class="app-modal__dialog">
-        <div class="app-modal__content" ng-if="data">
+        <div class="app-modal__content">
             <a href modal-close class="app-modal__close">
                 <i class="material-icons">clear</i>
             </a>
@@ -24,17 +25,17 @@
                 </div>
             </div>
             <div class="app-profile__stats">
-                <div ng-repeat="name in ['win', 'draw', 'lose']" class="app-profile__stat app-profile__stat--{{ name }}">
+                <div ng-repeat="chart in charts" class="app-profile__stat app-profile__stat--{{ chart.name }}">
                     <div easypiechart
-                         options="options[name]" 
-                         percent="getPercent(data[name])"
+                         options="chart.options" 
+                         percent="chart.percent"
                          class="app-profile__stat-chart"></div>
                     <div class="app-profile__stat-text">
                         <span class="app-profile__stat-value">
-                            {{ data[name] }}
+                            {{ chart.value }}
                         </span>
                         <span class="app-profile__stat-desc">
-                            {{ name|translate }}
+                            {{ chart.name|translate }}
                         </span>
                     </div>
                 </div>

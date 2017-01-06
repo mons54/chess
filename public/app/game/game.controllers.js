@@ -22,8 +22,48 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         socket.emit('initGame', $routeParams.id);
 
-        socket.on('game', function (data) {
-            $scope.$apply(applyGame(data));
+        socket.on('game', function (game) {
+            if (!game) {
+                $rootScope.user.gid = null;
+                $location.path('/');
+                return; 
+            }
+
+            if (sound.timer.played) {
+                sound.timer.load();
+            }
+
+            if (game.finish) {
+                $rootScope.user.gid = null;
+                modal.show(modal.get('modal-finish-game'));
+            }
+
+            /**
+             * Play sound if is not player turn and has last turn
+             */
+            if (!$scope.isPlayerTurn() &&
+                $scope.game &&
+                game.lastTurn && 
+                game.lastTurn.start &&
+                game.lastTurn.start !== $scope.game.lastTurn.start) {
+                sound[$scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace'].load().play();
+            }
+
+            $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            $scope.numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
+
+            if ($rootScope.user.uid === game.black.uid) {
+                $scope.player1 = game.black;
+                $scope.player2 = game.white;
+                $scope.orientation = 'black';
+                $scope.numbers.reverse();
+            } else {
+                $scope.player1 = game.white;
+                $scope.player2 = game.black;
+                $scope.orientation = 'white';
+            }
+
+            $scope.game = game;
         });
 
         socket.on('offerDraw', function (data) {
@@ -82,50 +122,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 description: description,
             });
         };
-
-        function applyGame(game) {
-            if (!game) {
-                $rootScope.user.gid = null;
-                $location.path('/');
-                return; 
-            }
-
-            if (sound.timer.played) {
-                sound.timer.load();
-            }
-
-            if (game.finish) {
-                $rootScope.user.gid = null;
-                modal.show(modal.get('modal-finish-game'));
-            }
-
-            /**
-             * Play sound if is not player turn and has last turn
-             */
-            if (!$scope.isPlayerTurn() &&
-                $scope.game &&
-                game.lastTurn && 
-                game.lastTurn.start &&
-                game.lastTurn.start !== $scope.game.lastTurn.start) {
-                sound[$scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace'].load().play();
-            }
-
-            $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-            $scope.numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
-
-            if ($rootScope.user.uid === game.black.uid) {
-                $scope.player1 = game.black;
-                $scope.player2 = game.white;
-                $scope.orientation = 'black';
-                $scope.numbers.reverse();
-            } else {
-                $scope.player1 = game.white;
-                $scope.player2 = game.black;
-                $scope.orientation = 'white';
-            }
-
-            $scope.game = game;
-        }
 
         $interval.cancel($interval.stopTimeGame);
         $interval.stopTimeGame = $interval(function () {

@@ -503,7 +503,7 @@ module.exports = function (io) {
         if (room && room.sockets) {
             for (var socketId in room.sockets) {
                 var socket = io.sockets.connected[socketId];
-                if (!socket || !socket.facebookId) {
+                if (!socket || !socket.uid) {
                     continue;
                 }
                 challengers.push({

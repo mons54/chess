@@ -16,80 +16,137 @@ angular.module('facebook', []).
  */
 constant('facebookRedirectUri', 'https://apps.facebook.com/____test/').
 
-service('facebook', ['user', 'socket', function (user, socket) {
+/**
+ * @ngdoc service
+ * @name facebook.service:facebook
+ * @description 
+ * Facebook service.
+ * @requires $rootScope
+ * @requires global.service:socket
+ * @requires global.service:lang
+ */
+service('facebook', ['$rootScope', 'socket', 'lang', 
 
-    var self = this;
+    function ($rootScope, socket, lang) {
 
-    function setLoginStatus (response) {
-        self.status = response.status;
-        if (response.status === 'connected') {
-            self.auth = {
-                id: response.authResponse.userID,
-                accessToken: response.authResponse.accessToken
-            };
-        } else {
-            delete self.auth;
+        var self = this;
+
+        function setLoginStatus (response) {
+            self.status = response.status;
+            if (response.status === 'connected') {
+                self.auth = {
+                    id: response.authResponse.userID,
+                    accessToken: response.authResponse.accessToken
+                };
+            } else {
+                delete self.auth;
+            }
         }
-    }
 
-    this.init = function () {
-        FB.init({
-            appId: '466889913406471',
-            xfbml: true,
-            version: 'v2.8'
-        });
-    };
-
-    this.setLoginStatus = function (callback) {
-        FB.getLoginStatus(function (response) {
-            setLoginStatus(response);
-            callback();
-        });
-    };
-
-    this.login = function () {
-        FB.login(function (response) {
-            setLoginStatus(response);
-            self.handleLogin();
-        }, {
-            scope: 'user_friends'
-        });
-    };
-
-    this.logout = function () {
-        FB.logout(function () {
-            socket.disconnect();
-        });
-    };
-
-    this.handleLogin = function () {
-        
-        FB.api('/me?fields=first_name,name,locale,gender,currency', function (response) {
-
-            user.set({
-                lang: response.locale,
-                gender: response.gender
+        /**
+         * @ngdoc function
+         * @name #init
+         * @methodOf facebook.service:facebook
+         * @description
+         * Init app Facebook.
+         */
+        this.init = function () {
+            FB.init({
+                appId: '738045286230106',
+                xfbml: true,
+                version: 'v2.8'
             });
+        };
 
-            var friends = [];
-                    
-            friends.push(response.id);
+        /**
+         * @ngdoc function
+         * @name #setLoginStatus
+         * @methodOf facebook.service:facebook
+         * @description
+         * Set Facebook login status.
+         * @param {function} callback Callback
+         */
+        this.setLoginStatus = function (callback) {
+            FB.getLoginStatus(function (response) {
+                setLoginStatus(response);
+                callback();
+            });
+        };
 
-            FB.api('/me/friends?fields=installed,id,name', function (res) {
-                angular.forEach(res.data, function (value) {
-                    if (value.installed) {
-                        friends.push(value.id);
-                    }
+        /**
+         * @ngdoc function
+         * @name #login
+         * @methodOf facebook.service:facebook
+         * @description
+         * Facebook login.
+         */
+        this.login = function () {
+            FB.login(function (response) {
+                setLoginStatus(response);
+                self.handleLogin();
+            }, {
+                scope: 'user_friends'
+            });
+        };
+
+        /**
+         * @ngdoc function
+         * @name #logout
+         * @methodOf facebook.service:facebook
+         * @description
+         * Facebook logout.
+         */
+        this.logout = function () {
+            FB.logout(function () {
+                socket.disconnect();
+            });
+        };
+
+        /**
+         * @ngdoc function
+         * @name #handleLogin
+         * @methodOf facebook.service:facebook
+         * @description
+         * Set user data from facebook.
+         * Set user friends from facebook list.
+         */
+        this.handleLogin = function () {
+            
+            FB.api('/me?fields=first_name,name,locale,gender,currency', function (response) {
+
+                lang.set(response.locale);
+
+                $rootScope.user.gender = response.gender;
+
+                socket.connect();
+
+                if ($rootScope.user.friends.length) {
+                    return;
+                }
+                        
+                $rootScope.user.friends.push(response.id);
+
+                FB.api('/me/friends?fields=installed,id,name', function (res) {
+                    angular.forEach(res.data, function (value) {
+                        if (value.installed) {
+                            $rootScope.user.friends.push(value.id);
+                        }
+                    });
                 });
             });
+        }
 
-            user.set({
-                friends: friends
-            });
-
-            socket.connect();
-        });
+        return this;
     }
+]);
 
-    return this;
-}]);
+/**
+ * Init the SDK Facebook
+ */
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));

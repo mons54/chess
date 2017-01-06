@@ -239,122 +239,142 @@ service('sound', ['$cookies', function ($cookies) {
  * @description 
  * Socket management.
  */
-provider('socket', function () {
+factory('socket', ['$rootScope', function ($rootScope) {
 
     var socket,
         deferedEvents = {};
 
-    /**
-     * @ngdoc function
-     * @name #connect
-     * @methodOf global.service:socket
-     * @description 
-     * Connect the socket.
-     */
-    this.connect = function () {
-        if (!socket) {
-            socket = io.connect();
-        } else {
-            socket.connect();
+    return {
+        /**
+         * @ngdoc function
+         * @name #connect
+         * @methodOf global.service:socket
+         * @description 
+         * Socket connect.
+         */
+        connect: function () {
+            if (!socket) {
+                socket = io.connect();
+            } else {
+                socket.connect();
+            }
+            angular.forEach(deferedEvents, function (callback, eventName) {
+                this.on(eventName, callback)
+            }.bind(this));
+            deferedEvents = {};
+        },
+        /**
+         * @ngdoc function
+         * @name #disconnect
+         * @methodOf global.service:socket
+         * @description 
+         * Socket disconnect.
+         */
+        disconnect: function () {
+            if (!socket) {
+                return;
+            }
+            socket.disconnect();
+        },
+        /**
+         * @ngdoc function
+         * @name #on
+         * @methodOf global.service:socket
+         * @description 
+         * Subscribe once event.
+         * @param {string} eventName Event name
+         * @param {function} callback Callback
+         */
+        on: function (eventName, callback) {
+            if (!socket) {
+                deferedEvents[eventName] = callback;
+                return;
+            }
+            socket.on(eventName, function () {
+                var args = arguments;
+                $rootScope.$apply(function () {
+                    callback.apply(socket, args);
+                });
+            });
+        },
+        /**
+         * @ngdoc function
+         * @name #once
+         * @methodOf global.service:socket
+         * @description 
+         * Subscribe once event.
+         * @param {string} eventName Event name
+         * @param {function} callback Callback
+         */
+        once: function (eventName, callback) {
+            if (!socket) {
+                deferedEvents[eventName] = callback;
+                return;
+            }
+            socket.once(eventName, function () {
+                var args = arguments;
+                $rootScope.$apply(function () {
+                    callback.apply(socket, args);
+                });
+            });
+        },
+        /**
+         * @ngdoc function
+         * @name #emit
+         * @methodOf global.service:socket
+         * @description 
+         * Emit an event.
+         * @param {string} eventName Event name
+         * @param {object} data Data
+         * @param {function} callback Callback
+         */
+        emit: function (eventName, data, callback) {
+            if (!socket) {
+                return;
+            }
+            socket.emit(eventName, data, function () {
+                var args = arguments;
+                $rootScope.$apply(function () {
+                    if (callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            })
         }
-
-        angular.forEach(deferedEvents, function (callback, event) {
-            this.on(event, callback)
-        }.bind(this));
-
-        deferedEvents = {};
     };
+}]).
 
-    /**
-     * @ngdoc function
-     * @name #disconnect
-     * @methodOf global.service:socket
-     * @description 
-     * Disconnect the socket.
-     */
-    this.disconnect = function () {
-        if (!socket) {
-            return;
-        }
-        socket.disconnect();
-    };
+/**
+ * @ngdoc service
+ * @name global.service:lang
+ * @description 
+ * Seervice lang.
+ * @requires $translate
+ */
+service('lang', ['$translate',
 
-    /**
-     * @ngdoc function
-     * @name #emit
-     * @methodOf global.service:socket
-     * @description 
-     * Emit one event.
-     * @param {string} event The event name
-     * @param {object=} data The data
-     */
-    this.emit = function (event, data) {
-        if (!socket) {
-            return;
-        }
-        socket.emit(event, data);
-    };
-
-    /**
-     * @ngdoc function
-     * @name #emit
-     * @methodOf global.service:socket
-     * @description 
-     * Subscribe on event.
-     * @param {string} event The event name
-     * @param {function} callback The callback
-     */
-    this.on = function (event, callback) {
-        if (!socket) {
-            deferedEvents[event] = callback;
-            return;
-        }
-        socket.on(event, callback);
-    };
-
-    /**
-     * @ngdoc function
-     * @name #once
-     * @methodOf global.service:socket
-     * @description 
-     * Subscribe once event.
-     * @param {string} event The event name
-     * @param {function} callback The callback
-     */
-    this.once = function (event, callback) {
-        if (!socket) {
-            return;
-        }
-        socket.once(event, callback);
-    };
-        
-    this.$get = function () {
-        return this;
-    };
-}).
-
-service('user', ['$rootScope', '$translate',
-
-    function ($rootScope, $translate) {
-
-        var defaultData = {
-            lang: $translate.use(),
-            gender: 1,
-            friends: []
-        };
+    function ($translate) {
 
         return {
-            init: function () {
-                $rootScope.user = defaultData;
-            },
-            set: function (data) {
-                if (data.lang) {
-                    data.lang = data.lang.substr(0, 2);
-                    if (data.lang !== defaultData.lang) {
-                        $translate.use(data.lang);
-                    }
+            /**
+             * @ngdoc function
+             * @name #set
+             * @methodOf global.service:lang
+             * @description 
+             * Set app lang.
+             * @param {string} lang New lang
+             */
+            set: function (lang) {
+
+                if (!lang) {
+                    return;
                 }
-                angular.extend($rootScope.user, data);
+
+                lang = lang.substr(0, 2);
+
+                if (lang !== $translate.use()) {
+                    $translate.use(lang);
+                }
             },
         };
     }

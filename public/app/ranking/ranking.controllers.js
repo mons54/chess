@@ -19,34 +19,6 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
         socket.emit('leaveHome');
 
         socket.on('ranking', function (data) {
-            $scope.$apply(apply(data));
-        });
-
-        $scope.rankingType = function () {
-            $scope.friends = !$scope.friends;
-            emit();
-        };
-
-        $scope.setPage = function (page) {
-            page = parseInt(page);
-            if (!page || page < 0 || page === $scope.pages.page || page > $scope.pages.last) {
-                $scope.page = $scope.pages.page;
-                return;
-            }
-            emit(page);
-        };
-
-        function emit(page) {
-            $rootScope.loading = true;
-            socket.emit('ranking', {
-                page: page,
-                friends: $scope.friends ? $rootScope.user.friends : false
-            });
-        }
-
-        function apply(data) {
-
-            $rootScope.loading = false;
 
             if (!data) {
                 return;
@@ -69,15 +41,22 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             });
 
             $rootScope.loading = false;
-        }
+        });
 
-        function setUsersName (data) {
+        $scope.setPage = function (page) {
+            page = parseInt(page);
+            if (!page || page < 0 || page === $scope.pages.page || page > $scope.pages.last) {
+                $scope.page = $scope.pages.page;
+                return;
+            }
+            emit(page);
+        };
 
-            angular.forEach($scope.ranking, function (value) {
-                if (!data[value.uid]) {
-                    return;
-                }
-                value.name = data[value.uid].name; 
+        function emit(page) {
+            $rootScope.loading = true;
+            socket.emit('ranking', {
+                page: page,
+                friends: $scope.friends ? $rootScope.user.friends : false
             });
         }
 

@@ -19,10 +19,6 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
         socket.emit('refresh');
         
         socket.on('listGames', function (data) {
-            $scope.$apply(applyGames(data));
-        });
-
-        function applyGames(data) {
             $scope.createdGames = [];
             
             angular.forEach(data, function (value, key) {
@@ -32,26 +28,18 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                     $scope.createdGames.push(value);
                 }
             });
-        }
-
-        socket.on('listChallenges', function (data) {
-            $scope.$apply(applyChallenges(data));
         });
 
-        function applyChallenges(data) {
+        socket.on('listChallenges', function (data) {
             $scope.challenges = [];
             
             angular.forEach(data, function (value, key) {
                 value.uid = key;
                 $scope.challenges.push(value);
             });
-        }
-
-        socket.on('challengers', function (data) {
-            $scope.$apply(applyChallenger(data));
         });
 
-        function applyChallenger(data) {
+        socket.on('challengers', function (data) {
             $scope.challengers = [];
             $scope.friends = [];
 
@@ -61,7 +49,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                     return;
                 }
                 
-                if ($rootScope.user.friends.indexOf(value.uid) !== -1) {
+                if ($rootScope.user.friends.indexOf(value.facebookId) !== -1) {
                     $scope.friends.push(value);
                 }
 
@@ -75,7 +63,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             $scope.friends.sort(function (a, b) {
                 return a.points > b.points;
             });
-        }
+        });
 
         $scope.createGame = function () {
             socket.emit('createGame', $scope.game);

@@ -221,12 +221,12 @@ Game.prototype.start = function (white, black, time) {
 
     var gid = this.games.id++;
 
-    this.games.data[gid] = this.get(gid, white, black, time);
+    this.games.data[gid] = this.newGame(gid, white, black, time);
 
     return gid;
 };
 
-Game.prototype.get = function (gid, white, black, time) {
+Game.prototype.newGame = function (gid, white, black, time) {
     
     var timeTurn = 120,
         nbPieces = 16;
