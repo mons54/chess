@@ -65,13 +65,13 @@ module.exports = function (io) {
         })
         .then(function (response) {
 
-            var socketConnected = self.getSocket(response._id);
+            var socketConnected = self.getSocket(response.id);
 
             if (socketConnected) {
                 socketConnected.disconnect();
             }
 
-            socket.uid = response._id;
+            socket.uid = response.id;
             socket.avatar = data.avatar;
             socket.name = data.name;
             socket.facebookId = data.facebookId;
@@ -110,7 +110,7 @@ module.exports = function (io) {
         }
 
         if (Object.keys(saveData).length) {
-            return db.update('users', { _id: userData._id }, saveData).then(function () {
+            return db.update('users', { _id: db.ObjectId(userData.id) }, saveData).then(function () {
                 return Object.assign(userData, saveData);
             });
         }
@@ -126,7 +126,7 @@ module.exports = function (io) {
 
         var self = this;
 
-        db.findOne('users', { _id: socket.uid })
+        db.findOne('users', { _id: db.ObjectId(socket.uid) })
         .then(function (response) {
             
             if (!response) {
@@ -355,7 +355,7 @@ module.exports = function (io) {
         delete this.userGames[uidWhite];
         delete this.userGames[uidBlack];
 
-        db.findOne('users', { _id: uidWhite }, null)
+        db.findOne('users', { _id: db.ObjectId(uidWhite) }, null)
         .then(function (response) {
             
             var player = self.getDataPlayerGame(response, game, result, 'white');
@@ -375,7 +375,7 @@ module.exports = function (io) {
 
             data.white.countGame = response;
 
-            return db.findOne('users', { _id: uidBlack }, null);
+            return db.findOne('users', { _id: db.ObjectId(uidBlack) }, null);
         })
         .then(function (response) {
 
@@ -414,7 +414,7 @@ module.exports = function (io) {
 
     Module.prototype.updateUserGame = function (uid, result, data) {
         var self = this;
-        db.update('users', { _id: uid }, {
+        db.update('users', { _id: db.ObjectId(uid) }, {
             points: data.points,
             consWin: data.consWin,
             blackList: data.blackList,
@@ -521,7 +521,7 @@ module.exports = function (io) {
     };
 
     Module.prototype.profile = function (socket, data) {
-        db.findOne('users', { _id: data.uid }, 'points')
+        db.findOne('users', { _id: db.ObjectId(data.uid) }, 'points')
         .then(function (response) {
             data.points = response.points;
             return db.all([
@@ -675,7 +675,7 @@ module.exports = function (io) {
             for (var i in data) {
                 if (!saveUser && socket.points >= data[i].points) {
                     result.push({
-                        _id: socket.uid,
+                        id: socket.uid,
                         name: socket.name,
                         avatar: socket.avatar,
                         points: socket.points
@@ -687,7 +687,7 @@ module.exports = function (io) {
 
             if (!saveUser) {
                 result.push({
-                    _id: socket.uid,
+                    id: socket.uid,
                     name: socket.name,
                     avatar: socket.avatar,
                     points: socket.points,
@@ -714,7 +714,7 @@ module.exports = function (io) {
             }
 
             ranking[i] = {
-                uid: result[i]._id,
+                uid: result[i].id,
                 name: result[i].name,
                 avatar: result[i].avatar,
                 points: result[i].points,
@@ -728,7 +728,7 @@ module.exports = function (io) {
     };
 
     Module.prototype.getRequestRankingWithUser = function (uid, friends) {
-        return friends ? { $and: [{ active: 1, facebookId: { $in: friends } }, { _id: { $ne: uid } }] } : { $and: [{ active: 1 }, { _id: { $ne: uid } }] };
+        return friends ? { $and: [{ active: 1, facebookId: { $in: friends } }, { _id: { $ne: db.ObjectId(uid) } }] } : { $and: [{ active: 1 }, { _id: { $ne: db.ObjectId(uid) } }] };
     };
 
     Module.prototype.getRequestRankingWithoutUser = function (friends) {  
@@ -860,7 +860,7 @@ module.exports = function (io) {
                 return;
             }
 
-            db.update('users', { _id: socket.uid }, { trophies: socket.trophies })
+            db.update('users', { _id: db.ObjectId(socket.uid) }, { trophies: socket.trophies })
             .then(function (response) {
                 socket.emit('trophies', {
                     newTrophies: newTrophies,

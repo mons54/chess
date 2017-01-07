@@ -85,3 +85,5 @@ Module.prototype.save = function (model, data) {
 Module.prototype.update = function (model, request, set) {
     return this.models[model].update(request, { $set: set });
 };
+
+Module.prototype.ObjectId = mongoose.Types.ObjectId;
