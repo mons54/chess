@@ -351,9 +351,9 @@ factory('socket', ['$rootScope', function ($rootScope) {
  * Seervice lang.
  * @requires $translate
  */
-service('lang', ['$translate',
+service('lang', ['$rootScope', '$translate',
 
-    function ($translate) {
+    function ($rootScope, $translate) {
 
         return {
             /**
@@ -373,6 +373,7 @@ service('lang', ['$translate',
                 lang = lang.substr(0, 2);
 
                 if (lang !== $translate.use()) {
+                    $rootScope.user.lang = lang;
                     $translate.use(lang);
                 }
             },

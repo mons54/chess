@@ -1,0 +1,140 @@
+body {
+  direction: rtl;
+}
+
+.app__pull-left {
+  float: right;
+}
+
+.app__pull-right {
+  float: left;
+}
+
+.app-navigation {
+  direction: rtl;
+}
+
+.app-navigation__container {
+  direction: ltr;
+}
+
+.app-element .app-element__tools {
+  float: left;
+}
+
+.app-ranking__pagination-prev {
+  float: right;
+}
+
+.app-ranking__pagination-next {
+  float: left;
+}
+
+.app-game__box {
+  float: right;
+}
+
+.app-head .app-button__create-game {
+  left: 10px;
+  right: initial;
+}
+
+.mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric {
+    text-align: right;
+}
+
+.mdl-data-table th {
+  text-align: left;
+}
+
+.mdl-data-table td {
+  text-align: left;
+}
+
+.app-button__sound {
+  right: initial;
+  left: 0;
+  margin-right: 0;
+  margin-left: 40px;
+}
+
+.app-modal__actions {
+  text-align: left;
+}
+
+.app-profile__image {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+.app-profile__stat:last-child {
+  margin-right: 20px;
+}
+
+.app-profile__stat:first-child {
+  margin-right: 0;
+}
+
+.app-modal__close {
+  right: inherit;
+  left: 1em;
+}
+
+.app-drawer .mdl-navigation__link .material-icons {
+  margin-right: initial;
+  margin-left: 32px;
+}
+
+.mdl-layout__header .mdl-layout__drawer-button {
+  right: 0;
+}
+
+.app-mobile__title {
+  left: initial;
+  right: 55px;
+}
+
+.mdl-layout__drawer {
+  right: 0;
+  -webkit-transform: translateX(250px);
+  transform: translateX(250px);
+}
+
+.mdl-layout__drawer.is-visible {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.app-game__action {
+  margin-left: 20px;
+  margin-right: initial;
+}
+
+.app-profile__info {
+  margin-left: 10px;
+  margin-right: initial;
+}
+
+.app-profile__info:last-child {
+  margin-left: 0;
+}
+
+.app-modal__actions button {
+    margin-left: 2%;
+    margin-right: initial;
+}
+
+.app-modal__actions button {
+    margin-left: 2%;
+    margin-right: initial;
+}
+
+.app-modal__actions button:last-child {
+    margin-left: 0;
+}
+
+@media (max-width: 479px) {
+  .app-head .app-button__create-game {
+    left: auto;
+  }
+}

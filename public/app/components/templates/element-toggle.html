@@ -1,5 +1,5 @@
 <button ng-click="toggle()"
         ng-class="{'mdl-button--colored': hasFiltersGame()}"
         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons">{{ open ? 'keyboard_arrow_left' : 'keyboard_arrow_down'}}</i>
+    <i class="material-icons">{{ open ? (user.lang === 'ar' ? 'keyboard_arrow_right' : 'keyboard_arrow_left') : 'keyboard_arrow_down'}}</i>
 </button>

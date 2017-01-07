@@ -34,7 +34,7 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', 'socket', 'modal', 'facebook', 'google',
+    run(['$rootScope', '$route', '$http', '$location', 'socket', 'modal', 'facebook', 'google', 'lang',
 
         /**
          * @param {object} $rootScope Global scope
@@ -46,7 +46,7 @@
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, socket, modal, facebook, google) {
+        function ($rootScope, $route, $http, $location, socket, modal, facebook, google, lang) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
@@ -201,6 +201,8 @@
                 gender: 1,
                 friends: []
             };
+
+            lang.set(navigator.language || navigator.userLanguage || 'en');
         }
     ]).
 
@@ -240,7 +242,7 @@
                 'suffix': '.json'
             });
 
-            $translateProvider.preferredLanguage(navigator.language || navigator.userLanguage || 'en');
+            $translateProvider.preferredLanguage('en');
         }
     ]);
 
