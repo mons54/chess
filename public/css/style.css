@@ -870,7 +870,7 @@ a {
   padding-top: 100%;
 }
 
-.mdl-layout--fixed-header > .mdl-layout__header.is-game .app-navigation__container {
+.mdl-layout--fixed-header > .mdl-layout__header.is-game {
   display: none;
 }
 
@@ -944,10 +944,6 @@ a {
 }
 
 @media screen and (max-width: 1024px) {
-  .mdl-layout--fixed-header > .mdl-layout__header.is-game {
-    display: none;
-  }
-
   .app-button__sound {
     margin-right: 15px;
     margin-bottom: 15px;

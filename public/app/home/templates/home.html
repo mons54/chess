@@ -225,7 +225,7 @@
                 </div>
                 <div class="app-form__select">
                     <select ng-model="game.time"
-                            ng-options="value as (value / 60) + ' ' + 'minutes'|translate for (key, value) in paramsGame.times" 
+                            ng-options="value as (value / 60) + ' ' + ('minutes'|translate) for (key, value) in paramsGame.times" 
                             id="create-game-time">
                     </select>
                     <label for="create-game-time">{{ 'time'|translate }}</label>
@@ -288,7 +288,7 @@
                 </div>
                 <div class="app-form__select">
                     <select ng-model="game.time"
-                            ng-options="value as (value / 60) + ' ' + 'minutes'|translate for (key, value) in paramsGame.times" 
+                            ng-options="value as (value / 60) + ' ' + ('minutes'|translate) for (key, value) in paramsGame.times" 
                             id="create-game-time">
                     </select>
                     <label for="create-game-time">{{ 'time'|translate }}</label>
