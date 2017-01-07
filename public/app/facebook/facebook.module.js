@@ -14,7 +14,7 @@ angular.module('facebook', []).
  * @description
  * The redirect uri.
  */
-constant('facebookRedirectUri', 'https://apps.facebook.com/____test/').
+constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
 
 /**
  * @ngdoc service
@@ -25,7 +25,7 @@ constant('facebookRedirectUri', 'https://apps.facebook.com/____test/').
  * @requires global.service:socket
  * @requires global.service:lang
  */
-service('facebook', ['$rootScope', 'socket', 'lang', 
+service('facebook', ['$rootScope', 'socket', 'lang',
 
     function ($rootScope, socket, lang) {
 
@@ -52,7 +52,7 @@ service('facebook', ['$rootScope', 'socket', 'lang',
          */
         this.init = function () {
             FB.init({
-                appId: '466889913406471',
+                appId: '1687859708170830',
                 xfbml: true,
                 version: 'v2.8'
             });
