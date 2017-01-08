@@ -1,5 +1,7 @@
 module.exports = function () {
 
+    require(dirname + '/server/utils');
+
     var Engine = require(dirname + '/server/modules/game/engine'),
         moduleGame = require(dirname + '/server/modules/game');
 
@@ -8,7 +10,7 @@ module.exports = function () {
     };
 
     this.newGame = function (gid) {
-        this.game = moduleGame.get(gid, {
+        this.game = moduleGame.newGame(gid, {
             uid: 1,
             name: 'tester1',
             avatar: null,
