@@ -7,6 +7,7 @@ var express = require('express'),
 
 global.dirname = __dirname;
 
+require(dirname + '/server/utils');
 require(dirname + '/server/config')(app);
 require(dirname + '/server/modules/io')(app, io);
 

@@ -25,6 +25,7 @@ function Module() {
                     unique: true, 
                     sparse: true
                 },
+                lastGame: String,
                 name: String,
                 avatar: String,
                 points: Number,

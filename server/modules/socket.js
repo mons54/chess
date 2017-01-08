@@ -257,24 +257,25 @@ module.exports = function (io) {
         return Math.round(k * (player1.coefficient - points));
     };
 
-    Module.prototype.getBlackList = function (blackList, game, color) {
+    Module.prototype.getBlackList = function (data, game, color) {
 
-        if (!(blackList instanceof Object)) {
-            blackList = {};
+        if (!(data.blackList instanceof Object)) {
+            data.blackList = {};
         } else {
-            var maxTime = Math.round(new Date().getTime()) - (3600 * 1000);
-            for (var uid in blackList) {
-                if (maxTime > blackList[uid]) {
-                    delete blackList[uid];
+            var maxTime = Math.round(new Date().getTime()) - (3600 * 1000 * 24);
+            for (var uid in data.blackList) {
+                if (maxTime > data.blackList[uid]) {
+                    delete data.blackList[uid];
                 }
             };
         }
 
-        if (game.result.name === 'resign' && (game.played < 4 || game.white.time + game.black.time + 30 > game.time * 2)) {
-            blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+        if ((game.played < 4 || game.timestamp < game.timeTurn) && data.lastGame && data.lastGame === data.newGame) {
+            data.blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+            console.log('blackList', data.blackList);
         }
 
-        return blackList;
+        return data.blackList;
     };
 
     Module.prototype.getDataPlayerGame = function (data, game, result, color) {
@@ -303,7 +304,7 @@ module.exports = function (io) {
         return {
             coefficient: coefficient,
             success: success,
-            blackList: this.getBlackList(data.blackList, game, color)
+            blackList: this.getBlackList(data, game, color)
         };
     };
 
@@ -313,6 +314,7 @@ module.exports = function (io) {
             whiteUid = game.white.uid,
             blackUid = game.black.uid,
             result = game.result.winner,
+            hashGame = JSON.stringify(game.saved).hash(),
             data;
 
         moduleGame.deleteGame(game.id);
@@ -322,6 +324,8 @@ module.exports = function (io) {
 
         db.findOne('users', { _id: db.ObjectId(whiteUid) }, null)
         .then(function (response) {
+
+            response.newGame = hashGame;
             
             var player = self.getDataPlayerGame(response, game, result, 'white');
 
@@ -330,6 +334,7 @@ module.exports = function (io) {
                     points: response.points,
                     coefficient: player.coefficient,
                     success: player.success,
+                    lastGame: response.newGame,
                     blackList: player.blackList
                 }
             };
@@ -344,12 +349,15 @@ module.exports = function (io) {
         })
         .then(function (response) {
 
+            response.newGame = hashGame;
+
             var player = self.getDataPlayerGame(response, game, result, 'black');
             
             data.black = {
                 points: response.points,
                 coefficient: player.coefficient,
                 success: player.success,
+                lastGame: response.newGame,
                 blackList: player.blackList
             };
 
@@ -382,6 +390,7 @@ module.exports = function (io) {
         db.update('users', { _id: db.ObjectId(uid) }, {
             points: data.points,
             success: data.success,
+            lastGame: data.lastGame,
             blackList: data.blackList,
             active: true
         })

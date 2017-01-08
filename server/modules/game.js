@@ -106,7 +106,11 @@ Game.prototype.resign = function (socket, id) {
     
     var game = this.getGame(id);
 
-    if (!game || game.finish || !this.isPlayer(game, socket.uid) || !game.played) {
+    if (!game || 
+        game.finish || 
+        !this.isPlayer(game, socket.uid) || 
+        game.played < 4 ||
+        game.timestamp < 60) {
         return;
     }
 
@@ -200,21 +204,22 @@ Game.prototype.getRoom = function (gid) {
 
 Game.prototype.timer = function (game) {
 
+    game.timestamp++;
+
     var time = game[game.turn].time,
         timeTurn = game[game.turn].timeTurn;
 
     if (time > 0 && timeTurn > 0) {
         game[game.turn].time--;
         game[game.turn].timeTurn--;
-    } else {
-        var color = game.turn === 'white' ? 'black' : 'white';
-        game.finish = true;
-        game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
-        game.result.name = game.result.winner === 0 ? 'draw' : 'time';
-        return game;
-    }
-
-    return false;
+        return false;
+    } 
+    
+    var color = game.turn === 'white' ? 'black' : 'white';
+    game.finish = true;
+    game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
+    game.result.name = game.result.winner === 0 ? 'draw' : 'time';
+    return game;
 };
 
 Game.prototype.start = function (white, black, time) {
@@ -235,6 +240,7 @@ Game.prototype.newGame = function (gid, white, black, time) {
         id: gid,
         time: time,
         timeTurn: timeTurn,
+        timestamp: 0,
         finish: false,
         turn: 'white',
         turn50: 0,

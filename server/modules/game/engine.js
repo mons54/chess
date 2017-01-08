@@ -109,12 +109,12 @@ Engine.prototype.init = function (start, end, promotion) {
         code += position[i] + this.game.pieces[position[i]].name + this.game.pieces[position[i]].color;
     }
 
-    code = code.hashCode();
+    code = code.hash();
 
     position = 0;
 
     for (var i in this.game.save) {
-        if (code == this.game.save[i].code) {
+        if (code === this.game.save[i].code) {
             position++;
         }
     }
@@ -1027,15 +1027,4 @@ Engine.prototype.getTypeMove = function (piece, end) {
 
 Engine.prototype.inArray = function (needle, array) {
     return array.indexOf(needle) != -1;
-};
-
-String.prototype.hashCode = function() {
-    var hash = 0, i, chr, len;
-    if (this.length == 0) return hash;
-    for (i = 0, len = this.length; i < len; i++) {
-        chr   = this.charCodeAt(i);
-        hash  = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
 };

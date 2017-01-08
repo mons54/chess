@@ -129,6 +129,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return;
             }
 
+            $scope.game.timestamp++;
+
             var player = $scope.game[$scope.game.turn];
 
             if (player.time > 0) {
@@ -177,8 +179,8 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
             return $scope.$parent.game.finish;
         };
 
-        $scope.isStarted = function () {
-            return $scope.$parent.game.played;
+        $scope.canResign = function () {
+            return $scope.$parent.game.played >= 4 && $scope.$parent.game.timestamp >= 60;
         };
 
         $scope.canOfferDraw = function () {
