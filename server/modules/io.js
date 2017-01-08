@@ -8,7 +8,8 @@ module.exports = function (app, io) {
     io.on('connection', function (socket) {
 
         socket.on('facebookConnect', function (data) {
-            if (!data || 
+            if (socket.unauthorized ||
+                !data || 
                 !data.id || 
                 !data.accessToken) {
                 socket.disconnect();
@@ -18,7 +19,8 @@ module.exports = function (app, io) {
         });
 
         socket.on('googleConnect', function (data) {
-            if (!data ||
+            if (socket.unauthorized ||
+                !data ||
                 !data.accessToken) {
                 socket.disconnect();
                 return;
@@ -26,8 +28,10 @@ module.exports = function (app, io) {
             moduleSocket.googleConnect(socket, data);
         });
 
-        socket.on('refresh', function () {
-            moduleSocket.refresh(socket);
+        socket.on('joinHome', function () {
+            socket.join('home', moduleSocket.listChallengers);
+            socket.emit('listGames', moduleGame.createdGame);
+            socket.emit('listChallenges', socket.challenges);
         });
 
         socket.on('challenge', function (data) {

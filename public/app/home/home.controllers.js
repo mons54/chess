@@ -15,8 +15,8 @@ angular.module('home').
 controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
     
     function ($rootScope, $scope, socket, utils, paramsGame) {
-
-        socket.emit('refresh');
+        
+        socket.emit('joinHome');
         
         socket.on('listGames', function (data) {
             $scope.createdGames = [];

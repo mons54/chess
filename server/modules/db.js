@@ -28,9 +28,9 @@ function Module() {
                 name: String,
                 avatar: String,
                 points: Number,
-                consWin: Number,
                 active: Boolean,
-                ban: Boolean,
+                success: Number,
+                unauthorized: Boolean,
                 blackList: Object,
                 trophies: Array
             })

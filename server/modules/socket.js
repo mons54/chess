@@ -61,9 +61,37 @@ module.exports = function (io) {
 
         db.findOne('users', request)
         .then(function (response) {
-            return self.saveUser(data, response);
+
+            if (!response) {
+                return db.save('users', Object.assign(data, {
+                    points: 1500,
+                    trophies: []
+                }));
+            }
+
+            var saveData = {};
+
+            if (data.name && response.name !== data.name) {
+                saveData.name = data.name;
+            }
+
+            if (data.avatar && (!response || response.avatar !== data.avatar)) {
+                saveData.avatar = data.avatar;
+            }
+
+            if (saveData) {
+                db.update('users', { _id: response._id }, saveData);
+            }
+
+            return Object.assign(response, data);
         })
         .then(function (response) {
+
+            if (response.unauthorized) {
+                socket.unauthorized = true;
+                socket.disconnect();
+                return;
+            }
 
             var socketConnected = self.getSocket(response.id);
 
@@ -72,111 +100,48 @@ module.exports = function (io) {
             }
 
             socket.uid = response.id;
-            socket.avatar = data.avatar;
-            socket.name = data.name;
-            socket.facebookId = data.facebookId;
+            socket.avatar = response.avatar;
+            socket.name = response.name;
+            socket.facebookId = response.facebookId;
+            socket.points = response.points;
+            socket.blackList = response.blackList;
+            socket.trophies = response.trophies;
 
-            self.socketConnected[socket.uid] = socket.id;
+            self.socketConnected[response.id] = socket.id;
 
-            self.init(socket, response);
+            db.count('users', { active: true, points: { $gt: socket.points } })
+            .then(function (response) {
+
+                socket.ranking = response + true;
+
+                self.sendUser(socket);
+
+                var gid = self.getUserGame(socket.uid);
+
+                if (gid) {
+                    socket.join(moduleGame.getRoom(gid));
+                    socket.emit('startGame', gid);
+                } else {
+                    socket.join('home', self.listChallengers);
+                    socket.emit('listGames', moduleGame.createdGame);
+                    socket.emit('listChallenges', socket.challenges);
+                }
+
+                socket.emit('connected');
+            });
         });
     };
 
-    Module.prototype.saveUser = function (data, userData) {
-        
-        var saveData = {};
-        
-        if (data.facebookId && (!userData || userData.facebookId !== data.facebookId)) {
-            saveData.facebookId = data.facebookId;
-        }
+    Module.prototype.sendUser = function (socket) {
 
-        if (data.googleId && (!userData || userData.googleId !== data.googleId)) {
-            saveData.googleId = data.googleId;
-        }
-
-        if (data.name && (!userData || userData.name !== data.name)) {
-            saveData.name = data.name;
-        }
-
-        if (data.avatar && (!userData || userData.avatar !== data.avatar)) {
-            saveData.avatar = data.avatar;
-        }
-
-        if (!userData) {
-            return db.save('users', Object.assign(saveData, {
-                points: 1500,
-                trophies: []
-            }));
-        }
-
-        if (Object.keys(saveData).length) {
-            return db.update('users', { _id: db.ObjectId(userData.id) }, saveData).then(function () {
-                return Object.assign(userData, saveData);
-            });
-        }
-
-        return userData;
-    };
-
-    Module.prototype.refresh = function (socket) {
-
-        if (!this.checkSocket(socket)) {
-            return;
-        }
-
-        var self = this;
-
-        db.findOne('users', { _id: db.ObjectId(socket.uid) })
-        .then(function (response) {
-            
-            if (!response) {
-                return;
-            }
-
-            self.init(socket, response);
-        });
-    };
-
-    Module.prototype.init = function (socket, data) {
-
-        if (data.ban) {
-            socket.disconnect();
-            return;
-        }
-
-        socket.points = data.points;
-        socket.blackList = data.blackList;
-        socket.trophies = data.trophies;
-
-        var self = this;
-
-        db.count('users', { active: 1, points: { $gt: socket.points } })
-        .then(function (response) {
-
-            socket.ranking = response + 1;
-
-            socket.emit('user', {
-                uid: socket.uid,
-                name: socket.name,
-                avatar: socket.avatar,
-                points: socket.points,
-                ranking: socket.ranking,
-                trophies: socket.trophies,
-                blackList: socket.blackList
-            });
-
-            var gid = self.getUserGame(socket.uid);
-
-            if (gid) {
-                socket.join(moduleGame.getRoom(gid));
-                socket.emit('startGame', gid);
-            } else {
-                socket.join('home', self.listChallengers);
-                socket.emit('listGames', moduleGame.createdGame);
-                socket.emit('listChallenges', socket.challenges);
-            }
-
-            socket.emit('connected');
+        socket.emit('user', {
+            uid: socket.uid,
+            name: socket.name,
+            avatar: socket.avatar,
+            points: socket.points,
+            ranking: socket.ranking,
+            trophies: socket.trophies,
+            blackList: socket.blackList
         });
     };
 
@@ -289,7 +254,7 @@ module.exports = function (io) {
             k = 40;
         }
 
-        return Math.round(k * (player1.coefGame - points));
+        return Math.round(k * (player1.coefficient - points));
     };
 
     Module.prototype.getBlackList = function (blackList, game, color) {
@@ -314,30 +279,30 @@ module.exports = function (io) {
 
     Module.prototype.getDataPlayerGame = function (data, game, result, color) {
         
-        var coefGame,
+        var coefficient,
             position = color === 'white' ? 1 : 2,
-            consWin  = data.consWin ? data.consWin : 0;
+            success  = data.success ? data.success : 0;
 
         if (result === 0) {
-            coefGame = 0.5;
-            consWin = 0;
+            coefficient = 0.5;
+            success = 0;
         } else if (result === position) {
-            coefGame = 1;
-            if (consWin < 0) {
-                consWin = 0;
+            coefficient = 1;
+            if (success < 0) {
+                success = 0;
             }
-            consWin++;
+            success++;
         } else {
-            coefGame = 0;
-            if (consWin > 0) {
-                consWin = 0;
+            coefficient = 0;
+            if (success > 0) {
+                success = 0;
             }
-            consWin--;
+            success--;
         }
 
         return {
-            coefGame: coefGame,
-            consWin: consWin,
+            coefficient: coefficient,
+            success: success,
             blackList: this.getBlackList(data.blackList, game, color)
         };
     };
@@ -345,17 +310,17 @@ module.exports = function (io) {
     Module.prototype.saveGame = function (game) {
 
         var self = this,
-            uidWhite = game.white.uid,
-            uidBlack = game.black.uid,
+            whiteUid = game.white.uid,
+            blackUid = game.black.uid,
             result = game.result.winner,
             data;
 
         moduleGame.deleteGame(game.id);
 
-        delete this.userGames[uidWhite];
-        delete this.userGames[uidBlack];
+        delete this.userGames[whiteUid];
+        delete this.userGames[blackUid];
 
-        db.findOne('users', { _id: db.ObjectId(uidWhite) }, null)
+        db.findOne('users', { _id: db.ObjectId(whiteUid) }, null)
         .then(function (response) {
             
             var player = self.getDataPlayerGame(response, game, result, 'white');
@@ -363,19 +328,19 @@ module.exports = function (io) {
             data = {
                 white: {
                     points: response.points,
-                    coefGame: player.coefGame,
-                    consWin: player.consWin,
+                    coefficient: player.coefficient,
+                    success: player.success,
                     blackList: player.blackList
                 }
             };
 
-            return db.count('games', { $or: [{ white: uidWhite }, { black: uidWhite }] }, null);
+            return db.count('games', { $or: [{ white: whiteUid }, { black: whiteUid }] }, null);
         })
         .then(function (response) {
 
             data.white.countGame = response;
 
-            return db.findOne('users', { _id: db.ObjectId(uidBlack) }, null);
+            return db.findOne('users', { _id: db.ObjectId(blackUid) }, null);
         })
         .then(function (response) {
 
@@ -383,12 +348,12 @@ module.exports = function (io) {
             
             data.black = {
                 points: response.points,
-                coefGame: player.coefGame,
-                consWin: player.consWin,
+                coefficient: player.coefficient,
+                success: player.success,
                 blackList: player.blackList
             };
 
-            return db.count('games', { $or: [{ white: uidBlack }, { black: uidBlack }] }, null);
+            return db.count('games', { $or: [{ white: blackUid }, { black: blackUid }] }, null);
         })
         .then(function (response) {
 
@@ -396,8 +361,8 @@ module.exports = function (io) {
 
             db.save('games', {
                 result: result,
-                white: uidWhite,
-                black: uidBlack,
+                white: whiteUid,
+                black: blackUid,
                 date: new Date()
             });
 
@@ -407,8 +372,8 @@ module.exports = function (io) {
             data.white.points += self.getPointsGame(data.white, data.black);
             data.black.points += self.getPointsGame(data.black, data.white);
 
-            self.updateUserGame(uidWhite, result, data.white);
-            self.updateUserGame(uidBlack, result, data.black);
+            self.updateUserGame(whiteUid, result, data.white);
+            self.updateUserGame(blackUid, result, data.black);
         });
     };
 
@@ -416,7 +381,7 @@ module.exports = function (io) {
         var self = this;
         db.update('users', { _id: db.ObjectId(uid) }, {
             points: data.points,
-            consWin: data.consWin,
+            success: data.success,
             blackList: data.blackList,
             active: true
         })
@@ -427,6 +392,7 @@ module.exports = function (io) {
             }
             socket.points = data.points;
             socket.blackList = data.blackList;
+            self.sendUser(socket);
             data.countGame++;
             self.setTrophies(socket, data);
         });
@@ -526,7 +492,7 @@ module.exports = function (io) {
             data.points = response.points;
             return db.all([
                 db.count('users', {
-                    active: 1,
+                    active: true,
                     points: {
                         $gt: data.points
                     }
@@ -581,7 +547,7 @@ module.exports = function (io) {
 
         var self = this,
             points = socket.points,
-            request = friends ? { active: 1, facebookId: { $in: friends }, points: { $gt: points } } : { active: 1, points: { $gt: points } };
+            request = friends ? { active: true, facebookId: { $in: friends }, points: { $gt: points } } : { active: true, points: { $gt: points } };
 
         db.count('users', request)
         .then(function (count) {
@@ -635,10 +601,10 @@ module.exports = function (io) {
             }
 
             var points = (getUser && socket.points > response[0].points) ? socket.points : response[0].points,
-                request = { active: 1, points: { $gt: points } };
+                request = { active: true, points: { $gt: points } };
 
             if (friends) {
-                request = { active: 1, facebookId: { $in: friends }, points: { $gt: points } };
+                request = { active: true, facebookId: { $in: friends }, points: { $gt: points } };
             }
 
             data = response;
@@ -647,9 +613,9 @@ module.exports = function (io) {
         })
         .then(function (count) {
             position = count + 1;
-            var request = { active: 1, points: data[0].points };
+            var request = { active: true, points: data[0].points };
             if (friends) {
-                request = { active: 1, facebookId: { $in: friends }, points: data[0].points };
+                request = { active: true, facebookId: { $in: friends }, points: data[0].points };
             }
 
             return db.count('users', request);
@@ -728,11 +694,11 @@ module.exports = function (io) {
     };
 
     Module.prototype.getRequestRankingWithUser = function (uid, friends) {
-        return friends ? { $and: [{ active: 1, facebookId: { $in: friends } }, { _id: { $ne: db.ObjectId(uid) } }] } : { $and: [{ active: 1 }, { _id: { $ne: db.ObjectId(uid) } }] };
+        return friends ? { $and: [{ active: true, facebookId: { $in: friends } }, { _id: { $ne: db.ObjectId(uid) } }] } : { $and: [{ active: true }, { _id: { $ne: db.ObjectId(uid) } }] };
     };
 
     Module.prototype.getRequestRankingWithoutUser = function (friends) {  
-        return friends ? { active: 1, facebookId: { $in: friends } } : { active: 1 };
+        return friends ? { active: true, facebookId: { $in: friends } } : { active: true };
     };
 
     Module.prototype.formatPage = function (page) {
@@ -831,15 +797,15 @@ module.exports = function (io) {
         })
         .finally(function () {
 
-            if (data.consWin >= 20) {
+            if (data.success >= 20) {
                 trophies = trophies.concat([16, 17, 18, 19]);
-            } else if (data.consWin >= 10) {
+            } else if (data.success >= 10) {
                 trophies = trophies.concat([16, 17, 18]);
-            } else if (data.consWin >= 5) {
+            } else if (data.success >= 5) {
                 trophies = trophies.concat([16, 17]);
-            } else if (data.consWin >= 3) {
+            } else if (data.success >= 3) {
                 trophies = trophies.concat([16]);
-            } else if (data.consWin <= -3) {
+            } else if (data.success <= -3) {
                 trophies = trophies.concat([20]);
             }
 
