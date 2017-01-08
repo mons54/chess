@@ -69,8 +69,8 @@
             </a>
             <h4 class="app-modal__title">{{ 'game_over'|translate }}</h4>
             <h5 class="app-game-over__result-name">{{ game.result.name|translate }}</h5>
-            <h6 class="app-game-over__result-winner" ng-if="game.result.winner === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
-            <h6 class="app-game-over__result-winner" ng-if="game.result.winner === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
+            <h6 class="app-game-over__result-winner" ng-if="game.result.value === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
+            <h6 class="app-game-over__result-winner" ng-if="game.result.value === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
             <button ng-click="shareResult()"
                     type="button" 
                     class="mdl-button mdl-button--raised mdl-button--colored">

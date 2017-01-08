@@ -117,9 +117,9 @@ Game.prototype.resign = function (socket, id) {
     game.finish = true;
 
     if (this.getColorPlayer(game, socket.uid) === 'white') {
-        game.result.winner = 2;
+        game.result.value = 2;
     } else {
-        game.result.winner = 1;
+        game.result.value = 1;
     }
 
     game.result.name = 'resign';
@@ -164,7 +164,7 @@ Game.prototype.acceptDraw = function (socket, id) {
     }
 
     game.finish = true;
-    game.result.winner = 0;
+    game.result.value = 0;
     game.result.name = 'draw';
 
     return game;
@@ -217,8 +217,8 @@ Game.prototype.timer = function (game) {
     
     var color = game.turn === 'white' ? 'black' : 'white';
     game.finish = true;
-    game.result.winner = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
-    game.result.name = game.result.winner === 0 ? 'draw' : 'time';
+    game.result.value = game[color].nbPieces === 1 ? 0 : (color === 'white' ? 1 : 2);
+    game.result.name = game.result.value === 0 ? 'draw' : 'time';
     return game;
 };
 

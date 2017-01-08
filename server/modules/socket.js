@@ -230,31 +230,31 @@ module.exports = function (io) {
         io.to(room).emit('startGame', gid);
     };
 
-    Module.prototype.getPointsGame = function (player1, player2) {
+    Module.prototype.getPointsGame = function (p1, p2) {
 
-        var points = player1.points - player2.points;
+        var d = p2.points - p1.points, k, max;
 
-        if (points > 400) {
-            points = 400;
-        } else if (points < -400) {
-            points = -400;
+        if (p1.points > 2400) {
+            k = 15;
+            max = 400;
+        } else if (p1.countGame <= 30) {
+            k = 60;
+            max = 700;
+        } else {
+            k = 30;
+            max = 600;
         }
 
-        points = points / 400;
-        points = Math.pow(10, points);
-        points = 1 + points;
-        points = 1 / points;
-        points = 1 - points;
-
-        var k = 20;
-
-        if (player1.points > 2400) {
-            k = 10;
-        } else if (player1.countGame <= 30) {
-            k = 40;
+        if (d > max) { 
+            d = max;
+        } else if (d < -max) {
+            d = -max;
         }
 
-        return Math.round(k * (player1.coefficient - points));
+        var points = k * (p1.coefficient - (1 / ( 1 + Math.pow(10, d / 400)))),
+            abs = Math.round(Math.abs(points));
+        
+        return points < 0 ? -abs : abs;
     };
 
     Module.prototype.getBlackList = function (data, game, color) {
@@ -313,7 +313,7 @@ module.exports = function (io) {
         var self = this,
             whiteUid = game.white.uid,
             blackUid = game.black.uid,
-            result = game.result.winner,
+            result = game.result.value,
             hashGame = JSON.stringify(game.saved).hash(),
             data;
 
@@ -374,11 +374,14 @@ module.exports = function (io) {
                 date: new Date()
             });
 
-            var pointsWhite = self.getPointsGame(data.white, data.black),
-                pointsBlack = self.getPointsGame(data.black, data.white);
+            var whitePoints = self.getPointsGame(data.white, data.black),
+                blackPoints = self.getPointsGame(data.black, data.white);
 
-            data.white.points += self.getPointsGame(data.white, data.black);
-            data.black.points += self.getPointsGame(data.black, data.white);
+            /**
+             * Important: Set points only after get points game 
+             */
+            data.white.points += whitePoints;
+            data.black.points += blackPoints;
 
             self.updateUserGame(whiteUid, result, data.white);
             self.updateUserGame(blackUid, result, data.black);

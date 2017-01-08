@@ -111,9 +111,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             var description = $filter('translate')($scope.game.result.name);
 
-            if ($scope.game.result.winner === 1) {
+            if ($scope.game.result.value === 1) {
                 description += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.white.name;
-            } else if ($scope.game.result.winner === 2) {
+            } else if ($scope.game.result.value === 2) {
                 description += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.black.name;
             }
 

@@ -137,14 +137,14 @@ Engine.prototype.init = function (start, end, promotion) {
             name: 'mat'
         };
         if (this.game.turn == 'black') {
-            this.game.result.winner = 1;
+            this.game.result.value = 1;
         } else {
-            this.game.result.winner = 2;
+            this.game.result.value = 2;
         }
     } else if (this.pat == true || this.draw == true) {
         this.game.finish = true;
         this.game.result = {
-            winner: 0
+            value: 0
         };
         if (this.pat == true) {
             this.game.result.name = 'pat';
