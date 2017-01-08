@@ -92,7 +92,6 @@ Game.prototype.move = function (socket, id, start, end, promotion) {
     
     var game = this.getGame(id);
 
-    // voir si son temps est dépassé
     if (!game || game.finish || game[game.turn].uid !== socket.uid) {
         return;
     }
@@ -206,10 +205,7 @@ Game.prototype.timer = function (game) {
 
     game.timestamp++;
 
-    var time = game[game.turn].time,
-        timeTurn = game[game.turn].timeTurn;
-
-    if (time > 0 && timeTurn > 0) {
+    if (game[game.turn].time > 0 && game[game.turn].timeTurn > 0) {
         game[game.turn].time--;
         game[game.turn].timeTurn--;
         return false;
