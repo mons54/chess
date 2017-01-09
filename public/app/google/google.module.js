@@ -17,9 +17,9 @@ angular.module('google', []).
  * @requires global.service:socket
  * @requires global.service:lang
  */
-service('google', ['$rootScope', 'socket', 'lang',
+service('google', ['$rootScope', '$cookies', 'socket', 'lang',
 
-    function ($rootScope, socket, lang) {
+    function ($rootScope, $cookies, socket, lang) {
 
         var self = this;
 
@@ -77,6 +77,8 @@ service('google', ['$rootScope', 'socket', 'lang',
                 gapi.auth2.getAuthInstance().isSignedIn.listen(function() {
                     self.setLoginStatus(self.handleLogin);
                 });
+            }, function (err) {
+                self.status = 'error';
             });
         };
 
@@ -89,6 +91,12 @@ service('google', ['$rootScope', 'socket', 'lang',
          * @param {function} callback Callback
          */
         this.setLoginStatus = function (callback) {
+
+            if (this.status === 'error') {
+                callback();
+                return;
+            }
+
             var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
             if (!isSignedIn) {
                 this.status = 'unknown';
@@ -110,7 +118,11 @@ service('google', ['$rootScope', 'socket', 'lang',
          * Google login.
          */
         this.login = function () {
-            gapi.auth2.getAuthInstance().signIn();
+            if (this.status === 'connected') {
+                this.handleLogin();
+            } else {
+                gapi.auth2.getAuthInstance().signIn();
+            }
         };
 
         /**
@@ -134,6 +146,7 @@ service('google', ['$rootScope', 'socket', 'lang',
          * Set user friends from facebook list.
          */
         this.handleLogin = function () {
+            $cookies.put('login', 'google');
             gapi.client.people.people.get({
                 resourceName: 'people/me'
             }).then(function(response) {

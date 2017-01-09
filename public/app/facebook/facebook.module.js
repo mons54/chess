@@ -25,9 +25,9 @@ constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
  * @requires global.service:socket
  * @requires global.service:lang
  */
-service('facebook', ['$rootScope', 'socket', 'lang',
+service('facebook', ['$rootScope', '$cookies', '$interval', 'socket', 'lang',
 
-    function ($rootScope, socket, lang) {
+    function ($rootScope, $cookies, $interval, socket, lang) {
 
         var self = this;
 
@@ -67,7 +67,18 @@ service('facebook', ['$rootScope', 'socket', 'lang',
          * @param {function} callback Callback
          */
         this.setLoginStatus = function (callback) {
+            var interval;
+            if (!this.isFacebookApp) {
+                interval = $interval(function () {
+                    $interval.cancel(interval);
+                    self.status = 'unknown';
+                    callback();
+                }, 1000);
+            }
             FB.getLoginStatus(function (response) {
+                if (interval) {
+                    $interval.cancel(interval);
+                }
                 setLoginStatus(response);
                 callback();
             });
@@ -81,12 +92,16 @@ service('facebook', ['$rootScope', 'socket', 'lang',
          * Facebook login.
          */
         this.login = function () {
-            FB.login(function (response) {
-                setLoginStatus(response);
-                self.handleLogin();
-            }, {
-                scope: 'user_friends'
-            });
+            if (this.status === 'connected') {
+                this.handleLogin();
+            } else {
+                FB.login(function (response) {
+                    setLoginStatus(response);
+                    self.handleLogin();
+                }, {
+                    scope: 'user_friends'
+                });
+            }
         };
 
         /**
@@ -111,6 +126,10 @@ service('facebook', ['$rootScope', 'socket', 'lang',
          * Set user friends from facebook list.
          */
         this.handleLogin = function () {
+
+            if (!this.isFacebookApp) {
+                $cookies.put('login', 'facebook');
+            }
             
             FB.api('/me?fields=first_name,name,locale,gender,currency', function (response) {
 

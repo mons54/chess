@@ -34,7 +34,7 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', 'socket', 'modal', 'facebook', 'google', 'lang',
+    run(['$rootScope', '$route', '$http', '$location', '$cookies', 'socket', 'modal', 'facebook', 'google', 'lang',
 
         /**
          * @param {object} $rootScope Global scope
@@ -46,7 +46,7 @@
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, socket, modal, facebook, google, lang) {
+        function ($rootScope, $route, $http, $location, $cookies, socket, modal, facebook, google, lang) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
@@ -92,7 +92,7 @@
             };
 
             $rootScope.connect = function () {
-                if (isFacebook) {
+                if (facebook.isFacebookApp) {
                     facebookSetLoginStatus();
                 } else {
                     setLoginStatus();
@@ -120,16 +120,19 @@
             }
 
             function callBackLoginStatus() {
+
+                var login = $cookies.get('login');
+
                 if (!facebook.status) {
                     return;
                 }
 
-                if (facebook.status === 'connected') {
+                if ((facebook.isFacebookApp || login === 'facebook') && facebook.status === 'connected') {
                     facebook.handleLogin();
                     return;
                 } 
 
-                if (isFacebook) {
+                if (facebook.isFacebookApp) {
                     facebook.login();
                     return;
                 }
@@ -138,7 +141,7 @@
                     return;
                 }
 
-                if (google.status === 'connected') {
+                if (login === 'google' && google.status === 'connected') {
                     google.handleLogin();
                     return;
                 }
@@ -147,9 +150,11 @@
             }
 
             socket.on('connect', function () {
-                if (facebook.auth) {
+                var login = $cookies.get('login');
+
+                if (facebook.isFacebookApp || (login === 'facebook' && facebook.auth)) {
                     socket.emit('facebookConnect', facebook.auth);
-                } else if (google.auth) {
+                } else if (login === 'google' && google.auth) {
                     socket.emit('googleConnect', google.auth);
                 }
             });
@@ -186,9 +191,9 @@
                 facebookSetLoginStatus();
             };
 
-            var isFacebook = $location.search().facebook;
+            facebook.isFacebookApp = $location.search().facebook;
 
-            if (!isFacebook && gapi && gapi.load) {
+            if (!facebook.isFacebookApp && gapi && gapi.load) {
 
                 gapi.load('client', function () {
                     google.init().then(googleSetLoginStatus);
