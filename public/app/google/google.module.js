@@ -69,9 +69,9 @@ service('google', ['$rootScope', '$cookies', 'socket', 'lang',
          */
         this.init = function () {
             return gapi.client.init({
-                apiKey: 'AIzaSyCE3PfWFk6TXpS16wV38NadJnf2nJN6duI',
+                apiKey: 'AIzaSyAsUqdlQmVKm0xCbB_5d9WdGolwVfFhm2A',
                 discoveryDocs: ['https://people.googleapis.com/$discovery/rest?version=v1'],
-                clientId: '695464964183-2cofi6rshusga6ojnocqubdf124eg7oh.apps.googleusercontent.com',
+                clientId: '695464964183-1h07us30agq8fa70ourpn3dajgrulr6o.apps.googleusercontent.com',
                 scope: 'profile'
             }).then(function(response) {
                 gapi.auth2.getAuthInstance().isSignedIn.listen(function() {
