@@ -13,7 +13,10 @@
             class="app-game__box"
             data-game-box>
             <div class="app-game__box-content">
-                <span ng-class="getPieceClass(position)" piece-draggable data-position="{{position}}"></span>
+                <span ng-if="game.pieces[position]" class="app-game__piece" piece-draggable data-position="{{ position }}">
+                    <img ng-src="../images/game-1/{{ game.pieces[position].name }}-{{ game.pieces[position].color }}.svg"
+                         class="app-game__piece-image">
+                </span>
             </div>
         </div>
     </div>

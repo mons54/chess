@@ -728,7 +728,7 @@ a {
   float: left;
   display: block;
   width: 12.5%;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(180, 140, 100);
 }
 
 .app-game__box:before {
@@ -740,7 +740,7 @@ a {
 .app-game__box.last-turn,
 .app-game__box.selected,
 .app-game__box.ui-droppable {
-  border-style: solid;
+  border-style: ridge solid;
   border-width: 3px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -753,18 +753,18 @@ a {
 }
 
 .app-game__box.selected {
-  border-color: #3F51B5;
+  border-color: #2196F3;
 }
 
 .app-game__box.ui-droppable {
-  border-color: #4CAF50;
+  border-color: #8BC34A;
 }
 
 .app-game--white .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
 .app-game--white .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
 .app-game--black .app-game__row:nth-child(even) .app-game__box:nth-child(even),
 .app-game--black .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
-  background-color: rgb(120, 120, 120);
+  background-color: rgba(240, 220, 180, 1);
 }
 
 .app-game__box-content {
@@ -775,87 +775,15 @@ a {
   bottom: 12.5%;
 }
 
-.app-game__box-content .app-game__icon {
+.app-game__box-content .app-game__piece {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.app-game__icon {
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.app-game__icon--bishop {
-  background-image: url(../images/game/bishop.svg);
-}
-
-.app-game__icon--king {
-  background-image: url(../images/game/king.svg);
-}
-
-.app-game__icon--knight {
-  background-image: url(../images/game/knight.svg);
-}
-
-.app-game__icon--pawn {
-  background-image: url(../images/game/pawn.svg);
-}
-
-.app-game__icon--queen {
-  background-image: url(../images/game/queen.svg);
-}
-
-.app-game__icon--rook {
-  background-image: url(../images/game/rook.svg);
-}
-
-.app-game__icon--bishop.app-game__icon--white {
-  background-image: url(../images/game/bishop-white.svg);
-}
-
-.app-game__icon--king.app-game__icon--white {
-  background-image: url(../images/game/king-white.svg);
-}
-
-.app-game__icon--knight.app-game__icon--white {
-  background-image: url(../images/game/knight-white.svg);
-}
-
-.app-game__icon--pawn.app-game__icon--white {
-  background-image: url(../images/game/pawn-white.svg);
-}
-
-.app-game__icon--queen.app-game__icon--white {
-  background-image: url(../images/game/queen-white.svg);
-}
-
-.app-game__icon--rook.app-game__icon--white {
-  background-image: url(../images/game/rook-white.svg);
-}
-
-.app-game__icon--bishop.app-game__icon--black {
-  background-image: url(../images/game/bishop-black.svg);
-}
-
-.app-game__icon--king.app-game__icon--black {
-  background-image: url(../images/game/king-black.svg);
-}
-
-.app-game__icon--knight.app-game__icon--black {
-  background-image: url(../images/game/knight-black.svg);
-}
-
-.app-game__icon--pawn.app-game__icon--black {
-  background-image: url(../images/game/pawn-black.svg);
-}
-
-.app-game__icon--queen.app-game__icon--black {
-  background-image: url(../images/game/queen-black.svg);
-}
-
-.app-game__icon--rook.app-game__icon--black {
-  background-image: url(../images/game/rook-black.svg);
+.app-game__box-content .app-game__piece-image {
+  width: 100%;
+  height: 100%;
 }
 
 .app-promotion__icon {
@@ -907,7 +835,7 @@ a {
     width: auto;
   }
 
-  .app-head .app-button__create-game {
+  .app-button__create-game {
     position: relative;
     right: auto;
     top: auto;
