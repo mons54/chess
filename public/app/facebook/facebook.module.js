@@ -25,9 +25,9 @@ constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
  * @requires global.service:socket
  * @requires global.service:lang
  */
-service('facebook', ['$rootScope', '$cookies', '$interval', 'socket', 'lang',
+service('facebook', ['$rootScope', '$cookies', 'socket', 'lang',
 
-    function ($rootScope, $cookies, $interval, socket, lang) {
+    function ($rootScope, $cookies, socket, lang) {
 
         var self = this;
 
@@ -67,18 +67,7 @@ service('facebook', ['$rootScope', '$cookies', '$interval', 'socket', 'lang',
          * @param {function} callback Callback
          */
         this.setLoginStatus = function (callback) {
-            var interval;
-            if (!this.isFacebookApp) {
-                interval = $interval(function () {
-                    $interval.cancel(interval);
-                    self.status = 'unknown';
-                    callback();
-                }, 1000);
-            }
             FB.getLoginStatus(function (response) {
-                if (interval) {
-                    $interval.cancel(interval);
-                }
                 setLoginStatus(response);
                 callback();
             });
