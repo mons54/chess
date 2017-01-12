@@ -15,7 +15,7 @@
             <div class="app-game__box-content">
                 <span ng-if="game.pieces[position]" class="app-game__piece" piece-draggable data-position="{{ position }}">
                     <img ng-src="../images/game-1/{{ game.pieces[position].name }}-{{ game.pieces[position].color }}.svg"
-                         class="app-game__piece-image">
+                         class="app-game__piece-image app__no-drag">
                 </span>
             </div>
         </div>
