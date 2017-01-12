@@ -34,7 +34,9 @@
                     <th>#</th>
                     <th>{{ 'white'|translate }}</th>
                     <th></th>
+                    <th></th>
                     <th>{{ 'black'|translate }}</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -43,8 +45,10 @@
                     <td class="app-table--notations-index mdl-data-table__cell--non-numeric">{{ $index + 1 }}</td>
                     <td class="app-table--notations-text app-table--notations-white mdl-data-table__cell--non-numeric">{{ played.white.notation }}</td>
                     <td class="app-table--notations-white">{{ played.white.time }}'</td>
-                    <td ng-if="played.black.notation" class="app-table--notations-text app-table--notations-black mdl-data-table__cell--non-numeric">{{ played.black.notation }}</td>
-                    <td ng-if="played.black.time" class="app-table--notations-black">{{ played.black.time }}'</td>
+                    <td class="app-table--notations-white">{{ played.white.score }}'</td>
+                    <td ng-if="played.black" class="app-table--notations-text app-table--notations-black mdl-data-table__cell--non-numeric">{{ played.black.notation }}</td>
+                    <td ng-if="played.black" class="app-table--notations-black">{{ played.black.time }}'</td>
+                    <td ng-if="played.black" class="app-table--notations-black">{{ played.black.score }}'</td>
                 </tr>
             </tbody>
         </table>
