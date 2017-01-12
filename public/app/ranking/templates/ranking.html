@@ -1,14 +1,14 @@
 <div element class="app-element app-ranking mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div element-content class="app-element__body">
-        <table class="app-element__table app-element__table--ranking mdl-data-table mdl-js-data-table">
+        <table class="app-table app-table--ranking mdl-data-table mdl-js-data-table">
             <tbody>
                 <tr ng-repeat="rank in ranking" show-profile="rank">
-                    <td class="app-element__table-rank mdl-data-table__cell--non-numeric">{{ rank.position }}</td>
-                    <td class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-picture" ng-src="{{rank.avatar}}">
-                        <span class="app-element__table-name">{{ rank.name }}</span>
+                    <td class="app-table__rank mdl-data-table__cell--non-numeric">{{ rank.position }}</td>
+                    <td class="app-table__user mdl-data-table__cell--non-numeric">
+                        <img class="app-table__avatar" ng-src="{{rank.avatar}}">
+                        <span class="app-table__name">{{ rank.name }}</span>
                     </td>
-                    <td class="app-element__table-points">{{ rank.points }}</td>
+                    <td class="app-table__points">{{ rank.points }}</td>
                 </tr>
             </tbody>
         </table>

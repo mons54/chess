@@ -39,8 +39,7 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
         restrict: 'A',
         link: function (scope, element, attr) {
 
-            var modalPromotion = modal.get('modal-promotion'),
-                touch = utils.isTouch(),
+            var touch = utils.isTouch(),
                 selectedClass = 'selected',
                 droppableClass =  'ui-droppable';
 
@@ -122,6 +121,7 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
                     elementBox.find('[piece-draggable]').removeClass();
 
                     if (isPromotion(position)) {
+                        var modalPromotion = modal.get('modal-promotion');
                         modal.show(modalPromotion);
                         modalPromotion.find('[data-icon]').click(function() {
                             var promotion = $(this).data('icon');

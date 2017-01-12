@@ -19,8 +19,16 @@ angular.module('game').
 controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'socket', 'utils', 'modal', 'sound',
     
     function ($rootScope, $scope, $routeParams, $location, $filter, $interval, socket, utils, modal, sound) {
-
+        
         socket.emit('initGame', $routeParams.id);
+
+        var defaultPieces = {
+            pawn: 8,
+            bishop: 2,
+            knight: 2,
+            rook: 2,
+            queen: 1
+        };
 
         socket.on('game', function (game) {
             if (!game) {
@@ -38,49 +46,84 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 modal.show(modal.get('modal-finish-game'));
             }
 
+            var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+                numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
+
             /**
              * Play sound if is not player turn and has last turn
              */
             if (!$scope.isPlayerTurn() &&
                 $scope.game &&
-                game.lastTurn && 
-                game.lastTurn.start &&
-                game.lastTurn.start !== $scope.game.lastTurn.start) {
-                sound[$scope.game.pieces[game.lastTurn.end] ? 'capture' : 'deplace'].load().play();
+                game.played.length && 
+                game.played.start &&
+                game.played[0] !== $scope.game.played[0]) {
+                sound[$scope.game.pieces[game.played[0].end] ? 'capture' : 'deplace'].load().play();
             }
 
-            $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-            $scope.numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
+            game.black.lostPieces = angular.copy(defaultPieces);
+            game.white.lostPieces = angular.copy(defaultPieces);
+
+            angular.forEach(game.pieces, function (piece) {
+                if (!game[piece.color].lostPieces[piece.name]) {
+                    return;
+                }
+                game[piece.color].lostPieces[piece.name]--;
+            });
+
+            game.notations = [];
+
+            var time = game.startTime;
+
+            angular.forEach(game.played, function (value, index) {
+                var data = {
+                    text: value.notation,
+                    time: ((value.time - time) / 1000).toFixed(2)
+                };
+                time = value.time;
+                if (index % 2 === 0) {
+                    game.notations.push({
+                        white: data
+                    });
+                } else {
+                    game.notations[game.notations.length - 1].black = data;
+                }
+            });
 
             if ($rootScope.user.uid === game.black.uid) {
                 $scope.player1 = game.black;
                 $scope.player2 = game.white;
+                $scope.player1.color = 'black';
+                $scope.player2.color = 'white';
                 $scope.orientation = 'black';
-                $scope.numbers.reverse();
+                numbers.reverse();
             } else {
                 $scope.player1 = game.white;
                 $scope.player2 = game.black;
+                $scope.player1.color = 'white';
+                $scope.player2.color = 'black';
                 $scope.orientation = 'white';
             }
 
             $scope.game = game;
+
+            $scope.letters = letters;
+            $scope.numbers = numbers;
         });
 
         socket.on('offerDraw', function (data) {
             modal.show(modal.get('modal-response-draw'));
         });
 
-        $scope.getPieceClass = function (position) {
-            if (!$scope.game.pieces[position]) {
-                return;
-            }
-            return 'app-game__icon app-game__icon--' + $scope.game.pieces[position].color + ' app-game__icon--' + $scope.game.pieces[position].name;
-        };
+        socket.on('possibleDraw', function (data) {
+            modal.show(modal.get('modal-possible-draw'));
+        });
 
         $scope.isLastTurn = function (position) {
-            if ($scope.game.lastTurn.start === position || $scope.game.lastTurn.end === position) {
-                return 'last-turn';
+            if (!$scope.game.played || !$scope.game.played.length) {
+                return;
             }
+            var lastTurn = $scope.game.played[$scope.game.played.length - 1];
+            return lastTurn.start === position || lastTurn.end === position;
         };
 
         $scope.acceptDraw = function () {
@@ -180,11 +223,19 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
         };
 
         $scope.canResign = function () {
-            return $scope.$parent.game.played >= 4 && $scope.$parent.game.timestamp >= 60;
+            return $scope.$parent.game.played.length >= 4 && $scope.$parent.game.timestamp >= 60;
         };
 
         $scope.canOfferDraw = function () {
             return !$scope.player.disableOfferDraw && $scope.player.offerDraw < $scope.$parent.game.maxOfferDraw;
+        };
+
+        $scope.getLostPieces = function(number) {
+            var pieces = [];
+            for (var i = 0; i < number; i++) {
+                pieces.push(i);
+            };
+            return pieces;   
         };
         
         $scope.formatTime = function (time) {

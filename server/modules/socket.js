@@ -217,7 +217,6 @@ module.exports = function (io) {
             };
         }
 
-
         var gid = moduleGame.start(white, black, dataGame.time),
             room = moduleGame.getRoom(gid);
 
@@ -270,7 +269,7 @@ module.exports = function (io) {
             };
         }
 
-        if ((game.played < 4 || game.timestamp < game.timeTurn) && data.lastGame && data.lastGame === data.newGame) {
+        if ((game.played.length < 4 || game.timestamp < game.timeTurn) && data.lastGame && data.lastGame === data.newGame) {
             data.blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
             console.log('blackList', data.blackList);
         }
@@ -314,7 +313,7 @@ module.exports = function (io) {
             whiteUid = game.white.uid,
             blackUid = game.black.uid,
             result = game.result.value,
-            hashGame = JSON.stringify(game.saved).hash(),
+            hashGame = JSON.stringify(game.played).hash(),
             data;
 
         moduleGame.deleteGame(game.id);

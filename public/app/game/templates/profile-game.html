@@ -70,6 +70,28 @@
                 </div>
             </div>
         </div>
+
+        <div id="modal-promotion" 
+             class="app-modal app-modal__bg"
+             role="dialog" 
+             aria-hidden="true">
+            <div class="app-modal__dialog">
+                <div class="app-modal__content">
+                    <div class="app-promotion__icon"
+                         ng-repeat="piece in ['queen', 'rook', 'knight', 'bishop']">
+                        <div class="app-game__box-content">
+                            <a href 
+                               class="app-game__icon app-game__icon--{{ piece }}" 
+                               modal-close 
+                               data-icon="{{ piece }}">
+                               <img ng-src="../images/game-1/{{ piece }}-{{ player.color }}.svg"
+                                 class="app-game__piece-image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div>
@@ -88,6 +110,16 @@
         <div class="app-profile__info">
             <span class="app-icon app-icon__points"></span>
             <span>{{ player.points }}</span>
+        </div>
+        <div class="app-game__lost-pieces">
+            <span ng-repeat="(name, number) in player.lostPieces"
+                  class="app-game__lost-pieces-group app-game__lost-pieces-group--{{ name }}">
+                <span ng-if="number > 0"
+                      ng-repeat="i in getLostPieces(number)"
+                      class="app-game__lost-piece">
+                    <img ng-src="../images/game-1/{{ name }}-{{ player.color }}.svg">
+                </span>
+            </span>
         </div>
     </div>
 </div>

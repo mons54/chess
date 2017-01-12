@@ -1492,13 +1492,22 @@ setInterval(function() {
     game.newGame();
     moduleGame.newGame(gid);
     run(gid++);
-}, 500);
+}, 1);
 
+var date,
+    time = 0;
 
 function run(gid) {
 
+    if (!date) {
+        date = new Date().getTime();
+    }
+
     if (moduleGame.game.finish) {
-        console.log('success', gid);
+        var newDate = new Date().getTime();
+        time += newDate - date;
+        console.log('success', gid, time);
+        date = newDate;
         return;
     }
 

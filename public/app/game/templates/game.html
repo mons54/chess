@@ -2,13 +2,13 @@
     <div profile-game player="player2"></div>
 </div>
 
-<div class="app-game__content app-element mdl-shadow--2dp mdl-cell mdl-cell--10-col mdl-cell--12-col-tablet" 
+<div class="app-game__content app-element mdl-shadow--2dp mdl-cell mdl-cell--12-col" 
      ng-class="{'app-game--white': orientation == 'white', 'app-game--black': orientation == 'black'}">
     <div ng-repeat="number in numbers" class="app-game__row">
         <div 
             ng-repeat="letter in letters" 
             ng-init="position = letter + number" 
-            ng-class="isLastTurn(position)" 
+            ng-class="{'last-turn': isLastTurn(position) }" 
             id="{{position}}" 
             class="app-game__box"
             data-game-box>
@@ -22,17 +22,43 @@
     </div>
 </div>
 
-<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
-    <div class="app-game__notation app-element mdl-shadow--2dp">
-        <div ng-repeat="notation in player1.notation track by $index">{{ notation }}</div>
-    </div>
-    <div class="app-game__notation app-element mdl-shadow--2dp">
-        <div ng-repeat="notation in player2.notation track by $index">{{ notation }}</div>
-    </div>
-</div>
-
 <div class="app-head mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile-game player="player1"></div>
+</div>
+
+<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+    <table class="app-table app-table--notations mdl-data-table mdl-js-data-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ 'white'|translate }}</th>
+                <th></th>
+                <th>{{ 'black'|translate }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="notation in game.notations">
+                <td class="app-table--notations-index">{{ $index + 1 }}</td>
+                <td class="app-table--notations-text app-table--notations-white">{{ notation.white.text }}</td>
+                <td class="app-table--notations-time app-table--notations-white">{{ notation.white.time }}'</td>
+                <td ng-if="notation.black" class="app-table--notations-text app-table--notations-black">{{ notation.black.text }}</td>
+                <td ng-if="notation.black" class="app-table--notations-time app-table--notations-black">{{ notation.black.time }}'</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+    <table class="app-table app-table--stats mdl-data-table mdl-js-data-table">
+        <thead>
+            <tr>
+                <th>{{ 'white'|translate }}</th>
+                <th></th>
+                <th>{{ 'black'|translate }}</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
 </div>
 
 <div id="modal-response-draw" 
@@ -43,6 +69,30 @@
     <div class="app-modal__dialog">
         <div class="app-modal__content">
             <h4 class="app-modal__title">{{ player2.name }} {{ 'offers_a_draw'|translate }} ?</h4>
+            <div class="app-modal__actions">
+                <button modal-close 
+                        type="reset" 
+                        class="mdl-button mdl-button--raised">
+                        {{ 'cancel'|translate }}
+                </button>
+                <button modal-close 
+                        ng-click="acceptDraw()"
+                        type="button" 
+                        class="mdl-button mdl-button--raised mdl-button--colored">
+                        {{ 'ok'|translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-possible-draw"
+     class="app-modal app-modal__bg" 
+     role="dialog" 
+     aria-hidden="true">
+    <div class="app-modal__dialog">
+        <div class="app-modal__content">
+            <h4 class="app-modal__title">{{ 'draw'|translate }} ?</h4>
             <div class="app-modal__actions">
                 <button modal-close 
                         type="reset" 
@@ -79,26 +129,6 @@
                     class="mdl-button mdl-button--raised mdl-button--colored">
                     {{ 'share'|translate }}
             </button>
-        </div>
-    </div>
-</div>
-
-<div id="modal-promotion" 
-     class="app-modal app-modal__bg"
-     role="dialog" 
-     aria-hidden="true">
-    <div class="app-modal__dialog">
-        <div class="app-modal__content">
-            <div class="app-promotion__icon"
-                 ng-repeat="piece in ['queen', 'rook', 'knight', 'bishop']">
-                <div class="app-game__box-content">
-                    <a href 
-                       class="app-game__icon app-game__icon--{{ piece }}" 
-                       modal-close 
-                       data-icon="{{ piece }}">
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 </div>

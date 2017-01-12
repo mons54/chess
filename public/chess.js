@@ -1,16 +1,291 @@
 'use strict';
 
-module.exports = Engine;
-
-function Engine(game, start, end, promotion) {
+var game = function (gid, white, black, time, startTime) {
     
+    var timeTurn = 120,
+        nbPieces = 16;
+
+    return {
+        id: gid,
+        startTime: startTime ? startTime : new Date().getTime(),
+        time: time,
+        timeTurn: timeTurn,
+        timestamp: 0,
+        finish: false,
+        turn: 'white',
+        turn50: 0,
+        maxOfferDraw: 3,
+        played: [],
+        result: {},
+        white: {
+            uid: white.uid,
+            name: white.name,
+            avatar: white.avatar,
+            points: white.points,
+            ranking: white.ranking,
+            time: time,
+            timeTurn: timeTurn,
+            possibleDraw: false,
+            king: {
+                position: 'e1',
+                moveForbidden: []
+            },
+            nbPieces: nbPieces,
+            offerDraw: 0
+        },
+        black: {
+            uid: black.uid,
+            name: black.name,
+            avatar: black.avatar,
+            points: black.points,
+            ranking: black.ranking,
+            time: time,
+            timeTurn: timeTurn,
+            possibleDraw: false,
+            king: {
+                position: 'e8',
+                moveForbidden: []
+            },
+            nbPieces: nbPieces,
+            offerDraw: 0
+        },
+        pieces: {
+            e1: {
+                name: 'king',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            e8: {
+                name: 'king',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            d1: {
+                name: 'queen',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            d8: {
+                name: 'queen',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            a1: {
+                name: 'rook',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            h1: {
+                name: 'rook',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            a8: {
+                name: 'rook',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            h8: {
+                name: 'rook',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            c1: {
+                name: 'bishop',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            f1: {
+                name: 'bishop',
+                color: 'white',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            c8: {
+                name: 'bishop',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            f8: {
+                name: 'bishop',
+                color: 'black',
+                deplace: [],
+                capture: [],
+                moved: false
+            },
+            b1: {
+                name: 'knight',
+                color: 'white',
+                deplace: ['a3', 'c3'],
+                capture: [],
+                moved: false
+            },
+            g1: {
+                name: 'knight',
+                color: 'white',
+                deplace: ['f3', 'h3'],
+                capture: [],
+                moved: false
+            },
+            b8: {
+                name: 'knight',
+                color: 'black',
+                deplace: ['a6', 'c6'],
+                capture: [],
+                moved: false
+            },
+            g8: {
+                name: 'knight',
+                color: 'black',
+                deplace: ['f6', 'h6'],
+                capture: [],
+                moved: false
+            },
+            a2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['a3', 'a4'],
+                capture: [],
+                moved: false
+            },
+            b2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['b3', 'b4'],
+                capture: [],
+                moved: false
+            },
+            c2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['c3', 'c4'],
+                capture: [],
+                moved: false
+            },
+            d2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['d3', 'd4'],
+                capture: [],
+                moved: false
+            },
+            e2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['e3', 'e4'],
+                capture: [],
+                moved: false
+            },
+            f2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['f3', 'f4'],
+                capture: [],
+                moved: false
+            },
+            g2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['g3', 'g4'],
+                capture: [],
+                moved: false
+            },
+            h2: {
+                name: 'pawn',
+                color: 'white',
+                deplace: ['h3', 'h4'],
+                capture: [],
+                moved: false
+            },
+            a7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['a6', 'a5'],
+                capture: [],
+                moved: false
+            },
+            b7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['b6', 'b5'],
+                capture: [],
+                moved: false
+            },
+            c7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['c6', 'c5'],
+                capture: [],
+                moved: false
+            },
+            d7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['d6', 'd5'],
+                capture: [],
+                moved: false
+            },
+            e7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['e6', 'e5'],
+                capture: [],
+                moved: false
+            },
+            f7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['f6', 'f5'],
+                capture: [],
+                moved: false
+            },
+            g7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['g6', 'g5'],
+                capture: [],
+                moved: false
+            },
+            h7: {
+                name: 'pawn',
+                color: 'black',
+                deplace: ['h6', 'h5'],
+                capture: [],
+                moved: false
+            }
+        }
+    };
+};
+
+var engine = function(game, start, end, promotion) {
     this.game = game;
     this.init(start, end, promotion);
 
     return this.game;
 };
 
-Engine.prototype.init = function (start, end, promotion) {
+engine.prototype.init = function (start, end, promotion) {
 
     var pieceStart = this.game.pieces[start],
         pieceEnd = this.game.pieces[end];
@@ -25,17 +300,11 @@ Engine.prototype.init = function (start, end, promotion) {
         return;
     }
 
-    this.game.lastTurn = {
-        start: start,
-        end: end
-    };
-
     if (this.isPawnPromotion(pieceStart, end)) {
         pieceStart = this.getPawnPromotion(pieceStart.color, promotion);
     }
 
-    var extension = '',
-        sign = typeMove === 'capture' ? 'x' : ' ';
+    var extension = '';
 
     if (typeMove === 'capture') {
         if (!pieceEnd) {
@@ -55,8 +324,6 @@ Engine.prototype.init = function (start, end, promotion) {
             extension += end.charAt(0) === 'c' ? ' 0-0-0' : ' 0-0';
         }
     }
-
-    this.game[this.game.turn].notation.unshift(start + sign + end + extension);
 
     this.positionInPassing = [];
 
@@ -90,74 +357,9 @@ Engine.prototype.init = function (start, end, promotion) {
         this.game[this.game.turn].timeTurn = this.game[this.game.turn].time;
     }
 
-    this.game[this.game.turn].canDraw = false;
+    this.game[this.game.turn].possibleDraw = false;
 
     this.game.turn = this.game.turn == 'white' ? 'black' : 'white';
-
-    this.setMove();
-
-    var position = [],
-        code = '';
-
-    for (var i in this.game.pieces) {
-        position.push(i);
-    }
-
-    position.sort();
-
-    for (var i in position) {
-        code += position[i] + this.game.pieces[position[i]].name + this.game.pieces[position[i]].color;
-    }
-
-    code = code.hash();
-
-    position = 0;
-
-    for (var i in this.game.save) {
-        if (code === this.game.save[i].code) {
-            position++;
-        }
-    }
-
-    if (this.turn50 >= 50 || position >= 3) {
-        this.game[this.game.turn].canDraw = true;
-    }
-
-    this.game.played++;
-
-    this.game.saved[this.game.played] = {
-        code: code,
-        start: start,
-        end: end
-    };
-
-    if (this.checkmat == true) {
-        this.game.finish = true;
-        this.game.result = {
-            name: 'mat'
-        };
-        if (this.game.turn == 'black') {
-            this.game.result.value = 1;
-        } else {
-            this.game.result.value = 2;
-        }
-    } else if (this.pat == true || this.draw == true) {
-        this.game.finish = true;
-        this.game.result = {
-            value: 0
-        };
-        if (this.pat == true) {
-            this.game.result.name = 'pat';
-        } else {
-            this.game.result.name = 'nul';
-        }
-    }
-
-    this.game.white.king.moveForbidden = [];
-    this.game.black.king.moveForbidden = [];
-};
-
-Engine.prototype.setMove = function () {
 
     this.game.white.king.moveForbidden = [];
     this.game.black.king.moveForbidden = [];
@@ -221,9 +423,83 @@ Engine.prototype.setMove = function () {
     this.setMovePiecesKing();
 
     this.setMat();
+
+    var position = [],
+        hash = '';
+
+    for (var i in this.game.pieces) {
+        position.push(i);
+    }
+
+    position.sort();
+
+    for (var i in position) {
+        hash += position[i] + this.game.pieces[position[i]].name + this.game.pieces[position[i]].color;
+    }
+
+    hash = hash.hash();
+
+    // Init position at 1 for this turn
+    position = 1;
+
+    this.game.played.forEach(function (value) {
+        if (hash === value.hash) {
+            position++;
+        }
+    });
+
+    if (this.turn50 >= 50 || position >= 3) {
+        this.game[this.game.turn].possibleDraw = true;
+    }
+
+    this.game.played.push({
+        time: new Date().getTime(),
+        hash: hash,
+        start: start,
+        end: end,
+        promotion: promotion,
+        notation: start + (typeMove === 'capture' ? 'x' : ' ') + end + extension
+    });
+
+    if (this.checkmat == true) {
+        this.game.finish = true;
+        this.game.result = {
+            name: 'mat'
+        };
+        if (this.game.turn == 'black') {
+            this.game.result.value = 1;
+        } else {
+            this.game.result.value = 2;
+        }
+    } else if (this.pat == true || this.draw == true) {
+        this.game.finish = true;
+        this.game.result = {
+            value: 0
+        };
+        if (this.pat == true) {
+            this.game.result.name = 'pat';
+        } else {
+            this.game.result.name = 'nul';
+        }
+    }
+
+    this.game.white.king.moveForbidden = [];
+    this.game.black.king.moveForbidden = [];
+
+    return this.game;
 };
 
-Engine.prototype.setMat = function () {
+if (typeof exports !== 'undefined') {
+    exports.engine = engine;
+    exports.game = game;
+} else {
+    window.chess = {
+        engine: engine,
+        game: game
+    };
+}
+
+engine.prototype.setMat = function () {
 
     this.checkmat = false;
 
@@ -261,7 +537,7 @@ Engine.prototype.setMat = function () {
 
 };
 
-Engine.prototype.setPieceMat = function (piece) {
+engine.prototype.setPieceMat = function (piece) {
 
     if (piece.deplace.length) {
 
@@ -274,7 +550,7 @@ Engine.prototype.setPieceMat = function (piece) {
     }
 };
 
-Engine.prototype.setPieceMatCapture = function (piece) {
+engine.prototype.setPieceMatCapture = function (piece) {
 
     if (!this.kingCheckCapture) {
         return;
@@ -288,7 +564,7 @@ Engine.prototype.setPieceMatCapture = function (piece) {
     }
 };
 
-Engine.prototype.setPieceMatDeplace = function (piece) {
+engine.prototype.setPieceMatDeplace = function (piece) {
 
     if (!this.kingCheckDeplace || !this.kingCheckDeplace.length) {
         return;
@@ -307,7 +583,7 @@ Engine.prototype.setPieceMatDeplace = function (piece) {
     }
 };
 
-Engine.prototype.getDraw = function () {
+engine.prototype.getDraw = function () {
 
     if ((this.game.white.nbPieces == 1 && (this.game.black.nbPieces == 1 || (this.stayPieces.black.name == 'bishop' || this.stayPieces.black.name == 'knight'))) ||
         (this.game.black.nbPieces == 1 && (this.stayPieces.white.name == 'bishop' || this.stayPieces.white.name == 'knight'))) {
@@ -331,7 +607,7 @@ Engine.prototype.getDraw = function () {
     return false;
 };
 
-Engine.prototype.setMovePiecesKing = function () {
+engine.prototype.setMovePiecesKing = function () {
     
     this.pat = true;
 
@@ -357,7 +633,7 @@ Engine.prototype.setMovePiecesKing = function () {
     }
 };
 
-Engine.prototype.setMovePiecesOtherThanKing = function (color) {
+engine.prototype.setMovePiecesOtherThanKing = function (color) {
 
     for (var i in this.game.pieces) {
 
@@ -382,7 +658,7 @@ Engine.prototype.setMovePiecesOtherThanKing = function (color) {
     }
 };
 
-Engine.prototype.setMovePiece = function () {
+engine.prototype.setMovePiece = function () {
 
     this.saveCapture = [];
     this.deplaceBeforeKing = [];
@@ -411,7 +687,7 @@ Engine.prototype.setMovePiece = function () {
     this.piece.capture = this.capture;
 };
 
-Engine.prototype.setMovePawn = function (letter, number) {
+engine.prototype.setMovePawn = function (letter, number) {
 
     if (this.inPassing && this.game.turn == this.piece.color && this.inArray(this.piece.position, this.positionInPassing)) {
         this.capture.push(this.inPassing);
@@ -440,7 +716,7 @@ Engine.prototype.setMovePawn = function (letter, number) {
     }
 };
 
-Engine.prototype.checkDeplacePawn = function () {
+engine.prototype.checkDeplacePawn = function () {
     
     if (!this.checkPosition()) {
         return;
@@ -453,7 +729,7 @@ Engine.prototype.checkDeplacePawn = function () {
     }
 };
 
-Engine.prototype.checkCapturePawn = function () {
+engine.prototype.checkCapturePawn = function () {
     
     if (!this.checkPosition()) {
         return;
@@ -481,7 +757,7 @@ Engine.prototype.checkCapturePawn = function () {
     this.game[this.piece.color].king.moveForbidden.push(position);
 };
 
-Engine.prototype.setMoveKnight = function (letter, number) {
+engine.prototype.setMoveKnight = function (letter, number) {
     
     this.letter = letter - 2;
     this.number = number - 1;
@@ -510,7 +786,7 @@ Engine.prototype.setMoveKnight = function (letter, number) {
     this.checkMoveKnight();
 };
 
-Engine.prototype.checkMoveKnight = function () {
+engine.prototype.checkMoveKnight = function () {
 
     if (!this.checkPosition()) {
         return;
@@ -536,7 +812,7 @@ Engine.prototype.checkMoveKnight = function () {
     this.game[this.piece.color].king.moveForbidden.push(position);
 };
 
-Engine.prototype.setMoveQueenBishop = function (letter, number) {
+engine.prototype.setMoveQueenBishop = function (letter, number) {
 
     this.setParamsMoveQueenRookBishop();
     for (this.current = 1; this.current < 9; this.current++) {
@@ -570,7 +846,7 @@ Engine.prototype.setMoveQueenBishop = function (letter, number) {
     }
 };
 
-Engine.prototype.setMoveQueenRook = function (letter, number) {
+engine.prototype.setMoveQueenRook = function (letter, number) {
     
     this.setParamsMoveQueenRookBishop();
     for (this.current = 1; this.current < 9; this.current++) {
@@ -602,14 +878,14 @@ Engine.prototype.setMoveQueenRook = function (letter, number) {
     }
 };
 
-Engine.prototype.setParamsMoveQueenRookBishop = function () {
+engine.prototype.setParamsMoveQueenRookBishop = function () {
     this.stop = false;
     this.kingCheckForbidden = false;
     this.deplaceBeforeKing2 = [];
     this.deplaceCheckKing = [];
 };
 
-Engine.prototype.setMoveQueenRookBishop = function () {
+engine.prototype.setMoveQueenRookBishop = function () {
 
     if (!this.checkPosition()) {
         return;
@@ -626,7 +902,7 @@ Engine.prototype.setMoveQueenRookBishop = function () {
     }
 };
 
-Engine.prototype.checkMoveQueenRookBishop = function (position) {
+engine.prototype.checkMoveQueenRookBishop = function (position) {
     
     var color = this.reverseColor(this.piece.color);
 
@@ -660,7 +936,7 @@ Engine.prototype.checkMoveQueenRookBishop = function (position) {
     }
 };
 
-Engine.prototype.pieceBeforeKing = function () {
+engine.prototype.pieceBeforeKing = function () {
 
     var key = this.saveCapture,
         piece = this.game.pieces[key],
@@ -696,7 +972,7 @@ Engine.prototype.pieceBeforeKing = function () {
     this.game.pieces[key].capture = capture;
 };
 
-Engine.prototype.checkMoveQueenRookBishopStop = function (position) {
+engine.prototype.checkMoveQueenRookBishopStop = function (position) {
     
     if (this.checkCapture(position)) {
 
@@ -718,7 +994,7 @@ Engine.prototype.checkMoveQueenRookBishopStop = function (position) {
     }
 };
 
-Engine.prototype.setCaptureQueenRookBishop = function (position) {
+engine.prototype.setCaptureQueenRookBishop = function (position) {
 
     this.capture.push(position);
     this.saveCapture = position;
@@ -742,7 +1018,7 @@ Engine.prototype.setCaptureQueenRookBishop = function (position) {
     }
 };
 
-Engine.prototype.setMoveKing = function (letter, number) {
+engine.prototype.setMoveKing = function (letter, number) {
 
     this.checkCastling();
 
@@ -772,7 +1048,7 @@ Engine.prototype.setMoveKing = function (letter, number) {
     this.checkMoveKing();
 };
 
-Engine.prototype.checkMoveKing = function () {
+engine.prototype.checkMoveKing = function () {
 
     if (!this.checkPosition()) {
         return;
@@ -787,7 +1063,7 @@ Engine.prototype.checkMoveKing = function () {
     }
 };
 
-Engine.prototype.checkDeplaceKing = function (position) {
+engine.prototype.checkDeplaceKing = function (position) {
 
     if (!this.checkDeplace(position)) {
         return;
@@ -796,7 +1072,7 @@ Engine.prototype.checkDeplaceKing = function (position) {
     return this.checkMoveForbiddenKing(position);
 },
 
-Engine.prototype.checkCaptureKing = function (position) {
+engine.prototype.checkCaptureKing = function (position) {
 
     if (!this.checkCapture(position)) {
         return false;
@@ -805,25 +1081,25 @@ Engine.prototype.checkCaptureKing = function (position) {
     return this.checkMoveForbiddenKing(position);
 };
 
-Engine.prototype.checkMoveForbiddenKing = function (position) {
+engine.prototype.checkMoveForbiddenKing = function (position) {
     
     var color = this.reverseColor(this.piece.color);
 
     return !this.inArray(position, this.game[color].king.moveForbidden);
 };
 
-Engine.prototype.checkDeplace = function (position) {
+engine.prototype.checkDeplace = function (position) {
     return !this.game.pieces[position];
 };
 
-Engine.prototype.checkCapture = function (position) {
+engine.prototype.checkCapture = function (position) {
     if (!this.checkPiece(position)) {
         return false;
     }
     return this.game.pieces[position].color != this.piece.color;
 };
 
-Engine.prototype.checkCastling = function () {
+engine.prototype.checkCastling = function () {
 
     if (this.check || this.piece.moved) {
         return;
@@ -844,7 +1120,7 @@ Engine.prototype.checkCastling = function () {
     this.setCastling(moveForbidden, color, 'h', number);
 };
 
-Engine.prototype.setCastling = function (moveForbidden, color, letter, number) {
+engine.prototype.setCastling = function (moveForbidden, color, letter, number) {
 
     var piece = this.game.pieces[letter + number];
 
@@ -870,13 +1146,13 @@ Engine.prototype.setCastling = function (moveForbidden, color, letter, number) {
 };
 
 
-Engine.prototype.checkKingForbiden = function () {
+engine.prototype.checkKingForbiden = function () {
     if (this.checkPosition()) {
         this.game[this.pieceColor].king.moveForbidden.push(this.getPosition());
     }
 };
 
-Engine.prototype.checkInPassing = function (piece, end) {
+engine.prototype.checkInPassing = function (piece, end) {
 
     var number = end.substr(-1),
         letter,
@@ -911,23 +1187,23 @@ Engine.prototype.checkInPassing = function (piece, end) {
     }
 };
 
-Engine.prototype.checkPiece = function (position) {
+engine.prototype.checkPiece = function (position) {
     return this.game.pieces[position];
 }
 
-Engine.prototype.checkPosition = function () {
+engine.prototype.checkPosition = function () {
     return this.letter > 0 && this.letter < 9 && this.number > 0 && this.number < 9;
 };
 
-Engine.prototype.getPosition = function () {
+engine.prototype.getPosition = function () {
     return this.numberToLetter(this.letter) + this.number;
 };
 
-Engine.prototype.reverseColor = function (color) {
+engine.prototype.reverseColor = function (color) {
     return color == 'white' ? 'black' : 'white';
 };
 
-Engine.prototype.letterToNumber = function (letter) {
+engine.prototype.letterToNumber = function (letter) {
     switch (letter) {
         case 'a': return 1;
         case 'b': return 2;
@@ -940,7 +1216,7 @@ Engine.prototype.letterToNumber = function (letter) {
     }
 };
 
-Engine.prototype.numberToLetter = function (number) {
+engine.prototype.numberToLetter = function (number) {
     switch (number) {
         case 1: return 'a';
         case 2: return 'b';
@@ -954,7 +1230,7 @@ Engine.prototype.numberToLetter = function (number) {
     return number;
 };
 
-Engine.prototype.castling = function (end) {
+engine.prototype.castling = function (end) {
     var letter = end.substr(0, 1),
         number = end.substr(-1),
         rook;
@@ -977,14 +1253,14 @@ Engine.prototype.castling = function (end) {
     };
 }
 
-Engine.prototype.isCastling = function (piece, end) {
+engine.prototype.isCastling = function (piece, end) {
     if (piece.name != 'king' || piece.moved == true || !this.inArray(end, ['c1', 'g1', 'c8', 'g8'])) {
         return false;
     }
     return true;
 };
 
-Engine.prototype.getPawnPromotion = function (color, name) {
+engine.prototype.getPawnPromotion = function (color, name) {
     if (!this.inArray(name, ['queen', 'rook', 'bishop', 'knight'])) {
         name = 'queen';
     }
@@ -997,7 +1273,7 @@ Engine.prototype.getPawnPromotion = function (color, name) {
     };
 };
 
-Engine.prototype.isPawnPromotion = function (piece, end) {
+engine.prototype.isPawnPromotion = function (piece, end) {
     var number = end.substr(-1);
     if (piece.name == 'pawn' && ((piece.color == 'white' && number == '8') || (piece.color == 'black' && number == '1'))) {
         return true;
@@ -1005,7 +1281,7 @@ Engine.prototype.isPawnPromotion = function (piece, end) {
     return false;
 };
 
-Engine.prototype.deleteInPassing = function (end) { 
+engine.prototype.deleteInPassing = function (end) { 
     var letter = end.substr(0, 1),
         number = end.substr(-1);
 
@@ -1016,7 +1292,7 @@ Engine.prototype.deleteInPassing = function (end) {
     }
 };
 
-Engine.prototype.getTypeMove = function (piece, end) {
+engine.prototype.getTypeMove = function (piece, end) {
     if (this.inArray(end, piece.deplace)) {
         return 'deplace';
     } else if (this.inArray(end, piece.capture)) {
@@ -1025,6 +1301,17 @@ Engine.prototype.getTypeMove = function (piece, end) {
     return false;
 };
 
-Engine.prototype.inArray = function (needle, array) {
+engine.prototype.inArray = function (needle, array) {
     return array.indexOf(needle) != -1;
+};
+
+String.prototype.hash = function() {
+    var hash = 0, i, chr, len;
+    if (this.length == 0) return hash;
+    for (i = 0, len = this.length; i < len; i++) {
+        chr   = this.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0;
+    }
+    return hash.toString();
 };

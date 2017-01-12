@@ -1,16 +1,13 @@
 module.exports = function () {
 
-    require(dirname + '/server/utils');
-
-    var Engine = require(dirname + '/server/modules/game/engine'),
-        moduleGame = require(dirname + '/server/modules/game');
+    var chess = require(dirname + '/public/chess');
 
     this.move = function (start, end, promotion) {
-        this.game = new Engine(this.game, start, end, promotion);
+        this.game = new chess.engine(this.game, start, end, promotion);
     };
 
     this.newGame = function (gid) {
-        this.game = moduleGame.newGame(gid, {
+        this.game = chess.game(gid, {
             uid: 1,
             name: 'tester1',
             avatar: null,

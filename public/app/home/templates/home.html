@@ -35,7 +35,7 @@
     </div>
     <div element-content class="app-element__body">
         <table ng-show="createdGames.length"
-               class="app-element__table mdl-data-table mdl-js-data-table">
+               class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -47,9 +47,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="game in createdGames">
-                    <td show-profile="game" class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-picture" ng-src="{{ game.avatar }}">
-                        <span class="app-element__table-name">{{ game.name }}</span>
+                    <td show-profile="game" class="app-table__user mdl-data-table__cell--non-numeric">
+                        <img class="app-table__avatar" ng-src="{{ game.avatar }}">
+                        <span class="app-table__name">{{ game.name }}</span>
                     </td>
                     <td>{{ game.points }}</td>
                     <td>{{ game.color | translate }}</td>
@@ -86,7 +86,7 @@
         </div>
     </div>
     <div element-content class="app-element__body">
-        <table class="app-element__table mdl-data-table mdl-js-data-table">
+        <table class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -98,9 +98,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="challenge in challenges">
-                    <td show-profile="challenge" class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-picture" ng-src="{{challenge.avatar}}">
-                        <span class="app-element__table-name">{{ challenge.name }}</span>
+                    <td show-profile="challenge" class="app-table__user mdl-data-table__cell--non-numeric">
+                        <img class="app-table__avatar" ng-src="{{challenge.avatar}}">
+                        <span class="app-table__name">{{ challenge.name }}</span>
                     </td>
                     <td>{{ challenge.points }}</td>
                     <td>{{ challenge.color | translate }}</td>
@@ -132,7 +132,7 @@
     </div>
     <div element-content class="app-element__body">
         <table ng-show="challengers.length"
-               class="app-element__table mdl-data-table mdl-js-data-table">
+               class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -143,9 +143,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="challenger in challengers">
-                    <td show-profile="challenger" class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-picture" ng-src="{{challenger.avatar}}">
-                        <span class="app-element__table-name">{{ challenger.name }}</span>
+                    <td show-profile="challenger" class="app-table__user mdl-data-table__cell--non-numeric">
+                        <img class="app-table__avatar" ng-src="{{challenger.avatar}}">
+                        <span class="app-table__name">{{ challenger.name }}</span>
                     </td>
                     <td>{{ challenger.points }}</td>
                     <td>{{ challenger.ranking }}</td>
@@ -177,7 +177,7 @@
         </div>
     </div>
     <div element-content class="app-element__body">
-        <table class="app-element__table mdl-data-table mdl-js-data-table">
+        <table class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
@@ -188,9 +188,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="friend in friends">
-                    <td show-profile="friend" class="app-element__table-user mdl-data-table__cell--non-numeric">
-                        <img class="app-element__table-picture" ng-src="{{friend.avatar}}">
-                        <span class="app-element__table-name">{{ friend.name }}</span>
+                    <td show-profile="friend" class="app-table__user mdl-data-table__cell--non-numeric">
+                        <img class="app-table__avatar" ng-src="{{ friend.avatar }}">
+                        <span class="app-table__name">{{ friend.name }}</span>
                     </td>
                     <td>{{ friend.points }}</td>
                     <td>{{ friend.ranking }}</td>
