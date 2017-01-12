@@ -54,13 +54,6 @@ a {
   color: #ff5252;
 }
 
-.app__button--small {
-  height: 24px;
-  font-size: 12px;
-  padding: 0 4px;
-  line-height: 26px;
-}
-
 .app__action--connect {
   font-size: 10vw;
 }
@@ -800,22 +793,49 @@ a {
   font-size: 18px;
 }
 
-.app-table--notations {
+.app-table--actions {
+  width: 100%;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.app-table--actions tr td {
+  border-right: 1px solid rgba(0,0,0,.12);
+  text-align: center;
+  padding:  0;
+}
+
+.app-table--actions tr td:first-of-type,
+.app-table--actions tr td:last-of-type {
+  padding: 0;
+}
+
+.app-table--actions tr td:last-of-type {
+  border-right: 0;
+}
+
+.app-table--actions .app-button {
+  font-size: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.app-table--game {
   width: 100%;
   font-size: 13px;
   border: none;
 }
 
-.app-table--notations tbody tr,
-.app-table--notations tbody tr td {
+.app-table--game tbody tr,
+.app-table--game tbody tr td {
   height: 39px;
 }
 
-.app-table--notations tbody tr {
+.app-table--game tbody tr {
   border: none;
 }
 
-.app-table--notations tbody tr td {
+.app-table--game tbody tr td {
   padding: 0 20px;
 }
 
@@ -1046,21 +1066,6 @@ a {
   margin-bottom: 0;
 }
 
-.app-game__action {
-  width: 150px;
-  margin-right: 20px;
-}
-
-.app-game__action-button {
-  display: block;
-  width: 100%;
-  margin-bottom: 5px;
-}
-
-.app-game__action-button:last-child {
-  margin-bottom: 0;
-}
-
 .app-game__lost-pieces {
   line-height: initial;
   direction: rtl;
@@ -1264,18 +1269,8 @@ a {
     padding-left: 12px;
   }
 
-  .app-button--phone {
-    height: 24px;
-    line-height: 24px;
-    padding: 0 5px;
-  }
-
   .app-profile__name {
     font-size: 15px;
-  }
-
-  .app-game__action {
-    width: auto;
   }
 
   .app-head .app-button__create-game {

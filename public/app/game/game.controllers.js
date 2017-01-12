@@ -111,6 +111,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         });
 
         socket.on('offerDraw', function (data) {
+            $scope.game[$scope.getPlayerColor()].possibleDraw = true;
             modal.show(modal.get('modal-response-draw'));
         });
 
@@ -124,10 +125,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
             var lastTurn = $scope.game.played[$scope.game.played.length - 1];
             return lastTurn.start === position || lastTurn.end === position;
-        };
-
-        $scope.acceptDraw = function () {
-            socket.emit('acceptDraw', $scope.game.id);
         };
 
         $scope.move = function (start, end, promotion) {
@@ -145,6 +142,50 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.isPlayerTurn = function() {
             return $scope.game && $scope.game[$scope.game.turn].uid === $rootScope.user.uid;
+        };
+
+        $scope.isPlayer = function () {
+            return $scope.game && ($scope.game.white.uid === $rootScope.user.uid || $scope.game.black.uid === $rootScope.user.uid);
+        };
+        
+        $scope.getPlayerColor = function () {
+            if ($scope.game.white.uid === $rootScope.user.uid) {
+                return 'white';
+            } else if ($scope.game.black.uid === $rootScope.user.uid) {
+                return 'black';
+            }
+
+            return false;
+        };
+
+        $scope.resign = function () {
+            socket.emit('resign', $scope.game.id);
+        };
+
+        $scope.offerDraw = function () {
+            if (!$scope.game[$scope.getPlayerColor()]) {
+                return;
+            }
+            $scope.game[$scope.getPlayerColor()].hasOfferDraw = true;
+            socket.emit('offerDraw', $scope.game.id);
+        };
+
+        $scope.acceptDraw = function () {
+            socket.emit('acceptDraw', $scope.game.id);
+        };
+
+        $scope.possibleResign = function () {
+            return $scope.game.played.length >= 4 && $scope.game.timestamp >= 60;
+        };
+
+        $scope.possibleOfferDraw = function () {
+            var player = $scope.game[$scope.getPlayerColor()];
+            return player && !player.possibleDraw && !player.hasOfferDraw && player.offerDraw < $scope.game.maxOfferDraw;
+        };
+
+        $scope.possibleDraw = function () {
+            var player = $scope.game[$scope.getPlayerColor()];
+            return player && player.possibleDraw;
         };
 
         $scope.shareResult = function () {
@@ -204,31 +245,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
     
     function ($rootScope, $scope, socket, utils) {
-
-        $scope.resign = function () {
-            socket.emit('resign', $scope.$parent.game.id);
-        };
-
-        $scope.offerDraw = function () {
-            $scope.player.disableOfferDraw = true;
-            socket.emit('offerDraw', $scope.$parent.game.id);
-        };
-
-        $scope.isPlayerUser = function () {
-            return $scope.player && $scope.player.uid && $scope.player.uid === $rootScope.user.uid;
-        };
-
-        $scope.isFinish = function () {
-            return $scope.$parent.game.finish;
-        };
-
-        $scope.canResign = function () {
-            return $scope.$parent.game.played.length >= 4 && $scope.$parent.game.timestamp >= 60;
-        };
-
-        $scope.canOfferDraw = function () {
-            return !$scope.player.disableOfferDraw && $scope.player.offerDraw < $scope.$parent.game.maxOfferDraw;
-        };
 
         $scope.getLostPieces = function(number) {
             var pieces = [];

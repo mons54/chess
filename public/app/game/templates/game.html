@@ -27,7 +27,72 @@
 </div>
 
 <div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
-    <table class="app-table app-table--notations mdl-data-table mdl-js-data-table">
+    <table ng-if="isPlayer() && !game.finish" 
+           class="app-table app-table--actions mdl-data-table mdl-js-data-table">
+        <tbody>
+            <tr>
+                <td>
+                    <button ng-disabled="!possibleResign()"
+                            show-modal="modal-resign" 
+                            class="app-button mdl-button mdl-js-button">
+                                {{ 'resign'|translate }}
+                    </button>
+                </td>
+                <td>
+                    <button ng-disabled="!possibleOfferDraw()"
+                            show-modal="modal-offer-draw" 
+                            class="app-button mdl-button mdl-js-button">
+                                {{ 'offer_draw'|translate }}
+                    </button>
+                </td>
+                <td>
+                    <button ng-disabled="!possibleDraw()"
+                            show-modal="modal-possible-draw" 
+                            class="app-button mdl-button mdl-js-button">
+                                    {{ 'draw'|translate }}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="app-table app-table--game app-table--stats mdl-data-table mdl-js-data-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'white'|translate }}</th>
+                <th></th>
+                <th>{{ 'black'|translate }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{ 'win' | translate }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{ 'draw' | translate }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">{{ 'lose' | translate }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+    <table class="app-table app-table--game app-table--notations mdl-data-table mdl-js-data-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -48,63 +113,125 @@
         </tbody>
     </table>
 </div>
-<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
-    <table class="app-table app-table--stats mdl-data-table mdl-js-data-table">
-        <thead>
-            <tr>
-                <th>{{ 'white'|translate }}</th>
-                <th></th>
-                <th>{{ 'black'|translate }}</th>
-                <th></th>
-            </tr>
-        </thead>
-    </table>
-</div>
 
-<div id="modal-response-draw" 
-     class="app-modal app-modal__bg" 
-     role="dialog" 
-     aria-hidden="true"
-     modal-close-bg>
-    <div class="app-modal__dialog">
-        <div class="app-modal__content">
-            <h4 class="app-modal__title">{{ player2.name }} {{ 'offers_a_draw'|translate }} ?</h4>
-            <div class="app-modal__actions">
-                <button modal-close 
-                        type="reset" 
-                        class="mdl-button mdl-button--raised">
-                        {{ 'cancel'|translate }}
-                </button>
-                <button modal-close 
-                        ng-click="acceptDraw()"
-                        type="button" 
-                        class="mdl-button mdl-button--raised mdl-button--colored">
-                        {{ 'ok'|translate }}
-                </button>
+<div ng-if="isPlayer()">
+    <div id="modal-response-draw" 
+         class="app-modal app-modal__bg" 
+         role="dialog" 
+         aria-hidden="true"
+         modal-close-bg>
+        <div class="app-modal__dialog">
+            <div class="app-modal__content">
+                <h4 class="app-modal__title">{{ player2.name }} {{ 'offers_a_draw'|translate }} ?</h4>
+                <div class="app-modal__actions">
+                    <button modal-close 
+                            type="reset" 
+                            class="mdl-button mdl-button--raised">
+                            {{ 'cancel'|translate }}
+                    </button>
+                    <button modal-close 
+                            ng-click="acceptDraw()"
+                            type="button" 
+                            class="mdl-button mdl-button--raised mdl-button--colored">
+                            {{ 'ok'|translate }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="modal-possible-draw"
-     class="app-modal app-modal__bg" 
-     role="dialog" 
-     aria-hidden="true">
-    <div class="app-modal__dialog">
-        <div class="app-modal__content">
-            <h4 class="app-modal__title">{{ 'draw'|translate }} ?</h4>
-            <div class="app-modal__actions">
-                <button modal-close 
-                        type="reset" 
-                        class="mdl-button mdl-button--raised">
-                        {{ 'cancel'|translate }}
-                </button>
-                <button modal-close 
-                        ng-click="acceptDraw()"
-                        type="button" 
-                        class="mdl-button mdl-button--raised mdl-button--colored">
-                        {{ 'ok'|translate }}
-                </button>
+    <div id="modal-possible-draw"
+         class="app-modal app-modal__bg" 
+         role="dialog" 
+         aria-hidden="true">
+        <div class="app-modal__dialog">
+            <div class="app-modal__content">
+                <h4 class="app-modal__title">{{ 'draw'|translate }} ?</h4>
+                <div class="app-modal__actions">
+                    <button modal-close 
+                            type="reset" 
+                            class="mdl-button mdl-button--raised">
+                            {{ 'cancel'|translate }}
+                    </button>
+                    <button modal-close 
+                            ng-click="acceptDraw()"
+                            type="button" 
+                            class="mdl-button mdl-button--raised mdl-button--colored">
+                            {{ 'ok'|translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-offer-draw" 
+         class="app-modal app-modal__bg" 
+         role="dialog" 
+         aria-hidden="true"
+         modal-close-bg>
+        <div class="app-modal__dialog">
+            <div class="app-modal__content">
+                <h4 class="app-modal__title">{{ 'offer_draw'|translate }} ?</h4>
+                <div class="app-modal__actions">
+                    <button modal-close 
+                            type="reset" 
+                            class="mdl-button mdl-button--raised">
+                            {{ 'cancel'|translate }}
+                    </button>
+                    <button modal-close 
+                            ng-click="offerDraw()"
+                            type="button" 
+                            class="mdl-button mdl-button--raised mdl-button--colored">
+                            {{ 'ok'|translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-resign" 
+         class="app-modal app-modal__bg" 
+         role="dialog" 
+         aria-hidden="true"
+         modal-close-bg>
+        <div class="app-modal__dialog">
+            <div class="app-modal__content">
+                <h4 class="app-modal__title">{{ 'resign'|translate }} ?</h4>
+                <div class="app-modal__actions">
+                    <button modal-close 
+                            type="reset" 
+                            class="mdl-button mdl-button--raised">
+                            {{ 'cancel'|translate }}
+                    </button>
+                    <button modal-close 
+                            ng-click="resign()" 
+                            type="button" 
+                            class="mdl-button mdl-button--raised mdl-button--colored">
+                            {{ 'ok'|translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-promotion" 
+         class="app-modal app-modal__bg"
+         role="dialog" 
+         aria-hidden="true">
+        <div class="app-modal__dialog">
+            <div class="app-modal__content">
+                <div class="app-promotion__icon"
+                     ng-repeat="piece in ['queen', 'rook', 'knight', 'bishop']">
+                    <div class="app-game__box-content">
+                        <a href 
+                           class="app-game__icon app-game__icon--{{ piece }}" 
+                           modal-close 
+                           data-icon="{{ piece }}">
+                           <img ng-src="../images/game-1/{{ piece }}-{{ getPlayerColor() }}.svg"
+                             class="app-game__piece-image">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -361,6 +361,8 @@ engine.prototype.init = function (start, end, promotion) {
 
     this.game.turn = this.game.turn == 'white' ? 'black' : 'white';
 
+    this.game[this.game.turn].possibleDraw = false;
+
     this.game.white.king.moveForbidden = [];
     this.game.black.king.moveForbidden = [];
 

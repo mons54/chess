@@ -41,7 +41,8 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
 
             var touch = utils.isTouch(),
                 selectedClass = 'selected',
-                droppableClass =  'ui-droppable';
+                droppableClass =  'ui-droppable',
+                modalPromotion = modal.get('modal-promotion');
 
             scope.$watch('game', function (game) {
 
@@ -121,7 +122,6 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
                     elementBox.find('[piece-draggable]').removeClass();
 
                     if (isPromotion(position)) {
-                        var modalPromotion = modal.get('modal-promotion');
                         modal.show(modalPromotion);
                         modalPromotion.find('[data-icon]').click(function() {
                             var promotion = $(this).data('icon');

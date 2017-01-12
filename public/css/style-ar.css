@@ -105,11 +105,6 @@ body {
   transform: translateX(0);
 }
 
-.app-game__action {
-  margin-left: 20px;
-  margin-right: initial;
-}
-
 .app-profile__info {
   margin-left: 10px;
   margin-right: initial;
