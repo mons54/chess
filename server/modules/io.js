@@ -158,6 +158,17 @@ module.exports = function (app, io) {
 
             var game = moduleGame.move(socket, data.id, data.start, data.end, data.promotion);
 
+            if (!game) {
+                return;
+            }
+
+            if (game[game.turn].possibleDraw) {
+                var socketOpponent = moduleSocket.getSocket(game[game.turn].uid);
+                if (socketOpponent) {
+                    socketOpponent.emit('possibleDraw');
+                }
+            }
+
             if (game) {
                 if (game.finish) {
                     moduleSocket.saveGame(game);

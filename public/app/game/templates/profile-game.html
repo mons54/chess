@@ -89,5 +89,15 @@
             <span class="app-icon app-icon__points"></span>
             <span>{{ player.points }}</span>
         </div>
+        <div class="app-game__lost-pieces">
+            <span ng-repeat="(name, number) in player.lostPieces"
+                  class="app-game__lost-pieces-group app-game__lost-pieces-group--{{ name }}">
+                <span ng-if="number > 0"
+                      ng-repeat="i in getLostPieces(number)"
+                      class="app-game__lost-piece">
+                    <img ng-src="../images/game-1/{{ name }}-{{ player.color }}.svg">
+                </span>
+            </span>
+        </div>
     </div>
 </div>

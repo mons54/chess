@@ -52,7 +52,7 @@ service('facebook', ['$rootScope', '$cookies', 'socket', 'lang',
          */
         this.init = function () {
             FB.init({
-                appId: '1687859708170830',
+                appId: '738045286230106',
                 xfbml: true,
                 version: 'v2.8'
             });
