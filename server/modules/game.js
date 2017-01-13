@@ -220,7 +220,11 @@ Game.prototype.start = function (white, black, time) {
 
     var gid = this.games.id++;
 
-    this.games.data[gid] = chess.game(gid, white, black, time);
+    this.games.data[gid] = chess.game.newGame(gid, white, black, time);
 
     return gid;
+};
+
+Game.prototype.getPoints = function (p1, p2) {
+    return chess.game.getPoints(p1.points, p2.points, p1.coefficient, p1.countGame);
 };

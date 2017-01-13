@@ -183,7 +183,7 @@ module.exports = function (io) {
         this.deleteChallenges(socket);
         this.deleteChallenges(socketOpponent);
 
-        var white, black;
+        var self = this, white, black;
 
         if (dataGame.color === 'white') {
             white = {
@@ -217,43 +217,28 @@ module.exports = function (io) {
             };
         }
 
-        var gid = moduleGame.start(white, black, dataGame.time),
-            room = moduleGame.getRoom(gid);
+        db.count('games', { $or: [{ white: white.uid }, { black: white.uid }] })
+        .then(function (response) {
 
-        this.userGames[socket.uid] = gid;
-        this.userGames[socketOpponent.uid] = gid;
+            white.countGame = response;
 
-        socket.join(room);
-        socketOpponent.join(room);
+            return db.count('games', { $or: [{ white: black.uid }, { black: black.uid }] });
+        })
+        .then(function (response) {
 
-        io.to(room).emit('startGame', gid);
-    };
+            black.countGame = response;
 
-    Module.prototype.getPointsGame = function (p1, p2) {
+            var gid = moduleGame.start(white, black, dataGame.time),
+                room = moduleGame.getRoom(gid);
 
-        var d = p2.points - p1.points, k, max;
+            self.userGames[socket.uid] = gid;
+            self.userGames[socketOpponent.uid] = gid;
 
-        if (p1.points > 2400) {
-            k = 15;
-            max = 400;
-        } else if (p1.countGame <= 30) {
-            k = 60;
-            max = 700;
-        } else {
-            k = 30;
-            max = 600;
-        }
+            socket.join(room);
+            socketOpponent.join(room);
 
-        if (d > max) { 
-            d = max;
-        } else if (d < -max) {
-            d = -max;
-        }
-
-        var points = k * (p1.coefficient - (1 / ( 1 + Math.pow(10, d / 400)))),
-            abs = Math.round(Math.abs(points));
-        
-        return points < 0 ? -abs : abs;
+            io.to(room).emit('startGame', gid);
+        });
     };
 
     Module.prototype.getBlackList = function (data, game, color) {
@@ -321,7 +306,7 @@ module.exports = function (io) {
         delete this.userGames[whiteUid];
         delete this.userGames[blackUid];
 
-        db.findOne('users', { _id: db.ObjectId(whiteUid) }, null)
+        db.findOne('users', { _id: db.ObjectId(whiteUid) })
         .then(function (response) {
 
             response.newGame = hashGame;
@@ -331,6 +316,7 @@ module.exports = function (io) {
             data = {
                 white: {
                     points: response.points,
+                    countGame: game.white.countGame,
                     coefficient: player.coefficient,
                     success: player.success,
                     lastGame: response.newGame,
@@ -338,13 +324,7 @@ module.exports = function (io) {
                 }
             };
 
-            return db.count('games', { $or: [{ white: whiteUid }, { black: whiteUid }] }, null);
-        })
-        .then(function (response) {
-
-            data.white.countGame = response;
-
-            return db.findOne('users', { _id: db.ObjectId(blackUid) }, null);
+            return db.findOne('users', { _id: db.ObjectId(blackUid) });
         })
         .then(function (response) {
 
@@ -355,16 +335,11 @@ module.exports = function (io) {
             data.black = {
                 points: response.points,
                 coefficient: player.coefficient,
+                countGame: game.black.countGame,
                 success: player.success,
                 lastGame: response.newGame,
                 blackList: player.blackList
             };
-
-            return db.count('games', { $or: [{ white: blackUid }, { black: blackUid }] }, null);
-        })
-        .then(function (response) {
-
-            data.black.countGame = response;
 
             db.save('games', {
                 result: result,
@@ -373,8 +348,8 @@ module.exports = function (io) {
                 date: new Date()
             });
 
-            var whitePoints = self.getPointsGame(data.white, data.black),
-                blackPoints = self.getPointsGame(data.black, data.white);
+            var whitePoints = moduleGame.getPoints(data.white, data.black),
+                blackPoints = moduleGame.getPoints(data.black, data.white);
 
             /**
              * Important: Set points only after get points game 

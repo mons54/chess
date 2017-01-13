@@ -207,6 +207,15 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             });
         };
 
+        $scope.getPoints = function (p1, p2, c) {
+            var points = window.game.getPoints(p1.points, p2.points, c, p1.countGame);
+            return points > 0 ? '+' + points : points;
+        };
+
+        $scope.getPercentage = function (p1, p2) {
+            return Math.round(window.game.getElo(p1.points, p2.points) * 100);
+        };
+
         $interval.cancel($interval.stopTimeGame);
         $interval.stopTimeGame = $interval(function () {
             if (!$scope.game || $scope.game.finish) {

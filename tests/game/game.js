@@ -7,7 +7,7 @@ module.exports = function () {
     };
 
     this.newGame = function (gid) {
-        this.game = chess.game(gid, {
+        this.game = chess.game.newGame(gid, {
             uid: 1,
             name: 'tester1',
             avatar: null,

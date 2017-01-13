@@ -55,37 +55,31 @@
             </tr>
         </tbody>
     </table>
-    <table class="app-table app-table--game app-table--stats mdl-data-table mdl-js-data-table">
+    <table ng-if="game" 
+           class="app-table app-table--game app-table--stats mdl-data-table mdl-js-data-table">
         <thead>
             <tr>
                 <th></th>
-                <th>{{ 'white'|translate }}</th>
-                <th></th>
-                <th>{{ 'black'|translate }}</th>
-                <th></th>
+                <th>{{ 'win' | translate }}</th>
+                <th>{{ 'draw' | translate }}</th>
+                <th>{{ 'lose'|translate }}</th>
+                <th>%</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="mdl-data-table__cell--non-numeric">{{ 'win' | translate }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ 'white' | translate }}</td>
+                <td>{{ getPoints(game.white, game.black, 1) }}</td>
+                <td>{{ getPoints(game.white, game.black, 0.5) }}</td>
+                <td>{{ getPoints(game.white, game.black, 0) }}</td>
+                <td ng-init="percentage = getPercentage(game.white, game.black)">{{ percentage }}%</td>
             </tr>
             <tr>
-                <td class="mdl-data-table__cell--non-numeric">{{ 'draw' | translate }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="mdl-data-table__cell--non-numeric">{{ 'lose' | translate }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ 'black' | translate }}</td>
+                <td>{{ getPoints(game.black, game.white, 1) }}</td>
+                <td>{{ getPoints(game.black, game.white, 0.5) }}</td>
+                <td>{{ getPoints(game.black, game.white, 0) }}</td>
+                <td>{{ 100 - percentage }}%</td>
             </tr>
         </tbody>
     </table>
