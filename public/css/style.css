@@ -802,32 +802,6 @@ a {
   font-size: 18px;
 }
 
-.app-table--actions {
-  width: 100%;
-  border-bottom: 1px solid rgba(0,0,0,.12);
-}
-
-.app-table--actions tr td {
-  border-right: 1px solid rgba(0,0,0,.12);
-  text-align: center;
-  padding:  0;
-}
-
-.app-table--actions tr td:first-of-type,
-.app-table--actions tr td:last-of-type {
-  padding: 0;
-}
-
-.app-table--actions tr td:last-of-type {
-  border-right: 0;
-}
-
-.app-table--actions .app-button {
-  font-size: 12px;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-}
 
 .app-table--game {
   width: 100%;
@@ -836,9 +810,14 @@ a {
 }
 
 .app-table--game tbody tr,
-.app-table--game tbody tr td {
-  height: 39px;
+.app-table--game tbody tr td,
+.app-table--game thead th {
+  height: 36px;
 }
+
+.app-table--game thead th {
+  padding: 0 18px 6px 18px;
+} 
 
 .app-table--game tbody tr {
   border: none;
@@ -848,20 +827,51 @@ a {
   padding: 0 20px;
 }
 
-.app-table--notations-index,
-.app-table--notations-white:nth-child(odd) {
+.app-table--game-actions {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.app-table--game-actions tr td {
+  border-right: 1px solid rgba(0,0,0,.12);
+  text-align: center;
+  padding:  0;
+}
+
+.app-table--game-actions tr td:first-of-type,
+.app-table--game-actions tr td:last-of-type {
+  padding: 0;
+}
+
+.app-table--game-actions tr td:last-of-type {
+  border-right: 0;
+}
+
+.app-table--game-actions .app-button {
+  font-size: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.app-table--game-notations-index,
+.app-table--game-notations-white:nth-child(odd) {
   border-right: 1px solid rgba(0, 0, 0, .12);
 }
 
-.app-table--notations tbody tr td.app-table--notations-text {
+.app-table--game-notations tbody tr td.app-table--game-notations-text {
   font-weight: bold;
   text-align: left;
   padding-right: 0;
 }
 
-.app-table--notations tbody tr td.app-table--notations-time {
+.app-table--game-notations tbody tr td.app-table--game-notations-time {
   text-align: right;
   padding-left: 0;
+}
+
+.app-table--game-stats {
+  border-top: 1px solid rgba(0,0,0,.12);
 }
 
 .app-table__user {
@@ -1051,7 +1061,8 @@ a {
 
 .app-game__infos {
   max-height: 360px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .app-game__time {
@@ -1294,7 +1305,7 @@ a {
     font-size: 15px;
   }
 
-  .app-table--notations {
+  .app-table--game-notations {
     font-size: 13px;
   }
 

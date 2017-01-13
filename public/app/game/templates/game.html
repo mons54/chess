@@ -28,7 +28,7 @@
 
 <div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
     <table ng-if="isPlayer() && !game.finish" 
-           class="app-table app-table--actions mdl-data-table mdl-js-data-table">
+           class="app-table app-table--game-actions">
         <tbody>
             <tr>
                 <td>
@@ -56,7 +56,7 @@
         </tbody>
     </table>
     <table ng-if="game" 
-           class="app-table app-table--game app-table--stats mdl-data-table mdl-js-data-table">
+           class="app-table app-table--game app-table--game-stats mdl-data-table mdl-js-data-table">
         <thead>
             <tr>
                 <th></th>
@@ -86,7 +86,7 @@
 </div>
 
 <div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
-    <table class="app-table app-table--game app-table--notations mdl-data-table mdl-js-data-table">
+    <table class="app-table app-table--game app-table--game-notations mdl-data-table mdl-js-data-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -98,11 +98,11 @@
         </thead>
         <tbody>
             <tr ng-repeat="notation in game.notations">
-                <td class="app-table--notations-index">{{ $index + 1 }}</td>
-                <td class="app-table--notations-text app-table--notations-white">{{ notation.white.text }}</td>
-                <td class="app-table--notations-time app-table--notations-white">{{ notation.white.time }}'</td>
-                <td ng-if="notation.black" class="app-table--notations-text app-table--notations-black">{{ notation.black.text }}</td>
-                <td ng-if="notation.black" class="app-table--notations-time app-table--notations-black">{{ notation.black.time }}'</td>
+                <td class="app-table--game-notations-index">{{ $index + 1 }}</td>
+                <td class="app-table--game-notations-text app-table--game-notations-white">{{ notation.white.text }}</td>
+                <td class="app-table--game-notations-time app-table--game-notations-white">{{ notation.white.time }}'</td>
+                <td ng-if="notation.black" class="app-table--game-notations-text app-table--game-notations-black">{{ notation.black.text }}</td>
+                <td ng-if="notation.black" class="app-table--game-notations-time app-table--game-notations-black">{{ notation.black.time }}'</td>
             </tr>
         </tbody>
     </table>
