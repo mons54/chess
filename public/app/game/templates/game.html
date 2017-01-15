@@ -27,7 +27,7 @@
 </div>
 
 <div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell mdl-cell--12-col-tablet">
-    <table ng-if="isPlayer() && game.finish" 
+    <table ng-if="isPlayer()" 
            class="app-table app-table--game-actions">
         <tbody>
             <tr>
@@ -35,21 +35,21 @@
                     <button ng-disabled="!possibleResign()"
                             show-modal="modal-resign" 
                             class="app-button mdl-button mdl-js-button">
-                                {{ 'resign'|translate }}
+                            {{ 'resign'|translate }}
                     </button>
                 </td>
                 <td>
                     <button ng-disabled="!possibleOfferDraw()"
                             show-modal="modal-offer-draw" 
                             class="app-button mdl-button mdl-js-button">
-                                {{ 'offer_draw'|translate }}
+                            {{ 'offer_draw'|translate }}
                     </button>
                 </td>
                 <td>
                     <button ng-disabled="!possibleDraw()"
                             show-modal="modal-possible-draw" 
                             class="app-button mdl-button mdl-js-button">
-                                    {{ 'draw'|translate }}
+                            {{ 'draw'|translate }}
                     </button>
                 </td>
             </tr>
@@ -88,7 +88,7 @@
     </table>
 </div>
 
-<div class="app-game__played">
+<div class="app-game__played" ng-if="played.length">
     <div class="app-game__played-head"
          ng-click="togglePlayed()">
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">

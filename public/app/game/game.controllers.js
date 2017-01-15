@@ -185,15 +185,21 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.possibleResign = function () {
-            return $scope.game.played.length >= 4 && $scope.game.timestamp >= 60;
+            return !$scope.game.finish && $scope.game.played.length >= 4 && $scope.game.timestamp >= 60;
         };
 
         $scope.possibleOfferDraw = function () {
+            if ($scope.game.finish) {
+                return false;
+            }
             var player = $scope.game[$scope.getPlayerColor()];
             return player && !player.possibleDraw && !player.hasOfferDraw && player.offerDraw < $scope.game.maxOfferDraw;
         };
 
         $scope.possibleDraw = function () {
+            if ($scope.game.finish) {
+                return false;
+            }
             var player = $scope.game[$scope.getPlayerColor()];
             return player && player.possibleDraw;
         };
