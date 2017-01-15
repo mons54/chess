@@ -102,7 +102,8 @@
         </table>
     </div>
     <div class="app-game__played-content"
-         ng-show="showPlayed">
+         ng-show="showPlayed"
+         scroll-down="'played'">
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
             <tbody>
                 <tr ng-repeat="play in played">
@@ -110,16 +111,17 @@
                     <td class="app-table--game-played-notation app-table--game-played-white" 
                         ng-class="{'app__clickable': play.white.pieces}"
                         ng-click="replay(play.white)">
-                            {{ play.white.notation }}
+                        {{ play.white.notation }}
                     </td>
                     <td class="app-table--game-played-time app-table--game-played-white">{{ play.white.time }}'</td>
-                    <td ng-if="play.black" 
-                        class="app-table--game-played-notation app-table--game-played-black" 
+                    <td class="app-table--game-played-notation app-table--game-played-black" 
                         ng-class="{'app__clickable': game.finish}"
                         ng-click="replay(play.black)">
-                            {{ play.black.notation }}
+                        <span ng-if="play.black.notation">{{ play.black.notation }}</span>
                     </td>
-                    <td ng-if="play.black" class="app-table--game-played-time app-table--game-played-black">{{ play.black.time }}'</td>
+                    <td class="app-table--game-played-time app-table--game-played-black">
+                        <span ng-if="play.black.time">{{ play.black.time }}'</span>
+                    </td>
                 </tr>
             </tbody>
         </table>

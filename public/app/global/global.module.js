@@ -379,4 +379,28 @@ service('lang', ['$rootScope', '$translate',
             },
         };
     }
-]);
+]).
+
+directive('scrollDown', [function () {
+    return {
+        scope: {
+            scrollDown: '='
+        },
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var scrollDown = true,
+                el = element[0];
+
+            element.on('scroll', function () {
+                var el = element[0];
+                scrollDown = (el.scrollTop + el.clientHeight + 1) > el.scrollHeight;
+            });
+
+            scope.$parent.$watch(scope.scrollDown, function (newValue) {
+                if (newValue && scrollDown) {
+                    element.scrollTop(el.scrollHeight);
+                }
+            });
+        }
+    };
+}]);
