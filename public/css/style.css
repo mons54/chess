@@ -802,78 +802,6 @@ a {
   font-size: 18px;
 }
 
-
-.app-table--game {
-  width: 100%;
-  font-size: 13px;
-  border: none;
-}
-
-.app-table--game tbody tr,
-.app-table--game tbody tr td,
-.app-table--game thead th {
-  height: 36px;
-}
-
-.app-table--game thead th {
-  padding: 0 18px 6px 18px;
-} 
-
-.app-table--game tbody tr {
-  border: none;
-}
-
-.app-table--game tbody tr td {
-  padding: 0 20px;
-}
-
-.app-table--game-actions {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.app-table--game-actions tr td {
-  border-right: 1px solid rgba(0,0,0,.12);
-  text-align: center;
-  padding:  0;
-}
-
-.app-table--game-actions tr td:first-of-type,
-.app-table--game-actions tr td:last-of-type {
-  padding: 0;
-}
-
-.app-table--game-actions tr td:last-of-type {
-  border-right: 0;
-}
-
-.app-table--game-actions .app-button {
-  font-size: 12px;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-}
-
-.app-table--game-notations-index,
-.app-table--game-notations-white:nth-child(odd) {
-  border-right: 1px solid rgba(0, 0, 0, .12);
-}
-
-.app-table--game-notations tbody tr td.app-table--game-notations-text {
-  font-weight: bold;
-  text-align: left;
-  padding-right: 0;
-}
-
-.app-table--game-notations tbody tr td.app-table--game-notations-time {
-  text-align: right;
-  padding-left: 0;
-}
-
-.app-table--game-stats {
-  border-top: 1px solid rgba(0,0,0,.12);
-}
-
 .app-table__user {
   max-width: 150px;
   overflow: hidden;
@@ -1059,8 +987,24 @@ a {
   z-index: 9;
 }
 
-.app-game__infos {
-  max-height: 360px;
+.app-game__played {
+  position: fixed;
+  bottom: 0;
+  width: 350px;
+  right: 25px;
+  border: 1px solid rgba(0,0,0,.12);
+}
+
+.app-game__played-head {
+  cursor: pointer;
+}
+
+.app-game__played-color {
+  width: 50%;
+}
+
+.app-game__played-content {
+  max-height: 288px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -1181,6 +1125,103 @@ a {
   height: 100%;
 }
 
+.app-table--game {
+  width: 100%;
+  font-size: 13px;
+  border: none;
+}
+
+.app-table--game tbody tr,
+.app-table--game tbody tr td,
+.app-table--game thead th {
+  height: 36px;
+}
+
+.app-table--game thead th {
+  padding: 0 18px 6px 18px;
+} 
+
+.app-table--game tbody tr {
+  border: none;
+}
+
+.app-table--game tbody tr td {
+  padding: 0 20px;
+}
+
+.app-table--game-actions {
+  width: 100%;
+  border-collapse: collapse;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.app-table--game-actions tr td {
+  border-right: 1px solid rgba(0,0,0,.12);
+  text-align: center;
+  padding:  0;
+}
+
+.app-table--game-actions tr td:first-of-type,
+.app-table--game-actions tr td:last-of-type {
+  padding: 0;
+}
+
+.app-table--game-actions tr td:last-of-type {
+  border-right: 0;
+}
+
+.app-table--game-actions .app-button {
+  font-size: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.app-table--game-played-index {
+  width: 53px;
+}
+
+.app-table--game-played-white {
+  width: 140px;
+}
+
+.app-table--game-played-notation {
+  width: 79px;
+}
+
+.app-table--game-played-time {
+  width: 61px;
+}
+
+.app-table--game-played th {
+  text-align: left;
+}
+
+.app-table--game-played td:first-of-type, 
+.app-table--game-played th:first-of-type {
+  padding-left: 0;
+}
+
+.app-table--game-played tbody tr td.app-table--game-played-index,
+.app-table--game-played tbody tr td.app-table--game-played-white:nth-child(odd) {
+  border-right: 1px solid rgba(0, 0, 0, .12);
+}
+
+.app-table--game-played tbody tr td.app-table--game-played-notation {
+  font-weight: bold;
+  text-align: left;
+  padding-right: 0;
+}
+
+.app-table--game-played tbody tr td.app-table--game-played-time {
+  text-align: right;
+  padding-left: 0;
+}
+
+.app-table--game-stats {
+  border-top: 1px solid rgba(0,0,0,.12);
+}
+
 .app-promotion__icon {
   position: relative;
   display: inline-block;
@@ -1208,6 +1249,10 @@ a {
     height: 42px;
     min-width: 42px;
     width: 42px;
+  }
+
+  .app-game__played {
+    right: 15px;
   }
 }
 
@@ -1306,7 +1351,23 @@ a {
   }
 
   .app-table--game {
-    font-size: 13px;
+    font-size: 12px;
+  }
+
+  .app-table--game-actions .app-button {
+    font-size: 11px;
+  }
+
+  .app-table--game thead th {
+    padding: 0 12px 6px 12px;
+  }
+
+  .app-table--game-stats thead th {
+    padding: 0 6px 6px 6px;
+  }
+
+  .app-table--game tbody tr td {
+    padding: 0 12px;
   }
 
   .app-table__name {
@@ -1315,6 +1376,36 @@ a {
 
   .app-table--ranking .app-table__name {
     display: initial;
+  }
+
+  .app-game__played {
+    right: 15px;
+    left: 15px;
+    width: auto;
+  }
+
+  .app-game__played-content {
+    max-height: 144px;
+  }
+
+  .app-table--game-played-index {
+    width: 12%;
+  }
+
+  .app-table--game-played-index {
+    width: 12%;
+  }
+
+  .app-table--game-played-white {
+    width: 44%;
+  }
+
+  .app-table--game-played-notation {
+    width: 24%;
+  }
+
+  .app-table--game-played-time {
+    width: 20%;
   }
 
   .app-login__content-button {

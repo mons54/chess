@@ -70,22 +70,28 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 game[piece.color].lostPieces[piece.name]--;
             });
 
-            game.notations = [];
+            if (game.finish) {
+                var gameCopy = window.game.newGame(game.id, game.white, game.black, game.time);
+            }
+
+            $scope.played = [];
 
             var time = game.startTime;
 
             angular.forEach(game.played, function (value, index) {
-                var data = {
-                    text: value.notation,
-                    time: ((value.time - time) / 1000).toFixed(2)
-                };
+                var data = angular.copy(value);
+                data.time = ((data.time - time) / 1000).toFixed(2);
+                if (gameCopy) {
+                    new window.chess.engine(gameCopy, value.start, value.end, value.promotion);
+                    data.pieces = angular.copy(gameCopy.pieces);
+                }
                 time = value.time;
                 if (index % 2 === 0) {
-                    game.notations.push({
+                    $scope.played.push({
                         white: data
                     });
                 } else {
-                    game.notations[game.notations.length - 1].black = data;
+                    $scope.played[$scope.played.length - 1].black = data;
                 }
             });
 
@@ -120,11 +126,15 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         });
 
         $scope.isLastTurn = function (position) {
-            if (!$scope.game.played || !$scope.game.played.length) {
+            if (!$scope.lastTurn && (!$scope.game.played || !$scope.game.played.length)) {
                 return;
             }
-            var lastTurn = $scope.game.played[$scope.game.played.length - 1];
-            return lastTurn.start === position || lastTurn.end === position;
+
+            if (!$scope.lastTurn) {
+                $scope.lastTurn = $scope.game.played[$scope.game.played.length - 1];
+            }
+
+            return $scope.lastTurn.start === position || $scope.lastTurn.end === position;
         };
 
         $scope.move = function (start, end, promotion) {
@@ -188,6 +198,28 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return player && player.possibleDraw;
         };
 
+        $scope.getPoints = function (p1, p2, c) {
+            var points = window.game.getPoints(p1.points, p2.points, c, p1.countGame);
+            return points > 0 ? '+' + points : points;
+        };
+
+        $scope.getPercentage = function (p1, p2) {
+            return Math.round(window.game.getElo(p1.points, p2.points) * 100);
+        };
+
+        $scope.replay = function (data) {
+            if (!data.pieces) {
+                return;
+            }
+            $scope.lastTurn = data;
+            $scope.game.pieces = data.pieces;
+        };
+
+        $scope.togglePlayed = function () {
+            $scope.showPlayed = !$scope.showPlayed; 
+            $rootScope.hideSound = $scope.showPlayed;
+        }
+
         $scope.shareResult = function () {
             if (!$scope.game.finish) {
                 return;
@@ -205,15 +237,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 name: $scope.game.white.name + ' VS ' + $scope.game.black.name,
                 description: description,
             });
-        };
-
-        $scope.getPoints = function (p1, p2, c) {
-            var points = window.game.getPoints(p1.points, p2.points, c, p1.countGame);
-            return points > 0 ? '+' + points : points;
-        };
-
-        $scope.getPercentage = function (p1, p2) {
-            return Math.round(window.game.getElo(p1.points, p2.points) * 100);
         };
 
         $interval.cancel($interval.stopTimeGame);

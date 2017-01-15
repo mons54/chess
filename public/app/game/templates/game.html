@@ -26,8 +26,8 @@
     <div profile-game player="player1"></div>
 </div>
 
-<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
-    <table ng-if="isPlayer() && !game.finish" 
+<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell mdl-cell--12-col-tablet">
+    <table ng-if="isPlayer() && game.finish" 
            class="app-table app-table--game-actions">
         <tbody>
             <tr>
@@ -55,6 +55,9 @@
             </tr>
         </tbody>
     </table>
+</div>
+
+<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
     <table ng-if="game" 
            class="app-table app-table--game app-table--game-stats mdl-data-table mdl-js-data-table">
         <thead>
@@ -85,27 +88,42 @@
     </table>
 </div>
 
-<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
-    <table class="app-table app-table--game app-table--game-notations mdl-data-table mdl-js-data-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>{{ 'white'|translate }}</th>
-                <th></th>
-                <th>{{ 'black'|translate }}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="notation in game.notations">
-                <td class="app-table--game-notations-index">{{ $index + 1 }}</td>
-                <td class="app-table--game-notations-text app-table--game-notations-white">{{ notation.white.text }}</td>
-                <td class="app-table--game-notations-time app-table--game-notations-white">{{ notation.white.time }}'</td>
-                <td ng-if="notation.black" class="app-table--game-notations-text app-table--game-notations-black">{{ notation.black.text }}</td>
-                <td ng-if="notation.black" class="app-table--game-notations-time app-table--game-notations-black">{{ notation.black.time }}'</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="app-game__played">
+    <div class="app-game__played-head"
+         ng-click="togglePlayed()">
+        <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
+            <thead>
+                <tr>
+                    <th class="app-table--game-played-index"></th>
+                    <th class="app-table--game-played-white">{{ 'white'|translate }}</th>
+                    <th class="app-table--game-played-black">{{ 'black'|translate }}</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="app-game__played-content"
+         ng-show="showPlayed">
+        <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
+            <tbody>
+                <tr ng-repeat="play in played">
+                    <td class="app-table--game-played-index">{{ $index + 1 }}</td>
+                    <td class="app-table--game-played-notation app-table--game-played-white" 
+                        ng-class="{'app__clickable': play.white.pieces}"
+                        ng-click="replay(play.white)">
+                            {{ play.white.notation }}
+                    </td>
+                    <td class="app-table--game-played-time app-table--game-played-white">{{ play.white.time }}'</td>
+                    <td ng-if="play.black" 
+                        class="app-table--game-played-notation app-table--game-played-black" 
+                        ng-class="{'app__clickable': game.finish}"
+                        ng-click="replay(play.black)">
+                            {{ play.black.notation }}
+                    </td>
+                    <td ng-if="play.black" class="app-table--game-played-time app-table--game-played-black">{{ play.black.time }}'</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div ng-if="isPlayer()">

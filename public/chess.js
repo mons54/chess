@@ -1,14 +1,14 @@
 'use strict';
 
 var game = {
-    newGame: function (gid, white, black, time, startTime) {
+    newGame: function (gid, white, black, time) {
     
         var timeTurn = 120,
             nbPieces = 16;
 
         return {
             id: gid,
-            startTime: startTime ? startTime : new Date().getTime(),
+            startTime: new Date().getTime(),
             time: time,
             timeTurn: timeTurn,
             timestamp: 0,
