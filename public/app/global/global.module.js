@@ -132,7 +132,7 @@ service('sound', ['$cookies', function ($cookies) {
     };
 
     function getSound() {
-        return !!$cookies.getObject('sound');
+        return !!$cookies.get('sound');
     }
 
     function loadAll() {
@@ -147,7 +147,7 @@ service('sound', ['$cookies', function ($cookies) {
 
     function change() {
         sound = !getSound();
-        $cookies.putObject('sound', sound);
+        $cookies.put('sound', sound);
 
         if (!sound) {
             loadAll();
@@ -380,6 +380,21 @@ service('lang', ['$rootScope', '$translate',
         };
     }
 ]).
+
+service('user', ['$cookies', function ($cookies) {
+    return {
+        setLogin: function (value) {
+            var expires = new Date();
+            expires.setDate(expires.getDate() + 365);
+            $cookies.put('login', value, {
+                expires: expires
+            });
+        },
+        getLogin: function () {
+            return $cookies.get('login');
+        }
+    }
+}]).
 
 directive('scrollDown', [function () {
     return {

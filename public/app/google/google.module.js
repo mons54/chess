@@ -14,12 +14,13 @@ angular.module('google', []).
  * @description 
  * Google service.
  * @requires $rootScope
+ * @requires global.service:user
  * @requires global.service:socket
  * @requires global.service:lang
  */
-service('google', ['$rootScope', '$cookies', 'socket', 'lang',
+service('google', ['$rootScope', 'user', 'socket', 'lang',
 
-    function ($rootScope, $cookies, socket, lang) {
+    function ($rootScope, user, socket, lang) {
 
         var self = this;
 
@@ -146,7 +147,7 @@ service('google', ['$rootScope', '$cookies', 'socket', 'lang',
          * Set user friends from facebook list.
          */
         this.handleLogin = function () {
-            $cookies.put('login', 'google');
+            user.setLogin('google');
             gapi.client.people.people.get({
                 resourceName: 'people/me'
             }).then(function(response) {

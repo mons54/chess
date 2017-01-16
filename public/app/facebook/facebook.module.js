@@ -22,12 +22,13 @@ constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
  * @description 
  * Facebook service.
  * @requires $rootScope
+ * @requires global.service:user
  * @requires global.service:socket
  * @requires global.service:lang
  */
-service('facebook', ['$rootScope', '$cookies', 'socket', 'lang',
+service('facebook', ['$rootScope', 'user', 'socket', 'lang',
 
-    function ($rootScope, $cookies, socket, lang) {
+    function ($rootScope, user, socket, lang) {
 
         var self = this;
 
@@ -52,7 +53,7 @@ service('facebook', ['$rootScope', '$cookies', 'socket', 'lang',
          */
         this.init = function () {
             FB.init({
-                appId: '1687859708170830',
+                appId: '738045286230106',
                 xfbml: true,
                 version: 'v2.8'
             });
@@ -117,7 +118,7 @@ service('facebook', ['$rootScope', '$cookies', 'socket', 'lang',
         this.handleLogin = function () {
 
             if (!this.isFacebookApp) {
-                $cookies.put('login', 'facebook');
+                user.setLogin('facebook');
             }
             
             FB.api('/me?fields=first_name,name,locale,gender,currency', function (response) {
