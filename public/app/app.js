@@ -34,7 +34,7 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', '$cookies', '$window', 'socket', 'modal', 'facebook', 'google', 'lang',
+    run(['$rootScope', '$route', '$http', '$location', 'user', '$window', 'socket', 'modal', 'facebook', 'google', 'lang',
 
         /**
          * @param {object} $rootScope Global scope
@@ -46,7 +46,7 @@
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, $cookies, $window, socket, modal, facebook, google, lang) {
+        function ($rootScope, $route, $http, $location, user, $window, socket, modal, facebook, google, lang) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
@@ -121,7 +121,7 @@
 
             function callBackLoginStatus() {
 
-                var login = $cookies.get('login');
+                var login = user.getLogin();
 
                 if (!facebook.status) {
                     return;
@@ -150,7 +150,7 @@
             }
 
             socket.on('connect', function () {
-                var login = $cookies.get('login');
+                var login = user.getLogin();
 
                 if (facebook.isFacebookApp || (login === 'facebook' && facebook.auth)) {
                     socket.emit('facebookConnect', facebook.auth);
