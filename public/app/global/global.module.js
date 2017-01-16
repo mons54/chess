@@ -41,9 +41,9 @@ constant('paramsGame', {
  * @requires facebook.constant:facebookRedirectUri
  * @requires global.constant:host
  */
-factory('utils', ['$rootScope', '$filter', 'host', 'facebookRedirectUri',
+factory('utils', ['$rootScope', '$filter', '$window', 'host', 'facebookRedirectUri',
     
-    function ($rootScope, $filter, host, facebookRedirectUri) {
+    function ($rootScope, $filter, $window, host, facebookRedirectUri) {
 
         return {
 
@@ -106,7 +106,7 @@ factory('utils', ['$rootScope', '$filter', 'host', 'facebookRedirectUri',
              * @returns {bool} has touch
              */
             isTouch: function () {
-                return 'ontouchstart' in window || navigator.msMaxTouchPoints;
+                return 'ontouchstart' in $window || navigator.msMaxTouchPoints;
             }
         };
     }

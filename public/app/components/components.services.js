@@ -15,6 +15,10 @@ service('modal', function () {
      * @param {object} modal Modal element
      */
     function showModal(modal) {
+        if (!modal.parent().is('body')) {
+            modal.defaultParent = modal.parent();
+            $('body').append(modal);
+        }
         modal.addClass('app-modal--active').trigger('show');
     }
 
@@ -23,6 +27,9 @@ service('modal', function () {
      * @param {object} modal Modal element
      */
     function hideModal(modal) {
+        if (modal.defaultParent) {
+            modal.defaultParent.append(modal);
+        }
         modal.removeClass('app-modal--active').trigger('hide');
     }
 

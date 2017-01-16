@@ -16,9 +16,9 @@ angular.module('game').
  * @requires global.service:utils
  * @requires components.service:modal
  */
-controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', 'socket', 'utils', 'modal', 'sound',
+controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', 'socket', 'utils', 'modal', 'sound',
     
-    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, socket, utils, modal, sound) {
+    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, socket, utils, modal, sound) {
         
         socket.emit('initGame', $routeParams.id);
 
@@ -71,7 +71,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             });
 
             if (game.finish) {
-                var gameCopy = window.game.newGame(game.id, game.white, game.black, game.time);
+                var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.time);
             }
 
             $scope.played = [];
@@ -82,7 +82,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 var data = angular.copy(value);
                 data.time = ((data.time - time) / 1000).toFixed(2);
                 if (gameCopy) {
-                    new window.chess.engine(gameCopy, value.start, value.end, value.promotion);
+                    new $window.chess.engine(gameCopy, value.start, value.end, value.promotion);
                     data.pieces = angular.copy(gameCopy.pieces);
                 }
                 time = value.time;
@@ -205,12 +205,12 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.getPoints = function (p1, p2, c) {
-            var points = window.game.getPoints(p1.points, p2.points, c, p1.countGame);
+            var points = $window.game.getPoints(p1.points, p2.points, c, p1.countGame);
             return points > 0 ? '+' + points : points;
         };
 
         $scope.getPercentage = function (p1, p2) {
-            return Math.round(window.game.getElo(p1.points, p2.points) * 100);
+            return Math.round($window.game.getElo(p1.points, p2.points) * 100);
         };
 
         $scope.replay = function (data) {
