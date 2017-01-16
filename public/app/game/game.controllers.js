@@ -13,12 +13,15 @@ angular.module('game').
  * @requires $location
  * @requires $filter
  * @requires $interval
+ * @requires $window
+ * @requires global.service:socket
+ * @requires global.service:user
  * @requires global.service:utils
  * @requires components.service:modal
  */
-controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', 'socket', 'utils', 'modal', 'sound',
+controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', 'socket', 'user', 'utils', 'modal', 'sound',
     
-    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, socket, utils, modal, sound) {
+    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, socket, user, utils, modal, sound) {
         
         socket.emit('initGame', $routeParams.id);
 
@@ -29,6 +32,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             rook: 2,
             queen: 1
         };
+
+        setShowPlayed(user.getShowPlayed());
 
         socket.on('game', function (game) {
             if (!game) {
@@ -221,10 +226,16 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.game.pieces = data.pieces;
         };
 
-        $scope.togglePlayed = function () {
-            $scope.showPlayed = !$scope.showPlayed; 
-            $rootScope.hideSound = $scope.showPlayed;
+        function setShowPlayed(value) {
+            $scope.showPlayed = value;
+            $rootScope.hideSound = value;
         }
+
+        $scope.togglePlayed = function () {
+            var value = !$scope.showPlayed;
+            setShowPlayed(value);
+            user.setShowPlayed(value);
+        };
 
         $scope.shareResult = function () {
             if (!$scope.game.finish) {

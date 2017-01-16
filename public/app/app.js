@@ -34,19 +34,21 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', 'user', '$window', 'socket', 'modal', 'facebook', 'google', 'lang',
+    run(['$rootScope', '$route', '$http', '$location', '$window', 'user', 'socket', 'modal', 'facebook', 'google', 'lang',
 
         /**
          * @param {object} $rootScope Global scope
          * @param {object} $route Service route
          * @param {object} $http Service http
          * @param {object} $location Service location
-         * @param {object} socket Socket service
+         * @param {object} $window Service window
+         * @param {object} $window Service window
+         * @param {object} user User service
          * @param {object} modal Modal service
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, user, $window, socket, modal, facebook, google, lang) {
+        function ($rootScope, $route, $http, $location, $window, user, socket, modal, facebook, google, lang) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**

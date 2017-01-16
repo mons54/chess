@@ -1004,7 +1004,7 @@ a {
 }
 
 .app-game__played-content {
-  max-height: 288px;
+  max-height: 289px;
   overflow-x: hidden;
   overflow-y: auto;
 }

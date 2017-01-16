@@ -118,10 +118,10 @@ factory('utils', ['$rootScope', '$filter', '$window', 'host', 'facebookRedirectU
  * @description 
  * Sound management.
  */
-service('sound', ['$cookies', function ($cookies) {
+service('sound', ['user', function (user) {
 
     var sounds,
-        sound = getSound();
+        sound = user.getSound();
 
     if (typeof Audio === 'function') {
         sounds = {
@@ -130,10 +130,6 @@ service('sound', ['$cookies', function ($cookies) {
             capture: new Audio('/sounds/capture.wav')
         };
     };
-
-    function getSound() {
-        return !!$cookies.get('sound');
-    }
 
     function loadAll() {
         if (!sounds) {
@@ -146,8 +142,8 @@ service('sound', ['$cookies', function ($cookies) {
     }
 
     function change() {
-        sound = !getSound();
-        $cookies.put('sound', sound);
+        sound = !sound;
+        user.setSound(sound);
 
         if (!sound) {
             loadAll();
@@ -381,21 +377,136 @@ service('lang', ['$rootScope', '$translate',
     }
 ]).
 
+/**
+ * @ngdoc service
+ * @name global.service:user
+ * @description 
+ * Socket management.
+ */
 service('user', ['$cookies', function ($cookies) {
+
+    function get() {
+        return $cookies.getObject('user') || {};
+    }
+
+    function set(data) {
+        var expires = new Date();
+
+        expires.setDate(expires.getDate() + 365);
+
+        $cookies.putObject('user', data, {
+            expires: expires
+        });
+    }
+
     return {
-        setLogin: function (value) {
-            var expires = new Date();
-            expires.setDate(expires.getDate() + 365);
-            $cookies.put('login', value, {
-                expires: expires
-            });
+        /**
+         * @ngdoc function
+         * @name #get
+         * @methodOf global.service:user
+         * @description 
+         * Get user data
+         * @param {string} name Name
+         * @returns {object} Value
+         */
+        get: function (name) {
+            return get()[name];
         },
+        /**
+         * @ngdoc function
+         * @name #set
+         * @methodOf global.service:user
+         * @description 
+         * Set user data
+         * @param {string} name Name
+         * @param {string|object} value Value
+         */
+        set: function (name, value) {
+            var data = get();
+
+            data[name] = value;
+
+            set(data);
+        },
+        /**
+         * @ngdoc function
+         * @name #getLogin
+         * @methodOf global.service:user
+         * @description 
+         * Get login value
+         * @returns {bool} Login
+         */
         getLogin: function () {
-            return $cookies.get('login');
-        }
+            return this.get('login');
+        },
+        /**
+         * @ngdoc function
+         * @name #setLogin
+         * @methodOf global.service:user
+         * @description 
+         * Set login value
+         * @param {bool} value Login
+         */
+        setLogin: function (value) {
+            this.set('login', value);
+        },
+        /**
+         * @ngdoc function
+         * @name #getSound
+         * @methodOf global.service:user
+         * @description 
+         * Get sound value
+         * @returns {bool} Sound
+         */
+        getSound: function () {
+            return this.get('sound');
+        },
+        /**
+         * @ngdoc function
+         * @name #setSound
+         * @methodOf global.service:user
+         * @description 
+         * Set sound value
+         * @param {bool} value Sound
+         */
+        setSound: function (value) {
+            this.set('sound', value);
+        },
+        /**
+         * @ngdoc function
+         * @name #getShowPlayed
+         * @methodOf global.service:user
+         * @description 
+         * Get show played value
+         * @returns {bool} Show
+         */
+        getShowPlayed: function () {
+            return this.get('showPlayed');
+        },
+        /**
+         * @ngdoc function
+         * @name #setShowPlayed
+         * @methodOf global.service:user
+         * @description 
+         * Set show played value
+         * @param {bool} value Show
+         */
+        setShowPlayed: function (value) {
+            this.set('showPlayed', value);
+        },
     }
 }]).
 
+/**
+ * @ngdoc directive
+ * @name components.directive:scrollDown
+ * @description 
+ * Add a click event to an item to show a modal.
+ * @requires components.service:modal
+ * @restrict A
+ * @scope
+ * @param {string} scrollDown Name of scope data (ex: played for $scope.played)
+ */
 directive('scrollDown', [function () {
     return {
         scope: {
