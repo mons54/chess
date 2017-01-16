@@ -34,7 +34,7 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', '$cookies', 'socket', 'modal', 'facebook', 'google', 'lang',
+    run(['$rootScope', '$route', '$http', '$location', '$cookies', '$window', 'socket', 'modal', 'facebook', 'google', 'lang',
 
         /**
          * @param {object} $rootScope Global scope
@@ -46,7 +46,7 @@
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, $cookies, socket, modal, facebook, google, lang) {
+        function ($rootScope, $route, $http, $location, $cookies, $window, socket, modal, facebook, google, lang) {
 
             $rootScope.$on('$routeChangeStart', function() {
                 /**
@@ -184,7 +184,7 @@
                 $rootScope.$emit('trophies', data.newTrophies);
             });
 
-            window.fbAsyncInit = function () {
+            $window.fbAsyncInit = function () {
 
                 facebook.init();
 
@@ -208,6 +208,14 @@
             };
 
             lang.set(navigator.language || navigator.userLanguage || 'en');
+            
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
         }
     ]).
 
