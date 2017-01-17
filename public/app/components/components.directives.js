@@ -164,30 +164,6 @@ directive('friendsRequests', ['$translate',
 
 /**
  * @ngdoc directive
- * @name components.directive:sound
- * @description 
- * Add an click event to the directive element to manage sound
- * @requires sound Sound provider
- * @restrict E
- */
-directive('buttonSound', ['sound',
-    function (sound) {
-        return {
-            restrict: 'E',
-            replace: true,
-            templateUrl: '/app/components/templates/button-sound.html',
-            controller: ['$scope', function ($scope) {
-                $scope.sound = sound.sound;
-                $scope.change = function () {
-                    $scope.sound = sound.change();
-                };
-            }]
-        };
-    }
-]).
-
-/**
- * @ngdoc directive
  * @name components.directive:sortable
  * @description 
  * Use this directive to make a sortable column

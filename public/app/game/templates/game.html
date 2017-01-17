@@ -1,4 +1,4 @@
-<div class="app-head mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-head app-head--game mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile-game player="player2"></div>
 </div>
 
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="app-head mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-head app-head--game mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile-game player="player1"></div>
 </div>
 
@@ -193,11 +193,21 @@
         <div class="app-game__toggle-icon--phone" ng-click="togglePlayedPhone()">
             <i class="app-game__toggle-icon material-icons">description</i>
         </div>
+        <div class="app-game__toggle-icon--phone" ng-click="changeSound()">
+            <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
+        </div>
         <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessagesPhone()">
             <span class="app-game__toggle-count">{{ unreadMessages }}</span>
         </div>
     </div>
 </div>
+
+<button class="app-button__sound mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-js-ripple-effect mdl-color--accent"
+        ng-hide="hideSound"
+        ng-click="changeSound()">
+    <span class="mdl-button__ripple-container">
+    <i class="material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
+</button>
 
 <div ng-if="isPlayer()">
     <div id="modal-response-draw" 

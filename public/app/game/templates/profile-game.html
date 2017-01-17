@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div>
+    <div ng-class="{'app-profile__show-pieces': hasLostPieces()">
         <div class="app__pull-left">
             <a show-profile="player" href>
                 <img show-profile="player" class="app-profile__avatar" ng-src="{{ player.avatar }}">

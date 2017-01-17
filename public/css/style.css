@@ -553,9 +553,13 @@ a {
 
 .app-footer {
   text-align: center;
-  height: 40px;
-  line-height: 40px;
+  height: 20px;
+  line-height: 20px;
   padding-bottom: 16px;
+}
+
+.app-footer.is-game {
+  padding-bottom: 51px;
 }
 
 .app-footer a {
@@ -978,12 +982,12 @@ a {
 }
 
 .app-button__sound {
-  position: fixed;
   display: block;
+  position: fixed;
   right: 0;
   bottom: 0;
   margin-right: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   z-index: 9;
 }
 
@@ -1173,7 +1177,7 @@ a {
 }
 
 .app-game__time--danger {
-  background-color: #c9302c;
+  background-color: #ff5252;
 }
 
 .app-game__time:last-child {
@@ -1396,7 +1400,7 @@ a {
 
   .app-button__sound {
     margin-right: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 46px;
     height: 42px;
     min-width: 42px;
     width: 42px;
@@ -1408,6 +1412,10 @@ a {
 
   .app-game__toggle--messages {
     left: 15px;
+  }
+
+  .app-footer {
+    font-size: 13px;
   }
 }
 
@@ -1436,6 +1444,13 @@ a {
 
   .app-profile--game .app-profile__name {
     max-width: 450px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+  .app-footer.is-game {
+    padding-top: 5px;
+    padding-bottom: 56px;
   }
 }
 
@@ -1592,11 +1607,15 @@ a {
     border-right: 1px solid rgba(0,0,0,.12);
   }
 
-  .app-game__toggle-icon--phone:nth-child(2) {
+  .app-game__toggle-icon--phone:nth-of-type(2) {
     left: 36px;
   }
 
-  .app-game__toggle-icon--action-phone {
+  .app-game__toggle-icon--phone:nth-of-type(3) {
+    left: 72px;
+  }
+
+  .app-game__toggle-icon--phone.app-game__toggle-icon--action-phone {
     right: 0;
     top: 0;
     left: initial;
@@ -1631,12 +1650,8 @@ a {
     top: 6px;
   }
 
-  .app-footer.is-game {
-    padding-bottom: 51px;
-  }
-
-  .app-button__sound.is-game {
-    bottom: 35px;
+  .app-button__sound {
+    display: none;
   }
 }
 
@@ -1721,16 +1736,46 @@ a {
     font-size: 14px;
   }
 
+  .app-head--game {
+    padding: 8px;
+  }
+
+  .app-profile--game {
+    line-height: 0;
+  }
+
   .app-profile--game .app-game__time {
     font-size: 13px;
-    width: 45px;
+    line-height: 13px;
+    width: auto;
+    height: 13px;
+    color: #3A3A3A;
+    background-color: initial;
+    text-align: right;
+  }
+
+  .app-profile--game .app-game__time:first-child {
+    margin-bottom: 6px;
+  }
+
+  .app-game__time--danger {
+    color: #ff5252;
   }
 
   .app-game__lost-pieces {
+    display: none;
     direction: ltr;
     float: none;
     margin-top: 2px;
     margin-right: 0;
+  }
+
+  .app-profile__show-pieces .app-game__lost-pieces {
+    display: initial;
+  }
+
+  .app-profile__show-pieces .app-profile__info {
+    display: none;
   }
 
   .app-game__lost-pieces-group--pawn {

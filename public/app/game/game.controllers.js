@@ -41,7 +41,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         setShowPlayed(user.getShowPlayed());
 
-        socket.on('game', function game (game) {
+        $scope.sound = sound.sound;
+
+        socket.on('sound', function (game) {
             if (!game) {
                 $rootScope.user.gid = null;
                 $location.path('/');
@@ -346,6 +348,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             });
         };
 
+        $scope.changeSound = function () {
+            $scope.sound = sound.change();
+        };
+
         function getMessageId(message) {
             return $scope.game.gid + '-' + message.time;
         }
@@ -386,7 +392,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         function setShowPlayed(value) {
             $scope.showPlayed = value;
-            $rootScope.hideSound = value;
+            $scope.hideSound = value;
         }
 
         $interval.cancel($interval.stopTimeGame);
@@ -427,6 +433,15 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
     
     function ($rootScope, $scope, socket, utils) {
+
+        $scope.hasLostPieces = function (lostPieces) {
+            for (var i in lostPieces) {
+                if (lostPieces[i]) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         $scope.getLostPieces = function(number) {
             var pieces = [];
