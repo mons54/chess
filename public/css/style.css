@@ -1758,7 +1758,7 @@ a {
     margin-bottom: 6px;
   }
 
-  .app-game__time--danger {
+  .app-profile--game .app-game__time--danger {
     color: #ff5252;
   }
 
@@ -1771,7 +1771,7 @@ a {
   }
 
   .app-profile__show-pieces .app-game__lost-pieces {
-    display: initial;
+    display: block;
   }
 
   .app-profile__show-pieces .app-profile__info {

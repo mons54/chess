@@ -43,7 +43,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.sound = sound.sound;
 
-        socket.on('sound', function (game) {
+        socket.on('game', function (game) {
             if (!game) {
                 $rootScope.user.gid = null;
                 $location.path('/');
@@ -435,9 +435,11 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
     function ($rootScope, $scope, socket, utils) {
 
         $scope.hasLostPieces = function (lostPieces) {
-            for (var i in lostPieces) {
-                if (lostPieces[i]) {
-                    return true;
+            if (typeof lostPieces === 'object') {
+                for (var i in lostPieces) {
+                    if (lostPieces[i]) {
+                        return true;
+                    }
                 }
             }
             return false;
