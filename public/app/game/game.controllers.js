@@ -176,11 +176,13 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return;
             }
 
-            if (!$scope.lastTurn) {
-                $scope.lastTurn = $scope.game.played[$scope.game.played.length - 1];
+            if ($scope.lastTurn) {
+                var lastTurn = $scope.lastTurn;
+            } else {
+                var lastTurn = $scope.game.played[$scope.game.played.length - 1];
             }
 
-            return $scope.lastTurn.start === position || $scope.lastTurn.end === position;
+            return lastTurn.start === position || lastTurn.end === position;
         };
 
         $scope.move = function (start, end, promotion) {
