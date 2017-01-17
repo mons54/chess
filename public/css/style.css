@@ -652,7 +652,7 @@ a {
   margin-bottom: 30px;
 }
 
-.app-profile__image {
+.app-profile__avatar {
   width: 50px;
   height: 50px;
   border-radius: 5px;
@@ -987,26 +987,162 @@ a {
   z-index: 9;
 }
 
-.app-game__played {
+.app-game__toggle {
   position: fixed;
   bottom: 0;
   width: 350px;
-  right: 25px;
+  background-color: #fff;
   border: 1px solid rgba(0,0,0,.12);
 }
 
-.app-game__played-head {
+.app-game__toggle--played {
+  right: 25px;
+}
+
+.app-game__toggle--messages {
+  left: 25px;
+}
+
+.app-game__toggle-head {
   cursor: pointer;
+  height: 36px;
+  line-height: 36px;
+}
+
+.app-game__toggle-head--messages {
+  padding: 0 20px;
+}
+
+.app-game__toggle-head .app-icons {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  color: rgba(0,0,0,.54);
+}
+
+.app-game__toggle-count {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  background-color: #795548;
+  color: #fff;
+  width: 48px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  font-size: 12px;
+}
+
+.app-game__toggle-count:before {
+  position: absolute;
+  top: 0;
+  left: -5px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 5px 5px 0;
+  border-color: transparent #795548 transparent transparent;
+}
+
+.app-game__toggle-content {
+  max-height: 289px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.app-game__toggle-content--messages {
+  height: 252px;
+  border-top: 1px solid rgba(0,0,0,.12);
+  margin-bottom: 36px;
+}
+
+.app-game__toggle-textfield {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  line-height: 36px;
+  border-top: 1px solid rgba(0, 0, 0, .12);
+}
+
+.app-game__toggle-textfield input {
+  border: none;
+  width: calc(100% - 24px);
+  height: calc(100% - 12px);
+  padding: 6px 12px;
+  outline: 0;
+}
+
+.app-game__message {
+  padding: 10px;
+}
+
+.app-game__message.app-game__message--next {
+  padding-top: 0;
+}
+
+.app-game__message-avatar {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  float: left;
+}
+
+.app-game__message--next .app-game__message-avatar {
+  display: none;
+}
+
+.app-game__message-avatar img {
+  height: 100%;
+  width: 100%;
+}
+
+.app-game__message-content {
+  position: relative;
+  padding: 5px 10px;
+  min-height: 40px;
+  margin: 0 10px 0 63px;
+  background-color: #795548;
+  color: #fff;
+}
+
+.app-game__message:not(.app-game__message--next) .app-game__message-content:before {
+  position: absolute;
+  top: 0;
+  left: -8px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 0;
+  border-color: transparent #795548 transparent transparent;
+}
+
+.app-game__message--user .app-game__message-avatar {
+  float: right;
+}
+
+.app-game__message--user .app-game__message-content {
+  margin: 0 63px 0 10px;
+  background-color: #ff5252;
+}
+
+.app-game__message--user:not(.app-game__message--next) .app-game__message-content:before {
+  right: -8px;
+  left: initial;
+  border-width: 0 0 10px 10px;
+  border-color: transparent transparent transparent #ff5252;
+}
+
+.app-game__message-infos {
+  font-size: 10px;
 }
 
 .app-game__played-color {
   width: 50%;
-}
-
-.app-game__played-content {
-  max-height: 289px;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .app-game__time {
@@ -1251,8 +1387,12 @@ a {
     width: 42px;
   }
 
-  .app-game__played {
+  .app-game__toggle--played {
     right: 15px;
+  }
+
+  .app-game__toggle--messages {
+    left: 15px;
   }
 }
 
@@ -1284,7 +1424,72 @@ a {
   }
 }
 
-@media (min-width: 544px) {
+@media (min-width: 600px) and (max-width: 745px) {
+  .app-game__toggle--played {
+    width: calc(55% - 20px);
+  }
+
+  .app-game__toggle--messages {
+    width: calc(45% - 20px);
+  }
+
+  .app-table--game-played-index {
+    width: 14%;
+  }
+}
+
+@media (max-width: 745px) {
+
+  .app-game__toggle-content--messages {
+    padding: 5px 0;
+  }
+
+  .app-game__message {
+    padding: 5px 10px;
+  }
+
+  .app-game__message-avatar {
+    height: 42px;
+    width: 42px;
+  }
+
+  .app-game__message-content {
+    margin: 0 10px 0 52px;
+    min-height: 32px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .app-game__message--user .app-game__message-content {
+    margin: 0 52px 0 10px;
+  }
+
+  .app-table--game-played-index {
+    width: 12%;
+  }
+
+  .app-table--game-played-index {
+    width: 12%;
+  }
+
+  .app-table--game-played-white {
+    width: 44%;
+  }
+
+  .app-table--game-played-notation {
+    width: 24%;
+  }
+
+  .app-table--game-played-time {
+    width: 20%;
+  }
+
+  .app-table--game-played tbody tr td {
+    padding: 0 10px;
+  }
+}
+
+@media (min-width: 600px) {
   .app-form--inline .app-form__textfield {
     display:inline-block;
     margin-bottom: 0
@@ -1320,6 +1525,39 @@ a {
   }
 }
 
+@media (max-width: 599px) {
+  
+  .app-table.app-table--game {
+    font-size: 12px;
+  }
+
+  .app-table--game-actions .app-button {
+    font-size: 11px;
+  }
+
+  .app-table--game thead th {
+    padding: 0 12px 6px 12px;
+  }
+
+  .app-table--game-stats thead th {
+    padding: 0 6px 6px 6px;
+  }
+
+  .app-table--game tbody tr td {
+    padding: 0 12px;
+  }
+
+  .app-game__toggle {
+    right: 15px;
+    left: 15px;
+    width: auto;
+  }
+
+  .app-game__toggle-content {
+    max-height: 144px;
+  }
+}
+
 @media (max-width: 479px) {
 
   .mdl-data-table th {
@@ -1350,62 +1588,12 @@ a {
     font-size: 15px;
   }
 
-  .app-table--game {
-    font-size: 12px;
-  }
-
-  .app-table--game-actions .app-button {
-    font-size: 11px;
-  }
-
-  .app-table--game thead th {
-    padding: 0 12px 6px 12px;
-  }
-
-  .app-table--game-stats thead th {
-    padding: 0 6px 6px 6px;
-  }
-
-  .app-table--game tbody tr td {
-    padding: 0 12px;
-  }
-
   .app-table__name {
     display: none;
   }
 
   .app-table--ranking .app-table__name {
     display: initial;
-  }
-
-  .app-game__played {
-    right: 15px;
-    left: 15px;
-    width: auto;
-  }
-
-  .app-game__played-content {
-    max-height: 144px;
-  }
-
-  .app-table--game-played-index {
-    width: 12%;
-  }
-
-  .app-table--game-played-index {
-    width: 12%;
-  }
-
-  .app-table--game-played-white {
-    width: 44%;
-  }
-
-  .app-table--game-played-notation {
-    width: 24%;
-  }
-
-  .app-table--game-played-time {
-    width: 20%;
   }
 
   .app-login__content-button {
@@ -1423,7 +1611,7 @@ a {
     text-align: center;
   }
 
-  .app-profile--game .app-profile__image {
+  .app-profile--game .app-profile__avatar {
     width: 32px;
     height: 32px;
     border-radius: 3px;

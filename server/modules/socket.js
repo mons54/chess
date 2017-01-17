@@ -121,10 +121,6 @@ module.exports = function (io) {
                 if (gid) {
                     socket.join(moduleGame.getRoom(gid));
                     socket.emit('startGame', gid);
-                } else {
-                    socket.join('home', self.listChallengers);
-                    socket.emit('listGames', moduleGame.createdGame);
-                    socket.emit('listChallenges', socket.challenges);
                 }
 
                 socket.emit('connected');

@@ -29,9 +29,11 @@ module.exports = function (app, io) {
         });
 
         socket.on('joinHome', function () {
-            socket.join('home', moduleSocket.listChallengers);
-            socket.emit('listGames', moduleGame.createdGame);
-            socket.emit('listChallenges', socket.challenges);
+            socket.join('home', function () {
+                socket.emit('listGames', moduleGame.createdGame);
+                socket.emit('listChallenges', socket.challenges);
+                moduleSocket.listChallengers();
+            });
         });
 
         socket.on('challenge', function (data) {
@@ -99,10 +101,10 @@ module.exports = function (app, io) {
         });
 
         socket.on('removeGame', function () {
-            if (!moduleSocket.checkSocket(socket)) {
+            if (!moduleSocket.checkSocket(socket) || !moduleGame.deleteCreatedGame(socket.uid)) {
                 return;
             }
-            moduleGame.deleteCreatedGame(socket.uid);
+            
             moduleSocket.listGames(moduleGame.createdGame);
         });
 
@@ -148,7 +150,15 @@ module.exports = function (app, io) {
             if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
-            socket.emit('game', moduleGame.getGame(gid));
+
+            var game = moduleGame.getGame(gid);
+
+            if (game) {
+               socket.join(moduleGame.getRoom(gid)); 
+            }
+
+            socket.emit('game', game);
+            socket.emit('messagesGame', moduleGame.getMessages(gid));
         });
 
         socket.on('moveGame', function (data) {
@@ -174,6 +184,28 @@ module.exports = function (app, io) {
             }
             
             io.to(moduleGame.getRoom(data.id)).emit('game', game);
+        });
+
+        socket.on('sendMessageGame', function (data) {
+
+            if (!data || !data.gid || !data.message || typeof data.message !== 'string' || !data.message.length || !moduleSocket.checkSocket(socket)) {
+                return;
+            }
+
+            var gid = data.gid,
+                message = data.message.replace(/<(?:.|\n)*?>/gm, '').substr(0, 250),
+                time = new Date().getTime(),
+                data = {
+                    uid: socket.uid,
+                    name: socket.name,
+                    avatar: socket.avatar,
+                    message: message,
+                    time: time
+                };
+
+            moduleGame.setMessage(gid, data);
+
+            io.to(moduleGame.getRoom(gid)).emit('messageGame', data);
         });
 
         socket.on('resign', function (gid) {
@@ -244,14 +276,16 @@ module.exports = function (app, io) {
         function leaveHome() {
             moduleSocket.listChallengers();
             moduleSocket.deleteChallenges(socket);
-            moduleGame.deleteCreatedGame(socket.uid);
-            moduleSocket.listGames(moduleGame.createdGame);
+            if (moduleGame.deleteCreatedGame(socket.uid)) {
+                moduleSocket.listGames(moduleGame.createdGame);
+            }
         }
     });
 
     setInterval(function () {
-        for (var key in moduleGame.games.data) {
-            timer(moduleGame.games.data[key]);
+        var games = moduleGame.getGames();
+        for (var key in games) {
+            timer(games[key].data);
         }
     }, 1000);
 

@@ -12,16 +12,15 @@ function Game() {
     
     this.createdGame = {};
 
-    this.games = {
-        id: 1,
-        data: {}
-    };
+    this.gid = 1;
+
+    this.games = {};
 };
 
 var chess = require(dirname + '/public/chess');
 
 Game.prototype.getGames = function () {
-    return this.games.data;
+    return this.games;
 };
 
 Game.prototype.create = function (socket, data) {
@@ -52,10 +51,12 @@ Game.prototype.create = function (socket, data) {
 
 Game.prototype.deleteCreatedGame = function (uid) {
     if (!this.createdGame[uid]) {
-        return;
+        return false;
     }
 
     delete this.createdGame[uid];
+
+    return true;
 };
 
 Game.prototype.getTime = function (time) {
@@ -187,16 +188,36 @@ Game.prototype.getOpponent = function (game, uid) {
     return game.white.uid === uid ? game.black : game.white;
 };
 
+Game.prototype.hasGame = function (gid) {
+    return this.games.hasOwnProperty(gid);
+};
+
 Game.prototype.getGame = function (gid) {
-    return this.games.data[gid];
+    return this.hasGame(gid) ? this.games[gid].data : null;
 };
 
 Game.prototype.deleteGame = function (gid) {
-    delete this.games.data[gid];
+    delete this.games[gid];
 };
 
 Game.prototype.getRoom = function (gid) {
     return 'game' + gid;
+};
+
+Game.prototype.getMessages = function (gid) {
+    return this.hasGame(gid) ? this.games[gid].messages : null;
+};
+
+Game.prototype.setMessage = function (gid, data) {
+    if (!this.hasGame(gid)) {
+        return;
+    }
+
+    var messages = this.games[gid].messages;
+    messages.push(data);
+    if (messages.length > 50) {
+        messages.splice(0, 1);
+    }
 };
 
 Game.prototype.timer = function (game) {
@@ -218,9 +239,12 @@ Game.prototype.timer = function (game) {
 
 Game.prototype.start = function (white, black, time) {
 
-    var gid = this.games.id++;
+    var gid = this.gid++;
 
-    this.games.data[gid] = chess.game.newGame(gid, white, black, time);
+    this.games[gid] = {
+        data: chess.game.newGame(gid, white, black, time),
+        messages: []
+    };
 
     return gid;
 };

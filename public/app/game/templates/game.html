@@ -88,8 +88,8 @@
     </table>
 </div>
 
-<div class="app-game__played" ng-if="played.length">
-    <div class="app-game__played-head"
+<div class="app-game__toggle app-game__toggle--played mdl-shadow--2dp" ng-if="played.length">
+    <div class="app-game__toggle-head"
          ng-click="togglePlayed()">
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
             <thead>
@@ -101,7 +101,7 @@
             </thead>
         </table>
     </div>
-    <div class="app-game__played-content"
+    <div class="app-game__toggle-content"
          ng-show="showPlayed"
          scroll-down="'played'">
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
@@ -126,6 +126,34 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<div class="app-game__toggle app-game__toggle--messages mdl-shadow--2dp">
+    <div class="app-game__toggle-head app-game__toggle-head--messages"
+         ng-click="toggleMessages()">
+        <i class="app-icons material-icons">chat</i>
+        <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
+    </div>
+    <div class="app-game__toggle-content app-game__toggle-content--messages"
+         ng-show="showMessages"
+         scroll-down="'messages'">
+         <div ng-repeat="message in messages" class="app-game__messages">
+            <div class="app-game__message" ng-class="{'app-game__message--user': message.uid === user.uid, 'app-game__message--next': message.uid === messages[$index - 1].uid }">
+                <div class="app-game__message-avatar">
+                    <img ng-src="{{ message.avatar }}">
+                </div>
+                <div class="app-game__message-content">
+                    <div class="app-game__message-message">{{ message.message }}</div>
+                    <div class="app-game__message-infos">{{ message.name }} {{ getLocaleTime(message.time) }}</div>
+                </div>
+            </div>
+         </div>
+    </div>
+    <form ng-submit="sendMessage()" ng-show="showMessages">
+         <div class="app-game__toggle-textfield">
+            <input placeholder="..." ng-model="message">
+        </div>
+    </form>
 </div>
 
 <div ng-if="isPlayer()">

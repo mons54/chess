@@ -41,7 +41,7 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             });
 
             $rootScope.loading = false;
-        });
+        }, $scope);
 
         $scope.setPage = function (page) {
             page = parseInt(page);

@@ -238,7 +238,7 @@ service('sound', ['user', function (user) {
 factory('socket', ['$rootScope', function ($rootScope) {
 
     var socket,
-        deferedEvents = {};
+        deferedEvents = [];
 
     return {
         /**
@@ -254,9 +254,9 @@ factory('socket', ['$rootScope', function ($rootScope) {
             } else {
                 socket.connect();
             }
-            angular.forEach(deferedEvents, function (callback, eventName) {
-                this.on(eventName, callback)
-            }.bind(this));
+            angular.forEach(deferedEvents, function (callback) {
+                callback();
+            });
             deferedEvents = {};
         },
         /**
@@ -280,18 +280,30 @@ factory('socket', ['$rootScope', function ($rootScope) {
          * Subscribe once event.
          * @param {string} eventName Event name
          * @param {function} callback Callback
+         * @param {object} scope Scope
          */
-        on: function (eventName, callback) {
+        on: function (eventName, callback, scope) {
             if (!socket) {
-                deferedEvents[eventName] = callback;
+                deferedEvents.push(function () {
+                    this.on(eventName, callback, scope);
+                }.bind(this));
                 return;
             }
-            socket.on(eventName, function () {
+
+            var listener = function () {
                 var args = arguments;
                 $rootScope.$apply(function () {
                     callback.apply(socket, args);
                 });
-            });
+            };
+
+            socket.on(eventName, listener);
+
+            if (scope) {
+                scope.$on('$destroy', function() {
+                    socket.off(eventName, listener);
+                });
+            }
         },
         /**
          * @ngdoc function
@@ -302,17 +314,28 @@ factory('socket', ['$rootScope', function ($rootScope) {
          * @param {string} eventName Event name
          * @param {function} callback Callback
          */
-        once: function (eventName, callback) {
+        once: function (eventName, callback, scope) {
             if (!socket) {
-                deferedEvents[eventName] = callback;
+                deferedEvents.push(function () {
+                    this.once(eventName, callback, scope);
+                }.bind(this));
                 return;
             }
-            socket.once(eventName, function () {
+
+            var listener = function () {
                 var args = arguments;
                 $rootScope.$apply(function () {
                     callback.apply(socket, args);
                 });
-            });
+            };
+
+            socket.once(eventName, listener);
+
+            if (scope) {
+                scope.$on('$destroy', function() {
+                    socket.off(eventName, listener);
+                });
+            }
         },
         /**
          * @ngdoc function
@@ -495,38 +518,4 @@ service('user', ['$cookies', function ($cookies) {
             this.set('showPlayed', value);
         },
     }
-}]).
-
-/**
- * @ngdoc directive
- * @name components.directive:scrollDown
- * @description 
- * Add a click event to an item to show a modal.
- * @requires components.service:modal
- * @restrict A
- * @scope
- * @param {string} scrollDown Name of scope data (ex: played for $scope.played)
- */
-directive('scrollDown', [function () {
-    return {
-        scope: {
-            scrollDown: '='
-        },
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var scrollDown = true,
-                el = element[0];
-
-            element.on('scroll', function () {
-                var el = element[0];
-                scrollDown = (el.scrollTop + el.clientHeight + 1) > el.scrollHeight;
-            });
-
-            scope.$parent.$watch(scope.scrollDown, function (newValue) {
-                if (newValue && scrollDown) {
-                    element.scrollTop(el.scrollHeight);
-                }
-            });
-        }
-    };
 }]);

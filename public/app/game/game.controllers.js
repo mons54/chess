@@ -19,9 +19,9 @@ angular.module('game').
  * @requires global.service:utils
  * @requires components.service:modal
  */
-controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', 'socket', 'user', 'utils', 'modal', 'sound',
+controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'utils', 'modal', 'sound',
     
-    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, socket, user, utils, modal, sound) {
+    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, utils, modal, sound) {
         
         socket.emit('initGame', $routeParams.id);
 
@@ -35,7 +35,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         setShowPlayed(user.getShowPlayed());
 
-        socket.on('game', function (game) {
+        socket.on('game', function game (game) {
             if (!game) {
                 $rootScope.user.gid = null;
                 $location.path('/');
@@ -115,20 +115,53 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.orientation = 'white';
             }
 
+            checkTime($scope.player1);
+            checkTime($scope.player2);
+
             $scope.game = game;
 
             $scope.letters = letters;
             $scope.numbers = numbers;
-        });
+        }, $scope);
 
         socket.on('offerDraw', function (data) {
             $scope.game[$scope.getPlayerColor()].possibleDraw = true;
             modal.show(modal.get('modal-response-draw'));
-        });
+        }, $scope);
+
+        socket.on('messageGame', function (message) {
+            if (!$scope.messages) {
+                return;
+            }
+            $scope.messages.push(message);
+            if ($scope.showMessages) {
+                addReadMessage(message);
+                setCookieReadMessages();
+            } else if (isUnreadMessage(message)) {
+                $scope.unreadMessages++;
+            }
+        }, $scope);
+
+        socket.on('messagesGame', function (messages) {
+
+            $scope.messages = messages;
+
+            if ($scope.showMessages) {
+                showMessages();
+            } else {
+                $scope.unreadMessages = 0;
+                $scope.readMessages = getCookieReadMessages();
+                angular.forEach(messages, function (message) {
+                    if (isUnreadMessage(message) && $scope.readMessages.indexOf(getMessageId(message)) === -1) {
+                        $scope.unreadMessages++;
+                    }
+                });
+            }
+        }, $scope);
 
         socket.on('possibleDraw', function (data) {
             modal.show(modal.get('modal-possible-draw'));
-        });
+        }, $scope);
 
         $scope.isLastTurn = function (position) {
             if (!$scope.lastTurn && (!$scope.game.played || !$scope.game.played.length)) {
@@ -180,7 +213,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         $scope.offerDraw = function () {
             if (!$scope.game[$scope.getPlayerColor()]) {
                 return;
-            }
+            }   
             $scope.game[$scope.getPlayerColor()].hasOfferDraw = true;
             socket.emit('offerDraw', $scope.game.id);
         };
@@ -226,15 +259,40 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.game.pieces = data.pieces;
         };
 
-        function setShowPlayed(value) {
-            $scope.showPlayed = value;
-            $rootScope.hideSound = value;
-        }
-
         $scope.togglePlayed = function () {
             var value = !$scope.showPlayed;
             setShowPlayed(value);
             user.setShowPlayed(value);
+        };
+
+        $scope.toggleMessages = function () {
+            if ($scope.unreadMessages > 0) {
+                showMessages();
+            }
+
+            $scope.showMessages = !$scope.showMessages;
+
+            if ($scope.showMessages) {
+                $timeout(function () {
+                    angular.element('[ng-model="message"]').focus();
+                });
+            }
+        };
+
+        $scope.sendMessage = function () {
+            if (!$scope.message) {
+                return;
+            }
+            socket.emit('sendMessageGame', {
+                gid: $scope.game.id,
+                message: $scope.message
+            });
+
+            $scope.message = '';
+        };
+
+        $scope.getLocaleTime = function(time) {
+            return new Date(time).toLocaleTimeString();
         };
 
         $scope.shareResult = function () {
@@ -255,6 +313,49 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 description: description,
             });
         };
+
+        function getMessageId(message) {
+            return $scope.game.gid + '-' + message.time;
+        }
+
+        function isUnreadMessage(message) {
+            return message.uid !== $rootScope.user.uid;
+        }
+
+        function addReadMessage(message) {
+            $scope.readMessages.push(getMessageId(message));
+        }
+
+        function showMessages(messages) {
+            $scope.unreadMessages = 0;
+            $scope.readMessages = [];
+            angular.forEach($scope.messages, addReadMessage);
+            setCookieReadMessages();
+        }
+
+        function getCookieReadMessages() {
+            return $cookies.getObject('gameReadMessages') || [];
+        }
+
+        function setCookieReadMessages() {
+            var messages = $scope.readMessages || [],
+                expires = new Date();
+            expires.setDate(expires.getDate() + 1);
+            $cookies.putObject('gameReadMessages', messages, {
+                expires: expires
+            });
+        }
+
+        function checkTime(player) {
+            if (player.time < player.timeTurn) {
+                player.timeTurn = player.time;
+            }
+        }
+
+        function setShowPlayed(value) {
+            $scope.showPlayed = value;
+            $rootScope.hideSound = value;
+        }
 
         $interval.cancel($interval.stopTimeGame);
         $interval.stopTimeGame = $interval(function () {

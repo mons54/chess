@@ -28,7 +28,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                     $scope.createdGames.push(value);
                 }
             });
-        });
+        }, $scope);
 
         socket.on('listChallenges', function (data) {
             $scope.challenges = [];
@@ -37,7 +37,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 value.uid = key;
                 $scope.challenges.push(value);
             });
-        });
+        }, $scope);
 
         socket.on('challengers', function (data) {
             $scope.challengers = [];
@@ -63,7 +63,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             $scope.friends.sort(function (a, b) {
                 return a.points > b.points;
             });
-        });
+        }, $scope);
 
         $scope.createGame = function () {
             socket.emit('createGame', $scope.game);

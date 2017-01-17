@@ -151,6 +151,8 @@
                 modal.show(modal.get('modal-connect'));
             }
 
+            var isDisconnect = false;
+
             socket.on('connect', function () {
                 var login = user.getLogin();
 
@@ -162,6 +164,7 @@
             });
 
             socket.on('disconnect', function () {
+                isDisconnect = true;
                 modal.show(modal.get('modal-disconnect'));
             });
 
@@ -175,6 +178,9 @@
             });
 
             socket.on('connected', function () {
+                if (isDisconnect) {
+                    $route.reload();
+                }
                 modal.hide(modal.get('modal-connect'));
                 modal.hide(modal.get('modal-disconnect'));
                 $rootScope.loading = false;
