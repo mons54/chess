@@ -1616,6 +1616,15 @@ a {
     height: 112px;
   }
 
+  .app-game__toggle-count--phone {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 65px;
+  }
+
   .app-game__toggle-count {
     position: absolute;
     right: 6px;

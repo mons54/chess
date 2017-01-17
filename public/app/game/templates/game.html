@@ -193,7 +193,9 @@
         <div class="app-game__toggle-icon--phone" ng-click="togglePlayedPhone()">
             <i class="app-game__toggle-icon material-icons">description</i>
         </div>
-        <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
+        <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessagesPhone()">
+            <span class="app-game__toggle-count">{{ unreadMessages }}</span>
+        </div>
     </div>
 </div>
 
