@@ -239,7 +239,7 @@ directive('elementToggle', [
             templateUrl: '/app/components/templates/element-toggle.html',
             link: function (scope, element, attrs) {
                 scope.toggle = function () {
-                    scope.open = !scope.open;
+                    scope.close = !scope.close;
                     element.parents('[element]').find('[element-content]').toggle();
                 }
             }

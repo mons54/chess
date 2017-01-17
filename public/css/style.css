@@ -1007,24 +1007,30 @@ a {
   cursor: pointer;
   height: 36px;
   line-height: 36px;
+  text-align: center;
 }
 
 .app-game__toggle-head--messages {
   padding: 0 20px;
 }
 
-.app-game__toggle-head .app-icons {
+.app-game__toggle-icon {
   position: absolute;
   left: 6px;
   top: 6px;
   color: rgba(0,0,0,.54);
+  z-index: 9;
+}
+
+.app-game__toggle-icon--action {
+  left: auto;
+  right: 6px;
 }
 
 .app-game__toggle-count {
-  position: absolute;
-  right: 6px;
-  top: 6px;
-  background-color: #795548;
+  position: relative;
+  display: inline-block;
+  background-color: #ff5252;
   color: #fff;
   width: 48px;
   height: 24px;
@@ -1042,11 +1048,11 @@ a {
   height: 0;
   border-style: solid;
   border-width: 0 5px 5px 0;
-  border-color: transparent #795548 transparent transparent;
+  border-color: transparent #ff5252 transparent transparent;
 }
 
 .app-game__toggle-content {
-  max-height: 289px;
+  height: 289px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -1105,7 +1111,7 @@ a {
   padding: 5px 10px;
   min-height: 40px;
   margin: 0 10px 0 63px;
-  background-color: #795548;
+  background-color: #ff5252;
   color: #fff;
 }
 
@@ -1118,7 +1124,7 @@ a {
   height: 0;
   border-style: solid;
   border-width: 0 10px 10px 0;
-  border-color: transparent #795548 transparent transparent;
+  border-color: transparent #ff5252 transparent transparent;
 }
 
 .app-game__message--user .app-game__message-avatar {
@@ -1127,14 +1133,14 @@ a {
 
 .app-game__message--user .app-game__message-content {
   margin: 0 63px 0 10px;
-  background-color: #ff5252;
+  background-color: #795548;
 }
 
 .app-game__message--user:not(.app-game__message--next) .app-game__message-content:before {
   right: -8px;
   left: initial;
   border-width: 0 0 10px 10px;
-  border-color: transparent transparent transparent #ff5252;
+  border-color: transparent transparent transparent #795548;
 }
 
 .app-game__message-infos {
@@ -1271,10 +1277,11 @@ a {
 .app-table--game tbody tr td,
 .app-table--game thead th {
   height: 36px;
+  line-height: 36px;
 }
 
 .app-table--game thead th {
-  padding: 0 18px 6px 18px;
+  padding: 0 18px ;
 } 
 
 .app-table--game tbody tr {
@@ -1439,10 +1446,6 @@ a {
 }
 
 @media (max-width: 745px) {
-
-  .app-game__toggle-content--messages {
-    padding: 5px 0;
-  }
 
   .app-game__message {
     padding: 5px 10px;
