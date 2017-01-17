@@ -1003,15 +1003,15 @@ a {
   left: 25px;
 }
 
+.app-game__toggle--phone {
+  display: none;
+}
+
 .app-game__toggle-head {
   cursor: pointer;
   height: 36px;
   line-height: 36px;
   text-align: center;
-}
-
-.app-game__toggle-head--messages {
-  padding: 0 20px;
 }
 
 .app-game__toggle-icon {
@@ -1025,6 +1025,10 @@ a {
 .app-game__toggle-icon--action {
   left: auto;
   right: 6px;
+}
+
+.app-game__toggle-icon--phone {
+  display: none;
 }
 
 .app-game__toggle-count {
@@ -1055,12 +1059,16 @@ a {
   height: 289px;
   overflow-x: hidden;
   overflow-y: auto;
+  border-top: 1px solid rgba(0,0,0,.12);
 }
 
 .app-game__toggle-content--messages {
   height: 252px;
-  border-top: 1px solid rgba(0,0,0,.12);
   margin-bottom: 36px;
+}
+
+.app-game__toggle-content .app-table tr:first-child td {
+  border-top: 0;
 }
 
 .app-game__toggle-textfield {
@@ -1539,7 +1547,7 @@ a {
   }
 
   .app-table--game thead th {
-    padding: 0 12px 6px 12px;
+    padding: 0 12px;
   }
 
   .app-table--game-stats thead th {
@@ -1551,13 +1559,75 @@ a {
   }
 
   .app-game__toggle {
+    display: none;
     right: 15px;
     left: 15px;
     width: auto;
   }
 
+  .app-game__toggle.show {
+    display: initial;
+  }
+
+  .app-game__toggle--phone {
+    display: initial;
+  }
+
+  .app-game__toggle-head--phone {
+    cursor: initial;
+  }
+
+  .app-game__toggle-icon--description,
+  .app-game__toggle-icon--action {
+    display: none;
+  }
+
+  .app-game__toggle-icon--phone {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 36px;
+    width: 36px;
+    border-right: 1px solid rgba(0,0,0,.12);
+  }
+
+  .app-game__toggle-icon--phone:nth-child(2) {
+    left: 36px;
+  }
+
+  .app-game__toggle-icon--action-phone {
+    right: 0;
+    top: 0;
+    left: initial;
+  }
+
+  .app-game__toggle-icon--phone .material-icons {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+  }
+
   .app-game__toggle-content {
-    max-height: 144px;
+    height: 148px;
+  }
+
+  .app-game__toggle-content--messages {
+    height: 112px;
+  }
+
+  .app-game__toggle-count {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+  }
+
+  .app-footer.is-game {
+    padding-bottom: 51px;
+  }
+
+  .app-button__sound.is-game {
+    bottom: 35px;
   }
 }
 

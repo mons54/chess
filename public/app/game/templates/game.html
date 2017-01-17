@@ -88,11 +88,24 @@
     </table>
 </div>
 
-<div class="app-game__toggle app-game__toggle--played mdl-shadow--2dp">
+<div class="app-game__toggle app-game__toggle--played mdl-shadow--2dp" ng-class="{'show' : showPlayedPhone }">
     <div class="app-game__toggle-head"
          ng-click="togglePlayed()">
-        <i class="app-game__toggle-icon material-icons">description</i> 
-        <i class="app-game__toggle-icon app-game__toggle-icon--action material-icons">{{ showPlayed ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</i>
+        
+        <i class="app-game__toggle-icon app-game__toggle-icon--description material-icons">description</i> 
+        <i class="app-game__toggle-icon app-game__toggle-icon--action material-icons">
+            {{ showPlayed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+        </i>
+
+        <div ng-click="togglePlayedPhone()" class="app-game__toggle-icon--phone">
+            <i class="app-game__toggle-icon material-icons">description</i> 
+        </div>
+        <div ng-click="togglePlayedPhone()" class="app-game__toggle-icon--phone app-game__toggle-icon--action-phone">
+            <i class="app-game__toggle-icon material-icons">
+                {{ showPlayed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+            </i>
+        </div>
+
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
@@ -130,11 +143,24 @@
     </div>
 </div>
 
-<div class="app-game__toggle app-game__toggle--messages mdl-shadow--2dp">
+<div class="app-game__toggle app-game__toggle--messages mdl-shadow--2dp" ng-class="{'show' : showMessagesPhone }">
     <div class="app-game__toggle-head app-game__toggle-head--messages"
          ng-click="toggleMessages()">
-        <i class="app-game__toggle-icon material-icons">chat</i>
-        <i class="app-game__toggle-icon app-game__toggle-icon--action material-icons">{{ showMessages ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</i>
+        
+        <i class="app-game__toggle-icon app-game__toggle-icon--description material-icons">chat</i>
+        <i class="app-game__toggle-icon app-game__toggle-icon--action material-icons">
+            {{ showMessages ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+        </i>
+
+        <div ng-click="toggleMessagesPhone()" class="app-game__toggle-icon--phone">
+            <i class="app-game__toggle-icon material-icons">chat</i> 
+        </div>
+        <div ng-click="toggleMessagesPhone()" class="app-game__toggle-icon--phone app-game__toggle-icon--action-phone">
+            <i class="app-game__toggle-icon material-icons">
+                {{ showMessages ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+            </i>
+        </div>
+
         <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
     </div>
     <div class="app-game__toggle-content app-game__toggle-content--messages"
@@ -157,6 +183,18 @@
             <input placeholder="..." ng-model="message">
         </div>
     </form>
+</div>
+
+<div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" ng-hide="showMessagesPhone || showPlayedPhone">
+    <div class="app-game__toggle-head app-game__toggle-head--phone">
+        <div class="app-game__toggle-icon--phone" ng-click="toggleMessagesPhone()">
+            <i class="app-game__toggle-icon material-icons">chat</i>
+        </div>
+        <div class="app-game__toggle-icon--phone" ng-click="togglePlayedPhone()">
+            <i class="app-game__toggle-icon material-icons">description</i>
+        </div>
+        <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
+    </div>
 </div>
 
 <div ng-if="isPlayer()">

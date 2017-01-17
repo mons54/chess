@@ -22,6 +22,12 @@ angular.module('game').
 controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'utils', 'modal', 'sound',
     
     function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, utils, modal, sound) {
+
+        $rootScope.isGame = true;
+
+        $scope.$on('$destroy', function() {
+            $rootScope.isGame = false;
+        });
         
         socket.emit('initGame', $routeParams.id);
 
@@ -259,13 +265,13 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.game.pieces = data.pieces;
         };
 
-        $scope.togglePlayed = function () {
+        function togglePlayed() {
             var value = !$scope.showPlayed;
             setShowPlayed(value);
             user.setShowPlayed(value);
-        };
+        }
 
-        $scope.toggleMessages = function () {
+        function toggleMessages() {
             if ($scope.unreadMessages > 0) {
                 showMessages();
             }
@@ -277,6 +283,32 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     angular.element('[ng-model="message"]').focus();
                 });
             }
+        }
+
+        $scope.togglePlayed = function () {
+            if (typeof $scope.showPlayedPhone !== 'undefined') {
+                return;
+            }
+            togglePlayed();
+        };
+
+        $scope.toggleMessages = function () {
+            if (typeof $scope.showMessagesPhone !== 'undefined') {
+                return;
+            }
+            toggleMessages();
+        };
+
+        $scope.togglePlayedPhone = function () {
+            $scope.showPlayed = $scope.showPlayedPhone;
+            $scope.showPlayedPhone = !$scope.showPlayedPhone;
+            togglePlayed();
+        };
+
+        $scope.toggleMessagesPhone = function () {
+            $scope.showMessages = $scope.showMessagesPhone;
+            $scope.showMessagesPhone = !$scope.showMessagesPhone;
+            toggleMessages();
         };
 
         $scope.sendMessage = function () {
