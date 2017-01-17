@@ -232,10 +232,11 @@ directive('elementToggle', [
  * @scope
  * @param {string} scrollDown Name of scope data (ex: played for $scope.played)
  */
-directive('scrollDown', [function () {
+directive('scrollDown', ['$timeout', function ($timeout) {
     return {
         scope: {
-            scrollDown: '='
+            scrollDown: '=',
+            scrollDownShow: '='
         },
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -252,6 +253,16 @@ directive('scrollDown', [function () {
                     element.scrollTop(el.scrollHeight);
                 }
             });
+
+            if (scope.scrollDownShow) {
+                scope.$parent.$watch(scope.scrollDownShow, function (newValue) {
+                    if (newValue && scrollDown) {
+                        $timeout(function() {
+                            element.scrollTop(el.scrollHeight);
+                        });
+                    }
+                });
+            }
         }
     };
 }]);

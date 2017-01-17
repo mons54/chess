@@ -118,7 +118,8 @@
     </div>
     <div class="app-game__toggle-content"
          ng-show="showPlayed"
-         scroll-down="'played'">
+         scroll-down="'played'"
+         scroll-down-show="'showPlayed'">
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
             <tbody>
                 <tr ng-repeat="play in played">
@@ -165,7 +166,8 @@
     </div>
     <div class="app-game__toggle-content app-game__toggle-content--messages"
          ng-show="showMessages"
-         scroll-down="'messages'">
+         scroll-down="'messages'"
+         scroll-down-show="'showMessages'">
          <div ng-repeat="message in messages" class="app-game__messages">
             <div class="app-game__message" ng-class="{'app-game__message--user': message.uid === user.uid, 'app-game__message--next': message.uid === messages[$index - 1].uid }">
                 <div class="app-game__message-avatar">
