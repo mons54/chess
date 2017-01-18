@@ -249,6 +249,6 @@ Game.prototype.start = function (white, black, time) {
     return gid;
 };
 
-Game.prototype.getPoints = function (p1, p2) {
-    return chess.game.getPoints(p1.points, p2.points, p1.coefficient, p1.countGame);
+Game.prototype.getPoints = function (p1, p2, coefficient, countGame) {
+    return chess.game.getPoints(p1, p2, coefficient, countGame);
 };

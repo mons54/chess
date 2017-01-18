@@ -26,7 +26,7 @@
     <div profile-game player="player1"></div>
 </div>
 
-<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell mdl-cell--12-col-tablet">
+<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <table ng-if="isPlayer()" 
            class="app-table app-table--game-actions">
         <tbody>
@@ -57,9 +57,8 @@
     </table>
 </div>
 
-<div class="app-game__infos mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
-    <table ng-if="game" 
-           class="app-table app-table--game app-table--game-stats mdl-data-table mdl-js-data-table">
+<div ng-if="game" class="mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <table class="app-table app-table--game mdl-data-table mdl-js-data-table">
         <thead>
             <tr>
                 <th></th>
@@ -189,14 +188,14 @@
 
 <div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" ng-hide="showMessagesPhone || showPlayedPhone">
     <div class="app-game__toggle-head app-game__toggle-head--phone">
+        <div class="app-game__toggle-icon--phone" ng-click="changeSound()">
+            <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
+        </div>
         <div class="app-game__toggle-icon--phone" ng-click="toggleMessagesPhone()">
             <i class="app-game__toggle-icon material-icons">chat</i>
         </div>
         <div class="app-game__toggle-icon--phone" ng-click="togglePlayedPhone()">
             <i class="app-game__toggle-icon material-icons">description</i>
-        </div>
-        <div class="app-game__toggle-icon--phone" ng-click="changeSound()">
-            <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
         </div>
         <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessagesPhone()">
             <span class="app-game__toggle-count">{{ unreadMessages }}</span>
@@ -204,12 +203,13 @@
     </div>
 </div>
 
-<button class="app-button__sound mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-js-ripple-effect mdl-color--accent"
-        ng-hide="hideSound"
-        ng-click="changeSound()">
-    <span class="mdl-button__ripple-container">
-    <i class="material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
-</button>
+<div class="app-button__fixed app-button__fixed--game">
+    <button class="app-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+            ng-hide="hideSound"
+            ng-click="changeSound()">
+        <i class="material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
+    </button>
+</div>
 
 <div ng-if="isPlayer()">
     <div id="modal-response-draw" 
@@ -348,6 +348,33 @@
             <h5 class="app-game-over__result-name">{{ game.result.name|translate }}</h5>
             <h6 class="app-game-over__result-winner" ng-if="game.result.value === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
             <h6 class="app-game-over__result-winner" ng-if="game.result.value === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
+            <table class="app-table app-table--game app-table--game-stats mdl-data-table mdl-js-data-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><span class="app-icon__points"></span></th>
+                        <th></th>
+                        <th><span class="app-icon__ranking"></span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ game.white.name }}</td>
+                        <td>{{ resultGame.white.points }}</td>
+                        <td>{{ game.white.points - resultGame.white.points }}</td>
+                        <td>{{ resultGame.white.ranking }}</td>
+                        <td>{{ game.white.ranking - resultGame.white.ranking }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ game.black.name }}</td>
+                        <td>{{ resultGame.black.points }}</td>
+                        <td>{{ game.black.points - resultGame.black.points }}</td>
+                        <td>{{ resultGame.black.ranking }}</td>
+                        <td>{{ game.black.ranking - resultGame.black.ranking }}</td>
+                    </tr>
+                </tbody>
+            </table>
             <button ng-click="shareResult()"
                     type="button" 
                     class="mdl-button mdl-button--raised mdl-button--colored">

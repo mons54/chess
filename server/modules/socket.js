@@ -87,12 +87,6 @@ module.exports = function (io) {
         })
         .then(function (response) {
 
-            if (response.unauthorized) {
-                socket.unauthorized = true;
-                socket.disconnect();
-                return;
-            }
-
             var socketConnected = self.getSocket(response.id);
 
             if (socketConnected) {
@@ -103,41 +97,65 @@ module.exports = function (io) {
             socket.avatar = response.avatar;
             socket.name = response.name;
             socket.facebookId = response.facebookId;
-            socket.points = response.points;
-            socket.blackList = response.blackList;
-            socket.trophies = response.trophies;
+            
+            self.init(socket, response);
 
             self.socketConnected[response.id] = socket.id;
 
-            db.count('users', { active: true, points: { $gt: socket.points } })
-            .then(function (response) {
-
-                socket.ranking = response + true;
-
-                self.sendUser(socket);
-
-                var gid = self.getUserGame(socket.uid);
-
-                if (gid) {
-                    socket.join(moduleGame.getRoom(gid));
-                    socket.emit('startGame', gid);
-                }
-
-                socket.emit('connected');
-            });
+            socket.emit('connected');
         });
     };
 
-    Module.prototype.sendUser = function (socket) {
+    Module.prototype.refreshUser = function (socket) {
+        var self = this;
+        db.findOne('users', { _id: db.ObjectId(socket.uid) })
+        .then(function (response) {
+            self.init(socket, response);
+        });
+    };
 
-        socket.emit('user', {
-            uid: socket.uid,
-            name: socket.name,
-            avatar: socket.avatar,
-            points: socket.points,
-            ranking: socket.ranking,
-            trophies: socket.trophies,
-            blackList: socket.blackList
+    Module.prototype.init = function (socket, data) {
+
+        if (data.unauthorized) {
+            socket.unauthorized = true;
+            socket.disconnect();
+            return;
+        }
+
+        this.checkBlackList(data.blackList);
+
+        socket.points = data.points;
+        socket.blackList = data.blackList;
+        socket.trophies = data.trophies;
+
+        var self = this,
+            gid = self.getUserGame(socket.uid);
+
+        if (gid) {
+            socket.join(moduleGame.getRoom(gid));
+            socket.emit('startGame', gid);
+            return;
+        }
+
+        db.count('users', { active: true, points: { $gt: data.points } })
+        .then(function (response) {
+
+            socket.ranking = response + 1;
+
+            socket.join('home', function () {
+                socket.emit('user', {
+                    uid: socket.uid,
+                    name: socket.name,
+                    avatar: socket.avatar,
+                    points: socket.points,
+                    ranking: socket.ranking,
+                    blackList: socket.blackList,
+                    trophies: data.trophies
+                });
+                socket.emit('listGames', moduleGame.createdGame);
+                socket.emit('listChallenges', socket.challenges);
+                self.listChallengers();
+            });
         });
     };
 
@@ -237,146 +255,158 @@ module.exports = function (io) {
         });
     };
 
-    Module.prototype.getBlackList = function (data, game, color) {
-
-        if (!(data.blackList instanceof Object)) {
-            data.blackList = {};
-        } else {
-            var maxTime = Math.round(new Date().getTime()) - (3600 * 1000 * 24);
-            for (var uid in data.blackList) {
-                if (maxTime > data.blackList[uid]) {
-                    delete data.blackList[uid];
-                }
-            };
+    Module.prototype.checkBlackList = function (blackList) {
+        if (!(blackList instanceof Object)) {
+            blackList = {};
+            return;
         }
 
-        if ((game.played.length < 4 || game.timestamp < game.timeTurn) && data.lastGame && data.lastGame === data.newGame) {
-            data.blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
-            console.log('blackList', data.blackList);
-        }
-
-        return data.blackList;
+        var expires = new Date();
+        expires.setDate(expires.getDate() - 1);
+        var maxTime = expires.getTime();
+        for (var uid in blackList) {
+            if (maxTime > blackList[uid]) {
+                delete blackList[uid];
+            }
+        };
     };
 
-    Module.prototype.getDataPlayerGame = function (data, game, result, color) {
-        
-        var coefficient,
-            position = color === 'white' ? 1 : 2,
-            success  = data.success ? data.success : 0;
+    Module.prototype.getNewBlackList = function (blackList, lastGame, newGame, game, color) {
+
+        this.checkBlackList(blackList);
+
+        if (lastGame && lastGame === newGame) {
+            blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+            console.log('blackList', blackList);
+        }
+
+        return blackList;
+    };
+
+    Module.prototype.getNewSuccess = function (success, result, position) {
+
+        if (!success) {
+            success = 0;
+        }
 
         if (result === 0) {
-            coefficient = 0.5;
             success = 0;
         } else if (result === position) {
-            coefficient = 1;
             if (success < 0) {
                 success = 0;
             }
             success++;
         } else {
-            coefficient = 0;
             if (success > 0) {
                 success = 0;
             }
             success--;
         }
 
-        return {
-            coefficient: coefficient,
-            success: success,
-            blackList: this.getBlackList(data, game, color)
-        };
+        return success;
+    };
+
+    Module.prototype.getNewPoints = function (p1, p2, result, position) {
+        var coefficient = 0;
+        if (result === 0) {
+            coefficient = 0.5;
+        } else if (result === position) {
+            coefficient = 1;
+        }
+        return p1.points + moduleGame.getPoints(p1.points, p2.points, coefficient, p1.countGame)
     };
 
     Module.prototype.saveGame = function (game) {
 
         var self = this,
-            whiteUid = game.white.uid,
-            blackUid = game.black.uid,
+            white = game.white,
+            black = game.black,
             result = game.result.value,
-            hashGame = JSON.stringify(game.played).hash(),
+            hashGame = null,
             data;
+
+        if (game.result !== 0 && (game.played.length < 4 || game.timestamp < game.timeTurn)) {
+            hashGame = '';
+            game.played.forEach(function (value) {
+                hashGame += value.hash;
+            });
+            hashGame = JSON.stringify(hashGame).hash();
+        }
 
         moduleGame.deleteGame(game.id);
 
-        delete this.userGames[whiteUid];
-        delete this.userGames[blackUid];
+        delete this.userGames[white.uid];
+        delete this.userGames[black.uid];
 
-        db.findOne('users', { _id: db.ObjectId(whiteUid) })
-        .then(function (response) {
+        data = {
+            white: {
+                points: this.getNewPoints(white, black, result, 1),
+                lastGame: hashGame
+            },
+            black: {
+                points: this.getNewPoints(black, white, result, 2),
+                lastGame: hashGame
+            }
+        };
 
-            response.newGame = hashGame;
-            
-            var player = self.getDataPlayerGame(response, game, result, 'white');
-
-            data = {
-                white: {
-                    points: response.points,
-                    countGame: game.white.countGame,
-                    coefficient: player.coefficient,
-                    success: player.success,
-                    lastGame: response.newGame,
-                    blackList: player.blackList
-                }
-            };
-
-            return db.findOne('users', { _id: db.ObjectId(blackUid) });
-        })
-        .then(function (response) {
-
-            response.newGame = hashGame;
-
-            var player = self.getDataPlayerGame(response, game, result, 'black');
-            
-            data.black = {
-                points: response.points,
-                coefficient: player.coefficient,
-                countGame: game.black.countGame,
-                success: player.success,
-                lastGame: response.newGame,
-                blackList: player.blackList
-            };
-
+        db.all([
+            db.findOne('users', { _id: db.ObjectId(white.uid) }),
+            db.findOne('users', { _id: db.ObjectId(black.uid) }),
             db.save('games', {
                 result: result,
-                white: whiteUid,
-                black: blackUid,
+                white: white.uid,
+                black: black.uid,
                 date: new Date()
-            });
+            })
+        ]).then(function (response) {
+            data.white.success = self.getNewSuccess(response[0].success, result, 1);
+            data.black.success = self.getNewSuccess(response[1].success, result, 2);
+            data.white.blackList = self.getNewBlackList(response[0].blackList, response[0].lastGame, hashGame, game, 'white');
+            data.black.blackList = self.getNewBlackList(response[1].blackList, response[1].lastGame, hashGame, game, 'black');
+            data.white.trophies = response[0].trophies;
+            data.black.trophies = response[1].trophies;
+            data.white.countGame = white.countGame + 1;
+            data.black.countGame = black.countGame + 1;
 
-            var whitePoints = moduleGame.getPoints(data.white, data.black),
-                blackPoints = moduleGame.getPoints(data.black, data.white);
-
-            /**
-             * Important: Set points only after get points game 
-             */
-            data.white.points += whitePoints;
-            data.black.points += blackPoints;
-
-            self.updateUserGame(whiteUid, result, data.white);
-            self.updateUserGame(blackUid, result, data.black);
-        });
-    };
-
-    Module.prototype.updateUserGame = function (uid, result, data) {
-        var self = this;
-        db.update('users', { _id: db.ObjectId(uid) }, {
-            points: data.points,
-            success: data.success,
-            lastGame: data.lastGame,
-            blackList: data.blackList,
-            active: true
+            return db.all([
+                db.update('users', { _id: db.ObjectId(white.uid) }, {
+                    points: data.white.points,
+                    success: data.white.success,
+                    lastGame: data.white.lastGame,
+                    blackList: data.white.blackList,
+                    active: true
+                }),
+                db.update('users', { _id: db.ObjectId(black.uid) }, {
+                    points: data.black.points,
+                    success: data.black.success,
+                    lastGame: data.black.lastGame,
+                    blackList: data.black.blackList,
+                    active: true
+                })
+            ]);
         })
         .then(function (response) {
-            var socket = self.getSocket(uid);
-            if (!socket) {
-                return;
-            }
-            socket.points = data.points;
-            socket.blackList = data.blackList;
-            self.sendUser(socket);
-            data.countGame++;
-            self.setTrophies(socket, data);
+
+            self.setTrophies(white.uid, data.white);
+            self.setTrophies(black.uid, data.black);
+
+            return db.all([
+                db.count('users', { active: true, points: { $gt: data.white.points }}),
+                db.count('users', { active: true, points: { $gt: data.black.points }})
+            ]);
+        })
+        .then(function (response) {
+
+            io.to(moduleGame.getRoom(game.id)).emit('gameOver', {
+                white: {
+                    points: data.white.points,
+                    ranking: response[0] + 1
+                },
+                black: {
+                    points: data.black.points,
+                    ranking: response[1] + 1
+                }
+            });
         });
     };
 
@@ -717,9 +747,10 @@ module.exports = function (io) {
         return false;
     };
 
-    Module.prototype.setTrophies = function (socket, data) {
+    Module.prototype.setTrophies = function (uid, data) {
 
-        var trophies = [];
+        var self = this,
+            trophies = [];
 
         if (data.countGame >= 5000) {
             trophies = trophies.concat([1, 2, 3, 4, 5]);
@@ -735,9 +766,9 @@ module.exports = function (io) {
 
         db.count('games', { 
             $or: [{ 
-                $and: [{ black: socket.uid, result: 2 }] 
+                $and: [{ black: uid, result: 2 }] 
             }, { 
-                $and: [{ white: socket.uid, result: 1 }]
+                $and: [{ white: uid, result: 1 }]
             }] 
         })
         .then(function (response) {
@@ -761,7 +792,7 @@ module.exports = function (io) {
             return db.count('games', { $and: [{
                 date: { $gt: date }
             }, { 
-                $or: [{white: socket.uid}, {black: socket.uid}] 
+                $or: [{white: uid}, {black: uid}] 
             } ]});
         })
         .then(function (response) {
@@ -798,9 +829,9 @@ module.exports = function (io) {
             var newTrophies = [];
 
             trophies.forEach(function (value) {
-                if (socket.trophies.indexOf(value) === -1) {
+                if (data.trophies.indexOf(value) === -1) {
                     newTrophies.push(value);
-                    socket.trophies.push(value);
+                    data.trophies.push(value);
                 }
             });
 
@@ -808,12 +839,15 @@ module.exports = function (io) {
                 return;
             }
 
-            db.update('users', { _id: db.ObjectId(socket.uid) }, { trophies: socket.trophies })
+            db.update('users', { _id: db.ObjectId(uid) }, { trophies: data.trophies })
             .then(function (response) {
-                socket.emit('trophies', {
-                    newTrophies: newTrophies,
-                    trophies: socket.trophies
-                });
+                var socket = self.getSocket(uid);
+                if (socket) {
+                    socket.emit('trophies', {
+                        newTrophies: newTrophies,
+                        trophies: data.trophies
+                    });
+                }
             });
         });
     };

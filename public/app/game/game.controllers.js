@@ -43,7 +43,15 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.sound = sound.sound;
 
-        socket.on('game', function (game) {
+        socket.on('gameOver', function (data) {
+            if (!$scope.game || !$scope.game.finish) {
+                return;
+            }
+            $scope.resultGame = data;
+            modal.show(modal.get('modal-finish-game'));
+        });
+
+        socket.on('game', function game (game) {
             if (!game) {
                 $rootScope.user.gid = null;
                 $location.path('/');
@@ -56,7 +64,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             if (game.finish) {
                 $rootScope.user.gid = null;
-                modal.show(modal.get('modal-finish-game'));
             }
 
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],

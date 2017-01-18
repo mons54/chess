@@ -558,7 +558,7 @@ a {
   padding-bottom: 16px;
 }
 
-.app-footer.is-game {
+.app-layout.is-game .app-footer {
   padding-bottom: 51px;
 }
 
@@ -981,14 +981,24 @@ a {
     opacity: 0.7;
 }
 
-.app-button__sound {
+.app-button__fixed {
   display: block;
   position: fixed;
-  right: 0;
-  bottom: 0;
-  margin-right: 40px;
-  margin-bottom: 50px;
+  right: 25px;
+  bottom: 25px;
   z-index: 9;
+}
+
+.app-button__fixed--game {
+  bottom: 46px;
+}
+
+.app-button__fixed .app-button {
+  margin-left: 6px;
+}
+
+.app-button__fixed .app-button:last-child {
+  margin-left: 0;
 }
 
 .app-game__toggle {
@@ -1373,10 +1383,6 @@ a {
   padding-left: 0;
 }
 
-.app-table--game-stats {
-  border-top: 1px solid rgba(0,0,0,.12);
-}
-
 .app-promotion__icon {
   position: relative;
   display: inline-block;
@@ -1389,8 +1395,12 @@ a {
   padding-top: 100%;
 }
 
-.mdl-layout--fixed-header > .mdl-layout__header.is-game {
+.app-layout.is-user-game .app-header {
   display: none;
+}
+
+.app-layout.is-game .app-content {
+  overflow: visible;
 }
 
 @media screen and (max-width: 1024px) {
@@ -1398,12 +1408,22 @@ a {
     padding: 0 16px;
   }
 
-  .app-button__sound {
-    margin-right: 15px;
-    margin-bottom: 46px;
-    height: 42px;
-    min-width: 42px;
-    width: 42px;
+  .app-button__fixed {
+    display: block;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 9;
+  }
+
+  .app-button__fixed--game {
+    bottom: 46px;
+  }
+
+  .app-button__fixed .app-button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
   }
 
   .app-game__toggle--played {
@@ -1416,6 +1436,54 @@ a {
 
   .app-footer {
     font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 961px) {
+  @media (max-height: 959px) {
+    .app-layout.is-game .app-grid {
+      max-width: 700px;
+    }
+    .app-layout.is-game .app-grid .mdl-cell--6-col, 
+    .app-layout.is-game .app-grid .mdl-cell--6-col-desktop.mdl-cell--6-col-desktop {
+      width: calc(100% - 16px);
+    }
+  }
+
+  @media (max-height: 899px) {
+    .app-layout.is-game .app-grid {
+      max-width: 650px;
+    }
+  }
+
+  @media (max-height: 849px) {
+    .app-layout.is-game .app-grid {
+      max-width: 600px;
+    }
+  }
+
+  @media (max-height: 799px) {
+    .app-layout.is-game .app-grid {
+      max-width: 550px;
+    }
+  }
+
+  @media (max-height: 749px) {
+    .app-layout.is-game .app-grid {
+      max-width: 500px;
+    }
+  }
+
+  @media (max-height: 699px) {
+    .app-layout.is-game .app-grid {
+      max-width: 450px;
+    }
+  }
+
+  @media (max-height: 649px) {
+    .app-layout.is-game .app-grid {
+      max-width: 400px;
+    }
   }
 }
 
@@ -1447,14 +1515,14 @@ a {
   }
 }
 
-@media (min-width: 600px) and (max-width: 1024px) {
-  .app-footer.is-game {
-    padding-top: 5px;
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+  .app-layout.is-game .app-footer {
+    padding-top: 4px;
     padding-bottom: 56px;
   }
 }
 
-@media (min-width: 600px) and (max-width: 745px) {
+@media screen and (min-width: 600px) and (max-width: 745px) {
   .app-game__toggle--played {
     width: calc(55% - 20px);
   }
@@ -1468,7 +1536,7 @@ a {
   }
 }
 
-@media (max-width: 745px) {
+@media screen and (max-width: 745px) {
 
   .app-game__message {
     padding: 5px 10px;
@@ -1515,7 +1583,7 @@ a {
   }
 }
 
-@media (min-width: 600px) {
+@media screen and (min-width: 600px) {
   .app-form--inline .app-form__textfield {
     display:inline-block;
     margin-bottom: 0
@@ -1551,7 +1619,7 @@ a {
   }
 }
 
-@media (max-width: 599px) {
+@media screen and (max-width: 599px) {
   
   .app-table.app-table--game {
     font-size: 12px;
@@ -1563,10 +1631,6 @@ a {
 
   .app-table--game thead th {
     padding: 0 12px;
-  }
-
-  .app-table--game-stats thead th {
-    padding: 0 6px 6px 6px;
   }
 
   .app-table--game tbody tr td {
@@ -1607,12 +1671,16 @@ a {
     border-right: 1px solid rgba(0,0,0,.12);
   }
 
-  .app-game__toggle-icon--phone:nth-of-type(2) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(2) {
     left: 36px;
   }
 
-  .app-game__toggle-icon--phone:nth-of-type(3) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(3) {
     left: 72px;
+  }
+
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(4) {
+    left: 108px;
   }
 
   .app-game__toggle-icon--phone.app-game__toggle-icon--action-phone {
@@ -1650,12 +1718,12 @@ a {
     top: 6px;
   }
 
-  .app-button__sound {
+  .app-button__fixed {
     display: none;
   }
 }
 
-@media (max-width: 479px) {
+@media screen and (max-width: 479px) {
 
   .mdl-data-table th {
     padding: 0 6px 12px 6px;

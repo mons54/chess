@@ -29,11 +29,7 @@ module.exports = function (app, io) {
         });
 
         socket.on('joinHome', function () {
-            socket.join('home', function () {
-                socket.emit('listGames', moduleGame.createdGame);
-                socket.emit('listChallenges', socket.challenges);
-                moduleSocket.listChallengers();
-            });
+            moduleSocket.refreshUser(socket);
         });
 
         socket.on('challenge', function (data) {
