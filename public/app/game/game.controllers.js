@@ -44,11 +44,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         $scope.sound = sound.sound;
 
         socket.on('gameOver', function (data) {
-            if (!$scope.game || !$scope.game.finish) {
-                return;
-            }
             $scope.resultGame = data;
-            modal.show(modal.get('modal-finish-game'));
         });
 
         socket.on('game', function game (game) {
@@ -64,6 +60,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             if (game.finish) {
                 $rootScope.user.gid = null;
+                modal.show(modal.get('modal-finish-game'));
+                var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.time);
             }
 
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
@@ -89,10 +87,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 }
                 game[piece.color].lostPieces[piece.name]--;
             });
-
-            if (game.finish) {
-                var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.time);
-            }
 
             $scope.played = [];
 
@@ -137,6 +131,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             $scope.letters = letters;
             $scope.numbers = numbers;
+
         }, $scope);
 
         socket.on('offerDraw', function (data) {
@@ -276,13 +271,22 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.game.pieces = data.pieces;
         };
 
-        function togglePlayed() {
+        $scope.togglePlayed = function (isPhone) {
+            if (isPhone || $scope.showPlayedPhone) {
+                $scope.showPlayed = $scope.showPlayedPhone;
+                $scope.showPlayedPhone = !$scope.showPlayedPhone;
+            }
             var value = !$scope.showPlayed;
             setShowPlayed(value);
             user.setShowPlayed(value);
-        }
+        };
 
-        function toggleMessages() {
+        $scope.toggleMessages = function (isPhone) {
+            if (isPhone || $scope.showMessagesPhone) {
+                $scope.showMessages = $scope.showMessagesPhone;
+                $scope.showMessagesPhone = !$scope.showMessagesPhone;
+            }
+
             if ($scope.unreadMessages > 0) {
                 showMessages();
             }
@@ -294,33 +298,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     angular.element('[ng-model="message"]').focus();
                 });
             }
-        }
-
-        $scope.togglePlayed = function () {
-            if (typeof $scope.showPlayedPhone !== 'undefined') {
-                return;
-            }
-            togglePlayed();
         };
 
-        $scope.toggleMessages = function () {
-            if (typeof $scope.showMessagesPhone !== 'undefined') {
-                return;
-            }
-            toggleMessages();
-        };
 
-        $scope.togglePlayedPhone = function () {
-            $scope.showPlayed = $scope.showPlayedPhone;
-            $scope.showPlayedPhone = !$scope.showPlayedPhone;
-            togglePlayed();
-        };
-
-        $scope.toggleMessagesPhone = function () {
-            $scope.showMessages = $scope.showMessagesPhone;
-            $scope.showMessagesPhone = !$scope.showMessagesPhone;
-            toggleMessages();
-        };
 
         $scope.sendMessage = function () {
             if (!$scope.message) {

@@ -26,9 +26,8 @@
     <div profile-game player="player1"></div>
 </div>
 
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <table ng-if="isPlayer()" 
-           class="app-table app-table--game-actions">
+<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-if="isPlayer()">
+    <table class="app-table app-table--game-actions">
         <tbody>
             <tr>
                 <td>
@@ -96,15 +95,6 @@
             {{ showPlayed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
         </i>
 
-        <div ng-click="togglePlayedPhone()" class="app-game__toggle-icon--phone">
-            <i class="app-game__toggle-icon material-icons">description</i> 
-        </div>
-        <div ng-click="togglePlayedPhone()" class="app-game__toggle-icon--phone app-game__toggle-icon--action-phone">
-            <i class="app-game__toggle-icon material-icons">
-                {{ showPlayed ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
-            </i>
-        </div>
-
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
@@ -152,15 +142,6 @@
             {{ showMessages ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
         </i>
 
-        <div ng-click="toggleMessagesPhone()" class="app-game__toggle-icon--phone">
-            <i class="app-game__toggle-icon material-icons">chat</i> 
-        </div>
-        <div ng-click="toggleMessagesPhone()" class="app-game__toggle-icon--phone app-game__toggle-icon--action-phone">
-            <i class="app-game__toggle-icon material-icons">
-                {{ showMessages ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
-            </i>
-        </div>
-
         <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
     </div>
     <div class="app-game__toggle-content app-game__toggle-content--messages"
@@ -191,13 +172,13 @@
         <div class="app-game__toggle-icon--phone" ng-click="changeSound()">
             <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
         </div>
-        <div class="app-game__toggle-icon--phone" ng-click="toggleMessagesPhone()">
+        <div class="app-game__toggle-icon--phone" ng-click="toggleMessages(true)">
             <i class="app-game__toggle-icon material-icons">chat</i>
         </div>
-        <div class="app-game__toggle-icon--phone" ng-click="togglePlayedPhone()">
+        <div class="app-game__toggle-icon--phone" ng-click="togglePlayed(true)">
             <i class="app-game__toggle-icon material-icons">description</i>
         </div>
-        <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessagesPhone()">
+        <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessages(true)">
             <span class="app-game__toggle-count">{{ unreadMessages }}</span>
         </div>
     </div>
