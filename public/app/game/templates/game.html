@@ -320,42 +320,51 @@
      role="dialog" 
      aria-hidden="true"
      modal-close-bg>
-    <div class="app-modal__dialog">
+    <div class="app-modal__dialog app-modal__dialog--head">
+        <a href modal-close class="app-modal__close">
+            <i class="material-icons">clear</i>
+        </a>
+        <div class="app-modal__head">{{ 'game_over'|translate }}</div>
         <div class="app-modal__content app__text-center">
-            <a href modal-close class="app-modal__close">
-                <i class="material-icons">clear</i>
-            </a>
-            <h4 class="app-modal__title">{{ 'game_over'|translate }}</h4>
-            <h5 class="app-game-over__result-name">{{ game.result.name|translate }}</h5>
-            <h6 class="app-game-over__result-winner" ng-if="game.result.value === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
-            <h6 class="app-game-over__result-winner" ng-if="game.result.value === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
-            <table class="app-table app-table--game app-table--game-stats mdl-data-table mdl-js-data-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th><span class="app-icon__points"></span></th>
-                        <th></th>
-                        <th><span class="app-icon__ranking"></span></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ game.white.name }}</td>
-                        <td>{{ resultGame.white.points }}</td>
-                        <td>{{ game.white.points - resultGame.white.points }}</td>
-                        <td>{{ resultGame.white.ranking }}</td>
-                        <td>{{ game.white.ranking - resultGame.white.ranking }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ game.black.name }}</td>
-                        <td>{{ resultGame.black.points }}</td>
-                        <td>{{ game.black.points - resultGame.black.points }}</td>
-                        <td>{{ resultGame.black.ranking }}</td>
-                        <td>{{ game.black.ranking - resultGame.black.ranking }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="app-modal__title">{{ game.result.name|translate }}</div>
+
+            <!--<div ng-if="resultGame" class="app-game__result">
+                <div class="app-game__result-color app-game__result-color--white">
+                    <div class="app-game__result-player">{{ game.white.name }}</div>
+                    <div class="app-game__result-item">
+                        <span class="app-icon__points"></span>
+                        {{ resultGame.white.points }}
+                        {{ resultGame.white.points - game.white.points }}
+                    </div>
+                    <div class="app-game__result-item">
+                        <span class="app-icon__ranking"></span>
+                        {{ game.white.ranking }}
+                        {{ resultGame.white.ranking - game.white.ranking }}
+                    </div>
+                </div>
+                <div class="app-game__result-icon">
+                    <i class="material-icons">games</i>
+                </div>
+                <div class="app-game__result-color app-game__result-color--black">
+                    <div class="app-game__result-player">{{ game.black.name }}</div>
+                    <div class="app-game__result-item">
+                        <span class="app-icon__points"></span>
+                        {{ game.black.points }}
+                        {{ game.black.points - resultGame.black.points }}
+                        {{ resultGame.black.points }}
+                    </div>
+                    <div class="app-game__result-item">
+                        <span class="app-icon__ranking"></span>
+                        {{ game.black.ranking }}
+                        {{ game.black.ranking - resultGame.black.ranking }}
+                        {{ resultGame.black.ranking }}
+                    </div>
+                </div>
+            </div>!-->
+
+            <h6 ng-if="game.result.value === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
+            <h6 ng-if="game.result.value === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
+
             <button ng-click="shareResult()"
                     type="button" 
                     class="mdl-button mdl-button--raised mdl-button--colored">
