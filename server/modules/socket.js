@@ -97,12 +97,13 @@ module.exports = function (io) {
             socket.avatar = response.avatar;
             socket.name = response.name;
             socket.facebookId = response.facebookId;
-            
-            self.init(socket, response);
 
             self.socketConnected[response.id] = socket.id;
-
-            socket.emit('connected');
+            
+            self.init(socket, response)
+            .then(function () {
+                socket.emit('connected');
+            });
         });
     };
 
@@ -128,34 +129,36 @@ module.exports = function (io) {
         socket.blackList = data.blackList;
         socket.trophies = data.trophies;
 
-        var self = this,
-            gid = self.getUserGame(socket.uid);
+        var self = this;
 
-        if (gid) {
-            socket.join(moduleGame.getRoom(gid));
-            socket.emit('startGame', gid);
-            return;
-        }
-
-        db.count('users', { active: true, points: { $gt: data.points } })
+        return db.count('users', { active: true, points: { $gt: data.points } })
         .then(function (response) {
 
             socket.ranking = response + 1;
 
-            socket.join('home', function () {
-                socket.emit('user', {
-                    uid: socket.uid,
-                    name: socket.name,
-                    avatar: socket.avatar,
-                    points: socket.points,
-                    ranking: socket.ranking,
-                    blackList: socket.blackList,
-                    trophies: data.trophies
-                });
-                socket.emit('listGames', moduleGame.createdGame);
-                socket.emit('listChallenges', socket.challenges);
-                self.listChallengers();
+            socket.emit('user', {
+                uid: socket.uid,
+                name: socket.name,
+                avatar: socket.avatar,
+                points: socket.points,
+                ranking: socket.ranking,
+                blackList: socket.blackList,
+                trophies: data.trophies
             });
+
+            var gid = self.getUserGame(socket.uid)
+
+            if (gid) {
+                socket.join(moduleGame.getRoom(gid), function () {
+                    socket.emit('startGame', gid);
+                });
+            } else {
+                socket.join('home', function () {
+                    socket.emit('listGames', moduleGame.createdGame);
+                    socket.emit('listChallenges', socket.challenges);
+                    self.listChallengers();
+                });
+            }
         });
     };
 
