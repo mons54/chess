@@ -150,7 +150,7 @@
                     <td>{{ challenger.points }}</td>
                     <td>{{ challenger.ranking }}</td>
                     <td>
-                        <button ng-if="challenger.uid !== user.uid"
+                        <button ng-disabled="blackList(challenger.uid)"
                                 ng-click="setChallenger(challenger)"
                                 show-modal="modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
