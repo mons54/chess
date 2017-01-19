@@ -43,11 +43,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.sound = sound.sound;
 
-        socket.on('gameOver', function (data) {
-            $scope.resultGame = data;
-        });
-
-        socket.on('game', function game (game) {
+        socket.on('game', function (game) {
             if (!game) {
                 $rootScope.user.gid = null;
                 $location.path('/');

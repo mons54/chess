@@ -328,42 +328,38 @@
         <div class="app-modal__content app__text-center">
             <div class="app-modal__title">{{ game.result.name|translate }}</div>
 
-            <!--<div ng-if="resultGame" class="app-game__result">
-                <div class="app-game__result-color app-game__result-color--white">
-                    <div class="app-game__result-player">{{ game.white.name }}</div>
-                    <div class="app-game__result-item">
-                        <span class="app-icon__points"></span>
-                        {{ resultGame.white.points }}
-                        {{ resultGame.white.points - game.white.points }}
+            <div class="app-game__result mdl-grid">
+                <div class="mdl-cell mdl-cell--6-col app-game__result-color app-game__result-color--white">
+                    <div class="app-game__result-player">
+                        <i ng-if="game.result.value === 1" class="material-icons">star</i>
+                        <span class="app-game__result-name">{{ game.white.name }}</span>
+                        <i ng-if="game.result.value === 1" class="material-icons">star</i>
                     </div>
-                    <div class="app-game__result-item">
-                        <span class="app-icon__ranking"></span>
-                        {{ game.white.ranking }}
-                        {{ resultGame.white.ranking - game.white.ranking }}
+                    <div class="app-game__result-icon">
+                        <img src="../images/game-1/queen-white.svg">
                     </div>
-                </div>
-                <div class="app-game__result-icon">
-                    <i class="material-icons">games</i>
-                </div>
-                <div class="app-game__result-color app-game__result-color--black">
-                    <div class="app-game__result-player">{{ game.black.name }}</div>
-                    <div class="app-game__result-item">
-                        <span class="app-icon__points"></span>
-                        {{ game.black.points }}
-                        {{ game.black.points - resultGame.black.points }}
-                        {{ resultGame.black.points }}
-                    </div>
-                    <div class="app-game__result-item">
-                        <span class="app-icon__ranking"></span>
-                        {{ game.black.ranking }}
-                        {{ game.black.ranking - resultGame.black.ranking }}
-                        {{ resultGame.black.ranking }}
+                    <div class="app-game__result-points" 
+                         ng-init="pointsWhite = getPoints(game.white, game.black, game.result.value === 0 ? 0.5 : (game.result.value === 1 ? 1 : 0))"
+                         ng-class="{'positive': pointsWhite > 0, 'negative': pointsWhite < 0 }">
+                        {{ pointsWhite }}
                     </div>
                 </div>
-            </div>!-->
-
-            <h6 ng-if="game.result.value === 1">{{ 'winner'|translate }}: {{ game.white.name }}</h6>
-            <h6 ng-if="game.result.value === 2">{{ 'winner'|translate }}: {{ game.black.name }}</h6>
+                <div class="mdl-cell mdl-cell--6-col app-game__result-color app-game__result-color--black">
+                    <div class="app-game__result-player">
+                        <i ng-if="game.result.value === 2" class="material-icons">star</i>
+                        <span class="app-game__result-name">{{ game.black.name }}</span>
+                        <i ng-if="game.result.value === 2" class="material-icons">star</i>
+                    </div>
+                    <div class="app-game__result-icon">
+                        <img src="../images/game-1/queen-black.svg">
+                    </div>
+                    <div class="app-game__result-points"
+                         ng-init="pointsBlack = getPoints(game.white, game.black, game.result.value === 0 ? 0.5 : (game.result.value === 2 ? 1 : 0))"
+                         ng-class="{'positive': pointsBlack > 0, 'negative': pointsBlack < 0 }">
+                        {{ pointsBlack }}
+                    </div>
+                </div>
+            </div>
 
             <button ng-click="shareResult()"
                     type="button" 

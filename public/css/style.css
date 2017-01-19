@@ -1309,16 +1309,53 @@ a {
   height: 100%;
 }
 
-.app-game__result-color {
+.app-game__result {
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.app-game__result-player {
+  font-size: 24px;
+  height: 24px;
+  line-height: 24px;
+  margin-bottom: 12px;
+}
+
+.app-game__result-name {
   display: inline-block;
+  max-width: calc(100% - 62px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-game__result-player .material-icons {
+  color: #FF9800;
 }
 
 .app-game__result-icon {
+  position: relative;
   display: inline-block;
+  width:  100px;
+  height: 100px;
+  margin-bottom: 12px;
 }
 
-.app-game__result-item {
-  display: inline-block;
+.app-game__result-icon img {
+  width:  100%;
+  height: 100%;
+}
+
+.app-game__result-points {
+  font-size: 24px;
+}
+
+.app-game__result-points.positive {
+  color: #4CAF50;
+}
+
+.app-game__result-points.negative {
+  color: #F44336;
 }
 
 .app-table--game {
@@ -1571,6 +1608,12 @@ a {
 
   .app-profile--game .app-profile__name {
     max-width: 450px;
+  }
+}
+
+@media (max-width: 839px) and (min-width: 480px) {
+  .mdl-cell--6-col, .mdl-cell--6-col-tablet.mdl-cell--6-col-tablet {
+      width: calc(50% - 16px);
   }
 }
 
