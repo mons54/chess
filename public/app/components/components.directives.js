@@ -265,4 +265,24 @@ directive('scrollDown', ['$timeout', function ($timeout) {
             }
         }
     };
+}]).
+
+directive('pagination', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: true,
+        templateUrl: '/app/components/templates/pagination.html',
+        controller: ['$scope', function ($scope) {
+            $scope.setPage = function (page) {
+                page = parseInt(page);
+                if (!page || page < 0 || page === $rootScope.pages.page || page > $rootScope.pages.last) {
+                    $rootScope.page = $rootScope.pages.page;
+                    return;
+                }
+                $rootScope.page = page;
+                $rootScope.$emit('page', page);
+            };
+        }]
+    };
 }]);

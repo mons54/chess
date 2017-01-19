@@ -214,6 +214,7 @@ a {
 .app-modal__content {
   position: relative;
   padding: 2.4rem;
+  background-color: #fff;
 }
 
 .app-modal__title {
@@ -365,7 +366,6 @@ a {
 }
 
 .app-form__textfield>input:focus {
-  height: 33px;
   margin-bottom: -1px
 }
 
@@ -374,11 +374,6 @@ a {
 }
 
 .app-form__textfield>textarea[rows]:not([rows="2"]):focus {
-  margin-bottom: -1px
-}
-
-.app-form__textfield>input:focus {
-  height: 33px;
   margin-bottom: -1px
 }
 
@@ -837,8 +832,17 @@ a {
   width: 50px;
 }
 
+.app-table--ranking {
+  width: 100%;
+}
+
 .app-table--ranking tbody tr {
   cursor: pointer;
+}
+
+.app-table--ranking tbody tr.is-user {
+  background-color: #795548;
+  color: #fff;
 }
 
 .app-table--ranking tbody tr td {
@@ -855,40 +859,42 @@ a {
   max-width: 100px;
 }
 
-.app-ranking__pagination {
+.app-pagination {
   width: 100%;
   text-align: center;
 }
 
-.app-ranking__pagination-content {
+.app-pagination--fixed {
+  display: none;
+}
+
+.app-pagination__content {
   padding: 8px;
+  text-align: right;
 }
 
-.app-ranking__pagination-form {
+.app-pagination__form {
   display: inline-block;
+  margin-right: 8px;
 }
 
-.app-ranking__pagination-prev {
-  float: left;
+.app-pagination__prev {
+  margin-right: 8px;
 }
 
-.app-ranking__pagination-next {
-  float: right;
-}
-
-.app-ranking__pagination-count {
+.app-pagination__count {
   font-size: 16px;
 }
 
-.app-ranking__pagination-textfield {
+.app-pagination__textfield {
   display: inline-block;
   padding-top: 0;
   margin-bottom: 0;
 }
 
-.app-ranking__pagination-textfield > input {
+.app-pagination__textfield > input {
   width: 50px;
-  text-align: center;
+  text-align: right;
 }
 
 .app-trophies {
@@ -1462,6 +1468,33 @@ a {
 
   .app-footer {
     font-size: 13px;
+  }
+}
+
+@media screen and (max-height: 768px) {
+  .app-pagination {
+    display: none;
+  }
+
+  .app-pagination--fixed {
+    z-index: 9;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    box-shadow: 2px 0 2px 0 rgba(0,0,0,.14), 3px 0 1px -2px rgba(0,0,0,.2), 1px 0 5px 0 rgba(0,0,0,.12);
   }
 }
 

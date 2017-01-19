@@ -1,0 +1,22 @@
+<div ng-if="pages" class="app-pagination__content">
+    <form ng-submit="setPage(page)" 
+          name="pagination"
+          class="app-pagination__form">
+        <div class="app-form__textfield app-pagination__textfield">
+            <input ng-model="page" type="text" ng-blur="setPage(page)">
+        </div>
+        <span class="app-pagination__count"> / {{ pages.last }}</span>
+    </form>
+    <button ng-disabled="!pages.prev"
+        ng-click="setPage(pages.prev)"
+        class="app-pagination__prev mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" ng-if="user.lang !== 'ar'">navigate_before</i>
+        <i class="material-icons" ng-if="user.lang === 'ar'">navigate_next</i>
+    </button>
+    <button ng-disabled="!pages.next"
+            ng-click="setPage(pages.next)"
+            class="app-pagination__next mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" ng-if="user.lang === 'ar'">navigate_before</i>
+        <i class="material-icons" ng-if="user.lang !== 'ar'">navigate_next</i>
+    </button>
+</div>

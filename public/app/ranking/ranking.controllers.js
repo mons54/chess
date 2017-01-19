@@ -20,6 +20,9 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
 
         socket.on('ranking', function (data) {
 
+            $rootScope.loading = false;
+            $rootScope.loadPage = false;
+
             if (!data) {
                 return;
             }
@@ -27,11 +30,9 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             var usersId = [],
                 usersName;
 
-            $scope.pages = false;
-
             if (data.pages) {
-                $scope.pages = data.pages;
-                $scope.page  = data.pages.page;
+                $rootScope.pages = data.pages;
+                $rootScope.page  = data.pages.page;
             }
 
             $scope.ranking = data.ranking;
@@ -39,26 +40,24 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             angular.forEach($scope.ranking, function (value) {
                 usersId.push(value.uid);
             });
-
-            $rootScope.loading = false;
         }, $scope);
 
-        $scope.setPage = function (page) {
-            page = parseInt(page);
-            if (!page || page < 0 || page === $scope.pages.page || page > $scope.pages.last) {
-                $scope.page = $scope.pages.page;
-                return;
-            }
+        $rootScope.$on('page', function ($event, page) {
             emit(page);
-        };
+        });
 
         function emit(page) {
-            $rootScope.loading = true;
+            if ($rootScope.loadPage) {
+                return;
+            }
+            $rootScope.loadPage = true;
             socket.emit('ranking', {
                 page: page,
                 friends: $scope.friends ? $rootScope.user.friends : false
             });
         }
+
+        $rootScope.loading = true;
 
         emit();
     }
