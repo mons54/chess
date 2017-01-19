@@ -150,7 +150,7 @@
                     <td>{{ challenger.points }}</td>
                     <td>{{ challenger.ranking }}</td>
                     <td>
-                        <button ng-disabled="blackList(challenger.uid)"
+                        <button ng-disabled="blackList(challenger)"
                                 ng-click="setChallenger(challenger)"
                                 show-modal="modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
@@ -195,7 +195,7 @@
                     <td>{{ friend.points }}</td>
                     <td>{{ friend.ranking }}</td>
                     <td>
-                        <button ng-if="friend.uid !== user.uid"
+                        <button ng-disabled="blackList(friend)"
                                 ng-click="setChallenger(friend)"
                                 show-modal="modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">

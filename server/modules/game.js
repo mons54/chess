@@ -39,6 +39,7 @@ Game.prototype.create = function (socket, data) {
         name: socket.name,
         points: socket.points,
         ranking: socket.ranking,
+        blackList: socket.blackList,
         color: color,
         time: time,
         pointsMin: pointsMin,

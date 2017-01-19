@@ -103,15 +103,15 @@ module.exports = function (io) {
             
             return self.init(socket, response);
         })
-            .then(function () {
+        .then(function () {
             var gid = self.getUserGame(socket.uid);
             if (gid) {
                 socket.join(moduleGame.getRoom(gid), function () {
                     socket.emit('startGame', gid);
                 });
             }
-                socket.emit('connected');
-            });
+            socket.emit('connected');
+        });
     };
 
     Module.prototype.joinHome = function (socket) {
@@ -141,10 +141,19 @@ module.exports = function (io) {
             return;
         }
 
-        this.checkBlackList(data.blackList);
+        var blackList = [];
+        
+        if (data.blackList instanceof Object) {
+            var expires  = this.getBlackListExpires();
+            for (var uid in data.blackList) {
+                if (data.blackList[uid] >= expires) {
+                    blackList.push(uid);
+                }
+            };
+        }
 
         socket.points = data.points;
-        socket.blackList = data.blackList;
+        socket.blackList = blackList;
         socket.trophies = data.trophies;
 
         var self = this;
@@ -178,15 +187,14 @@ module.exports = function (io) {
         return this.userGames[uid];
     };
 
-    Module.prototype.isBlackListed = function (socket, uid) {
-        return socket.blackList && socket.blackList[uid];
+    Module.prototype.isBlackListed = function (data, uid) {
+        return data.indexOf(uid) !== -1;
     };
 
     Module.prototype.checkStartGame = function (socket, uid) {
         return this.checkSocket(socket) && 
                !this.getUserGame(socket.uid) && 
-               socket.uid !== uid && 
-               !this.isBlackListed(socket, uid);
+               socket.uid !== uid;
     };
 
     Module.prototype.startGame = function (socket, socketOpponent, dataGame) {
@@ -259,25 +267,24 @@ module.exports = function (io) {
         });
     };
 
-    Module.prototype.checkBlackList = function (blackList) {
-        if (!(blackList instanceof Object)) {
-            blackList = {};
-            return;
-        }
-
-        var expires = new Date();
-        expires.setDate(expires.getDate() - 1);
-        var maxTime = expires.getTime();
-        for (var uid in blackList) {
-            if (maxTime > blackList[uid]) {
-                delete blackList[uid];
-            }
-        };
+    Module.prototype.getBlackListExpires = function () {
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        return date.getTime();
     };
 
     Module.prototype.getNewBlackList = function (blackList, lastGame, newGame, game, color) {
 
-        this.checkBlackList(blackList);
+        if (!(blackList instanceof Object)) {
+            blackList = {};
+        } else {
+            var expires  = this.getBlackListExpires();
+            for (var uid in blackList) {
+                if (expires > blackList[uid]) {
+                    delete blackList[uid];
+                }
+            };
+        }
 
         if (lastGame && lastGame === newGame) {
             blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
@@ -475,7 +482,8 @@ module.exports = function (io) {
                     avatar: socket.avatar,
                     name: socket.name,
                     ranking: socket.ranking,
-                    points: socket.points
+                    points: socket.points,
+                    blackList: socket.blackList
                 });
             };
         }

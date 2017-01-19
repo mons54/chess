@@ -106,13 +106,13 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
 
         $scope.blackList = blackList;
 
-        function blackList (uid) {
-            return $rootScope.user.blackList && $rootScope.user.blackList[uid];
+        function blackList (data) {
+            return $rootScope.user.blackList.indexOf(data.uid) !== -1 || data.blackList.indexOf($rootScope.user.uid) !== -1;
         }
 
         function checkGame (game) {
             return game.uid === $rootScope.user.uid || 
-                   !blackList(game.uid) &&
+                   !blackList(game) &&
                    ((!game.pointsMin || $rootScope.user.points >= game.pointsMin) && 
                    (!game.pointsMax || $rootScope.user.points <= game.pointsMax));
         }

@@ -44,7 +44,6 @@ module.exports = function (app, io) {
             if (!data || 
                 !data.uid || 
                 !moduleSocket.checkSocket(socket) || 
-                moduleSocket.isBlackListed(socket, data.uid) ||
                 moduleSocket.getUserGame(socket.uid)) {
                 return;
             }
@@ -53,7 +52,10 @@ module.exports = function (app, io) {
                 color = data.color,
                 time = moduleGame.getTime(data.time);
 
-            if (!socketOpponent || !moduleGame.checkColor(color) || !moduleGame.checkColor(color)) {
+            if (!socketOpponent || 
+                !moduleGame.checkColor(color) ||
+                moduleSocket.isBlackListed(socket.blackList, data.uid) ||
+                moduleSocket.isBlackListed(socketOpponent.blackList, socket.uid)) {
                 return;
             }
 
@@ -112,7 +114,15 @@ module.exports = function (app, io) {
         });
 
         socket.on('startGame', function (uid) {
-            if (!moduleSocket.checkStartGame(socket, uid) || !moduleGame.createdGame[uid]) {
+            if (!moduleSocket.checkStartGame(socket, uid)) {
+                return;
+            }
+
+            var createdGame = moduleGame.createdGame[uid];
+
+            if (!createdGame || 
+                moduleSocket.isBlackListed(socket.blackList, uid) || 
+                moduleSocket.isBlackListed(createdGame.blackList, socket.uid)) {
                 return;
             }
 
