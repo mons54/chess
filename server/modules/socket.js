@@ -326,7 +326,7 @@ module.exports = function (io) {
             hashGame = null,
             data;
 
-        if (game.result !== 0 && (game.played.length < 4 || game.timestamp < game.timeTurn)) {
+        if (result !== 0 && (game.played.length < 4 || game.timestamp < game.timeTurn)) {
             hashGame = '';
             game.played.forEach(function (value) {
                 hashGame += value.hash;
