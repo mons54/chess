@@ -325,7 +325,7 @@
             <i class="material-icons">clear</i>
         </a>
         <div class="app-modal__head">{{ 'game_over'|translate }}</div>
-        <div class="app-modal__content app__text-center">
+        <div class="app-modal__content app__text-center" ng-if="game.finish">
             <div class="app-modal__title">{{ game.result.name|translate }}</div>
 
             <div class="app-game__result mdl-grid">
@@ -354,7 +354,7 @@
                         <img src="../images/game-1/queen-black.svg">
                     </div>
                     <div class="app-game__result-points"
-                         ng-init="pointsBlack = getPoints(game.white, game.black, game.result.value === 0 ? 0.5 : (game.result.value === 2 ? 1 : 0))"
+                         ng-init="pointsBlack = getPoints(game.black, game.white, game.result.value === 0 ? 0.5 : (game.result.value === 2 ? 1 : 0))"
                          ng-class="{'positive': pointsBlack > 0, 'negative': pointsBlack < 0 }">
                         {{ pointsBlack }}
                     </div>
