@@ -51,28 +51,26 @@
         function ($rootScope, $route, $http, $location, $window, user, socket, modal, facebook, google, lang) {
 
             $rootScope.$on('$routeChangeStart', function() {
-                /**
-                 * Check if the user has a game in progress.
-                 */
+
                 if ($rootScope.user && $rootScope.user.gid) {
-                    /**
-                     * If the user has a game in progress redirect to this game
-                     */
                     redirectToGame();
                 }
             });
 
-            $rootScope.$on('$routeChangeSuccess', function() {
-                /**
-                 * Set the title of the page.
-                 */
+            $rootScope.$on('$routeChangeSuccess', function(event, toState, fromState) {
+                
+                if (fromState && $rootScope.user && !$rootScope.user.refresh) {
+                    $rootScope.user.refresh = true;
+                }
+
                 $rootScope.title = $route.current.title;
             });
 
             /**
-             * Close mobile menu.
+             * Close menu mobile
              */
             $rootScope.closeDrawer = function () {
+
                 var drawer = angular.element('.mdl-layout__drawer');
                 if (!drawer || !drawer.hasClass('is-visible')) {
                   return;

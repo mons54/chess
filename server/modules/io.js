@@ -28,8 +28,15 @@ module.exports = function (app, io) {
             moduleSocket.googleConnect(socket, data);
         });
 
-        socket.on('joinHome', function () {
-            moduleSocket.refreshUser(socket);
+        socket.on('joinHome', function (refresh) {
+            if (refresh) {
+                moduleSocket.refreshUser(socket)
+                .then(function() {
+                    moduleSocket.joinHome(socket);
+                });
+            } else {
+                moduleSocket.joinHome(socket);
+            }
         });
 
         socket.on('challenge', function (data) {

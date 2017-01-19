@@ -101,18 +101,35 @@ module.exports = function (io) {
 
             self.socketConnected[response.id] = socket.id;
             
-            self.init(socket, response)
+            return self.init(socket, response);
+        })
             .then(function () {
+            var gid = self.getUserGame(socket.uid);
+            if (gid) {
+                socket.join(moduleGame.getRoom(gid), function () {
+                    socket.emit('startGame', gid);
+                });
+            }
                 socket.emit('connected');
             });
+    };
+
+    Module.prototype.joinHome = function (socket) {
+        var self = this;
+        socket.join('home', function () {
+            socket.emit('listGames', moduleGame.createdGame);
+            socket.emit('listChallenges', socket.challenges);
+            self.listChallengers();
         });
     };
 
     Module.prototype.refreshUser = function (socket) {
+        
         var self = this;
-        db.findOne('users', { _id: db.ObjectId(socket.uid) })
+
+        return db.findOne('users', { _id: db.ObjectId(socket.uid) })
         .then(function (response) {
-            self.init(socket, response);
+            return self.init(socket, response);
         });
     };
 
@@ -146,20 +163,6 @@ module.exports = function (io) {
                 blackList: socket.blackList,
                 trophies: data.trophies
             });
-
-            var gid = self.getUserGame(socket.uid)
-
-            if (gid) {
-                socket.join(moduleGame.getRoom(gid), function () {
-                    socket.emit('startGame', gid);
-                });
-            } else {
-                socket.join('home', function () {
-                    socket.emit('listGames', moduleGame.createdGame);
-                    socket.emit('listChallenges', socket.challenges);
-                    self.listChallengers();
-                });
-            }
         });
     };
 
