@@ -81,9 +81,10 @@ module.exports = function (io) {
 
             if (saveData) {
                 db.update('users', { _id: response._id }, saveData);
+                Object.assign(response, saveData);
             }
 
-            return Object.assign(response, data);
+            return response;
         })
         .then(function (response) {
 
@@ -234,16 +235,13 @@ module.exports = function (io) {
             };
         }
 
-        db.count('games', { $or: [{ white: white.uid }, { black: white.uid }] })
-        .then(function (response) {
+        db.all([
+            db.count('games', { $or: [{ white: white.uid }, { black: white.uid }] }),
+            db.count('games', { $or: [{ white: black.uid }, { black: black.uid }] })
+        ]).then(function (response) {
 
-            white.countGame = response;
-
-            return db.count('games', { $or: [{ white: black.uid }, { black: black.uid }] });
-        })
-        .then(function (response) {
-
-            black.countGame = response;
+            white.countGame = response[0];
+            black.countGame = response[1];
 
             var gid = moduleGame.start(white, black, dataGame.time),
                 room = moduleGame.getRoom(gid);
@@ -362,6 +360,7 @@ module.exports = function (io) {
                 date: new Date()
             })
         ]).then(function (response) {
+
             data.white.success = self.getNewSuccess(response[0].success, result, 1);
             data.black.success = self.getNewSuccess(response[1].success, result, 2);
             data.white.blackList = self.getNewBlackList(response[0].blackList, response[0].lastGame, hashGame, game, 'white');
@@ -371,7 +370,10 @@ module.exports = function (io) {
             data.white.countGame = white.countGame + 1;
             data.black.countGame = black.countGame + 1;
 
-            return db.all([
+            self.setTrophies(white.uid, data.white);
+            self.setTrophies(black.uid, data.black);
+
+            db.all([
                 db.update('users', { _id: db.ObjectId(white.uid) }, {
                     points: data.white.points,
                     success: data.white.success,
@@ -387,29 +389,6 @@ module.exports = function (io) {
                     active: true
                 })
             ]);
-        })
-        .then(function (response) {
-
-            self.setTrophies(white.uid, data.white);
-            self.setTrophies(black.uid, data.black);
-
-            return db.all([
-                db.count('users', { active: true, points: { $gt: data.white.points }}),
-                db.count('users', { active: true, points: { $gt: data.black.points }})
-            ]);
-        })
-        .then(function (response) {
-
-            io.to(moduleGame.getRoom(game.id)).emit('gameOver', {
-                white: {
-                    points: data.white.points,
-                    ranking: response[0] + 1
-                },
-                black: {
-                    points: data.black.points,
-                    ranking: response[1] + 1
-                }
-            });
         });
     };
 
@@ -550,45 +529,56 @@ module.exports = function (io) {
     };
 
     Module.prototype.ranking = function (socket, data) {
+
         var page = parseInt(data.page),
             limit = 10,
-            friends = data.friends;
+            friends = data.friends,
+            user;
 
         if (page) {
+            user = false;
             page = this.formatPage(page);
-            this.initRanking(socket, friends, page, limit, false);
-            return;
+            this.initRanking(socket, page, limit, user, friends);
+        } else {
+
+            user = true;
+
+            var self = this,
+                points = socket.points;
+
+            db.findOne('users', { _id: db.ObjectId(socket.uid) }, 'points')
+            .then(function (response) {
+                socket.points = response.points;
+                return db.count('users', friends ? { active: true, facebookId: { $in: friends }, points: { $gt: response.points } } : { active: true, points: { $gt: response.points } });
+            })
+            .then(function (response) {
+                page = self.formatPage(Math.ceil((response + 1) / limit));
+                self.initRanking(socket, page, limit, user, friends);
+            });
         }
-
-        var self = this,
-            points = socket.points,
-            request = friends ? { active: true, facebookId: { $in: friends }, points: { $gt: points } } : { active: true, points: { $gt: points } };
-
-        db.count('users', request)
-        .then(function (count) {
-            count++;
-            var page = self.formatPage(Math.ceil(count / limit));
-            self.initRanking(socket, friends, page, limit, true);
-        });
     };
 
-    Module.prototype.initRanking = function (socket, friends, page, limit, getUser) {
+    Module.prototype.initRanking = function (socket, page, limit, user, friends) {
+
         var self = this,
-            offset = (page * limit) - limit,
             request,
-            total,
             data,
+            offset,
+            total,
             position;
 
-        if (getUser) {
-            request = this.getRequestRankingWithUser(socket.uid, friends);
+        if (user) {
+            request = friends ? { $and: [{ active: true, facebookId: { $in: friends } }, { _id: { $ne: db.ObjectId(socket.uid) } }] } : { $and: [{ active: true }, { _id: { $ne: db.ObjectId(socket.uid) } }] };
         } else {
-            request = this.getRequestRankingWithoutUser(friends);
+            request = friends ? { active: true, facebookId: { $in: friends } } : { active: true };
         }
 
         db.count('users', request)
-        .then(function (count) {
-            if (count === 0) {
+        .then(function (response) {
+
+            offset = (page * limit) - limit;
+
+            if (response === 0) {
                 socket.emit('ranking', {
                     ranking:[{
                         uid: socket.uid,
@@ -601,55 +591,59 @@ module.exports = function (io) {
                 this.finally;
             }
 
-            if (getUser) {
-                count++;
+            if (user) {
+                response++;
             }
 
-            total = count;
+            total = response;
 
-            return db.exec('users', request, { points: -1 }, offset, getUser ? limit - 1 : limit, { points: 1 });
+            return db.exec('users', request, { points: -1 }, offset, user ? limit - 1 : limit, { points: 1 });
         })
         .then(function (response) {
+
             if (typeof response[0] !== 'object' || typeof response[0].points !== 'number') {
                 socket.emit('ranking', false);
                 this.finally;
             }
 
-            var points = (getUser && socket.points > response[0].points) ? socket.points : response[0].points,
-                request = { active: true, points: { $gt: points } };
-
-            if (friends) {
-                request = { active: true, facebookId: { $in: friends }, points: { $gt: points } };
-            }
-
             data = response;
 
-            return db.count('users', request);
-        })
-        .then(function (count) {
-            position = count + 1;
-            var request = { active: true, points: data[0].points };
+            var requests,
+                points = (user && socket.points > response[0].points) ? socket.points : response[0].points;
+
             if (friends) {
-                request = { active: true, facebookId: { $in: friends }, points: data[0].points };
+                requests = [
+                    db.count('users', { active: true, facebookId: { $in: friends }, points: { $gt: points } }),
+                    db.count('users', { active: true, facebookId: { $in: friends }, points: data[0].points }),
+                ];
+            } else {
+                requests = [
+                    db.count('users', { active: true, points: { $gt: points } }),
+                    db.count('users', { active: true, points: data[0].points }),
+                ];
             }
 
-            return db.count('users', request);
+            return db.all(requests);
         })
-        .then(function (count) {
+        .then(function (response) {
+
+            position = response[0] + 1;
+
             socket.emit('ranking', {
-                ranking: self.getRanking(socket, data, position, count, getUser),
+                ranking: self.getRanking(socket, data, position, response[1], user),
                 pages: self.getPages(total, offset, limit)
             });
         });
     };
 
-    Module.prototype.getRanking = function (socket, data, position, count, getUser) {
+    Module.prototype.getRanking = function (socket, data, position, count, user) {
+        
         var current = 0,
             result = [],
             ranking = {},
             value;
 
-        if (getUser) {
+        if (user) {
 
             var saveUser = false;
 
@@ -708,19 +702,12 @@ module.exports = function (io) {
         return ranking;
     };
 
-    Module.prototype.getRequestRankingWithUser = function (uid, friends) {
-        return friends ? { $and: [{ active: true, facebookId: { $in: friends } }, { _id: { $ne: db.ObjectId(uid) } }] } : { $and: [{ active: true }, { _id: { $ne: db.ObjectId(uid) } }] };
-    };
-
-    Module.prototype.getRequestRankingWithoutUser = function (friends) {  
-        return friends ? { active: true, facebookId: { $in: friends } } : { active: true };
-    };
-
     Module.prototype.formatPage = function (page) {
         return page <= 0 ? 1 : page;
     };
 
     Module.prototype.getPages = function (total, offset, limit) {
+        
         var page = Math.ceil(offset / limit) + 1,
             last = Math.ceil(total / limit);
 
@@ -730,88 +717,61 @@ module.exports = function (io) {
 
         return {
             page: page,
-            prev: this.getPagePrev(page, offset, limit),
-            next: this.getPageNext(page, last),
+            prev: offset >= limit ? page - 1 : false,
+            next: page != last ? page + 1 : false,
             last: last
         };
-    };
-
-    Module.prototype.getPageNext = function (page, last) {
-        if (page != last) {
-            return page + 1;
-        }
-        return false;
-    };
-
-    Module.prototype.getPagePrev = function (page, offset, limit) {
-        if (offset >= limit) {
-            return page - 1;
-        }
-        return false;
     };
 
     Module.prototype.setTrophies = function (uid, data) {
 
         var self = this,
-            trophies = [];
+            date = new Date();
 
-        if (data.countGame >= 5000) {
-            trophies = trophies.concat([1, 2, 3, 4, 5]);
-        } else if (data.countGame >= 1000) {
-            trophies = trophies.concat([1, 2, 3, 4]);
-        } else if (data.countGame >= 500) {
-            trophies = trophies.concat([1, 2, 3]);
-        } else if (data.countGame >= 100) {
-            trophies = trophies.concat([1, 2]);
-        } else if (data.countGame >= 1) {
-            trophies = trophies.concat([1]);
-        }
+        date.setDate(date.getDate() - 1);
 
-        db.count('games', { 
-            $or: [{ 
-                $and: [{ black: uid, result: 2 }] 
-            }, { 
-                $and: [{ white: uid, result: 1 }]
-            }] 
-        })
-        .then(function (response) {
+        db.all([
+            db.count('games', {$or: [{ $and: [{ black: uid, result: 2 }] }, { $and: [{ white: uid, result: 1 }] }] }),
+            db.count('games', { $and: [{ date: { $gt: date } }, { $or: [{white: uid}, {black: uid}] } ]})
+        ]).then(function (response) {
 
-            if (response >= 2000) {
+            var trophies = [];
+
+            if (data.countGame >= 5000) {
+                trophies = trophies.concat([1, 2, 3, 4, 5]);
+            } else if (data.countGame >= 1000) {
+                trophies = trophies.concat([1, 2, 3, 4]);
+            } else if (data.countGame >= 500) {
+                trophies = trophies.concat([1, 2, 3]);
+            } else if (data.countGame >= 100) {
+                trophies = trophies.concat([1, 2]);
+            } else if (data.countGame >= 1) {
+                trophies = trophies.concat([1]);
+            }
+
+            if (response[0] >= 2000) {
                 trophies = trophies.concat([6, 7, 8, 9, 10]);
-            } else if (response >= 500) {
+            } else if (response[0] >= 500) {
                 trophies = trophies.concat([6, 7, 8, 9]);
-            } else if (response >= 250) {
+            } else if (response[0] >= 250) {
                 trophies = trophies.concat([6, 7, 8]);
-            } else if (response >= 50) {
+            } else if (response[0] >= 50) {
                 trophies = trophies.concat([6, 7]);
-            } else if (response >= 1) {
+            } else if (response[0] >= 1) {
                 trophies = trophies.concat([6]);
             }
 
-            var date = new Date();
-
-            date.setDate(date.getDate() - 1);
-
-            return db.count('games', { $and: [{
-                date: { $gt: date }
-            }, { 
-                $or: [{white: uid}, {black: uid}] 
-            } ]});
-        })
-        .then(function (response) {
-            if (response >= 100) {
+            if (response[1] >= 100) {
                 trophies = trophies.concat([11, 12, 13, 14, 15]);
-            } else if (response >= 50) {
+            } else if (response[1] >= 50) {
                 trophies = trophies.concat([11, 12, 13, 14]);
-            } else if (response >= 25) {
+            } else if (response[1] >= 25) {
                 trophies = trophies.concat([11, 12, 13]);
-            } else if (response >= 10) {
+            } else if (response[1] >= 10) {
                 trophies = trophies.concat([11, 12]);
-            } else if (response >= 5) {
+            } else if (response[1] >= 5) {
                 trophies = trophies.concat([11]);
             }
-        })
-        .finally(function () {
 
             if (data.success >= 20) {
                 trophies = trophies.concat([16, 17, 18, 19]);
