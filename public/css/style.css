@@ -1367,32 +1367,50 @@ a {
   font-size: 24px;
   height: 24px;
   line-height: 24px;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 
 .app-game__result-name {
   display: inline-block;
-  max-width: calc(100% - 62px);
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.app-game__result-player .material-icons {
-  color: #FF9800;
-}
-
 .app-game__result-icon {
   position: relative;
   display: inline-block;
-  width:  100px;
-  height: 100px;
-  margin-bottom: 12px;
+  width:  100%;
+  margin-bottom: 18px;
+}
+
+.app-game__result-icon.is-winner {
+  animation: zoom 1s ease-out infinite;
+}
+
+.app-game__result-icon .material-icons {
+  display: inline-block;
+  font-size: 36px;
+  color: #FF9800;
+  vertical-align: middle;
 }
 
 .app-game__result-icon img {
-  width:  100%;
-  height: 100%;
+  height: 108px;
+  width: 108px;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.95);
+  }
 }
 
 .app-game__result-points {
@@ -1405,6 +1423,10 @@ a {
 
 .app-game__result-points.negative {
   color: #F44336;
+}
+
+.app-game__result-link {
+  margin-top: 24px;
 }
 
 .app-table--game {

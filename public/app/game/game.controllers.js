@@ -19,9 +19,9 @@ angular.module('game').
  * @requires global.service:utils
  * @requires components.service:modal
  */
-controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'utils', 'modal', 'sound',
+controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'modal', 'sound',
     
-    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, utils, modal, sound) {
+    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, modal, sound) {
 
         $rootScope.isGame = true;
 
@@ -251,8 +251,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.getPoints = function (p1, p2, c) {
-            var points = $window.game.getPoints(p1.points, p2.points, c, p1.countGame);
-            return points > 0 ? '+' + points : points;
+            return $window.game.getPoints(p1.points, p2.points, c, p1.countGame);
         };
 
         $scope.getPercentage = function (p1, p2) {
@@ -295,8 +294,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 });
             }
         };
-
-
 
         $scope.sendMessage = function () {
             if (!$scope.message) {

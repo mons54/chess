@@ -518,4 +518,9 @@ service('user', ['$cookies', function ($cookies) {
             this.set('showPlayed', value);
         },
     }
-}]);
+}])
+.filter('relativeNumber', function () {
+    return function (value) {
+        return value > 0 ? '+' + value : value;
+    };
+});

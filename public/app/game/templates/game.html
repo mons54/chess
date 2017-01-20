@@ -70,16 +70,16 @@
         <tbody>
             <tr>
                 <td>{{ 'white' | translate }}</td>
-                <td>{{ getPoints(game.white, game.black, 1) }}</td>
-                <td>{{ getPoints(game.white, game.black, 0.5) }}</td>
-                <td>{{ getPoints(game.white, game.black, 0) }}</td>
+                <td>{{ getPoints(game.white, game.black, 1) | relativeNumber }}</td>
+                <td>{{ getPoints(game.white, game.black, 0.5) | relativeNumber }}</td>
+                <td>{{ getPoints(game.white, game.black, 0) | relativeNumber }}</td>
                 <td ng-init="percentage = getPercentage(game.white, game.black)">{{ percentage }}%</td>
             </tr>
             <tr>
                 <td>{{ 'black' | translate }}</td>
-                <td>{{ getPoints(game.black, game.white, 1) }}</td>
-                <td>{{ getPoints(game.black, game.white, 0.5) }}</td>
-                <td>{{ getPoints(game.black, game.white, 0) }}</td>
+                <td>{{ getPoints(game.black, game.white, 1) | relativeNumber }}</td>
+                <td>{{ getPoints(game.black, game.white, 0.5) | relativeNumber }}</td>
+                <td>{{ getPoints(game.black, game.white, 0) | relativeNumber }}</td>
                 <td>{{ 100 - percentage }}%</td>
             </tr>
         </tbody>
@@ -331,41 +331,43 @@
             <div class="app-game__result mdl-grid">
                 <div class="mdl-cell mdl-cell--6-col app-game__result-color app-game__result-color--white">
                     <div class="app-game__result-player">
-                        <i ng-if="game.result.value === 1" class="material-icons">star</i>
                         <span class="app-game__result-name">{{ game.white.name }}</span>
-                        <i ng-if="game.result.value === 1" class="material-icons">star</i>
                     </div>
-                    <div class="app-game__result-icon">
+                    <div class="app-game__result-icon" ng-class="{'is-winner': game.result.value === 1 }">
+                        <i ng-if="game.result.value === 1" class="material-icons">star</i>
                         <img src="../images/game-1/queen-white.svg">
+                        <i ng-if="game.result.value === 1" class="material-icons">star</i>
                     </div>
                     <div class="app-game__result-points" 
                          ng-init="pointsWhite = getPoints(game.white, game.black, game.result.value === 0 ? 0.5 : (game.result.value === 1 ? 1 : 0))"
                          ng-class="{'positive': pointsWhite > 0, 'negative': pointsWhite < 0 }">
-                        {{ pointsWhite }}
+                        {{ game.white.points + pointsWhite }} ({{ pointsWhite | relativeNumber }})
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--6-col app-game__result-color app-game__result-color--black">
                     <div class="app-game__result-player">
-                        <i ng-if="game.result.value === 2" class="material-icons">star</i>
                         <span class="app-game__result-name">{{ game.black.name }}</span>
-                        <i ng-if="game.result.value === 2" class="material-icons">star</i>
                     </div>
-                    <div class="app-game__result-icon">
+                    <div class="app-game__result-icon" ng-class="{'is-winner': game.result.value === 2 }">
+                        <i ng-if="game.result.value === 2" class="material-icons">star</i>
                         <img src="../images/game-1/queen-black.svg">
+                        <i ng-if="game.result.value === 2" class="material-icons">star</i>
                     </div>
                     <div class="app-game__result-points"
                          ng-init="pointsBlack = getPoints(game.black, game.white, game.result.value === 0 ? 0.5 : (game.result.value === 2 ? 1 : 0))"
                          ng-class="{'positive': pointsBlack > 0, 'negative': pointsBlack < 0 }">
-                        {{ pointsBlack }}
+                        {{ game.black.points + pointsBlack }} ({{ pointsBlack | relativeNumber }})
                     </div>
                 </div>
             </div>
 
-            <button ng-click="shareResult()"
-                    type="button" 
-                    class="mdl-button mdl-button--raised mdl-button--colored">
-                    {{ 'share'|translate }}
-            </button>
+            <div class="mdl-cell mdl-cell--12-col" share="shareResult"></div>
+
+            <div class="app-game__result-link mdl-cell mdl-cell--12-col">
+                <a href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                    {{ 'home' | translate}}
+                </a>
+            </div>
         </div>
     </div>
 </div>
