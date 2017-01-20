@@ -8,6 +8,8 @@
  */
 angular.module('google', []).
 
+constant('googleClientId', '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com').
+
 /**
  * @ngdoc service
  * @name google.service:google
@@ -18,9 +20,9 @@ angular.module('google', []).
  * @requires global.service:socket
  * @requires global.service:lang
  */
-service('google', ['$rootScope', 'user', 'socket', 'lang',
+service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'lang',
 
-    function ($rootScope, user, socket, lang) {
+    function ($rootScope, googleClientId, user, socket, lang) {
 
         var self = this;
 
@@ -70,9 +72,9 @@ service('google', ['$rootScope', 'user', 'socket', 'lang',
          */
         this.init = function () {
             return gapi.client.init({
-                apiKey: 'AIzaSyAsUqdlQmVKm0xCbB_5d9WdGolwVfFhm2A',
+                apiKey: 'AIzaSyDo-HJeI3NjUs4T0HVett5W2SBfeUcpIXY',
                 discoveryDocs: ['https://people.googleapis.com/$discovery/rest?version=v1'],
-                clientId: '695464964183-1h07us30agq8fa70ourpn3dajgrulr6o.apps.googleusercontent.com',
+                clientId: googleClientId,
                 scope: 'profile'
             }).then(function(response) {
                 gapi.auth2.getAuthInstance().isSignedIn.listen(function() {
@@ -108,7 +110,7 @@ service('google', ['$rootScope', 'user', 'socket', 'lang',
                     accessToken: gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token
                 };
             }
-            callback();
+            callback('google');
         };
 
         /**

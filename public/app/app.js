@@ -120,34 +120,26 @@
                 google.setLoginStatus(callBackLoginStatus);
             }
 
-            function callBackLoginStatus() {
+            function callBackLoginStatus(service) {
 
                 var login = user.getLogin();
 
-                if (!facebook.status) {
+                if (!facebook.isFacebookApp && !login) {
+                    modal.show(modal.get('modal-connect'));
                     return;
                 }
 
-                if ((facebook.isFacebookApp || login === 'facebook') && facebook.status === 'connected') {
-                    facebook.handleLogin();
-                    return;
-                } 
-
-                if (facebook.isFacebookApp) {
-                    facebook.login();
-                    return;
+                if (service === 'facebook') {
+                    if ((facebook.isFacebookApp || login === 'facebook') && facebook.status === 'connected') {
+                        facebook.handleLogin();
+                    } else if (facebook.isFacebookApp) {
+                        facebook.login();
+                    }
+                } else if (service === 'google') {
+                    if (login === 'google' && google.status === 'connected') {
+                        google.handleLogin();
+                    }
                 }
-
-                if (!google.status) {
-                    return;
-                }
-
-                if (login === 'google' && google.status === 'connected') {
-                    google.handleLogin();
-                    return;
-                }
-
-                modal.show(modal.get('modal-connect'));
             }
 
             var isDisconnect = false;

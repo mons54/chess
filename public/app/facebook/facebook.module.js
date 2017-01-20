@@ -70,7 +70,7 @@ service('facebook', ['$rootScope', 'user', 'socket', 'lang',
         this.setLoginStatus = function (callback) {
             FB.getLoginStatus(function (response) {
                 setLoginStatus(response);
-                callback();
+                callback('facebook');
             });
         };
 
