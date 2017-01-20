@@ -638,6 +638,55 @@ a {
   padding: 10px;
 }
 
+.app-button--share {
+  padding: 0;
+  min-width: initial;
+  width: 48px;
+  margin-right: 6px;
+}
+
+.app-button--share:last-child {
+  margin-right: 0;
+}
+
+.app-button--facebook {
+  background-color: #3b5998;
+}
+
+.app-button--facebook:active,
+.app-button--facebook:hover,
+.app-button--facebook:focus:not(:active),
+.app-button--facebook:visited {
+  background-color: #2d4373;
+}
+
+.app-button--twitter {
+  background-color: #55acee;
+}
+
+.app-button--twitter:active,
+.app-button--twitter:hover,
+.app-button--twitter:focus:not(:active),
+.app-button--twitter:visited {
+  background-color: #2795e9;
+}
+
+.app-button--google {
+  background-color: #dd4b39;
+}
+
+.app-button--google:active,
+.app-button--google:hover,
+.app-button--google:focus:not(:active),
+.app-button--google:visited {
+  background-color: #c23321;
+}
+
+.app-button--share svg {
+  height: 24px;
+  fill: #fff;
+}
+
 .app-content {
   background-color: #f3f3f3;
 }

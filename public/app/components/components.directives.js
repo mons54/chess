@@ -285,4 +285,62 @@ directive('pagination', ['$rootScope', function ($rootScope) {
             };
         }]
     };
-}]);
+}]).
+
+directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'googleClientId',
+    function ($window, $filter, host, facebookRedirectUri, googleClientId) {
+        return {
+            restrict: 'A',
+            scope: {
+                share: '='
+            },
+            templateUrl: '/app/components/templates/share.html',
+            controller: ['$scope', function ($scope) {
+
+                if (typeof $scope.share !== 'function') {
+                    return;
+                }
+
+                $scope.facebook = function () {
+                    if (!FB) {
+                        return;
+                    }
+
+                    FB.ui({
+                        method: 'feed',
+                        redirect_uri: facebookRedirectUri,
+                        link: facebookRedirectUri,
+                        picture: 'https://' + host + '/images/' + data.picture,
+                        name: data.title,
+                        caption: data.caption,
+                        description: data.description
+                    });
+                };
+
+                var data = $scope.share();
+
+                if (!data.picture) {
+                    data.picture = 'logo.png';
+                }
+
+                $scope.url = 'https://' + host;
+                $scope.title = data.title;
+                $scope.description = data.description;
+
+                if (gapi && gapi.interactivepost) {
+                    gapi.interactivepost.render('ginteractivepost', {
+                        contenturl: $scope.url,
+                        contentdeeplinkid: '/',
+                        clientid: googleClientId,
+                        cookiepolicy: 'single_host_origin',
+                        prefilltext: data.title + ' - ' + $scope.description,
+                        calltoactionlabel: 'PLAY',
+                        calltoactionurl: $scope.url,
+                        calltoactiondeeplinkid: '/'
+                    });
+                }
+            }]
+        };
+    }
+]);
+

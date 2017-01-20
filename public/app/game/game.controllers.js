@@ -315,6 +315,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.shareResult = function () {
+
             if (!$scope.game.finish) {
                 return;
             }
@@ -327,10 +328,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 description += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.black.name;
             }
 
-            utils.share({
-                name: $scope.game.white.name + ' VS ' + $scope.game.black.name,
+            return {
+                title: $scope.game.white.name + ' ~ ' + $scope.game.black.name,
                 description: description,
-            });
+            };
         };
 
         $scope.changeSound = function () {
