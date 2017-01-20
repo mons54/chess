@@ -292,16 +292,63 @@ directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'google
         return {
             restrict: 'A',
             scope: {
-                share: '='
+                share: '=',
             },
             templateUrl: '/app/components/templates/share.html',
-            controller: ['$scope', function ($scope) {
+            link: function(scope, element) {
 
-                if (typeof $scope.share !== 'function') {
-                    return;
-                }
+                var gindex = 1;
 
-                $scope.facebook = function () {
+                scope.url = 'https://' + host;
+
+                scope.$watch('share', function (value) {
+
+                    if (value) {
+
+                        if (!value.picture) {
+                            value.picture = 'logo.png';
+                        }
+
+                        if (!value.name) {
+                            value.name = $filter('translate')('title');
+                        }
+
+                        if (!value.description) {
+                            value.description = $filter('translate')('description');
+                        }
+
+                        if (!value.caption) {
+                            value.caption = $filter('translate')('title');
+                        }
+
+                        scope.picture = value.picture;
+                        scope.title = value.title;
+                        scope.description = value.description;
+                        scope.caption = value.caption;
+
+                        if (gapi && gapi.interactivepost) {
+
+                            var gid = 'ginteractivepost-' + scope.$id + gindex;
+
+                            element.find('[data-google]').attr('id', gid);
+                            
+                            gapi.interactivepost.render(gid, {
+                                contenturl: scope.url,
+                                contentdeeplinkid: '/',
+                                clientid: googleClientId,
+                                cookiepolicy: 'single_host_origin',
+                                prefilltext: scope.title + ' - ' + scope.description,
+                                calltoactionlabel: 'PLAY',
+                                calltoactionurl: scope.url,
+                                calltoactiondeeplinkid: '/'
+                            });
+
+                            gindex++;
+                        }
+                    }
+                });
+
+                scope.facebook = function () {
                     if (!FB) {
                         return;
                     }
@@ -310,36 +357,13 @@ directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'google
                         method: 'feed',
                         redirect_uri: facebookRedirectUri,
                         link: facebookRedirectUri,
-                        picture: 'https://' + host + '/images/' + data.picture,
-                        name: data.title,
-                        caption: data.caption,
-                        description: data.description
+                        picture: 'https://' + host + '/images/' + scope.picture,
+                        name: scope.title,
+                        caption: scope.caption,
+                        description: scope.description
                     });
                 };
-
-                var data = $scope.share();
-
-                if (!data.picture) {
-                    data.picture = 'logo.png';
-                }
-
-                $scope.url = 'https://' + host;
-                $scope.title = data.title;
-                $scope.description = data.description;
-
-                if (gapi && gapi.interactivepost) {
-                    gapi.interactivepost.render('ginteractivepost', {
-                        contenturl: $scope.url,
-                        contentdeeplinkid: '/',
-                        clientid: googleClientId,
-                        cookiepolicy: 'single_host_origin',
-                        prefilltext: data.title + ' - ' + $scope.description,
-                        calltoactionlabel: 'PLAY',
-                        calltoactionurl: $scope.url,
-                        calltoactiondeeplinkid: '/'
-                    });
-                }
-            }]
+            }
         };
     }
 ]);

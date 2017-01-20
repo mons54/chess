@@ -13,12 +13,9 @@
                   ng-class="getUserClass(trophy)"> 
             </span>
             <p class="app-trophy__desc">{{ 'trophies.content.' + trophy + '.description' | translate }}</p>
-            <button ng-if="hasTrophy(trophy)"
-                    ng-click="shareTrophy(trophy)"
-                    type="button"
-                    class="mdl-button mdl-button--raised mdl-button--colored">
-                    {{ 'share'|translate }}
-            </button>
+            <div ng-if="hasTrophy(trophy)" 
+                 class="mdl-cell mdl-cell--12-col" 
+                 share="shareData"></div>
         </div>
     </div>
 </div>

@@ -56,6 +56,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             if (game.finish) {
                 $rootScope.user.gid = null;
+                $scope.shareResultData = getShareResultData(game);
                 modal.show(modal.get('modal-finish-game'));
                 var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.time);
             }
@@ -311,29 +312,25 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return new Date(time).toLocaleTimeString();
         };
 
-        $scope.shareResult = function () {
-
-            if (!$scope.game.finish) {
-                return;
-            }
-
-            var description = $filter('translate')($scope.game.result.name);
-
-            if ($scope.game.result.value === 1) {
-                description += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.white.name;
-            } else if ($scope.game.result.value === 2) {
-                description += ' - ' + $filter('translate')('winner') + ': ' + $scope.game.black.name;
-            }
-
-            return {
-                title: $scope.game.white.name + ' ~ ' + $scope.game.black.name,
-                description: description,
-            };
-        };
-
         $scope.changeSound = function () {
             $scope.sound = sound.change();
         };
+
+        function getShareResultData(game) {
+
+            var description = $filter('translate')(game.result.name);
+
+            if (game.result.value === 1) {
+                description += ' - ' + $filter('translate')('winner') + ': ' + game.white.name;
+            } else if (game.result.value === 2) {
+                description += ' - ' + $filter('translate')('winner') + ': ' + game.black.name;
+            }
+
+            return {
+                title: game.white.name + ' ~ ' + game.black.name,
+                description: description
+            };
+        }
 
         function getMessageId(message) {
             return $scope.game.gid + '-' + message.time;

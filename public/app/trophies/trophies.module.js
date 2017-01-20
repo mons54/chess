@@ -88,8 +88,8 @@ angular.module('trophies', [])
  * @restrict E
  * @scope
  */
-directive('modalTrophy', ['$rootScope', 'modal',
-    function ($rootScope, modal) {
+directive('modalTrophy', ['$rootScope', '$filter', 'modal', 'trophies',
+    function ($rootScope, $filter, modal, trophies) {
         return {
             restrict: 'E',
             replace: true,
@@ -97,51 +97,45 @@ directive('modalTrophy', ['$rootScope', 'modal',
             templateUrl: '/app/trophies/templates/modal-trophy.html',
             link: function (scope, element) {
 
-                function show() {
+                function show(data) {
 
-                    if (!scope.data || !scope.data.length) {
+                    if (!data || !data.length) {
                         return;
                     }
 
-                    scope.trophy = scope.data.shift();
+                    var trophy = data.shift();
+
+                    scope.trophy = trophy;
+                    scope.shareData = {
+                        title: $filter('translate')('trophies.content.' + trophy + '.title'),
+                        description: $filter('translate')('trophies.content.' + trophy + '.description'),
+                        picture: trophies.getUserImage(trophy)
+                    };
+
                     modal.show(element);
 
-                    element.one('hide', show);
+                    element.one('hide', function () {
+                        $rootScope.$apply(function () {
+                            show(data);
+                        });
+                    });
                 }
 
                 $rootScope.$on('trophies', function (event, data) {
-                    scope.data = data;
-                    show();
+                    show(data);
                 });
-            },
-            controller: ['$scope', '$filter', 'utils', 'trophies',
 
-                function ($scope, $filter, utils, trophies) {
+                scope.getUserClass = function (id) {
+                    if (!id) {
+                        return;
+                    }
+                    return trophies.getUserClass(id);
+                };
 
-                    $scope.getUserClass = function (id) {
-                        if (!id) {
-                            return;
-                        }
-                        return trophies.getUserClass(id);
-                    };
-
-                    $scope.hasTrophy = function (id) {
-                        return trophies.hasTrophy(id);
-                    };
-
-                    $scope.shareTrophy = function (id) {
-                        if (!id || !trophies.hasTrophy(id)) {
-                            return;
-                        }
-
-                        utils.share({
-                            name: $filter('translate')('trophies.content.' + id + '.title'),
-                            description: $filter('translate')('trophies.content.' + id + '.description'),
-                            picture: trophies.getUserImage(id)
-                        });
-                    };
-                }
-            ]
+                scope.hasTrophy = function (id) {
+                    return trophies.hasTrophy(id);
+                };
+            }
         };
     }
 ]);
