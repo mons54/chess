@@ -1,51 +1,47 @@
 'use strict';
 
-var express = require('express'),
-    mongoose = require('mongoose');
-
 module.exports = function (app) {
 
-    mongoose.connect('mongodb://mons54:jsOL160884@ds011321.mlab.com:11321/chess');
-
-
-    var staticPath = dirname + '/public/',
+    var express = require('express'),
+        mongoose = require('mongoose'),
         bodyParser = require('body-parser'),
-        dictionaries = {};
-
-    app.use(express.static(staticPath));
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
-    app.set('views', staticPath);
-    app.engine('html', require('ejs').renderFile);
-
-    app.use(function (req, res, next) {
-        console.log(req.url)
-      next();
-    });
-
-    app.get('/docs/*', function (req, res) {
-        res.sendFile(staticPath + 'docs/index.html');
-    });
+        staticPath = dirname + '/public/',
+        dictionaries = {},
+        acceptsLanguages;
 
     require('fs').readdirSync(staticPath + 'json/dictionaries').forEach(function (file) {
-        var dictionary = require(staticPath + 'json/dictionaries/' + file);
-        dictionaries[file.substr(0, 2)] = {
+        
+        var lang = file.substr(0, 2),
+            dictionary = require(staticPath + 'json/dictionaries/' + file);
+
+        dictionaries[lang] = {
+            lang: lang,
             title: dictionary.title,
             description: dictionary.description
         };
     });
 
-    app.get('/:lang([a-z0-9]+)?/([a-z0-9]+)?', function (req, res) {
-        var data;
-        if (dictionaries[req.params.lang]) {
-            data = dictionaries[req.params.lang];
-        }
-        console.log('toto')
-        res.sendFile(staticPath + 'index.html', data);
-    });
+    acceptsLanguages = Object.keys(dictionaries);
 
-    app.get('/*[^.map]$', function(req, res) {
-        res.redirect('/')
+    mongoose.connect('mongodb://mons54:jsOL160884@ds011321.mlab.com:11321/chess');
+
+    app.use(express.static(staticPath));
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.set('views', staticPath);
+    app.set('view engine', 'ejs');
+
+    app.get('/([a-z][^.]+)?', function (req, res) {
+        var data,
+            lang = req.acceptsLanguages(acceptsLanguages);
+
+        if (!dictionaries.hasOwnProperty(lang)) {
+            lang = 'en';
+        }
+
+        data = dictionaries[lang];
+
+        res.render('index', data);
     });
 };
 

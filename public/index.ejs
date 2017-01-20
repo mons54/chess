@@ -1,15 +1,30 @@
 <!doctype html>
-<html lang="{{ user.lang }}" ng-app="app">
+<html lang="<%= lang %>" ng-app="app">
     <head>
-        <meta name="fragment" content="!">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="{{ 'description' | translate }}">
+        <meta name="description" content="<%= description %>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+        <meta property="og:url" content="https://worldofchess.online"/>
+        <meta property="og:title" content="<%= title %>" />
+        <meta property="og:description" content="<%= description %>" />
+        <meta property="og:image" content="https://worldofchess.online/images/logo.png" />
+        <meta property="fb:app_id" content="1687859708170830" />
+
+        <meta property="og:title" content="<%= title %>" />
+        <meta property="og:description" content="<%= description %>" />
+        <meta property="og:image" content="https://worldofchess.online/images/logo.png" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@WorldOfChess_" />
+        <meta name="twitter:title" content="<%= title %>" />
+        <meta name="twitter:description" content="<%= description %>" />
+        <meta name="twitter:image" content="https://worldofchess.online/images/logo.png" />
 
         <base href="/">
         
-        <title ng-bind="'title'|translate"></title>
+        <title ng-bind="'title'|translate"><%= title %></title>
 
         <link rel="shortcut icon" href="/images/favicon.ico">
 
