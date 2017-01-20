@@ -17,7 +17,7 @@ service('modal', function () {
     function showModal(modal) {
         if (!modal.parent().is('body')) {
             modal.defaultParent = modal.parent();
-            $('body').append(modal);
+            $('body').prepend(modal);
         }
         modal.addClass('app-modal--active').trigger('show');
     }
