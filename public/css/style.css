@@ -937,6 +937,9 @@ a {
 
 .app-pagination__textfield {
   display: inline-block;
+  vertical-align: middle;
+  height: 29px;
+  padding-bottom: 4px;
   padding-top: 0;
   margin-bottom: 0;
 }
@@ -944,6 +947,7 @@ a {
 .app-pagination__textfield > input {
   width: 50px;
   text-align: right;
+  height: 100%;
 }
 
 .app-trophies {
