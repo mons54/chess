@@ -365,43 +365,6 @@ factory('socket', ['$rootScope', function ($rootScope) {
 
 /**
  * @ngdoc service
- * @name global.service:lang
- * @description 
- * Seervice lang.
- * @requires $translate
- */
-service('lang', ['$rootScope', '$translate',
-
-    function ($rootScope, $translate) {
-
-        return {
-            /**
-             * @ngdoc function
-             * @name #set
-             * @methodOf global.service:lang
-             * @description 
-             * Set app lang.
-             * @param {string} lang New lang
-             */
-            set: function (lang) {
-
-                if (!lang) {
-                    return;
-                }
-
-                lang = lang.substr(0, 2);
-
-                if (lang !== $translate.use()) {
-                    $rootScope.user.lang = lang;
-                    $translate.use(lang);
-                }
-            },
-        };
-    }
-]).
-
-/**
- * @ngdoc service
  * @name global.service:user
  * @description 
  * Socket management.
@@ -518,8 +481,77 @@ service('user', ['$cookies', function ($cookies) {
             this.set('showPlayed', value);
         },
     }
-}])
-.filter('relativeNumber', function () {
+}]).
+
+/**
+ * @ngdoc service
+ * @name global.service:translator
+ * @description 
+ * Service translator
+ * @requires $http
+ */
+service('translator', ['$http', function($http) {
+    return {
+        available: ['ar', 'de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'tr', 'zh'],
+        default: 'en',
+        lang: null,
+        data: null,
+        use: function (lang) {
+
+            if (typeof lang === 'string') {
+                lang = lang.substr(0, 2);
+            }
+
+            if (this.available.indexOf(lang) === -1) {
+                lang = this.default;
+            }
+
+            if (this.lang && lang === this.lang) {
+                return;
+            }
+
+            $http.get('/json/dictionaries/' + lang + '.json')
+            .then(function (response) {
+                this.lang = lang;
+                this.data = response.data;
+            }.bind(this));
+        },
+        translate: function (key) {
+
+            if (!this.data) {
+                return key;
+            }
+
+            var result,
+                data = this.data;
+
+            angular.forEach(key.split('.'), function(value, index) {
+                
+                if (result) {
+                    return;
+                }
+
+                if (typeof data[value] === 'string') {
+                    result = data[value];
+                } else if (typeof data[value] === 'object') {
+                    data = data[value];
+                }
+            }.bind(this));
+
+            return result ? result : key;
+        }
+    };
+}]).
+filter('translate', ['translator', function (translator) {
+    function translate(value) {
+        return translator.translate(value);
+    };
+
+    translate.$stateful = true;
+
+    return translate;
+}]).
+filter('relativeNumber', function () {
     return function (value) {
         return value > 0 ? '+' + value : value;
     };

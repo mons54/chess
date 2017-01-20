@@ -18,11 +18,11 @@ constant('googleClientId', '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.g
  * @requires $rootScope
  * @requires global.service:user
  * @requires global.service:socket
- * @requires global.service:lang
+ * @requires global.service:translator
  */
-service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'lang',
+service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator',
 
-    function ($rootScope, googleClientId, user, socket, lang) {
+    function ($rootScope, googleClientId, user, socket, translator) {
 
         var self = this;
 
@@ -36,7 +36,7 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'lang',
 
             angular.forEach(response.locales, function (value) {
                 if (value.value.substr(0, 2) !== 'en') {
-                    lang.set(value.value);
+                    translator.use(value.value);
                 }
             });
 

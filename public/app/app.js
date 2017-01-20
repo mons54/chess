@@ -12,7 +12,6 @@
      * @requires ngRoute
      * @requires ngCookies
      * @requires easypiechart
-     * @requires pascalprecht.translate
      * @requires components
      * @requires game
      * @requires home
@@ -23,7 +22,6 @@
         'ngRoute',
         'ngCookies',
         'easypiechart',
-        'pascalprecht.translate',
         'global',
         'facebook',
         'google',
@@ -34,7 +32,7 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', '$window', 'user', 'socket', 'modal', 'facebook', 'google', 'lang',
+    run(['$rootScope', '$route', '$http', '$location', '$window', 'user', 'socket', 'modal', 'facebook', 'google', 'translator',
 
         /**
          * @param {object} $rootScope Global scope
@@ -48,7 +46,7 @@
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, $window, user, socket, modal, facebook, google, lang) {
+        function ($rootScope, $route, $http, $location, $window, user, socket, modal, facebook, google, translator) {
 
             $rootScope.$on('$routeChangeStart', function() {
 
@@ -206,7 +204,7 @@
                 friends: []
             };
 
-            lang.set(navigator.language || navigator.userLanguage || 'en');
+            translator.use(navigator.language || navigator.userLanguage || 'en');
             
             (function(d, s, id){
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -235,8 +233,8 @@
         }
     ]).
 
-    config(['$routeProvider', '$locationProvider', '$translateProvider',
-        function ($routeProvider, $locationProvider, $translateProvider) {
+    config(['$routeProvider', '$locationProvider',
+        function ($routeProvider, $locationProvider) {
             $routeProvider
             .when('/', {
                 title : 'home',
@@ -263,15 +261,6 @@
             });
 
             $locationProvider.html5Mode(true);
-
-            $translateProvider.useSanitizeValueStrategy('escape');
-
-            $translateProvider.useStaticFilesLoader({
-                'prefix': 'json/dictionaries/',
-                'suffix': '.json'
-            });
-
-            $translateProvider.preferredLanguage('en');
         }
     ]);
 

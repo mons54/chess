@@ -24,11 +24,11 @@ constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
  * @requires $rootScope
  * @requires global.service:user
  * @requires global.service:socket
- * @requires global.service:lang
+ * @requires global.service:translator
  */
-service('facebook', ['$rootScope', 'user', 'socket', 'lang',
+service('facebook', ['$rootScope', 'user', 'socket', 'translator',
 
-    function ($rootScope, user, socket, lang) {
+    function ($rootScope, user, socket, translator) {
 
         var self = this;
 
@@ -123,7 +123,7 @@ service('facebook', ['$rootScope', 'user', 'socket', 'lang',
             
             FB.api('/me?fields=first_name,name,locale,gender,currency', function (response) {
 
-                lang.set(response.locale);
+                translator.use(response.locale);
 
                 $rootScope.user.gender = response.gender;
 

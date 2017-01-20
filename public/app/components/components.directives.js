@@ -145,16 +145,16 @@ directive('modalProfile', ['socket', 'modal',
  * @requires $translate
  * @restrict A
  */
-directive('friendsRequests', ['$translate',
-    function ($translate) {
+directive('friendsRequests', ['$filter',
+    function ($filter) {
         return {
             restrict: 'A',
             link: function (scope, element) {
                 element.bind('click', function () {
                     FB.ui({
                         method: 'apprequests',
-                        title: $translate('title'),
-                        message: $translate('description'),
+                        title: $filter('translate')('title'),
+                        message: $filter('translate')('description'),
                     });
                 });
             }
