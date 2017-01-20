@@ -9,7 +9,8 @@ module.exports = function (app) {
 
 
     var staticPath = dirname + '/public/',
-        bodyParser = require('body-parser');
+        bodyParser = require('body-parser'),
+        dictionaries = {};
 
     app.use(express.static(staticPath));
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,12 +18,34 @@ module.exports = function (app) {
     app.set('views', staticPath);
     app.engine('html', require('ejs').renderFile);
 
-    app.all('/docs/*', function (req, res) {
+    app.use(function (req, res, next) {
+        console.log(req.url)
+      next();
+    });
+
+    app.get('/docs/*', function (req, res) {
         res.sendFile(staticPath + 'docs/index.html');
     });
 
-    app.all('/*', function (req, res) {
-        res.sendFile(staticPath + 'index.html');
+    require('fs').readdirSync(staticPath + 'json/dictionaries').forEach(function (file) {
+        var dictionary = require(staticPath + 'json/dictionaries/' + file);
+        dictionaries[file.substr(0, 2)] = {
+            title: dictionary.title,
+            description: dictionary.description
+        };
+    });
+
+    app.get('/:lang([a-z0-9]+)?/([a-z0-9]+)?', function (req, res) {
+        var data;
+        if (dictionaries[req.params.lang]) {
+            data = dictionaries[req.params.lang];
+        }
+        console.log('toto')
+        res.sendFile(staticPath + 'index.html', data);
+    });
+
+    app.get('/*[^.map]$', function(req, res) {
+        res.redirect('/')
     });
 };
 
