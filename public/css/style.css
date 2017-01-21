@@ -874,6 +874,7 @@ a {
 .app-table__avatar {
   margin-right: 10px;
   width: 40px;
+  height: 40px;
   border-radius: 3px;
 }
 
@@ -1923,6 +1924,11 @@ a {
 
   .app-table {
     font-size: 15px;
+  }
+
+  .app-table__avatar {
+    width: 30px;
+    height: 30px;
   }
 
   .app-table__name {
