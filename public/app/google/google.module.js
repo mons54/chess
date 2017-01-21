@@ -26,6 +26,8 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
 
         var self = this;
 
+        this.name = 'google';
+
         function setData (response) {
 
             if (!self.auth) {
@@ -110,7 +112,8 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
                     accessToken: gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token
                 };
             }
-            callback('google');
+
+            callback(this);
         };
 
         /**
@@ -130,18 +133,6 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
 
         /**
          * @ngdoc function
-         * @name #logout
-         * @methodOf google.service:google
-         * @description
-         * Google logout.
-         */
-        this.logout = function () {
-            gapi.auth2.getAuthInstance().signOut();
-            socket.disconnect();
-        };
-
-        /**
-         * @ngdoc function
          * @name #handleLogin
          * @methodOf google.service:google
          * @description
@@ -149,7 +140,7 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
          * Set user friends from facebook list.
          */
         this.handleLogin = function () {
-            user.setLogin('google');
+            user.setLogin(self.name);
             gapi.client.people.people.get({
                 resourceName: 'people/me'
             }).then(function(response) {

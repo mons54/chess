@@ -1891,8 +1891,29 @@ a {
     top: 6px;
   }
 
-  .app-button__fixed {
+  .app-button__fixed .app-button {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+  }
+
+  .app-button__fixed--game {
     display: none;
+  }
+
+  .app-login__content-button {
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .app-login__content-button:last-child {
+    margin-bottom: 0;
+  }
+
+  .app-login__content-button button {
+    width: 300px;
+    text-align: center;
   }
 }
 
@@ -1937,21 +1958,6 @@ a {
 
   .app-table--ranking .app-table__name {
     display: initial;
-  }
-
-  .app-login__content-button {
-    text-align: center;
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  .app-login__content-button:last-child {
-    margin-bottom: 0;
-  }
-
-  .app-login__content-button button {
-    width: 300px;
-    text-align: center;
   }
 
   .app-profile--game .app-profile__avatar {

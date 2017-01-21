@@ -84,10 +84,12 @@
 
             $rootScope.facebookLogin = function () {
                 facebook.login();
+                afterLogin();
             };
 
             $rootScope.googleLogin = function () {
                 google.login();
+                afterLogin();
             };
 
             $rootScope.connect = function () {
@@ -96,6 +98,19 @@
                 } else {
                     setLoginStatus();
                 }
+                modal.hide(modal.get('modal-disconnect'));
+            };
+
+            $rootScope.logout = function (argument) {
+                if (facebook.isFacebookApp) {
+                    return;
+                }
+
+                $rootScope.loading = true;
+                $rootScope.isLogout = true;
+                user.setLogin(false);
+                socket.disconnect();
+                modal.show(modal.get('modal-connect'));
             };
 
             /**
@@ -103,6 +118,11 @@
              */
             function redirectToGame () {
                 $location.path('/game/' + $rootScope.user.gid);
+            }
+
+            function afterLogin() {
+                delete $rootScope.isLogout;
+                modal.hide(modal.get('modal-connect'));
             }
 
             function setLoginStatus() {
@@ -122,25 +142,24 @@
 
                 var login = user.getLogin();
 
-                if (!facebook.isFacebookApp && !login) {
+                if (facebook.isFacebookApp) {
+                    login = facebook.name;
+                }
+
+                if (!facebook.isFacebookApp && (!login || login === service.name && service.status !== 'connected')) {
                     modal.show(modal.get('modal-connect'));
                     return;
                 }
 
-                if (service === 'facebook') {
-                    if ((facebook.isFacebookApp || login === 'facebook') && facebook.status === 'connected') {
-                        facebook.handleLogin();
+
+                if (login === service.name) {
+                    if (service.status === 'connected') {
+                        service.handleLogin();
                     } else if (facebook.isFacebookApp) {
                         facebook.login();
                     }
-                } else if (service === 'google') {
-                    if (login === 'google' && google.status === 'connected') {
-                        google.handleLogin();
-                    }
                 }
             }
-
-            var isDisconnect = false;
 
             socket.on('connect', function () {
                 var login = user.getLogin();
@@ -153,8 +172,11 @@
             });
 
             socket.on('disconnect', function () {
-                isDisconnect = true;
-                modal.show(modal.get('modal-disconnect'));
+                $rootScope.loading = true;
+                $rootScope.isDisconnected = true;
+                if (!$rootScope.isLogout) {
+                    modal.show(modal.get('modal-disconnect'));
+                }
             });
 
             socket.on('user', function (data) {
@@ -167,11 +189,10 @@
             });
 
             socket.on('connected', function () {
-                if (isDisconnect && !$rootScope.isGameFinish) {
+                if ($rootScope.isDisconnected && !$rootScope.isGameFinish) {
                     $route.reload();
                 }
-                modal.hide(modal.get('modal-connect'));
-                modal.hide(modal.get('modal-disconnect'));
+                delete $rootScope.isDisconnected;
                 $rootScope.loading = false;
                 $rootScope.ready = true;
             });
@@ -189,6 +210,8 @@
             };
 
             facebook.isFacebookApp = $location.search().facebook;
+
+            $rootScope.isFacebookApp = facebook.isFacebookApp;
 
             if (!facebook.isFacebookApp && gapi && gapi.load) {
 

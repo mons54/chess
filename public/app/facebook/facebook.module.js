@@ -32,6 +32,8 @@ service('facebook', ['$rootScope', 'user', 'socket', 'translator',
 
         var self = this;
 
+        this.name = 'facebook';
+
         function setLoginStatus (response) {
             self.status = response.status;
             if (response.status === 'connected') {
@@ -70,7 +72,7 @@ service('facebook', ['$rootScope', 'user', 'socket', 'translator',
         this.setLoginStatus = function (callback) {
             FB.getLoginStatus(function (response) {
                 setLoginStatus(response);
-                callback('facebook');
+                callback(self);
             });
         };
 
@@ -96,19 +98,6 @@ service('facebook', ['$rootScope', 'user', 'socket', 'translator',
 
         /**
          * @ngdoc function
-         * @name #logout
-         * @methodOf facebook.service:facebook
-         * @description
-         * Facebook logout.
-         */
-        this.logout = function () {
-            FB.logout(function () {
-                socket.disconnect();
-            });
-        };
-
-        /**
-         * @ngdoc function
          * @name #handleLogin
          * @methodOf facebook.service:facebook
          * @description
@@ -118,7 +107,7 @@ service('facebook', ['$rootScope', 'user', 'socket', 'translator',
         this.handleLogin = function () {
 
             if (!this.isFacebookApp) {
-                user.setLogin('facebook');
+                user.setLogin(this.name);
             }
             
             FB.api('/me?fields=first_name,name,locale,gender,currency', function (response) {
