@@ -235,7 +235,7 @@ service('sound', ['user', function (user) {
  * @description 
  * Socket management.
  */
-factory('socket', ['$rootScope', function ($rootScope) {
+factory('socket', ['$timeout', function ($timeout) {
 
     var socket,
         deferedEvents = [];
@@ -292,7 +292,7 @@ factory('socket', ['$rootScope', function ($rootScope) {
 
             var listener = function () {
                 var args = arguments;
-                $rootScope.$apply(function () {
+                $timeout(function () {
                     callback.apply(socket, args);
                 });
             };
@@ -324,7 +324,7 @@ factory('socket', ['$rootScope', function ($rootScope) {
 
             var listener = function () {
                 var args = arguments;
-                $rootScope.$apply(function () {
+                $timeout(function () {
                     callback.apply(socket, args);
                 });
             };
@@ -353,7 +353,7 @@ factory('socket', ['$rootScope', function ($rootScope) {
             }
             socket.emit(eventName, data, function () {
                 var args = arguments;
-                $rootScope.$apply(function () {
+                $timeout(function () {
                     if (callback) {
                         callback.apply(socket, args);
                     }

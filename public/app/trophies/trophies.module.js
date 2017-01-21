@@ -88,8 +88,8 @@ angular.module('trophies', [])
  * @restrict E
  * @scope
  */
-directive('modalTrophy', ['$rootScope', '$filter', 'modal', 'trophies',
-    function ($rootScope, $filter, modal, trophies) {
+directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal', 'trophies',
+    function ($rootScope, $timeout, $filter, modal, trophies) {
         return {
             restrict: 'E',
             replace: true,
@@ -97,9 +97,12 @@ directive('modalTrophy', ['$rootScope', '$filter', 'modal', 'trophies',
             templateUrl: '/app/trophies/templates/modal-trophy.html',
             link: function (scope, element) {
 
+                var load = false;
+
                 function show(data) {
 
                     if (!data || !data.length) {
+                        load = false;
                         return;
                     }
 
@@ -115,13 +118,17 @@ directive('modalTrophy', ['$rootScope', '$filter', 'modal', 'trophies',
                     modal.show(element);
 
                     element.one('hide', function () {
-                        $rootScope.$apply(function () {
+                        $timeout(function () {
                             show(data);
                         });
                     });
                 }
 
                 $rootScope.$on('trophies', function (event, data) {
+                    if (load) {
+                        return;
+                    }
+                    load = true;
                     show(data);
                 });
 

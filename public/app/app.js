@@ -167,7 +167,7 @@
             });
 
             socket.on('connected', function () {
-                if (isDisconnect) {
+                if (isDisconnect && !$rootScope.isGameFinish) {
                     $route.reload();
                 }
                 modal.hide(modal.get('modal-connect'));

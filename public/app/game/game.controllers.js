@@ -26,7 +26,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         $rootScope.isGame = true;
 
         $scope.$on('$destroy', function() {
-            $rootScope.isGame = false;
+            delete $rootScope.isGame;
+            delete $rootScope.isGameFinish;
         });
         
         socket.emit('initGame', $routeParams.id);
@@ -57,6 +58,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             if (game.finish) {
                 $rootScope.user.gid = null;
                 $scope.shareResultData = getShareResultData(game);
+                $rootScope.isGameFinish = true;
                 modal.show(modal.get('modal-finish-game'));
                 var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.time);
             }

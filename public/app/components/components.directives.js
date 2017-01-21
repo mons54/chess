@@ -53,14 +53,21 @@ directive('showModal', ['modal',
  * @scope
  * @param {object} user User data {uid: uid, name: name}
  */
-directive('showProfile', ['socket',
-    function (socket) {
+directive('showProfile', ['$rootScope', 'socket',
+    function ($rootScope, socket) {
         return {
             scope: {
                 showProfile: '='
             },
             link: function (scope, element) {
                 element.bind('click', function () {
+
+                    if ($rootScope.loadProfile) {
+                        return;
+                    }
+
+                    $rootScope.loadProfile = true;
+
                     socket.emit('profile', {
                         uid: scope.showProfile.uid,
                         name: scope.showProfile.name,
@@ -82,8 +89,8 @@ directive('showProfile', ['socket',
  * @restrict E
  * @scope
  */
-directive('modalProfile', ['socket', 'modal',
-    function (socket, modal) {
+directive('modalProfile', ['$rootScope', 'socket', 'modal',
+    function ($rootScope, socket, modal) {
         return {
             restrict: 'E',
             replace: true,
@@ -117,6 +124,8 @@ directive('modalProfile', ['socket', 'modal',
 
                 socket.on('profile', function (data) {
 
+                    delete $rootScope.loadProfile;
+
                     scope.charts = [];
 
                     angular.forEach(['win', 'draw', 'lose'], function (name) {
@@ -131,7 +140,7 @@ directive('modalProfile', ['socket', 'modal',
                     scope.data = data;
 
                     modal.show(element);
-                });
+                }, scope);
             }
         }
     }
