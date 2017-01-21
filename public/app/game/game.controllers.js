@@ -41,6 +41,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         setShowPlayed(user.getShowPlayed());
+        setShowMessages(user.getShowMessages());
 
         $scope.sound = sound.sound;
 
@@ -289,7 +290,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 showMessages();
             }
 
-            $scope.showMessages = !$scope.showMessages;
+            var value = !$scope.showMessages;
+            setShowMessages(value);
+            user.setShowMessages(value);
 
             if ($scope.showMessages) {
                 $timeout(function () {
@@ -375,6 +378,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         function setShowPlayed(value) {
             $scope.showPlayed = value;
             $scope.hideSound = value;
+        }
+
+        function setShowMessages(value) {
+            $scope.showMessages = value;
         }
 
         $interval.cancel($interval.stopTimeGame);

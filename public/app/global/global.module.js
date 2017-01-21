@@ -480,6 +480,28 @@ service('user', ['$cookies', function ($cookies) {
         setShowPlayed: function (value) {
             this.set('showPlayed', value);
         },
+        /**
+         * @ngdoc function
+         * @name #getShowMessages
+         * @methodOf global.service:user
+         * @description 
+         * Get show messages value
+         * @returns {bool} Show
+         */
+        getShowMessages: function () {
+            return this.get('showMessages');
+        },
+        /**
+         * @ngdoc function
+         * @name #setShowMessages
+         * @methodOf global.service:user
+         * @description 
+         * Set show messages value
+         * @param {bool} value Show
+         */
+        setShowMessages: function (value) {
+            this.set('showMessages', value);
+        },
     }
 }]).
 
