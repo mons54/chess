@@ -119,7 +119,7 @@
 
 
             <div class="app-drawer mdl-layout__drawer">
-                <span class="mdl-layout-title">
+                <span class="app-layout-title mdl-layout-title">
                     <span class="app-logo">
                         <span class="app-logo__icon"></span>
                         <span class="app-logo__text" ng-bind="'title'|translate"></span>
@@ -143,6 +143,12 @@
                        ng-click="closeDrawer()">
                         <i class="material-icons" role="presentation">star</i>
                         {{ 'trophies.title' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href
+                       ng-click="closeDrawer(); logout()">
+                        <i class="material-icons" role="presentation">power_settings_new</i>
+                        {{ 'logout' | translate }}
                     </a>
                 </nav>
             </div>
