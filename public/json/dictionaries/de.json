@@ -1,150 +1,147 @@
 {
-	"title":"Schach",
-	"description":"spielen Partie Schach gegen andere Spieler. Vergleichen Sie Ihre Ergebnisse mit anderen Spielern und erkämpfen Sie sich einen Platz in der Rangliste.",
-	"online":"Online",
-	"offline":"Offline",
-	"home":"Home",
-	"play":"spielen",
-	"ranking":"Rangliste",
-	"invite":"Laden",
-	"points":"Punkte",
-	"player":"Spieler",
-	"games": "Spiele",
-	"challengers":"Challengers",
-	"challenges": "Herausforderungen",
-	"all":"All",
-	"time":"Zeit",
-	"minutes":"Minuten",
-	"color":"Farbe",
-	"white":"weiß",
-	"black":"Schwarz",
-	"min":"Mini",
-	"max":"Maxi",
-	"winner":"Gewinner",
-	"game_over":"Game Over",
-	"mat":"Schachmatt",
-	"pat":"Patt",
-	"nul":"Remis",
-	"start_game":"Spiel starten",
-	"search_game":"Suche nach einem Spiel",
-	"level":"Ebene",
-	"facile":"leicht",
-	"normal":"normal",
-	"difficile":"schwer",
-	"none":"Ninguno",
-	"one_player":"Ein Spieler",
-	"two_player":"zwei Spieler",
-	"error_browser":"Ihr Browser ist nicht kompatibel mit diesem Spiel",
-	"error":"Ein Fehler ist aufgetreten",
-	"wait_game":"Waiting for a game ...",
-	"offer_draw":"Remis anbieten",
-	"offers_a_draw":"anbiete ein Remis",
-	"resign":"aufgeben",
-	"ok":"Ok",
-	"cancel":"Abbrechen",
+    "title":"Schach",
+    "description":"spielen Partie Schach gegen andere Spieler. Vergleichen Sie Ihre Ergebnisse mit anderen Spielern und erkämpfen Sie sich einen Platz in der Rangliste.",
+    "home":"Home",
+    "ranking":"Rangliste",
+    "invite":"Freunde einladen",
+    "points":"Punkte",
+    "games": "Spiele",
+    "challengers":"Challengers",
+    "challenges": "Herausforderungen",
+    "all":"All",
+    "time":"Zeit",
+    "minutes":"Minuten",
+    "color":"Farbe",
+    "white":"weiß",
+    "black":"Schwarz",
+    "min":"Mini",
+    "max":"Maxi",
+    "winner":"Gewinner",
+    "game_over":"Game Over",
+    "mat":"Schachmatt",
+    "pat":"Patt",
+    "nul":"Remis",
+    "offer_draw":"Remis anbieten",
+    "offers_a_draw":"anbieten ein Remis",
+    "resign":"aufgeben",
+    "ok":"Ok",
+    "cancel":"Abbrechen",
 	"create_game":"Erstellen Sie ein Spiel",
-	"challenge":"Herausfordern",
-	"newChallenge":"neue Herausforderung",
-	"cancel_partie":"Dieses Spiel ist nicht mehr vorhanden",
-	"win":"gewinnen",
-	"lose":"verlieren",
-	"draw":"Remis",
-	"game":"Spiel",
-	"connected":"verbunden",
-	"quick_game":"Spiel",
-	"share":"Teilen",
-	"friends":"Freunde",
-	"congratulation":"Glückwunsch",
-	"fanpage":"Fan Page",
-	"terms_service":"Nutzungsbedingungen",
-	"privacy_policy":"Datenschutz",
-	"login_with_facebook": "Mit Facebook anmelden",
-	"login_with_google": "Mit Google anmelden",
+    "win":"gewinnen",
+    "lose":"verlieren",
+    "draw":"Remis",
+    "connected":"verbunden",
+    "share":"Teilen",
+    "friends":"Freunde",
+    "fanpage":"Fan Page",
+    "terms_service":"Nutzungsbedingungen",
+    "privacy_policy":"Datenschutz",
+    "login_with_facebook": "Mit Facebook anmelden",
+    "login_with_google": "Mit Google anmelden",
     "logout": "Abmelden",
-	"trophies":{
-		"title":"Trophäe",
-		"win":"Sie gewinnen eine Trophäe",
-		"content":{
-			"1":{
-				"title":"Neuling",
-				"description":"Spielen Sie 1 Spiel"
-			},
-			"2":{
-				"title":"Lehrling",
-				"description":"Spielen Sie 100 Spiele"
-			},
-			"3":{
-				"title":"Zwischen-",
-				"description":"Spielen Sie 500 Spiele"
-			},
-			"4":{
-				"title":"fortgeschritten",
-				"description":"Spielen Sie 1000 Spiele"
-			},
-			"5":{
-				"title":"Experte",
-				"description":"Spielen Sie 5000 Spiele"
-			},
-			"6":{
-				"title":"Anfänger",
-				"description":"Gewinnen Sie 1 Spiel"
-			},
-			"7":{
-				"title":"Schüler",
-				"description":"Gewinnen Sie 50 Spiele"
-			},
-			"8":{
-				"title":"Champion",
-				"description":"Gewinnen Sie 250 Spiele"
-			},
-			"9":{
-				"title":"Professor",
-				"description":"Gewinnen Sie 500 Spiele"
-			},
-			"10":{
-				"title":"Genius",
-				"description":"Gewinnen Sie 2000 Spiele"
-			},
-			"11":{
-				"title":"Amateur",
-				"description":"Spielen Sie 5 Spiele an einem Tag"
-			},
-			"12":{
-				"title":"Enthusiast",
-				"description":"Spielen Sie 10 Spiele an einem Tag"
-			},
-			"13":{
-				"title":"Fan",
-				"description":"Spielen Sie 25 Spiele an einem Tag"
-			},
-			"14":{
-				"title":"Super Fan",
-				"description":"Spielen Sie 50 Spiele an einem Tag"
-			},
-			"15":{
-				"title":"Süchtige",
-				"description":"Spielen Sie 100 Spiele an einem Tag"
-			},
-			"16":{
-				"title":"Gewinner",
-				"description":"Gewinne 3 Spiele in Folge"
-			},
-			"17":{
-				"title":"Eroberer",
-				"description":"Gewinne 5 Spiele in Folge"
-			},
-			"18":{
-				"title":"Killer",
-				"description":"Gewinne 10 Spiele in Folge"
-			},
-			"19":{
-				"title":"unbesiegbar",
-				"description":"Gewinne 20 Spiele in Folge"
-			},
-			"20":{
-				"title":"Verlierer",
-				"description":"Lose 3 Spiele in Folge"
-			}
-		}
-	}
+    "achievements":{
+        "title":"Erfolge",
+        "content":{
+            "1":{
+                "title":"Neuling",
+                "description":"Spielen Sie 1 Spiel"
+            },
+            "2":{
+                "title":"Lehrling",
+                "description":"Spielen Sie 100 Spiele"
+            },
+            "3":{
+                "title":"Medium",
+                "description":"Spielen Sie 500 Spiele"
+            },
+            "4":{
+                "title":"Spezialist",
+                "description":"Spielen Sie 1000 Spiele"
+            },
+            "5":{
+                "title":"Veteran",
+                "description":"Spielen Sie 5000 Spiele"
+            },
+            "6":{
+                "title":"Anfänger",
+                "description":"Gewinnen Sie 1 Spiel"
+            },
+            "7":{
+                "title":"Schüler",
+                "description":"Gewinnen Sie 50 Spiele"
+            },
+            "8":{
+                "title":"Champion",
+                "description":"Gewinnen Sie 250 Spiele"
+            },
+            "9":{
+                "title":"Professor",
+                "description":"Gewinnen Sie 500 Spiele"
+            },
+            "10":{
+                "title":"Titan",
+                "description":"Gewinnen Sie 2000 Spiele"
+            },
+            "11":{
+                "title":"Amateur",
+                "description":"Spielen Sie 5 Spiele an einem Tag"
+            },
+            "12":{
+                "title":"Leidenschaftlich",
+                "description":"Spielen Sie 10 Spiele an einem Tag"
+            },
+            "13":{
+                "title":"Fan",
+                "description":"Spielen Sie 25 Spiele an einem Tag"
+            },
+            "14":{
+                "title":"Super Fan",
+                "description":"Spielen Sie 50 Spiele an einem Tag"
+            },
+            "15":{
+                "title":"Addict",
+                "description":"Spielen Sie 100 Spiele an einem Tag"
+            },
+            "16":{
+                "title":"Gewinner",
+                "description":"Gewinne 2 Spiele in Folge"
+            },
+            "17":{
+                "title":"Sieger",
+                "description":"Gewinne 5 Spiele in Folge"
+            },
+            "18":{
+                "title":"Eroberer",
+                "description":"Gewinne 10 Spiele in Folge"
+            },
+            "19":{
+                "title":"Gladiator",
+                "description":"Gewinne 15 Spiele in Folge"
+            },
+            "20":{
+                "title":"Unbesiegbar",
+                "description":"Gewinne 20 Spiele in Folge"
+            },
+            "21":{
+                "title":"Guter Spieler",
+                "description":"Reichweite 1600 Punkte"
+            },
+            "22":{
+               "title":"Club Spieler",
+               "description":"Reichweite 1800 Punkte"
+            },
+            "23":{
+               "title":"Experte",
+               "description":"Reichweite 2000 Punkte"
+            },
+            "24":{
+               "title":"Schachmeister",
+               "description":"Reichweite 2400 Punkte"
+            },
+            "25":{
+               "title":"Schachgroßmeister",
+               "description":"Reichweite 2800 Punkte"
+            }
+        }
+    }
 }

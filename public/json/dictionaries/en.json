@@ -1,14 +1,10 @@
 {
    "title":"Chess",
    "description":"Play Chess against players all over the world. Improve your chess and your ranking.",
-   "online":"Online",
-   "offline":"Offline",
    "home":"Home",
-   "play":"Play",
    "ranking":"Ranking",
    "invite":"Invite",
    "points":"Points",
-   "player":"Player",
    "games": "Games",
    "challengers":"Challengers",
    "challenges": "Challenges",
@@ -25,100 +21,81 @@
    "mat":"Checkmate",
    "pat":"Stalemate",
    "nul":"Draw",
-   "start_game":"Start game",
-   "search_game":"Search for a game",
-   "level":"Level",
-   "facile":"Easy",
-   "normal":"Normal",
-   "difficile":"Hard",
-   "none":"None",
-   "one_player":"One player",
-   "two_player":"Two players",
-   "error_browser":"Your browser is not compatible with this game",
-   "error":"An error has occurred",
-   "wait_game":"Waiting for a game ...",
    "offer_draw":"Offer draw",
    "offers_a_draw":"offers a draw",
    "resign":"Resign",
    "ok":"Ok",
    "cancel":"Cancel",
    "create_game":"Create a game",
-   "challenge":"Challenge",
-   "newChallenge":"New challenge",
-   "cancel_partie":"This game session no longer exists",
    "win":"Win",
    "lose":"Lose",
    "draw":"Draw",
-   "game":"Game",
    "connected":"connected",
-   "quick_game":"game",
    "share":"Share",
    "friends":"Friends",
-   "congratulation":"Congratulation",
    "fanpage":"Fan Page",
    "terms_service":"Terms of Service",
    "privacy_policy":"Privacy Policy",
    "login_with_facebook": "Login with Facebook",
    "login_with_google": "Login with Google",
    "logout": "Log out",
-   "trophies":{
-      "title":"Trophy",
-      "win":"You win a trophy",
+   "achievements":{
+      "title":"Erfolge",
       "content":{
          "1":{
             "title":"Beginner",
             "description":"Play 1 game"
          },
          "2":{
-            "title":"Novice",
+            "title":"Apprentice",
             "description":"Play 100 games"
          },
          "3":{
-            "title":"Intermediate",
+            "title":"Medium",
             "description":"Play 500 games"
          },
          "4":{
-            "title":"Advanced",
-            "description":"Play 1000 games"
+            "title":"Specialist",
+            "description":"Play 2000 games"
          },
          "5":{
-            "title":"Expert",
+            "title":"Veteran",
             "description":"Play 5000 games"
          },
          "6":{
-            "title":"Champion Chocolate",
+            "title":"Novice",
             "description":"Win 1 game"
          },
          "7":{
-            "title":"Champion bronze",
+            "title":"Student",
             "description":"Win 50 games"
          },
          "8":{
-            "title":"Champion silver",
+            "title":"Professor",
             "description":"Win 250 games"
          },
          "9":{
-            "title":"Champion gold",
-            "description":"Win 500 games"
+            "title":"Champion",
+            "description":"Win 1000 games"
          },
          "10":{
-            "title":"Champion platinum",
-            "description":"Win 2000 games"
+            "title":"Titan",
+            "description":"Win 2500 games"
          },
          "11":{
             "title":"Amateur",
             "description":"Play 5 games in one day"
          },
          "12":{
-            "title":"Enthusiast",
+            "title":"Passionate",
             "description":"Play 10 games in one day"
          },
          "13":{
-            "title":"Fan",
+            "title":"Lover",
             "description":"Play 25 games in one day"
          },
          "14":{
-            "title":"Super Fan",
+            "title":"Fan",
             "description":"Play 50 games in one day"
          },
          "15":{
@@ -127,23 +104,43 @@
          },
          "16":{
             "title":"Winner",
-            "description":"Win 3 consecutive games"
+            "description":"Win 2 consecutive games"
          },
          "17":{
-            "title":"Conqueror",
+            "title":"Victor",
             "description":"Win 5 consecutive games"
          },
          "18":{
-            "title":"Killer",
+            "title":"Conqueror",
             "description":"Win 10 consecutive games"
          },
          "19":{
+            "title":"Gladiator",
+            "description":"Win 15 consecutive games"
+         },
+         "20":{
             "title":"Invincible",
             "description":"Win 20 consecutive games"
          },
-         "20":{
-            "title":"Loser",
-            "description":"Lose 3 consecutive games"
+         "21":{
+            "title":"Good player",
+            "description":"Reach 1600 points"
+         },
+         "22":{
+            "title":"Club player",
+            "description":"Reach 1800 points"
+         },
+         "23":{
+            "title":"Expert",
+            "description":"Reach 2000 points"
+         },
+         "24":{
+            "title":"Chess Master",
+            "description":"Reach 2400 points"
+         },
+         "25":{
+            "title":"Chess Grandmaster",
+            "description":"Reach 2800 points"
          }
       }
    }

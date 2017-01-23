@@ -61,8 +61,8 @@
    "login_with_facebook": "Connexion avec Facebook",
    "login_with_google": "Connexion avec Google",
    "logout": "Déconnexion",
-   "trophies":{
-      "title":"Trophées",
+   "achievements":{
+      "title":"Succès",
       "win":"Vous gagnez un trophée.",
       "content":{
          "1":{
@@ -74,15 +74,15 @@
             "description":"Jouer 100 parties"
          },
          "3":{
-            "title":"Intermédiaire",
+            "title":"Junior",
             "description":"Jouer 500 parties"
          },
          "4":{
             "title":"Confirmé",
-            "description":"Jouer 1000 parties"
+            "description":"Jouer 2000 parties"
          },
          "5":{
-            "title":"Pro",
+            "title":"Senior",
             "description":"Jouer 5000 parties"
          },
          "6":{
@@ -94,16 +94,16 @@
             "description":"Gagner 50 parties"
          },
          "8":{
-            "title":"Champion",
+            "title":"Professeur",
             "description":"Gagner 250 parties"
          },
          "9":{
-            "title":"Professeur",
-            "description":"Gagner 500 parties"
+            "title":"Champion",
+            "description":"Gagner 1000 parties"
          },
          "10":{
-            "title":"Génie",
-            "description":"Gagner 2000 parties"
+            "title":"Titan",
+            "description":"Gagner 2500 parties"
          },
          "11":{
             "title":"Amateur",
@@ -114,15 +114,15 @@
             "description":"Jouer 10 parties en une journée"
          },
          "13":{
-            "title":"Fan",
+            "title":"Lover",
             "description":"Jouer 25 parties en une journée"
          },
          "14":{
-            "title":"Super Fan",
+            "title":"Fanatique",
             "description":"Jouer 50 parties en une journée"
          },
          "15":{
-            "title":"Accro",
+            "title":"Addict",
             "description":"Jouer 100 parties en une journée"
          },
          "16":{
@@ -130,7 +130,7 @@
             "description":"Gagner 2 parties à la suite"
          },
          "17":{
-            "title":"Vainqueur",
+            "title":"Victorieux",
             "description":"Gagner 5 parties à la suite"
          },
          "18":{
@@ -138,7 +138,7 @@
             "description":"Gagner 10 parties à la suite"
          },
          "19":{
-            "title":"Killer",
+            "title":"Triomphant",
             "description":"Gagner 15 parties à la suite"
          },
          "20":{
@@ -146,23 +146,23 @@
             "description":"Gagner 20 parties à la suite"
          },
          "21":{
-            "title":"Medium",
+            "title":"Joueur moyen",
             "description":"Atteindre 1600 points"
          },
          "22":{
-            "title":"Bon",
+            "title":"Bon joueur",
             "description":"Atteindre 1800 points"
          },
          "23":{
-            "title":"Pro",
+            "title":"Expert",
             "description":"Atteindre 2000 points"
          },
          "24":{
-            "title":"Master",
+            "title":"Maitre",
             "description":"Atteindre 2400 points"
          },
          "25":{
-            "title":"Champion du monde",
+            "title":"Grand maitre",
             "description":"Atteindre 2800 points"
          }
       }
