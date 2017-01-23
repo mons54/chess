@@ -9,12 +9,12 @@
                 <i class="material-icons">clear</i>
             </a>
             <h3 class="app-trophy__title">{{ 'trophies.content.' + trophy + '.title' | translate }}</h3>
-            <span class="app-trophy__badge app-trophy__badge--modal"
-                  ng-class="getUserClass(trophy)"> 
+            <span class="app-trophy__content app-trophy__content--{{ trophy }} app-trophy__content--modal"> 
+                <img ng-if="hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
+               <img ng-if="!hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
             </span>
             <p class="app-trophy__desc">{{ 'trophies.content.' + trophy + '.description' | translate }}</p>
-            <div ng-if="hasTrophy(trophy)" 
-                 class="mdl-cell mdl-cell--12-col" 
+            <div class="mdl-cell mdl-cell--12-col" 
                  share="shareData"></div>
         </div>
     </div>

@@ -82,27 +82,27 @@
             "description":"Jouer 1000 parties"
          },
          "5":{
-            "title":"Expert",
+            "title":"Pro",
             "description":"Jouer 5000 parties"
          },
          "6":{
-            "title":"Champion de Chocolat",
+            "title":"Novice",
             "description":"Gagner 1 partie"
          },
          "7":{
-            "title":"Champion de Bronze",
+            "title":"Elève",
             "description":"Gagner 50 parties"
          },
          "8":{
-            "title":"Champion d'Argent",
+            "title":"Champion",
             "description":"Gagner 250 parties"
          },
          "9":{
-            "title":"Champion d'Or",
+            "title":"Professeur",
             "description":"Gagner 500 parties"
          },
          "10":{
-            "title":"Champion de platine",
+            "title":"Génie",
             "description":"Gagner 2000 parties"
          },
          "11":{
@@ -126,24 +126,44 @@
             "description":"Jouer 100 parties en une journée"
          },
          "16":{
-            "title":"Vainqueur",
-            "description":"Gagner 3 parties à la suite"
+            "title":"Gagnant",
+            "description":"Gagner 2 parties à la suite"
          },
          "17":{
-            "title":"Conquérant",
+            "title":"Vainqueur",
             "description":"Gagner 5 parties à la suite"
          },
          "18":{
-            "title":"Killer",
+            "title":"Conquérant",
             "description":"Gagner 10 parties à la suite"
          },
          "19":{
+            "title":"Killer",
+            "description":"Gagner 15 parties à la suite"
+         },
+         "20":{
             "title":"Invincible",
             "description":"Gagner 20 parties à la suite"
          },
-         "20":{
-            "title":"Loser",
-            "description":"Perdre 3 parties à la suite"
+         "21":{
+            "title":"Medium",
+            "description":"Atteindre 1600 points"
+         },
+         "22":{
+            "title":"Bon",
+            "description":"Atteindre 1800 points"
+         },
+         "23":{
+            "title":"Pro",
+            "description":"Atteindre 2000 points"
+         },
+         "24":{
+            "title":"Master",
+            "description":"Atteindre 2400 points"
+         },
+         "25":{
+            "title":"Champion du monde",
+            "description":"Atteindre 2800 points"
          }
       }
    }

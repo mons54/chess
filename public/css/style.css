@@ -972,54 +972,67 @@ a {
   color: #795548;
 }
 
-.app-trophy__badge {
+.app-trophy__content {
   display: inline-block;
   position: relative;
-  width: 75px;
-  height: 75px;
-  padding: 25px;
-  margin: 10px;
-  background-size: 75%;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  background-color: #FF5252;
-  border-radius: 100px;
-  box-shadow: -0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  width: 133px;
+  height: 133px;
+  margin: 6px;
+  padding:  0;
+  border-radius: 12px;
 }
 
-.app-trophy__badge--modal {
+.app-trophy__content--1 { background-color: #C8E6C9; }
+.app-trophy__content--2 { background-color: #81C784; }
+.app-trophy__content--3 { background-color: #4CAF50; }
+.app-trophy__content--4 { background-color: #388E3C; }
+.app-trophy__content--5 { background-color: #1B5E20; }
+
+.app-trophy__content--6 { background-color: #BBDEFB; }
+.app-trophy__content--7 { background-color: #64B5F6; }
+.app-trophy__content--8 { background-color: #2196F3; }
+.app-trophy__content--9 { background-color: #1976D2; }
+.app-trophy__content--10 { background-color: #0D47A1; }
+
+.app-trophy__content--11 { background-color: #FFF9C4; }
+.app-trophy__content--12 { background-color: #FFF176; }
+.app-trophy__content--13 { background-color: #FFEB3B; }
+.app-trophy__content--14 { background-color: #FBC02D; }
+.app-trophy__content--15 { background-color: #F57F17; }
+
+.app-trophy__content--16 { background-color: #CFD8DC; }
+.app-trophy__content--17 { background-color: #90A4AE; }
+.app-trophy__content--18 { background-color: #607D8B; }
+.app-trophy__content--19 { background-color: #455A64; }
+.app-trophy__content--20 { background-color: #263238; }
+
+.app-trophy__content--21 { background-color: #D7CCC8; }
+.app-trophy__content--22 { background-color: #A1887F; }
+.app-trophy__content--23 { background-color: #795548; }
+.app-trophy__content--24 { background-color: #5D4037; }
+.app-trophy__content--25 { background-color: #3E2723; }
+
+.app-trophy__content img {
+  width: 109px;
+  height: 109px;
+  padding: 12px;
+}
+
+.app-trophy__content--modal {
   margin: 20px 0;
+  width: 200px;
+  height: 200px;
+}
+
+.app-trophy__content--modal img {
+  width: 164px;
+  height: 164px;
+  padding: 18px;
 }
 
 .app-trophy__desc {
   font-size: 24px;
 }
-
-.app-trophy__badge-unknown { background-image: url(../images/trophies/unknown.png); }
-
-.app-trophy__badge-game-1 { background-image: url(../images/trophies/game-1.png); }
-.app-trophy__badge-game-100 { background-image: url(../images/trophies/game-100.png); }
-.app-trophy__badge-game-500 { background-image: url(../images/trophies/game-500.png); }
-.app-trophy__badge-game-1000 { background-image: url(../images/trophies/game-1000.png); }
-.app-trophy__badge-game-5000 { background-image: url(../images/trophies/game-5000.png); }
-
-.app-trophy__badge-win-1 { background-image: url(../images/trophies/win-1.png); }
-.app-trophy__badge-win-50 { background-image: url(../images/trophies/win-50.png); }
-.app-trophy__badge-win-250 { background-image: url(../images/trophies/win-250.png); }
-.app-trophy__badge-win-500 { background-image: url(../images/trophies/win-500.png); }
-.app-trophy__badge-win-2000 { background-image: url(../images/trophies/win-2000.png); }
-
-.app-trophy__badge-game-day-5 { background-image: url(../images/trophies/game-day-5.png); }
-.app-trophy__badge-game-day-10 { background-image: url(../images/trophies/game-day-10.png); }
-.app-trophy__badge-game-day-25 { background-image: url(../images/trophies/game-day-25.png); }
-.app-trophy__badge-game-day-50 { background-image: url(../images/trophies/game-day-50.png); }
-.app-trophy__badge-game-day-100 { background-image: url(../images/trophies/game-day-100.png); }
-
-.app-trophy__badge-win-cons-3 { background-image: url(../images/trophies/win-cons-3.png); }
-.app-trophy__badge-win-cons-5 { background-image: url(../images/trophies/win-cons-5.png); }
-.app-trophy__badge-win-cons-10 { background-image: url(../images/trophies/win-cons-10.png); }
-.app-trophy__badge-win-cons-20 { background-image: url(../images/trophies/win-cons-20.png); }
-.app-trophy__badge-lose-cons-3 { background-image: url(../images/trophies/lose-cons-3.png); }
 
 .ui-draggable {
     cursor: move;

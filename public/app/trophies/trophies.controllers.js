@@ -10,16 +10,15 @@ angular.module('trophies').
  * @requires $rootScope
  * @requires $scope
  */
-controller('trophiesCtrl', ['$rootScope', '$scope', 'socket', 'trophies',
+controller('trophiesCtrl', ['$rootScope', '$scope', 'socket',
     
-    function ($rootScope, $scope, socket, trophies) {
+    function ($rootScope, $scope, socket) {
 
         socket.emit('leaveHome');
 
-        $scope.trophies = trophies.trophies;
-
-        $scope.getUserClass = function (id) {
-            return trophies.getUserClass(id);
+        $scope.trophies = [];
+        for (var i = 1; i <= 25; i++) {
+            $scope.trophies.push(i);
         };
 
         $scope.openTrophy = function (trophy) {

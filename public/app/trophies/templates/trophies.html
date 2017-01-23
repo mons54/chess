@@ -1,10 +1,11 @@
 <div element class="app-element app-trophies mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div element-content class="app-element__body">
-        <a href
-           ng-repeat="(key, value) in trophies"
-           ng-click="openTrophy(key)"
-           class="app-trophy__badge"
-           ng-class="getUserClass(key)">
-        </a>
+          <button
+             ng-repeat="value in trophies track by $index"
+             ng-click="openTrophy(value)"
+             class="app-trophy__content app-trophy__content--{{ value }} app-button mdl-button mdl-js-button">
+           <img ng-if="hasTrophy(value)" ng-src="../images/trophies/trophy-{{ value }}.svg">
+           <img ng-if="!hasTrophy(value)" ng-src="../images/trophies/trophy-{{ value }}.svg">
+        </button>
     </div>
 </div>

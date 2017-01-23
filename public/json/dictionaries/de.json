@@ -60,6 +60,7 @@
 	"privacy_policy":"Datenschutz",
 	"login_with_facebook": "Mit Facebook anmelden",
 	"login_with_google": "Mit Google anmelden",
+    "logout": "Abmelden",
 	"trophies":{
 		"title":"Trophäe",
 		"win":"Sie gewinnen eine Trophäe",
@@ -69,7 +70,7 @@
 				"description":"Spielen Sie 1 Spiel"
 			},
 			"2":{
-				"title":"Anfänger",
+				"title":"Lehrling",
 				"description":"Spielen Sie 100 Spiele"
 			},
 			"3":{
@@ -85,23 +86,23 @@
 				"description":"Spielen Sie 5000 Spiele"
 			},
 			"6":{
-				"title":"Meister Schokolade",
+				"title":"Anfänger",
 				"description":"Gewinnen Sie 1 Spiel"
 			},
 			"7":{
-				"title":"Meister Bronze",
+				"title":"Schüler",
 				"description":"Gewinnen Sie 50 Spiele"
 			},
 			"8":{
-				"title":"Meister Bronze",
+				"title":"Champion",
 				"description":"Gewinnen Sie 250 Spiele"
 			},
 			"9":{
-				"title":"Meister Gold",
+				"title":"Professor",
 				"description":"Gewinnen Sie 500 Spiele"
 			},
 			"10":{
-				"title":"Meister Platin",
+				"title":"Genius",
 				"description":"Gewinnen Sie 2000 Spiele"
 			},
 			"11":{
