@@ -613,6 +613,7 @@ a {
 }
  
 .app-drawer {
+  z-index:  10;
   border-right: none;
 }
 
@@ -630,12 +631,19 @@ a {
     margin-right: 32px;
 }
 
-.app-drawer .mdl-layout-title {
+.app-drawer .app-layout-title {
   position: relative;
   background: #795548;
   line-height: 24px;
-  padding-left: 12px;
-  padding: 10px;
+  padding: 12px;
+}
+
+.app-drawer .app-layout-title .app-logo {
+  padding: 0 7px;
+}
+
+.app-drawer .app-layout-title .app-logo .app-logo__icon {
+  left: 7px;
 }
 
 .app-button--share {
@@ -1553,12 +1561,6 @@ a {
     padding: 0 16px;
   }
 
-  .app-button__fixed {
-    right: 15px;
-    bottom: 15px;
-    z-index: 9;
-  }
-
   .app-button__fixed--game {
     bottom: 46px;
   }
@@ -1689,8 +1691,7 @@ a {
   }
 
   .app-button__fixed--logout {
-    top: 13px;
-    right: 13px;
+    display: none;
   }
 }
 

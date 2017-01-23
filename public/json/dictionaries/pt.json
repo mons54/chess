@@ -60,6 +60,7 @@
    "privacy_policy":"Política de Privacidade",
    "login_with_facebook": "Entrar com o Facebook",
    "login_with_google": "Entrar com o Google",
+   "logout": "Terminar Sessão",
    "trophies":{
       "title":"Troféu",
       "win":"Você ganha um troféu",

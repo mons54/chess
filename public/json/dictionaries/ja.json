@@ -60,6 +60,7 @@
    "privacy_policy":"個人情報保護方針",
    "login_with_facebook": "Facebookアカウントでログインする",
    "login_with_google": "Googleアカウントでログインする",
+   "logout": "ログアウト",
    "trophies":{
       "title":"トロフィー",
       "win":"あなたは、トロフィーを獲得",

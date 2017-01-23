@@ -60,6 +60,7 @@
    "privacy_policy":"Gizlilik Politikası",
    "login_with_facebook": "Facebook ile oturum aç",
    "login_with_google": "Google ile oturum aç",
+   "logout": "Çıkış Yap",
    "trophies":{
       "title":"Ganimet",
       "win":"Bir kupa kazanmak",

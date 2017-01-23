@@ -60,6 +60,7 @@
    "privacy_policy":"Informativa sulla privacy",
    "login_with_facebook": "Accedi con Facebook",
    "login_with_google": "Accedi con Google",
+   "logout": "Esci",
    "trophies":{
       "title":"Trofeo",
       "win":"Si vince un trofeo",
