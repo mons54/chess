@@ -1,10 +1,11 @@
 {
-   "title":"Chess",
+   "name":"Chess",
+   "title":"Online Chess",
    "description":"Play Chess against players all over the world. Improve your chess and your ranking.",
    "home":"Home",
    "ranking":"Ranking",
-   "invite":"Invite",
-   "points":"Points",
+   "invite":"Invite friends",
+   "points":"Rating",
    "games": "Games",
    "challengers":"Challengers",
    "challenges": "Challenges",
@@ -23,7 +24,7 @@
    "offer_draw":"Offer draw",
    "offers_a_draw":"offers a draw",
    "resign":"Resign",
-   "ok":"Ok",
+   "ok":"Validate",
    "cancel":"Cancel",
    "create_game":"Create a game",
    "win":"Win",
@@ -121,23 +122,23 @@
          },
          "21":{
             "title":"Good player",
-            "description":"Reach 1600 points"
+            "description":"Get 1600 points"
          },
          "22":{
             "title":"Very good player",
-            "description":"Reach 1800 points"
+            "description":"Get 1800 points"
          },
          "23":{
             "title":"Expert",
-            "description":"Reach 2000 points"
+            "description":"Get 2000 points"
          },
          "24":{
             "title":"Chess Master",
-            "description":"Reach 2400 points"
+            "description":"Get 2400 points"
          },
          "25":{
             "title":"Chess Grandmaster",
-            "description":"Reach 2800 points"
+            "description":"Get 2800 points"
          }
       }
    }
