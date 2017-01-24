@@ -24,13 +24,13 @@
     "offer_draw":"Remis anbieten",
     "offers_a_draw":"anbieten ein Remis",
     "resign":"aufgeben",
-    "ok":"Ok",
+    "ok":"OK",
     "cancel":"Abbrechen",
-	"create_game":"Erstellen Sie ein Spiel",
+	"create_game":"Neue Partie",
     "win":"gewinnen",
     "lose":"verlieren",
     "draw":"Remis",
-    "connected":"verbunden",
+    "connected":"Spieler",
     "share":"Teilen",
     "friends":"Freunde",
     "fanpage":"Fan Page",
@@ -44,83 +44,83 @@
         "content":{
             "1":{
                 "title":"Neuling",
-                "description":"Spielen Sie 1 Spiel"
+                "description":"Spielen Sie 1 Partie"
             },
             "2":{
                 "title":"Lehrling",
-                "description":"Spielen Sie 100 Spiele"
+                "description":"Spielen Sie 100 Partien"
             },
             "3":{
-                "title":"Medium",
-                "description":"Spielen Sie 500 Spiele"
+                "title":"Erfahren",
+                "description":"Spielen Sie 500 Partien"
             },
             "4":{
                 "title":"Spezialist",
-                "description":"Spielen Sie 1000 Spiele"
+                "description":"Spielen Sie 2000 Partien"
             },
             "5":{
                 "title":"Veteran",
-                "description":"Spielen Sie 5000 Spiele"
+                "description":"Spielen Sie 5000 Partien"
             },
             "6":{
                 "title":"Anfänger",
-                "description":"Gewinnen Sie 1 Spiel"
+                "description":"Gewinnen Sie 1 Partie"
             },
             "7":{
-                "title":"Schüler",
-                "description":"Gewinnen Sie 50 Spiele"
+                "title":"Wettbewerber",
+                "description":"Gewinnen Sie 50 Partien"
             },
             "8":{
-                "title":"Champion",
-                "description":"Gewinnen Sie 250 Spiele"
+                "title":"Herausforderer",
+                "description":"Gewinnen Sie 250 Partien"
             },
             "9":{
-                "title":"Professor",
-                "description":"Gewinnen Sie 500 Spiele"
+                "title":"Champion",
+                "description":"Gewinnen Sie 1000 Partien"
             },
             "10":{
                 "title":"Titan",
-                "description":"Gewinnen Sie 2000 Spiele"
+                "description":"Gewinnen Sie 2500 Partien"
             },
             "11":{
                 "title":"Amateur",
-                "description":"Spielen Sie 5 Spiele an einem Tag"
+                "description":"Spielen Sie 5 Partien an einem Tag"
             },
             "12":{
                 "title":"Leidenschaftlich",
-                "description":"Spielen Sie 10 Spiele an einem Tag"
+                "description":"Spielen Sie 10 Partien an einem Tag"
             },
             "13":{
                 "title":"Fan",
-                "description":"Spielen Sie 25 Spiele an einem Tag"
+                "description":"Spielen Sie 25 Partien an einem Tag"
             },
             "14":{
                 "title":"Super Fan",
-                "description":"Spielen Sie 50 Spiele an einem Tag"
+                "description":"Spielen Sie 50 Partien an einem Tag"
             },
             "15":{
                 "title":"Addict",
-                "description":"Spielen Sie 100 Spiele an einem Tag"
+                "description":"Spielen Sie 100 Partien an einem Tag"
             },
             "16":{
                 "title":"Gewinner",
-                "description":"Gewinne 2 Spiele in Folge"
+                "description":"Gewinne 2 Partien in Folge"
             },
             "17":{
-                "title":"Sieger",
-                "description":"Gewinne 5 Spiele in Folge"
+                "title":"Eroberer",
+                "description":"Gewinne 5 Partien in Folge"
             },
             "18":{
-                "title":"Eroberer",
-                "description":"Gewinne 10 Spiele in Folge"
+                "title":"Gladiator",
+                "description":"Gewinne 10 Partien in Folge"
             },
             "19":{
-                "title":"Gladiator",
-                "description":"Gewinne 15 Spiele in Folge"
+                "title":"Koloss",
+                "description":"Gewinne 15 Partien in Folge"
             },
             "20":{
                 "title":"Unbesiegbar",
-                "description":"Gewinne 20 Spiele in Folge"
+                "description":"Gewinne 20 Partien in Folge"
             },
             "21":{
                 "title":"Guter Spieler",

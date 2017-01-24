@@ -30,7 +30,7 @@
    "win":"Win",
    "lose":"Lose",
    "draw":"Draw",
-   "connected":"connected",
+   "players":"players",
    "share":"Share",
    "friends":"Friends",
    "fanpage":"Fan Page",
@@ -40,7 +40,7 @@
    "login_with_google": "Login with Google",
    "logout": "Log out",
    "achievements":{
-      "title":"Erfolge",
+      "title":"Achievements",
       "content":{
          "1":{
             "title":"Beginner",
@@ -51,7 +51,7 @@
             "description":"Play 100 games"
          },
          "3":{
-            "title":"Medium",
+            "title":"Experienced",
             "description":"Play 500 games"
          },
          "4":{
@@ -67,11 +67,11 @@
             "description":"Win 1 game"
          },
          "7":{
-            "title":"Student",
+            "title":"Competitor",
             "description":"Win 50 games"
          },
          "8":{
-            "title":"Professor",
+            "title":"Challenger",
             "description":"Win 250 games"
          },
          "9":{
@@ -87,11 +87,11 @@
             "description":"Play 5 games in one day"
          },
          "12":{
-            "title":"Passionate",
+            "title":"Enthusiast",
             "description":"Play 10 games in one day"
          },
          "13":{
-            "title":"Lover",
+            "title":"Passionate",
             "description":"Play 25 games in one day"
          },
          "14":{
@@ -107,15 +107,15 @@
             "description":"Win 2 consecutive games"
          },
          "17":{
-            "title":"Victor",
+            "title":"Conqueror",
             "description":"Win 5 consecutive games"
          },
          "18":{
-            "title":"Conqueror",
+            "title":"Gladiator",
             "description":"Win 10 consecutive games"
          },
          "19":{
-            "title":"Gladiator",
+            "title":"Giant",
             "description":"Win 15 consecutive games"
          },
          "20":{

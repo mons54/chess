@@ -1,15 +1,11 @@
 {
    "title":"Ajedrez",
    "description":"Juega en línea contra otros jugadores. Que seas amateur del juego rapido o seas partidario de las partidas largas, Ajedrez esta hecho a su medida. Su ranking se actualiza despues de cada partida.",
-   "online":"En línea",
-   "offline":"Fuera de línea",
    "home":"Home",
-   "play":"Jugar",
    "ranking":"Clasificación",
    "invite":"Invitar",
    "points":"Puntos",
-   "player":"Jugador",
-   "games": "Juegos",
+   "games": "Partidas",
    "challengers":"Challengers",
    "challenges": "Desafíos",
    "all":"Todos",
@@ -25,125 +21,126 @@
    "mat":"Jaque mate",
    "pat":"Ahogado",
    "nul":"Tablas",
-   "start_game":"Inicio del juego",
-   "search_game":"Buscar un juego",
-   "level":"Nivel",
-   "facile":"Fácil",
-   "normal":"Normal",
-   "difficile":"Duro",
-   "none":"Nenhum",
-   "one_player":"Uno jugador",
-   "two_player":"Dos jugadores",
-   "error_browser":"Su navegador no es compatible con este juego",
-   "error":"Se produjo un error",
-   "wait_game":"Esperando a un juego ...",
    "offer_draw":"Ofrecer tablas",
    "offers_a_draw":"ofrece tablas",
    "resign":"Abandonar",
-   "ok":"Ok",
+   "ok":"Aceptar",
    "cancel":"Cancelar",
-   "create_game":"Crear un juego",
-   "challenge":"Desafiar",
-   "newChallenge":"Nuevo desafío",
-   "cancel_partie":"Este juego ya no existe",
+   "create_game":"Crear una partida",
    "win":"Ganar",
    "lose":"Perder",
    "draw":"Tablas",
-   "game":"Juego",
-   "connected":"conectado",
-   "quick_game":"juego",
+   "players":"jugadores",
    "share":"Compartir",
    "friends":"Amigos",
-   "congratulation":"Felicitación",
    "fanpage":"Fan Page",
    "terms_service":"Condiciones del servicio",
    "privacy_policy":"Política de privacidad",
    "login_with_facebook": "Inicia con Facebook",
    "login_with_google": "Inicia con Google",
    "logout": "Salir",
-   "trophies":{
-      "title":"Trofeo",
-      "win":"Usted gana un trofeo",
+   "achievements":{
+      "title":"Logros",
       "content":{
          "1":{
             "title":"Principiante",
-            "description":"Juega 1 juego"
+            "description":"Jugar 1 partida"
          },
          "2":{
-            "title":"Novicio",
-            "description":"Juega 100 juegos"
+            "title":"Aprendiz",
+            "description":"Jugar 100 partidas"
          },
          "3":{
-            "title":"Intermedio",
-            "description":"Juega 500 juegos"
+            "title":"Experimentado",
+            "description":"Jugar 500 partidas"
          },
          "4":{
-            "title":"Avanzado",
-            "description":"Juega 1000 juegos"
+            "title":"Especialista",
+            "description":"Jugar 2000 partidas"
          },
          "5":{
-            "title":"Experto",
-            "description":"Juega 5000 juegos"
+            "title":"Veterano",
+            "description":"Jugar 5000 partidas"
          },
          "6":{
-            "title":"Campeón del chocolate",
-            "description":"Gana 1 juego"
+            "title":"Novicio",
+            "description":"Ganar 1 partida"
          },
          "7":{
-            "title":"Campeón de bronce",
-            "description":"Gana 50 juegos"
+            "title":"Competidor",
+            "description":"Ganar 50 partidas"
          },
          "8":{
-            "title":"Campeón de plata",
-            "description":"Gana 250 juegos"
+            "title":"Desafiador",
+            "description":"Ganar 250 partidas"
          },
          "9":{
-            "title":"Campeón de oro",
-            "description":"Gana 500 juegos"
+            "title":"Campeón",
+            "description":"Ganar 1000 partidas"
          },
          "10":{
-            "title":"Campeón del platino",
-            "description":"Gana 2000 juegos"
+            "title":"Titán",
+            "description":"Ganar 2500 partidas"
          },
          "11":{
-            "title":"Aficionado",
-            "description":"Juega 5 juegos en un día"
+            "title":"Amateur",
+            "description":"Jugar 5 partidas en un día"
          },
          "12":{
-            "title":"Entusiasta",
-            "description":"Juega 10 juegos en un día"
+            "title":"Aficionado",
+            "description":"Jugar 10 partidas en un día"
          },
          "13":{
-            "title":"Fan",
-            "description":"Juega 25 juegos en un día"
+            "title":"Apasionado",
+            "description":"Jugar 25 partidas en un día"
          },
          "14":{
-            "title":"Super Fan",
-            "description":"Juega 50 juegos en un día"
+            "title":"Fan",
+            "description":"Jugar 50 partidas en un día"
          },
          "15":{
             "title":"Adicto",
-            "description":"Juega 100 juegos en un día"
+            "description":"Jugar 100 partidas en un día"
          },
          "16":{
             "title":"Ganador",
-            "description":"Gana 3 juegos consecutivos"
+            "description":"Ganar 2 partidas consecutivos"
          },
          "17":{
             "title":"Conquistador",
-            "description":"Gana 5 juegos consecutivos"
+            "description":"Ganar 5 partidas consecutivos"
          },
          "18":{
-            "title":"Asesino",
-            "description":"Gana 10 juegos consecutivos"
+            "title":"Gladiador",
+            "description":"Ganar 10 partidas consecutivos"
          },
          "19":{
-            "title":"Invencible",
-            "description":"Gana 250 juegos consecutivos"
+            "title":"Coloso",
+            "description":"Ganar 15 partidas consecutivos"
          },
          "20":{
-            "title":"Perdedor",
-            "description":"Perder 3 juegos consecutivos"
+            "title":"Invencible",
+            "description":"Ganar 20 partidas consecutivos"
+         },
+         "21":{
+            "title":"Buen jugador",
+            "description":"Alcanzar 1600 puntos"
+         },
+         "22":{
+            "title":"Jugador de club",
+            "description":"Alcanzar 1800 puntos"
+         },
+         "23":{
+            "title":"Experto",
+            "description":"Alcanzar 2000 puntos"
+         },
+         "24":{
+            "title":"Maestro",
+            "description":"Alcanzar 2400 puntos"
+         },
+         "25":{
+            "title":"Gran Maestro",
+            "description":"Alcanzar 2800 puntos"
          }
       }
    }

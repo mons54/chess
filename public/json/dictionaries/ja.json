@@ -1,16 +1,12 @@
 {
    "title":"チェス",
    "description":"世界中から選手に対してチェスをする。ベストに挑戦し、あなたのランキングで場所を確認します。",
-   "online":"オンライン",
-   "offline":"オフラインで",
-   "home":"歓迎",
-   "play":"遊ぶ",
+   "home":"ホーム",
    "ranking":"ランキング",
-   "invite":"招待",
+   "invite":"招待者",
    "points":"点数",
-   "player":"プレーヤー",
-   "games": "ゲームズ",
-   "challengers":"チャレンジャー",
+   "games": "ゲーム",
+   "challengers":"挑戦者",
    "challenges": "課題",
    "all":"すべて",
    "time":"時間",
@@ -23,38 +19,20 @@
    "winner":"勝者",
    "game_over":"ゲームオーバー",
    "mat":"チェックメイト",
-   "pat":"平等",
-   "nul":"平等",
-   "start_game":"ゲームをスタート",
-   "search_game":"パーツを検索",
-   "level":"レベル",
-   "facile":"簡単に",
-   "normal":"ノーマル",
-   "difficile":"難しい",
-   "none":"ノー",
-   "one_player":"プレーヤー",
-   "two_player":"二人のプレイヤー",
-   "error_browser":"あなたのブラウザは、このゲームとの互換性はありません",
-   "error":"エラーが発生しました",
-   "wait_game":"一部を待っています...",
-   "offer_draw":"描画を提供",
-   "offers_a_draw":"提供されなく",
-   "resign":"放棄する",
-   "ok":"有効にする",
+   "pat":"ステイルメイト",
+   "nul":"引き分け",
+   "offer_draw":"オファー引き分け",
+   "offers_a_draw":"引き分けの提案",
+   "resign":"投了",
+   "ok":"確認",
    "cancel":"キャンセル",
-   "create_game":"ゲームを作る",
-   "challenge":"挑戦",
-   "newChallenge":"新たな挑戦",
-   "cancel_partie":"この部分は、もはや存在しない",
+   "create_game":"新しいゲーム",
    "win":"勝利",
    "lose":"敗北",
-   "draw":"平等",
-   "game":"ゲーム",
-   "connected":"オンライン",
-   "quick_game":"ゲーム",
+   "draw":"引き分け",
+   "players":"接続中のプレイヤ",
    "share":"シェア",
    "friends":"フレンズ",
-   "congratulation":"祝賀",
    "fanpage":"ファンページ",
    "terms_service":"利用規約",
    "privacy_policy":"個人情報保護方針",
@@ -62,88 +40,107 @@
    "login_with_google": "Googleアカウントでログインする",
    "logout": "ログアウト",
    "trophies":{
-      "title":"トロフィー",
-      "win":"あなたは、トロフィーを獲得",
+      "title":"実績",
       "content":{
          "1":{
             "title":"初心者",
-            "description":"1ゲームをプレイ"
+            "description":"1ゲーム遊びます"
          },
          "2":{
-            "title":"新米",
-            "description":"100ゲームをプレイ"
+            "title":"見習い",
+            "description":"100ゲーム遊びます"
          },
          "3":{
-            "title":"中間の",
-            "description":"500ゲームをプレイ"
+            "title":"経験豊富な",
+            "description":"500ゲーム遊びます"
          },
          "4":{
-            "title":"高度な",
-            "description":"1000ゲームをプレイ"
+            "title":"スペシャリスト",
+            "description":"2000ゲーム遊びます"
          },
          "5":{
-            "title":"専門家",
-            "description":"5000ゲームをプレイ"
+            "title":"古豪",
+            "description":"5000ゲーム遊びます"
          },
          "6":{
-            "title":"チャンピオンチョコレート",
-            "description":"1試合に勝つ"
+            "title":"若輩",
+            "description":"1ゲームに勝ちます"
          },
          "7":{
-            "title":"チャンピオン青銅",
-            "description":"50ゲームに勝つ"
+            "title":"競争者",
+            "description":"50ゲームに勝ちます"
          },
          "8":{
-            "title":"チャンピオン銀",
-            "description":"250ゲームに勝つ"
+            "title":"挑戦者",
+            "description":"250ゲームに勝ちます"
          },
          "9":{
-            "title":"チャンピオンゴールド",
-            "description":"500ゲームに勝つ"
+            "title":"チャンピオン",
+            "description":"1000ゲームに勝ちます"
          },
          "10":{
-            "title":"チャンピオンプラチナ",
-            "description":"2000試合に勝つ"
+            "title":"タイタン",
+            "description":"2500ゲームに勝ちます"
          },
          "11":{
             "title":"アマチュア",
-            "description":"1日に5ゲームをプレイ"
+            "description":"1日で5ゲーム遊びます"
          },
          "12":{
-            "title":"愛好者",
-            "description":"1日に10ゲームをプレイ"
+            "title":"愛好家",
+            "description":"1日に10ゲーム遊びます"
          },
          "13":{
-            "title":"ファン",
-            "description":"1日に25ゲームをプレイ"
+            "title":"情熱的な",
+            "description":"1日に25ゲーム遊びます"
          },
          "14":{
-            "title":"スーパーファン",
-            "description":"1日に50ゲームをプレイ"
+            "title":"愛好者",
+            "description":"1日に50ゲーム遊びます"
          },
          "15":{
-            "title":"常習者",
-            "description":"1日に100ゲームをプレイ"
+            "title":"中毒",
+            "description":"1日に100ゲーム遊びます"
          },
          "16":{
             "title":"勝者",
-            "description":"3試合連続で勝利する"
+            "description":"2連勝"
          },
          "17":{
             "title":"征服王",
-            "description":"5試合連続で勝利する"
+            "description":"5連勝"
          },
          "18":{
-            "title":"キラー",
-            "description":"10試合連続で勝利する"
+            "title":"グラディエーター",
+            "description":"10連勝"
          },
          "19":{
-            "title":"無敵",
-            "description":"20試合連続で勝利する"
+            "title":"巨人",
+            "description":"15連勝"
          },
          "20":{
-            "title":"敗者",
-            "description":"3試合連続を失う"
+            "title":"無敵",
+            "description":"20連勝"
+         },
+         "21":{
+            "title":"良い選手",
+            "description":"リーチ1600ポイント"
+         },
+         "22":{
+            "title":"非常に良い選手",
+            "description":"リーチ1800ポイント"
+         },
+         "23":{
+            "title":"専門家",
+            "description":"リーチ2000ポイント"
+         },
+         "24":{
+            "title":"チェスマスター",
+            "description":"リーチ2400ポイント"
+         },
+         "25":{
+            "title":"チェスグランドマスター",
+            "description":"リーチ2800ポイント"
          }
       }
    }
