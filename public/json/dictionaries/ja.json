@@ -22,7 +22,7 @@
    "pat":"ステイルメイト",
    "nul":"引き分け",
    "offer_draw":"オファー引き分け",
-   "offers_a_draw":"引き分けの提案",
+   "offers_a_draw":"が引き分けを申し込みました",
    "resign":"投了",
    "ok":"確認",
    "cancel":"キャンセル",
@@ -31,7 +31,6 @@
    "lose":"敗北",
    "draw":"引き分け",
    "players":"接続中のプレイヤ",
-   "share":"シェア",
    "friends":"フレンズ",
    "fanpage":"ファンページ",
    "terms_service":"利用規約",
@@ -87,11 +86,11 @@
             "description":"1日で5ゲーム遊びます"
          },
          "12":{
-            "title":"愛好家",
+            "title":"情熱的な",
             "description":"1日に10ゲーム遊びます"
          },
          "13":{
-            "title":"情熱的な",
+            "title":"恋人",
             "description":"1日に25ゲーム遊びます"
          },
          "14":{

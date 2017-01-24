@@ -31,7 +31,6 @@
    "lose":"Lose",
    "draw":"Draw",
    "players":"players",
-   "share":"Share",
    "friends":"Friends",
    "fanpage":"Fan Page",
    "terms_service":"Terms of Service",
@@ -87,11 +86,11 @@
             "description":"Play 5 games in one day"
          },
          "12":{
-            "title":"Enthusiast",
+            "title":"Passionate",
             "description":"Play 10 games in one day"
          },
          "13":{
-            "title":"Passionate",
+            "title":"Lover",
             "description":"Play 25 games in one day"
          },
          "14":{
@@ -115,7 +114,7 @@
             "description":"Win 10 consecutive games"
          },
          "19":{
-            "title":"Giant",
+            "title":"Colossus",
             "description":"Win 15 consecutive games"
          },
          "20":{
@@ -127,7 +126,7 @@
             "description":"Reach 1600 points"
          },
          "22":{
-            "title":"Club player",
+            "title":"Very good player",
             "description":"Reach 1800 points"
          },
          "23":{

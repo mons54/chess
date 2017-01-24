@@ -22,7 +22,7 @@
     "pat":"Patt",
     "nul":"Remis",
     "offer_draw":"Remis anbieten",
-    "offers_a_draw":"anbieten ein Remis",
+    "offers_a_draw":"bieten ein Remis",
     "resign":"aufgeben",
     "ok":"OK",
     "cancel":"Abbrechen",
@@ -31,7 +31,6 @@
     "lose":"verlieren",
     "draw":"Remis",
     "connected":"Spieler",
-    "share":"Teilen",
     "friends":"Freunde",
     "fanpage":"Fan Page",
     "terms_service":"Nutzungsbedingungen",
@@ -91,11 +90,11 @@
                 "description":"Spielen Sie 10 Partien an einem Tag"
             },
             "13":{
-                "title":"Fan",
+                "title":"Liebhaber",
                 "description":"Spielen Sie 25 Partien an einem Tag"
             },
             "14":{
-                "title":"Super Fan",
+                "title":"Fan",
                 "description":"Spielen Sie 50 Partien an einem Tag"
             },
             "15":{
@@ -127,7 +126,7 @@
                 "description":"Reichweite 1600 Punkte"
             },
             "22":{
-               "title":"Club Spieler",
+               "title":"Sehr guter Spieler",
                "description":"Reichweite 1800 Punkte"
             },
             "23":{

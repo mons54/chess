@@ -3,7 +3,7 @@
    "description":"Juega en línea contra otros jugadores. Que seas amateur del juego rapido o seas partidario de las partidas largas, Ajedrez esta hecho a su medida. Su ranking se actualiza despues de cada partida.",
    "home":"Home",
    "ranking":"Clasificación",
-   "invite":"Invitar",
+   "invite":"Invitar amigos",
    "points":"Puntos",
    "games": "Partidas",
    "challengers":"Challengers",
@@ -31,7 +31,6 @@
    "lose":"Perder",
    "draw":"Tablas",
    "players":"jugadores",
-   "share":"Compartir",
    "friends":"Amigos",
    "fanpage":"Fan Page",
    "terms_service":"Condiciones del servicio",
@@ -95,7 +94,7 @@
             "description":"Jugar 25 partidas en un día"
          },
          "14":{
-            "title":"Fan",
+            "title":"Enamorado",
             "description":"Jugar 50 partidas en un día"
          },
          "15":{
@@ -127,7 +126,7 @@
             "description":"Alcanzar 1600 puntos"
          },
          "22":{
-            "title":"Jugador de club",
+            "title":"Muy buen jugador",
             "description":"Alcanzar 1800 puntos"
          },
          "23":{

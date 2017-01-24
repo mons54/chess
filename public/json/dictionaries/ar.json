@@ -5,7 +5,7 @@
     "ranking":"تصنيف",
     "invite":"دعوة أصدقاء",
     "points":"النقاط",
-    "games": "ألعاب",
+    "games": "لعبة",
     "challengers":"المتحدون",
     "challenges": "التحديات",
     "all":"جميع",
@@ -21,9 +21,9 @@
     "mat":"أمات الشاه الشطرنج",
     "pat":"إحراج الشاه في الشطرنج",
     "nul":"تعادل",
-    "offer_draw":"طلب تعادل",
-    "offers_a_draw":"تعادل الطلب",
-    "resign":"تنازل",
+    "offer_draw":"عرض التعادل",
+    "offers_a_draw":"يعرض التعادل",
+    "resign":"استسلم",
     "ok":"موافق",
     "cancel":"إلغاء",
     "create_game":"إنشاء لعبة",
@@ -31,7 +31,6 @@
     "lose":"هزيمة",
     "draw":"تعادل",
     "players":"لاعبين",
-    "share":"المشاركة",
     "friends":"أصدقاء",
     "fanpage":"مروحة الصفحة",
     "terms_service":"شروط الخدمة",
@@ -44,103 +43,103 @@
         "content":{
             "1":{
                 "title":"المبتدئ",
-                "description":"لعب 1 مباراة"
+                "description":"لعب 1 لعبة"
             },
             "2":{
                 "title":"المتمهن",
-                "description":"لعب 100 مباراة"
+                "description":"لعب 100 لعبة"
             },
             "3":{
                 "title":"شهدت",
-                "description":"لعب 500 مباراة"
+                "description":"لعب 500 لعبة"
             },
             "4":{
                 "title":"الخبير",
-                "description":"لعب 2000 مباراة"
+                "description":"لعب 2000 لعبة"
             },
             "5":{
                 "title":"محارب قديم",
-                "description":"لعب 5000 مباراة"
+                "description":"لعب 5000 لعبة"
             },
             "6":{
                 "title":"مبتدئ",
-                "description":"فوز 1 مباراة"
+                "description":"فوز 1 لعبة"
             },
             "7":{
                 "title":"متنافس",
-                "description":"فوز 50 مباراة"
+                "description":"فوز 50 لعبة"
             },
             "8":{
                 "title":"متحدّي",
-                "description":"فوز 250 مباراة"
+                "description":"فوز 250 لعبة"
             },
             "9":{
                 "title":"بطل",
-                "description":"فوز 1000 مباراة"
+                "description":"فوز 1000 لعبة"
             },
             "10":{
                 "title":"عملاق",
-                "description":"فوز 2500 مباراة"
+                "description":"فوز 2500 لعبة"
             },
             "11":{
                 "title":"للهواة",
-                "description":"لعب 5 مباريات في يوم واحد"
+                "description":"لعب 5 لعبة في يوم واحد"
             },
             "12":{
                 "title":"متحمس",
-                "description":"لعب 10 مباراة في يوم واحد"
+                "description":"لعب 10 لعبة في يوم واحد"
             },
             "13":{
-                "title":"عاطفي",
-                "description":"لعب 25 مباراة في يوم واحد"
+                "title":"حبيب",
+                "description":"لعب 25 لعبة في يوم واحد"
             },
             "14":{
                 "title":"مشجعي",
-                "description":"لعب 50 مباراة في يوم واحد"
+                "description":"لعب 50 لعبة في يوم واحد"
             },
             "15":{
                 "title":"مدمن",
-                "description":"لعب 100 مباراة في يوم واحد"
+                "description":"لعب 100 لعبة في يوم واحد"
             },
             "16":{
                 "title":"الفائز",
-                "description":"فوز 2 مباريات متتالية"
+                "description":"فوز 2 لعبة متتالية"
             },
             "17":{
                 "title":"غاز مهاجم",
-                "description":"فوز 5 مباريات متتالية"
+                "description":"فوز 5 لعبة متتالية"
             },
             "18":{
                 "title":"مجالد",
-                "description":"فوز 10 مباراة متتالية"
+                "description":"فوز 10 لعبة متتالية"
             },
             "19":{
                 "title":"تمثال ضخم",
-                "description":"فوز 15 مباراة متتالية"
+                "description":"فوز 15 لعبة متتالية"
             },
             "20":{
                 "title":"لا يقهر",
-                "description":"فوز 20 مباراة متتالية"
+                "description":"فوز 20 لعبة متتالية"
             },
             "21":{
                 "title":"لاعب جيد",
-                "description":"وصول إلى 1600 نقطة"
+                "description":"وصول إلى 1600 النقاط"
              },
              "22":{
-                "title":"لاعب النادي",
-                "description":"وصول إلى 1800 نقطة"
+                "title":"لاعب جيد جدا",
+                "description":"وصول إلى 1800 النقاط"
              },
              "23":{
                 "title":"خبير",
-                "description":"وصول إلى 2000 نقطة"
+                "description":"وصول إلى 2000 النقاط"
              },
              "24":{
                 "title":"الشطرنج ماستر",
-                "description":"وصول إلى 2400 نقطة"
+                "description":"وصول إلى 2400 النقاط"
              },
              "25":{
                 "title":"الشطرنج غراند ماستر",
-                "description":"وصول إلى 2800 نقطة"
+                "description":"وصول إلى 2800 النقاط"
              }
         }
     }

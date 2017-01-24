@@ -31,7 +31,6 @@
    "lose":"Sconfitta",
    "draw":"Patta",
    "players":"Giocatori online",
-   "share":"Condividi",
    "friends":"Amici",
    "fanpage":"Fan Page",
    "terms_service":"Termini di servizio",
@@ -87,19 +86,19 @@
             "description":"Giocare 5 partita in un giorno"
          },
          "12":{
-            "title":"Appassionato",
+            "title":"Ammiratore",
             "description":"Giocare 10 partita in un giorno"
          },
          "13":{
-            "title":"Fan",
+            "title":"Appassionato",
             "description":"Giocare 25 partita in un giorno"
          },
          "14":{
-            "title":"Fanatico",
+            "title":"Fan",
             "description":"Giocare 50 partita in un giorno"
          },
          "15":{
-            "title":"Addict",
+            "title":"Fanatico",
             "description":"Giocare 100 partita in un giorno"
          },
          "16":{
@@ -127,7 +126,7 @@
             "description":"Raggiungi 1600 punti"
          },
          "22":{
-            "title":"Giocatore del club",
+            "title":"Molto buon giocatore",
             "description":"Raggiungi 1800 punti"
          },
          "23":{
