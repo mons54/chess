@@ -1,18 +1,14 @@
 {
-   "title":"Échecs",
+   "name":"Échecs",
+   "title": "Échecs en ligne",
    "description":"Jouez aux échecs contre des joueurs du monde entier. Défiez les meilleurs et faites vous une place dans le classement.",
-   "online":"En ligne",
-   "offline":"Hors ligne",
    "home":"Accueil",
-   "play":"Jouer",
    "ranking":"Classement",
-   "invite":"Inviter",
+   "invite":"Inviter des amis",
    "points":"Points",
-   "player":"Joueur",
    "games": "Parties",
    "challengers":"Challengers",
    "challenges": "Défis",
-   "all":"Tous",
    "time":"Temps",
    "minutes":"minutes",
    "color":"Couleur",
@@ -25,36 +21,16 @@
    "mat":"Échec et mat",
    "pat":"Pat",
    "nul":"Égalité",
-   "start_game":"Démarrer la partie",
-   "search_game":"Rechercher une partie",
-   "level":"Niveau",
-   "facile":"Facile",
-   "normal":"Normal",
-   "difficile":"Difficile",
-   "none":"Aucun",
-   "one_player":"Un joueur",
-   "two_player":"Deux joueurs",
-   "error_browser":"Votre navigateur n'est pas compatible avec ce jeu",
-   "error":"Une erreur est survenue",
-   "wait_game":"En attente d'une partie ...",
    "offer_draw":"Proposer le nul",
    "offers_a_draw":"propose le nul",
    "resign":"Abandonner",
    "ok":"Valider",
    "cancel":"Annuler",
    "create_game":"Creer une partie",
-   "challenge":"Défier",
-   "newChallenge":"Nouveau défi",
-   "cancel_partie":"Cette partie n'existe plus",
    "win":"Victoire",
    "lose":"Défaite",
    "draw":"Nul",
-   "game":"Jeu",
-   "connected":"connectés",
-   "quick_game":"partie",
-   "share":"Partager",
    "friends":"Amis",
-   "congratulation":"Félicitation",
    "fanpage":"Fan Page",
    "terms_service":"Conditions d'utilisation",
    "privacy_policy":"Politique de confidentialité",
@@ -63,7 +39,6 @@
    "logout": "Déconnexion",
    "achievements":{
       "title":"Succès",
-      "win":"Vous gagnez un trophée.",
       "content":{
          "1":{
             "title":"Débutant",
@@ -74,15 +49,15 @@
             "description":"Jouer 100 parties"
          },
          "3":{
-            "title":"Junior",
+            "title":"Expérimenté",
             "description":"Jouer 500 parties"
          },
          "4":{
-            "title":"Confirmé",
+            "title":"Spécialiste",
             "description":"Jouer 2000 parties"
          },
          "5":{
-            "title":"Senior",
+            "title":"Vétéran",
             "description":"Jouer 5000 parties"
          },
          "6":{
@@ -90,11 +65,11 @@
             "description":"Gagner 1 partie"
          },
          "7":{
-            "title":"Elève",
+            "title":"Compétiteur",
             "description":"Gagner 50 parties"
          },
          "8":{
-            "title":"Professeur",
+            "title":"Challenger",
             "description":"Gagner 250 parties"
          },
          "9":{
@@ -114,7 +89,7 @@
             "description":"Jouer 10 parties en une journée"
          },
          "13":{
-            "title":"Lover",
+            "title":"Frénétique",
             "description":"Jouer 25 parties en une journée"
          },
          "14":{
@@ -130,15 +105,15 @@
             "description":"Gagner 2 parties à la suite"
          },
          "17":{
-            "title":"Victorieux",
+            "title":"Conquérant",
             "description":"Gagner 5 parties à la suite"
          },
          "18":{
-            "title":"Conquérant",
+            "title":"Gladiateur",
             "description":"Gagner 10 parties à la suite"
          },
          "19":{
-            "title":"Triomphant",
+            "title":"Colosse",
             "description":"Gagner 15 parties à la suite"
          },
          "20":{
@@ -146,11 +121,11 @@
             "description":"Gagner 20 parties à la suite"
          },
          "21":{
-            "title":"Joueur moyen",
+            "title":"Bon joueur",
             "description":"Atteindre 1600 points"
          },
          "22":{
-            "title":"Bon joueur",
+            "title":"Très bon joueur",
             "description":"Atteindre 1800 points"
          },
          "23":{
