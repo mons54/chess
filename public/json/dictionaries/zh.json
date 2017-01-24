@@ -1,149 +1,143 @@
 {
    "title":"国际象棋",
    "description":"玩國際象棋世界各地的玩家。",
-   "online":"在線",
-   "offline":"當前離線",
    "home":"首页",
-   "play":"玩",
    "ranking":"排行",
-   "invite":"邀請",
-   "points":"積分",
-   "player":"播放機",
-   "games": "游戏",
+   "invite":"邀请朋友",
+   "points":"得分",
+   "games": "對局",
    "challengers":"挑战者",
    "challenges": "挑战",
-   "all":"所有",
    "time":"時間",
    "minutes":"分鐘",
    "color":"顏色",
    "white":"白",
    "black":"黑色",
-   "min":"最低限度",
+   "min":"最小",
    "max":"最大",
-   "winner":"勝利者",
+   "winner":"优胜者",
    "game_over":"遊戲結束",
-   "mat":"將死",
-   "pat":"畫",
-   "nul":"畫",
-   "start_game":"開始遊戲",
-   "search_game":"搜索遊戲",
-   "level":"水平",
-   "facile":"容易",
-   "normal":"正常",
-   "difficile":"硬",
-   "none":"無",
-   "one_player":"一個球員",
-   "two_player":"兩名球員",
-   "error_browser":"您的瀏覽器不兼容這個遊戲",
-   "error":"發生了一個錯誤",
-   "wait_game":"等待的遊戲...",
-   "offer_draw":"提供畫",
-   "offers_a_draw":"提供畫",
-   "resign":"放棄",
-   "ok":"行",
+   "mat":"将死",
+   "pat":"逼和",
+   "nul":"和局",
+   "offer_draw":"提出和棋",
+   "offers_a_draw":"提出和棋",
+   "resign":"認輸",
+   "ok":"确认",
    "cancel":"取消",
-   "create_game":"創建一個遊戲",
-   "challenge":"挑戰",
-   "newChallenge":"面臨的新挑戰",
-   "cancel_partie":"遊戲中的會話不再存在",
-   "win":"贏",
-   "lose":"失去",
-   "draw":"畫",
-   "game":"遊戲",
-   "connected":"連接的",
-   "quick_game":"遊戲",
-   "share":"分享",
+   "create_game":"開始對局",
+   "win":"胜利",
+   "lose":"连败",
+   "draw":"和局",
    "friends":"朋友",
-   "congratulation":"祝賀",
    "fanpage":"粉絲專頁",
    "terms_service":"服務條款",
    "privacy_policy":"隱私權政策",
    "login_with_facebook": "与Facebook登录",
    "login_with_google": "与Google登录",
    "logout": "退出",
-   "trophies":{
-      "title":"杯",
-      "win":"你贏得獎杯",
+   "achievements":{
+      "title":"成就",
       "content":{
          "1":{
-            "title":"初學者",
-            "description":"播放1個遊戲"
+            "title":"初学者",
+            "description":"玩1游戏"
          },
          "2":{
-            "title":"初學者",
-            "description":"播放100個遊戲"
+            "title":"学徒",
+            "description":"玩100游戏"
          },
          "3":{
-            "title":"中間",
-            "description":"播放500個遊戲"
+            "title":"有经验的",
+            "description":"玩500游戏"
          },
          "4":{
-            "title":"先進",
-            "description":"播放1000個遊戲"
+            "title":"精通",
+            "description":"玩2000游戏"
          },
          "5":{
-            "title":"專家",
-            "description":"播放5000個遊戲"
+            "title":"老将",
+            "description":"玩5000游戏"
          },
          "6":{
-            "title":"冠軍巧克力",
-            "description":"獨贏1場比賽"
+            "title":"新手",
+            "description":"赢1游戏"
          },
          "7":{
-            "title":"冠軍青銅",
-            "description":"獨贏50場比賽"
+            "title":"竞争者",
+            "description":"赢50游戏"
          },
          "8":{
-            "title":"冠軍銀",
-            "description":"獨贏250場比賽"
+            "title":"挑战者",
+            "description":"赢250游戏"
          },
          "9":{
-            "title":"冠軍金",
-            "description":"獨贏500場比賽"
+            "title":"冠军",
+            "description":"赢1000游戏"
          },
          "10":{
-            "title":"冠軍鉑",
-            "description":"獨贏2000場比賽"
+            "title":"泰坦",
+            "description":"赢2000游戏"
          },
          "11":{
-            "title":"業餘",
-            "description":"在一天之內打5場比賽"
+            "title":"业余",
+            "description":"玩5游戏在一天"
          },
          "12":{
-            "title":"愛好者",
-            "description":"在一天之內打10場比賽"
+            "title":"多情",
+            "description":"玩10游戏在一天"
          },
          "13":{
-            "title":"風扇",
-            "description":"在一天之內打25場比賽"
+            "title":"恋爱",
+            "description":"玩25游戏在一天"
          },
          "14":{
-            "title":"超級球迷，",
-            "description":"在一天之內打50場比賽"
+            "title":"球迷",
+            "description":"玩50游戏在一天"
          },
          "15":{
-            "title":"有藥癮者",
-            "description":"在一天之內打100場比賽"
+            "title":"有药瘾者",
+            "description":"玩100游戏在一天"
          },
          "16":{
-            "title":"勝利者",
-            "description":"連續贏3場比賽"
+            "title":"优胜者",
+            "description":"赢2个游戏连续"
          },
          "17":{
             "title":"征服者",
-            "description":"連續贏5場比賽"
+            "description":"赢5个游戏连续"
          },
          "18":{
-            "title":"兇手",
-            "description":"連續贏10場比賽"
+            "title":"角斗士",
+            "description":"赢10个游戏连续"
          },
          "19":{
-            "title":"不可戰勝的",
-            "description":"連續贏20場比賽"
+            "title":"巨人",
+            "description":"赢15个游戏连续"
          },
          "20":{
-            "title":"失敗者",
-            "description":"失去連續3場比賽"
+            "title":"无敌",
+            "description":"赢20个游戏连续"
+         },
+         "21":{
+            "title":"好队友",
+            "description":"获得1600点"
+         },
+         "22":{
+            "title":"非常好的球员",
+            "description":"获得1800点"
+         },
+         "23":{
+            "title":"专家",
+            "description":"获得2000点"
+         },
+         "24":{
+            "title":"象棋大师",
+            "description":"获得2400点"
+         },
+         "25":{
+            "title":"国际象棋大师",
+            "description":"获得2800点"
          }
       }
    }

@@ -19,115 +19,125 @@
    "game_over":"Oyun bitti",
    "mat":"Mat",
    "pat":"Pat",
-   "nul":"Teklif",
-   "offer_draw":"Beraberlik teklif et",
-   "offers_a_draw":"beraberlik teklif ediyor",
+   "nul":"Berabere",
+   "offer_draw":"Berabere teklif et",
+   "offers_a_draw":"berabere teklif ediyor",
    "resign":"Oyundan Çekil",
    "ok":"Onayla",
    "cancel":"Iptal",
    "create_game":"Oyun bir oluştur",
-
-
-
-   
-   "win":"kez kazandı",
+   "win":"Galibiyet",
    "lose":"Mağlubiyet ",
    "draw":"Berabere",
-   "game":"Oyun",
-   "connected":"bağlı",
-   "quick_game":"oyun",
-   "share":"Paylaş",
    "friends":"Arkadaşlar",
-   "congratulation":"Kutlama",
    "fanpage":"Fan Page",
    "terms_service":"Hizmet Şartları",
    "privacy_policy":"Gizlilik Politikası",
    "login_with_facebook": "Facebook ile oturum aç",
    "login_with_google": "Google ile oturum aç",
    "logout": "Çıkış Yap",
-   "trophies":{
-      "title":"Ganimet",
-      "win":"Bir kupa kazanmak",
+   "achievements":{
+      "title":"Başarılar",
       "content":{
          "1":{
             "title":"Acemi",
-            "description":"1 oyunu oyna"
+            "description":"1 oyunu oynayın"
          },
          "2":{
-            "title":"Yeni",
-            "description":"100 oyna"
+            "title":"Çırak",
+            "description":"100 oyun oynayın"
          },
          "3":{
-            "title":"Ara",
-            "description":"500 oyna"
+            "title":"Deneyimli",
+            "description":"500 oyun oynayın"
          },
          "4":{
-            "title":"Gelişmiş",
-            "description":"1000 oyna"
+            "title":"Uzman",
+            "description":"2000 oyun oynayın"
          },
          "5":{
-            "title":"Uzman",
-            "description":"5000 oyna"
+            "title":"Emektar",
+            "description":"5000 oyun oynayın"
          },
          "6":{
-            "title":"Şampiyon Çikolata",
-            "description":"1 oyunu kazanın"
+            "title":"Acemi",
+            "description":"1 oyunu kazanmak"
          },
          "7":{
-            "title":"Şampiyon bronz",
-            "description":"50 oyun kazan"
+            "title":"Yarışmacı",
+            "description":"50 oyun kazanmak"
          },
          "8":{
-            "title":"Şampiyon gümüş",
-            "description":"250 oyun kazan"
+            "title":"Meydan okuyucu",
+            "description":"250 oyun kazanmak"
          },
          "9":{
-            "title":"Şampiyon altın",
-            "description":"500 oyun kazan"
+            "title":"Şampiyon",
+            "description":"1000 oyun kazanmak"
          },
          "10":{
-            "title":"Şampiyon platin",
-            "description":"2000 oyun kazan"
+            "title":"Titan",
+            "description":"2500 oyun kazanmak"
          },
          "11":{
             "title":"Amatör",
-            "description":"Bir günde 5 oyna"
+            "description":"Bir günde 5 oyun oynayın"
          },
          "12":{
-            "title":"Tutkunları",
-            "description":"Bir günde 10 oyna"
+            "title":"Tutkulu",
+            "description":"Bir günde 10 oyun oynayın"
          },
          "13":{
-            "title":"Fan",
-            "description":"Bir günde 25 oyna"
+            "title":"Aşık",
+            "description":"Bir günde 25 oyun oynayın"
          },
          "14":{
-            "title":"Hayran",
-            "description":"Bir günde 50 oyna"
+            "title":"Fanatik",
+            "description":"Bir günde 50 oyun oynayın"
          },
          "15":{
-            "title":"Bağımlı",
-            "description":"Bir günde 100 oyna"
+            "title":"Tiryaki",
+            "description":"Bir günde 100 oyun oynayın"
          },
          "16":{
-            "title":"Kazanan",
-            "description":"3 ardışık oyunlar Win"
+            "title":"Galip",
+            "description":"2 ardıl oyun kazanmak"
          },
          "17":{
             "title":"Fatih",
-            "description":"5 ardışık oyunlar Win"
+            "description":"5 ardıl oyun kazanmak"
          },
          "18":{
-            "title":"Katil",
-            "description":"10 ardışık oyunlar Win"
+            "title":"Gladyatör",
+            "description":"10 ardıl oyun kazanmak"
          },
          "19":{
-            "title":"Yenilmez",
-            "description":"20 ardışık oyunlar Win"
+            "title":"Devasa",
+            "description":"15 ardıl oyun kazanmak"
          },
          "20":{
-            "title":"Mağlup",
-            "description":"3 ardışık oyunlar Lose"
+            "title":"Yenilmez",
+            "description":"20 ardıl oyun kazanmak"
+         },
+         "21":{
+            "title":"İyi oyuncu",
+            "description":"1600 puan al"
+         },
+         "22":{
+            "title":"Çok iyi oyuncu",
+            "description":"1800 puan al"
+         },
+         "23":{
+            "title":"Eksper",
+            "description":"2000 puan al"
+         },
+         "24":{
+            "title":"Ustası",
+            "description":"2400 puan al"
+         },
+         "25":{
+            "title":"Büyükusta",
+            "description":"2800 puan al"
          }
       }
    }
