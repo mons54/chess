@@ -1,149 +1,143 @@
 {
    "title":"Xadrez",
    "description":"Jogue online com outros fãns de xadrez.",
-   "online":"Online",
-   "offline":"Offline",
    "home":"Home",
-   "play":"Jogar",
    "ranking":"Classificação",
-   "invite":"Convidar",
+   "invite":"Convidar amigos",
    "points":"Pontos",
-   "player":"Jogador",
-   "games": "Jogos",
+   "games": "Partidas",
    "challengers":"Challengers",
    "challenges": "Desafios",
-   "all":"Todos",
    "time":"Tempo",
-   "minutes":"atas",
+   "minutes":"minutos",
    "color":"Cor",
-   "white":"Branco",
-   "black":"Pretro",
+   "white":"Brancas",
+   "black":"Pretas",
    "min":"Mínimo",
    "max":"Máximo",
    "winner":"Vencedor",
    "game_over":"Game Over",
    "mat":"Xeque-mate",
    "pat":"Afogamento",
-   "nul":"Empatado",
-   "start_game":"Comece o jogo",
-   "search_game":"Procurar um jogo",
-   "level":"Nível",
-   "facile":"Fácil",
-   "normal":"Normal",
-   "difficile":"Difícil",
-   "none":"Nenhum",
-   "one_player":"Um jogador",
-   "two_player":"Dois jogadores",
-   "error_browser":"Seu navegador não é compatível com este jogo",
-   "error":"Ocorreu um erro",
-   "wait_game":"À espera de um jogo ...",
-   "offer_draw":"Fornecer empatado",
-   "offers_a_draw":"fornecer empatado",
-   "resign":"Resignar",
-   "ok":"Ok",
+   "nul":"Empate",
+   "offer_draw":"Propor empate",
+   "offers_a_draw":"propõe empate",
+   "resign":"Desistir",
+   "ok":"Validar",
    "cancel":"Cancelar",
-   "create_game":"Criar um jogo",
-   "challenge":"Desafiar",
-   "newChallenge":"Novo desafio",
-   "cancel_partie":"Este jogo não existe mais",
-   "win":"Ganhar",
-   "lose":"Perder",
-   "draw":"Empatado",
-   "game":"Jogo",
-   "connected":"conectado",
-   "quick_game":"jogo",
-   "share":"Compartilhar",
+   "create_game":"Criar uma partida",
+   "win":"Vitórias",
+   "lose":"Derrotas",
+   "draw":"Empates",
    "friends":"Amigos",
-   "congratulation":"Parabéns",
    "fanpage":"Fan Page",
    "terms_service":"Termos de Serviço",
    "privacy_policy":"Política de Privacidade",
    "login_with_facebook": "Entrar com o Facebook",
    "login_with_google": "Entrar com o Google",
    "logout": "Terminar Sessão",
-   "trophies":{
-      "title":"Troféu",
-      "win":"Você ganha um troféu",
+   "achievements":{
+      "title":"Conquistas",
       "content":{
          "1":{
-            "title":"Novato",
-            "description":"Jogar 1 jogo"
+            "title":"Principiante",
+            "description":"Jogar 1 partida"
          },
          "2":{
             "title":"Aprendiz",
-            "description":"Jogar 100 jogos"
+            "description":"Jogar 100 partidas"
          },
          "3":{
-            "title":"Intermediário",
-            "description":"Jogar 500 jogos"
+            "title":"Experiente",
+            "description":"Jogar 500 partidas"
          },
          "4":{
             "title":"Confirmado",
-            "description":"Jogar 1000 jogos"
+            "description":"Jogar 2000 partidas"
          },
          "5":{
-            "title":"Especialista",
-            "description":"Jogar 5000 jogos"
+            "title":"Veterano",
+            "description":"Jogar 5000 partidas"
          },
          "6":{
-            "title":"Campeão Chocolate",
-            "description":"Ganhe 1 jogo"
+            "title":"Novato",
+            "description":"Ganhar 1 partida"
          },
          "7":{
-            "title":"Campeão Bronze",
-            "description":"Ganhe 50 jogos"
+            "title":"Concorrente",
+            "description":"Ganhar 50 partidas"
          },
          "8":{
-            "title":"Campeão Prata",
-            "description":"Ganhe 250 jogos"
+            "title":"Desafiador",
+            "description":"Ganhar 250 partidas"
          },
          "9":{
-            "title":"Campeão Ouro",
-            "description":"Ganhe 500 jogos"
+            "title":"Campeão",
+            "description":"Ganhar 1000 partidas"
          },
          "10":{
-            "title":"Campeão Platina",
-            "description":"Ganhe 2000 jogos"
+            "title":"Titã",
+            "description":"Ganhar 2500 partidas"
          },
          "11":{
             "title":"Amador",
-            "description":"Jogue 5 jogos em um dia"
+            "description":"Jogar 5 partidas em um dia"
          },
          "12":{
-            "title":"Entusiasta",
-            "description":"Jogue 10 jogos em um dia"
+            "title":"Apaixonado",
+            "description":"Jogar 10 partidas em um dia"
          },
          "13":{
             "title":"Aficionado",
-            "description":"Jogue 25 jogos em um dia"
+            "description":"Jogar 25 partidas em um dia"
          },
          "14":{
             "title":"Fanático",
-            "description":"Jogue 50 jogos em um dia"
+            "description":"Jogar 50 partidas em um dia"
          },
          "15":{
             "title":"Viciado",
-            "description":"Jogue 100 jogos em um dia"
+            "description":"Jogar 100 partidas em um dia"
          },
          "16":{
             "title":"Vencedor",
-            "description":"Ganhar 3 jogos consecutivos"
+            "description":"Ganhar 2 partidas consecutivos"
          },
          "17":{
             "title":"Conquistador",
-            "description":"Ganhar 5 jogos consecutivos"
+            "description":"Ganhar 5 partidas consecutivos"
          },
          "18":{
-            "title":"Assassino",
-            "description":"Ganhar 10 jogos consecutivos"
+            "title":"Gladiador",
+            "description":"Ganhar 10 partidas consecutivos"
          },
          "19":{
-            "title":"Invencível",
-            "description":"Ganhar 20 jogos consecutivos"
+            "title":"Colosso",
+            "description":"Ganhar 15 partidas consecutivos"
          },
          "20":{
-            "title":"Perdedor",
-            "description":"Perder 3 jogos consecutivos"
+            "title":"Invencível",
+            "description":"Ganhar 20 partidas consecutivos"
+         },
+         "21":{
+            "title":"Bom jogador",
+            "description":"Alcançar 1600 pontos"
+         },
+         "22":{
+            "title":"Muito bom jogador",
+            "description":"Alcançar 1800 pontos"
+         },
+         "23":{
+            "title":"Especialista",
+            "description":"Alcançar 2000 pontos"
+         },
+         "24":{
+            "title":"Mestre",
+            "description":"Alcançar 2400 pontos"
+         },
+         "25":{
+            "title":"Grande mestre",
+            "description":"Alcançar 2800 pontos"
          }
       }
    }
