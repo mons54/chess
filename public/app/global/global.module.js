@@ -14,7 +14,7 @@ angular.module('global', []).
  * @description
  * The host.
  */
-constant('host', 'chess-game.herokuapp.com').
+constant('host', 'www.worldofchess.online').
 
 /**
  * @ngdoc parameters
