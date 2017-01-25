@@ -41,8 +41,15 @@
 
         <div ng-show="loading" class="app-loading">
             <div ng-hide="socketServerDisconnect || unauthorized" class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-            <i ng-show="socketServerDisconnect" ng-click="connect()" class="app__clickable app__action material-icons">play_arrow</i>
-            <i ng-show="unauthorized" class="app__action material-icons">remove_circle</i>
+            <i ng-show="socketServerDisconnect" 
+                ng-click="connect()"
+                ng-bind="'play_arrow'"
+                class="app__clickable app__action material-icons">
+            </i>
+            <i ng-show="unauthorized"
+               ng-bind="'remove_circle'" 
+               class="app__action material-icons">
+            </i>
         </div>
 
         <modal-profile></modal-profile>
