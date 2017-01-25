@@ -20,15 +20,15 @@
    "game_over":"Game Over",
    "mat":"Jaque mate",
    "pat":"Ahogado",
-   "nul":"Tablas",
+   "nulle":"Tablas",
    "offer_draw":"Ofrecer tablas",
    "offers_a_draw":"ofrece tablas",
    "resign":"Abandonar",
    "ok":"Aceptar",
    "cancel":"Cancelar",
    "create_game":"Crear una partida",
-   "win":"Ganar",
-   "lose":"Perder",
+   "win":"Victorias",
+   "lose":"Derrotas",
    "draw":"Tablas",
    "friends":"Amigos",
    "fanpage":"Fan Page",
@@ -122,23 +122,23 @@
          },
          "21":{
             "title":"Buen jugador",
-            "description":"Alcanzar 1600 puntos"
+            "description":"Obtener 1600 puntos"
          },
          "22":{
             "title":"Muy buen jugador",
-            "description":"Alcanzar 1800 puntos"
+            "description":"Obtener 1800 puntos"
          },
          "23":{
             "title":"Experto",
-            "description":"Alcanzar 2000 puntos"
+            "description":"Obtener 2000 puntos"
          },
          "24":{
             "title":"Maestro",
-            "description":"Alcanzar 2400 puntos"
+            "description":"Obtener 2400 puntos"
          },
          "25":{
             "title":"Gran Maestro",
-            "description":"Alcanzar 2800 puntos"
+            "description":"Obtener 2800 puntos"
          }
       }
    }

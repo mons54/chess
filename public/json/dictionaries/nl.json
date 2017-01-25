@@ -1,5 +1,6 @@
 {
-   "title":"Schaken",
+   "name":"Schaken",
+   "title":"Schaken Online",
    "description":"Schaak tegen spelers over de hele wereld. Verbeter uw schaken en je ranking.",
    "home":"Home",
    "ranking":"Ranglijst",
@@ -19,13 +20,13 @@
    "game_over":"Game Over",
    "mat":"Schaakmat",
    "pat":"Patstelling",
-   "nul":"Remise",
+   "nulle":"Remise",
    "offer_draw":"Remise aanbieden",
    "offers_a_draw":"biedt remise aan",
    "resign":"Geef op",
    "ok":"Ok",
    "cancel":"annuleren",
-   "create_game":"Maak een partij",
+   "create_game":"Maak Game",
    "win":"Gewonnen",
    "lose":"Verloren",
    "draw":"Remise",
@@ -121,23 +122,23 @@
          },
          "21":{
             "title":"Goede speler",
-            "description":"Bereiken 1600 punten"
+            "description":"Krijg 1600 punten"
          },
          "22":{
             "title":"Zeer goede speler",
-            "description":"Bereiken 1800 punten"
+            "description":"Krijg 1800 punten"
          },
          "23":{
             "title":"Deskundige",
-            "description":"Bereiken 2000 punten"
+            "description":"Krijg 2000 punten"
          },
          "24":{
             "title":"Meester",
-            "description":"Bereiken 2400 punten"
+            "description":"Krijg 2400 punten"
          },
          "25":{
             "title":"Grootmeester",
-            "description":"Bereiken 2800 punten"
+            "description":"Krijg 2800 punten"
          }
       }
    }

@@ -1,5 +1,6 @@
 {
-   "title":"Xadrez",
+   "name":"Xadrez",
+   "title":"Xadrez Online",
    "description":"Jogue online com outros fãns de xadrez.",
    "home":"Home",
    "ranking":"Classificação",
@@ -19,7 +20,7 @@
    "game_over":"Game Over",
    "mat":"Xeque-mate",
    "pat":"Afogamento",
-   "nul":"Empate",
+   "nulle":"Empate",
    "offer_draw":"Propor empate",
    "offers_a_draw":"propõe empate",
    "resign":"Desistir",
@@ -121,23 +122,23 @@
          },
          "21":{
             "title":"Bom jogador",
-            "description":"Alcançar 1600 pontos"
+            "description":"Obter 1600 pontos"
          },
          "22":{
             "title":"Muito bom jogador",
-            "description":"Alcançar 1800 pontos"
+            "description":"Obter 1800 pontos"
          },
          "23":{
             "title":"Especialista",
-            "description":"Alcançar 2000 pontos"
+            "description":"Obter 2000 pontos"
          },
          "24":{
             "title":"Mestre",
-            "description":"Alcançar 2400 pontos"
+            "description":"Obter 2400 pontos"
          },
          "25":{
             "title":"Grande mestre",
-            "description":"Alcançar 2800 pontos"
+            "description":"Obter 2800 pontos"
          }
       }
    }

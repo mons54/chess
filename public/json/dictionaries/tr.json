@@ -1,5 +1,6 @@
 {
-   "title":"Satranç",
+   "name":"Satranç",
+   "title":"Satranç Çevrimiçi",
    "description":"Dünyanın her yerinden insanlarla satranç oyna.",
    "home":"Ana sayfa",
    "ranking":"Sıralaması",
@@ -19,16 +20,16 @@
    "game_over":"Oyun bitti",
    "mat":"Mat",
    "pat":"Pat",
-   "nul":"Berabere",
+   "nulle":"Berabere",
    "offer_draw":"Berabere teklif et",
    "offers_a_draw":"berabere teklif ediyor",
    "resign":"Oyundan Çekil",
    "ok":"Onayla",
    "cancel":"Iptal",
-   "create_game":"Oyun bir oluştur",
-   "win":"Galibiyet",
-   "lose":"Mağlubiyet ",
-   "draw":"Berabere",
+   "create_game":"Yeni bir oyun kur",
+   "win":"Kez kazandı",
+   "lose":"Kez kaybetti",
+   "draw":"Kez berabere",
    "friends":"Arkadaşlar",
    "fanpage":"Fan Page",
    "terms_service":"Hizmet Şartları",
@@ -121,23 +122,23 @@
          },
          "21":{
             "title":"İyi oyuncu",
-            "description":"1600 puan al"
+            "description":"1600 puanı al"
          },
          "22":{
             "title":"Çok iyi oyuncu",
-            "description":"1800 puan al"
+            "description":"1800 puanı al"
          },
          "23":{
             "title":"Eksper",
-            "description":"2000 puan al"
+            "description":"2000 puanı al"
          },
          "24":{
             "title":"Ustası",
-            "description":"2400 puan al"
+            "description":"2400 puanı al"
          },
          "25":{
             "title":"Büyükusta",
-            "description":"2800 puan al"
+            "description":"2800 puanı al"
          }
       }
    }

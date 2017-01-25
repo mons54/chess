@@ -1,5 +1,6 @@
 {
-   "title":"国际象棋",
+   "name":"国际象棋",
+   "title":"国际象棋在线",
    "description":"玩國際象棋世界各地的玩家。",
    "home":"首页",
    "ranking":"排行",
@@ -19,7 +20,7 @@
    "game_over":"遊戲結束",
    "mat":"将死",
    "pat":"逼和",
-   "nul":"和局",
+   "nulle":"和局",
    "offer_draw":"提出和棋",
    "offers_a_draw":"提出和棋",
    "resign":"認輸",
@@ -121,23 +122,23 @@
          },
          "21":{
             "title":"好队友",
-            "description":"获得1600点"
+            "description":"获得1600分"
          },
          "22":{
             "title":"非常好的球员",
-            "description":"获得1800点"
+            "description":"获得1800分"
          },
          "23":{
             "title":"专家",
-            "description":"获得2000点"
+            "description":"获得2000分"
          },
          "24":{
             "title":"象棋大师",
-            "description":"获得2400点"
+            "description":"获得2400分"
          },
          "25":{
             "title":"国际象棋大师",
-            "description":"获得2800点"
+            "description":"获得2800分"
          }
       }
    }

@@ -1,5 +1,6 @@
 {
-   "title":"Scacchi",
+   "name":"Scacchi",
+   "title":"Scacchi Online",
    "description":"Giocare a scacchi in linea contro i giocatori di tutte il mondo.",
    "home":"Home",
    "ranking":"Classifica",
@@ -19,16 +20,16 @@
    "game_over":"Game Over",
    "mat":"Scacco Matto",
    "pat":"Stallo",
-   "nul":"Patta",
-   "offer_draw":"Offerta di patta",
-   "offers_a_draw":"offre di patta",
+   "nulle":"Patta",
+   "offer_draw":"Offri la patta",
+   "offers_a_draw":"offre la patta",
    "resign":"Abbandonare",
    "ok":"Conferma",
    "cancel":"Annulla",
-   "create_game":"Creare una partita",
-   "win":"Vittoria",
-   "lose":"Sconfitta",
-   "draw":"Patta",
+   "create_game":"Crea una partita",
+   "win":"Vittorie",
+   "lose":"Sconfitte",
+   "draw":"Pareggi",
    "friends":"Amici",
    "fanpage":"Fan Page",
    "terms_service":"Termini di servizio",
@@ -121,23 +122,23 @@
          },
          "21":{
             "title":"Buon giocatore",
-            "description":"Raggiungi 1600 punti"
+            "description":"Ottenere 1600 punti"
          },
          "22":{
             "title":"Molto buon giocatore",
-            "description":"Raggiungi 1800 punti"
+            "description":"Ottenere 1800 punti"
          },
          "23":{
             "title":"Esperto",
-            "description":"Raggiungi 2000 punti"
+            "description":"Ottenere 2000 punti"
          },
          "24":{
             "title":"Maestro",
-            "description":"Raggiungi 2400 punti"
+            "description":"Ottenere 2400 punti"
          },
          "25":{
             "title":"Grande Maestro",
-            "description":"Raggiungi 2800 punti"
+            "description":"Ottenere 2800 punti"
          }
       }
    }

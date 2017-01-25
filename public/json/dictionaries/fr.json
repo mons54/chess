@@ -20,16 +20,16 @@
    "game_over":"Game Over",
    "mat":"Échec et mat",
    "pat":"Pat",
-   "nul":"Égalité",
+   "nulle":"Égalité",
    "offer_draw":"Proposer le nul",
    "offers_a_draw":"propose le nul",
    "resign":"Abandonner",
    "ok":"Valider",
    "cancel":"Annuler",
    "create_game":"Creer une partie",
-   "win":"Victoire",
-   "lose":"Défaite",
-   "draw":"Nul",
+   "win":"Victoires",
+   "lose":"Défaites",
+   "draw":"Nuls",
    "friends":"Amis",
    "fanpage":"Fan Page",
    "terms_service":"Conditions d'utilisation",
@@ -122,23 +122,23 @@
          },
          "21":{
             "title":"Bon joueur",
-            "description":"Atteindre 1600 points"
+            "description":"Obtenir 1600 points"
          },
          "22":{
             "title":"Très bon joueur",
-            "description":"Atteindre 1800 points"
+            "description":"Obtenir 1800 points"
          },
          "23":{
             "title":"Expert",
-            "description":"Atteindre 2000 points"
+            "description":"Obtenir 2000 points"
          },
          "24":{
             "title":"Maitre",
-            "description":"Atteindre 2400 points"
+            "description":"Obtenir 2400 points"
          },
          "25":{
             "title":"Grand maitre",
-            "description":"Atteindre 2800 points"
+            "description":"Obtenir 2800 points"
          }
       }
    }

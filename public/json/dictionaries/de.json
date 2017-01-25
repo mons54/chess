@@ -20,15 +20,15 @@
     "game_over":"Game Over",
     "mat":"Schachmatt",
     "pat":"Patt",
-    "nul":"Remis",
+    "nulle":"Remis",
     "offer_draw":"Remis anbieten",
     "offers_a_draw":"bietet ein Remis",
     "resign":"Aufgeben",
     "ok":"OK",
     "cancel":"Abbrechen",
 	"create_game":"Neue Partie",
-    "win":"gewinnen",
-    "lose":"verlieren",
+    "win":"Siege",
+    "lose":"Niederlagen",
     "draw":"Remis",
     "friends":"Freunde",
     "fanpage":"Fan Page",
@@ -122,23 +122,23 @@
             },
             "21":{
                 "title":"Guter Spieler",
-                "description":"Reichweite 1600 Punkte"
+                "description":"Erhalten Sie 1600 Punkte"
             },
             "22":{
                "title":"Sehr guter Spieler",
-               "description":"Reichweite 1800 Punkte"
+               "description":"Erhalten Sie 1800 Punkte"
             },
             "23":{
                "title":"Experte",
-               "description":"Reichweite 2000 Punkte"
+               "description":"Erhalten Sie 2000 Punkte"
             },
             "24":{
                "title":"Schachmeister",
-               "description":"Reichweite 2400 Punkte"
+               "description":"Erhalten Sie 2400 Punkte"
             },
             "25":{
                "title":"Schachgroßmeister",
-               "description":"Reichweite 2800 Punkte"
+               "description":"Erhalten Sie 2800 Punkte"
             }
         }
     }
