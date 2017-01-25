@@ -37,8 +37,8 @@
    "login_with_facebook": "Войти через Facebook",
    "login_with_google": "Войти через Google",
    "logout": "Выйти",
-   "achievements":{
-      "title":"Трофей",
+   "trophies":{
+      "title":"Награды",
       "content":{
          "1":{
             "title":"начинающий",

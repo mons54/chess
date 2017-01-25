@@ -37,8 +37,8 @@
    "login_with_facebook": "Facebook ile oturum aç",
    "login_with_google": "Google ile oturum aç",
    "logout": "Çıkış Yap",
-   "achievements":{
-      "title":"Başarılar",
+   "trophies":{
+      "title":"Kupalar",
       "content":{
          "1":{
             "title":"Acemi",

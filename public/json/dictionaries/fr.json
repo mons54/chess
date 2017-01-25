@@ -37,8 +37,8 @@
    "login_with_facebook": "Connexion avec Facebook",
    "login_with_google": "Connexion avec Google",
    "logout": "Déconnexion",
-   "achievements":{
-      "title":"Succès",
+   "trophies":{
+      "title":"Trophées",
       "content":{
          "1":{
             "title":"Débutant",

@@ -557,6 +557,8 @@ service('translator', ['$http', function($http) {
                     result = data[value];
                 } else if (typeof data[value] === 'object') {
                     data = data[value];
+                } else {
+                    result = key;
                 }
             }.bind(this));
 

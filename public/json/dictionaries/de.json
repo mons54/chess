@@ -37,8 +37,8 @@
     "login_with_facebook": "Mit Facebook anmelden",
     "login_with_google": "Mit Google anmelden",
     "logout": "Abmelden",
-    "achievements":{
-        "title":"Erfolge",
+    "trophies":{
+        "title":"Trophäen",
         "content":{
             "1":{
                 "title":"Neuling",

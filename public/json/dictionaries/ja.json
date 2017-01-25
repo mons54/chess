@@ -38,7 +38,7 @@
    "login_with_google": "Googleアカウントでログインする",
    "logout": "ログアウト",
    "trophies":{
-      "title":"実績",
+      "title":"トロフィー",
       "content":{
          "1":{
             "title":"初心者",

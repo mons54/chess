@@ -37,8 +37,8 @@
     "login_with_facebook": "تسجيل الدخول باستخدام الفيسبوك",
     "login_with_google": "تسجيل الدخول مع جوجل",
     "logout": "تسجيل الخروج",
-    "achievements":{
-        "title":"إنجازات",
+    "trophies":{
+        "title":"الجوائز",
         "content":{
             "1":{
                 "title":"المبتدئ",

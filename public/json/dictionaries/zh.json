@@ -37,8 +37,8 @@
    "login_with_facebook": "与Facebook登录",
    "login_with_google": "与Google登录",
    "logout": "退出",
-   "achievements":{
-      "title":"成就",
+   "trophies":{
+      "title":"奖杯",
       "content":{
          "1":{
             "title":"初学者",
