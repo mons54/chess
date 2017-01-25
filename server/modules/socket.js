@@ -7,7 +7,7 @@ var request = require('request'),
 module.exports = function (io) {
 
     function Module() {
-        this.socketConnected = {};
+        this.connected = {};
         this.userGames = {};
     }
 
@@ -88,10 +88,10 @@ module.exports = function (io) {
         })
         .then(function (response) {
 
-            var socketConnected = self.getSocket(response.id);
+            var connected = self.getSocket(response.id);
 
-            if (socketConnected) {
-                socketConnected.disconnect();
+            if (connected) {
+                connected.disconnect(true);
             }
 
             socket.uid = response.id;
@@ -99,7 +99,7 @@ module.exports = function (io) {
             socket.name = response.name;
             socket.facebookId = response.facebookId;
 
-            self.socketConnected[response.id] = socket.id;
+            self.connected[response.id] = socket.id;
             
             return self.init(socket, response);
         })
@@ -136,9 +136,8 @@ module.exports = function (io) {
     Module.prototype.init = function (socket, data) {
 
         if (data.unauthorized) {
-            socket.unauthorized = true;
-            socket.disconnect();
-            return;
+            socket.emit('unauthorized');
+            throw new Error('unauthorized');
         }
 
         var blackList = [];
@@ -441,7 +440,7 @@ module.exports = function (io) {
 
     Module.prototype.getSocket = function (uid) {
 
-        var id = this.socketConnected[uid],
+        var id = this.connected[uid],
             socket = null;
 
         if (!id) {

@@ -40,7 +40,9 @@
     <body>
 
         <div ng-show="loading" class="app-loading">
-            <div class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <div ng-hide="socketServerDisconnect || unauthorized" class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <i ng-show="socketServerDisconnect" ng-click="connect()" class="app__clickable app__action material-icons">play_arrow</i>
+            <i ng-show="unauthorized" class="app__action material-icons">remove_circle</i>
         </div>
 
         <modal-profile></modal-profile>
@@ -67,15 +69,6 @@
                         {{ 'login_with_google' | translate }}
                     </button>
                 </div>
-            </div>
-        </div>
-
-        <div id="modal-disconnect" 
-             class="app-modal app-modal__bg" 
-             role="dialog" 
-             aria-hidden="true">
-            <div class="app__clickable app-modal__content" ng-click="connect()">
-                <i class="app__action app__action--connect material-icons">play_arrow</i>
             </div>
         </div>
 

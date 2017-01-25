@@ -8,21 +8,17 @@ module.exports = function (app, io) {
     io.on('connection', function (socket) {
 
         socket.on('facebookConnect', function (data) {
-            if (socket.unauthorized ||
-                !data || 
+            if (!data || 
                 !data.id || 
                 !data.accessToken) {
-                socket.disconnect();
                 return;
             }
             moduleSocket.facebookConnect(socket, data);
         });
 
         socket.on('googleConnect', function (data) {
-            if (socket.unauthorized ||
-                !data ||
+            if (!data ||
                 !data.accessToken) {
-                socket.disconnect();
                 return;
             }
             moduleSocket.googleConnect(socket, data);
@@ -282,7 +278,7 @@ module.exports = function (app, io) {
             if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
-            delete moduleSocket.socketConnected[socket.uid];
+            delete moduleSocket.connected[socket.uid];
             leaveHome();
         });
 

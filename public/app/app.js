@@ -98,7 +98,7 @@
                 } else {
                     setLoginStatus();
                 }
-                modal.hide(modal.get('modal-disconnect'));
+                delete $rootScope.socketServerDisconnect;
             };
 
             $rootScope.logout = function (argument) {
@@ -107,7 +107,6 @@
                 }
 
                 $rootScope.loading = true;
-                $rootScope.isLogout = true;
                 user.setLogin(false);
                 socket.disconnect();
                 modal.show(modal.get('modal-connect'));
@@ -121,7 +120,6 @@
             }
 
             function afterLogin() {
-                delete $rootScope.isLogout;
                 modal.hide(modal.get('modal-connect'));
             }
 
@@ -175,12 +173,20 @@
                 }
             });
 
-            socket.on('disconnect', function () {
+            socket.on('disconnect', function (data) {
+                if (data === 'io server disconnect') {
+
+                }
                 $rootScope.loading = true;
                 $rootScope.isDisconnected = true;
-                if (!$rootScope.isLogout) {
-                    modal.show(modal.get('modal-disconnect'));
+                if (data === 'io server disconnect') {
+                    $rootScope.socketServerDisconnect = true;
                 }
+            });
+
+            socket.on('unauthorized', function () {
+                $rootScope.unauthorized = true;
+                socket.disconnect();
             });
 
             socket.on('user', function (data) {
