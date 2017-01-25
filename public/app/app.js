@@ -140,6 +140,10 @@
 
             function callBackLoginStatus(service) {
 
+                if (!service) {
+                    return;
+                }
+
                 var login = user.getLogin();
 
                 if (facebook.isFacebookApp) {
