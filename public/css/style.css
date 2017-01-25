@@ -141,6 +141,10 @@ a {
   background: #E74B37;
 }
 
+.app-share {
+  text-align: center;
+}
+
 .app-modal {
   will-change: visibility, opacity;
   display: -webkit-box;
@@ -959,78 +963,89 @@ a {
   height: 100%;
 }
 
-.app-trophies {
-  padding: 9px;
-  text-align: center;
-}
-
 .app-trophy__title {
-  text-transform: uppercase;
-  font-size: 40px;
   margin: 0;
   text-shadow: 0px 1px 1px rgba(0,0,0,.2);
   color: #795548;
 }
 
-.app-trophy__content {
-  display: inline-block;
+.app-trophy__picture {
   position: relative;
-  width: 133px;
-  height: 133px;
-  margin: 6px;
-  padding:  0;
-  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.12);
 }
 
-.app-trophy__content--1 { background-color: #C8E6C9; }
-.app-trophy__content--2 { background-color: #81C784; }
-.app-trophy__content--3 { background-color: #4CAF50; }
-.app-trophy__content--4 { background-color: #388E3C; }
-.app-trophy__content--5 { background-color: #1B5E20; }
+.app-trophy__desc {
+  margin-bottom: 0;
+}
 
-.app-trophy__content--6 { background-color: #BBDEFB; }
-.app-trophy__content--7 { background-color: #64B5F6; }
-.app-trophy__content--8 { background-color: #2196F3; }
-.app-trophy__content--9 { background-color: #1976D2; }
-.app-trophy__content--10 { background-color: #0D47A1; }
+.app-trophy__title,
+.app-trophy__desc {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
 
-.app-trophy__content--11 { background-color: #FFF9C4; }
-.app-trophy__content--12 { background-color: #FFF176; }
-.app-trophy__content--13 { background-color: #FFEB3B; }
-.app-trophy__content--14 { background-color: #FBC02D; }
-.app-trophy__content--15 { background-color: #F57F17; }
+.app-trophy--page {
+  cursor: pointer;
+  padding: 6px;
+}
 
-.app-trophy__content--16 { background-color: #CFD8DC; }
-.app-trophy__content--17 { background-color: #90A4AE; }
-.app-trophy__content--18 { background-color: #607D8B; }
-.app-trophy__content--19 { background-color: #455A64; }
-.app-trophy__content--20 { background-color: #263238; }
+.app-trophy--page .app-trophy__picture {
+  float: left;
+  width: 96px;
+  height: 96px;
+}
 
-.app-trophy__content--21 { background-color: #D7CCC8; }
-.app-trophy__content--22 { background-color: #A1887F; }
-.app-trophy__content--23 { background-color: #795548; }
-.app-trophy__content--24 { background-color: #5D4037; }
-.app-trophy__content--25 { background-color: #3E2723; }
-
-.app-trophy__content img {
-  width: 109px;
-  height: 109px;
+.app-trophy--page .app-trophy__picture img {
+  width: 72px;
+  height: 72px;
   padding: 12px;
 }
 
-.app-trophy__content--modal {
+.app-trophy--page .app-trophy__desc {
+  font-size: 15px;
+  line-height: 20px;
+  margin-bottom: 0;
+}
+
+.app-trophy--page .app-trophy__content {
+  margin-left: 108px;
+}
+
+.app-trophy--page .app-trophy__title {
+  font-size: 24px;
+  line-height: 24px;
+  margin: 0 0 12px;
+}
+
+.app-trophy--modal {
+  cursor: auto;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.app-trophy--modal .app-trophy__picture {
+  display: inline-block;
+  float: none;
   margin: 20px 0;
   width: 200px;
   height: 200px;
 }
 
-.app-trophy__content--modal img {
+.app-trophy--modal .app-trophy__picture img {
   width: 164px;
   height: 164px;
   padding: 18px;
 }
 
-.app-trophy__desc {
+.app-trophy--modal .app-trophy__title {
+  font-size: 36px;
+  margin: 0;
+}
+
+.app-trophy--modal  .app-trophy__desc {
   font-size: 24px;
 }
 
@@ -1645,13 +1660,13 @@ a {
   }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 840px) {
   .mdl-layout__drawer-button {
     display: none;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 839px) {
   .app-navigation__container {
     display: none;
   }
@@ -1710,7 +1725,8 @@ a {
 
 @media (max-width: 839px) and (min-width: 480px) {
   .mdl-cell--6-col, .mdl-cell--6-col-tablet.mdl-cell--6-col-tablet {
-      width: calc(50% - 16px);
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

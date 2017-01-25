@@ -1,11 +1,12 @@
-<div element class="app-element app-trophies mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div element-content class="app-element__body">
-          <button
-             ng-repeat="value in trophies track by $index"
-             ng-click="openTrophy(value)"
-             class="app-trophy__content app-trophy__content--{{ value }} app-button mdl-button mdl-js-button">
-           <img ng-if="hasTrophy(value)" ng-src="../images/trophies/trophy-{{ value }}.svg">
-           <img ng-if="!hasTrophy(value)" ng-src="../images/trophies/trophy-{{ value }}.svg">
-        </button>
+<div class="app-trophy app-trophy--page mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"
+     ng-repeat="value in trophies track by $index"
+     ng-click="openTrophy(value)">
+    <div class="app-trophy__picture">
+       <img ng-if="hasTrophy(value)" ng-src="../images/trophies/trophy-{{ value }}.svg">
+       <img ng-if="!hasTrophy(value)" ng-src="../images/trophies/trophy-{{ value }}.svg">
+    </div>
+    <div class="app-trophy__content">
+        <h3 class="app-trophy__title">{{ 'trophies.content.' + value + '.title' | translate }}</h3>
+        <p class="app-trophy__desc">{{ 'trophies.content.' + value + '.description' | translate }}</p>
     </div>
 </div>

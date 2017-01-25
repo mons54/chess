@@ -4,18 +4,19 @@
      aria-hidden="true"
      modal-close-bg>
     <div class="app-modal__dialog">
-        <div class="app-modal__content app__text-center">
-            <a href modal-close class="app-modal__close">
-                <i class="material-icons">clear</i>
-            </a>
-            <h3 class="app-trophy__title">{{ 'trophies.content.' + trophy + '.title' | translate }}</h3>
-            <span class="app-trophy__content app-trophy__content--{{ trophy }} app-trophy__content--modal"> 
-                <img ng-if="hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
-               <img ng-if="!hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
-            </span>
-            <p class="app-trophy__desc">{{ 'trophies.content.' + trophy + '.description' | translate }}</p>
-            <div class="mdl-cell mdl-cell--12-col" 
-                 share="shareData"></div>
+        <div class="app-modal__content">
+            <div class="app-trophy app-trophy--modal">
+                <a href modal-close class="app-modal__close">
+                    <i class="material-icons">clear</i>
+                </a>
+                <h3 class="app-trophy__title">{{ 'trophies.content.' + trophy + '.title' | translate }}</h3>
+                <span class="app-trophy__picture"> 
+                    <img ng-if="hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
+                   <img ng-if="!hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
+                </span>
+                <p class="app-trophy__desc">{{ 'trophies.content.' + trophy + '.description' | translate }}</p>
+            </div>
+            <div class="app-share" share="shareData"></div>
         </div>
     </div>
 </div>
