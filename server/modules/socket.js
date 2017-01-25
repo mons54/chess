@@ -745,11 +745,15 @@ module.exports = function (io) {
             db.count('games', { $and: [{ date: { $gt: date } }, { $or: [{white: uid}, {black: uid}] } ]})
         ]).then(function (response) {
 
-            var trophies = [];
+            var trophies = [],
+                wins = response[0],
+                gamesDay = response[1],
+                success = data.success,
+                points = data.points;
 
             if (data.countGame >= 5000) {
                 trophies = trophies.concat([1, 2, 3, 4, 5]);
-            } else if (data.countGame >= 1000) {
+            } else if (data.countGame >= 2000) {
                 trophies = trophies.concat([1, 2, 3, 4]);
             } else if (data.countGame >= 500) {
                 trophies = trophies.concat([1, 2, 3]);
@@ -759,40 +763,52 @@ module.exports = function (io) {
                 trophies = trophies.concat([1]);
             }
 
-            if (response[0] >= 2000) {
+            if (wins >= 2500) {
                 trophies = trophies.concat([6, 7, 8, 9, 10]);
-            } else if (response[0] >= 500) {
+            } else if (wins >= 1000) {
                 trophies = trophies.concat([6, 7, 8, 9]);
-            } else if (response[0] >= 250) {
+            } else if (wins >= 250) {
                 trophies = trophies.concat([6, 7, 8]);
-            } else if (response[0] >= 50) {
+            } else if (wins >= 50) {
                 trophies = trophies.concat([6, 7]);
-            } else if (response[0] >= 1) {
+            } else if (wins >= 1) {
                 trophies = trophies.concat([6]);
             }
 
-            if (response[1] >= 100) {
+            if (gamesDay >= 100) {
                 trophies = trophies.concat([11, 12, 13, 14, 15]);
-            } else if (response[1] >= 50) {
+            } else if (gamesDay >= 50) {
                 trophies = trophies.concat([11, 12, 13, 14]);
-            } else if (response[1] >= 25) {
+            } else if (gamesDay >= 25) {
                 trophies = trophies.concat([11, 12, 13]);
-            } else if (response[1] >= 10) {
+            } else if (gamesDay >= 10) {
                 trophies = trophies.concat([11, 12]);
-            } else if (response[1] >= 5) {
+            } else if (gamesDay >= 5) {
                 trophies = trophies.concat([11]);
             }
 
-            if (data.success >= 20) {
+            if (success >= 20) {
+                trophies = trophies.concat([16, 17, 18, 19, 20]);
+            } else if (success >= 15) {
                 trophies = trophies.concat([16, 17, 18, 19]);
-            } else if (data.success >= 10) {
+            } else if (success >= 10) {
                 trophies = trophies.concat([16, 17, 18]);
-            } else if (data.success >= 5) {
+            } else if (success >= 5) {
                 trophies = trophies.concat([16, 17]);
-            } else if (data.success >= 3) {
+            } else if (success >= 2) {
                 trophies = trophies.concat([16]);
-            } else if (data.success <= -3) {
-                trophies = trophies.concat([20]);
+            }
+
+            if (points >= 2800) {
+                trophies = trophies.concat([21, 22, 23, 24, 25]);
+            } else if (points >= 2400) {
+                trophies = trophies.concat([21, 22, 23, 24]);
+            } else if (points >= 2000) {
+                trophies = trophies.concat([21, 22, 23]);
+            } else if (points >= 1800) {
+                trophies = trophies.concat([21, 22]);
+            } else if (points >= 1600) {
+                trophies = trophies.concat([21]);
             }
 
             if (!trophies.length) {
