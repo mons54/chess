@@ -1875,8 +1875,19 @@ a {
     padding: 0 12px;
   }
 
+  .app-layout.is-toggle .app-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 9;
+  }
+
   .app-game__toggle {
     display: none;
+    top: 0;
     right: 0;
     left: 0;
     border-right: 0;
@@ -1890,6 +1901,7 @@ a {
 
   .app-game__toggle--phone {
     display: initial;
+    top: initial;
   }
 
   .app-game__toggle--messages {

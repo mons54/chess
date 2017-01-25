@@ -274,6 +274,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             if (isPhone || $scope.showPlayedPhone) {
                 $scope.showPlayed = $scope.showPlayedPhone;
                 $scope.showPlayedPhone = !$scope.showPlayedPhone;
+                $rootScope.isToggle = $scope.showPlayedPhone;
             }
             var value = !$scope.showPlayed;
             setShowPlayed(value);
@@ -284,6 +285,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             if (isPhone || $scope.showMessagesPhone) {
                 $scope.showMessages = $scope.showMessagesPhone;
                 $scope.showMessagesPhone = !$scope.showMessagesPhone;
+                $rootScope.isToggle = $scope.showMessagesPhone;
             }
 
             if ($scope.unreadMessages > 0) {
