@@ -60,7 +60,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $rootScope.user.gid = null;
                 $scope.shareResultData = getShareResultData(game);
                 $rootScope.isGameFinish = true;
-                modal.show(modal.get('modal-finish-game'));
+                modal('#modal-finish-game').show();
                 var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.time);
             }
 
@@ -136,7 +136,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         socket.on('offerDraw', function (data) {
             $scope.game[$scope.getPlayerColor()].possibleDraw = true;
-            modal.show(modal.get('modal-response-draw'));
+            modal('#modal-response-draw').show();
         }, $scope);
 
         socket.on('messageGame', function (message) {
@@ -170,7 +170,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         }, $scope);
 
         socket.on('possibleDraw', function (data) {
-            modal.show(modal.get('modal-possible-draw'));
+            modal('#modal-possible-draw').show();
         }, $scope);
 
         $scope.isLastTurn = function (position) {

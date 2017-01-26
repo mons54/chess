@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="app-button__create-game">
-        <button show-modal="modal-create-game" 
+        <button create-game
                 class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             {{ 'create_game' | translate }}
         </button>
@@ -152,7 +152,7 @@
                     <td>
                         <button ng-disabled="blackList(challenger)"
                                 ng-click="setChallenger(challenger)"
-                                show-modal="modal-challenger"
+                                show-modal="#modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>
@@ -197,7 +197,7 @@
                     <td>
                         <button ng-disabled="blackList(friend)"
                                 ng-click="setChallenger(friend)"
-                                show-modal="modal-challenger"
+                                show-modal="#modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
                         </button>
@@ -205,53 +205,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</div>
-
-<div id="modal-create-game" 
-     class="app-modal app-modal__bg" 
-     role="dialog" 
-     aria-hidden="true"
-     modal-close-bg>
-    <div class="app-modal__dialog">
-        <div class="app-modal__content">
-            <form ng-submit="createGame()" role="form">
-                <div class="app-form__select">
-                    <select ng-model="game.color" 
-                            ng-options="value as value|translate for (key, value) in paramsGame.colors" 
-                            id="create-game-color">
-                    </select>
-                    <label for="create-game-color">{{ 'color'|translate }}</label>
-                </div>
-                <div class="app-form__select">
-                    <select ng-model="game.time"
-                            ng-options="value as (value / 60) + ' ' + ('minutes'|translate) for (key, value) in paramsGame.times" 
-                            id="create-game-time">
-                    </select>
-                    <label for="create-game-time">{{ 'time'|translate }}</label>
-                </div>
-                <div class="app-form__select">
-                    <div class="app-form__select-grid mdl-grid">
-                        <select ng-model="game.pointsMin"
-                                ng-options="value as value for (key, value) in paramsGame.pointsMin" 
-                                id="create-game-points" 
-                                class="mdl-cell--6-col">
-                            <option value="">{{ 'min'|translate }}</option>
-                        </select>
-                        <select ng-model="game.pointsMax"
-                                ng-options="value as value for (key, value) in paramsGame.pointsMax"
-                                class="mdl-cell--6-col">
-                            <option value="">{{ 'max'|translate }}</option>
-                        </select>
-                    </div>
-                    <label for="create-game-points">{{ 'points'|translate }}</label>
-                </div>
-                <div class="app-modal__actions">
-                    <button modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
-                    <button modal-close type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'ok'|translate }}</button>
-                </div>
-            </form>
-        </div>
     </div>
 </div>
 
@@ -278,20 +231,20 @@
                     <span>{{ challenger.points }}</span>
                 </div>
             </div>
-            <form ng-submit="challenge(challenger.uid)" role="form">
+            <form ng-submit="createChallenge(challenger.uid)" role="form">
                 <div class="app-form__select">
-                    <select ng-model="game.color" 
+                    <select ng-model="challenge.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 
-                            id="create-game-color">
+                            id="challenge-color">
                     </select>
-                    <label for="create-game-color">{{ 'color'|translate }}</label>
+                    <label for="challenge-color">{{ 'color'|translate }}</label>
                 </div>
                 <div class="app-form__select">
-                    <select ng-model="game.time"
+                    <select ng-model="challenge.time"
                             ng-options="value as (value / 60) + ' ' + ('minutes'|translate) for (key, value) in paramsGame.times" 
-                            id="create-game-time">
+                            id="challenge-time">
                     </select>
-                    <label for="create-game-time">{{ 'time'|translate }}</label>
+                    <label for="challenge-time">{{ 'time'|translate }}</label>
                 </div>
                 <div class="app-modal__actions">
                     <button modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>

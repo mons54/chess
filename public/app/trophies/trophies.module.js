@@ -29,7 +29,8 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
             templateUrl: '/app/trophies/templates/modal-trophy.html',
             link: function (scope, element) {
 
-                var load = false;
+                var modalTrophy = modal(element),
+                    load = false;
 
                 function show(data) {
 
@@ -47,9 +48,9 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
                         picture: 'trophies/trophy-' + trophy + '.png'
                     };
 
-                    modal.show(element);
+                    modalTrophy.show();
 
-                    element.one('hide', function () {
+                    element.one('modal:hide', function () {
                         $timeout(function () {
                             show(data);
                         });

@@ -109,7 +109,7 @@
                 $rootScope.loading = true;
                 user.setLogin(false);
                 socket.disconnect();
-                modal.show(modal.get('modal-connect'));
+                modalConnect.show();
             };
 
             /**
@@ -120,7 +120,7 @@
             }
 
             function afterLogin() {
-                modal.hide(modal.get('modal-connect'));
+                modalConnect.hide();
             }
 
             function setLoginStatus() {
@@ -149,7 +149,7 @@
                 }
 
                 if (!facebook.isFacebookApp && (!login || login === service.name && service.status !== 'connected')) {
-                    modal.show(modal.get('modal-connect'));
+                    modalConnect.show();
                     return;
                 }
 
@@ -218,6 +218,8 @@
 
                 facebookSetLoginStatus();
             };
+
+            var modalConnect = modal('#modal-connect');
 
             facebook.isFacebookApp = $location.search().facebook;
 

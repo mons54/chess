@@ -10,78 +10,41 @@ angular.module('components').
  */
 service('modal', function () {
 
-    /**
-     * Show modal
-     * @param {object} modal Modal element
-     */
-    function showModal(modal) {
-        if (!modal.parent().is('body')) {
-            modal.defaultParent = modal.parent();
-            $('body').prepend(modal);
+    return function (element) {
+
+        if (typeof element === 'string') {
+            var element = angular.element(element);
         }
-        modal.addClass('app-modal--active').trigger('show');
-    }
 
-    /**
-     * Hide modal
-     * @param {object} modal Modal element
-     */
-    function hideModal(modal) {
-        if (modal.defaultParent) {
-            modal.defaultParent.append(modal);
-        }
-        modal.removeClass('app-modal--active').trigger('hide');
-    }
+        element.show = function () {
 
-    return {
-        
-        /**
-         * @ngdoc function
-         * @name #get
-         * @methodOf components.service:modal
-         * @description 
-         * Get the modal element by id.
-         * @param {string} id Id of modal
-         * @returns {object} Modal element
-         */
-        get: function (id) {
-            return angular.element('#' + id);
-        },
+            if (!element.parent().is('body')) {
+                element.defaultParent = element.parent();
+                $('body').prepend(element);
+            }
+            element.addClass('app-modal--active').trigger('modal:show');
 
-        /**
-         * @ngdoc function
-         * @name #show
-         * @methodOf components.service:modal
-         * @description 
-         * Show modal.
-         * @param {object} modal Modal element
-         */
-        show: function (modal) {
-
-            showModal(modal);
-
-            modal.find('[modal-close]').one('click', function (event) {
-                hideModal(modal);
+            element.find('[modal-close]').one('click', function (event) {
+                element.hide();
             });
 
             angular.element('[modal-close-bg]').one('click', function (event) {
                 if (!this || event.target !== this) {
                     return;
                 }
-                hideModal(modal);
+                element.hide();
             });
 
             return this;
-        },
+        };
 
-        /**
-         * @ngdoc function
-         * @name #hide
-         * @methodOf components.service:modal
-         * @description 
-         * Hide modal.
-         * @param {object} modal Modal element
-         */
-        hide: hideModal
+        element.hide = function hideModal() {
+            if (element.defaultParent) {
+                element.defaultParent.append(element);
+            }
+            element.removeClass('app-modal--active').trigger('modal:hide', element.data);
+        };
+
+        return element;
     };
 });
