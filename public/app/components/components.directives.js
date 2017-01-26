@@ -103,6 +103,7 @@ directive('modalCreateGame', ['$rootScope', function ($rootScope) {
 
             $scope.game = {
                 color: paramsGame.colors[0],
+                color: null,
                 time: paramsGame.times[0],
                 pointsMin: null,
                 pointsMax: null

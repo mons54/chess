@@ -25,12 +25,12 @@ Game.prototype.getGames = function () {
 
 Game.prototype.create = function (socket, data) {
     
-    var color = data.color, 
+    var color = this.getColor(data.color), 
         time = this.getTime(data.time), 
         pointsMin = parseInt(data.pointsMin) ? data.pointsMin : false,
         pointsMax = parseInt(data.pointsMax) ? data.pointsMax : false;
 
-    if (!this.checkColor(color) || !this.checkTime(time) || !this.checkPoints(pointsMin, pointsMax)) {
+    if (!this.checkTime(time) || !this.checkPoints(pointsMin, pointsMax)) {
         return false;
     }
 
@@ -60,15 +60,19 @@ Game.prototype.deleteCreatedGame = function (uid) {
     return true;
 };
 
-Game.prototype.getTime = function (time) {
-    return parseInt(time);
+Game.prototype.randomColor = function () {
+    this.options.colors[Math.round(Math.random())];
 };
 
-Game.prototype.checkColor = function (color) {
+Game.prototype.getColor = function (color) {
     if (this.options.colors.indexOf(color) === -1) {
-        return false;
+        color = null;
     }
-    return true;
+    return color;
+};
+
+Game.prototype.getTime = function (time) {
+    return parseInt(time);
 };
 
 Game.prototype.checkTime = function (time) {

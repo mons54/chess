@@ -12,6 +12,7 @@
                         <select ng-model="game.color" 
                                 ng-options="value as value|translate for (key, value) in paramsGame.colors" 
                                 id="create-game-color">
+                            <option value="">{{ 'random' | translate }}</option>
                         </select>
                         <label for="create-game-color">{{ 'color'|translate }}</label>
                     </div>

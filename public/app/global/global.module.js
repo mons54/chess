@@ -540,7 +540,7 @@ service('translator', ['$http', function($http) {
         },
         translate: function (key) {
 
-            if (!this.data) {
+            if (!key || !this.data) {
                 return key;
             }
 

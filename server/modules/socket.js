@@ -213,6 +213,10 @@ module.exports = function (io) {
 
         var self = this, white, black;
 
+        if (!dataGame.color) {
+            dataGame.color = moduleGame.randomColor();
+        }
+
         if (dataGame.color === 'white') {
             white = {
                 uid: socketOpponent.uid,

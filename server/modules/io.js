@@ -45,11 +45,11 @@ module.exports = function (app, io) {
             }
 
             var socketOpponent = moduleSocket.getSocket(data.uid),
-                color = data.color,
+                color = moduleGame.getColor(data.color),
                 time = moduleGame.getTime(data.time);
 
             if (!socketOpponent || 
-                !moduleGame.checkColor(color) ||
+                !moduleGame.checkTime(time) ||
                 moduleSocket.isBlackListed(socket.blackList, data.uid) ||
                 moduleSocket.isBlackListed(socketOpponent.blackList, socket.uid)) {
                 return;
