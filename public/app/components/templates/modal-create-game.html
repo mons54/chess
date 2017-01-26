@@ -5,7 +5,7 @@
      modal-close-bg>
     <div class="app-modal__dialog">
         <div class="app-modal__head">{{ 'create_game'|translate }}</div>
-        <div class="app-modal__content">
+        <div class="app-modal__content" ng-show="!loadGame">
             <form ng-submit="createGame()" role="form">
                 <div class="app-form__select">
                     <select ng-model="game.color" 
@@ -40,9 +40,21 @@
                 </div>
                 <div class="app-modal__actions">
                     <button modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
-                    <button modal-close type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'ok'|translate }}</button>
+                    <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'ok'|translate }}</button>
                 </div>
             </form>
+        </div>
+        <div class="app-modal__content app__text-center" ng-show="loadGame">
+            <p>
+                <strong>{{ game.time / 60 }}:00</strong>
+                <br>
+                {{ 'color' | translate }}: <strong>{{ (game.color ? game.color : 'random') | translate }}</strong>
+            </p>
+            <h3>{{ 'search'|translate }} ...</h3>
+            <div class="app-spinner"></div>
+            <div>
+                <button ng-click="removeGame()" modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
+            </div>
         </div>
     </div>
 </div>
