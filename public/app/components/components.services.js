@@ -22,7 +22,7 @@ service('modal', function () {
                 element.defaultParent = element.parent();
                 $('body').prepend(element);
             }
-            element.addClass('app-modal--active').trigger('modal:show');
+            element.addClass('app-modal--active').trigger('show');
 
             element.find('[modal-close]').one('click', function (event) {
                 element.hide();
@@ -42,7 +42,7 @@ service('modal', function () {
             if (element.defaultParent) {
                 element.defaultParent.append(element);
             }
-            element.removeClass('app-modal--active').trigger('modal:hide', element.data);
+            element.removeClass('app-modal--active').trigger('hide', element.data);
         };
 
         return element;

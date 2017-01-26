@@ -50,7 +50,7 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
 
                     modalTrophy.show();
 
-                    element.one('modal:hide', function () {
+                    element.one('hide', function () {
                         $timeout(function () {
                             show(data);
                         });
