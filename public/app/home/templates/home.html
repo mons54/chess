@@ -69,8 +69,8 @@
                 </tr>
             </tbody>
         </table>
-        <div ng-show="!createdGames.length" class="app-element__loading">
-            <img src="/images/spin.svg">
+        <div ng-hide="createdGames.length" class="app-element__loading">
+            <div class="app-spinner app-spinner--small"></div>
         </div>
     </div>
 </div>
@@ -160,8 +160,8 @@
                 </tr>
             </tbody>
         </table>
-        <div ng-show="!challengers.length" class="app-element__loading">
-            <img src="/images/spin.svg">
+        <div ng-hide="challengers.length" class="app-element__loading">
+            <div class="app-spinner app-spinner--small"></div>
         </div>
     </div>
 </div>

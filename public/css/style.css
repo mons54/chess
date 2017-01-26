@@ -166,8 +166,8 @@ a {
   z-index: 1000;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);}
+}
+
 .app-modal--active {
   visibility: visible;
   opacity: 1;
@@ -187,9 +187,6 @@ a {
   background-clip: padding-box;
   box-shadow: 0 12px 15px 0 rgba(0,0,0,0.25);
   opacity: 1;
-  will-change: transform, opacity;
-  -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .app-modal__close {
@@ -860,13 +857,31 @@ a {
   margin-left: 3px;
 }
 
-.app-element .app-element__loading {
-  padding: 20px 0;
+.app-element__loading {
   text-align: center;
+  padding: 12px 0 8px 0;
 }
 
-.app-element .app-element__loading img {
-  height: 25px;
+.app-spinner {
+  display: inline-block;
+  border: 5px solid #9E9E9E;
+  border-top-color: #795548;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+}
+
+.app-spinner--small {
+  border-width: 2px;
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .app-table {
