@@ -57,7 +57,7 @@ module.exports = function (io) {
                         googleId: data.id,
                         name: data.name,
                         avatar: data.avatar
-                    }, { googleId: body.user_id });
+                    }, { googleId: data.id });
                 } catch (Error) {
                     console.log(error, response);
                 }
