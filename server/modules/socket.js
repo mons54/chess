@@ -18,14 +18,21 @@ module.exports = function (io) {
         request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,name,picture', 
             function (error, response, body) {
                 try {
+                    
                     body = JSON.parse(body);
+
+                    if (body.error && body.error.code === 190) {
+                        socket.emit('refreshAccessToken');
+                        return;
+                    }
+
                     self.create(socket, {
                         facebookId: body.id,
                         name: body.name,
                         avatar: body.picture.data.url
                     }, { facebookId: body.id });
                 } catch (Error) {
-                    socket.disconnect();
+                    console.log(error, response);
                 }
             }
         );
@@ -35,17 +42,24 @@ module.exports = function (io) {
         
         var self = this;
 
-        request.get('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + data.accessToken, 
+        request.get('https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=' + data.accessToken, 
             function (error, response, body) {
                 try {
+
                     body = JSON.parse(body);
+
+                    if (body.sub !== data.id) {
+                        socket.emit('refreshAccessToken');
+                        return;
+                    }
+
                     self.create(socket, {
-                        googleId: body.user_id,
+                        googleId: data.id,
                         name: data.name,
                         avatar: data.avatar
                     }, { googleId: body.user_id });
                 } catch (Error) {
-                    socket.disconnect();
+                    console.log(error, response);
                 }
             }
         );

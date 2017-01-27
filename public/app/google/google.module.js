@@ -107,9 +107,11 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
                 this.status = 'unknown';
                 delete this.auth;
             } else {
+                var user = gapi.auth2.getAuthInstance().currentUser.get();
                 this.status = 'connected';
                 this.auth = {
-                    accessToken: gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token
+                    id: user.getId(),
+                    accessToken: user.getAuthResponse().access_token
                 };
             }
 

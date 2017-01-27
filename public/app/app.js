@@ -90,25 +90,25 @@
                 afterLogin();
             };
 
-            $rootScope.connect = function () {
-                if (facebook.isFacebookApp) {
-                    facebookSetLoginStatus();
-                } else {
-                    setLoginStatus();
-                }
+            $rootScope.reconnect = function () {
+                socket.connect();
                 delete $rootScope.socketServerDisconnect;
             };
 
-            $rootScope.logout = function (argument) {
+            $rootScope.logout = function () {
                 if (facebook.isFacebookApp) {
                     return;
                 }
 
+                logout();
+            };
+
+            function logout() {
                 $rootScope.loading = true;
                 user.setLogin(false);
                 socket.disconnect();
                 modalConnect.show();
-            };
+            }
 
             /**
              * Redirect to the game in progress of the user.
@@ -171,10 +171,21 @@
                 }
             });
 
-            socket.on('disconnect', function (data) {
-                if (data === 'io server disconnect') {
+            socket.on('refreshAccessToken', function () {
 
+                if ($rootScope.refreshAccessToken) {
+                    logout();
                 }
+
+                $rootScope.refreshAccessToken = true;
+
+                socket.disconnect();
+
+                setLoginStatus();
+            });
+
+            socket.on('disconnect', function (data) {
+                modal('#modal-create-game').hide();
                 $rootScope.loading = true;
                 $rootScope.isDisconnected = true;
                 if (data === 'io server disconnect') {
@@ -192,6 +203,7 @@
             });
 
             socket.on('startGame', function (gid) {
+                modal('#modal-create-game').hide();
                 $rootScope.user.gid = gid;
                 redirectToGame();
             });
@@ -200,6 +212,7 @@
                 if ($rootScope.isDisconnected && !$rootScope.isGameFinish) {
                     $route.reload();
                 }
+                delete $rootScope.refreshAccessToken;
                 delete $rootScope.isDisconnected;
                 $rootScope.loading = false;
                 $rootScope.ready = true;
