@@ -177,8 +177,10 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
                 element.on('hide', stopLoad);
 
                 function stopLoad () {
-                    socket.emit('removeGame');
-                    delete scope.loadGame;
+                    if (scope.loadGame) {
+                        socket.emit('removeGame');
+                        delete scope.loadGame;
+                    }
                 }
             }
         };

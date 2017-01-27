@@ -39,7 +39,7 @@ service('modal', function () {
             return this;
         };
 
-        element.hide = function hideModal() {
+        element.hide = function () {
             if (element.defaultParent) {
                 element.defaultParent.append(element);
             }
