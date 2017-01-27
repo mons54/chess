@@ -22,14 +22,7 @@ constant('host', 'www.worldofchess.online').
  * @description
  * The params games data
  */
-constant('paramsGame', {
-    colors: ['white', 'black'],
-    times: [300, 600, 1200, 3600, 5400],
-    points: {
-        min: 1200,
-        max: 3000
-    }
-}).
+constant('paramsGame', chess.game.options).
 
 /**
  * @ngdoc service

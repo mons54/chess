@@ -112,7 +112,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
         $scope.paramsGame = paramsGame;
 
         $scope.challenge = {
-            color: paramsGame.colors[0],
+            color: null,
             time: paramsGame.times[0]
         };
 

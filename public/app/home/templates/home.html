@@ -236,6 +236,7 @@
                     <select ng-model="challenge.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 
                             id="challenge-color">
+                            <option value="">{{ 'random' | translate }}</option>
                     </select>
                     <label for="challenge-color">{{ 'color'|translate }}</label>
                 </div>

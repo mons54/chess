@@ -1,6 +1,12 @@
 'use strict';
 
 var game = {
+    options: {
+        colors: ['white', 'black'],
+        times: [300, 600, 1200, 3600, 5400],
+        pointsMin: 1000,
+        pointsMax: 2800
+    },
     newGame: function (gid, white, black, time) {
     
         var timeTurn = 120,

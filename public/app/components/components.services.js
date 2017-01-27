@@ -28,10 +28,11 @@ service('modal', function () {
                 element.hide();
             });
 
-            angular.element('[modal-close-bg]').one('click', function (event) {
+            angular.element('[modal-close-bg]').on('click', function (event) {
                 if (!this || event.target !== this) {
                     return;
                 }
+                $(this).unbind('click');
                 element.hide();
             });
 

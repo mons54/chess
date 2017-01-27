@@ -78,9 +78,9 @@ directive('showProfile', ['$rootScope', 'socket',
     }
 ]).
 
-directive('modalCreateGame', ['$route', 'modal', 'socket', 'paramsGame', 
+directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'paramsGame', 
 
-    function ($route, modal, socket, paramsGame) {
+    function ($rootScope, $route, modal, socket, paramsGame) {
         return {
             restrict: 'E',
             scope: true,
@@ -88,18 +88,12 @@ directive('modalCreateGame', ['$route', 'modal', 'socket', 'paramsGame',
             templateUrl: '/app/components/templates/modal-create-game.html',
             link: function (scope, element) {
 
-                var pointsMin = [],
-                    pointsMax = [],
+                var pointsMin = paramsGame.pointsMin,
+                    pointsMax = paramsGame.pointsMax,
                     value;
 
-                for (value = paramsGame.points.min; value <= paramsGame.points.max; value += 100) {
-                    if (value > paramsGame.points.min) {
-                        pointsMax.push(value);
-                    }
-                    if (value < paramsGame.points.max) {
-                        pointsMin.push(value);
-                    }
-                }
+                paramsGame.pointsMin = [];
+                paramsGame.pointsMax = [];
 
                 scope.paramsGame = paramsGame;
 
@@ -111,43 +105,56 @@ directive('modalCreateGame', ['$route', 'modal', 'socket', 'paramsGame',
                     pointsMax: null
                 };
 
-                scope.$watch('game.pointsMin', function (value) {
+                $rootScope.$watch('user.points', function (value, oldValue) {
 
-                    if (!value) {
-                        value = pointsMin[0];
+                    value = Math.floor(value / 100) * 100;
+
+                    paramsGame.pointsMin = [];
+                    paramsGame.pointsMax = [];
+
+                    for (var i = pointsMin; i <= pointsMax; i += 100) {
+                        if (value >= i && i < pointsMax) {
+                            paramsGame.pointsMin.push(i);
+                        }
+                        if (value <= i && i > pointsMin) {
+                            paramsGame.pointsMax.push(i);
+                        }
+                    };
+
+                    if (!oldValue) {
+                        return;
                     }
 
-                    var data = [];
+                    var diff = value - Math.floor(oldValue / 100) * 100;
 
-                    angular.forEach(pointsMax, function (max) {
-                        if (value < max) {
-                            data.push(max);
-                        }
-                    });
+                    if (scope.game.pointsMin) {
+                        scope.game.pointsMin += diff;
+                    }
 
-                    scope.paramsGame.pointsMax = data;
+                    if (scope.game.pointsMax) {
+                        scope.game.pointsMax += diff;
+                    }
+
+                    if (paramsGame.pointsMin.indexOf(scope.game.pointsMin) === -1) {
+                        scope.game.pointsMin = diff > 0 ? paramsGame.pointsMin[paramsGame.pointsMin.length - 1] : null;
+                    }
+
+                    if (paramsGame.pointsMax.indexOf(scope.game.pointsMax) === -1) {
+                        scope.game.pointsMax = diff < 0 ? paramsGame.pointsMax[0] : null;
+                    }
+                });
+
+                scope.$watch('game.pointsMin', function (value) {
+                    if (value && value === scope.game.pointsMax) {
+                        scope.game.pointsMax += 100;
+                    }
                 });
 
                 scope.$watch('game.pointsMax', function (value) {
-
-                    if (!value) {
-                        value = pointsMax[pointsMax.length - 1];
+                    if (value && value === scope.game.pointsMin) {
+                        scope.game.pointsMin -= 100;
                     }
-
-                    var data = [];
-
-                    angular.forEach(pointsMin, function (min) {
-                        if (value > min) {
-                            data.push(min);
-                        }
-                    });
-
-                    scope.paramsGame.pointsMin = data;
                 });
-
-                scope.removeGame = function () {
-                    socket.emit('removeGame');
-                };
 
                 scope.createGame = function () {
                     socket.emit('createGame', scope.game);
@@ -165,9 +172,14 @@ directive('modalCreateGame', ['$route', 'modal', 'socket', 'paramsGame',
                     return game.color === 'white' ? 'app-search__game-color--white' : 'app-search__game-color--black';
                 };
 
-                element.on('hide', function () {
+                scope.stopLoad = stopLoad;
+
+                element.on('hide', stopLoad);
+
+                function stopLoad () {
+                    socket.emit('removeGame');
                     delete scope.loadGame;
-                });
+                }
             }
         };
     }

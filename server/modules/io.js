@@ -7,6 +7,15 @@ module.exports = function (app, io) {
 
     io.on('connection', function (socket) {
 
+        function startGame(game) {
+            var socketOpponent = moduleSocket.getSocket(game.uid);
+            if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
+                moduleSocket.startGame(socket, socketOpponent, game);
+            } else {
+                moduleGame.deleteCreatedGame(game.uid);
+            }
+        }
+
         socket.on('facebookConnect', function (data) {
             if (!data || 
                 !data.id || 
@@ -48,10 +57,9 @@ module.exports = function (app, io) {
                 color = moduleGame.getColor(data.color),
                 time = moduleGame.getTime(data.time);
 
-            if (!socketOpponent || 
-                !moduleGame.checkTime(time) ||
-                moduleSocket.isBlackListed(socket.blackList, data.uid) ||
-                moduleSocket.isBlackListed(socketOpponent.blackList, socket.uid)) {
+            if (!socketOpponent ||
+                socket.blackList.indexOf(data.uid) !== -1 ||
+                socketOpponent.blackList.indexOf(socket.uid) !== -1) {
                 return;
             }
 
@@ -95,9 +103,16 @@ module.exports = function (app, io) {
         });
 
         socket.on('createGame', function (data) {
-            if (!data || !moduleSocket.checkSocket(socket) || moduleSocket.getUserGame(socket.uid) || !moduleGame.create(socket, data)) {
+            if (!data || !moduleSocket.checkSocket(socket) || moduleSocket.getUserGame(socket.uid)) {
                 return;
             }
+
+            var game = moduleGame.create(socket, data);
+
+            if (game) {
+                startGame(game);
+            }
+
             moduleSocket.listGames(moduleGame.createdGame);
         });
 
@@ -117,18 +132,12 @@ module.exports = function (app, io) {
             var createdGame = moduleGame.createdGame[uid];
 
             if (!createdGame || 
-                moduleSocket.isBlackListed(socket.blackList, uid) || 
-                moduleSocket.isBlackListed(createdGame.blackList, socket.uid)) {
+                socket.blackList.indexOf(uid) !== -1 || 
+                createdGame.blackList.indexOf(socket.uid) !== -1) {
                 return;
             }
 
-            var socketOpponent = moduleSocket.getSocket(uid);
-
-            if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
-                moduleSocket.startGame(socket, socketOpponent, moduleGame.createdGame[uid]);
-            } else {
-                moduleGame.deleteCreatedGame(uid);
-            }
+            startGame(createdGame);
         });
 
         socket.on('startChallenge', function (uid) {
