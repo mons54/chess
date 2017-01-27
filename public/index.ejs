@@ -42,7 +42,7 @@
         <div ng-show="loading" class="app-loading">
             <div ng-hide="socketServerDisconnect || unauthorized" class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
             <i ng-show="socketServerDisconnect" 
-                ng-click="connect()"
+                ng-click="reconnect()"
                 ng-bind="'play_arrow'"
                 class="app__clickable app__action material-icons">
             </i>
@@ -51,10 +51,6 @@
                class="app__action material-icons">
             </i>
         </div>
-
-        <modal-profile></modal-profile>
-        <modal-trophy></modal-trophy>
-        <modal-create-game></modal-create-game>
 
         <div id="modal-connect" 
              class="app-modal app-modal__bg" 
@@ -82,7 +78,8 @@
 
         <div class="app-layout mdl-layout mdl-js-layout mdl-layout--fixed-header" 
              ng-show="!loading" 
-             ng-class="{'is-user-game': user.gid, 'is-game': isGame, 'is-toggle': isToggle }">
+             ng-class="{'is-user-game': user.gid, 'is-game': isGame, 'is-toggle': isToggle }"
+             data-layout>
              
             <header class="app-header mdl-layout__header">
                 <div class="app-header__row mdl-layout__header-row">
@@ -109,6 +106,12 @@
                             <a class="mdl-navigation__link mdl-typography--text-uppercase" 
                                href="/trophies"
                                ng-bind="'trophies.title'|translate">
+                            </a>
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href
+                               ng-click="logout()"
+                               ng-hide="isFacebookApp || isGame">
+                               <i class="material-icons">power_settings_new</i>
                             </a>
                         </nav>
                     </div>
@@ -150,6 +153,13 @@
                     </a>
                     <a class="mdl-navigation__link" 
                        href
+                       ng-click="closeDrawer()"
+                       show-modal="#modal-create-game">
+                        <i class="material-icons">games</i>
+                        {{ 'create_game' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href
                        ng-click="closeDrawer(); logout()">
                         <i class="material-icons" role="presentation">power_settings_new</i>
                         {{ 'logout' | translate }}
@@ -165,17 +175,21 @@
                 </footer>
             </div>
 
+            <div class="app-button__fixed" ng-class="{'app-button__fixed--pagination': pages }">
+                <button class="app-button app-button--create-game mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+                        ng-hide="isGame"
+                        show-modal="#modal-create-game">
+                    <i class="material-icons">games</i>
+                </button>
+            </div>
+
             <div class="app-pagination app-pagination--fixed">
                 <pagination></pagination>
             </div>
-        </div>
 
-        <div class="app-button__fixed app-button__fixed--logout">
-            <button class="app-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-                    ng-hide="isFacebookApp || isGame"
-                    ng-click="logout()">
-                <i class="material-icons">power_settings_new</i>
-            </button>
+            <modal-profile></modal-profile>
+            <modal-trophy></modal-trophy>
+            <modal-create-game></modal-create-game>
         </div>
           
         <div id="fb-root"></div>

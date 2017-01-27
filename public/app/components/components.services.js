@@ -18,9 +18,9 @@ service('modal', function () {
 
         element.show = function () {
 
-            if (!element.parent().is('body')) {
+            if (!element.parent().is('body, [data-layout]')) {
                 element.defaultParent = element.parent();
-                $('body').prepend(element);
+                $('[data-layout]').prepend(element);
             }
             element.addClass('app-modal--active').trigger('show');
 

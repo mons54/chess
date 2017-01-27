@@ -15,7 +15,7 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
     function ($rootScope, $scope, socket) {
 
         $scope.$on('$destroy', function() {
-            $rootScope.pages = false;
+            delete $rootScope.pages;
         });
         
         $scope.friends = false;

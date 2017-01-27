@@ -33,13 +33,9 @@ directive('showModal', ['modal',
     function (modal) {
         return {
             restrict: 'A',
-            scope: {
-                data: '=showModalData'
-            },
             link: function (scope, element, attrs) {
                 element.on('click', function (event) {
-                    var modalElement = modal(attrs.showModal);
-                    modalElement.data(angular.extend(modalElement.data(), scope.data)).show();
+                    modal(attrs.showModal).show();
                 });
             }
         };
@@ -82,10 +78,9 @@ directive('showProfile', ['$rootScope', 'socket',
     }
 ]).
 
+directive('modalCreateGame', ['$route', 'modal', 'socket', 'paramsGame', 
 
-directive('modalCreateGame', ['$rootScope', '$timeout', 'modal', 'socket', 'paramsGame', 
-
-    function ($rootScope, $timeout, modal, socket, paramsGame) {
+    function ($route, modal, socket, paramsGame) {
         return {
             restrict: 'E',
             scope: true,
@@ -156,11 +151,18 @@ directive('modalCreateGame', ['$rootScope', '$timeout', 'modal', 'socket', 'para
 
                 scope.createGame = function () {
                     socket.emit('createGame', scope.game);
-                    if (element.data('loadGame')) {
-                        scope.loadGame = true;
-                    } else {
+                    if ($route.current.name === 'home') {
                         modal(element).hide();
+                    } else {
+                        scope.loadGame = true;
                     }
+                };
+
+                scope.getColorClass = function (color) {
+                    if (!color) {
+                        return;
+                    }
+                    return game.color === 'white' ? 'app-search__game-color--white' : 'app-search__game-color--black';
                 };
 
                 element.on('hide', function () {

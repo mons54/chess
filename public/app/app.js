@@ -60,8 +60,6 @@
                 if (fromState && $rootScope.user && !$rootScope.user.refresh) {
                     $rootScope.user.refresh = true;
                 }
-
-                $rootScope.title = $route.current.title;
             });
 
             /**
@@ -272,22 +270,22 @@
         function ($routeProvider, $locationProvider) {
             $routeProvider
             .when('/', {
-                title : 'home',
+                name : 'home',
                 templateUrl: '/app/home/templates/home.html',
                 controller: 'homeCtrl'
             })
             .when('/game/:id', {
-                title : 'game',
+                name : 'game',
                 templateUrl: 'app/game/templates/game.html',
                 controller: 'gameCtrl'
             })
             .when('/ranking', {
-                title : 'ranking',
+                name : 'ranking',
                 templateUrl: '/app/ranking/templates/ranking.html',
                 controller: 'rankingCtrl'
             })
             .when('/trophies', {
-                title : 'trophies',
+                name : 'trophies',
                 templateUrl: '/app/trophies/templates/trophies.html',
                 controller: 'trophiesCtrl'
             })

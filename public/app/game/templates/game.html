@@ -169,6 +169,9 @@
 
 <div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" ng-hide="showMessagesPhone || showPlayedPhone">
     <div class="app-game__toggle-head app-game__toggle-head--phone">
+        <div class="app-game__toggle-icon--phone" ng-if="!user.gid && !hideSound" show-modal="#modal-create-game">
+            <i class="app-game__toggle-icon material-icons">games</i>
+        </div>
         <div class="app-game__toggle-icon--phone" ng-click="changeSound()">
             <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
         </div>
@@ -185,7 +188,12 @@
 </div>
 
 <div class="app-button__fixed app-button__fixed--game">
-    <button class="app-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+    <button class="app-button app-button--create-game mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+            ng-hide="user.gid || hideSound"
+            show-modal="#modal-create-game">
+        <i class="material-icons">games</i>
+    </button>
+    <button class="app-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
             ng-hide="hideSound"
             ng-click="changeSound()">
         <i class="material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
@@ -331,7 +339,7 @@
                 <div class="app-modal__title">{{ game.result.name|translate }}</div>
 
                 <div class="app-game__result mdl-grid">
-                    <div class="mdl-cell mdl-cell--6-col app-game__result-color app-game__result-color--white">
+                    <div class="app-game__result-color app-game__result-color--white">
                         <div class="app-game__result-player">
                             <span class="app-game__result-name">{{ game.white.name }}</span>
                         </div>
@@ -346,7 +354,7 @@
                             {{ game.white.points + pointsWhite }} ({{ pointsWhite | relativeNumber }})
                         </div>
                     </div>
-                    <div class="mdl-cell mdl-cell--6-col app-game__result-color app-game__result-color--black">
+                    <div class="app-game__result-color app-game__result-color--black">
                         <div class="app-game__result-player">
                             <span class="app-game__result-name">{{ game.black.name }}</span>
                         </div>
@@ -363,10 +371,10 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--12-col" share="shareResultData"></div>
+                <div share="shareResultData"></div>
             </div>
 
-            <div class="app-game__result-link mdl-cell mdl-cell--12-col">
+            <div class="app-game__result-link">
                 <a modal-close href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
                     {{ 'home' | translate}}
                 </a>

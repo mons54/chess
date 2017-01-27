@@ -22,10 +22,6 @@
                 class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
             {{ 'create_game' | translate }}
         </button>
-        <button show-modal="#modal-create-game" show-modal-data="{ loadGame: true }"
-                class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
-            {{ 'create_game' | translate }}
-        </button>
     </div>
 </div>
 
@@ -55,10 +51,10 @@
                         <img class="app-table__avatar" ng-src="{{ game.avatar }}">
                         <span class="app-table__name">{{ game.name }}</span>
                     </td>
-                    <td>{{ game.points }}</td>
-                    <td>{{ game.color | translate }}</td>
-                    <td>{{ game.time / 60 }}:00</td>
-                    <td>
+                    <td class="app-table__points">{{ game.points }}</td>
+                    <td class="app-table__color" ng-class="getClassColorGame(game.color)"></td>
+                    <td class="app-table__time">{{ game.time / 60 }}:00</td>
+                    <td class="app-table__actions">
                         <button ng-if="game.uid == user.uid" 
                                 ng-click="removeGame()" 
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
@@ -106,10 +102,10 @@
                         <img class="app-table__avatar" ng-src="{{challenge.avatar}}">
                         <span class="app-table__name">{{ challenge.name }}</span>
                     </td>
-                    <td>{{ challenge.points }}</td>
-                    <td>{{ challenge.color | translate }}</td>
-                    <td>{{ challenge.time / 60 }}:00</td>
-                    <td>
+                    <td class="app-table__points">{{ challenge.points }}</td>
+                    <td class="app-table__color" ng-class="getClassColorGame(challenge.color)"></td>
+                    <td class="app-table__time">{{ challenge.time / 60 }}:00</td>
+                    <td class="app-table__actions">
                         <button ng-click="removeChallenge(challenge.uid)" 
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                             <i class="material-icons">close</i>

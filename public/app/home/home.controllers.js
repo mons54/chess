@@ -92,6 +92,10 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             socket.emit('removeChallenge', uid);
         };
 
+        $scope.getClassColorGame = function (color) {
+            return {'app-table__color--white': color === 'white', 'app-table__color--black': color === 'black' };
+        };
+
         $scope.blackList = blackList;
 
         function blackList (data) {

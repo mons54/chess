@@ -5,8 +5,10 @@
      modal-close-bg>
     <div class="app-modal__dialog">
         <div class="app-modal__head">{{ 'create_game'|translate }}</div>
-        <div class="app-modal__content" ng-show="!loadGame">
-            <form ng-submit="createGame()" role="form">
+        <div class="app-modal__content">
+            <form ng-submit="createGame()"
+                  ng-hide="loadGame"
+                  role="form">
                 <div class="app-form__select">
                     <select ng-model="game.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 
@@ -43,17 +45,26 @@
                     <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'ok'|translate }}</button>
                 </div>
             </form>
-        </div>
-        <div class="app-modal__content app__text-center" ng-show="loadGame">
-            <p>
-                <strong>{{ game.time / 60 }}:00</strong>
-                <br>
-                {{ 'color' | translate }}: <strong>{{ (game.color ? game.color : 'random') | translate }}</strong>
-            </p>
-            <h3>{{ 'search'|translate }} ...</h3>
-            <div class="app-spinner"></div>
-            <div>
-                <button ng-click="removeGame()" modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
+            <div class="app-search__game" ng-show="loadGame">
+                <button ng-click="removeGame(); loadGame = false;" 
+                        class="app-search__game-edit mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                    <i class="material-icons">edit</i>
+                </button>
+                <div class="app-search__game-title">
+                    <span>{{ 'search'|translate }} ...</span>
+                </div>
+                <div class="app-search__game-params">
+                    <span class="app-search__game-time">{{ game.time / 60 }}:00</span>
+                </div>
+                <div class="app-search__game-spinner">
+                    <span class="app-search__game-color"
+                          ng-class="getColorClass(game.color)">
+                    </span>
+                    <span class="app-spinner"></span>
+                </div>
+                <div>
+                    <button ng-click="removeGame()" modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
+                </div>
             </div>
         </div>
     </div>
