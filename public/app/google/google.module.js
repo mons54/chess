@@ -28,41 +28,16 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
 
         this.name = 'google';
 
-        function setData (response) {
+        function setAuth (user) {
 
-            if (!self.auth) {
-                return;
-            }
+            var profile = user.getBasicProfile();
 
-            var data = {};
-
-            angular.forEach(response.locales, function (value) {
-                if (value.value.substr(0, 2) !== 'en') {
-                    translator.use(value.value);
-                }
-            });
-
-            angular.forEach(response.genders, function (value) {
-                if (!data.gender) {
-                    $rootScope.user.gender = value.value;
-                }
-            });
-
-            if (typeof response.nicknames === 'object') {
-                response.names = angular.extend(response.names, response.nicknames);
-            }
-
-            angular.forEach(response.names, function (value) {
-                if (!self.auth.name) {
-                    self.auth.name = value.value;
-                }
-            });
-
-            angular.forEach(response.photos, function (value) {
-                if (!self.auth.avatar) {
-                    self.auth.avatar = value.url;
-                }
-            });
+            self.auth = {
+                accessToken: user.getAuthResponse().access_token,
+                id: user.getId(),
+                avatar: profile.Paa,
+                name: profile.ig
+            };
         }
 
         /**
@@ -107,12 +82,7 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
                 this.status = 'unknown';
                 delete this.auth;
             } else {
-                var user = gapi.auth2.getAuthInstance().currentUser.get();
                 this.status = 'connected';
-                this.auth = {
-                    id: user.getId(),
-                    accessToken: user.getAuthResponse().access_token
-                };
             }
 
             callback(this);
@@ -143,12 +113,8 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
          */
         this.handleLogin = function () {
             user.setLogin(self.name);
-            gapi.client.people.people.get({
-                resourceName: 'people/me'
-            }).then(function(response) {
-                setData(response.result);
-                socket.connect();
-            });
+            setAuth(gapi.auth2.getAuthInstance().currentUser.get());
+            socket.connect();
         };
 
         return this;
