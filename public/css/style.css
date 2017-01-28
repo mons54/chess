@@ -766,37 +766,48 @@ a {
 }
 
 .app-profile__stats {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #171B22;
+  margin-top: 24px;
+  padding: 8px;
+  background-color: #795548;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
 }
 
 .app-profile__stat {
   position: relative;
-  display: inline-block;
   color: #fff;
-  margin-right: 20px;
   text-align: center;
+  width: calc(33% - 8px);
+  margin: 4px;
+}
+
+.app-profile__stat:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 
 .app-profile__stat:last-child {
   margin-right: 0;
 }
 
-@media screen and (max-width: 597px) {
-  .app-profile__stat {
-    display: block;
-    margin-bottom: 20px;
-  }
-
-  .app-profile__stat:last-child {
-    margin-bottom: 0;
-  }
+.app-profile__stat-chart {
+  top: -5px;
+  position: absolute;
+  display: inline-block;
+  height: auto;
 }
 
 .app-profile__stat-text {
   position: absolute;
-  top: 50px;
+  top: calc(50% - 22px);
   display: block;
   width: 100%;
 }
@@ -812,15 +823,15 @@ a {
 }
 
 .app-profile__stat--win .app-profile__stat-value {
-  color: #54c08b;
+  color: #8BC34A;
 }
 
 .app-profile__stat--draw .app-profile__stat-value {
-  color: #565d6d;
+  color: #03A9F4;
 }
 
 .app-profile__stat--lose .app-profile__stat-value {
-  color: #f5716e;
+  color: #F44336;
 }
 
 .app-element .app-element__head {
@@ -2142,6 +2153,25 @@ a {
 
   .app-button__fixed--pagination {
     bottom: 59px;
+  }
+
+  .app-profile__stat {
+    width: 33%;
+    margin: 0;
+  }
+
+  .app-profile__stat-text {
+    top: calc(50% - 19px);
+  }
+
+  .app-profile__stat-value {
+    font-size: 15px;
+    margin-bottom: -5px;
+  }
+
+  .app-profile__stat-desc {
+    font-size: 8px;
+    font-weight: normal;
   }
 }
 

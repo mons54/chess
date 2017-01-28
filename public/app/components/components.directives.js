@@ -207,27 +207,13 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
             link: function (scope, element) {
 
                 var defaultOptions = {
-                    animate:{
-                        duration: 0,
-                        enabled: false
-                    },
-                    size: 150,
-                    trackColor: '#2E3138',
-                    scaleColor: false,
-                    lineWidth: 10,
-                    lineCap: 'circle'
+                    showTooltips: false
                 };
 
-                var options = {
-                    win: angular.extend({
-                        barColor: '#54c08b'
-                    }, defaultOptions),
-                    draw: angular.extend({
-                        barColor: '#565d6d'
-                    }, defaultOptions),
-                    lose: angular.extend({
-                        barColor: '#f5716e'
-                    }, defaultOptions),
+                var colors = {
+                    win: '#8BC34A',
+                    draw: '#03A9F4',
+                    lose: '#F44336'
                 };
 
                 socket.on('profile', function (data) {
@@ -237,17 +223,41 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                     scope.charts = [];
 
                     angular.forEach(['win', 'draw', 'lose'], function (name) {
+
                         scope.charts.push({
                             name: name,
                             value: data[name],
-                            percent: 100 * data[name] / data.games,
-                            options: options[name]
+                            data: [data[name], data.games ? data.games : 1],
+                            color: colors[name]
                         });
                     });
 
                     scope.data = data;
 
-                    modal(element).show();
+                    Chart.defaults.global.tooltips.enabled = false;
+                    Chart.defaults.global.hover = false;
+
+                    modal(element).show(function () {
+                        angular.forEach(scope.charts, function (value) {
+                            new Chart($('[data-chart=' + value.name + ']'), {
+                                type: 'doughnut',
+                                data: {
+                                    showTooltips: false,
+                                    datasets: [{
+                                        data: value.data,
+                                        backgroundColor: [
+                                            value.color,
+                                            '#9E9E9E'
+                                        ],
+                                        borderWidth: 0
+                                    }]
+                                },
+                                options: {
+                                    cutoutPercentage : 85
+                                }
+                            });
+                        });
+                    });
 
                 }, scope);
             }

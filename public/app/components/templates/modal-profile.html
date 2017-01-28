@@ -26,10 +26,7 @@
             </div>
             <div class="app-profile__stats">
                 <div ng-repeat="chart in charts" class="app-profile__stat app-profile__stat--{{ chart.name }}">
-                    <div easypiechart
-                         options="chart.options" 
-                         percent="chart.percent"
-                         class="app-profile__stat-chart"></div>
+                    <canvas class="app-profile__stat-chart" data-chart="{{ chart.name }}"></canvas>
                     <div class="app-profile__stat-text">
                         <span class="app-profile__stat-value">
                             {{ chart.value }}

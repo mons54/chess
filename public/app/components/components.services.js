@@ -8,7 +8,7 @@ angular.module('components').
  * @description 
  * Modal service management.
  */
-service('modal', function () {
+service('modal', ['$timeout', function ($timeout) {
 
     return function (element) {
 
@@ -16,7 +16,7 @@ service('modal', function () {
             var element = angular.element(element);
         }
 
-        element.show = function () {
+        element.show = function (callback) {
 
             if (!element.parent().is('body, [data-layout]')) {
                 element.defaultParent = element.parent();
@@ -36,6 +36,8 @@ service('modal', function () {
                 element.hide();
             });
 
+            $timeout(callback);
+
             return this;
         };
 
@@ -48,4 +50,4 @@ service('modal', function () {
 
         return element;
     };
-});
+}]);

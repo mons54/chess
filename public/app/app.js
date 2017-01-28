@@ -21,7 +21,6 @@
     module('app', [
         'ngRoute',
         'ngCookies',
-        'easypiechart',
         'global',
         'facebook',
         'google',
