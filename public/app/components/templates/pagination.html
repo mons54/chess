@@ -10,13 +10,13 @@
     <button ng-disabled="!pages.prev"
         ng-click="setPage(pages.prev)"
         class="app-pagination__prev mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" ng-if="user.lang !== 'ar'">navigate_before</i>
-        <i class="material-icons" ng-if="user.lang === 'ar'">navigate_next</i>
+        <i class="material-icons" ng-if="lang() !== 'ar'">navigate_before</i>
+        <i class="material-icons" ng-if="lang() === 'ar'">navigate_next</i>
     </button>
     <button ng-disabled="!pages.next"
             ng-click="setPage(pages.next)"
             class="app-pagination__next mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" ng-if="user.lang === 'ar'">navigate_before</i>
-        <i class="material-icons" ng-if="user.lang !== 'ar'">navigate_next</i>
+        <i class="material-icons" ng-if="lang() === 'ar'">navigate_before</i>
+        <i class="material-icons" ng-if="lang() !== 'ar'">navigate_next</i>
     </button>
 </div>

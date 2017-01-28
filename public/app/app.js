@@ -103,6 +103,10 @@
                 logout();
             };
 
+            $rootScope.lang = function () {
+                return translator.lang;
+            };
+
             function logout() {
                 $rootScope.loading = true;
                 user.setLogin(false);

@@ -1,5 +1,6 @@
-body {
+.mdl-layout__container {
   direction: rtl;
+  overflow: hidden;
 }
 
 .app__pull-left {
@@ -14,6 +15,10 @@ body {
   direction: rtl;
 }
 
+.app-header__row {
+    padding: 0 60px 0 40px;
+}
+
 .app-navigation__container {
   direction: ltr;
 }
@@ -22,12 +27,12 @@ body {
   float: left;
 }
 
-.app-ranking__pagination-prev {
-  float: right;
+.app-pagination__content {
+  text-align: left;
 }
 
-.app-ranking__pagination-next {
-  float: left;
+.app-pagination__textfield > input {
+  text-align: left;
 }
 
 .app-game__box {
@@ -37,6 +42,20 @@ body {
 .app-head .app-button__create-game {
   left: 10px;
   right: initial;
+}
+
+.app-search__game-edit {
+  right: initial;
+  left: 30px;
+}
+
+.app-form__select-grid select.mdl-cell--6-col {
+  margin-right: 0;
+  margin-left: 4%;
+}
+
+.app-form__select-grid select.mdl-cell--6-col:last-child {
+  margin-left: 0;
 }
 
 .mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric {
@@ -49,6 +68,10 @@ body {
 
 .mdl-data-table td {
   text-align: left;
+}
+
+.app-table__avatar {
+  margin-left: 10px;
 }
 
 .app-button__sound {
@@ -77,12 +100,12 @@ body {
 
 .app-modal__close {
   right: inherit;
-  left: 1em;
+  left: 18px;
 }
 
 .app-drawer .mdl-navigation__link .material-icons {
   margin-right: initial;
-  margin-left: 32px;
+  margin-left: 18px;
 }
 
 .mdl-layout__header .mdl-layout__drawer-button {
@@ -128,8 +151,172 @@ body {
     margin-left: 0;
 }
 
+.app-table--game-actions tbody tr td {
+  border-left: 1px solid rgba(0,0,0,.12);
+  border-right: 0;
+}
+
+.app-game__message-avatar {
+  float: right;
+}
+
+.app-game__message--user .app-game__message-avatar {
+  float: left;
+}
+
+.app-game__message--user .app-game__message-content {
+  margin: 0 10px 0 63px;
+}
+
+.app-game__message-content {
+  margin: 0 63px 0 10px;
+}
+
+.app-game__message--user:not(.app-game__message--next) .app-game__message-content:before {
+  left: -8px;
+  right: initial;
+  border-width: 0 0 10px 10px;
+}
+
+.app-game__message:not(.app-game__message--next) .app-game__message-content:before {
+  right: -8px;
+  border-width: 0 0 10px 10px;
+  border-color: transparent transparent transparent #ff5252;
+}
+
+.app-game__message--user:not(.app-game__message--next) .app-game__message-content:before {
+  left: -8px;
+  right: initial;
+  border-width: 0 10px 10px 0;
+  border-color: transparent #795548 transparent transparent;
+}
+
+.app-game__toggle--played {
+  left: 25px;
+  right: initial;
+}
+
+.app-game__toggle--messages {
+  right: 25px;
+  left: initial;
+}
+
+.app-game__toggle-icon {
+  right: 6px;
+  left: initial;
+}
+
+.app-game__toggle-icon--action {
+  right: initial;
+  left: 6px;
+}
+
+.app-table th.app-table--game-played-black:last-of-type {
+  padding-left: 36px;
+}
+
+.app-game__toggle-count:before {
+  border-width: 0 0 5px 5px;
+  border-color: transparent transparent transparent #ff5252;
+  right: -5px;
+  left: initial;
+}
+
+.app-game__lost-pieces {
+  direction: ltr;
+  float: left;
+  margin-left: 10px;
+  margin-right: 0;
+}
+
+.app-table--game-played tbody tr td.app-table--game-played-index, 
+.app-table--game-played tbody tr td.app-table--game-played-white:nth-child(odd) {
+  border-left: 1px solid rgba(0, 0, 0, .12);
+  border-right: 0;
+}
+
+.app-table--game-played td:first-of-type, .app-table--game-played th:first-of-type {
+  padding-left: 12px;
+  padding-right: 0;
+}
+
+.app-trophy--page .app-trophy__picture {
+  float: right;
+}
+
+.app-trophy--page .app-trophy__content {
+  margin-right: 108px;
+}
+
+@media screen and (max-width: 1024px) {
+  .app-button__fixed {
+    right: initial;
+    left: 24px;
+  }
+
+  .app-game__toggle--messages {
+    left: initial;
+    right: 0;
+  }
+
+  .app-game__toggle--played {
+    right: initial;
+    left: 0;
+  }
+}
+
+@media (max-width: 839px) {
+  .app-button__fixed {
+    right: initial;
+    left: 16px;
+  }
+}
+
 @media (max-width: 479px) {
   .app-head .app-button__create-game {
     left: auto;
+  }
+
+  .app-button__fixed {
+    left: 16px;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .app-button__fixed {
+    left: 16px;
+    right: initial;
+  }
+
+  .app-game__toggle {
+    right: 0;
+    left: 0;
+  }
+
+  .app-game__toggle-icon--phone {
+    left: initial;
+    right: 0;
+    border-right: 0;
+    border-left: 1px solid rgba(0,0,0,.12);
+  }
+
+  .app-game__toggle-count--phone {
+    right: initial;
+    left: 0;
+  }
+
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(2) {
+    left: initial;
+    right: 36px;
+  }
+
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(3) {
+    left: initial;
+    right: 72px;
+  }
+
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(4) {
+    left: initial;
+    right: 108px;
   }
 }

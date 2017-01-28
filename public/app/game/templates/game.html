@@ -169,7 +169,7 @@
 
 <div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" ng-hide="showMessagesPhone || showPlayedPhone">
     <div class="app-game__toggle-head app-game__toggle-head--phone">
-        <div class="app-game__toggle-icon--phone" ng-if="!user.gid && !hideSound" show-modal="#modal-create-game">
+        <div class="app-game__toggle-icon--phone" ng-if="!user.gid" show-modal="#modal-create-game">
             <i class="app-game__toggle-icon material-icons">games</i>
         </div>
         <div class="app-game__toggle-icon--phone" ng-click="changeSound()">
@@ -189,12 +189,12 @@
 
 <div class="app-button__fixed app-button__fixed--game">
     <button class="app-button app-button--create-game mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-            ng-hide="user.gid || hideSound"
+            ng-hide="user.gid || hideFixedButton"
             show-modal="#modal-create-game">
         <i class="material-icons">games</i>
     </button>
     <button class="app-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-            ng-hide="hideSound"
+            ng-hide="hideFixedButton"
             ng-click="changeSound()">
         <i class="material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
     </button>

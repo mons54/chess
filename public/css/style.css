@@ -2080,11 +2080,11 @@ a {
   }
 
   .app-game__toggle-content {
-    height: 148px;
+    height: 100%;
   }
 
   .app-game__toggle-content--messages {
-    height: 112px;
+    height: 100%;
   }
 
   .app-game__toggle-count--phone {
