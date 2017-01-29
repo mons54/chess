@@ -224,10 +224,12 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     angular.forEach(['win', 'draw', 'lose'], function (name) {
 
+                        var percentage = data.games ? Math.round((data[name] / data.games) * 100) : 0;
+
                         scope.charts.push({
                             name: name,
                             value: data[name],
-                            data: [data[name], data.games ? data.games : 1],
+                            data: [percentage, 100 - percentage],
                             color: colors[name]
                         });
                     });
