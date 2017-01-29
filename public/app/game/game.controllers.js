@@ -19,9 +19,9 @@ angular.module('game').
  * @requires global.service:utils
  * @requires components.service:modal
  */
-controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'modal', 'sound',
+controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'modal', 'sound', 'colorsGame',
     
-    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, modal, sound) {
+    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, modal, sound, colorsGame) {
 
         $rootScope.isGame = true;
 
@@ -42,7 +42,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         setShowPlayed(user.getShowPlayed());
         setShowMessages(user.getShowMessages());
+        setColorGame(user.getColorGame());
 
+        $scope.colorsGame = colorsGame;
         $scope.sound = sound.sound;
 
         socket.on('game', function (game) {
@@ -173,7 +175,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             modal('#modal-possible-draw').show();
         }, $scope);
 
-        $scope.isLastTurn = function (position) {
+        function isLastTurn(position) {
             if (!$scope.lastTurn && (!$scope.game.played || !$scope.game.played.length)) {
                 return;
             }
@@ -319,9 +321,53 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return new Date(time).toLocaleTimeString();
         };
 
-        $scope.changeSound = function () {
+        $scope.getBoxClass = function (position) {
+            var result = '';
+            if (isLastTurn(position)) {
+                result += ' last-turn';
+            }
+            return result;
+        };
+
+        $scope.setSound = function () {
             $scope.sound = sound.change();
         };
+
+        $scope.setColorGame = function (color) {
+
+            var body = angular.element('body');
+
+            if ((!$scope.colorGame || $scope.colorGame === color) && !$scope.showColors) {
+                $scope.showColors = true;
+                body.on('click', function (event) {
+                    if (angular.element(event.target).closest('[data-colors-game]').length) {
+                        return;
+                    }
+                    $timeout(function() {
+                        $scope.showColors = false
+                    });
+                    $(this).unbind('click');
+                });
+            } else if ($scope.colorGame === color) {
+                $scope.showColors = false;
+                body.unbind('click');
+            }
+
+            if ($scope.colorGame !== color) {
+                setColorGame(color);
+                user.setColorGame(color);
+            }
+        };
+
+        function setColorGame(color) {
+            var index = colorsGame.indexOf(color);
+            if (index !== -1) {
+                colorsGame.splice(index, 1);
+                colorsGame.unshift(color);
+            }
+
+            $scope.colorGame = color;
+        }
 
         function getShareResultData(game) {
 

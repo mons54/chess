@@ -2,8 +2,8 @@
     <div profile-game player="player2"></div>
 </div>
 
-<div class="app-game__content app-element mdl-shadow--2dp mdl-cell mdl-cell--12-col" 
-     ng-class="{'app-game--white': orientation == 'white', 'app-game--black': orientation == 'black'}">
+<div class="app-game__board app-game__board--{{ colorGame }} app-element mdl-shadow--2dp mdl-cell mdl-cell--12-col" 
+     ng-class="{'app-game__board--player-white': orientation == 'white', 'app-game__board--player-black': orientation == 'black'}">
     <div ng-repeat="number in numbers" class="app-game__row">
         <div 
             ng-repeat="letter in letters" 
@@ -169,12 +169,6 @@
 
 <div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" ng-hide="showMessagesPhone || showPlayedPhone">
     <div class="app-game__toggle-head app-game__toggle-head--phone">
-        <div class="app-game__toggle-icon--phone" ng-if="!user.gid" show-modal="#modal-create-game">
-            <i class="app-game__toggle-icon material-icons">games</i>
-        </div>
-        <div class="app-game__toggle-icon--phone" ng-click="changeSound()">
-            <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
-        </div>
         <div class="app-game__toggle-icon--phone" ng-click="toggleMessages(true)">
             <i class="app-game__toggle-icon material-icons">chat</i>
         </div>
@@ -184,10 +178,34 @@
         <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessages(true)">
             <span class="app-game__toggle-count">{{ unreadMessages }}</span>
         </div>
+
+        <div class="app-game__toggle-icon--phone" ng-if="!user.gid" show-modal="#modal-create-game">
+            <i class="app-game__toggle-icon material-icons">games</i>
+        </div>
+        <div class="app-game__toggle-icon--phone" ng-click="setSound()">
+            <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
+        </div>
+        <div class="app-game__toggle-icon--phone" ng-class="{'is-active': showColors}" data-colors-game>
+            <div ng-repeat="color in colorsGame"
+                 class="app-game__toggle-icon--color"
+                 ng-click="setColorGame(color)">
+                <span class="app-button app-button--color app-button--color-{{ color }}"></span>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="app-button__fixed app-button__fixed--game">
+<div class="app-button__fixed app-button__fixed--game app-button__fixed--color" 
+     ng-hide="hideFixedButton"
+     ng-class="{'is-active': showColors}"
+     data-colors-game>
+    <button ng-repeat="color in colorsGame"
+            ng-click="setColorGame(color)"
+            class="app-button app-button--color app-button--color-{{ color }} mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+    </button>
+</div>
+
+<div class="app-button__fixed app-button__fixed--game app-button__fixed--action">
     <button class="app-button app-button--create-game mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
             ng-hide="user.gid || hideFixedButton"
             show-modal="#modal-create-game">
@@ -195,7 +213,7 @@
     </button>
     <button class="app-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
             ng-hide="hideFixedButton"
-            ng-click="changeSound()">
+            ng-click="setSound()">
         <i class="material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
     </button>
 </div>

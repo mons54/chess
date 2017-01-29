@@ -17,14 +17,6 @@ angular.module('global', []).
 constant('host', 'www.worldofchess.online').
 
 /**
- * @ngdoc parameters
- * @name global.constant:paramsGame
- * @description
- * The params games data
- */
-constant('paramsGame', chess.game.options).
-
-/**
  * @ngdoc service
  * @name global.service:utils
  * @description
@@ -495,6 +487,28 @@ service('user', ['$cookies', function ($cookies) {
         setShowMessages: function (value) {
             this.set('showMessages', value);
         },
+        /**
+         * @ngdoc function
+         * @name #getColorGame
+         * @methodOf global.service:user
+         * @description 
+         * Get color game
+         * @returns {string} Color
+         */
+        getColorGame: function () {
+            return this.get('colorGame');
+        },
+        /**
+         * @ngdoc function
+         * @name #setColorGame
+         * @methodOf global.service:user
+         * @description 
+         * Set color game
+         * @param {string} value Color
+         */
+        setColorGame: function (value) {
+            this.set('colorGame', value);
+        }
     }
 }]).
 
