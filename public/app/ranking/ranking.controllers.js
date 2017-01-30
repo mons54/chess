@@ -20,8 +20,6 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
         
         $scope.friends = false;
 
-        socket.emit('leaveHome');
-
         socket.on('ranking', function (data) {
 
             $rootScope.loading = false;

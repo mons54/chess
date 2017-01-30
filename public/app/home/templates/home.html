@@ -53,7 +53,7 @@
                     </td>
                     <td class="app-table__points">{{ game.points }}</td>
                     <td class="app-table__color" ng-class="getClassColorGame(game.color)"></td>
-                    <td class="app-table__time">{{ game.time / 60 }}:00</td>
+                    <td class="app-table__time">{{ paramsGame.games[game.game].time / 60 }} + {{ paramsGame.games[game.game].increment }}</td>
                     <td class="app-table__actions">
                         <button ng-if="game.uid == user.uid" 
                                 ng-click="removeGame()" 
@@ -104,7 +104,7 @@
                     </td>
                     <td class="app-table__points">{{ challenge.points }}</td>
                     <td class="app-table__color" ng-class="getClassColorGame(challenge.color)"></td>
-                    <td class="app-table__time">{{ challenge.time / 60 }}:00</td>
+                    <td class="app-table__time">{{ paramsGame.games[challenge.game].time / 60 }} + {{ paramsGame.games[challenge.game].increment }}</td>
                     <td class="app-table__actions">
                         <button ng-click="removeChallenge(challenge.uid)" 
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
@@ -232,6 +232,7 @@
                 </div>
             </div>
             <form ng-submit="createChallenge(challenger.uid)" role="form">
+                <game-choices data="paramsGame" model="challenge"></game-choices>
                 <div class="app-form__select">
                     <select ng-model="challenge.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 
@@ -239,13 +240,6 @@
                             <option value="">{{ 'random' | translate }}</option>
                     </select>
                     <label for="challenge-color">{{ 'color'|translate }}</label>
-                </div>
-                <div class="app-form__select">
-                    <select ng-model="challenge.time"
-                            ng-options="value as (value / 60) + ' ' + ('minutes'|translate) for (key, value) in paramsGame.times" 
-                            id="challenge-time">
-                    </select>
-                    <label for="challenge-time">{{ 'time'|translate }}</label>
                 </div>
                 <div class="app-modal__actions">
                     <button modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>

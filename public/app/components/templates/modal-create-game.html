@@ -9,6 +9,8 @@
             <form ng-submit="createGame()"
                   ng-hide="loadGame"
                   role="form">
+
+                <game-choices data="paramsGame" model="game"></game-choices>
                 <div class="app-form__select">
                     <select ng-model="game.color" 
                             ng-options="value as value|translate for (key, value) in paramsGame.colors" 
@@ -16,13 +18,6 @@
                         <option value="">{{ 'random' | translate }}</option>
                     </select>
                     <label for="create-game-color">{{ 'color'|translate }}</label>
-                </div>
-                <div class="app-form__select">
-                    <select ng-model="game.time"
-                            ng-options="value as (value / 60) + ' ' + ('minutes'|translate) for (key, value) in paramsGame.times" 
-                            id="create-game-time">
-                    </select>
-                    <label for="create-game-time">{{ 'time'|translate }}</label>
                 </div>
                 <div class="app-form__select">
                     <div class="app-form__select-grid mdl-grid">
@@ -54,7 +49,12 @@
                     <span>{{ 'search'|translate }} ...</span>
                 </div>
                 <div class="app-search__game-params">
-                    <span class="app-search__game-time">{{ game.time / 60 }}:00</span>
+                    <div class="app-search__game-name">
+                        {{ paramsGame.games[game.game].type|translate }}
+                    </div>
+                    <div class="app-search__game-time">
+                        {{ paramsGame.games[game.game].time / 60 }} + {{ paramsGame.games[game.game].increment }}
+                    </div>
                 </div>
                 <div class="app-search__game-spinner">
                     <span class="app-search__game-color"

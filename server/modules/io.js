@@ -7,15 +7,6 @@ module.exports = function (app, io) {
 
     io.on('connection', function (socket) {
 
-        function startGame(game) {
-            var socketOpponent = moduleSocket.getSocket(game.uid);
-            if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
-                moduleSocket.startGame(socket, socketOpponent, game);
-            } else {
-                moduleGame.deleteCreatedGame(game.uid);
-            }
-        }
-
         socket.on('facebookConnect', function (data) {
             if (!data || 
                 !data.id || 
@@ -55,7 +46,7 @@ module.exports = function (app, io) {
 
             var socketOpponent = moduleSocket.getSocket(data.uid),
                 color = moduleGame.getColor(data.color),
-                time = moduleGame.getTime(data.time);
+                game = moduleGame.getGameType(data.game);
 
             if (!socketOpponent ||
                 socket.blackList.indexOf(data.uid) !== -1 ||
@@ -63,24 +54,31 @@ module.exports = function (app, io) {
                 return;
             }
 
-            moduleSocket.setChallenges(socketOpponent, socket.uid, {
-                create: false,
+            var challenge = moduleSocket.getChallenge(socket, socketOpponent.uid);
+
+            if (challenge &&
+                challenge.color === color &&
+                challenge.game === game) {
+                moduleSocket.startGame(socket, socketOpponent, challenge);
+                return;
+            }
+
+            moduleSocket.setChallenge(socketOpponent, socket.uid, {
                 avatar: socket.avatar,
                 name: socket.name,
                 points: socket.points,
                 ranking: socket.ranking,
                 color: color,
-                time: time
+                game: game
             });
 
-            moduleSocket.setChallenges(socket, data.uid, {
-                create: true,
+            moduleSocket.setChallenge(socket, data.uid, {
                 avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
                 points: socketOpponent.points,
                 ranking: socketOpponent.ranking,
                 color: color,
-                time: time
+                game: game
             });
 
             socketOpponent.emit('listChallenges', socketOpponent.challenges);
@@ -94,14 +92,6 @@ module.exports = function (app, io) {
             moduleSocket.deleteChallenge(socket, uid);
         });
 
-        socket.on('leaveHome', function () {
-            if (!moduleSocket.checkSocket(socket)) {
-                return;
-            }
-            socket.leave('home');
-            leaveHome();
-        });
-
         socket.on('createGame', function (data) {
             if (!data || !moduleSocket.checkSocket(socket) || moduleSocket.getUserGame(socket.uid)) {
                 return;
@@ -111,9 +101,10 @@ module.exports = function (app, io) {
 
             if (game) {
                 startGame(game);
+                return;
             }
 
-            moduleSocket.listGames(moduleGame.createdGame);
+            moduleSocket.listGames();
         });
 
         socket.on('removeGame', function () {
@@ -121,7 +112,7 @@ module.exports = function (app, io) {
                 return;
             }
             
-            moduleSocket.listGames(moduleGame.createdGame);
+            moduleSocket.listGames();
         });
 
         socket.on('startGame', function (uid) {
@@ -284,18 +275,27 @@ module.exports = function (app, io) {
         });
 
         socket.on('disconnect', function () {
+
             if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
+
             delete moduleSocket.connected[socket.uid];
-            leaveHome();
+            moduleSocket.listChallengers();
+            
+            moduleSocket.deleteChallenges(socket);
+
+            if (moduleGame.deleteCreatedGame(socket.uid)) {
+                moduleSocket.listGames();
+            }
         });
 
-        function leaveHome() {
-            moduleSocket.listChallengers();
-            moduleSocket.deleteChallenges(socket);
-            if (moduleGame.deleteCreatedGame(socket.uid)) {
-                moduleSocket.listGames(moduleGame.createdGame);
+        function startGame(game) {
+            var socketOpponent = moduleSocket.getSocket(game.uid);
+            if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
+                moduleSocket.startGame(socket, socketOpponent, game);
+            } else {
+                moduleGame.deleteCreatedGame(game.uid);
             }
         }
     });

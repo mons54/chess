@@ -2,21 +2,55 @@
 
 var game = {
     options: {
-        colors: ['white', 'black'],
-        times: [300, 600, 1200, 3600, 5400],
         pointsMin: 1000,
-        pointsMax: 2800
+        pointsMax: 2800,
+        colors: ['white', 'black'],
+        games: [{
+            type: 'blitz',
+            time: 180,
+            increment: 2
+        },
+        {
+            type: 'blitz',
+            time: 300,
+            increment: 3
+        },
+        {
+            type: 'blitz',
+            time: 600,
+            increment: 0
+        },
+        {
+            type: 'rapid',
+            time: 600,
+            increment: 5
+        },
+        {
+            type: 'rapid',
+            time: 900,
+            increment: 10
+        },
+        {
+            type: 'rapid',
+            time: 1500,
+            increment: 10
+        }]
     },
-    newGame: function (gid, white, black, time) {
+    newGame: function (gid, white, black, game) {
     
-        var timeTurn = 120,
+        var data = this.options.games[game],
+            time = data.time,
+            timeTurn = 120,
             nbPieces = 16;
 
         return {
             id: gid,
+            game: game,
+            type: data.type,
             startTime: new Date().getTime(),
-            time: time,
+            time: data.time,
             timeTurn: timeTurn,
+            increment: data.increment,
             timestamp: 0,
             finish: false,
             turn: 'white',
@@ -403,9 +437,7 @@ engine.prototype.init = function (start, end, promotion) {
         this.game.turn50++;
     }
 
-    if (this.game.time == 5400) {
-        this.game[this.game.turn].time += 30;
-    }
+    this.game[this.game.turn].time += this.game.increment;
 
     if (this.game[this.game.turn].time > this.game[this.game.turn].timeTurn) {
         this.game[this.game.turn].timeTurn = this.game.timeTurn;

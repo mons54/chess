@@ -243,7 +243,7 @@ a {
 .app-form__textfield {
   display: block;
   padding-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   position: relative
 }
 
@@ -413,7 +413,7 @@ a {
 .app-form__select {
   display: block;
   padding-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   position: relative
 }
 
@@ -716,6 +716,31 @@ a {
   bottom: 10px;
 }
 
+.app-create-game__choices {
+  margin: 6px 0 18px 0;
+}
+
+.app-create-game__choices .app-button {
+  width: 172px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  height: auto;
+  line-height: initial;
+  text-transform: initial;
+  padding: 12px;
+}
+
+.app-create-game__choice-name {
+  display: block;
+  text-transform: uppercase;
+}
+
+.app-create-game__choice-time {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
 .app-profile {
   position: relative;
 }
@@ -850,7 +875,7 @@ a {
 }
 
 .app-element--small .app-element__body {
-  max-height: 243px;
+  max-height: 309px;
   overflow-x: auto;
 }
 
@@ -919,9 +944,15 @@ a {
   margin-bottom: 24px;
 }
 
-.app-search__game-time {
+.app-search__game-name {
   font-weight: 800;
   font-size: 18px;
+  text-transform: uppercase;
+  padding-bottom: 12px;
+}
+
+.app-search__game-time {
+  font-size: 24px;
 }
 
 .app-search__game-spinner {
@@ -1238,31 +1269,31 @@ a {
   margin-left: 0;
 }
 
-.app-button__fixed--color .app-button--color:nth-child(2) {
+.app-button__fixed--color .app-button--color:nth-of-type(2) {
   bottom: 68px;
 }
 
-.app-button__fixed--color .app-button--color:nth-child(3) {
+.app-button__fixed--color .app-button--color:nth-of-type(3) {
   bottom: 136px;
 }
 
-.app-button__fixed--color .app-button--color:nth-child(4) {
+.app-button__fixed--color .app-button--color:nth-of-type(4) {
   bottom: 204px;
 }
 
-.app-button__fixed--color .app-button--color:nth-child(5) {
+.app-button__fixed--color .app-button--color:nth-of-type(5) {
   bottom: 272px;
 }
 
-.app-button__fixed--color .app-button--color:nth-child(6) {
+.app-button__fixed--color .app-button--color:nth-of-type(6) {
   bottom: 340px;
 }
 
-.app-button__fixed--color .app-button--color:nth-child(7) {
+.app-button__fixed--color .app-button--color:nth-of-type(7) {
   bottom: 408px;
 }
 
-.app-button__fixed--color .app-button--color:nth-child(8) {
+.app-button__fixed--color .app-button--color:nth-of-type(8) {
   bottom: 476px;
 }
 
@@ -1575,59 +1606,59 @@ a {
   padding-top: 100%;
 }
 
-.app-game__board--player-white .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #CFD8DC;
 }
 
-.app-game__board--player-white.app-game__board--pink .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white.app-game__board--pink .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black.app-game__board--pink .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black.app-game__board--pink .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white.app-game__board--pink .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--pink .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--pink .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--pink .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #F8BBD0;
 }
 
-.app-game__board--player-white.app-game__board--blue .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white.app-game__board--blue .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black.app-game__board--blue .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black.app-game__board--blue .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white.app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #BBDEFB;
 }
 
-.app-game__board--player-white.app-game__board--orange .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white.app-game__board--orange .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black.app-game__board--orange .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black.app-game__board--orange .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white.app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #EBD0B3;
 }
 
-.app-game__board--player-white.app-game__board--green .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white.app-game__board--green .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black.app-game__board--green .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black.app-game__board--green .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white.app-game__board--green .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--green .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #C8E6C9;
 }
 
-.app-game__board--player-white.app-game__board--lime .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white.app-game__board--lime .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black.app-game__board--lime .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black.app-game__board--lime .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white.app-game__board--lime .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--lime .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--lime .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--lime .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #F0F4C3;
 }
 
-.app-game__board--player-white.app-game__board--red .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white.app-game__board--red .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black.app-game__board--red .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black.app-game__board--red .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white.app-game__board--red .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--red .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--red .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--red .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #FFCDD2;
 }
 
-.app-game__board--player-white.app-game__board--brown .app-game__row:nth-child(odd) .app-game__box:nth-child(even),
-.app-game__board--player-white.app-game__board--brown .app-game__row:nth-child(even) .app-game__box:nth-child(odd),
-.app-game__board--player-black.app-game__board--brown .app-game__row:nth-child(even) .app-game__box:nth-child(even),
-.app-game__board--player-black.app-game__board--brown .app-game__row:nth-child(odd) .app-game__box:nth-child(odd) {
+.app-game__board--player-white.app-game__board--brown .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--brown .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--brown .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--brown .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
   background-color: #D7CCC8;
 }
 
@@ -1840,7 +1871,7 @@ a {
 }
 
 .app-table--game-played tbody tr td.app-table--game-played-index,
-.app-table--game-played tbody tr td.app-table--game-played-white:nth-child(odd) {
+.app-table--game-played tbody tr td.app-table--game-played-white:nth-of-type(odd) {
   border-right: 1px solid rgba(0, 0, 0, .12);
 }
 
@@ -1891,31 +1922,31 @@ a {
     min-width: 40px;
   }
 
-  .app-button__fixed--color .app-button--color:nth-child(2) {
+  .app-button__fixed--color .app-button--color:nth-of-type(2) {
     bottom: 52px;
   }
 
-  .app-button__fixed--color .app-button--color:nth-child(3) {
+  .app-button__fixed--color .app-button--color:nth-of-type(3) {
     bottom: 104px;
   }
 
-  .app-button__fixed--color .app-button--color:nth-child(4) {
+  .app-button__fixed--color .app-button--color:nth-of-type(4) {
     bottom: 156px;
   }
 
-  .app-button__fixed--color .app-button--color:nth-child(5) {
+  .app-button__fixed--color .app-button--color:nth-of-type(5) {
     bottom: 208px;
   }
 
-  .app-button__fixed--color .app-button--color:nth-child(6) {
+  .app-button__fixed--color .app-button--color:nth-of-type(6) {
     bottom: 260px;
   }
 
-  .app-button__fixed--color .app-button--color:nth-child(7) {
+  .app-button__fixed--color .app-button--color:nth-of-type(7) {
     bottom: 312px;
   }
 
-  .app-button__fixed--color .app-button--color:nth-child(8) {
+  .app-button__fixed--color .app-button--color:nth-of-type(8) {
     bottom: 364px;
   }
 
@@ -2219,6 +2250,14 @@ a {
     margin-top: 0;
     vertical-align: bottom
   }
+
+  .app-create-game__choices .app-button:nth-of-type(3n + 3) {
+    margin-right: 0; 
+  }
+
+  .app-create-game__choices .app-button:nth-of-type(1n + 4) {
+    margin-bottom: 0; 
+  }
 }
 
 @media screen and (max-width: 599px) {
@@ -2286,27 +2325,27 @@ a {
     border-left: 1px solid rgba(0,0,0,.12);
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(1) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(1) {
     border-left: 0;
     left: 0;
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(2) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
     border-left: 0;
     left: 36px;
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(3) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(3) {
     border-right: 0;
     right: 72px;
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(4) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(4) {
     border-right: 0;
     right: 36px;
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(5) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(5) {
     border-right: 0;
     right: 0;
   }
@@ -2365,31 +2404,31 @@ a {
     border-top: 0;
   }
 
-  .app-game__toggle-icon--color:nth-child(2) {
+  .app-game__toggle-icon--color:nth-of-type(2) {
     bottom: 36px;
   }
 
-  .app-game__toggle-icon--color:nth-child(3) {
+  .app-game__toggle-icon--color:nth-of-type(3) {
     bottom: 73px;
   }
 
-  .app-game__toggle-icon--color:nth-child(4) {
+  .app-game__toggle-icon--color:nth-of-type(4) {
     bottom: 110px;
   }
 
-  .app-game__toggle-icon--color:nth-child(5) {
+  .app-game__toggle-icon--color:nth-of-type(5) {
     bottom: 147px;
   }
 
-  .app-game__toggle-icon--color:nth-child(6) {
+  .app-game__toggle-icon--color:nth-of-type(6) {
     bottom: 182px;
   }
 
-  .app-game__toggle-icon--color:nth-child(7) {
+  .app-game__toggle-icon--color:nth-of-type(7) {
     bottom: 219px;
   }
 
-  .app-game__toggle-icon--color:nth-child(8) {
+  .app-game__toggle-icon--color:nth-of-type(8) {
     bottom: 255px;
   }
 
@@ -2459,6 +2498,18 @@ a {
   .app-profile__stat-desc {
     font-size: 8px;
     font-weight: normal;
+  }
+
+  .app-create-game__choices .app-button {
+    width: calc(50% - 6px);
+  }
+
+  .app-create-game__choices .app-button:nth-of-type(2n + 2) {
+    margin-right: 0; 
+  }
+
+  .app-create-game__choices .app-button:nth-of-type(1n + 5) {
+    margin-bottom: 0; 
   }
 }
 
@@ -2599,6 +2650,15 @@ a {
   }
 
   .app-game__result-points {
+    font-size: 18px;
+  }
+
+  .app-trophy--modal  .app-trophy__desc {
+    font-size: 18px;
+  }
+  .app-modal__head {
+    line-height: 24px;
+    padding: 18px;
     font-size: 18px;
   }
 }

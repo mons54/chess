@@ -63,7 +63,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.shareResultData = getShareResultData(game);
                 $rootScope.isGameFinish = true;
                 modal('#modal-finish-game').show();
-                var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.time);
+                var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.game);
             }
 
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],

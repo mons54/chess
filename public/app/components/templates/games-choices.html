@@ -1,0 +1,15 @@
+<div class="app-form__select">
+    <label>{{ 'time'|translate }} ({{ 'minutes'|translate }} + {{ 'seconds'|translate }})</label>
+    <div class="app-create-game__choices">
+        <button type="button"
+            ng-repeat="(key, game) in data.games"
+            ng-click="model.game = key"
+            ng-class="{'mdl-button--colored': model.game === key }"
+            class="app-button mdl-button mdl-js-button mdl-button--raised">
+            <span class="app-create-game__choice-time">
+                {{ (game.time / 60) }} + {{ game.increment }}
+            </span>
+            <span class="app-create-game__choice-name">{{ game.type|translate }}</span>
+        </button>
+    </div>
+</div>

@@ -100,7 +100,7 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
                 scope.game = {
                     color: paramsGame.colors[0],
                     color: null,
-                    time: paramsGame.times[0],
+                    game: 0,
                     pointsMin: null,
                     pointsMax: null
                 };
@@ -169,7 +169,7 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
                     if (!color) {
                         return;
                     }
-                    return game.color === 'white' ? 'app-search__game-color--white' : 'app-search__game-color--black';
+                    return color === 'white' ? 'app-search__game-color--white' : 'app-search__game-color--black';
                 };
 
                 scope.stopLoad = stopLoad;
@@ -186,6 +186,18 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
         };
     }
 ]).
+
+directive('gameChoices', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            data: '=',
+            model: '='
+        },
+        templateUrl: '/app/components/templates/games-choices.html'
+    };
+}).
 
 /**
  * @ngdoc directive

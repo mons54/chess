@@ -14,8 +14,6 @@ controller('trophiesCtrl', ['$rootScope', '$scope', 'socket',
     
     function ($rootScope, $scope, socket) {
 
-        socket.emit('leaveHome');
-
         $scope.trophies = [];
         for (var i = 1; i <= 25; i++) {
             $scope.trophies.push(i);

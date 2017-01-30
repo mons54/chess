@@ -21,9 +21,9 @@ Game.prototype.getGames = function () {
 
 Game.prototype.create = function (socket, data) {
     
-    var game,
+    var match,
+        game = this.getGameType(data.game),
         color = this.getColor(data.color),
-        time = this.getTime(data.time), 
         pointsMin = data.pointsMin ? parseInt(data.pointsMin) : null,
         pointsMax = data.pointsMax ? parseInt(data.pointsMax) : null,
         uid = socket.uid,
@@ -56,15 +56,15 @@ Game.prototype.create = function (socket, data) {
 
         if (value.uid !== uid &&
             value.color === color &&
-            value.time === time &&
-            (!game || value.createAt < game.createAt) &&
+            value.game === game &&
+            (!match || value.createAt < game.createAt) &&
             (!value.pointsMin || value.pointsMin <= points) &&
             (!value.pointsMax || value.pointsMax >= points) &&
             (!pointsMin || pointsMin <= value.points) &&
             (!pointsMax || pointsMax >= value.pointsMax) &&
             blackList.indexOf(value.uid) === -1 &&
             value.blackList.indexOf(uid) === -1) {
-            game = value;
+            match = value;
         }
     };
 
@@ -76,13 +76,13 @@ Game.prototype.create = function (socket, data) {
         ranking: socket.ranking,
         blackList: blackList,
         color: color,
-        time: time,
+        game: game,
         pointsMin: pointsMin,
         pointsMax: pointsMax,
         createAt: new Date().getTime()
     };
 
-    return game;
+    return match;
 };
 
 Game.prototype.deleteCreatedGame = function (uid) {
@@ -95,6 +95,13 @@ Game.prototype.deleteCreatedGame = function (uid) {
     return true;
 };
 
+Game.prototype.getGameType = function (game) {
+    if (!this.options.games[game]) {
+        game = 0;
+    }
+    return game;
+};
+
 Game.prototype.randomColor = function () {
     this.options.colors[Math.round(Math.random())];
 };
@@ -104,14 +111,6 @@ Game.prototype.getColor = function (color) {
         color = null;
     }
     return color;
-};
-
-Game.prototype.getTime = function (time) {
-    time = parseInt(time);
-    if (this.options.times.indexOf(time) === -1) {
-        time = this.options.times[0];
-    }
-    return time;
 };
 
 Game.prototype.checkPoints = function (pointsMin, pointsMax) {
@@ -274,12 +273,12 @@ Game.prototype.timer = function (game) {
     return game;
 };
 
-Game.prototype.start = function (white, black, time) {
+Game.prototype.start = function (white, black, data) {
 
     var gid = this.gid++;
 
     this.games[gid] = {
-        data: chess.game.newGame(gid, white, black, time),
+        data: chess.game.newGame(gid, white, black, data),
         messages: []
     };
 

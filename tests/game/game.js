@@ -19,7 +19,7 @@ module.exports = function () {
             avatar: null,
             points: 1500,
             ranking: 1
-        }, 300);
+        }, 0);
     }
 
     return this;

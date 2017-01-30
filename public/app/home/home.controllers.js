@@ -24,7 +24,11 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             angular.forEach(data, function (value, key) {
                 value.uid = key;
 
-                if (checkGame(value)) {
+                if (key === $rootScope.user.uid) {
+                    $scope.createdGames.unshift(value);
+                } else if (!blackList(value) &&
+                   ((!value.pointsMin || $rootScope.user.points >= value.pointsMin) && 
+                   (!value.pointsMax || $rootScope.user.points <= value.pointsMax))) {
                     $scope.createdGames.push(value);
                 }
             });
@@ -81,11 +85,9 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
         };
 
         $scope.createChallenge = function (uid) {
-            socket.emit('challenge', {
-                uid: uid,
-                color: $scope.challenge.color,
-                time: $scope.challenge.time
-            });
+            socket.emit('challenge', angular.extend($scope.challenge, {
+                uid: uid
+            }));
         };
 
         $scope.removeChallenge = function (uid) {
@@ -102,18 +104,11 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             return $rootScope.user.blackList.indexOf(data.uid) !== -1 || data.blackList.indexOf($rootScope.user.uid) !== -1;
         }
 
-        function checkGame (game) {
-            return game.uid === $rootScope.user.uid || 
-                   !blackList(game) &&
-                   ((!game.pointsMin || $rootScope.user.points >= game.pointsMin) && 
-                   (!game.pointsMax || $rootScope.user.points <= game.pointsMax));
-        }
-
         $scope.paramsGame = paramsGame;
 
         $scope.challenge = {
             color: null,
-            time: paramsGame.times[0]
+            game: 0
         };
 
         $scope.challenges = [];    

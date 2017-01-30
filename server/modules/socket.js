@@ -188,8 +188,8 @@ module.exports = function (io) {
         });
     };
 
-    Module.prototype.listGames = function (createdGame) {
-        this.sendHome('listGames', createdGame);
+    Module.prototype.listGames = function () {
+        this.sendHome('listGames', moduleGame.createdGame);
     };
 
     Module.prototype.sendHome = function (name, data) {
@@ -215,7 +215,7 @@ module.exports = function (io) {
         moduleGame.deleteCreatedGame(socket.uid);
         moduleGame.deleteCreatedGame(socketOpponent.uid);
         
-        this.listGames(moduleGame.createdGame);
+        this.listGames();
         
         socket.leave('home');
         socketOpponent.leave('home');
@@ -271,7 +271,7 @@ module.exports = function (io) {
             white.countGame = response[0];
             black.countGame = response[1];
 
-            var gid = moduleGame.start(white, black, dataGame.time),
+            var gid = moduleGame.start(white, black, dataGame.game),
                 room = moduleGame.getRoom(gid);
 
             self.userGames[socket.uid] = gid;
@@ -419,7 +419,7 @@ module.exports = function (io) {
         });
     };
 
-    Module.prototype.setChallenges = function (socket, key, value) {
+    Module.prototype.setChallenge = function (socket, key, value) {
         if (!socket.challenges) {
             socket.challenges = {};
         }
