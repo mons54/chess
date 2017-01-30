@@ -35,7 +35,7 @@ module.exports = function (app, io) {
             }
         });
 
-        socket.on('challenge', function (data) {
+        socket.on('createChallenge', function (data) {
 
             if (!data || 
                 !data.uid || 
@@ -57,8 +57,11 @@ module.exports = function (app, io) {
             var challenge = moduleSocket.getChallenge(socket, socketOpponent.uid);
 
             if (challenge &&
-                challenge.color === color &&
-                challenge.game === game) {
+                challenge.game.index === game.index &&
+                (!color || !challenge.color || color !== challenge.color)) {
+                if (!challenge.color) {
+                    challenge.color = moduleGame.getRandomColor(color);
+                }
                 moduleSocket.startGame(socket, socketOpponent, challenge);
                 return;
             }
@@ -92,6 +95,33 @@ module.exports = function (app, io) {
             moduleSocket.deleteChallenge(socket, uid);
         });
 
+        socket.on('startChallenge', function (uid) {
+            if (!moduleSocket.checkStartGame(socket, uid)) {
+                return;
+            }
+
+            var socketOpponent = moduleSocket.getSocket(uid);
+
+            if (!socketOpponent) {
+                moduleSocket.deleteChallenge(socket, uid);
+                return;
+            }
+
+            if (moduleSocket.getUserGame(socketOpponent.uid)) {
+                moduleSocket.deleteChallenges(socketOpponent);
+                return;
+            }
+
+            var challenge;
+
+            if (challenge = moduleSocket.getChallenge(socketOpponent, socket.uid)) {
+                if (!challenge.color) {
+                    challenge.color = moduleGame.getRandomColor();
+                }
+                moduleSocket.startGame(socket, socketOpponent, challenge);
+            }
+        });
+
         socket.on('createGame', function (data) {
             if (!data || !moduleSocket.checkSocket(socket) || moduleSocket.getUserGame(socket.uid)) {
                 return;
@@ -100,6 +130,9 @@ module.exports = function (app, io) {
             var game = moduleGame.create(socket, data);
 
             if (game) {
+                if (!game.color) {
+                    game.color = moduleGame.getRandomColor(data.color);
+                }
                 startGame(game);
                 return;
             }
@@ -128,31 +161,11 @@ module.exports = function (app, io) {
                 return;
             }
 
+            if (!createdGame.color) {
+                createdGame.color = moduleGame.getRandomColor();
+            }
+
             startGame(createdGame);
-        });
-
-        socket.on('startChallenge', function (uid) {
-            if (!moduleSocket.checkStartGame(socket, uid)) {
-                return;
-            }
-
-            var socketOpponent = moduleSocket.getSocket(uid);
-
-            if (!socketOpponent) {
-                moduleSocket.deleteChallenge(socket, uid);
-                return;
-            }
-
-            if (moduleSocket.getUserGame(socketOpponent.uid)) {
-                moduleSocket.deleteChallenges(socketOpponent);
-                return;
-            }
-
-            var challenge;
-
-            if (challenge = moduleSocket.getChallenge(socketOpponent, socket.uid)) {
-                moduleSocket.startGame(socket, socketOpponent, challenge);
-            }
         });
 
         socket.on('initGame', function (gid) {

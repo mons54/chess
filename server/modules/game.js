@@ -55,8 +55,7 @@ Game.prototype.create = function (socket, data) {
         var value = this.createdGame[i];
 
         if (value.uid !== uid &&
-            value.color === color &&
-            value.game === game &&
+            (!color || !value.color || color !== value.color) &&
             (!match || value.createAt < game.createAt) &&
             (!value.pointsMin || value.pointsMin <= points) &&
             (!value.pointsMax || value.pointsMax >= points) &&
@@ -102,8 +101,15 @@ Game.prototype.getGameType = function (game) {
     return game;
 };
 
-Game.prototype.randomColor = function () {
-    this.options.colors[Math.round(Math.random())];
+/**
+ * @param {string} color Color opponent
+ * @returns {&string} Random color
+ */
+Game.prototype.getRandomColor = function (color) {
+    if (color) {
+        return color === 'white' ? 'black' : 'white';
+    }
+    return this.options.colors[Math.round(Math.random())];
 };
 
 Game.prototype.getColor = function (color) {

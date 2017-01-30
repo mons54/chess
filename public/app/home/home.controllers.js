@@ -85,7 +85,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
         };
 
         $scope.createChallenge = function (uid) {
-            socket.emit('challenge', angular.extend($scope.challenge, {
+            socket.emit('createChallenge', angular.extend($scope.challenge, {
                 uid: uid
             }));
         };
