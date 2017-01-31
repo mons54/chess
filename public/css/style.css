@@ -474,7 +474,7 @@ a {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #795548;
+  border-color: #FF5252;
   border-width: 2px
 }
 
@@ -1030,6 +1030,7 @@ a {
 
 .app-table--ranking {
   width: 100%;
+  border: none;
 }
 
 .app-table--ranking tbody tr {
@@ -1307,38 +1308,6 @@ a {
   cursor: auto;
 }
 
-.app-button.app-button--color-default {
-  background-image: linear-gradient(to right, #607D8B 50%, #CFD8DC 50%);
-}
-
-.app-button.app-button--color-pink {
-  background-image: linear-gradient(to right, #AD1457 50%, #F8BBD0 50%);
-}
-
-.app-button.app-button--color-blue {
-  background-image: linear-gradient(to right, #01579B 50%, #BBDEFB 50%);
-}
-
-.app-button.app-button--color-orange {
-  background-image: linear-gradient(to right, #B1613C 50%, #EBD0B3 50%);
-}
-
-.app-button.app-button--color-green {
-  background-image: linear-gradient(to right, #388E3C 50%, #C8E6C9 50%);
-}
-
-.app-button.app-button--color-lime {
-  background-image: linear-gradient(to right, #827717 50%, #F0F4C3 50%);
-}
-
-.app-button.app-button--color-red {
-  background-image: linear-gradient(to right, #D32F2F 50%, #FFCDD2 50%);
-}
-
-.app-button.app-button--color-brown {
-  background-image: linear-gradient(to right, #795548 50%, #D7CCC8 50%);
-}
-
 .app-game__toggle {
   position: fixed;
   bottom: 0;
@@ -1536,7 +1505,7 @@ a {
   line-height: initial;
   direction: rtl;
   float: right;
-  margin-top: -27px;
+  margin-top: -26px;
   margin-right: 10px;
 }
 
@@ -1569,31 +1538,31 @@ a {
   float: left;
   display: block;
   width: 12.5%;
-  background-color: #607D8B;
+  background-color: #557896;
 }
 
 .app-game__board--pink .app-game__box {
-  background-color: #C2185B;
+  background-color: #739673;
 }
 
 .app-game__board--blue .app-game__box {
-  background-color: #01579B;
+  background-color: #0D1F43;
 }
 
 .app-game__board--orange .app-game__box {
-  background-color: #B1613C;
+  background-color: #18333C;
 }
 
 .app-game__board--green .app-game__box {
-  background-color: #388E3C;
+  background-color: #789655;
 }
 
-.app-game__board--lime .app-game__box {
-  background-color: #827717;
+.app-game__board--grey .app-game__box {
+  background-color: #3F3F3F;
 }
 
-.app-game__board--red .app-game__box {
-  background-color: #D32F2F;
+.app-game__board--black .app-game__box {
+  background-color: #424242;
 }
 
 .app-game__board--brown .app-game__box {
@@ -1617,21 +1586,21 @@ a {
 .app-game__board--player-white.app-game__board--pink .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--player-black.app-game__board--pink .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
 .app-game__board--player-black.app-game__board--pink .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #F8BBD0;
+  background-color: #F0B4C8;
 }
 
 .app-game__board--player-white.app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
 .app-game__board--player-white.app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--player-black.app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
 .app-game__board--player-black.app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #BBDEFB;
+  background-color: #004787;
 }
 
 .app-game__board--player-white.app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
 .app-game__board--player-white.app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--player-black.app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
 .app-game__board--player-black.app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #EBD0B3;
+  background-color: #D55345;
 }
 
 .app-game__board--player-white.app-game__board--green .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
@@ -1641,25 +1610,57 @@ a {
   background-color: #C8E6C9;
 }
 
-.app-game__board--player-white.app-game__board--lime .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
-.app-game__board--player-white.app-game__board--lime .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
-.app-game__board--player-black.app-game__board--lime .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
-.app-game__board--player-black.app-game__board--lime .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #F0F4C3;
+.app-game__board--player-white.app-game__board--grey .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--grey .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--grey .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--grey .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #CCCCCC;
 }
 
-.app-game__board--player-white.app-game__board--red .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
-.app-game__board--player-white.app-game__board--red .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
-.app-game__board--player-black.app-game__board--red .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
-.app-game__board--player-black.app-game__board--red .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #FFCDD2;
+.app-game__board--player-white.app-game__board--black .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
+.app-game__board--player-white.app-game__board--black .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--player-black.app-game__board--black .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--player-black.app-game__board--black .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #E53935;
 }
 
 .app-game__board--player-white.app-game__board--brown .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
 .app-game__board--player-white.app-game__board--brown .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--player-black.app-game__board--brown .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
 .app-game__board--player-black.app-game__board--brown .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #D7CCC8;
+  background-color: #F0F0B4;
+}
+
+.app-button.app-button--color-default {
+  background-image: linear-gradient(to right, #607D8B 50%, #CFD8DC 50%);
+}
+
+.app-button.app-button--color-pink {
+  background-image: linear-gradient(to right, #739673 50%, #F0B4C8 50%);
+}
+
+.app-button.app-button--color-blue {
+  background-image: linear-gradient(to right, #0D1F43 50%, #004787 50%);
+}
+
+.app-button.app-button--color-orange {
+  background-image: linear-gradient(to right, #18333C 50%, #D55345 50%);
+}
+
+.app-button.app-button--color-green {
+  background-image: linear-gradient(to right, #789655 50%, #C8E6C9 50%);
+}
+
+.app-button.app-button--color-grey {
+  background-image: linear-gradient(to right, #3F3F3F 50%, #CCCCCC 50%);
+}
+
+.app-button.app-button--color-black {
+  background-image: linear-gradient(to right, #424242 50%, #E53935 50%);
+}
+
+.app-button.app-button--color-brown {
+  background-image: linear-gradient(to right, #795548 50%, #F0F0B4 50%);
 }
 
 .app-game__box.last-turn,
@@ -1713,7 +1714,7 @@ a {
   -webkit-align-items: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   padding: 0;
 }
 
@@ -1785,7 +1786,15 @@ a {
 }
 
 .app-game__result-link {
-  margin-top: 24px;
+  margin-top: 36px;
+}
+
+.app-game__result-link :nth-child(1n) {
+  margin-right: 6px;
+}
+
+.app-game__result-link :last-child {
+  margin-right: 0;
 }
 
 .app-table--game {
@@ -2278,6 +2287,10 @@ a {
     padding: 0 12px;
   }
 
+  .app-table--game-actions tbody tr td {
+    padding:  0;
+  }
+
   .app-layout.is-toggle .app-content {
     position: absolute;
     top: 0;
@@ -2363,26 +2376,17 @@ a {
   }
 
   .app-game__toggle-content {
-    height: 100%;
+    height: calc(100% - 36px);
   }
 
   .app-game__toggle-content--messages {
-    height: 100%;
+    height: calc(100% - 73px);
   }
 
   .app-game__toggle-count--phone {
     display: inline-block;
-    position: absolute;
-    right: 0;
-    top: 0;
     height: 100%;
     width: 65px;
-  }
-
-  .app-game__toggle-count {
-    position: absolute;
-    right: 6px;
-    top: 6px;
   }
 
   .app-game__toggle-icon--color {
@@ -2645,8 +2649,12 @@ a {
   }
 
   .app-game__result-icon img {
-    height: 78px;
-    width: 78px;
+    height: 72px;
+    width: 72px;
+  }
+
+  .app-game__result-icon .material-icons {
+    font-size: 24px;
   }
 
   .app-game__result-points {

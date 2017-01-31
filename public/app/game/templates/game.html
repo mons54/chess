@@ -175,11 +175,7 @@
         <div class="app-game__toggle-icon--phone" ng-click="togglePlayed(true)">
             <i class="app-game__toggle-icon material-icons">description</i>
         </div>
-        <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessages(true)">
-            <span class="app-game__toggle-count">{{ unreadMessages }}</span>
-        </div>
-
-        <div class="app-game__toggle-icon--phone" ng-if="!user.gid" show-modal="#modal-create-game">
+        <div class="app-game__toggle-icon--phone" ng-hide="user.gid" show-modal="#modal-create-game">
             <i class="app-game__toggle-icon material-icons">games</i>
         </div>
         <div class="app-game__toggle-icon--phone" ng-click="setSound()">
@@ -191,6 +187,9 @@
                  ng-click="setColorGame(color)">
                 <span class="app-button app-button--color app-button--color-{{ color }}"></span>
             </div>
+        </div>
+        <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessages(true)">
+            <span class="app-game__toggle-count">{{ unreadMessages }}</span>
         </div>
     </div>
 </div>
@@ -393,7 +392,12 @@
             </div>
 
             <div class="app-game__result-link">
-                <a modal-close href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                <button modal-close
+                        show-modal="#modal-create-game"
+                        class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+                    {{ 'create_game' | translate }}
+                </button>
+                <a modal-close href="/" class="mdl-button mdl-js-button mdl-button--raised">
                     {{ 'home' | translate}}
                 </a>
             </div>

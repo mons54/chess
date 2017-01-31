@@ -15,4 +15,4 @@ angular.module('game', []).
  * The params games data
  */
 constant('paramsGame', chess.game.options).
-constant('colorsGame', ['default', 'green', 'blue', 'red', 'brown', 'orange', 'pink', 'lime']);
+constant('colorsGame', ['default', 'green', 'pink', 'grey', 'brown', 'black', 'orange', 'blue']);
