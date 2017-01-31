@@ -109,8 +109,14 @@
                             </a>
                             <a class="mdl-navigation__link mdl-typography--text-uppercase" 
                                href
+                               ng-hide="user.gid"
+                               show-modal="#modal-create-game">
+                                {{ 'create_game' | translate }}
+                            </a>
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                               href
                                ng-click="logout()"
-                               ng-hide="isFacebookApp || isGame">
+                               ng-hide="isFacebookApp || user.gid">
                                <i class="material-icons">power_settings_new</i>
                             </a>
                         </nav>
