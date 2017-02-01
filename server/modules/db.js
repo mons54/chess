@@ -50,7 +50,8 @@ function Module() {
                 white: String,
                 black: String,
                 result: Number,
-                date: Date
+                finish: Boolean,
+                data: Object
             })
             .index({type: 1, white: 1, result: 1})
             .index({type: 1, black: 1, result: 1})
@@ -90,7 +91,7 @@ Module.prototype.save = function (model, data) {
 };
 
 Module.prototype.update = function (model, request, set) {
-    return this.models[model].update(request, { $set: set });
+    return this.models[model].update(request, { $set: set }).exec();
 };
 
 Module.prototype.ObjectId = mongoose.Types.ObjectId;

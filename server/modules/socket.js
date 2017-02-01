@@ -9,6 +9,13 @@ module.exports = function (io) {
     function Module() {
         this.connected = {};
         this.userGames = {};
+        db.find('games', { finish: false }).then(function(response) {
+            response.forEach(function (game) {
+                moduleGame.setGame(game.id, game.data);
+                this.userGames[game.white] = game.id;
+                this.userGames[game.black] = game.id;
+            }.bind(this));
+        }.bind(this));
     }
 
     Module.prototype.facebookConnect = function (socket, data) {
@@ -269,26 +276,40 @@ module.exports = function (io) {
             };
         }
 
-        var req = {};
+        var game, req = {};
 
         db.all([
             db.count('games', { $and: [{ type: type }, { $or: [{ white: white.uid }, { black: white.uid }] }] }),
             db.count('games', { $and: [{ type: type }, { $or: [{ white: black.uid }, { black: black.uid }] }] })
-        ]).then(function (response) {
+        ]).
+        then(function (response) {
 
             white.countGame = response[0];
             black.countGame = response[1];
 
-            var gid = moduleGame.start(white, black, dataGame.game),
-                room = moduleGame.getRoom(gid);
+            game = moduleGame.start(white, black, dataGame.game);
 
-            self.userGames[socket.uid] = gid;
-            self.userGames[socketOpponent.uid] = gid;
+            return db.save('games', {
+                type: game.type,
+                white: white.uid,
+                black: black.uid,
+                finish: false,
+                data: game
+            })
+        }).
+        then(function (response) {
+
+            var room = moduleGame.getRoom(response.id);
+
+            moduleGame.setGame(response.id, game);
+
+            self.userGames[socket.uid] = response.id;
+            self.userGames[socketOpponent.uid] = response.id;
 
             socket.join(room);
             socketOpponent.join(room);
 
-            io.to(room).emit('startGame', gid);
+            io.to(room).emit('startGame', response.id);
         });
     };
 
@@ -353,6 +374,12 @@ module.exports = function (io) {
     };
 
     Module.prototype.saveGame = function (game) {
+        db.update('games', { _id: db.ObjectId(game.id) }, {
+            data: game
+        });
+    };
+
+    Module.prototype.finishGame = function (game) {
 
         var self = this,
             white = game.white,
@@ -388,12 +415,10 @@ module.exports = function (io) {
         db.all([
             db.findOne('users', { _id: db.ObjectId(white.uid) }),
             db.findOne('users', { _id: db.ObjectId(black.uid) }),
-            db.save('games', {
-                type: game.type,
+            db.update('games', { _id: db.ObjectId(game.id) }, {
+                finish: true,
                 result: result,
-                white: white.uid,
-                black: black.uid,
-                date: new Date()
+                data: game
             })
         ]).then(function (response) {
 
@@ -431,6 +456,15 @@ module.exports = function (io) {
                 db.update('users', { _id: db.ObjectId(white.uid) }, whiteData),
                 db.update('users', { _id: db.ObjectId(black.uid) }, blackData)
             ]);
+        });
+    };
+
+    Module.prototype.getFinishGame = function (socket, gid) {
+        db.findOne('games', { _id: db.ObjectId(gid) }).then(function (response) {
+            if (!response) {
+                socket.emit('game', false);
+            }
+            socket.emit('game', response.data);
         });
     };
 

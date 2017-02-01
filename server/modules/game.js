@@ -9,10 +9,8 @@ function Game() {
     this.options = chess.game.options;
 
     this.types = ['blitz', 'rapid'];
-    
-    this.createdGame = {};
 
-    this.gid = 1;
+    this.createdGame = {};
 
     this.games = {};
 };
@@ -236,6 +234,14 @@ Game.prototype.getGame = function (gid) {
     return this.hasGame(gid) ? this.games[gid].data : null;
 };
 
+Game.prototype.setGame = function (gid, data) {
+    data.id = gid;
+    this.games[gid] = {
+        data: data,
+        messages: []
+    };
+};
+
 Game.prototype.deleteGame = function (gid) {
     delete this.games[gid];
 };
@@ -278,15 +284,7 @@ Game.prototype.timer = function (game) {
 };
 
 Game.prototype.start = function (white, black, data) {
-
-    var gid = this.gid++;
-
-    this.games[gid] = {
-        data: chess.game.newGame(gid, white, black, data),
-        messages: []
-    };
-
-    return gid;
+    return chess.game.newGame(white, black, data);
 };
 
 Game.prototype.getPoints = function (p1, p2, coefficient, countGame) {

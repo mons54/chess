@@ -176,11 +176,12 @@ module.exports = function (app, io) {
             var game = moduleGame.getGame(gid);
 
             if (game) {
-               socket.join(moduleGame.getRoom(gid)); 
+                socket.join(moduleGame.getRoom(gid)); 
+                socket.emit('game', game);
+                socket.emit('messagesGame', moduleGame.getMessages(gid));
+            } else {
+                moduleSocket.getFinishGame(socket, gid);
             }
-
-            socket.emit('game', game);
-            socket.emit('messagesGame', moduleGame.getMessages(gid));
         });
 
         socket.on('moveGame', function (data) {
@@ -202,6 +203,8 @@ module.exports = function (app, io) {
             }
 
             if (game.finish) {
+                moduleSocket.finishGame(game);
+            } else {
                 moduleSocket.saveGame(game);
             }
             
@@ -239,7 +242,7 @@ module.exports = function (app, io) {
             var game = moduleGame.resign(socket, gid);
 
             if (game) {
-                moduleSocket.saveGame(game);
+                moduleSocket.finishGame(game);
                 io.to(moduleGame.getRoom(gid)).emit('game', game);
             }
         });
@@ -267,7 +270,7 @@ module.exports = function (app, io) {
 
             var game = moduleGame.acceptDraw(socket, gid);
             if (game) {
-                moduleSocket.saveGame(game);
+                moduleSocket.finishGame(game);
                 io.to(moduleGame.getRoom(gid)).emit('game', game);
             }
         });
@@ -338,7 +341,7 @@ module.exports = function (app, io) {
         var game = moduleGame.timer(game);
 
         if (game) {
-            moduleSocket.saveGame(game);
+            moduleSocket.finishGame(game);
             io.to(moduleGame.getRoom(game.id)).emit('game', game);
         }
     }

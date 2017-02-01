@@ -212,7 +212,7 @@
             });
 
             socket.on('connected', function () {
-                if ($rootScope.isDisconnected && !$rootScope.isGameFinish) {
+                if ($rootScope.isDisconnected) {
                     $route.reload();
                 }
                 delete $rootScope.refreshAccessToken;

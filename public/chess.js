@@ -44,14 +44,13 @@ var game = {
      * @param {number} game.time Game time
      * @param {number} game.increment Game time increment
      */
-    newGame: function (gid, white, black, game) {
+    newGame: function (white, black, game) {
     
         var time = game.time,
             timeTurn = 120,
             nbPieces = 16;
 
         return {
-            id: gid,
             type: game.type,
             startTime: new Date().getTime(),
             time: time,
@@ -63,7 +62,10 @@ var game = {
             turn50: 0,
             maxOfferDraw: 3,
             played: [],
-            result: {},
+            result: {
+                value: null,
+                name: null
+            },
             white: {
                 uid: white.uid,
                 name: white.name,

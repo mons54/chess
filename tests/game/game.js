@@ -7,7 +7,7 @@ module.exports = function () {
     };
 
     this.newGame = function (gid) {
-        this.game = chess.game.newGame(gid, {
+        this.game = chess.game.newGame({
             uid: 1,
             name: 'tester1',
             avatar: null,
@@ -19,7 +19,13 @@ module.exports = function () {
             avatar: null,
             points: 1500,
             ranking: 1
-        }, 0);
+        }, {
+            type: 'blitz',
+            time: 300,
+            increment: 0
+        });
+
+        this.game.id = gid;
     }
 
     return this;

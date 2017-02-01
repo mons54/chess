@@ -23,11 +23,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
     
     function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, modal, sound, colorsGame) {
 
+        $rootScope.loading = true;
         $rootScope.isGame = true;
 
         $scope.$on('$destroy', function() {
             delete $rootScope.isGame;
-            delete $rootScope.isGameFinish;
         });
         
         socket.emit('initGame', $routeParams.id);
@@ -48,8 +48,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         $scope.sound = sound.sound;
 
         socket.on('game', function (game) {
+
+            $rootScope.loading = false;
+
             if (!game) {
-                $rootScope.user.gid = null;
+                delete $rootScope.user.gid;
                 $location.path('/');
                 return; 
             }
@@ -59,9 +62,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
 
             if (game.finish) {
-                $rootScope.user.gid = null;
+                delete $rootScope.user.gid;
                 $scope.shareResultData = getShareResultData(game);
-                $rootScope.isGameFinish = true;
                 modal('#modal-finish-game').show();
                 var gameCopy = $window.game.newGame(game.id, game.white, game.black, {
                     type: game.type,
