@@ -36,21 +36,27 @@ var game = {
             increment: 10
         }]
     },
+    /**
+     * @param {string} gid Game Id
+     * @param {object} white White data
+     * @param {object} black Black data
+     * @param {string} game.type Game type
+     * @param {number} game.time Game time
+     * @param {number} game.increment Game time increment
+     */
     newGame: function (gid, white, black, game) {
     
-        var data = this.options.games[game],
-            time = data.time,
+        var time = game.time,
             timeTurn = 120,
             nbPieces = 16;
 
         return {
             id: gid,
-            game: game,
-            type: data.type,
+            type: game.type,
             startTime: new Date().getTime(),
-            time: data.time,
+            time: time,
+            increment: game.increment,
             timeTurn: timeTurn,
-            increment: data.increment,
             timestamp: 0,
             finish: false,
             turn: 'white',

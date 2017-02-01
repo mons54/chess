@@ -4,6 +4,7 @@
    "description":"Schaak tegen spelers over de hele wereld. Verbeter uw schaken en je ranking.",
    "home":"Home",
    "ranking":"Ranglijst",
+   "top100": "Top 100",
    "blitz": "Blitzschaak",
    "rapid": "Snelschaak",
    "classical": "Klassiek",

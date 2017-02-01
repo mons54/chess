@@ -4,6 +4,7 @@
    "description":"Giocare a scacchi in linea contro i giocatori di tutte il mondo.",
    "home":"Home",
    "ranking":"Classifica",
+   "top100": "Top 100",
    "blitz": "Lampo",
    "rapid": "Rapido",
    "classical": "Classico",

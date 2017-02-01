@@ -17,13 +17,11 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
         $scope.$on('$destroy', function() {
             delete $rootScope.pages;
         });
-        
-        $scope.friends = false;
 
         socket.on('ranking', function (data) {
 
             $rootScope.loading = false;
-            $rootScope.loadPage = false;
+            $rootScope.loadRanking = false;
 
             if (!data) {
                 return;
@@ -32,9 +30,10 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             var usersId = [],
                 usersName;
 
+            $rootScope.pages = data.pages;
+
             if (data.pages) {
-                $rootScope.pages = data.pages;
-                $rootScope.page  = data.pages.page;
+                $rootScope.page = data.pages.page;
             }
 
             $scope.ranking = data.ranking;
@@ -45,22 +44,40 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
         }, $scope);
 
         $rootScope.$on('page', function ($event, page) {
-            emit(page);
+            emit($scope.type, page);
         });
 
-        function emit(page) {
-            if ($rootScope.loadPage) {
+        function emit(type, page) {
+            if ($rootScope.loadRanking) {
                 return;
             }
-            $rootScope.loadPage = true;
+            $rootScope.page = page;
+            $rootScope.loadRanking = true;
+            $scope.type = type;
             socket.emit('ranking', {
-                page: page,
-                friends: $scope.friends ? $rootScope.user.friends : false
+                type: type,
+                page: page
             });
+            return true;
         }
+
+        $scope.top100 = function (type) {
+            if ($rootScope.loadRanking) {
+                return;
+            }
+            $scope.type = type + 'Top100';
+            $rootScope.loadRanking = true;
+            socket.emit('rankingTop100', type);
+        };
+
+        $scope.setType = function (type) {
+            emit(type);
+        };
 
         $rootScope.loading = true;
 
-        emit();
+        componentHandler.upgradeElement($('[data-spinner]')[0]);
+
+        emit('blitz');
     }
 ]);

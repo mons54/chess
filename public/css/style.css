@@ -743,6 +743,7 @@ a {
 
 .app-profile {
   position: relative;
+  overflow: hidden;
 }
 
 .app-profile--challenger {
@@ -753,13 +754,14 @@ a {
   width: 50px;
   height: 50px;
   border-radius: 5px;
-  margin-right: 10px;
+  margin-right: 12px;
+  overflow: hidden;
 }
 
 .app-profile__name {
   font-weight: 800;
   font-size: 18px;
-  margin-bottom: 7px;
+  margin-bottom: 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -767,31 +769,78 @@ a {
 
 .app-profile__info {
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 6px;
   font-size: 15px;
-  font-weight: 800;
+  line-height: initial;
+  font-weight: bold;
+  max-height: 24px;
 }
 
-.app-profile__info .app-icon {
+.app-profile__info-title {
   font-size: 24px;
+  margin-right: 6px;
+  margin-bottom: 12px;
 }
 
-.app-profile__info .app-icon__ranking {
+.app-profile__info--blitz {
+  margin-left: -6px;
+}
+
+.app-profile__info.app-profile__info--game {
   position: relative;
-  top: 2px;
+  font-size: 15px;
+  top: 5px;
+  margin-left: 0;
+}
+
+.app-profile__info.app-profile__info--game > .app-icon {
+    font-size: 24px;
+}
+
+.app-profile__info > .app-icon {
+  color: rgba(0,0,0,.54);
+}
+
+.app-profile__info-content {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}
+
+.app-profile__info-content--points {
+  display: inline-block;
+  position: relative;
+  top: -5px;
   margin-right: 3px;
 }
 
-.app-profile__info .app-icon__points {
-  font-size: 20px;
+.app-profile__info--blitz .app-profile__info-content--points {
+  margin-left: -3px;
+}
+
+.app-profile__info-content--ranking {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}
+
+.app-profile__info-content > .app-icon {
+  font-size: 18px;
+  position: relative;
+  top: 3px;
+  margin-right: 3px;
+  color: rgba(0,0,0,.54);
 }
 
 .app-profile__info:last-child {
   margin-right: 0;
 }
 
+.app-profile__game {
+  margin-top: 18px;
+}
+
 .app-profile__stats {
-  margin-top: 24px;
   padding: 8px;
   background-color: #795548;
   display: -webkit-flex;
@@ -979,6 +1028,21 @@ a {
   background: #000;
 }
 
+.app-ranking {
+  position: relative;
+}
+
+.app-ranking__toggle {
+  padding: 6px;
+}
+
+.app-ranking__spinner {
+  position: absolute;
+  z-index: 9;
+  right: 10px;
+  top: 10px;
+}
+
 .app-spinner--search-game {
   position: relative;
   margin-bottom: 24px;
@@ -986,6 +1050,32 @@ a {
 
 .app-table {
   font-size: 18px;
+}
+
+.app-table__sortable {
+  display: block;
+  color: inherit;
+  line-height: 0;
+  margin-right: -18px;
+}
+
+.app-table__sortable:after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  bottom: 7px;
+  margin-left: 5px;
+  border-style: solid;
+}
+
+.app-table__sortable--down:after {
+  border-color: transparent transparent rgba(0,0,0,.54) transparent;
+  border-width: 0 5px 5px 5px;
+}
+
+.app-table__sortable--up:after {
+  border-color: rgba(0,0,0,.54) transparent transparent transparent;
+  border-width: 5px 5px 0 5px;
 }
 
 .app-table__user {
@@ -1000,6 +1090,13 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 3px;
+}
+
+.app-table__icon-ranking {
+  color: rgba(0,0,0,.54);
+  position: relative;
+  top: 3px;
+  font-size: 18px;
 }
 
 .app-table__color {
@@ -1190,11 +1287,6 @@ a {
 
 .ui-draggable-disabled {
     cursor: auto;
-}
-
-[class^="app-icon__"], [class*=" app-icon__"] {
-    font-size: 16px;
-    color: #362F2D;
 }
 
 .app-loading {
@@ -2613,10 +2705,6 @@ a {
     padding-left: 12px;
   }
 
-  .app-profile__name {
-    font-size: 15px;
-  }
-
   .app-table {
     font-size: 15px;
   }
@@ -2634,11 +2722,46 @@ a {
     display: initial;
   }
 
+  .app-profile {
+    height: 40px;
+  }
+
+  .app-profile__name {
+    line-height: 15px;
+    font-size: 15px;
+  }
+
+  .app-profile__avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .app-profile__info {
+    margin-right: 3px;
+    font-size: 13px;
+  }
+
+  .app-profile__info > .app-icon {
+    font-size: 21px;
+  }
+
+  .app-profile .app-profile__info-content--ranking {
+    display: none;
+  }
+
+  .app-profile--game {
+    height: 32px;
+  }
+
+  .app-profile--game .app-profile__info-content--ranking {
+    display: initial;
+  }
+
   .app-profile--game .app-profile__avatar {
     width: 32px;
     height: 32px;
     border-radius: 3px;
-    margin-right: 8px;
+    margin-right: 9px;
   }
 
   .app-profile--game .app-profile__name {
@@ -2649,17 +2772,7 @@ a {
   }
 
   .app-profile--game .app-profile__info {
-    margin-right: 5px;
-    font-size: 13px;
-    line-height: 13px;
-  }
-
-  .app-profile--game .app-profile__info .app-icon__ranking {
-    font-size: 18px;
-  }
-
-  .app-profile--game .app-profile__info .app-icon__points {
-    font-size: 14px;
+    margin-top: 1px;
   }
 
   .app-head--game {

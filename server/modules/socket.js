@@ -78,7 +78,8 @@ module.exports = function (io) {
 
             if (!response) {
                 return db.save('users', Object.assign(data, {
-                    points: 1500,
+                    blitz: 1500,
+                    rapid: 1500,
                     trophies: []
                 }));
             }
@@ -165,23 +166,32 @@ module.exports = function (io) {
             };
         }
 
-        socket.points = data.points;
+        socket.blitz = {
+            points: data.blitz
+        };
+        socket.rapid = {
+            points: data.rapid
+        };
         socket.blackList = blackList;
         socket.trophies = data.trophies;
 
         var self = this;
 
-        return db.count('users', { active: true, points: { $gt: data.points } })
+        return db.all([
+            db.count('users', { active_blitz: true, blitz: { $gt: data.blitz } }),
+            db.count('users', { active_rapid: true, rapid: { $gt: data.rapid } })
+        ])
         .then(function (response) {
 
-            socket.ranking = response + 1;
+            socket.blitz.ranking = response[0] + 1;
+            socket.rapid.ranking = response[1] + 1;
 
             socket.emit('user', {
                 uid: socket.uid,
                 name: socket.name,
                 avatar: socket.avatar,
-                points: socket.points,
-                ranking: socket.ranking,
+                blitz: socket.blitz,
+                rapid: socket.rapid,
                 blackList: socket.blackList,
                 trophies: data.trophies
             });
@@ -225,47 +235,45 @@ module.exports = function (io) {
         this.deleteChallenges(socket);
         this.deleteChallenges(socketOpponent);
 
-        var self = this, white, black;
-
-        if (!dataGame.color) {
-            dataGame.color = moduleGame.randomColor();
-        }
+        var self = this, white, black, type = dataGame.game.type;
 
         if (dataGame.color === 'white') {
             white = {
                 uid: socketOpponent.uid,
                 avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
-                points: socketOpponent.points,
-                ranking: socketOpponent.ranking
+                points: socketOpponent[type].points,
+                ranking: socketOpponent[type].ranking
             };
             black = {
                 uid: socket.uid,
                 avatar: socket.avatar,
                 name: socket.name,
-                points: socket.points,
-                ranking: socket.ranking
+                points: socket[type].points,
+                ranking: socket[type].ranking
             };
         } else {
             white = {
                 uid: socket.uid,
                 avatar: socket.avatar,
                 name: socket.name,
-                points: socket.points,
-                ranking: socket.ranking
+                points: socket[type].points,
+                ranking: socket[type].ranking
             };
             black = {
                 uid: socketOpponent.uid,
                 avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
-                points: socketOpponent.points,
-                ranking: socketOpponent.ranking
+                points: socketOpponent[type].points,
+                ranking: socketOpponent[type].ranking
             };
         }
 
+        var req = {};
+
         db.all([
-            db.count('games', { $or: [{ white: white.uid }, { black: white.uid }] }),
-            db.count('games', { $or: [{ white: black.uid }, { black: black.uid }] })
+            db.count('games', { $and: [{ type: type }, { $or: [{ white: white.uid }, { black: white.uid }] }] }),
+            db.count('games', { $and: [{ type: type }, { $or: [{ white: black.uid }, { black: black.uid }] }] })
         ]).then(function (response) {
 
             white.countGame = response[0];
@@ -381,6 +389,7 @@ module.exports = function (io) {
             db.findOne('users', { _id: db.ObjectId(white.uid) }),
             db.findOne('users', { _id: db.ObjectId(black.uid) }),
             db.save('games', {
+                type: game.type,
                 result: result,
                 white: white.uid,
                 black: black.uid,
@@ -400,21 +409,27 @@ module.exports = function (io) {
             self.setTrophies(white.uid, data.white);
             self.setTrophies(black.uid, data.black);
 
+            var whiteData = {
+                success: data.white.success,
+                lastGame: data.white.lastGame,
+                blackList: data.white.blackList
+            };
+
+            whiteData[game.type] = data.white.points;
+            whiteData['active_' + game.type] = true;
+
+            var blackData = {
+                success: data.black.success,
+                lastGame: data.black.lastGame,
+                blackList: data.black.blackList
+            };
+
+            blackData[game.type] = data.black.points;
+            blackData['active_' + game.type] = true;
+
             db.all([
-                db.update('users', { _id: db.ObjectId(white.uid) }, {
-                    points: data.white.points,
-                    success: data.white.success,
-                    lastGame: data.white.lastGame,
-                    blackList: data.white.blackList,
-                    active: true
-                }),
-                db.update('users', { _id: db.ObjectId(black.uid) }, {
-                    points: data.black.points,
-                    success: data.black.success,
-                    lastGame: data.black.lastGame,
-                    blackList: data.black.blackList,
-                    active: true
-                })
+                db.update('users', { _id: db.ObjectId(white.uid) }, whiteData),
+                db.update('users', { _id: db.ObjectId(black.uid) }, blackData)
             ]);
         });
     };
@@ -498,8 +513,8 @@ module.exports = function (io) {
                     facebookId: socket.facebookId,
                     avatar: socket.avatar,
                     name: socket.name,
-                    ranking: socket.ranking,
-                    points: socket.points,
+                    blitz: socket.blitz,
+                    rapid: socket.rapid,
                     blackList: socket.blackList
                 });
             };
@@ -509,96 +524,177 @@ module.exports = function (io) {
     };
 
     Module.prototype.profile = function (socket, data) {
-        db.findOne('users', { _id: db.ObjectId(data.uid) }, 'points')
+        db.findOne('users', { _id: db.ObjectId(data.uid) }, 'blitz rapid')
         .then(function (response) {
-            data.points = response.points;
+            data.blitz = {
+                points: response.blitz
+            };
+            data.rapid = {
+                points: response.rapid
+            };
             return db.all([
                 db.count('users', {
-                    active: true,
-                    points: {
-                        $gt: data.points
+                    active_blitz: true,
+                    blitz: {
+                        $gt: data.blitz.points
                     }
                 }),
                 db.count('games', {
-                    $or: [{
-                        white: data.uid
-                    }, {
-                        black: data.uid
-                    }]
-                }), 
-                db.count('games', {
-                    $or: [{
-                        white: data.uid,
-                        result: 1
-                    }, {
-                        black: data.uid,
-                        result: 2
+                    $and: [{
+                        type: 'blitz'
+                    },
+                    {
+                        $or: [{
+                            white: data.uid
+                        }, {
+                            black: data.uid
+                        }]
                     }]
                 }),
                 db.count('games', {
-                    $or: [{
-                        white: data.uid,
-                        result: 0
-                    }, {
-                        black: data.uid,
-                        result: 0
+                    $and: [{
+                        type: 'blitz'
+                    },
+                    {
+                        $or: [{
+                            white: data.uid,
+                            result: 1
+                        }, {
+                            black: data.uid,
+                            result: 2
+                        }]
+                    }]
+                }),
+                db.count('games', {
+                    $and: [{
+                        type: 'blitz'
+                    },
+                    {
+                        $or: [{
+                            white: data.uid,
+                            result: 0
+                        }, {
+                            black: data.uid,
+                            result: 0
+                        }]
+                    }]
+                }),
+                db.count('users', {
+                    active_rapid: true,
+                    rapid: {
+                        $gt: data.rapid.points
+                    }
+                }),
+                db.count('games', {
+                    $and: [{
+                        type: 'rapid'
+                    },
+                    {
+                        $or: [{
+                            white: data.uid
+                        }, {
+                            black: data.uid
+                        }]
+                    }]
+                }),
+                db.count('games', {
+                    $and: [{
+                        type: 'rapid'
+                    },
+                    {
+                        $or: [{
+                            white: data.uid,
+                            result: 1
+                        }, {
+                            black: data.uid,
+                            result: 2
+                        }]
+                    }]
+                }),
+                db.count('games', {
+                    $and: [{
+                        type: 'rapid'
+                    },
+                    {
+                        $or: [{
+                            white: data.uid,
+                            result: 0
+                        }, {
+                            black: data.uid,
+                            result: 0
+                        }]
                     }]
                 })
             ]);
         })
         .then(function (response) {
-            data.ranking = response[0] + 1;
-            data.games = response[1];
-            data.win = response[2];
-            data.draw = response[3];
-            data.lose = data.games - (data.win + data.draw);
+            data.blitz.ranking = response[0] + 1;
+            data.blitz.games = response[1];
+            data.blitz.win = response[2];
+            data.blitz.draw = response[3];
+            data.blitz.lose = data.blitz.games - (data.blitz.win + data.blitz.draw);
+
+            data.rapid.ranking = response[4] + 1;
+            data.rapid.games = response[5];
+            data.rapid.win = response[6];
+            data.rapid.draw = response[7];
+            data.rapid.lose = data.rapid.games - (data.rapid.win + data.rapid.draw);
+
             socket.emit('profile', data);
         });
     };
 
-    Module.prototype.ranking = function (socket, data) {
+    Module.prototype.ranking = function (socket, data, limit, pages) {
+
+        if (moduleGame.types.indexOf(data.type) === -1) {
+            return;
+        }
 
         var page = parseInt(data.page),
-            limit = 10,
+            limit = limit,
             friends = data.friends,
             user;
 
         if (page) {
             user = false;
             page = this.formatPage(page);
-            this.initRanking(socket, page, limit, user, friends);
+            this.initRanking(socket, page, limit, user, data.type, pages);
         } else {
 
             user = true;
 
-            var self = this,
-                points = socket.points;
+            var self = this;
 
-            db.findOne('users', { _id: db.ObjectId(socket.uid) }, 'points')
+            db.findOne('users', { _id: db.ObjectId(socket.uid) }, data.type)
             .then(function (response) {
-                socket.points = response.points;
-                return db.count('users', friends ? { active: true, facebookId: { $in: friends }, points: { $gt: response.points } } : { active: true, points: { $gt: response.points } });
+                var req = {};
+                req[data.type] = { $gt: response[data.type] };
+                req['active_' + data.type] = true;
+                return db.count('users', req);
             })
             .then(function (response) {
                 page = self.formatPage(Math.ceil((response + 1) / limit));
-                self.initRanking(socket, page, limit, user, friends);
+                self.initRanking(socket, page, limit, user, data.type, pages);
             });
         }
     };
 
-    Module.prototype.initRanking = function (socket, page, limit, user, friends) {
+    Module.prototype.initRanking = function (socket, page, limit, user, type, pages) {
 
         var self = this,
+            active = {},
             request,
             data,
             offset,
             total,
             position;
 
+        active['active_' + type] = true;
+
         if (user) {
-            request = friends ? { $and: [{ active: true, facebookId: { $in: friends } }, { _id: { $ne: db.ObjectId(socket.uid) } }] } : { $and: [{ active: true }, { _id: { $ne: db.ObjectId(socket.uid) } }] };
+            request = { $and: [active, { _id: { $ne: db.ObjectId(socket.uid) } }] };
         } else {
-            request = friends ? { active: true, facebookId: { $in: friends } } : { active: true };
+            request = active;
         }
 
         db.count('users', request)
@@ -607,14 +703,15 @@ module.exports = function (io) {
             offset = (page * limit) - limit;
 
             if (response === 0) {
+                var row = {
+                    uid: socket.uid,
+                    name: socket.name,
+                    avatar: socket.avatar,
+                    position: 1
+                };
+                row[type] = socket[type].points;
                 socket.emit('ranking', {
-                    ranking:[{
-                        uid: socket.uid,
-                        name: socket.name,
-                        avatar: socket.avatar,
-                        points: socket.points,
-                        position: 1
-                    }]
+                    ranking:[row]
                 });
                 this.finally;
             }
@@ -625,46 +722,55 @@ module.exports = function (io) {
 
             total = response;
 
-            return db.exec('users', request, { points: -1 }, offset, user ? limit - 1 : limit, { points: 1 });
+            var sort = {},
+                hint = {};
+
+            sort[type] = -1;
+            hint[type] = 1;
+
+            return db.exec('users', request, sort, offset, user ? limit - 1 : limit, hint);
         })
         .then(function (response) {
 
-            if (typeof response[0] !== 'object' || typeof response[0].points !== 'number') {
+            if (typeof response[0] !== 'object' || typeof response[0][type] !== 'number') {
                 socket.emit('ranking', false);
                 this.finally;
             }
 
             data = response;
 
-            var requests,
-                points = (user && socket.points > response[0].points) ? socket.points : response[0].points;
+            var points = (user && socket[type].points > response[0][type]) ? socket[type].points : response[0][type],
+                req1 = {},
+                req2 = {};
 
-            if (friends) {
-                requests = [
-                    db.count('users', { active: true, facebookId: { $in: friends }, points: { $gt: points } }),
-                    db.count('users', { active: true, facebookId: { $in: friends }, points: data[0].points }),
-                ];
-            } else {
-                requests = [
-                    db.count('users', { active: true, points: { $gt: points } }),
-                    db.count('users', { active: true, points: data[0].points }),
-                ];
-            }
+            req1[type] = { $gt: points };
+            req1['active_' + type] = true;
 
-            return db.all(requests);
+            req2[type] = data[0][type];
+            req2['active_' + type] = true;
+
+            return db.all([
+                db.count('users', req1),
+                db.count('users', req2)
+            ]);
         })
         .then(function (response) {
 
             position = response[0] + 1;
 
-            socket.emit('ranking', {
-                ranking: self.getRanking(socket, data, position, response[1], user),
-                pages: self.getPages(total, offset, limit)
-            });
+            var result = {
+                ranking: self.getRanking(socket, data, position, response[1], user, type)
+            };
+
+            if (pages) {
+                result.pages = self.getPages(total, offset, limit);
+            }
+
+            socket.emit('ranking', result);
         });
     };
 
-    Module.prototype.getRanking = function (socket, data, position, count, user) {
+    Module.prototype.getRanking = function (socket, data, position, count, user, type) {
         
         var current = 0,
             result = [],
@@ -676,25 +782,27 @@ module.exports = function (io) {
             var saveUser = false;
 
             for (var i in data) {
-                if (!saveUser && socket.points >= data[i].points) {
-                    result.push({
+                if (!saveUser && socket[type].points >= data[i][type]) {
+                    var row = {
                         id: socket.uid,
                         name: socket.name,
-                        avatar: socket.avatar,
-                        points: socket.points
-                    });
+                        avatar: socket.avatar
+                    };
+                    row[type] = socket[type].points;
+                    result.push(row);
                     saveUser = true;
                 }
                 result.push(data[i]);
             }
 
             if (!saveUser) {
-                result.push({
+                var row = {
                     id: socket.uid,
                     name: socket.name,
-                    avatar: socket.avatar,
-                    points: socket.points,
-                });
+                    avatar: socket.avatar
+                };
+                row[type] = socket[type].points;
+                result.push(row);
             }
         } else {
             result = data;
@@ -702,7 +810,7 @@ module.exports = function (io) {
 
         for (var i in result) {
 
-            if (result[i].points < result[current].points) {
+            if (result[i][type] < result[current][type]) {
                 if (!value) {
                     position += count;
                 } else {
@@ -720,7 +828,7 @@ module.exports = function (io) {
                 uid: result[i].id,
                 name: result[i].name,
                 avatar: result[i].avatar,
-                points: result[i].points,
+                points: result[i][type],
                 position: position
             };
 

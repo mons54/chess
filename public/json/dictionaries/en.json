@@ -4,6 +4,7 @@
    "description":"Play Chess against players all over the world. Improve your chess and your ranking.",
    "home":"Home",
    "ranking":"Ranking",
+   "top100": "Top 100",
    "blitz": "Blitz",
    "rapid": "Rapid",
    "classical": "Standard",

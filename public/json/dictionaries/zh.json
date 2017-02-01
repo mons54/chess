@@ -4,6 +4,7 @@
    "description":"玩國際象棋世界各地的玩家。",
    "home":"首页",
    "ranking":"排行",
+   "top100": "前100名",
    "blitz": "超快棋",
    "rapid": "快棋",
    "classical": "古典",

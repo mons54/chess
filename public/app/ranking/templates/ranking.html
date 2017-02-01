@@ -1,4 +1,29 @@
 <div class="app-ranking mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div class="app-ranking__toggle">
+        <button ng-click="setType('blitz')"
+                ng-class="{'mdl-button--accent': type === 'blitz'}"
+                class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            {{ 'blitz' | translate }}
+        </button>
+        <button ng-click="top100('blitz')"
+                ng-class="{'mdl-button--accent': type === 'blitzTop100'}"
+                class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            {{ 'blitz' | translate }} {{ 'top100'|translate }}
+        </button>
+        <button ng-click="setType('rapid')"
+                ng-class="{'mdl-button--accent': type === 'rapid'}"
+                class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            {{ 'rapid' | translate }}
+        </button>
+        <button ng-click="top100('rapid')"
+                ng-class="{'mdl-button--accent': type === 'rapidTop100'}"
+                class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            {{ 'rapid' | translate }} {{ 'top100'|translate }}
+        </button>
+    </div>
+    <div ng-show="loadRanking" class="app-ranking__spinner">
+        <div data-spinner class="mdl-spinner mdl-js-spinner is-active"></div>
+    </div>
     <table class="app-table app-table--ranking mdl-data-table mdl-js-data-table">
         <tbody>
             <tr ng-repeat="rank in ranking" show-profile="rank" ng-class="{'is-user': rank.uid === user.uid }">
@@ -11,7 +36,5 @@
             </tr>
         </tbody>
     </table>
-    <div class="app-pagination">
-        <pagination></pagination>
-    </div>
+    <div class="app-pagination" pagination></div>
 </div>

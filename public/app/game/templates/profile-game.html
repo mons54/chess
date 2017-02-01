@@ -17,13 +17,15 @@
         <div class="app-profile__name">
             <a show-profile="player" class="app-profile__name" href>{{ player.name }}</a>
         </div>
-        <div class="app-profile__info">
-            <span class="app-icon app-icon__ranking"></span>
-            <span>{{ player.ranking }}</span>
-        </div>
-        <div class="app-profile__info">
-            <span class="app-icon app-icon__points"></span>
-            <span>{{ player.points }}</span>
+        <div class="app-profile__info app-profile__info--blitz" title="{{ 'blitz'|translate }}">
+            <i class="app-icon material-icons">flash_on</i>
+            <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }} ({{ 'blitz'|translate }})">
+                {{ player.points }}
+            </div>
+            <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }} ({{ 'blitz'|translate }})">
+                <i class="app-icon material-icons">equalizer</i>
+                {{ player.ranking | number }}
+            </div>
         </div>
         <div class="app-game__lost-pieces">
             <span ng-repeat="(name, number) in player.lostPieces"

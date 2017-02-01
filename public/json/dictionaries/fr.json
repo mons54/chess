@@ -4,6 +4,7 @@
    "description":"Jouez aux échecs contre des joueurs du monde entier. Défiez les meilleurs et faites vous une place dans le classement.",
    "home":"Accueil",
    "ranking":"Classement",
+   "top100": "Top 100",
    "blitz": "Blitz",
    "rapid": "Rapide",
    "classical": "Classique",

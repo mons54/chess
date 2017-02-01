@@ -69,7 +69,7 @@ module.exports = function (app, io) {
             moduleSocket.setChallenge(socketOpponent, socket.uid, {
                 avatar: socket.avatar,
                 name: socket.name,
-                points: socket.points,
+                points: socket[game.type].points,
                 ranking: socket.ranking,
                 color: color,
                 game: game
@@ -78,7 +78,7 @@ module.exports = function (app, io) {
             moduleSocket.setChallenge(socket, data.uid, {
                 avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
-                points: socketOpponent.points,
+                points: socketOpponent[game.type].points,
                 ranking: socketOpponent.ranking,
                 color: color,
                 game: game
@@ -284,7 +284,17 @@ module.exports = function (app, io) {
             if (!moduleSocket.checkSocket(socket) || !data) {
                 return;
             }
-            moduleSocket.ranking(socket, data);
+            moduleSocket.ranking(socket, data, 10, true);
+        });
+
+        socket.on('rankingTop100', function (type) {
+            if (!moduleSocket.checkSocket(socket)) {
+                return;
+            }
+            moduleSocket.ranking(socket, {
+                type: type,
+                page: 1
+            }, 100, false);
         });
 
         socket.on('disconnect', function () {

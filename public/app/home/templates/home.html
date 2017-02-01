@@ -8,13 +8,25 @@
         <div class="app-profile__name">
             <a show-profile="user" class="app-profile__name" href>{{ user.name }}</a>
         </div>
-        <div class="app-profile__info">
-            <span class="app-icon app-icon__ranking"></span>
-            <span>{{ user.ranking }}</span>
+        <div class="app-profile__info app-profile__info--blitz" title="{{ 'blitz'|translate }}">
+            <i class="app-icon material-icons">flash_on</i>
+            <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }} ({{ 'blitz'|translate }})">
+                {{ user.blitz.points }}
+            </div>
+            <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }} ({{ 'blitz'|translate }})">
+                <i class="app-icon material-icons">equalizer</i>
+                {{ user.blitz.ranking | number }}
+            </div>
         </div>
-        <div class="app-profile__info">
-            <span class="app-icon app-icon__points"></span>
-            <span>{{ user.points }}</span>
+        <div class="app-profile__info app-profile__info--rapid" title="{{ 'rapid'|translate }}">
+            <i class="app-icon material-icons">timer</i>
+            <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }} ({{ 'rapid'|translate }})">
+                {{ user.rapid.points }}
+            </div>
+            <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }} ({{ 'rapid'|translate }})">
+                <i class="app-icon material-icons">equalizer</i>
+                {{ user.rapid.ranking | number }}
+            </div>
         </div>
     </div>
     <div class="app-button__create-game">
@@ -39,9 +51,9 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable collection="createdGames" expression="['points', 'time', 'color']" icon="points"></th>
-                    <th sortable collection="createdGames" expression="['color', 'points', 'time']" icon="king"></th>
-                    <th sortable collection="createdGames" expression="['time', 'points', 'color']" icon="time"></th>
+                    <th sortable collection="createdGames" expression="['points', 'time', 'color']" icon="star"></th>
+                    <th sortable collection="createdGames" expression="['color', 'points', 'time']" icon="invert_colors"></th>
+                    <th sortable collection="createdGames" expression="['time', 'points', 'color']" icon="watch_later"></th>
                     <th></th>
                 </tr>
             </thead>
@@ -53,7 +65,7 @@
                     </td>
                     <td class="app-table__points">{{ game.points }}</td>
                     <td class="app-table__color" ng-class="getClassColorGame(game.color)"></td>
-                    <td class="app-table__time">{{ paramsGame.games[game.game].time / 60 }} + {{ paramsGame.games[game.game].increment }}</td>
+                    <td class="app-table__time">{{ game.game.time / 60 }} + {{ game.game.increment }}</td>
                     <td class="app-table__actions">
                         <button ng-if="game.uid == user.uid" 
                                 ng-click="removeGame()" 
@@ -90,9 +102,9 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable collection="challenges" expression="['points', 'time', 'color']" icon="points"></th>
-                    <th sortable collection="challenges" expression="['color', 'points', 'time']" icon="king"></th>
-                    <th sortable collection="challenges" expression="['time', 'points', 'color']" icon="time"></th>
+                    <th sortable collection="challenges" expression="['points', 'time', 'color']" icon="star"></th>
+                    <th sortable collection="challenges" expression="['color', 'points', 'time']" icon="invert_colors"></th>
+                    <th sortable collection="challenges" expression="['time', 'points', 'color']" icon="watch_later"></th>
                     <th></th>
                 </tr>
             </thead>
@@ -104,7 +116,7 @@
                     </td>
                     <td class="app-table__points">{{ challenge.points }}</td>
                     <td class="app-table__color" ng-class="getClassColorGame(challenge.color)"></td>
-                    <td class="app-table__time">{{ paramsGame.games[challenge.game].time / 60 }} + {{ paramsGame.games[challenge.game].increment }}</td>
+                    <td class="app-table__time">{{ challenge.game.time / 60 }} + {{ challenge.game.increment }}</td>
                     <td class="app-table__actions">
                         <button ng-click="removeChallenge(challenge.uid)" 
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
@@ -136,8 +148,8 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable collection="challengers" expression="['points', 'ranking']" icon="points"></th>
-                    <th sortable collection="challengers" expression="['ranking', 'points']" icon="ranking"></th>
+                    <th sortable collection="challengers" expression="['blitz.points', 'rapid.points']" icon="flash_on"></th>
+                    <th sortable collection="challengers" expression="['rapid.points', 'blitz.points']" icon="timer"></th>
                     <th></th>
                 </tr>
             </thead>
@@ -147,8 +159,12 @@
                         <img class="app-table__avatar" ng-src="{{challenger.avatar}}">
                         <span class="app-table__name">{{ challenger.name }}</span>
                     </td>
-                    <td>{{ challenger.points }}</td>
-                    <td>{{ challenger.ranking }}</td>
+                    <td>
+                        {{ challenger.blitz.points }}
+                    </td>
+                    <td>
+                        {{ challenger.rapid.points }}
+                    </td>
                     <td>
                         <button ng-disabled="blackList(challenger)"
                                 ng-click="setChallenger(challenger)"
@@ -181,8 +197,8 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable collection="friends" expression="['points', 'ranking']" icon="points"></th>
-                    <th sortable collection="friends" expression="['ranking', 'points']" icon="ranking"></th>
+                    <th sortable collection="friends" expression="['blitz.points', 'rapid.points']" icon="flash_on"></th>
+                    <th sortable collection="friends" expression="['rapid.points', 'blitz.points']" icon="timer"></th>
                     <th></th>
                 </tr>
             </thead>
@@ -192,8 +208,12 @@
                         <img class="app-table__avatar" ng-src="{{ friend.avatar }}">
                         <span class="app-table__name">{{ friend.name }}</span>
                     </td>
-                    <td>{{ friend.points }}</td>
-                    <td>{{ friend.ranking }}</td>
+                    <td title="{{ 'blitz'|translate }}">
+                        {{ friend.blitz.points }}
+                    </td>
+                    <td title="{{ 'rapid'|translate }}">
+                        {{ friend.rapid.points }}
+                    </td>
                     <td>
                         <button ng-disabled="blackList(friend)"
                                 ng-click="setChallenger(friend)"

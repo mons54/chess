@@ -223,27 +223,54 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                 };
 
                 var colors = {
-                    win: '#8BC34A',
-                    draw: '#03A9F4',
-                    lose: '#F44336'
+                    win: '#4CAF50',
+                    draw: '#1E88E5',
+                    lose: '#E53935'
                 };
+
+                function drawChart(value) {
+                    new Chart($('[data-chart="' + value.type + '-' + value.name + '"]'), {
+                        type: 'doughnut',
+                        data: {
+                            showTooltips: false,
+                            datasets: [{
+                                data: value.data,
+                                backgroundColor: [
+                                    value.color,
+                                    '#9E9E9E'
+                                ],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            cutoutPercentage : 85
+                        }
+                    });
+                }
+
+                function getData(data, name, type) {
+                    var percentage = data.games ? Math.round((data[name] / data.games) * 100) : 0;
+                    return {
+                        type: type,
+                        name: name,
+                        value: data[name],
+                        data: [percentage, 100 - percentage],
+                        color: colors[name]
+                    };
+                }
 
                 socket.on('profile', function (data) {
 
                     delete $rootScope.loadProfile;
 
-                    scope.charts = [];
+                    scope.charts = {
+                        blitz: [],
+                        rapid: []
+                    };
 
                     angular.forEach(['win', 'draw', 'lose'], function (name) {
-
-                        var percentage = data.games ? Math.round((data[name] / data.games) * 100) : 0;
-
-                        scope.charts.push({
-                            name: name,
-                            value: data[name],
-                            data: [percentage, 100 - percentage],
-                            color: colors[name]
-                        });
+                        scope.charts.blitz.push(getData(data.blitz, name, 'blitz'));
+                        scope.charts.rapid.push(getData(data.rapid, name, 'rapid'));
                     });
 
                     scope.data = data;
@@ -252,25 +279,8 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                     Chart.defaults.global.hover = false;
 
                     modal(element).show(function () {
-                        angular.forEach(scope.charts, function (value) {
-                            new Chart($('[data-chart=' + value.name + ']'), {
-                                type: 'doughnut',
-                                data: {
-                                    showTooltips: false,
-                                    datasets: [{
-                                        data: value.data,
-                                        backgroundColor: [
-                                            value.color,
-                                            '#9E9E9E'
-                                        ],
-                                        borderWidth: 0
-                                    }]
-                                },
-                                options: {
-                                    cutoutPercentage : 85
-                                }
-                            });
-                        });
+                        angular.forEach(scope.charts.blitz, drawChart);
+                        angular.forEach(scope.charts.rapid, drawChart);
                     });
 
                 }, scope);
@@ -367,12 +377,14 @@ directive('elementToggle', [
 
 directive('pagination', ['$rootScope', function ($rootScope) {
     return {
-        restrict: 'E',
-        replace: true,
+        restrict: 'A',
         scope: true,
         templateUrl: '/app/components/templates/pagination.html',
-        controller: ['$scope', function ($scope) {
-            $scope.setPage = function (page) {
+        link: function (scope, element) {
+
+            $rootScope.page = false;
+
+            scope.setPage = function (page) {
                 page = parseInt(page);
                 if (!page || page < 0 || page === $rootScope.pages.page || page > $rootScope.pages.last) {
                     $rootScope.page = $rootScope.pages.page;
@@ -381,7 +393,14 @@ directive('pagination', ['$rootScope', function ($rootScope) {
                 $rootScope.page = page;
                 $rootScope.$emit('page', page);
             };
-        }]
+
+            $rootScope.$watch('page', function (value) {
+                if (!value) {
+                    return;
+                }
+                element.find('[ng-model="page"]').val(value);
+            });
+        }
     };
 }]).
 

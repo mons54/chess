@@ -7,6 +7,8 @@ module.exports = new Game();
 function Game() {
     
     this.options = chess.game.options;
+
+    this.types = ['blitz', 'rapid'];
     
     this.createdGame = {};
 
@@ -27,7 +29,7 @@ Game.prototype.create = function (socket, data) {
         pointsMin = data.pointsMin ? parseInt(data.pointsMin) : null,
         pointsMax = data.pointsMax ? parseInt(data.pointsMax) : null,
         uid = socket.uid,
-        points = socket.points,
+        points = socket[game.type].points,
         blackList = socket.blackList;
 
     if (pointsMin) {
@@ -55,6 +57,7 @@ Game.prototype.create = function (socket, data) {
         var value = this.createdGame[i];
 
         if (value.uid !== uid &&
+            value.game.index === game.index &&
             (!color || !value.color || color !== value.color) &&
             (!match || value.createAt < game.createAt) &&
             (!value.pointsMin || value.pointsMin <= points) &&
@@ -95,10 +98,17 @@ Game.prototype.deleteCreatedGame = function (uid) {
 };
 
 Game.prototype.getGameType = function (game) {
+    
+    var data;
+    
     if (!this.options.games[game]) {
         game = 0;
     }
-    return game;
+
+    data = this.options.games[game];
+    data.index = game;
+    
+    return data;
 };
 
 /**
@@ -117,18 +127,6 @@ Game.prototype.getColor = function (color) {
         color = null;
     }
     return color;
-};
-
-Game.prototype.checkPoints = function (pointsMin, pointsMax) {
-    if (!pointsMin || !pointsMax) {
-        return true;
-    }
-
-    if (pointsMin < this.options.pointsMin || pointsMax > this.options.pointsMax) {
-        return false;
-    }
-
-    return pointsMin < pointsMax;
 };
 
 Game.prototype.move = function (socket, id, start, end, promotion) {

@@ -4,6 +4,7 @@
     "description":"Spielen Partie Schach gegen andere Spieler. Vergleichen Sie Ihre Ergebnisse mit anderen Spielern und erkämpfen Sie sich einen Platz in der Rangliste.",
     "home":"Home",
     "ranking":"Rangliste",
+    "top100": "Top 100",
     "blitz": "Blitzschach",
     "rapid": "Schnellschach",
     "classical": "Klassisch",

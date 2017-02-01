@@ -28,26 +28,32 @@ function Module() {
                 lastGame: String,
                 name: String,
                 avatar: String,
-                points: Number,
-                active: Boolean,
+                blitz: Number,
+                rapid: Number,
+                active_blitz: Boolean,
+                active_rapid: Boolean,
                 success: Number,
                 unauthorized: Boolean,
                 blackList: Object,
                 trophies: Array
             })
-            .index({active: 1})
-            .index({points: 1})
-            .index({_id: 1, points: 1})
-            .index({_id: 1, active: 1})
-            .index({active: 1, points: 1})
+            .index({blitz: 1})
+            .index({rapid: 1})
+            .index({_id: 1, rapid: 1})
+            .index({_id: 1, blitz: 1})
+            .index({blitz: 1, activeBlitz: 1})
+            .index({rapid: 1, activeRapid: 1})
         ),
         games: mongoose.model('games', 
             new mongoose.Schema({
+                type: String,
                 white: String,
                 black: String,
                 result: Number,
                 date: Date
             })
+            .index({type: 1, white: 1, result: 1})
+            .index({type: 1, black: 1, result: 1})
         )
     };
 
