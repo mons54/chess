@@ -464,7 +464,6 @@ module.exports = function (io) {
             if (!response) {
                 socket.emit('game', false);
             }
-            socket.join(moduleGame.getRoom(gid));
             socket.emit('game', response.data);
         });
     };
