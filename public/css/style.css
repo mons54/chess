@@ -896,15 +896,15 @@ a {
     text-transform: uppercase;
 }
 
-.app-profile__stat--win .app-profile__stat-value {
+.app-profile__stat--wins .app-profile__stat-value {
   color: #8BC34A;
 }
 
-.app-profile__stat--draw .app-profile__stat-value {
+.app-profile__stat--draws .app-profile__stat-value {
   color: #03A9F4;
 }
 
-.app-profile__stat--lose .app-profile__stat-value {
+.app-profile__stat--losses .app-profile__stat-value {
   color: #F44336;
 }
 

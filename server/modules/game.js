@@ -201,7 +201,7 @@ Game.prototype.acceptDraw = function (socket, id) {
 
     game.finish = true;
     game.result.value = 0;
-    game.result.name = 'nulle';
+    game.result.name = 'null';
 
     return game;
 };
@@ -279,7 +279,7 @@ Game.prototype.timer = function (game) {
     var color = game.turn === 'white' ? 'black' : 'white';
     game.finish = true;
     game.result.value = (game[game.turn].possibleDraw || game[color].nbPieces === 1) ? 0 : (color === 'white' ? 1 : 2);
-    game.result.name = game.result.value === 0 ? 'nulle' : 'time';
+    game.result.name = game.result.value === 0 ? 'null' : 'time';
     return game;
 };
 

@@ -223,9 +223,9 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                 };
 
                 var colors = {
-                    win: '#4CAF50',
-                    draw: '#1E88E5',
-                    lose: '#E53935'
+                    wins: '#4CAF50',
+                    draws: '#1E88E5',
+                    losses: '#E53935'
                 };
 
                 function drawChart(value) {
@@ -268,7 +268,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                         rapid: []
                     };
 
-                    angular.forEach(['win', 'draw', 'lose'], function (name) {
+                    angular.forEach(['wins', 'draws', 'losses'], function (name) {
                         scope.charts.blitz.push(getData(data.blitz, name, 'blitz'));
                         scope.charts.rapid.push(getData(data.rapid, name, 'rapid'));
                     });

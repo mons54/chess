@@ -664,15 +664,15 @@ module.exports = function (io) {
         .then(function (response) {
             data.blitz.ranking = response[0] + 1;
             data.blitz.games = response[1];
-            data.blitz.win = response[2];
-            data.blitz.draw = response[3];
-            data.blitz.lose = data.blitz.games - (data.blitz.win + data.blitz.draw);
+            data.blitz.wins = response[2];
+            data.blitz.draws = response[3];
+            data.blitz.losses = data.blitz.games - (data.blitz.wins + data.blitz.draws);
 
             data.rapid.ranking = response[4] + 1;
             data.rapid.games = response[5];
-            data.rapid.win = response[6];
-            data.rapid.draw = response[7];
-            data.rapid.lose = data.rapid.games - (data.rapid.win + data.rapid.draw);
+            data.rapid.wins = response[6];
+            data.rapid.draws = response[7];
+            data.rapid.losses = data.rapid.games - (data.rapid.wins + data.rapid.draws);
 
             socket.emit('profile', data);
         });
