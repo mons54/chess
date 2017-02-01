@@ -559,6 +559,8 @@ engine.prototype.init = function (start, end, promotion) {
         notation: start + (typeMove === 'capture' ? 'x' : ' ') + end + extension
     });
 
+    this.game.check = !!this.check;
+
     if (this.checkmat == true) {
         this.game.finish = true;
         this.game.result = {

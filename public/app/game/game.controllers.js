@@ -206,6 +206,14 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return lastTurn.start === position || lastTurn.end === position;
         };
 
+        $scope.isCheck = function(position) {
+            var piece;
+            if (!$scope.game.check || !(piece = $scope.game.pieces[position])) {
+                return false;
+            }
+            return piece.color === $scope.game.turn && piece.name === 'king';
+        };
+
         $scope.move = function (start, end, promotion) {
 
             sound.timer.load();

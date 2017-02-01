@@ -8,7 +8,7 @@
         <div 
             ng-repeat="letter in letters" 
             ng-init="position = letter + number" 
-            ng-class="{'last-turn': isLastTurn(position) }" 
+            ng-class="{'last-turn': isLastTurn(position), 'is-check': isCheck(position) }" 
             id="{{position}}" 
             class="app-game__box"
             data-game-box>
