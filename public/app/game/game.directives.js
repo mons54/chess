@@ -117,19 +117,15 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
 
                 function move(elementBox, position) {
 
-                    var classes = element.attr('class');
-
-                    elementBox.find('[piece-draggable]').removeClass();
-
                     if (isPromotion(position)) {
                         modalPromotion.show();
                         modalPromotion.find('[data-icon]').click(function() {
                             var promotion = $(this).data('icon');
                             modalPromotion.find('[data-icon]').unbind('click');
-                            sendMove(elementBox, classes.replace('pawn', promotion), position, promotion);
+                            sendMove(position, promotion);
                         });
                     } else {
-                        sendMove(elementBox, classes, position);
+                        sendMove(position);
                     }
 
                     if (touch) {
@@ -141,8 +137,7 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
                     }
                 }
 
-                function sendMove(elementBox, classes, position, promotion) {
-                    elementBox.find('[piece-draggable]').addClass(classes);
+                function sendMove(position, promotion) {
                     scope.move(attr.position, position, promotion);
                 }
 
@@ -150,6 +145,105 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
                     return piece.name === 'pawn' && (position.substr(-1) === '1' || position.substr(-1) === '8');
                 }
             });
+        }
+    };
+}]).
+
+/**
+ * @ngdoc directive
+ * @name components.directive:scrollGame
+ * @description 
+ * Scroll Game
+ * @restrict A
+ * @scope
+ */
+directive('scrollGame', ['$timeout', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+
+            var isScroll = true,
+                direction = attrs.scrollGameDirection,
+                el = element[0];
+
+            element.on('scroll', function () {
+                if (direction === 'left') {
+                    isScroll = (el.scrollLeft + el.clientWidth + 1) > el.scrollWidth;
+                } else {
+                    isScroll = (el.scrollTop + el.clientHeight + 1) > el.scrollHeight;
+                }
+            });
+
+            scope.$watchCollection(attrs.scrollGame, function (newValue) {
+                if (newValue && isScroll) {
+                    $timeout(function() {
+                        if (direction === 'left') {
+                            element.scrollLeft(el.scrollWidth);
+                        } else {
+                            element.scrollTop(el.scrollHeight);
+                        }
+                    });
+                }
+            });
+
+            if (attrs.scrollGameActive) {
+                scope.$watch(attrs.scrollGameActive, function (newValue) {
+                    if (!scope.game || !scope.game.finish || typeof newValue === 'undefined') {
+                        return;
+                    }
+
+                    $timeout(function() {
+
+                        var active = element.find('[data-scroll-game-active="' + newValue + '"]');
+
+                        if (!active.length) {
+                            return;
+                        }
+
+                        if (typeof attrs.scrollGameActiveParent !== 'undefined') {
+                            active = active.parent();
+                        }
+
+                        if (direction === 'left') {
+                            var left = element.scrollLeft(),
+                                right = element.scrollLeft() + element.width(),
+                                offset = active.position().left,
+                                width = active.outerWidth();
+
+                            if (offset < left) {
+                                element.scrollLeft(offset);
+                            } else if (offset + width >= right) {
+                                element.scrollLeft(offset + width - element.width());
+                            }
+                        } else {
+                            var top = element.scrollTop(),
+                                bottom = element.scrollTop() + element.height(),
+                                offset = active.position().top,
+                                height = active.outerHeight();
+
+                            if (offset < top) {
+                                element.scrollTop(offset);
+                            } else if (offset + height >= bottom) {
+                                element.scrollTop(offset + height - element.height());
+                            }
+                        }
+                    });
+                });
+            }
+
+            if (attrs.scrollGameShow) {
+                scope.$watch(attrs.scrollGameShow, function (newValue) {
+                    if (newValue && isScroll) {
+                        $timeout(function() {
+                            if (direction === 'left') {
+                                element.scrollLeft(el.scrollWidth);
+                            } else {
+                                element.scrollTop(el.scrollHeight);
+                            }
+                        });
+                    }
+                });
+            }
         }
     };
 }]);
