@@ -154,7 +154,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         socket.on('messageGame', function (message) {
             if (!$scope.messages) {
-                return;
+                $scope.messages = [];
             }
             $scope.messages.push(message);
             if ($scope.showMessages) {
