@@ -210,7 +210,9 @@
     </div>
 </div>
 
-<div class="app-game__toggle app-game__toggle--messages mdl-shadow--2dp" ng-class="{'show' : showMessagesPhone }">
+<div ng-hide="game.archived" 
+     class="app-game__toggle app-game__toggle--messages mdl-shadow--2dp" 
+     ng-class="{'show' : showMessagesPhone }">
     <div class="app-game__toggle-head app-game__toggle-head--messages"
          ng-click="toggleMessages()">
         
@@ -246,7 +248,7 @@
 
 <div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" ng-hide="showMessagesPhone || showPlayedPhone">
     <div class="app-game__toggle-head app-game__toggle-head--phone">
-        <div class="app-game__toggle-icon--phone" ng-click="toggleMessages(true)">
+        <div ng-hide="game.archived" class="app-game__toggle-icon--phone" ng-click="toggleMessages(true)">
             <i class="app-game__toggle-icon material-icons">chat</i>
         </div>
         <div class="app-game__toggle-icon--phone" ng-click="togglePlayed(true)">
@@ -469,7 +471,7 @@
             </div>
 
             <div class="app-game__result-link">
-                <button show-modal="#modal-create-game"
+                <button modal-close show-modal="#modal-create-game"
                         class="app-button mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
                     {{ 'create_game' | translate }}
                 </button>

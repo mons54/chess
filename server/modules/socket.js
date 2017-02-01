@@ -464,6 +464,7 @@ module.exports = function (io) {
             if (!response) {
                 socket.emit('game', false);
             }
+            response.data.archived = true;
             socket.emit('game', response.data);
         });
     };
