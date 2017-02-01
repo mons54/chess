@@ -223,7 +223,7 @@ a {
 }
 
 .app-modal__title {
-  margin: 0 0 20px 0;
+  margin-bottom: 24px;
   padding: 0;
   font-size: 24px;
 }
@@ -651,7 +651,7 @@ a {
 .app-button--share {
   padding: 0;
   min-width: initial;
-  width: 48px;
+  width: 42px;
   margin-right: 6px;
 }
 
@@ -1844,7 +1844,6 @@ a {
 
 .app-game__result-color {
   width: 50%;
-  margin: 24px 0;
 }
 
 .app-game__result-player {
@@ -1910,10 +1909,10 @@ a {
 }
 
 .app-game__result-link {
-  margin-top: 36px;
+  margin-top: 24px;
 }
 
-.app-game__result-link :nth-child(1n) {
+.app-game__result-link .app-button {
   margin-right: 6px;
 }
 
@@ -2859,6 +2858,10 @@ a {
 
   .app-game__result-points {
     font-size: 18px;
+  }
+
+  .app-game__result-link .app-button {
+    padding: 0 12px;
   }
 
   .app-trophy--modal  .app-trophy__desc {
