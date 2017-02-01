@@ -96,10 +96,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             angular.forEach(game.played, function (value, index) {
                 var data = angular.copy(value);
+                data.index = index;
                 data.time = ((data.time - time) / 1000).toFixed(2);
                 if (gameCopy) {
                     new $window.chess.engine(gameCopy, value.start, value.end, value.promotion);
-                    data.pieces = angular.copy(gameCopy.pieces);
+                    value.pieces = angular.copy(gameCopy.pieces);
                 }
                 time = value.time;
                 if (index % 2 === 0) {
@@ -110,6 +111,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     $scope.played[$scope.played.length - 1].black = data;
                 }
             });
+
+            if (gameCopy) {
+                setTurn(game, game.played.length - 1);
+            }
 
             if ($rootScope.user.uid === game.black.uid) {
                 $scope.player1 = game.black;
@@ -175,16 +180,22 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             modal('#modal-possible-draw').show();
         }, $scope);
 
-        function isLastTurn(position) {
-            if (!$scope.lastTurn && (!$scope.game.played || !$scope.game.played.length)) {
+        $scope.isLastTurn = function (position) {
+            if ((!$scope.turn || $scope.turn.index === null) && (!$scope.game.played || !$scope.game.played.length)) {
                 return;
             }
 
-            if ($scope.lastTurn) {
-                var lastTurn = $scope.lastTurn;
+            var lastTurn, index;
+
+            if ($scope.turn && $scope.turn.index !== null) {
+                index = $scope.turn.index;
             } else {
-                var lastTurn = $scope.game.played[$scope.game.played.length - 1];
+                index = $scope.game.played.length - 1;
             }
+
+            $scope.lastTurn = index;
+
+            lastTurn = $scope.game.played[index];
 
             return lastTurn.start === position || lastTurn.end === position;
         };
@@ -264,12 +275,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return Math.round($window.game.getElo(p1.points, p2.points) * 100);
         };
 
-        $scope.replay = function (data) {
-            if (!data.pieces) {
-                return;
+        $scope.replay = function (index) {
+            if ($scope.game.finish) {
+                setTurn($scope.game, index);
             }
-            $scope.lastTurn = data;
-            $scope.game.pieces = data.pieces;
         };
 
         $scope.togglePlayed = function (isPhone) {
@@ -321,14 +330,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return new Date(time).toLocaleTimeString();
         };
 
-        $scope.getBoxClass = function (position) {
-            var result = '';
-            if (isLastTurn(position)) {
-                result += ' last-turn';
-            }
-            return result;
-        };
-
         $scope.setSound = function () {
             $scope.sound = sound.change();
         };
@@ -358,6 +359,24 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 user.setColorGame(color);
             }
         };
+
+        function setTurn(game, index) {
+
+            var length = game.played.length,
+                turn = {
+                    index: game.played[index] ? index : null,
+                    first: index !== 0 && game.played[0] ? 0 : null,
+                    prev: game.played[index - 1] ? index - 1 : null,
+                    next: game.played[index + 1] ? index + 1 : null,
+                    last: index !== length - 1 && game.played[length - 1] ? length - 1 : null
+                };
+
+            if (turn.index !== null) {
+                game.pieces = game.played[turn.index].pieces;
+            }
+
+            $scope.turn = turn;
+        }
 
         function setColorGame(color) {
             var index = colorsGame.indexOf(color);

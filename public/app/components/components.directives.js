@@ -365,50 +365,6 @@ directive('elementToggle', [
     }
 ]).
 
-/**
- * @ngdoc directive
- * @name components.directive:scrollDown
- * @description 
- * Scroll Down
- * @restrict A
- * @scope
- * @param {string} scrollDown Name of scope data (ex: played for $scope.played)
- */
-directive('scrollDown', ['$timeout', function ($timeout) {
-    return {
-        scope: {
-            scrollDown: '=',
-            scrollDownShow: '='
-        },
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var scrollDown = true,
-                el = element[0];
-
-            element.on('scroll', function () {
-                var el = element[0];
-                scrollDown = (el.scrollTop + el.clientHeight + 1) > el.scrollHeight;
-            });
-
-            scope.$parent.$watchCollection(scope.scrollDown, function (newValue) {
-                if (newValue && scrollDown) {
-                    element.scrollTop(el.scrollHeight);
-                }
-            });
-
-            if (scope.scrollDownShow) {
-                scope.$parent.$watch(scope.scrollDownShow, function (newValue) {
-                    if (newValue && scrollDown) {
-                        $timeout(function() {
-                            element.scrollTop(el.scrollHeight);
-                        });
-                    }
-                });
-            }
-        }
-    };
-}]).
-
 directive('pagination', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',

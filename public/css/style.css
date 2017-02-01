@@ -1308,6 +1308,10 @@ a {
   cursor: auto;
 }
 
+.app-game__played--phone {
+  display: none;
+}
+
 .app-game__toggle {
   position: fixed;
   bottom: 0;
@@ -1318,6 +1322,21 @@ a {
 
 .app-game__toggle--played {
   right: 25px;
+}
+
+.app-game__toggle--played .app-game__toggle-content--actions {
+    height: 256px;
+    margin-bottom: 32px;
+}
+
+.app-game__toggle--played-actions {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 33px;
+  border-top: 1px solid rgba(0,0,0,0.12);
+  background-color: #fff;
 }
 
 .app-game__toggle--messages {
@@ -1664,8 +1683,7 @@ a {
 }
 
 .app-game__box.last-turn,
-.app-game__box.selected,
-.app-game__box.ui-droppable {
+.app-game__box.selected {
   border-style: ridge solid;
   border-width: 3px;
   box-sizing: border-box;
@@ -1674,15 +1692,24 @@ a {
 }
 
 .app-game__box.last-turn {
-  border-color: #F44336;
+  border-color: #607D8B;
 }
 
 .app-game__box.selected {
-  border-color: #2196F3;
+  border-color: #607D8B;
 }
 
-.app-game__box.ui-droppable {
-  border-color: #8BC34A;
+.app-game__box.ui-droppable:after {
+  content: '';
+  position: absolute;
+  background-color: rgba(150, 150, 150, 0.5);
+  top: 35%;
+  left: 35%;
+  display: inline-block;
+  width: 30%;
+  z-index: 9;
+  height: 30%;
+  border-radius: 50%;
 }
 
 .app-game__box-content {
@@ -1872,6 +1899,11 @@ a {
 
 .app-table--game-played th {
   text-align: left;
+}
+
+.app-table--game-played td.is-active {
+  background-color: #ff5252;
+  color: #fff;
 }
 
 .app-table--game-played td:first-of-type, 
@@ -2375,11 +2407,61 @@ a {
     left: 6px;
   }
 
-  .app-game__toggle-content {
+  .app-game__played--phone {
+    display: initial;
+  }
+
+  .app-game__played--phone {
+    position: relative;
+  }
+
+  .app-game__played--phone-actions {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #fff;
+    padding-top: 2px;
+  }
+
+  .app-game__played--phone-notations {
+    overflow-y: auto;
+  }
+
+  .app-game__played--phone-notations.has-actions {
+    margin-left: 68px;
+  }
+
+  .app-table--game-played-phone {
+    width: auto;
+  }
+
+  .app-game__played--phone-notation:nth-child(2n + 1) {
+    margin: 0 6px;
+  }
+
+  .app-game__played--phone-notation.is-active {
+    color: #ff5252;
+    font-weight: bold;
+  }
+
+  .app-game__played--phone .app-table--game tr td {
+    border: none;
+    padding-left: 0;
+  }
+
+  .app-game__played--phone .app-table--game tr td {
+    padding-left: 12px;
+  }
+
+  .app-game__toggle .app-game__toggle-content {
     height: calc(100% - 36px);
   }
 
-  .app-game__toggle-content--messages {
+  .app-game__toggle .app-game__toggle--played-actions {
+    display: none;
+  }
+
+  .app-game__toggle .app-game__toggle-content--messages {
     height: calc(100% - 73px);
   }
 

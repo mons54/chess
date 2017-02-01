@@ -26,7 +26,52 @@
     <div profile-game player="player1"></div>
 </div>
 
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-if="isPlayer()">
+<div class="app-game__played--phone mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div ng-if="game.finish" class="app-game__played--phone-actions">
+        <button ng-disabled="turn.prev === null"
+                ng-click="replay(turn.prev)"
+                class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">chevron_left</i>
+        </button>
+        <button ng-disabled="turn.next === null"
+                ng-click="replay(turn.next)"
+                class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">chevron_right</i>
+        </button>
+    </div>
+    <div class="app-game__played--phone-notations"
+         ng-class="{'has-actions': game.finish}"
+         scroll-game="played"
+         scroll-game-active="lastTurn"
+         scroll-game-active-parent
+         scroll-game-direction="left">
+        <table class="app-table app-table--game app-table--game-played-phone mdl-data-table mdl-js-data-table">
+            <tbody>
+                    <tr>
+                        <td ng-repeat="play in played">
+                            {{ $index + 1 }}.
+                            <span class="app-game__played--phone-notation"
+                                  ng-class="{'is-active': lastTurn === play.white.index }"
+                                  ng-click="replay(play.white.index)"
+                                  data-scroll-game-active="{{ play.white.index }}">
+                                {{ play.white.notation }}
+                            </span>
+                            <span class="app-game__played--phone-notation"
+                                  ng-if="play.black" 
+                                  ng-click="replay(play.black.index)"
+                                  ng-class="{'is-active': lastTurn === play.black.index }"
+                                  data-scroll-game-active="{{ play.black.index }}">
+                                {{ play.black.notation }}
+                            </span>
+                        </td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-if="isPlayer() && !game.finish">
     <table class="app-table app-table--game app-table--game-actions">
         <tbody>
             <tr>
@@ -106,30 +151,62 @@
         </table>
     </div>
     <div class="app-game__toggle-content"
+         ng-class="{'app-game__toggle-content--actions': game.finish }"
          ng-show="showPlayed"
-         scroll-down="'played'"
-         scroll-down-show="'showPlayed'">
+         scroll-game="played"
+         scroll-game-active="lastTurn"
+         scroll-game-show="showPlayed">
         <table class="app-table app-table--game app-table--game-played mdl-data-table mdl-js-data-table">
             <tbody>
                 <tr ng-repeat="play in played">
                     <td class="app-table--game-played-index">{{ $index + 1 }}</td>
-                    <td class="app-table--game-played-notation app-table--game-played-white" 
-                        ng-class="{'app__clickable': play.white.pieces}"
-                        ng-click="replay(play.white)">
+                    <td class="app-table--game-played-notation app-table--game-played-white"
+                        ng-class="{'app__clickable': game.finish, 'is-active': lastTurn === play.white.index }"
+                        ng-click="replay(play.white.index)"
+                        data-scroll-game-active="{{ play.white.index }}">
                         {{ play.white.notation }}
                     </td>
-                    <td class="app-table--game-played-time app-table--game-played-white">{{ play.white.time }}'</td>
+                    <td class="app-table--game-played-time app-table--game-played-white"
+                        ng-class="{'app__clickable': game.finish, 'is-active': lastTurn === play.white.index }"
+                        ng-click="replay(play.white.index)">
+                        {{ play.white.time }}'
+                    </td>
                     <td class="app-table--game-played-notation app-table--game-played-black" 
-                        ng-class="{'app__clickable': game.finish}"
-                        ng-click="replay(play.black)">
+                        ng-class="{'app__clickable': game.finish, 'is-active': lastTurn === play.black.index }"
+                        ng-click="replay(play.black.index)"
+                        data-scroll-game-active="{{ play.black.index }}">
                         <span ng-if="play.black.notation">{{ play.black.notation }}</span>
                     </td>
-                    <td class="app-table--game-played-time app-table--game-played-black">
+                    <td class="app-table--game-played-time app-table--game-played-black"
+                        ng-class="{'app__clickable': game.finish, 'is-active': lastTurn === play.black.index }"
+                        ng-click="replay(play.black.index)">
                         <span ng-if="play.black.time">{{ play.black.time }}'</span>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div ng-if="game.finish" class="app-game__toggle--played-actions">
+            <button ng-disabled="turn.first === null"
+                    ng-click="replay(turn.first)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">first_page</i>
+            </button>
+            <button ng-disabled="turn.prev === null"
+                    ng-click="replay(turn.prev)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">chevron_left</i>
+            </button>
+            <button ng-disabled="turn.next === null"
+                    ng-click="replay(turn.next)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">chevron_right</i>
+            </button>
+            <button ng-disabled="turn.last === null"
+                    ng-click="replay(turn.last)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">last_page</i>
+            </button>
+        </div>
     </div>
 </div>
 
@@ -146,8 +223,8 @@
     </div>
     <div class="app-game__toggle-content app-game__toggle-content--messages"
          ng-show="showMessages"
-         scroll-down="'messages'"
-         scroll-down-show="'showMessages'">
+         scroll-game="messages"
+         scroll-game-show="showMessages">
          <div ng-repeat="message in messages" class="app-game__messages">
             <div class="app-game__message" ng-class="{'app-game__message--user': message.uid === user.uid, 'app-game__message--next': message.uid === messages[$index - 1].uid }">
                 <div class="app-game__message-avatar">
