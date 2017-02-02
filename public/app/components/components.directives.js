@@ -228,24 +228,13 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                     losses: '#E53935'
                 };
 
-                function drawChart(value) {
-                    new Chart($('[data-chart="' + value.type + '-' + value.name + '"]'), {
-                        type: 'doughnut',
-                        data: {
-                            showTooltips: false,
-                            datasets: [{
-                                data: value.data,
-                                backgroundColor: [
-                                    value.color,
-                                    '#9E9E9E'
-                                ],
-                                borderWidth: 0
-                            }]
-                        },
-                        options: {
-                            cutoutPercentage : 85
-                        }
-                    });
+                function progress(value) {
+                    new ProgressBar.Circle('#' + value.type + '-' + value.name , {
+                        strokeWidth: 6,
+                        trailWidth: 6,
+                        trailColor: '#9E9E9E',
+                        color: value.color
+                    }).animate(value.data / 100);
                 }
 
                 function getData(data, name, type) {
@@ -254,7 +243,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                         type: type,
                         name: name,
                         value: data[name],
-                        data: [percentage, 100 - percentage],
+                        data: percentage,
                         color: colors[name]
                     };
                 }
@@ -263,24 +252,21 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     delete $rootScope.loadProfile;
 
-                    scope.charts = {
+                    scope.stats = {
                         blitz: [],
                         rapid: []
                     };
 
                     angular.forEach(['wins', 'draws', 'losses'], function (name) {
-                        scope.charts.blitz.push(getData(data.blitz, name, 'blitz'));
-                        scope.charts.rapid.push(getData(data.rapid, name, 'rapid'));
+                        scope.stats.blitz.push(getData(data.blitz, name, 'blitz'));
+                        scope.stats.rapid.push(getData(data.rapid, name, 'rapid'));
                     });
 
                     scope.data = data;
 
-                    Chart.defaults.global.tooltips.enabled = false;
-                    Chart.defaults.global.hover = false;
-
                     modal(element).show(function () {
-                        angular.forEach(scope.charts.blitz, drawChart);
-                        angular.forEach(scope.charts.rapid, drawChart);
+                        angular.forEach(scope.stats.blitz, progress);
+                        angular.forEach(scope.stats.rapid, progress);
                     });
 
                 }, scope);

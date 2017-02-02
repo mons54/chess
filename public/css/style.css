@@ -852,8 +852,8 @@ a {
   position: relative;
   color: #fff;
   text-align: center;
-  width: calc(33% - 8px);
-  margin: 4px;
+  width: calc(33% - 16px);
+  margin: 8px;
 }
 
 .app-profile__stat:before {
@@ -866,11 +866,13 @@ a {
   margin-right: 0;
 }
 
-.app-profile__stat-chart {
-  top: -5px;
+.app-profile__progress-bar {
   position: absolute;
   display: inline-block;
   height: auto;
+  top: 0;
+  width: 100%;
+  left: 0;
 }
 
 .app-profile__stat-text {
@@ -2658,8 +2660,8 @@ a {
   }
 
   .app-profile__stat {
-    width: 33%;
-    margin: 0;
+    width: calc(33% - 8px);
+    margin: 4px;
   }
 
   .app-profile__stat-text {

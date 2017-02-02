@@ -51,14 +51,14 @@
                     </div>
                 </div>
                 <div class="app-profile__stats">
-                    <div ng-repeat="chart in charts.blitz" class="app-profile__stat app-profile__stat--{{ chart.name }}">
-                        <canvas class="app-profile__stat-chart" data-chart="blitz-{{ chart.name }}"></canvas>
+                    <div ng-repeat="stat in stats.blitz" class="app-profile__stat app-profile__stat--{{ stat.name }}">
+                        <div class="app-profile__progress-bar" id="blitz-{{ stat.name }}"></div>
                         <div class="app-profile__stat-text">
                             <span class="app-profile__stat-value">
-                                {{ chart.value }}
+                                {{ stat.value }}
                             </span>
                             <span class="app-profile__stat-desc">
-                                {{ chart.name|translate }}
+                                {{ stat.name|translate }}
                             </span>
                         </div>
                     </div>
@@ -79,14 +79,14 @@
                     </div>
                 </div>
                 <div class="app-profile__stats">
-                    <div ng-repeat="chart in charts.rapid" class="app-profile__stat app-profile__stat--{{ chart.name }}">
-                        <canvas class="app-profile__stat-chart" data-chart="rapid-{{ chart.name }}"></canvas>
+                    <div ng-repeat="stat in stats.rapid" class="app-profile__stat app-profile__stat--{{ stat.name }}">
+                        <div class="app-profile__progress-bar" id="rapid-{{ stat.name }}"></div>
                         <div class="app-profile__stat-text">
                             <span class="app-profile__stat-value">
-                                {{ chart.value }}
+                                {{ stat.value }}
                             </span>
                             <span class="app-profile__stat-desc">
-                                {{ chart.name|translate }}
+                                {{ stat.name|translate }}
                             </span>
                         </div>
                     </div>
