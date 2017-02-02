@@ -458,16 +458,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         function setShowPlayed(value) {
             $scope.showPlayed = value;
-            if ($rootScope.lang() !== 'ar') {
-                $scope.hideFixedButton = value;
-            }
+            $scope.hideFixedButton = value;
         }
 
         function setShowMessages(value) {
             $scope.showMessages = value;
-            if ($rootScope.lang() === 'ar') {
-                $scope.hideFixedButton = value;
-            }
         }
 
         $interval.cancel($interval.stopTimeGame);

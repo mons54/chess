@@ -44,6 +44,11 @@
   right: initial;
 }
 
+.app-create-game__choices .app-button {
+  margin-left: 12px;
+  margin-right: 0;
+}
+
 .app-search__game-edit {
   right: initial;
   left: 30px;
@@ -74,11 +79,23 @@
   margin-left: 10px;
 }
 
-.app-button__sound {
+.app-button__fixed {
   right: initial;
-  left: 0;
+  left: 36px;
+}
+
+.app-button__fixed--game.app-button__fixed--action {
+  right: initial;
+  left: 102px;
+}
+
+.app-button__fixed--action .app-button {
+  margin-left: 0;
+  margin-right: 6px;
+}
+
+.app-button__fixed .app-button:last-child {
   margin-right: 0;
-  margin-left: 40px;
 }
 
 .app-modal__actions {
@@ -88,14 +105,6 @@
 .app-profile__avatar {
   margin-right: 0;
   margin-left: 10px;
-}
-
-.app-profile__stat:last-child {
-  margin-right: 20px;
-}
-
-.app-profile__stat:first-child {
-  margin-right: 0;
 }
 
 .app-modal__close {
@@ -135,6 +144,10 @@
 
 .app-profile__info:last-child {
   margin-left: 0;
+}
+
+.app-profile__stat:last-child {
+  margin-right: 8px;
 }
 
 .app-modal__actions button {
@@ -248,9 +261,27 @@
   margin-right: 108px;
 }
 
+.app-game__result-link .app-button {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+.app-button--share {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+.app-button--share:last-child {
+  margin-left: 0;
+}
+
+.app-ranking__spinner {
+  right: initial;
+  left: 10px;
+}
+
 @media screen and (max-width: 1024px) {
   .app-button__fixed {
-    right: initial;
     left: 24px;
   }
 
@@ -272,7 +303,38 @@
   }
 }
 
+@media screen and (max-width: 1024px) and (min-width: 600px) {
+  .app-button__fixed--color {
+    left: 26px;
+  }
+
+  .app-button__fixed.app-button__fixed--action {
+    left: 82px;
+  }
+}
+
+@media screen and (max-width: 745px) {
+  .app-button__fixed.app-button__fixed--action {
+    right: initial;
+    left: 60px;
+  }
+
+  .app-button__fixed--color {
+    left: 4px;
+  }
+}
+
+@media (min-width: 600px) {
+  .app-create-game__choices .app-button:nth-of-type(3n + 3) {
+    margin-left: 0; 
+  }
+}
+
 @media (max-width: 479px) {
+  .app-create-game__choices .app-button:nth-of-type(2n + 2) {
+    margin-left: 0; 
+  }
+
   .app-head .app-button__create-game {
     left: auto;
   }
@@ -286,6 +348,16 @@
   .app-button__fixed {
     left: 16px;
     right: initial;
+  }
+
+  .app-profile__stat:first-child {
+    margin-left: 0;
+    margin-right: 4px;
+  }
+
+  .app-profile__stat:last-child {
+    margin-left: 0;
+    margin-right: 4px;
   }
 
   .app-game__toggle {
@@ -305,18 +377,42 @@
     left: 0;
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(2) {
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(1) {
+    border-right: 0;
+    border-left: 1px solid rgba(0,0,0,.12);
+    left: initial;
+    right: 0;
+  }
+
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
+    border-right: 0;
+    border-left: 1px solid rgba(0,0,0,.12);
     left: initial;
     right: 36px;
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(3) {
-    left: initial;
-    right: 72px;
+  .app-game__toggle--phone-archived .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
+    right: 0;
   }
 
-  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-child(4) {
-    left: initial;
-    right: 108px;
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(3) {
+    border-left: 0;
+    border-right: 1px solid rgba(0,0,0,.12);
+    right: initial;
+    left: 72px;
+  }
+
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(4) {
+    border-left: 0;
+    border-right: 1px solid rgba(0,0,0,.12);
+    right: initial;
+    left: 36px;
+  }
+
+  .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(5) {
+    border-left: 0;
+    border-right: 1px solid rgba(0,0,0,.12);
+    right: initial;
+    left: 0;
   }
 }

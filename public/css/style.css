@@ -22,6 +22,23 @@ a {
   color: #fff;
 }
 
+/* fix ie */
+.mdl-button--fab .material-icons {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  -webkit-transform: none;
+  transform: none;
+}
+
+.mdl-button--icon .material-icons {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  -webkit-transform: none;
+  transform: none;
+}
+
 .app__no-drag {
   user-drag: none; 
   user-select: none;
@@ -2066,6 +2083,13 @@ a {
 }
 
 @media screen and (max-width: 1024px) {
+
+  /* fix ie */
+  .mdl-button--fab .material-icons {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
   .app-header__row {
     padding: 0 16px;
   }
@@ -2496,6 +2520,10 @@ a {
   .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
     border-left: 0;
     left: 36px;
+  }
+
+  .app-game__toggle--phone-archived .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
+    left: 0;
   }
 
   .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(3) {

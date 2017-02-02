@@ -246,7 +246,9 @@
     </form>
 </div>
 
-<div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" ng-hide="showMessagesPhone || showPlayedPhone">
+<div class="app-game__toggle app-game__toggle--phone mdl-shadow--2dp" 
+     ng-hide="showMessagesPhone || showPlayedPhone"
+     ng-class="{'app-game__toggle--phone-archived': game.archived }">
     <div class="app-game__toggle-head app-game__toggle-head--phone">
         <div ng-hide="game.archived" class="app-game__toggle-icon--phone" ng-click="toggleMessages(true)">
             <i class="app-game__toggle-icon material-icons">chat</i>
