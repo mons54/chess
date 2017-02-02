@@ -86,8 +86,7 @@ module.exports = function (io) {
             if (!response) {
                 return db.save('users', Object.assign(data, {
                     blitz: 1500,
-                    rapid: 1500,
-                    trophies: []
+                    rapid: 1500
                 }));
             }
 
@@ -291,6 +290,7 @@ module.exports = function (io) {
 
             return db.save('games', {
                 type: game.type,
+                date: new Date(),
                 white: white.uid,
                 black: black.uid,
                 finish: false,
@@ -426,13 +426,22 @@ module.exports = function (io) {
             data.black.success = self.getNewSuccess(response[1].success, result, 2);
             data.white.blackList = self.getNewBlackList(response[0].blackList, response[0].lastGame, hashGame, game, 'white');
             data.black.blackList = self.getNewBlackList(response[1].blackList, response[1].lastGame, hashGame, game, 'black');
-            data.white.trophies = response[0].trophies;
-            data.black.trophies = response[1].trophies;
             data.white.countGame = white.countGame + 1;
             data.black.countGame = black.countGame + 1;
 
-            self.setTrophies(white.uid, data.white);
-            self.setTrophies(black.uid, data.black);
+            self.setTrophies(
+                white.uid, 
+                response[0].trophies, 
+                data.white.success, 
+                response[0].blitz > response[0].rapid ? response[0].blitz : response[0].rapid
+            );
+
+            self.setTrophies(
+                black.uid, 
+                response[1].trophies,
+                data.black.success, 
+                response[1].blitz > response[1].rapid ? response[1].blitz : response[1].rapid
+            );
 
             var whiteData = {
                 success: data.white.success,
@@ -735,21 +744,21 @@ module.exports = function (io) {
         db.count('users', request)
         .then(function (response) {
 
-            offset = (page * limit) - limit;
-
             if (response === 0) {
                 var row = {
                     uid: socket.uid,
                     name: socket.name,
                     avatar: socket.avatar,
-                    position: 1
+                    position: 1,
+                    points: socket[type].points
                 };
-                row[type] = socket[type].points;
                 socket.emit('ranking', {
                     ranking:[row]
                 });
-                this.finally;
-            }
+                throw Error();
+            } 
+
+            offset = (page * limit) - limit;
 
             if (user) {
                 response++;
@@ -766,11 +775,6 @@ module.exports = function (io) {
             return db.exec('users', request, sort, offset, user ? limit - 1 : limit, hint);
         })
         .then(function (response) {
-
-            if (typeof response[0] !== 'object' || typeof response[0][type] !== 'number') {
-                socket.emit('ranking', false);
-                this.finally;
-            }
 
             data = response;
 
@@ -894,7 +898,8 @@ module.exports = function (io) {
         };
     };
 
-    Module.prototype.setTrophies = function (uid, data) {
+
+    Module.prototype.setTrophies = function (uid, oldTrophies, winsCons, points) {
 
         var self = this,
             date = new Date();
@@ -902,103 +907,76 @@ module.exports = function (io) {
         date.setDate(date.getDate() - 1);
 
         db.all([
-            db.count('games', {$or: [{ $and: [{ black: uid, result: 2 }] }, { $and: [{ white: uid, result: 1 }] }] }),
+            db.count('games', { $or: [{ white: uid }, { black: uid }] }),
+            db.count('games', { $or: [{ $and: [{ black: uid, result: 2 }] }, { $and: [{ white: uid, result: 1 }] }] }),
             db.count('games', { $and: [{ date: { $gt: date } }, { $or: [{white: uid}, {black: uid}] } ]})
         ]).then(function (response) {
 
-            var trophies = [],
-                wins = response[0],
-                gamesDay = response[1],
-                success = data.success,
-                points = data.points;
+            var newTrophies = {},
+                games = response[0],
+                wins = response[1],
+                gamesDay = response[2],
+                trophies = {
+                    1:  getProgression(1, games, 1),
+                    2:  getProgression(2, games, 100),
+                    3:  getProgression(3, games, 500),
+                    4:  getProgression(4, games, 2000),
+                    5:  getProgression(5, games, 5000),
+                    6:  getProgression(6, wins, 1),
+                    7:  getProgression(7, wins, 50),
+                    8:  getProgression(8, wins, 250),
+                    9:  getProgression(9, wins, 1000),
+                    10: getProgression(10, wins, 2500),
+                    11: getProgression(11, gamesDay, 5),
+                    12: getProgression(12, gamesDay, 10),
+                    13: getProgression(13, gamesDay, 25),
+                    14: getProgression(14, gamesDay, 50),
+                    15: getProgression(15, gamesDay, 100),
+                    16: getProgression(16, winsCons, 2),
+                    17: getProgression(17, winsCons, 5),
+                    18: getProgression(18, winsCons, 10),
+                    19: getProgression(19, winsCons, 15),
+                    20: getProgression(20, winsCons, 20),
+                    21: getProgression(21, points, 1600),
+                    22: getProgression(22, points, 1800),
+                    23: getProgression(23, points, 2000),
+                    24: getProgression(24, points, 2400),
+                    25: getProgression(25, points, 2800)
+                };
 
-            if (data.countGame >= 5000) {
-                trophies = trophies.concat([1, 2, 3, 4, 5]);
-            } else if (data.countGame >= 2000) {
-                trophies = trophies.concat([1, 2, 3, 4]);
-            } else if (data.countGame >= 500) {
-                trophies = trophies.concat([1, 2, 3]);
-            } else if (data.countGame >= 100) {
-                trophies = trophies.concat([1, 2]);
-            } else if (data.countGame >= 1) {
-                trophies = trophies.concat([1]);
-            }
-
-            if (wins >= 2500) {
-                trophies = trophies.concat([6, 7, 8, 9, 10]);
-            } else if (wins >= 1000) {
-                trophies = trophies.concat([6, 7, 8, 9]);
-            } else if (wins >= 250) {
-                trophies = trophies.concat([6, 7, 8]);
-            } else if (wins >= 50) {
-                trophies = trophies.concat([6, 7]);
-            } else if (wins >= 1) {
-                trophies = trophies.concat([6]);
-            }
-
-            if (gamesDay >= 100) {
-                trophies = trophies.concat([11, 12, 13, 14, 15]);
-            } else if (gamesDay >= 50) {
-                trophies = trophies.concat([11, 12, 13, 14]);
-            } else if (gamesDay >= 25) {
-                trophies = trophies.concat([11, 12, 13]);
-            } else if (gamesDay >= 10) {
-                trophies = trophies.concat([11, 12]);
-            } else if (gamesDay >= 5) {
-                trophies = trophies.concat([11]);
-            }
-
-            if (success >= 20) {
-                trophies = trophies.concat([16, 17, 18, 19, 20]);
-            } else if (success >= 15) {
-                trophies = trophies.concat([16, 17, 18, 19]);
-            } else if (success >= 10) {
-                trophies = trophies.concat([16, 17, 18]);
-            } else if (success >= 5) {
-                trophies = trophies.concat([16, 17]);
-            } else if (success >= 2) {
-                trophies = trophies.concat([16]);
-            }
-
-            if (points >= 2800) {
-                trophies = trophies.concat([21, 22, 23, 24, 25]);
-            } else if (points >= 2400) {
-                trophies = trophies.concat([21, 22, 23, 24]);
-            } else if (points >= 2000) {
-                trophies = trophies.concat([21, 22, 23]);
-            } else if (points >= 1800) {
-                trophies = trophies.concat([21, 22]);
-            } else if (points >= 1600) {
-                trophies = trophies.concat([21]);
-            }
-
-            if (!trophies.length) {
-                return;
-            }
-
-            var newTrophies = [];
-
-            trophies.forEach(function (value) {
-                if (data.trophies.indexOf(value) === -1) {
-                    newTrophies.push(value);
-                    data.trophies.push(value);
-                }
-            });
-
-            if (!newTrophies.length) {
-                return;
-            }
-
-            db.update('users', { _id: db.ObjectId(uid) }, { trophies: data.trophies })
+            db.update('users', { _id: db.ObjectId(uid) }, { trophies: trophies })
             .then(function (response) {
                 var socket = self.getSocket(uid);
                 if (socket) {
                     socket.emit('trophies', {
+                        trophies: trophies,
                         newTrophies: newTrophies,
-                        trophies: data.trophies
                     });
                 }
             });
+
+            function getProgression(i, v, x) {
+                var res = 100;
+
+                if (oldTrophies && oldTrophies[i] === 100) {
+                    return res;
+                }
+
+                res = Math.round(v / x * 100);
+
+                if (res > 100) {
+                    res = 100;
+                } else if (res < 0) {
+                    res = 0;
+                }
+
+                if (res === 100) {
+                    newTrophies[i] = res;
+                }
+
+                return res;
+            }
+
         });
     };
 

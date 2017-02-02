@@ -8,6 +8,36 @@
  */
 angular.module('trophies', []).
 
+directive('progressBarTrophy', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            progressBarTrophy: '=',
+        },
+        link: function (scope, element, attrs) {
+            if (attrs.progressBarTrophyWatch) {
+                scope.$parent.$watch(attrs.progressBarTrophyWatch, function (value) {
+                    if (value) {
+                        element.empty();
+                        progressBar(value.value);
+                    }
+                });
+            } else {
+                progressBar(scope.progressBarTrophy);
+            }
+
+            function progressBar(value) {
+                new ProgressBar.Circle(element[0], {
+                    strokeWidth: attrs.progressBarTrophyWidth,
+                    color: '#388E3C',
+                    trailWidth: attrs.progressBarTrophyTrailWidth,
+                    trailColor: '#795548'
+                }).animate(value / 100);
+            }
+        }
+    };
+}).
+
 
 /**
  * @ngdoc directive
@@ -26,6 +56,7 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
             restrict: 'E',
             replace: true,
             scope: true,
+            priority: 1000,
             templateUrl: '/app/trophies/templates/modal-trophy.html',
             link: function (scope, element) {
 
@@ -34,18 +65,25 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
 
                 function show(data) {
 
-                    if (!data || !data.length) {
+                    if (!data || !Object.keys(data).length) {
                         load = false;
                         return;
                     }
 
-                    var trophy = data.shift();
+                    var id = Object.keys(data)[0],
+                        trophy = {
+                            id: id,
+                            value: data[id]
+                        };
+
+                    delete data[id];
 
                     scope.trophy = trophy;
+
                     scope.shareData = {
-                        title: $filter('translate')('trophies.content.' + trophy + '.title'),
-                        description: $filter('translate')('trophies.content.' + trophy + '.description'),
-                        picture: 'trophies/trophy-' + trophy + '.png'
+                        title: $filter('translate')('trophies.content.' + trophy.id + '.title'),
+                        description: $filter('translate')('trophies.content.' + trophy.id + '.description'),
+                        picture: 'trophies/trophy-' + trophy.id + '.png'
                     };
 
                     modalTrophy.show();
@@ -56,6 +94,8 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
                         });
                     });
                 }
+
+                scope.chart
 
                 $rootScope.$on('trophies', function (event, data) {
                     if (load) {

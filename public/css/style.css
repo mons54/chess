@@ -1199,7 +1199,18 @@ a {
 
 .app-trophy__picture {
   position: relative;
-  border: 1px solid rgba(0,0,0,.12);
+}
+
+.app-trophy__picture img {
+  background-color: #EFEBE9;
+}
+
+.app-trophy__progress-value {
+  color: #795548;
+  position: absolute;
+  top: 38px;
+  width: 100%;
+  text-align: center;
 }
 
 .app-trophy__desc {
@@ -1230,6 +1241,11 @@ a {
   width: 72px;
   height: 72px;
   padding: 12px;
+}
+
+.app-trophy--page .app-trophy__progress-value {
+  top: 38px;
+  font-size: 20px;
 }
 
 .app-trophy--page .app-trophy__desc {
@@ -1266,6 +1282,16 @@ a {
   width: 164px;
   height: 164px;
   padding: 18px;
+}
+
+.app-trophy--modal .app-trophy__progress-bar {
+  display:  block;
+  padding: 18px;
+}
+
+.app-trophy--modal .app-trophy__progress-value {
+  font-size: 32px;
+  top: 90px;
 }
 
 .app-trophy--modal .app-trophy__title {

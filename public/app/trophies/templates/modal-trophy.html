@@ -8,17 +8,27 @@
             <i class="material-icons">clear</i>
         </a>
         <div class="app-modal__head">
-            {{ 'trophies.content.' + trophy + '.title' | translate }}
+            {{ 'trophies.content.' + trophy.id + '.title' | translate }}
         </div>
         <div class="app-modal__content">
             <div class="app-trophy app-trophy--modal">
-                <span class="app-trophy__picture"> 
-                    <img ng-if="hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
-                   <img ng-if="!hasTrophy(value)" ng-src="../images/trophies/trophy-{{ trophy }}.svg">
-                </span>
-                <p class="app-trophy__desc">{{ 'trophies.content.' + trophy + '.description' | translate }}</p>
+                <div class="app-trophy__picture">
+                    <img ng-if="trophy.value === 100" ng-src="../images/trophies/trophy-{{ trophy.id }}.svg">
+                    <div ng-if="trophy.value !== 100"
+                         id="progress-bar"
+                         progress-bar-trophy="trophy.value"
+                         progress-bar-trophy-watch="trophy"
+                         progress-bar-trophy-width="8"
+                         progress-bar-trophy-trail-width="2"
+                         class="app-trophy__progress-bar">
+                    </div>
+                    <div ng-if="trophy.value !== 100" class="app-trophy__progress-value">
+                        {{ trophy.value }} %
+                    </div>
+                </div>
+                <p class="app-trophy__desc">{{ 'trophies.content.' + trophy.id + '.description' | translate }}</p>
             </div>
-            <div class="app-share" share="shareData"></div>
+            <div ng-if="trophy.value === 100" class="app-share" share="shareData"></div>
         </div>
     </div>
 </div>

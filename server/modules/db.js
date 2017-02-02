@@ -35,26 +35,29 @@ function Module() {
                 success: Number,
                 unauthorized: Boolean,
                 blackList: Object,
-                trophies: Array
+                trophies: Object
             })
             .index({blitz: 1})
             .index({rapid: 1})
-            .index({_id: 1, rapid: 1})
-            .index({_id: 1, blitz: 1})
-            .index({blitz: 1, activeBlitz: 1})
-            .index({rapid: 1, activeRapid: 1})
+            .index({active_blitz: 1})
+            .index({active_rapid: 1})
+            .index({active_blitz: 1, blitz: 1})
+            .index({active_rapid: 1, rapid: 1})
         ),
         games: mongoose.model('games', 
             new mongoose.Schema({
-                type: String,
                 white: String,
                 black: String,
+                type: String,
                 result: Number,
                 finish: Boolean,
+                date: Date,
                 data: Object
             })
-            .index({type: 1, white: 1, result: 1})
-            .index({type: 1, black: 1, result: 1})
+            .index({white: 1, type: 1})
+            .index({black: 1, type: 1})
+            .index({white: 1, type: 1, result: 1})
+            .index({black: 1, type: 1, result: 1})
         )
     };
 
