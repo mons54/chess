@@ -50,7 +50,6 @@ function Module() {
                 black: String,
                 type: String,
                 result: Number,
-                finish: Boolean,
                 date: Date,
                 data: Object
             })

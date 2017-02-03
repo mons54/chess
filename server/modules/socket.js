@@ -9,7 +9,7 @@ module.exports = function (io) {
     function Module() {
         this.connected = {};
         this.userGames = {};
-        db.find('games', { finish: false }).then(function(response) {
+        db.find('games', { result: { $exists: false } }).then(function(response) {
             response.forEach(function (game) {
                 moduleGame.setGame(game.id, game.data);
                 this.userGames[game.white] = game.id;
@@ -145,6 +145,10 @@ module.exports = function (io) {
     };
 
     Module.prototype.refreshUser = function (socket) {
+
+        if (!this.checkSocket(socket)) {
+            return;
+        }
         
         var self = this;
 
@@ -293,7 +297,6 @@ module.exports = function (io) {
                 date: new Date(),
                 white: white.uid,
                 black: black.uid,
-                finish: false,
                 data: game
             })
         }).
@@ -416,7 +419,6 @@ module.exports = function (io) {
             db.findOne('users', { _id: db.ObjectId(white.uid) }),
             db.findOne('users', { _id: db.ObjectId(black.uid) }),
             db.update('games', { _id: db.ObjectId(game.id) }, {
-                finish: true,
                 result: result,
                 data: game
             })
@@ -429,18 +431,23 @@ module.exports = function (io) {
             data.white.countGame = white.countGame + 1;
             data.black.countGame = black.countGame + 1;
 
+            var socketWhite = self.getSocket(white.uid),
+                socketBlack = self.getSocket(black.uid);
+
             self.setTrophies(
                 white.uid, 
                 response[0].trophies, 
                 data.white.success, 
-                response[0].blitz > response[0].rapid ? response[0].blitz : response[0].rapid
+                response[0].blitz > response[0].rapid ? response[0].blitz : response[0].rapid,
+                socketWhite
             );
 
             self.setTrophies(
                 black.uid, 
                 response[1].trophies,
                 data.black.success, 
-                response[1].blitz > response[1].rapid ? response[1].blitz : response[1].rapid
+                response[1].blitz > response[1].rapid ? response[1].blitz : response[1].rapid,
+                socketBlack
             );
 
             var whiteData = {
@@ -464,7 +471,10 @@ module.exports = function (io) {
             db.all([
                 db.update('users', { _id: db.ObjectId(white.uid) }, whiteData),
                 db.update('users', { _id: db.ObjectId(black.uid) }, blackData)
-            ]);
+            ]).then(function () {
+                self.refreshUser(socketWhite);
+                self.refreshUser(socketBlack);
+            });
         });
     };
 
@@ -585,7 +595,8 @@ module.exports = function (io) {
                 }),
                 db.count('games', {
                     $and: [{
-                        type: 'blitz'
+                        type: 'blitz',
+                        result: {$exists: true}
                     },
                     {
                         $or: [{
@@ -631,7 +642,8 @@ module.exports = function (io) {
                 }),
                 db.count('games', {
                     $and: [{
-                        type: 'rapid'
+                        type: 'rapid',
+                        result: {$exists: true}
                     },
                     {
                         $or: [{
@@ -899,7 +911,7 @@ module.exports = function (io) {
     };
 
 
-    Module.prototype.setTrophies = function (uid, oldTrophies, winsCons, points) {
+    Module.prototype.setTrophies = function (uid, oldTrophies, winsCons, points, socket) {
 
         var self = this,
             date = new Date();
@@ -946,7 +958,6 @@ module.exports = function (io) {
 
             db.update('users', { _id: db.ObjectId(uid) }, { trophies: trophies })
             .then(function (response) {
-                var socket = self.getSocket(uid);
                 if (socket) {
                     socket.emit('trophies', {
                         trophies: trophies,
