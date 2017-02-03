@@ -344,22 +344,31 @@ directive('sortable', ['$rootScope', 'orderByFilter',
  * @requires orderByFilter
  * @restrict E
  */
-directive('elementToggle', [
-    function () {
-        return {
-            restrict: 'E',
-            replace: true,
-            scope: true,
-            templateUrl: '/app/components/templates/element-toggle.html',
-            link: function (scope, element, attrs) {
-                scope.toggle = function () {
-                    scope.close = !scope.close;
-                    element.parents('[element]').find('[element-content]').toggle();
-                }
+directive('elementToggle', [function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            close: '='
+        },
+        templateUrl: '/app/components/templates/element-toggle.html',
+        link: function (scope, element, attrs) {
+            
+            if (scope.close) {
+                toggle();
             }
-        };
-    }
-]).
+            
+            scope.toggle = function () {
+                scope.close = !scope.close;
+                toggle();
+            };
+
+            function toggle() {
+                element.parents('[element]').find('[element-content]').toggle();
+            }
+        }
+    };
+}]).
 
 directive('pagination', ['$rootScope', function ($rootScope) {
     return {

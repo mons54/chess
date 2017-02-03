@@ -88,17 +88,17 @@
 </div>
 
 <div element 
-     ng-if="challenges.length"
      class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div class="app-element__head">
         <span>{{ 'challenges'|translate }}</span>
         <span class="app-element__badge">{{ challenges.length }}</span>
         <div class="app-element__tools">
-            <element-toggle></element-toggle>
+            <element-toggle close="true"></element-toggle>
         </div>
     </div>
     <div element-content class="app-element__body">
-        <table class="app-table mdl-data-table mdl-js-data-table">
+        <table ng-if="challenges.length"
+               class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
