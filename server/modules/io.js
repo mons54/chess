@@ -67,6 +67,7 @@ module.exports = function (app, io) {
             }
 
             moduleSocket.setChallenge(socketOpponent, socket.uid, {
+                create: false,
                 avatar: socket.avatar,
                 name: socket.name,
                 points: socket[game.type].points,
@@ -76,6 +77,7 @@ module.exports = function (app, io) {
             });
 
             moduleSocket.setChallenge(socket, data.uid, {
+                create: true,
                 avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
                 points: socketOpponent[game.type].points,
@@ -96,7 +98,8 @@ module.exports = function (app, io) {
         });
 
         socket.on('startChallenge', function (uid) {
-            if (!moduleSocket.checkStartGame(socket, uid)) {
+            if (!moduleSocket.checkSocket(socket) ||
+                !moduleSocket.checkStartGame(socket, uid)) {
                 return;
             }
 
@@ -112,14 +115,16 @@ module.exports = function (app, io) {
                 return;
             }
 
-            var challenge;
+            var challenge = moduleSocket.getChallenge(socketOpponent, socket.uid);
 
-            if (challenge = moduleSocket.getChallenge(socketOpponent, socket.uid)) {
-                if (!challenge.color) {
-                    challenge.color = moduleGame.getRandomColor();
-                }
-                moduleSocket.startGame(socket, socketOpponent, challenge);
+            if (!challenge || !challenge.create) {
+                return;
             }
+
+            if (!challenge.color) {
+                challenge.color = moduleGame.getRandomColor();
+            }
+            moduleSocket.startGame(socket, socketOpponent, challenge);
         });
 
         socket.on('createGame', function (data) {
