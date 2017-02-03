@@ -56,6 +56,7 @@
 
             $rootScope.$on('$routeChangeSuccess', function(event, toState, fromState) {
                 
+                // Used for refresh user when join home if true
                 if (fromState && $rootScope.user && !$rootScope.user.refresh) {
                     $rootScope.user.refresh = true;
                 }
