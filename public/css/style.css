@@ -31,6 +31,13 @@ a {
   transform: none;
 }
 
+.mdl-button--mini-fab .material-icons {
+  top: 8px;
+  left: 8px;
+}
+
+mdl-button--mini-fab
+
 .mdl-button--icon .material-icons {
   position: absolute;
   top: 5px;
@@ -2565,8 +2572,10 @@ a {
     position: absolute;
     left: 0;
     top: 0;
+    bottom: 0;
     background: #fff;
     padding-top: 2px;
+    height: 34px;
   }
 
   .app-game__played--phone-notations {
@@ -2935,5 +2944,11 @@ a {
 
   .app-ranking__toggle-content .app-button:nth-child(2n +2) {
     float: right;
+  }
+
+  .app-game__box.last-turn,
+  .app-game__box.selected,
+  .app-game__box.is-check {
+    border-width: 2px;
   }
 }
