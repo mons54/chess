@@ -55,7 +55,7 @@ service('facebook', ['$rootScope', 'user', 'socket', 'translator',
          */
         this.init = function () {
             FB.init({
-                appId: '738045286230106',
+                appId: '1687859708170830',
                 xfbml: true,
                 version: 'v2.8'
             });
