@@ -207,7 +207,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.isCheck = function(position) {
             var piece;
-            if (!$scope.game.check || !(piece = $scope.game.pieces[position])) {
+            if (!$scope.game.check ||
+                $scope.game.played.length - 1 !== $scope.lastTurn ||  
+                !(piece = $scope.game.pieces[position])) {
                 return false;
             }
             return piece.color === $scope.game.turn && piece.name === 'king';
