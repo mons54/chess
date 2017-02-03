@@ -23,7 +23,7 @@ module.exports = function (app) {
 
     acceptsLanguages = Object.keys(dictionaries);
 
-    mongoose.connect('mongodb://mons54:jsOL160884@ds137139.mlab.com:37139/chess_test');
+    mongoose.connect('mongodb://mons54:jsOL160884@ds141209.mlab.com:41209/chess-test');
 
     app.use(express.static(staticPath));
     app.use(bodyParser.urlencoded({ extended: true }));
