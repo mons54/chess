@@ -236,12 +236,11 @@
 
             var modalConnect = modal('#modal-connect');
 
-            facebook.isFacebookApp = $location.search().facebook;
+            facebook.isFacebookApp = angular.element('html').data('facebook');
 
             $rootScope.isFacebookApp = facebook.isFacebookApp;
 
             if (!facebook.isFacebookApp && gapi && gapi.load) {
-
                 gapi.load('client', function () {
                     google.init().then(googleSetLoginStatus);
                 });

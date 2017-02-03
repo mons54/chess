@@ -31,7 +31,12 @@ module.exports = function (app) {
     app.set('views', staticPath);
     app.set('view engine', 'ejs');
 
-    app.get('/([a-z][^.]+)?', function (req, res) {
+    app.post('/facebook', response);
+
+    app.get('/([a-z][^.]+)?', response);
+
+    function response(req, res) {
+        
         var data,
             lang = req.acceptsLanguages(acceptsLanguages);
 
@@ -41,8 +46,10 @@ module.exports = function (app) {
 
         data = dictionaries[lang];
 
+        data.facebook = req.route.path === '/facebook';
+
         res.render('index', data);
-    });
+    }
 };
 
 String.prototype.hash = function() {
