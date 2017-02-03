@@ -80,8 +80,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
              */
             if (!$scope.isPlayerTurn() &&
                 $scope.game &&
-                game.played.length !== $scope.game.played.length) {
-                sound[$scope.game.pieces[game.played[0].end] ? 'capture' : 'deplace'].load().play();
+                game.played.length !== $scope.game.played.length &&
+                game.played[game.played.length - 1]) {
+                sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'].load().play();
             }
 
             game.black.lostPieces = angular.copy(defaultPieces);
