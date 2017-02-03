@@ -48,7 +48,7 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
 
                 if (game.finish) {
                     if (touch) {
-                        element.unbind('click');
+                        element.unbind('click').removeClass('ui-droppable');
                     } else if (element.draggable) {
                         element.draggable({
                             disabled: true
