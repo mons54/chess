@@ -349,21 +349,19 @@ directive('elementToggle', [function () {
         restrict: 'E',
         replace: true,
         scope: {
-            close: '='
+            hide: '='
         },
         templateUrl: '/app/components/templates/element-toggle.html',
         link: function (scope, element, attrs) {
-            
-            if (scope.close) {
+
+            if (scope.hide) {
                 toggle();
             }
-            
-            scope.toggle = function () {
-                scope.close = !scope.close;
-                toggle();
-            };
+
+            scope.toggle = toggle;
 
             function toggle() {
+                scope.close = !scope.close;
                 element.parents('[element]').find('[element-content]').toggle();
             }
         }
