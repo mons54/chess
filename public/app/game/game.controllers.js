@@ -80,9 +80,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
              */
             if (!$scope.isPlayerTurn() &&
                 $scope.game &&
-                game.played.length && 
-                game.played.start &&
-                game.played[0] !== $scope.game.played[0]) {
+                game.played.length !== $scope.game.played.length) {
                 sound[$scope.game.pieces[game.played[0].end] ? 'capture' : 'deplace'].load().play();
             }
 
