@@ -2922,9 +2922,18 @@ a {
   .app-trophy--modal  .app-trophy__desc {
     font-size: 18px;
   }
+
   .app-modal__head {
-    line-height: 24px;
-    padding: 18px;
-    font-size: 18px;
+    line-height: 28px;
+    padding: 21px;
+    font-size: 21px;
+  }
+
+  .app-ranking__toggle-content {
+    display: block;
+  }
+
+  .app-ranking__toggle-content .app-button:nth-child(2n +2) {
+    float: right;
   }
 }

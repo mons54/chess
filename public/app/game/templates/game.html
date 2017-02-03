@@ -27,7 +27,7 @@
 </div>
 
 <div class="app-game__played--phone mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div ng-if="game.finish" class="app-game__played--phone-actions">
+    <div ng-if="game.finish && game.played.length" class="app-game__played--phone-actions">
         <button ng-disabled="turn.prev === null"
                 ng-click="replay(turn.prev)"
                 class="mdl-button mdl-js-button mdl-button--icon">
