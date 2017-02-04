@@ -80,8 +80,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
              */
             if (!$scope.isPlayerTurn() &&
                 $scope.game &&
-                game.played.length !== $scope.game.played.length) {
-                sound[$scope.game.pieces[game.played[0].end] ? 'capture' : 'deplace'].load().play();
+                game.played.length !== $scope.game.played.length &&
+                game.played[game.played.length - 1]) {
+                sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'].load().play();
             }
 
             game.black.lostPieces = angular.copy(defaultPieces);
@@ -206,7 +207,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.isCheck = function(position) {
             var piece;
-            if (!$scope.game.check || !(piece = $scope.game.pieces[position])) {
+            if (!$scope.game.check ||
+                $scope.game.played.length - 1 !== $scope.lastTurn ||  
+                !(piece = $scope.game.pieces[position])) {
                 return false;
             }
             return piece.color === $scope.game.turn && piece.name === 'king';

@@ -36,8 +36,6 @@ a {
   left: 8px;
 }
 
-mdl-button--mini-fab
-
 .mdl-button--icon .material-icons {
   position: absolute;
   top: 5px;
@@ -944,8 +942,15 @@ mdl-button--mini-fab
 }
 
 .app-element--small .app-element__body {
-  max-height: 309px;
+  height: 309px;
   overflow-x: auto;
+}
+
+.app-element__body .app-spinner {
+  margin-top: 109px;
+  width: 50px;
+  height: 50px;
+  border-width: 4px;
 }
 
 .app-element .app-table {
@@ -1820,7 +1825,11 @@ mdl-button--mini-fab
   background-image: linear-gradient(to right, #795548 50%, #F0F0B4 50%);
 }
 
-.app-game__box.last-turn,
+.app-game__board.app-game__board--player-white .app-game__row .app-game__box.last-turn:nth-child(1n),
+.app-game__board.app-game__board--player-black .app-game__row .app-game__box.last-turn:nth-child(1n) {
+  background-color: #C0CA33;
+}
+
 .app-game__box.selected,
 .app-game__box.is-check {
   border-style: ridge solid;
@@ -1830,16 +1839,12 @@ mdl-button--mini-fab
   -webkit-box-sizing: border-box;
 }
 
-.app-game__box.last-turn {
-  border-color: #607D8B;
-}
-
 .app-game__box.selected {
-  border-color: #607D8B;
+  border-color: #C0CA33;
 }
 
 .app-game__box.is-check {
-  border-color: #FF5722;
+  border-color: #C0CA33;
 }
 
 .app-game__box.ui-droppable:after {
@@ -2950,5 +2955,17 @@ mdl-button--mini-fab
   .app-game__box.selected,
   .app-game__box.is-check {
     border-width: 2px;
+  }
+
+  .app-element--small .app-element__body {
+    height: 219px;
+    overflow-x: auto;
+  }
+
+  .app-element__body .app-spinner {
+    margin-top: 79px;
+    width: 30px;
+    height: 30px;
+    border-width: 3px;
   }
 }

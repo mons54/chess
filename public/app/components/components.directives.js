@@ -313,7 +313,7 @@ directive('friendsRequests', ['$filter',
  * @param {string} icon The icon to display for this column
  */
 directive('sortable', ['$rootScope', 'orderByFilter',
-    function ($rootScope, orderBy) {
+    function ($rootScope, orderByFilter) {
         return {
             restrict: 'A',
             scope: {
@@ -328,7 +328,11 @@ directive('sortable', ['$rootScope', 'orderByFilter',
                         return;
                     }
                     scope.reverse = !scope.reverse;
-                    scope.$parent[attrs.collection] = orderBy(scope.$parent[attrs.collection], scope.expression, scope.reverse);
+                    scope.$parent.orderByFilter[attrs.collection] = {
+                        expression: scope.expression,
+                        reverse: scope.reverse
+                    };
+                    scope.$parent[attrs.collection] = orderByFilter(scope.$parent[attrs.collection], scope.expression, scope.reverse);
                 };
             }
         };
@@ -344,22 +348,29 @@ directive('sortable', ['$rootScope', 'orderByFilter',
  * @requires orderByFilter
  * @restrict E
  */
-directive('elementToggle', [
-    function () {
-        return {
-            restrict: 'E',
-            replace: true,
-            scope: true,
-            templateUrl: '/app/components/templates/element-toggle.html',
-            link: function (scope, element, attrs) {
-                scope.toggle = function () {
-                    scope.close = !scope.close;
-                    element.parents('[element]').find('[element-content]').toggle();
-                }
+directive('elementToggle', [function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            hide: '='
+        },
+        templateUrl: '/app/components/templates/element-toggle.html',
+        link: function (scope, element, attrs) {
+
+            if (scope.hide) {
+                toggle();
             }
-        };
-    }
-]).
+
+            scope.toggle = toggle;
+
+            function toggle() {
+                scope.close = !scope.close;
+                element.parents('[element]').find('[element-content]').toggle();
+            }
+        }
+    };
+}]).
 
 directive('pagination', ['$rootScope', function ($rootScope) {
     return {

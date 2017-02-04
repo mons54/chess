@@ -57,6 +57,7 @@ module.exports = function (app, io) {
             var challenge = moduleSocket.getChallenge(socket, socketOpponent.uid);
 
             if (challenge &&
+                !challenge.create &&
                 challenge.game.index === game.index &&
                 (!color || !challenge.color || color !== challenge.color)) {
                 if (!challenge.color) {

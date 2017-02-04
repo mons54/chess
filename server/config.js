@@ -31,7 +31,26 @@ module.exports = function (app) {
     app.set('views', staticPath);
     app.set('view engine', 'ejs');
 
+    app.all('/facebook', function (req, res) {
+        
+        var data = getData(req);
+
+        data.facebook = true;
+
+        res.render('index', data);
+    });
+
     app.get('/([a-z][^.]+)?', function (req, res) {
+        
+        var data = getData(req);
+
+        data.facebook = false;
+
+        res.render('index', data);
+    });
+
+    function getData(req, res) {
+        
         var data,
             lang = req.acceptsLanguages(acceptsLanguages);
 
@@ -41,8 +60,8 @@ module.exports = function (app) {
 
         data = dictionaries[lang];
 
-        res.render('index', data);
-    });
+        return data;
+    }
 };
 
 String.prototype.hash = function() {
