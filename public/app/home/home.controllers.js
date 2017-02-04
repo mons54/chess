@@ -16,7 +16,24 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
     
     function ($rootScope, $scope, socket, utils, paramsGame, orderByFilter) {
 
-        $scope.orderByFilter = {};
+        $scope.orderByFilter = {
+            createdGames: {
+                expression: ['points', 'time', 'color'],
+                reverse: true
+            },
+            challenges: {
+                expression: ['points', 'time', 'color'],
+                reverse: true
+            },
+            challengers: {
+                expression: ['blitz.points', 'rapid.points'],
+                reverse: true
+            },
+            friends: {
+                expression: ['blitz.points', 'rapid.points'],
+                reverse: true
+            }
+        };
         
         socket.emit('joinHome', $rootScope.user.refresh);
         
@@ -36,15 +53,11 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 }
             });
 
-            if ($scope.orderByFilter.createdGames) {
-                createdGames = orderByFilter(createdGames, $scope.orderByFilter.createdGames.expression, $scope.orderByFilter.createdGames.reverse);
-            }
+            $scope.createdGames = orderByFilter(createdGames, $scope.orderByFilter.createdGames.expression, $scope.orderByFilter.createdGames.reverse);
 
             if (userGame) {
-                createdGames.unshift(userGame);
+                $scope.createdGames.unshift(userGame);
             }
-
-            $scope.createdGames = createdGames;
 
         }, $scope);
 
@@ -56,11 +69,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 challenges.push(value);
             });
 
-            if ($scope.orderByFilter.challenges) {
-                challenges = orderByFilter(challenges, $scope.orderByFilter.challenges.expression, $scope.orderByFilter.challenges.reverse);
-            }
-
-            $scope.challenges = challenges;
+            $scope.challenges = orderByFilter(challenges, $scope.orderByFilter.challenges.expression, $scope.orderByFilter.challenges.reverse);
 
         }, $scope);
 
@@ -80,16 +89,8 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 challengers.push(value);
             });
 
-            if ($scope.orderByFilter.challengers) {
-                challengers = orderByFilter(challengers, $scope.orderByFilter.challengers.expression, $scope.orderByFilter.challengers.reverse);
-            }
-
-            if ($scope.orderByFilter.friends) {
-                friends = orderByFilter(friends, $scope.orderByFilter.friends.expression, $scope.orderByFilter.friends.reverse);
-            }
-            
-            $scope.challengers = challengers;
-            $scope.friends = friends;
+            $scope.challengers = orderByFilter(challengers, $scope.orderByFilter.challengers.expression, $scope.orderByFilter.challengers.reverse);
+            $scope.friends = orderByFilter(friends, $scope.orderByFilter.friends.expression, $scope.orderByFilter.friends.reverse);
 
         }, $scope);
 
