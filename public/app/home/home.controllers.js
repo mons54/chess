@@ -12,40 +12,61 @@ angular.module('home').
  * @requires global.service:utils
  * @requires global.constant:paramsGame
  */
-controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
+controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame', 'orderByFilter',
     
-    function ($rootScope, $scope, socket, utils, paramsGame) {
+    function ($rootScope, $scope, socket, utils, paramsGame, orderByFilter) {
+
+        $scope.orderByFilter = {};
         
         socket.emit('joinHome', $rootScope.user.refresh);
         
         socket.on('listGames', function (data) {
-            $scope.createdGames = [];
+            var createdGames = [],
+                userGame;
             
             angular.forEach(data, function (value, key) {
                 value.uid = key;
 
                 if (key === $rootScope.user.uid) {
-                    $scope.createdGames.unshift(value);
+                    userGame = value;
                 } else if (!blackList(value) &&
                    ((!value.pointsMin || $rootScope.user.points >= value.pointsMin) && 
                    (!value.pointsMax || $rootScope.user.points <= value.pointsMax))) {
-                    $scope.createdGames.push(value);
+                    createdGames.push(value);
                 }
             });
+
+            if ($scope.orderByFilter.createdGames) {
+                createdGames = orderByFilter(createdGames, $scope.orderByFilter.createdGames.expression, $scope.orderByFilter.createdGames.reverse);
+            }
+
+            if (userGame) {
+                createdGames.unshift(userGame);
+            }
+
+            $scope.createdGames = createdGames;
+
         }, $scope);
 
         socket.on('listChallenges', function (data) {
-            $scope.challenges = [];
+            var challenges = [];
             
             angular.forEach(data, function (value, key) {
                 value.uid = key;
-                $scope.challenges.push(value);
+                challenges.push(value);
             });
+
+            if ($scope.orderByFilter.challenges) {
+                challenges = orderByFilter(challenges, $scope.orderByFilter.challenges.expression, $scope.orderByFilter.challenges.reverse);
+            }
+
+            $scope.challenges = challenges;
+
         }, $scope);
 
         socket.on('challengers', function (data) {
-            $scope.challengers = [];
-            $scope.friends = [];
+            var challengers = [],
+                friends = [];
 
             angular.forEach(data, function (value) {
                 if ($rootScope.user.uid == value.uid) {
@@ -53,19 +74,23 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 }
                 
                 if ($rootScope.user.friends.indexOf(value.facebookId) !== -1) {
-                    $scope.friends.push(value);
+                    friends.push(value);
                 }
 
-                $scope.challengers.push(value);
-            });
-            
-            $scope.challengers.sort(function (a, b) {
-                return a.points > b.points;
+                challengers.push(value);
             });
 
-            $scope.friends.sort(function (a, b) {
-                return a.points > b.points;
-            });
+            if ($scope.orderByFilter.challengers) {
+                challengers = orderByFilter(challengers, $scope.orderByFilter.challengers.expression, $scope.orderByFilter.challengers.reverse);
+            }
+
+            if ($scope.orderByFilter.friends) {
+                friends = orderByFilter(friends, $scope.orderByFilter.friends.expression, $scope.orderByFilter.friends.reverse);
+            }
+            
+            $scope.challengers = challengers;
+            $scope.friends = friends;
+
         }, $scope);
 
         $scope.removeGame = function () {

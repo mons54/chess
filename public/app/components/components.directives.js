@@ -313,7 +313,7 @@ directive('friendsRequests', ['$filter',
  * @param {string} icon The icon to display for this column
  */
 directive('sortable', ['$rootScope', 'orderByFilter',
-    function ($rootScope, orderBy) {
+    function ($rootScope, orderByFilter) {
         return {
             restrict: 'A',
             scope: {
@@ -328,7 +328,11 @@ directive('sortable', ['$rootScope', 'orderByFilter',
                         return;
                     }
                     scope.reverse = !scope.reverse;
-                    scope.$parent[attrs.collection] = orderBy(scope.$parent[attrs.collection], scope.expression, scope.reverse);
+                    scope.$parent.orderByFilter[attrs.collection] = {
+                        expression: scope.expression,
+                        reverse: scope.reverse
+                    };
+                    scope.$parent[attrs.collection] = orderByFilter(scope.$parent[attrs.collection], scope.expression, scope.reverse);
                 };
             }
         };
