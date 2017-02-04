@@ -31,11 +31,25 @@ module.exports = function (app) {
     app.set('views', staticPath);
     app.set('view engine', 'ejs');
 
-    app.post('/facebook', response);
+    app.all('/facebook', function (req, res) {
+        
+        var data = getData(req);
 
-    app.get('/([a-z][^.]+)?', response);
+        data.facebook = true;
 
-    function response(req, res) {
+        res.render('index', data);
+    });
+
+    app.get('/([a-z][^.]+)?', function (req, res) {
+        
+        var data = getData(req);
+
+        data.facebook = false;
+
+        res.render('index', data);
+    });
+
+    function getData(req, res) {
         
         var data,
             lang = req.acceptsLanguages(acceptsLanguages);
@@ -46,9 +60,7 @@ module.exports = function (app) {
 
         data = dictionaries[lang];
 
-        data.facebook = req.route.path === '/facebook';
-
-        res.render('index', data);
+        return data;
     }
 };
 
