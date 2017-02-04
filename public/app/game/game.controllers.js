@@ -127,6 +127,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.player1.color = 'black';
                 $scope.player2.color = 'white';
                 $scope.orientation = 'black';
+                letters.reverse();
                 numbers.reverse();
             } else {
                 $scope.player1 = game.white;
