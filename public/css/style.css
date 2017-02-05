@@ -2086,8 +2086,7 @@ a {
   padding-top: 100%;
 }
 
-.app-layout.is-user-game .app-navigation__container,
-.app-layout.is-user-game .mdl-layout__drawer-button {
+.app-layout.is-user-game .app-header {
   display: none;
 }
 
@@ -2233,10 +2232,6 @@ a {
     left: 55px;
     top: 10px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .app-layout.is-user-game .app-mobile__title {
-    left: 10px;
   }
 
   .app-profile--game .app-profile__name {
