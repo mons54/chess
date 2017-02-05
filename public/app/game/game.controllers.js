@@ -62,9 +62,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
 
             if (game.finish) {
-                delete $rootScope.user.gid;
-                $scope.shareResultData = getShareResultData(game);
                 $timeout(function () {
+                    delete $rootScope.user.gid;
+                    $scope.shareResultData = getShareResultData(game);
                     modal('#modal-finish-game').show();
                 }, 1000);
                 var gameCopy = $window.game.newGame(game.id, game.white, game.black, {
