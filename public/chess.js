@@ -445,7 +445,7 @@ engine.prototype.init = function (start, end, promotion) {
         this.game.turn50++;
     }
 
-    this.game[this.game.turn].time += this.game.increment;
+    this.game[this.game.turn].time += this.game.increment + 1;
 
     if (this.game[this.game.turn].time > this.game[this.game.turn].timeTurn) {
         this.game[this.game.turn].timeTurn = this.game.timeTurn;
