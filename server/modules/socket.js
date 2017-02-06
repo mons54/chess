@@ -526,6 +526,7 @@ module.exports = function (io) {
         db.findOne('games', { _id: db.ObjectId(gid) }).then(function (response) {
             if (!response) {
                 socket.emit('game', false);
+                return;
             }
             response.data.archived = true;
             socket.emit('game', response.data);
