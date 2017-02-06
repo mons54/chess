@@ -1,9 +1,9 @@
 <div class="app-profile app-profile--game element" ng-class="{'app-profile--player': isPlayerUser()}">
     <div class="app__pull-right">
-        <div class="app-game__time" ng-class="{'app-game__time--danger': player.time < 10}">
+        <div class="app-game__time" ng-class="{'app-game__time--danger': player.time < 10000}">
             {{ formatTime(player.time) }}
         </div>
-        <div class="app-game__time" ng-class="{'app-game__time--danger': player.timeTurn < 10}">
+        <div class="app-game__time" ng-class="{'app-game__time--danger': player.timeTurn < 10000}">
             {{ formatTime(player.timeTurn) }}
         </div>
     </div>

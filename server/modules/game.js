@@ -135,6 +135,8 @@ Game.prototype.move = function (socket, id, start, end, promotion) {
         return;
     }
 
+    this.setTimeTurn(game, true);
+
     return new chess.engine(game, start, end, promotion);
 };
 
@@ -146,9 +148,11 @@ Game.prototype.resign = function (socket, id) {
         game.finish || 
         !this.isPlayer(game, socket.uid) || 
         game.played.length < 4 ||
-        game.timestamp < 60) {
+        new Date().getTime() - game.startTime < 60000) {
         return;
     }
+
+    this.setTimeTurn(game);
 
     game.finish = true;
 
@@ -198,6 +202,8 @@ Game.prototype.acceptDraw = function (socket, id) {
     if (!player.possibleDraw) {
         return;
     }
+
+    this.setTimeTurn(game);
 
     game.finish = true;
     game.result.value = 0;
@@ -266,25 +272,43 @@ Game.prototype.setMessage = function (gid, data) {
     }
 };
 
-Game.prototype.timer = function (game) {
+Game.prototype.setTimeTurn = function (game, isMove) {
 
-    game.timestamp++;
+    var time = new Date().getTime(),
+        player = game[game.turn];
 
-    if (game[game.turn].time > 0 && game[game.turn].timeTurn > 0) {
-        game[game.turn].time--;
-        game[game.turn].timeTurn--;
-        return false;
-    } 
-    
-    var color = game.turn === 'white' ? 'black' : 'white';
-    game.finish = true;
-    game.result.value = (game[game.turn].possibleDraw || game[color].nbPieces === 1) ? 0 : (color === 'white' ? 1 : 2);
-    game.result.name = game.result.value === 0 ? 'null' : 'time';
-    return game;
+    player.time -= time - game.lastTime;
+
+    if (isMove) {
+        player.time += game.increment;
+        if (player.time < game.timeTurn) {
+            player.timeTurn = player.time;
+        } else {
+            player.timeTurn = game.timeTurn;
+        }
+    } else {
+        player.timeTurn -= time - game.lastTime;
+    }
+
+    game.lastTime = time;
 };
 
 Game.prototype.start = function (white, black, data) {
-    return chess.game.newGame(white, black, data);
+
+    var game = chess.game.newGame(white, black, data.type),
+        time = data.time * 1000,
+        timeTurn = 120000;
+
+    game.time = time;
+    game.timeTurn = timeTurn;
+    game.increment = data.increment * 1000;
+    game.lastTime = new Date().getTime();
+    game.white.time = time;
+    game.black.time = time;
+    game.white.timeTurn = timeTurn;
+    game.black.timeTurn = timeTurn;
+
+    return game;
 };
 
 Game.prototype.getPoints = function (p1, p2, coefficient, countGame) {

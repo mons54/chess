@@ -242,7 +242,7 @@
 
             $rootScope.isFacebookApp = facebook.isFacebookApp;
 
-            if (!facebook.isFacebookApp && gapi && gapi.load) {
+            if (!facebook.isFacebookApp && typeof gapi !== 'undefined' && gapi.load) {
                 gapi.load('client', function () {
                     google.init().then(googleSetLoginStatus);
                 });

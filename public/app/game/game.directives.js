@@ -16,7 +16,8 @@ directive('profileGame', ['utils',
         return {
             restrict: 'A',
             scope: { 
-                player: '=' 
+                player: '=',
+                lastTime: '='
             },
             replace: true,
             templateUrl: '/app/game/templates/profile-game.html',
