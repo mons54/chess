@@ -145,10 +145,6 @@ module.exports = function (io) {
     };
 
     Module.prototype.refreshUser = function (socket) {
-
-        if (!this.checkSocket(socket)) {
-            return;
-        }
         
         var self = this;
 

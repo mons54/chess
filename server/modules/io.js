@@ -25,6 +25,11 @@ module.exports = function (app, io) {
         });
 
         socket.on('joinHome', function (refresh) {
+            
+            if (!moduleSocket.checkSocket(socket)) {
+                return;
+            }
+
             if (refresh) {
                 moduleSocket.refreshUser(socket)
                 .then(function() {
