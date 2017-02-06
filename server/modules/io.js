@@ -187,7 +187,8 @@ module.exports = function (app, io) {
             var game = moduleGame.getGame(gid);
 
             if (game) {
-                socket.join(moduleGame.getRoom(gid)); 
+                socket.join(moduleGame.getRoom(gid));
+                moduleGame.setTimeTurn(game);
                 socket.emit('game', game);
                 socket.emit('messagesGame', moduleGame.getMessages(gid));
             } else {
@@ -218,7 +219,7 @@ module.exports = function (app, io) {
             } else {
                 moduleSocket.saveGame(game);
             }
-            
+                
             io.to(moduleGame.getRoom(data.id)).emit('game', game);
         });
 
@@ -336,24 +337,4 @@ module.exports = function (app, io) {
             }
         }
     });
-
-    setInterval(function () {
-        var games = moduleGame.getGames();
-        for (var key in games) {
-            timer(games[key].data);
-        }
-    }, 1000);
-
-    function timer(game) {
-        if (game.finish) {
-            return;
-        }
-
-        var game = moduleGame.timer(game);
-
-        if (game) {
-            moduleSocket.finishGame(game);
-            io.to(moduleGame.getRoom(game.id)).emit('game', game);
-        }
-    }
 };

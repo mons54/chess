@@ -40,23 +40,15 @@ var game = {
      * @param {string} gid Game Id
      * @param {object} white White data
      * @param {object} black Black data
-     * @param {string} game.type Game type
-     * @param {number} game.time Game time
-     * @param {number} game.increment Game time increment
+     * @param {string} type Game type
      */
-    newGame: function (white, black, game) {
+    newGame: function (white, black, type) {
     
-        var time = game.time,
-            timeTurn = 120,
-            nbPieces = 16;
+        var nbPieces = 16;
 
         return {
-            type: game.type,
+            type: type,
             startTime: new Date().getTime(),
-            time: time,
-            increment: game.increment,
-            timeTurn: timeTurn,
-            timestamp: 0,
             finish: false,
             turn: 'white',
             turn50: 0,
@@ -73,8 +65,6 @@ var game = {
                 points: white.points,
                 ranking: white.ranking,
                 countGame: white.countGame,
-                time: time,
-                timeTurn: timeTurn,
                 possibleDraw: false,
                 king: {
                     position: 'e1',
@@ -90,8 +80,6 @@ var game = {
                 points: black.points,
                 ranking: black.ranking,
                 countGame: black.countGame,
-                time: time,
-                timeTurn: timeTurn,
                 possibleDraw: false,
                 king: {
                     position: 'e8',
@@ -443,14 +431,6 @@ engine.prototype.init = function (start, end, promotion) {
         this.game.turn50 = 0;
     } else {
         this.game.turn50++;
-    }
-
-    this.game[this.game.turn].time += this.game.increment;
-
-    if (this.game[this.game.turn].time > this.game[this.game.turn].timeTurn) {
-        this.game[this.game.turn].timeTurn = this.game.timeTurn;
-    } else {
-        this.game[this.game.turn].timeTurn = this.game[this.game.turn].time;
     }
 
     this.game[this.game.turn].possibleDraw = false;

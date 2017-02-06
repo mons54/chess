@@ -9,11 +9,14 @@ module.exports = function (io) {
     function Module() {
         this.connected = {};
         this.userGames = {};
+        this.timeout = {};
         db.find('games', { result: { $exists: false } }).then(function(response) {
             response.forEach(function (game) {
+                moduleGame.setTimeTurn(game.data);
                 moduleGame.setGame(game.id, game.data);
                 this.userGames[game.white] = game.id;
                 this.userGames[game.black] = game.id;
+                this.setTimeoutGame(game.data);
             }.bind(this));
         }.bind(this));
     }
@@ -308,8 +311,50 @@ module.exports = function (io) {
             socket.join(room);
             socketOpponent.join(room);
 
+            self.setTimeoutGame(game);
+
             io.to(room).emit('startGame', response.id);
         });
+    };
+
+    Module.prototype.clearTimeoutGame = function (gid) {
+        if (this.timeout[gid]) {
+            clearTimeout(this.timeout[gid]);
+        }
+        delete this.timeout[gid];
+    };
+
+    Module.prototype.setTimeoutGame = function (game) {
+
+        this.clearTimeoutGame(game.id);
+
+        if (game.finish) {
+            return;
+        }
+
+        if (game[game.turn].timeTurn > 0) {
+            this.timeout[game.id] = setTimeout(function() {
+                this.timeoutGame(game);
+            }.bind(this), game[game.turn].timeTurn);
+        } else {
+            this.timeoutGame(game);
+        }
+    };
+
+    Module.prototype.timeoutGame = function (game) {
+        
+        var player = game[game.turn],
+            color = game.turn === 'white' ? 'black' : 'white';
+
+        player.time = 0;
+        player.timeTurn = 0;
+
+        game.finish = true;
+        game.result.value = (game[game.turn].possibleDraw || game[color].nbPieces === 1) ? 0 : (color === 'white' ? 1 : 2);
+        game.result.name = game.result.value === 0 ? 'null' : 'time';
+        this.finishGame(game);
+        
+        io.to(moduleGame.getRoom(game.id)).emit('game', game);
     };
 
     Module.prototype.getBlackListExpires = function () {
@@ -373,12 +418,15 @@ module.exports = function (io) {
     };
 
     Module.prototype.saveGame = function (game) {
+        this.setTimeoutGame(game);
         db.update('games', { _id: db.ObjectId(game.id) }, {
             data: game
         });
     };
 
     Module.prototype.finishGame = function (game) {
+
+        this.clearTimeoutGame(game.id);
 
         var self = this,
             white = game.white,
@@ -387,7 +435,7 @@ module.exports = function (io) {
             hashGame = null,
             data;
 
-        if (result !== 0 && (game.played.length < 4 || game.timestamp < game.timeTurn)) {
+        if (result !== 0 && (game.played.length < 4 || new Date().getTime() - game.startTime < game.timeTurn)) {
             hashGame = '';
             game.played.forEach(function (value) {
                 hashGame += value.hash;
