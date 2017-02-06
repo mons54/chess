@@ -180,7 +180,7 @@ module.exports = function (app, io) {
         });
 
         socket.on('initGame', function (gid) {
-            if (!moduleSocket.checkSocket(socket)) {
+            if (typeof gid !== 'string' || !moduleSocket.checkSocket(socket)) {
                 return;
             }
 
