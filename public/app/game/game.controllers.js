@@ -78,7 +78,14 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.game &&
                 game.played.length !== $scope.game.played.length &&
                 game.played[game.played.length - 1]) {
-                sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'].load().play();
+
+                var moveSound = sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'];
+
+                if (moveSound.isPlayed()) {
+                    moveSound.load();
+                }
+
+                moveSound.play();
             }
 
             game.black.lostPieces = angular.copy(defaultPieces);
@@ -474,6 +481,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             var game = $scope.game;
 
             if (!game || game.finish) {
+                if (sound.timer.isPlayed()) {
+                    sound.timer.load();
+                }
                 return;
             }
 
@@ -492,7 +502,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 if (!$scope.isPlayerTurn()) {
                     sound.timer.load();
                 }
-            } else if ($scope.isPlayerTurn() && (player.currentTime < 10000 || player.currentTimeTurn < 10000)) {
+            } else if ($scope.isPlayerTurn() && (player.time < 10000 || player.timeTurn < 10000)) {
                 sound.timer.play();
             }
 
