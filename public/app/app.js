@@ -31,7 +31,7 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', '$window', 'user', 'socket', 'modal', 'facebook', 'google', 'translator',
+    run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user', 'socket', 'modal', 'facebook', 'google', 'translator',
 
         /**
          * @param {object} $rootScope Global scope
@@ -45,7 +45,7 @@
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, $window, user, socket, modal, facebook, google, translator) {
+        function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator) {
 
             $rootScope.$on('$routeChangeStart', function() {
 
@@ -226,7 +226,9 @@
 
             socket.on('trophies', function (data) {
                 $rootScope.user.trophies = data.trophies;
-                $rootScope.$emit('trophies', data.newTrophies);
+                $timeout(function () {
+                    $rootScope.$emit('trophies', data.newTrophies);
+                }, 1000);
             });
 
             $window.fbAsyncInit = function () {
