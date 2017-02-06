@@ -764,7 +764,6 @@ a {
 }
 
 .app-profile {
-  height: 50px;
   position: relative;
   overflow: hidden;
 }
@@ -1646,13 +1645,13 @@ a {
 .app-game__time {
   font-weight: bold;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   background-color: #3A3A3A;
   color: #fff;
-  width: 65px;
-  height: 23px;
-  line-height: 23px;
-  margin-bottom: 4px;
+  width: 60px;
+  height: 24px;
+  line-height: 24px;
+  margin-bottom: 5px;
   border-radius: 3px;
 }
 
@@ -1674,14 +1673,14 @@ a {
 
 .app-game__lost-pieces-group--pawn {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .app-game__lost-piece {
   line-height: initial;
   display: inline-block;
   vertical-align: top;
-  height: 23px;
+  height: 24px;
 }
 
 .app-game__lost-piece:not(:first-child) {

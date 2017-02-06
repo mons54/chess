@@ -1,0 +1,28 @@
+<div class="col-right">
+    <a ng-show="!isCurrentRoute('/')"
+       href="/"
+       class="element btn btn-default">
+        <span class="icon-right icon-home"></span>
+    </a>
+    <a ng-show="!isCurrentRoute('/ranking')"
+       href="/ranking"
+       class="element btn btn-default">
+        <span class="icon-right icon-ranking"></span>
+    </a>
+    <a ng-show="!isCurrentRoute('/trophies')"
+       href="/trophies"
+       class="element btn btn-default">
+        <span class="icon-right icon-points"></span>
+    </a>
+    <button friends-requests class="element btn btn-default">
+        <span class="icon-right icon-invite-friends"></span>
+    </button>
+    <button button-sound class="element btn btn-default"></button>
+    <div ng-if="freeTime" class="element">
+        <div>{{ freeTime.hour }}:{{ freeTime.minute }}:{{ freeTime.seconde }}</div>
+        <div class="free-token">
+            <span>+3</span>
+            <span class="icon-king"></span>
+        </div>
+    </div>
+</div>

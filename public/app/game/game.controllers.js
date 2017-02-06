@@ -57,13 +57,21 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return; 
             }
 
+            if (sound.timer.played) {
+                sound.timer.load();
+            }
+
             if (game.finish) {
                 $timeout(function () {
                     $scope.shareResultData = getShareResultData(game);
                     modal('#modal-finish-game').show();
                     delete $rootScope.user.gid;
                 }, 1000);
-                var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.type);
+                var gameCopy = $window.game.newGame(game.id, game.white, game.black, {
+                    type: game.type,
+                    time: game.time,
+                    increment: game.increment
+                });
             }
 
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
@@ -131,12 +139,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.orientation = 'white';
             }
 
-            if (!game.finish) {
-                game.white.currentTime = game.white.time;
-                game.white.currentTimeTurn = game.white.timeTurn;
-                game.black.currentTime = game.black.time;
-                game.black.currentTimeTurn = game.black.timeTurn;
-            }
+            checkTime($scope.player1);
+            checkTime($scope.player2);
 
             $scope.game = game;
 
@@ -216,13 +220,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.move = function (start, end, promotion) {
 
-            var moveSound = sound[$scope.game.pieces[end] ? 'capture' : 'deplace'];
-
-            if (moveSound.isPlayed()) {
-                moveSound.load();
-            }
-
-            moveSound.play();
+            sound.timer.load();
+            sound[$scope.game.pieces[end] ? 'capture' : 'deplace'].load().play();
 
             socket.emit('moveGame', {
                 id: $scope.game.id,
@@ -267,7 +266,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.possibleResign = function () {
-            return !$scope.game.finish && $scope.game.played.length >= 4 && new Date().getTime() - $scope.game.startTime >= 60000;
+            return !$scope.game.finish && $scope.game.played.length >= 4 && $scope.game.timestamp >= 60;
         };
 
         $scope.possibleOfferDraw = function () {
@@ -455,6 +454,12 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             });
         }
 
+        function checkTime(player) {
+            if (player.time < player.timeTurn) {
+                player.timeTurn = player.time;
+            }
+        }
+
         function setShowPlayed(value) {
             $scope.showPlayed = value;
             $scope.hideFixedButton = value;
@@ -464,32 +469,29 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.showMessages = value;
         }
 
-        var interval = 100;
-
         $interval.cancel($interval.stopTimeGame);
         $interval.stopTimeGame = $interval(function () {
-
-            var game = $scope.game;
-
-            if (!game || game.finish) {
+            if (!$scope.game || $scope.game.finish) {
                 return;
             }
 
-            var player = game[game.turn],
-                diff = new Date().getTime() - game.lastTime;
+            $scope.game.timestamp++;
 
-            player.time = player.currentTime - diff;
-            player.timeTurn = player.currentTimeTurn - diff;
+            var player = $scope.game[$scope.game.turn];
 
-            if (sound.timer.isPlayed()) {
-                if (!$scope.isPlayerTurn()) {
-                    sound.timer.load();
-                }
-            } else if ($scope.isPlayerTurn() && (player.currentTime < 10000 || player.currentTimeTurn < 10000)) {
+            if (player.time > 0) {
+                player.time--;
+            }
+
+            if (player.timeTurn > 0) {
+                player.timeTurn--;
+            }
+
+            if ($scope.isPlayerTurn() && (player.time < 10 || player.timeTurn < 10)) {
                 sound.timer.play();
             }
 
-        }, interval);
+        }, 1000);
     }
 ]).
 
@@ -530,17 +532,10 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
                 return;
             }
 
-            if (!$scope.lastTime) {
-                time *= 1000;
-            }
+            var minute = Math.floor(time / 60),
+                seconde = Math.floor(time - (minute * 60));
 
-            var date = new Date(time);
-
-            var minute = date.getMinutes(),
-                seconde = date.getSeconds(),
-                msecondes = Math.floor(date.getMilliseconds() / 100);
-
-            return utils.sprintf(minute) + ':' + utils.sprintf(seconde) + '.' + msecondes;
+            return utils.sprintf(minute) + ':' + utils.sprintf(seconde);
         };
     }
 ]);

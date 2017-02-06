@@ -59,6 +59,7 @@ function Module() {
             .index({black: 1, type: 1, result: 1})
         )
     };
+
 }
 
 Module.prototype.all = function (promises) {
