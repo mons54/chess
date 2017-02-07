@@ -30,24 +30,12 @@ Game.prototype.create = function (socket, data) {
         points = socket[game.type].points,
         blackList = socket.blackList;
 
-    if (pointsMin) {
-        if (pointsMin < this.options.pointsMin) {
-            pointsMin = this.options.pointsMin;
-        } 
-
-        if (pointsMin > points) {
-            pointsMin = points;
-        }
+    if (pointsMin && pointsMin < this.options.pointsMin) {
+        pointsMin = this.options.pointsMin;
     }
 
-    if (pointsMax) {
-        if (pointsMax > this.options.pointsMax) {
-            pointsMax = this.options.pointsMax;
-        }
-
-        if (pointsMax <= pointsMin) {
-            pointsMax = pointsMin + 100;
-        }
+    if (pointsMax && pointsMax > this.options.pointsMax) {
+        pointsMax = this.options.pointsMax;
     }
 
     for (var i in this.createdGame) {
