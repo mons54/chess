@@ -12,9 +12,9 @@ angular.module('home').
  * @requires global.service:utils
  * @requires global.constant:paramsGame
  */
-controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame', 'orderByFilter',
+controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'user', 'utils', 'paramsGame', 'orderByFilter',
     
-    function ($rootScope, $scope, socket, utils, paramsGame, orderByFilter) {
+    function ($rootScope, $scope, socket, user, utils, paramsGame, orderByFilter) {
 
         $scope.orderByFilter = {
             createdGames: {
@@ -47,8 +47,8 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 if (key === $rootScope.user.uid) {
                     userGame = value;
                 } else if (!blackList(value) &&
-                   ((!value.pointsMin || $rootScope.user.points >= value.pointsMin) && 
-                   (!value.pointsMax || $rootScope.user.points <= value.pointsMax))) {
+                   ((!value.pointsMin || $rootScope.user[value.game.type].points >= value.pointsMin) && 
+                   (!value.pointsMax || $rootScope.user[value.game.type].points <= value.pointsMax))) {
                     createdGames.push(value);
                 }
             });
@@ -132,10 +132,13 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
 
         $scope.paramsGame = paramsGame;
 
-        $scope.challenge = {
-            color: null,
-            game: 0
-        };
+        $scope.challenge = user.getDataChallenge();
+
+        $scope.$watchCollection('challenge', function (value) {
+            if (value) {
+                user.setDataChallenge(value);
+            }
+        });
 
         $scope.challenges = [];    
     }

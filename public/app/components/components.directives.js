@@ -78,9 +78,9 @@ directive('showProfile', ['$rootScope', 'socket',
     }
 ]).
 
-directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'paramsGame', 
+directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'user', 'paramsGame', 
 
-    function ($rootScope, $route, modal, socket, paramsGame) {
+    function ($rootScope, $route, modal, socket, user, paramsGame) {
         return {
             restrict: 'E',
             scope: true,
@@ -97,15 +97,53 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
 
                 scope.paramsGame = paramsGame;
 
-                scope.game = {
-                    color: paramsGame.colors[0],
-                    color: null,
-                    game: 0,
-                    pointsMin: null,
-                    pointsMax: null
-                };
+                scope.game = user.getDataGame();
 
-                $rootScope.$watch('user.points', function (value, oldValue) {
+                scope.$watchCollection('game', function (value) {
+                    if (value) {
+                        user.setDataGame(value);
+                    }
+                });
+
+                scope.$watch('game.game', function (value, oldValue) {
+                    var gameType = getGameType(value),
+                        oldGameType = getGameType(oldValue);
+                    if (gameType === oldGameType || 
+                        !$rootScope.user[gameType]) {
+                        return;
+                    }
+                    setPoints($rootScope.user[gameType].points, $rootScope.user[oldGameType].points);
+                });
+
+                $rootScope.$watch('user.blitz.points', function (value, oldValue) {
+                    if (getGameType(scope.game.game) === 'blitz') {
+                        setPoints(value, oldValue);
+                    }
+                });
+
+                $rootScope.$watch('user.rapid.points', function (value, oldValue) {
+                    if (getGameType(scope.game.game) === 'rapid') {
+                        setPoints(value, oldValue);
+                    }
+                });
+
+                scope.$watch('game.pointsMin', function (value) {
+                    if (value && value === scope.game.pointsMax) {
+                        scope.game.pointsMax += 100;
+                    }
+                });
+
+                scope.$watch('game.pointsMax', function (value) {
+                    if (value && value === scope.game.pointsMin) {
+                        scope.game.pointsMin -= 100;
+                    }
+                });
+
+                function getGameType(game) {
+                    return paramsGame.games[game].type;
+                }
+
+                function setPoints(value, oldValue) {
 
                     value = Math.floor(value / 100) * 100;
 
@@ -142,19 +180,7 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
                     if (paramsGame.pointsMax.indexOf(scope.game.pointsMax) === -1) {
                         scope.game.pointsMax = diff < 0 ? paramsGame.pointsMax[0] : null;
                     }
-                });
-
-                scope.$watch('game.pointsMin', function (value) {
-                    if (value && value === scope.game.pointsMax) {
-                        scope.game.pointsMax += 100;
-                    }
-                });
-
-                scope.$watch('game.pointsMax', function (value) {
-                    if (value && value === scope.game.pointsMin) {
-                        scope.game.pointsMin -= 100;
-                    }
-                });
+                }
 
                 scope.createGame = function () {
                     socket.emit('createGame', scope.game);

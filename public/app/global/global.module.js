@@ -508,6 +508,66 @@ service('user', ['$cookies', function ($cookies) {
          */
         setColorGame: function (value) {
             this.set('colorGame', value);
+        },
+        /**
+         * @ngdoc function
+         * @name #getDataGame
+         * @methodOf global.service:user
+         * @description 
+         * Get data game
+         * @returns {object} Data Game
+         */
+        getDataGame: function () {
+            var data = this.get('dataGame');
+            if (!data) {
+                data = {
+                    color: null,
+                    game: 0,
+                    pointsMin: null,
+                    pointsMax: null
+                };
+            }
+            return data;
+        },
+        /**
+         * @ngdoc function
+         * @name #setDataGame
+         * @methodOf global.service:user
+         * @description 
+         * Set data game
+         * @param {string} value Data Game
+         */
+        setDataGame: function (value) {
+            this.set('dataGame', value);
+        },
+        /**
+         * @ngdoc function
+         * @name #getDataChallenge
+         * @methodOf global.service:user
+         * @description 
+         * Get data game
+         * @returns {object} Data Challenge
+         */
+        getDataChallenge: function () {
+            var data = this.get('dataChallenge');
+            if (!data) {
+                data = {
+                    color: null,
+                    game: 0
+                };
+            }
+            return data;
+        },
+        /**
+         * @ngdoc function
+         * @name #setDataChallenge
+         * @methodOf global.service:user
+         * @description 
+         * Set data game
+         * @param {string} value Data Challenge
+         */
+        setDataChallenge: function (value) {
+            this.set('dataChallenge', value);
         }
     }
 }]).
