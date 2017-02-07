@@ -2976,4 +2976,8 @@ a {
     height: 30px;
     border-width: 3px;
   }
+
+  .app-table__sortable .material-icons {
+    font-size: 21px;
+  }
 }
