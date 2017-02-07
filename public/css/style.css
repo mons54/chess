@@ -478,13 +478,13 @@ a {
   padding: 0;
 }
 
-.app-form__select-grid select.mdl-cell--6-col {
+.app-form__select-grid .mdl-cell--6-col {
   display: inline-block;
   width: 48%;
   margin-right: 4%;
 }
 
-.app-form__select-grid select.mdl-cell--6-col:last-child {
+.app-form__select-grid .mdl-cell--6-col:last-child {
   margin-right: 0;
 }
 

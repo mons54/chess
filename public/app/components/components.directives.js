@@ -105,82 +105,23 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'user',
                     }
                 });
 
-                scope.$watch('game.game', function (value, oldValue) {
-                    var gameType = getGameType(value),
-                        oldGameType = getGameType(oldValue);
-                    if (gameType === oldGameType || 
-                        !$rootScope.user[gameType]) {
-                        return;
-                    }
-                    setPoints($rootScope.user[gameType].points, $rootScope.user[oldGameType].points);
-                });
-
-                $rootScope.$watch('user.blitz.points', function (value, oldValue) {
-                    if (getGameType(scope.game.game) === 'blitz') {
-                        setPoints(value, oldValue);
-                    }
-                });
-
-                $rootScope.$watch('user.rapid.points', function (value, oldValue) {
-                    if (getGameType(scope.game.game) === 'rapid') {
-                        setPoints(value, oldValue);
-                    }
-                });
-
                 scope.$watch('game.pointsMin', function (value) {
-                    if (value && value === scope.game.pointsMax) {
-                        scope.game.pointsMax += 100;
-                    }
-                });
-
-                scope.$watch('game.pointsMax', function (value) {
-                    if (value && value === scope.game.pointsMin) {
-                        scope.game.pointsMin -= 100;
-                    }
-                });
-
-                function getGameType(game) {
-                    return paramsGame.games[game].type;
-                }
-
-                function setPoints(value, oldValue) {
-
-                    value = Math.floor(value / 100) * 100;
-
-                    paramsGame.pointsMin = [];
                     paramsGame.pointsMax = [];
-
-                    for (var i = pointsMin; i <= pointsMax; i += 100) {
-                        if (value >= i && i < pointsMax) {
-                            paramsGame.pointsMin.push(i);
-                        }
-                        if (value <= i && i > pointsMin) {
+                    for (var i = pointsMin + 100; i <= pointsMax; i += 100) {
+                        if (!value || value < i) {
                             paramsGame.pointsMax.push(i);
                         }
                     };
+                });
 
-                    if (!oldValue) {
-                        return;
-                    }
-
-                    var diff = value - Math.floor(oldValue / 100) * 100;
-
-                    if (scope.game.pointsMin) {
-                        scope.game.pointsMin += diff;
-                    }
-
-                    if (scope.game.pointsMax) {
-                        scope.game.pointsMax += diff;
-                    }
-
-                    if (paramsGame.pointsMin.indexOf(scope.game.pointsMin) === -1) {
-                        scope.game.pointsMin = diff > 0 ? paramsGame.pointsMin[paramsGame.pointsMin.length - 1] : null;
-                    }
-
-                    if (paramsGame.pointsMax.indexOf(scope.game.pointsMax) === -1) {
-                        scope.game.pointsMax = diff < 0 ? paramsGame.pointsMax[0] : null;
-                    }
-                }
+                scope.$watch('game.pointsMax', function (value) {
+                    paramsGame.pointsMin = [];
+                    for (var i = pointsMin; i < pointsMax; i += 100) {
+                        if (!value || value > i) {
+                            paramsGame.pointsMin.push(i);
+                        }
+                    };
+                });
 
                 scope.createGame = function () {
                     socket.emit('createGame', scope.game);
