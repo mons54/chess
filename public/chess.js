@@ -559,7 +559,7 @@ engine.prototype.init = function (start, end, promotion) {
         if (this.pat == true) {
             this.game.result.name = 'pat';
         } else {
-            this.game.result.name = 'nul';
+            this.game.result.name = 'null';
         }
     }
 
