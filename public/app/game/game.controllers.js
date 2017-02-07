@@ -145,6 +145,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 game.white.currentTimeTurn = game.white.timeTurn;
                 game.black.currentTime = game.black.time;
                 game.black.currentTimeTurn = game.black.timeTurn;
+            } else if (!game.lastTime) {
+                game.white.currentTime = game.white.time * 1000;
+                game.white.currentTimeTurn = game.white.timeTurn * 1000;
+                game.black.currentTime = game.black.time * 1000;
+                game.black.currentTimeTurn = game.black.timeTurn * 1000;
             }
 
             $scope.game = game;
@@ -523,6 +528,10 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
     
     function ($rootScope, $scope, socket, utils) {
 
+        $scope.isPlayerTurn = function (player) {
+            return $scope.$parent.game && $scope.$parent.game.turn === player.color;
+        };
+
         $scope.hasLostPieces = function (lostPieces) {
             if (typeof lostPieces === 'object') {
                 for (var i in lostPieces) {
@@ -546,14 +555,9 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
             if (typeof time === 'undefined') {
                 return;
             }
-
-            if (!$scope.lastTime) {
-                time *= 1000;
-            }
-
-            var date = new Date(time);
-
-            var minute = date.getMinutes(),
+            
+            var date = new Date(time),
+                minute = date.getMinutes(),
                 seconde = date.getSeconds(),
                 msecondes = Math.floor(date.getMilliseconds() / 100);
 

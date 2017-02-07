@@ -1644,16 +1644,19 @@ a {
 }
 
 .app-game__time {
-  font-weight: bold;
   text-align: center;
   font-size: 16px;
-  background-color: #3A3A3A;
+  background-color: #9E9E9E;
   color: #fff;
   width: 65px;
   height: 23px;
   line-height: 23px;
   margin-bottom: 4px;
   border-radius: 3px;
+}
+
+.app-game__time--turn {
+  background-color: #3A3A3A;
 }
 
 .app-game__time--danger {
@@ -2862,13 +2865,17 @@ a {
     line-height: 13px;
     width: auto;
     height: 13px;
-    color: #3A3A3A;
+    color: #9E9E9E;
     background-color: initial;
     text-align: right;
   }
 
   .app-profile--game .app-game__time:first-child {
     margin-bottom: 6px;
+  }
+
+  .app-profile--game .app-game__time--turn {
+    color: #3A3A3A;
   }
 
   .app-profile--game .app-game__time--danger {
