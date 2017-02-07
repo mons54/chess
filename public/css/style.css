@@ -1770,7 +1770,7 @@ a {
 .app-game__board--player-white.app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--player-black.app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
 .app-game__board--player-black.app-game__board--green .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #C8E6C9;
+  background-color: #f0f8d2;
 }
 
 .app-game__board--player-white.app-game__board--grey .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even),
