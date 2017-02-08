@@ -43,7 +43,7 @@ module.exports = function (app) {
         res.render('index', data);
     });
 
-    app.get('/:lang([a-z]{2})/*', function (req, res) {
+    app.get('/:lang([a-z]{2})(/*)?', function (req, res) {
         
         var data,
             lang = req.params.lang;
