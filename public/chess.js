@@ -13,6 +13,11 @@ var game = {
         {
             type: 'blitz',
             time: 300,
+            increment: 0
+        },
+        {
+            type: 'blitz',
+            time: 300,
             increment: 3
         },
         {
@@ -29,6 +34,11 @@ var game = {
             type: 'rapid',
             time: 900,
             increment: 10
+        },
+        {
+            type: 'rapid',
+            time: 1500,
+            increment: 0
         },
         {
             type: 'rapid',
