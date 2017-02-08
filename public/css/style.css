@@ -2115,6 +2115,10 @@ a {
     min-width: 40px;
   }
 
+  .app-button__fixed .app-button--invite-friends {
+    display: none;
+  }
+
   .app-button__fixed--color .app-button--color:nth-of-type(2) {
     bottom: 52px;
   }
