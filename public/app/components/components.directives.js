@@ -244,31 +244,6 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
 /**
  * @ngdoc directive
- * @name components.directive:friendsRequests
- * @description 
- * Add an click event to the directive element to invite friends facebook.
- * @requires $translate
- * @restrict A
- */
-directive('friendsRequests', ['$filter',
-    function ($filter) {
-        return {
-            restrict: 'A',
-            link: function (scope, element) {
-                element.bind('click', function () {
-                    FB.ui({
-                        method: 'apprequests',
-                        title: $filter('translate')('title'),
-                        message: $filter('translate')('description'),
-                    });
-                });
-            }
-        };
-    }
-]).
-
-/**
- * @ngdoc directive
  * @name components.directive:sortable
  * @description 
  * Use this directive to make a sortable column
@@ -315,11 +290,13 @@ directive('sortable', ['$rootScope', 'orderByFilter',
  * @requires orderByFilter
  * @restrict E
  */
-directive('elementToggle', [function () {
+directive('elementToggle', ['$timeout', function ($timeout) {
     return {
         restrict: 'E',
         replace: true,
         scope: {
+            name: '=',
+            collection: '=',
             hide: '='
         },
         templateUrl: '/app/components/templates/element-toggle.html',

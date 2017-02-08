@@ -1,5 +1,7 @@
-<button ng-click="toggle()"
-        ng-class="{'mdl-button--colored': hasFiltersGame()}"
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons">{{ close ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
-</button>
+<div ng-click="toggle()" class="app-element__head app-element__head--toggle">
+    <span>{{ name|translate }}</span>
+    <span class="app-element__badge">{{ collection.length || 0 }}</span>
+    <div class="app-element__tools">
+        <i class="material-icons">{{ close ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+    </button>
+</div>

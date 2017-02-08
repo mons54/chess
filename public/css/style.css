@@ -936,9 +936,12 @@ a {
   font-size: 18px;
 }
 
+.app-element .app-element__head--toggle {
+  cursor: pointer;
+}
+
 .app-element .app-element__tools {
   float: right;
-  margin-top: -5px;
 }
 
 .app-element--small .app-element__body {
