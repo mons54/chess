@@ -603,23 +603,21 @@ a {
 }
 
 .app-navigation {
-  /* ... and now make sure the content is actually LTR */
   direction: ltr;
   -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   width: 800px;
 }
 
 .app-navigation__container {
-  /* Simple hack to make the overflow happen to the left instead... */
   direction: rtl;
   -webkit-order: 1;
-      -ms-flex-order: 1;
-          order: 1;
+  -ms-flex-order: 1;
+  order: 1;
   width: 500px;
   transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .app-navigation .mdl-navigation__link {
@@ -651,8 +649,8 @@ a {
 }
 
 .app-drawer .mdl-navigation__link .material-icons {
-    font-size: 24px;
-    margin-right: 18px;
+  font-size: 24px;
+  margin-right: 18px;
 }
 
 .app-drawer .app-layout-title {

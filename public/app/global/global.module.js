@@ -81,7 +81,20 @@ factory('utils', ['$rootScope', '$filter', '$window', 'host', 'facebookRedirectU
                     description: data.description
                 });
             },
-
+            /**
+             * @ngdoc function
+             * @name #inviteFriends
+             * @methodOf global.service:utils
+             * @description
+             * Invite friend facebook
+             */
+            inviteFriends: function () {
+                FB.ui({
+                    method: 'apprequests',
+                    title: $filter('translate')('title'),
+                    message: $filter('translate')('description')
+                });
+            },
             /**
              * @ngdoc function
              * @name #isTouch
