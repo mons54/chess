@@ -235,13 +235,13 @@ a {
 
 .app-modal__content {
   position: relative;
-  padding: 30px;
+  padding: 28px;
   background-color: #fff;
 }
 
 .app-modal__content--finish-game {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .app-modal__title {
@@ -434,8 +434,8 @@ a {
 
 .app-form__select {
   display: block;
-  padding-top: 15px;
-  margin-bottom: 18px;
+  padding-top: 16px;
+  margin-bottom: 16px;
   position: relative
 }
 
@@ -603,23 +603,21 @@ a {
 }
 
 .app-navigation {
-  /* ... and now make sure the content is actually LTR */
   direction: ltr;
   -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   width: 800px;
 }
 
 .app-navigation__container {
-  /* Simple hack to make the overflow happen to the left instead... */
   direction: rtl;
   -webkit-order: 1;
-      -ms-flex-order: 1;
-          order: 1;
+  -ms-flex-order: 1;
+  order: 1;
   width: 500px;
   transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .app-navigation .mdl-navigation__link {
@@ -651,8 +649,8 @@ a {
 }
 
 .app-drawer .mdl-navigation__link .material-icons {
-    font-size: 24px;
-    margin-right: 18px;
+  font-size: 24px;
+  margin-right: 18px;
 }
 
 .app-drawer .app-layout-title {
@@ -729,38 +727,39 @@ a {
 
 .app-head {
   position: relative;
-  padding: 10px;
+  padding: 12px;
 }
 
 .app-head .app-button__create-game {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 12px;
+  bottom: 12px;
 }
 
 .app-create-game__choices {
-  margin: 6px 0 18px 0;
+  margin-top: 8px;
 }
 
 .app-create-game__choices .app-button {
-  width: 172px;
-  margin-right: 12px;
-  margin-bottom: 12px;
+  width: 130px;
+  margin-right: 8px;
+  margin-bottom: 8px;
   height: auto;
   line-height: initial;
   text-transform: initial;
-  padding: 12px;
+  padding: 8px;
 }
 
 .app-create-game__choice-name {
   display: block;
   text-transform: uppercase;
+  font-size: 12px;
 }
 
 .app-create-game__choice-time {
   display: block;
-  font-size: 18px;
-  margin-bottom: 6px;
+  font-size: 20px;
+  margin-bottom: 4px;
 }
 
 .app-profile {
@@ -783,8 +782,8 @@ a {
 
 .app-profile__name {
   font-weight: 800;
-  font-size: 18px;
-  margin-bottom: 6px;
+  font-size: 16px;
+  margin-bottom: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -810,7 +809,7 @@ a {
 
 .app-profile__info--game {
   position: relative;
-  top: 5px;
+  top: 4px;
   margin-left: 0;
 }
 
@@ -929,7 +928,7 @@ a {
 
 .app-element .app-element__head {
   margin: 0;
-  padding: 10px;
+  padding: 12px;
   background-color: #eef5f9;
   border-bottom: 1px solid #dadede;
   border-radius: 3px 3px 0 0;
@@ -937,9 +936,12 @@ a {
   font-size: 18px;
 }
 
+.app-element .app-element__head--toggle {
+  cursor: pointer;
+}
+
 .app-element .app-element__tools {
   float: right;
-  margin-top: -5px;
 }
 
 .app-element--small .app-element__body {
@@ -1005,8 +1007,8 @@ a {
 
 .app-search__game-edit {
   position: absolute;
-  right: 30px;
-  top: 30px;
+  right: 28px;
+  top: 28px;
 }
 
 .app-search__game-title {
@@ -1021,7 +1023,7 @@ a {
 
 .app-search__game-name {
   font-weight: 800;
-  font-size: 18px;
+  font-size: 16px;
   text-transform: uppercase;
   padding-bottom: 12px;
 }
@@ -1231,10 +1233,6 @@ a {
   position: relative;
 }
 
-.app-trophy__picture img {
-  background-color: #EFEBE9;
-}
-
 .app-trophy__progress-value {
   color: #795548;
   position: absolute;
@@ -1258,7 +1256,7 @@ a {
 
 .app-trophy--page {
   cursor: pointer;
-  padding: 6px;
+  padding: 8px;
 }
 
 .app-trophy--page .app-trophy__picture {
@@ -1268,9 +1266,8 @@ a {
 }
 
 .app-trophy--page .app-trophy__picture img {
-  width: 72px;
-  height: 72px;
-  padding: 12px;
+  width: 100%;
+  height: 100%;
 }
 
 .app-trophy--page .app-trophy__progress-value {
@@ -1303,7 +1300,7 @@ a {
 .app-trophy--modal .app-trophy__picture {
   display: inline-block;
   float: none;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   width: 200px;
   height: 200px;
 }
@@ -1311,12 +1308,12 @@ a {
 .app-trophy--modal .app-trophy__picture img {
   width: 164px;
   height: 164px;
-  padding: 18px;
+  padding: 16px;
 }
 
 .app-trophy--modal .app-trophy__progress-bar {
   display:  block;
-  padding: 18px;
+  padding: 16px;
 }
 
 .app-trophy--modal .app-trophy__progress-value {
@@ -1671,8 +1668,8 @@ a {
   line-height: initial;
   direction: rtl;
   float: right;
-  margin-top: -26px;
-  margin-right: 10px;
+  margin-top: -28px;
+  margin-right: 12px;
 }
 
 .app-game__lost-pieces-group--pawn {
@@ -1905,7 +1902,7 @@ a {
   font-size: 24px;
   height: 24px;
   line-height: 24px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .app-game__result-name {
@@ -1920,7 +1917,7 @@ a {
   position: relative;
   display: inline-block;
   width:  100%;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .app-game__result-icon.is-winner {
@@ -2119,6 +2116,10 @@ a {
     width: 40px;
     height: 40px;
     min-width: 40px;
+  }
+
+  .app-button__fixed .app-button--invite-friends {
+    display: none;
   }
 
   .app-button__fixed--color .app-button--color:nth-of-type(2) {
@@ -2450,11 +2451,11 @@ a {
     vertical-align: bottom
   }
 
-  .app-create-game__choices .app-button:nth-of-type(3n + 3) {
+  .app-create-game__choices .app-button:nth-of-type(4n + 4) {
     margin-right: 0; 
   }
 
-  .app-create-game__choices .app-button:nth-of-type(1n + 4) {
+  .app-create-game__choices .app-button:nth-of-type(1n + 5) {
     margin-bottom: 0; 
   }
 }
@@ -2751,20 +2752,22 @@ a {
   }
 
   .app-create-game__choices .app-button {
-    width: calc(50% - 6px);
+    width: 32%;
+    margin-right: 2%;
+    margin-bottom: 2%;
   }
 
-  .app-create-game__choices .app-button:nth-of-type(2n + 2) {
+  .app-create-game__choices .app-button:nth-of-type(3n + 3) {
     margin-right: 0; 
   }
 
-  .app-create-game__choices .app-button:nth-of-type(1n + 5) {
+  .app-create-game__choices .app-button:nth-of-type(1n + 7) {
     margin-bottom: 0; 
   }
 
   .app-profile__info-title {
-    font-size: 21px;
-    margin-bottom: 6px;
+    font-size: 20px;
+    margin-bottom: 8px;
   }
 }
 
@@ -2806,6 +2809,7 @@ a {
   .app-profile__name {
     line-height: 15px;
     font-size: 15px;
+    margin-bottom: 5px;
   }
 
   .app-profile__avatar {
@@ -2852,7 +2856,7 @@ a {
     margin-top: 1px;
   }
 
-  .app-head--game {
+  .app-head {
     padding: 8px;
   }
 
@@ -2951,8 +2955,17 @@ a {
     font-size: 21px;
   }
 
+  .app-modal__content {
+    padding: 16px;
+  }
+
   .app-ranking__toggle-content {
     display: block;
+  }
+
+  .app-ranking__toggle-content .app-button {
+    min-width: 0;
+    padding: 0 8px;
   }
 
   .app-ranking__toggle-content .app-button:nth-child(2n +2) {
@@ -2963,6 +2976,10 @@ a {
   .app-game__box.selected,
   .app-game__box.is-check {
     border-width: 2px;
+  }
+
+  .app-element .app-element__head {
+    padding: 8px;
   }
 
   .app-element--small .app-element__body {

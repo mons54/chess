@@ -164,6 +164,12 @@
                     </a>
                     <a class="mdl-navigation__link" 
                        href
+                       ng-click="inviteFriends()">
+                        <i class="material-icons">person_add</i>
+                        {{ 'invite' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href
                        ng-click="closeDrawer(); logout()">
                         <i class="material-icons" role="presentation">power_settings_new</i>
                         {{ 'logout' | translate }}
@@ -179,11 +185,14 @@
                 </footer>
             </div>
 
-            <div class="app-button__fixed" ng-class="{'app-button__fixed--pagination': pages }">
+            <div ng-hide="isGame" class="app-button__fixed" ng-class="{'app-button__fixed--pagination': pages }">
                 <button class="app-button app-button--create-game mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-                        ng-hide="isGame"
                         show-modal="#modal-create-game">
                     <i class="material-icons">games</i>
+                </button>
+                <button class="app-button app-button--invite-friends mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+                        ng-click="inviteFriends()">
+                    <i class="material-icons">person_add</i>
                 </button>
             </div>
 

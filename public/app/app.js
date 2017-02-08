@@ -31,7 +31,7 @@
         'trophies'
     ]).
 
-    run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user', 'socket', 'modal', 'facebook', 'google', 'translator',
+    run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user', 'socket', 'modal', 'facebook', 'google', 'translator', 'utils',
 
         /**
          * @param {object} $rootScope Global scope
@@ -45,7 +45,7 @@
          * @param {object} facebook Facebook service
          * @param {object} google Google service
          */
-        function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator) {
+        function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator, utils) {
 
             $rootScope.$on('$routeChangeStart', function() {
 
@@ -108,6 +108,8 @@
             $rootScope.lang = function () {
                 return translator.lang;
             };
+
+            $rootScope.inviteFriends = utils.inviteFriends;
 
             function logout() {
                 $rootScope.loading = true;

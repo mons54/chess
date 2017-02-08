@@ -40,7 +40,7 @@
 }
 
 .app-head .app-button__create-game {
-  left: 10px;
+  left: 12px;
   right: initial;
 }
 
@@ -51,7 +51,7 @@
 
 .app-search__game-edit {
   right: initial;
-  left: 30px;
+  left: 28px;
 }
 
 .app-form__select-grid select.mdl-cell--6-col {
@@ -276,6 +276,7 @@
 }
 
 .app-ranking__spinner {
+  direction: ltr;
   right: initial;
   left: 10px;
 }
@@ -331,8 +332,9 @@
 }
 
 @media (max-width: 479px) {
-  .app-create-game__choices .app-button:nth-of-type(2n + 2) {
-    margin-left: 0; 
+
+  .app-head {
+    padding: 8px;
   }
 
   .app-head .app-button__create-game {
@@ -342,9 +344,27 @@
   .app-button__fixed {
     left: 16px;
   }
+
+  .app-ranking__toggle-content .app-button:nth-child(2n +2) {
+    float: left;
+  }
 }
 
 @media screen and (max-width: 599px) {
+
+  #modal-create-game .app-modal__head {
+    display: none;
+  }
+
+  .app-create-game__choices .app-button {
+    margin-right: 0;
+    margin-left: 2%;
+  }
+
+  .app-create-game__choices .app-button:nth-of-type(3n + 3) {
+    margin-left: 0; 
+  }
+
   .app-button__fixed {
     left: 16px;
     right: initial;
