@@ -7,7 +7,8 @@ module.exports = function (app) {
         bodyParser = require('body-parser'),
         staticPath = dirname + '/public/',
         dictionaries = {},
-        acceptsLanguages;
+        acceptsLanguages,
+        defaultLanguage = 'en';
 
     require('fs').readdirSync(staticPath + 'json/dictionaries').forEach(function (file) {
         
@@ -21,7 +22,9 @@ module.exports = function (app) {
         };
     });
 
-    acceptsLanguages = Object.keys(dictionaries);
+    acceptsLanguages = Object.keys(dictionaries).sort(function (a, b) {
+        return a === defaultLanguage ? -1 : 1;
+    });
 
     mongoose.connect('mongodb://127.0.0.1:27017/chess_new');
 
@@ -36,6 +39,22 @@ module.exports = function (app) {
         var data = getData(req);
 
         data.facebook = true;
+
+        res.render('index', data);
+    });
+
+    app.get('/:lang([a-z]{2})/*', function (req, res) {
+        
+        var data,
+            lang = req.params.lang;
+
+        if (!dictionaries.hasOwnProperty(lang)) {
+            res.status(406).send('Invalid language');
+            return;
+        }
+
+        data = dictionaries[lang];
+        data.facebook = false;
 
         res.render('index', data);
     });
@@ -55,7 +74,7 @@ module.exports = function (app) {
             lang = req.acceptsLanguages(acceptsLanguages);
 
         if (!dictionaries.hasOwnProperty(lang)) {
-            lang = 'en';
+            lang = defaultLanguage;
         }
 
         data = dictionaries[lang];
