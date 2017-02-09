@@ -85,8 +85,11 @@ module.exports = function (io) {
 
         var self = this;
 
-        db.findOne('users', request)
+        db.findOne('users', request, '_id name avatar facebookId lang dataGame colorGame sound blitz rapid unauthorized blackList trophies')
         .then(function (response) {
+
+            data.name = data.name.substr(0, 30);
+            data.lang = data.lang.substr(0, 2);
 
             if (!response) {
                 return db.save('users', Object.assign(data, {
@@ -135,14 +138,22 @@ module.exports = function (io) {
             
             return self.init(socket, response);
         })
-        .then(function () {
-            var gid = self.getUserGame(socket.uid);
+        .then(function (response) {
+            var gid = self.getUserGame(response.id);
             if (gid) {
                 socket.join(moduleGame.getRoom(gid), function () {
                     socket.emit('startGame', gid);
                 });
             }
-            socket.emit('connected');
+            socket.emit('connected', {
+                uid: response.id,
+                avatar: response.avatar,
+                name: response.name,
+                lang: response.lang,
+                dataGame: response.dataGame,
+                colorGame: response.colorGame,
+                sound: response.sound
+            });
         });
     };
 
@@ -159,10 +170,52 @@ module.exports = function (io) {
         
         var self = this;
 
-        return db.findOne('users', { _id: db.objectId(socket.uid) })
+        return db.findOne('users', { _id: db.objectId(socket.uid) }, 'blitz rapid unauthorized blackList trophies')
         .then(function (response) {
             return self.init(socket, response);
         });
+    };
+
+    Module.prototype.updateUser = function (uid, data) {
+
+        var saveData = {};
+
+        if (data.edited) {
+            saveData.edited = true;
+        }
+
+        if (typeof data.avatar === 'string' && (/^(https?:)?\/\/[^\s]+\.(jpeg|jpg|gif|png)$/).test(data.avatar)) {
+            saveData.avatar = data.avatar;
+        }
+
+        if (typeof data.name === 'string') {
+            saveData.name = data.name.substr(0, 30);
+        }
+
+        if (typeof data.lang === 'string') {
+            saveData.lang = data.lang.substr(0, 2);
+        }
+
+        if (typeof data.dataGame === 'object') {
+            saveData.dataGame = {
+                color: typeof data.dataGame.color !== 'string' ? null : data.dataGame.color,
+                game: typeof data.dataGame.game !== 'number' ? 0 : data.dataGame.game,
+                pointsMin: typeof data.dataGame.pointsMin !== 'number' ? null : data.dataGame.pointsMin,
+                pointsMax: typeof data.dataGame.pointsMax !== 'number' ? null : data.dataGame.pointsMax
+            };
+        }
+
+        if (typeof data.colorGame === 'string') {
+            saveData.colorGame = data.colorGame;
+        }
+
+        if (typeof data.sound === 'boolean') {
+            saveData.sound = data.sound;
+        }
+
+        if (Object.keys(saveData).length) {
+            db.update('users', { _id: db.objectId(uid) }, saveData);
+        }
     };
 
     Module.prototype.init = function (socket, data) {
@@ -204,15 +257,13 @@ module.exports = function (io) {
             socket.rapid.ranking = response[1] + 1;
 
             socket.emit('user', {
-                uid: socket.uid,
-                name: socket.name,
-                avatar: socket.avatar,
                 blitz: socket.blitz,
                 rapid: socket.rapid,
                 blackList: socket.blackList,
-                lang: data.lang,
                 trophies: data.trophies
             });
+
+            return data;
         });
     };
 

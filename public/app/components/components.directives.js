@@ -78,32 +78,45 @@ directive('showProfile', ['$rootScope', 'socket',
     }
 ]).
 
-directive('modalSettings', ['$rootScope', 'socket',
-    function ($rootScope, socket) {
+directive('modalSettings', ['$rootScope', 'socket', 'user', 'languages', 'colorsGame',
+    function ($rootScope, socket, user, languages, colorsGame) {
         return {
             restrict: 'E',
             scope: true,
             replace: true,
             templateUrl: '/app/components/templates/modal-settings.html',
-            controller: ['$scope', function ($scope) {
-                
-                $scope.settings = $rootScope.user;
+            link: function (scope, element) {
 
-                $scope.langs = {
-                    'ar': "‏العربية‏",
-                    'de': "Deutsch",
-                    'en': "English",
-                    'es': "Español",
-                    'fr': "Français",
-                    'it': "Italiano",
-                    'ja': "日本語",
-                    'nl': "Nederlands",
-                    'pt': "Português",
-                    'ru': "Русский",
-                    'tr': "Türkçe",
-                    'zh': "中文"
+                var defaultValues;
+
+                $rootScope.$watchCollection('user', setValues);
+
+                function setValues(value) {
+
+                    defaultValues = value;
+
+                    scope.settings = {
+                        avatar: value.avatar,
+                        name: value.name,
+                        lang: value.lang,
+                        colorGame: value.colorGame,
+                        sound: false
+                    };
+                }
+
+                scope.reset = function () {
+                    if (scope.settings.sound && !defaultValues.sound) {
+                        element.find('#settings-sound').click();
+                    }
+                    setValues(defaultValues);
                 };
-            }]
+
+                scope.patternName = /^([^`°~@#$%,.<>;*':"^\\/[\]|{}()=+\s][ ]?)+$/;
+
+                scope.languages = languages;
+
+                scope.colorsGame = colorsGame;
+            }
         }
     }
 ]).

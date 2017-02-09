@@ -32,6 +32,8 @@
    "resign":"Desistir",
    "ok":"Validar",
    "cancel":"Cancelar",
+   "reset": "Reset",
+   "settings": "Configurações",
    "create_game":"Criar uma partida",
    "search": "Pesquisa",
    "win":"Vitória",

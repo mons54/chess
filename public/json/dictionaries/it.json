@@ -32,6 +32,8 @@
    "resign":"Abbandonare",
    "ok":"Conferma",
    "cancel":"Annulla",
+   "reset": "Reset",
+   "settings": "Impostazioni",
    "create_game":"Crea una partita",
    "search": "Cerca",
    "win":"Vittoria",

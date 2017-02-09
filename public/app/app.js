@@ -86,12 +86,10 @@
 
             $rootScope.facebookLogin = function () {
                 facebook.login();
-                afterLogin();
             };
 
             $rootScope.googleLogin = function () {
                 google.login();
-                afterLogin();
             };
 
             $rootScope.reconnect = function () {
@@ -130,10 +128,6 @@
              */
             function redirectToGame () {
                 $location.path('/game/' + $rootScope.user.gid);
-            }
-
-            function afterLogin() {
-                modalConnect.hide();
             }
 
             function setLoginStatus() {
@@ -223,15 +217,35 @@
                 redirectToGame();
             });
 
-            socket.on('connected', function () {
+            socket.on('connected', function (data) {
+
+                modalConnect.hide();
+
+                translator.use(data.lang);
+
                 if ($rootScope.isDisconnected) {
                     $route.reload();
                 }
+
+                if (typeof data.dataGame === 'object' && Object.keys(data.dataGame).length) {
+                    user.setDataGame(data.dataGame);
+                }
+
+                if (data.colorGame) {
+                    user.setColorGame(data.colorGame);
+                }
+
+                user.setSound(data.sound);
+
+                delete data.dataGame;
+
+                angular.extend($rootScope.user, data);
+
                 delete $rootScope.refreshAccessToken;
                 delete $rootScope.isDisconnected;
+
                 $rootScope.loading = false;
                 $rootScope.ready = true;
-                translator.use($rootScope.user.lang);
             });
 
             socket.on('trophies', function (data) {
@@ -240,6 +254,17 @@
                     $rootScope.$emit('trophies', data.newTrophies);
                 }, 1000);
             });
+
+            $window.onbeforeunload = function () {
+                if ($rootScope.socketServerDisconnect) {
+                    return;
+                }
+                socket.emit('updateUser', {
+                    dataGame: user.getDataGame(),
+                    colorGame: user.getColorGame(),
+                    sound: user.getSound()
+                });
+            };
 
             $window.fbAsyncInit = function () {
 

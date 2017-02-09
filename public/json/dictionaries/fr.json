@@ -32,6 +32,8 @@
    "resign":"Abandonner",
    "ok":"Valider",
    "cancel":"Annuler",
+   "reset": "Reset",
+   "settings": "Paramètres",
    "create_game":"Creer une partie",
    "search": "Recherche",
    "win":"Victoire",

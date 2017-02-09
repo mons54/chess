@@ -132,11 +132,11 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'user', 'utils', 'para
 
         $scope.paramsGame = paramsGame;
 
-        $scope.challenge = user.getDataChallenge();
+        $scope.challenge = user.getDataGame();
 
         $scope.$watchCollection('challenge', function (value) {
             if (value) {
-                user.setDataChallenge(value);
+                user.setDataGame(value);
             }
         });
 

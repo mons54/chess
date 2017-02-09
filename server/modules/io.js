@@ -24,6 +24,14 @@ module.exports = function (app, io) {
             moduleSocket.googleConnect(socket, data);
         });
 
+        socket.on('updateUser', function (data) {
+            if (!moduleSocket.checkSocket(socket)) {
+                return;
+            }
+
+            moduleSocket.updateUser(socket.uid, data);
+        });
+
         socket.on('joinHome', function (refresh) {
             
             if (!moduleSocket.checkSocket(socket)) {

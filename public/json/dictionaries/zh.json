@@ -32,6 +32,8 @@
    "resign":"認輸",
    "ok":"确认",
    "cancel":"取消",
+   "reset": "复位",
+   "settings": "设定",
    "create_game":"開始對局",
    "search": "搜索",
    "win":"胜利",

@@ -155,13 +155,8 @@
 }
 
 .app-modal__actions button {
-    margin-left: 2%;
-    margin-right: initial;
-}
-
-.app-modal__actions button {
-    margin-left: 2%;
-    margin-right: initial;
+  margin-left: 4px;
+  margin-right: initial;
 }
 
 .app-modal__actions button:last-child {

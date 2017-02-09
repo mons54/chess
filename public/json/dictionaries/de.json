@@ -32,6 +32,8 @@
     "resign":"Aufgeben",
     "ok":"OK",
     "cancel":"Abbrechen",
+    "reset": "Reset",
+    "settings": "Einstellungen",
 	"create_game":"Neue Partie",
     "search": "Suche",
     "win":"Sieg",
