@@ -27,6 +27,10 @@
   float: left;
 }
 
+.app-element .app-element__badge {
+  position: initial;
+}
+
 .app-pagination__content {
   text-align: left;
 }
