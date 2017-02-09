@@ -6,19 +6,16 @@
         <meta name="description" content="<%= description %>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-        <meta property="og:url" content="https://worldofchess.online/<%= lang %>"/>
-        <meta property="og:title" content="<%= title %>" />
+        <meta property="og:url" content="https://www.worldofchess.online/<%= lang %>/"/>
+        <meta property="og:locale" content="<%= lang %>" />
+        <meta property="og:title" content="<%= title %> - World of Chess" />
         <meta property="og:description" content="<%= description %>" />
         <meta property="og:image" content="https://worldofchess.online/images/logo.png" />
         <meta property="fb:app_id" content="1687859708170830" />
 
-        <meta property="og:title" content="<%= title %>" />
-        <meta property="og:description" content="<%= description %>" />
-        <meta property="og:image" content="https://worldofchess.online/images/logo.png" />
-
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@WorldOfChess_" />
-        <meta name="twitter:title" content="<%= title %>" />
+        <meta name="twitter:title" content="<%= title %> - World of Chess" />
         <meta name="twitter:description" content="<%= description %>" />
         <meta name="twitter:image" content="https://worldofchess.online/images/logo.png" />
 
@@ -26,13 +23,26 @@
         
         <title><%= title %> - World of Chess</title>
 
+        <link rel="alternate" hreflang="ar" href="https://www.worldofchess.online/ar/"/>
+        <link rel="alternate" hreflang="de" href="https://www.worldofchess.online/de/"/>
+        <link rel="alternate" hreflang="en" href="https://www.worldofchess.online/en/"/>
+        <link rel="alternate" hreflang="es" href="https://www.worldofchess.online/es/"/>
+        <link rel="alternate" hreflang="fr" href="https://www.worldofchess.online/fr/"/>
+        <link rel="alternate" hreflang="it" href="https://www.worldofchess.online/it/"/>
+        <link rel="alternate" hreflang="ja" href="https://www.worldofchess.online/ja/"/>
+        <link rel="alternate" hreflang="nl" href="https://www.worldofchess.online/nl/"/>
+        <link rel="alternate" hreflang="pt" href="https://www.worldofchess.online/pt/"/>
+        <link rel="alternate" hreflang="ru" href="https://www.worldofchess.online/ru/"/>
+        <link rel="alternate" hreflang="tr" href="https://www.worldofchess.online/tr/"/>
+        <link rel="alternate" hreflang="zh" href="https://www.worldofchess.online/zh/"/>
+        
         <link rel="shortcut icon" href="/images/favicon.ico">
 
         <!-- Page styles -->
         <link href="css/material/material.min.css" rel="stylesheet">
         <link href="css/material/icon.css" rel="stylesheet" >
         <link href="css/style.css" rel="stylesheet">
-        <link ng-if="lang() == 'ar'" ng-href="css/style-ar.css" rel="stylesheet">
+        <link ng-if="lang === 'ar'" ng-href="css/style-ar.css" rel="stylesheet">
     </head>
     <body>
 

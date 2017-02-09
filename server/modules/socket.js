@@ -25,7 +25,7 @@ module.exports = function (io) {
 
         var self = this;
 
-        request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,name,picture', 
+        request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,name,picture,locale', 
             function (error, response, body) {
                 try {
                     
@@ -39,7 +39,8 @@ module.exports = function (io) {
                     self.create(socket, {
                         facebookId: body.id,
                         name: body.name,
-                        avatar: body.picture.data.url
+                        avatar: body.picture.data.url,
+                        lang: body.locale
                     }, { facebookId: body.id });
                 } catch (Error) {
                     console.log(error, response);
@@ -66,7 +67,8 @@ module.exports = function (io) {
                     self.create(socket, {
                         googleId: data.id,
                         name: data.name,
-                        avatar: data.avatar
+                        avatar: data.avatar,
+                        lang: data.lang
                     }, { googleId: data.id });
                 } catch (Error) {
                     console.log(error, response);
@@ -93,19 +95,25 @@ module.exports = function (io) {
                 }));
             }
 
-            var saveData = {};
+            if (!response.edited) {
+                var saveData = {};
 
-            if (data.name && response.name !== data.name) {
-                saveData.name = data.name;
-            }
+                if (data.name && data.name !== response.name) {
+                    saveData.name = data.name;
+                }
 
-            if (data.avatar && (!response || response.avatar !== data.avatar)) {
-                saveData.avatar = data.avatar;
-            }
+                if (data.avatar && data.avatar !== response.avatar) {
+                    saveData.avatar = data.avatar;
+                }
 
-            if (saveData) {
-                db.update('users', { _id: response._id }, saveData);
-                Object.assign(response, saveData);
+                if (data.lang && (!response.lang || data.lang !== response.lang)) {
+                    saveData.lang = data.lang;
+                }
+
+                if (Object.keys(saveData).length) {
+                    db.update('users', { _id: response._id }, saveData);
+                    Object.assign(response, saveData);
+                }
             }
 
             return response;
@@ -151,7 +159,7 @@ module.exports = function (io) {
         
         var self = this;
 
-        return db.findOne('users', { _id: db.ObjectId(socket.uid) })
+        return db.findOne('users', { _id: db.objectId(socket.uid) })
         .then(function (response) {
             return self.init(socket, response);
         });
@@ -202,6 +210,7 @@ module.exports = function (io) {
                 blitz: socket.blitz,
                 rapid: socket.rapid,
                 blackList: socket.blackList,
+                lang: data.lang,
                 trophies: data.trophies
             });
         });
@@ -419,7 +428,7 @@ module.exports = function (io) {
 
     Module.prototype.saveGame = function (game) {
         this.setTimeoutGame(game);
-        db.update('games', { _id: db.ObjectId(game.id) }, {
+        db.update('games', { _id: db.objectId(game.id) }, {
             data: game
         });
     };
@@ -460,9 +469,9 @@ module.exports = function (io) {
         };
 
         db.all([
-            db.findOne('users', { _id: db.ObjectId(white.uid) }),
-            db.findOne('users', { _id: db.ObjectId(black.uid) }),
-            db.update('games', { _id: db.ObjectId(game.id) }, {
+            db.findOne('users', { _id: db.objectId(white.uid) }),
+            db.findOne('users', { _id: db.objectId(black.uid) }),
+            db.update('games', { _id: db.objectId(game.id) }, {
                 result: result,
                 data: game
             })
@@ -513,8 +522,8 @@ module.exports = function (io) {
             blackData['active_' + game.type] = true;
 
             db.all([
-                db.update('users', { _id: db.ObjectId(white.uid) }, whiteData),
-                db.update('users', { _id: db.ObjectId(black.uid) }, blackData)
+                db.update('users', { _id: db.objectId(white.uid) }, whiteData),
+                db.update('users', { _id: db.objectId(black.uid) }, blackData)
             ]).then(function () {
                 self.refreshUser(socketWhite);
                 self.refreshUser(socketBlack);
@@ -522,13 +531,24 @@ module.exports = function (io) {
         });
     };
 
-    Module.prototype.getFinishGame = function (socket, gid) {
-        db.findOne('games', { _id: db.ObjectId(gid) }).then(function (response) {
+    Module.prototype.getGame = function (socket, gid) {
+
+        var objectId = db.objectId(gid);
+
+        if (!objectId) {
+            socket.emit('game', false);
+            return;
+        }
+
+        db.findOne('games', { _id: objectId }).then(function (response) {
+
             if (!response) {
                 socket.emit('game', false);
                 return;
             }
+
             response.data.archived = true;
+
             socket.emit('game', response.data);
         });
     };
@@ -623,7 +643,14 @@ module.exports = function (io) {
     };
 
     Module.prototype.profile = function (socket, data) {
-        db.findOne('users', { _id: db.ObjectId(data.uid) }, 'blitz rapid')
+
+        var objectId = db.objectId(data.uid);
+
+        if (!objectId) {
+            return;
+        }
+
+        db.findOne('users', { _id: objectId }, 'blitz rapid')
         .then(function (response) {
             data.blitz = {
                 points: response.blitz
@@ -766,7 +793,7 @@ module.exports = function (io) {
 
             var self = this;
 
-            db.findOne('users', { _id: db.ObjectId(socket.uid) }, data.type)
+            db.findOne('users', { _id: db.objectId(socket.uid) }, data.type)
             .then(function (response) {
                 var req = {};
                 req[data.type] = { $gt: response[data.type] };
@@ -793,7 +820,7 @@ module.exports = function (io) {
         active['active_' + type] = true;
 
         if (user) {
-            request = { $and: [active, { _id: { $ne: db.ObjectId(socket.uid) } }] };
+            request = { $and: [active, { _id: { $ne: db.objectId(socket.uid) } }] };
         } else {
             request = active;
         }
@@ -1001,7 +1028,7 @@ module.exports = function (io) {
                     25: getProgression(25, points, 2800)
                 };
 
-            db.update('users', { _id: db.ObjectId(uid) }, { trophies: trophies })
+            db.update('users', { _id: db.objectId(uid) }, { trophies: trophies })
             .then(function (response) {
                 if (socket) {
                     socket.emit('trophies', {

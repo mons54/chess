@@ -192,7 +192,7 @@ module.exports = function (app, io) {
                 socket.emit('game', game);
                 socket.emit('messagesGame', moduleGame.getMessages(gid));
             } else {
-                moduleSocket.getFinishGame(socket, gid);
+                moduleSocket.getGame(socket, gid);
             }
         });
 

@@ -56,6 +56,8 @@
 
             $rootScope.$on('$routeChangeSuccess', function(event, toState, fromState) {
 
+                setTitle(toState.title);
+
                 modal('[data-modal]').hide();
                 
                 // Used for refresh user when join home if true
@@ -105,11 +107,16 @@
                 logout();
             };
 
-            $rootScope.lang = function () {
-                return translator.lang;
-            };
+            $rootScope.$on('lang', function (event, value) {
+                $rootScope.lang = value;
+                setTitle($route.current.title);
+            });
 
             $rootScope.inviteFriends = utils.inviteFriends;
+
+            function setTitle(title) {
+                angular.element('title').text(translator.translate(title) + ' - World of Chess');
+            }
 
             function logout() {
                 $rootScope.loading = true;
@@ -224,6 +231,7 @@
                 delete $rootScope.isDisconnected;
                 $rootScope.loading = false;
                 $rootScope.ready = true;
+                translator.use($rootScope.user.lang);
             });
 
             socket.on('trophies', function (data) {
@@ -259,7 +267,7 @@
                 friends: []
             };
 
-            translator.use(navigator.language || navigator.userLanguage || 'en');
+            translator.use(translator.navigator);
             
             (function(d, s, id){
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -293,22 +301,25 @@
             $routeProvider
             .when('/', {
                 name : 'home',
+                title: 'home',
                 templateUrl: '/app/home/templates/home.html',
                 controller: 'homeCtrl'
             })
             .when('/game/:id', {
                 name : 'game',
-                templateUrl: 'app/game/templates/game.html',
+                title: 'game',
                 templateUrl: '/app/game/templates/game.html',
                 controller: 'gameCtrl'
             })
             .when('/ranking', {
                 name : 'ranking',
+                title: 'ranking',
                 templateUrl: '/app/ranking/templates/ranking.html',
                 controller: 'rankingCtrl'
             })
             .when('/trophies', {
                 name : 'trophies',
+                title: 'trophies.title',
                 templateUrl: '/app/trophies/templates/trophies.html',
                 controller: 'trophiesCtrl'
             })

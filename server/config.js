@@ -7,7 +7,6 @@ module.exports = function (app) {
         bodyParser = require('body-parser'),
         staticPath = dirname + '/public/',
         dictionaries = {},
-        acceptsLanguages,
         defaultLanguage = 'en';
 
     require('fs').readdirSync(staticPath + 'json/dictionaries').forEach(function (file) {
@@ -22,10 +21,6 @@ module.exports = function (app) {
         };
     });
 
-    acceptsLanguages = Object.keys(dictionaries).sort(function (a, b) {
-        return a === defaultLanguage ? -1 : 1;
-    });
-
     mongoose.connect('mongodb://127.0.0.1:27017/chess_new');
 
     app.use(express.static(staticPath));
@@ -35,52 +30,26 @@ module.exports = function (app) {
     app.set('view engine', 'ejs');
 
     app.all('/facebook', function (req, res) {
-        
-        var data = getData(req);
-
+        var data = dictionaries[defaultLanguage];
+        data.lang = defaultLanguage;
         data.facebook = true;
-
         res.render('index', data);
     });
 
-    app.get('/:lang([a-z]{2})(/*)?', function (req, res) {
+    app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (req, res) {
         
         var data,
             lang = req.params.lang;
-
-        if (!dictionaries.hasOwnProperty(lang)) {
-            res.status(406).send('Invalid language');
-            return;
-        }
-
-        data = dictionaries[lang];
-        data.facebook = false;
-
-        res.render('index', data);
-    });
-
-    app.get('/([a-z][^.]+)?', function (req, res) {
-        
-        var data = getData(req);
-
-        data.facebook = false;
-
-        res.render('index', data);
-    });
-
-    function getData(req, res) {
-        
-        var data,
-            lang = req.acceptsLanguages(acceptsLanguages);
 
         if (!dictionaries.hasOwnProperty(lang)) {
             lang = defaultLanguage;
         }
 
         data = dictionaries[lang];
+        data.facebook = false;
 
-        return data;
-    }
+        res.render('index', data);
+    });
 };
 
 String.prototype.hash = function() {

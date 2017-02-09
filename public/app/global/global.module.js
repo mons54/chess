@@ -592,11 +592,12 @@ service('user', ['$cookies', function ($cookies) {
  * Service translator
  * @requires $http
  */
-service('translator', ['$http', function($http) {
+service('translator', ['$rootScope', '$http', function($rootScope, $http) {
     return {
         available: ['ar', 'de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'tr', 'zh'],
-        default: 'en',
         lang: null,
+        default: 'en',
+        navigator: navigator.language || navigator.userLanguage,
         data: null,
         use: function (lang) {
 
@@ -616,6 +617,7 @@ service('translator', ['$http', function($http) {
             .then(function (response) {
                 this.lang = lang;
                 this.data = response.data;
+                $rootScope.$emit('lang', lang);
             }.bind(this));
         },
         translate: function (key) {

@@ -24,11 +24,10 @@ constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
  * @requires $rootScope
  * @requires global.service:user
  * @requires global.service:socket
- * @requires global.service:translator
  */
-service('facebook', ['$rootScope', 'user', 'socket', 'translator',
+service('facebook', ['$rootScope', 'user', 'socket',
 
-    function ($rootScope, user, socket, translator) {
+    function ($rootScope, user, socket) {
 
         var self = this;
 
@@ -110,26 +109,19 @@ service('facebook', ['$rootScope', 'user', 'socket', 'translator',
                 user.setLogin(this.name);
             }
             
-            FB.api('/me?fields=first_name,name,locale,gender,currency', function (response) {
+            socket.connect();
 
-                translator.use(response.locale);
-
-                $rootScope.user.gender = response.gender;
-
-                socket.connect();
-
-                if ($rootScope.user.friends.length) {
-                    return;
-                }
+            if ($rootScope.user.friends.length) {
+                return;
+            }
                         
-                $rootScope.user.friends.push(response.id);
+            $rootScope.user.friends.push(this.auth.id);
 
-                FB.api('/me/friends?fields=installed,id,name', function (res) {
-                    angular.forEach(res.data, function (value) {
-                        if (value.installed) {
-                            $rootScope.user.friends.push(value.id);
-                        }
-                    });
+            FB.api('/me/friends?fields=installed,id,name', function (res) {
+                angular.forEach(res.data, function (value) {
+                    if (value.installed) {
+                        $rootScope.user.friends.push(value.id);
+                    }
                 });
             });
         }

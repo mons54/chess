@@ -36,7 +36,8 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
                 accessToken: user.getAuthResponse().access_token,
                 id: user.getId(),
                 avatar: profile.Paa,
-                name: profile.ig
+                name: profile.ig,
+                lang: translator.navigator
             };
         }
 

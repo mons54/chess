@@ -25,9 +25,11 @@ function Module() {
                     unique: true, 
                     sparse: true
                 },
+                edited: Boolean,
                 lastGame: String,
                 name: String,
                 avatar: String,
+                lang: String,
                 blitz: Number,
                 rapid: Number,
                 active_blitz: Boolean,
@@ -95,4 +97,9 @@ Module.prototype.update = function (model, request, set) {
     return this.models[model].update(request, { $set: set }).exec();
 };
 
-Module.prototype.ObjectId = mongoose.Types.ObjectId;
+Module.prototype.objectId = function (id) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return null;
+    }
+    return mongoose.Types.ObjectId(id);
+};
