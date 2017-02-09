@@ -235,8 +235,8 @@
             });
 
             socket.on('trophies', function (data) {
-                $rootScope.user.trophies = data.trophies;
                 $timeout(function () {
+                    $rootScope.user.trophies = data.trophies;
                     $rootScope.$emit('trophies', data.newTrophies);
                 }, 1000);
             });

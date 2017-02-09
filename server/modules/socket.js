@@ -485,13 +485,14 @@ module.exports = function (io) {
             data.black.countGame = black.countGame + 1;
 
             var socketWhite = self.getSocket(white.uid),
-                socketBlack = self.getSocket(black.uid);
+                socketBlack = self.getSocket(black.uid),
+                reverseType = game.type === 'blitz' ? 'rapid' : 'blitz';
 
             self.setTrophies(
                 white.uid, 
                 response[0].trophies, 
                 data.white.success, 
-                response[0].blitz > response[0].rapid ? response[0].blitz : response[0].rapid,
+                data.white.points > response[0][reverseType] ? data.white.points : response[0][reverseType],
                 socketWhite
             );
 
@@ -499,7 +500,7 @@ module.exports = function (io) {
                 black.uid, 
                 response[1].trophies,
                 data.black.success, 
-                response[1].blitz > response[1].rapid ? response[1].blitz : response[1].rapid,
+                data.black.points > response[1][reverseType] ? data.black.points : response[1][reverseType],
                 socketBlack
             );
 
@@ -1045,7 +1046,7 @@ module.exports = function (io) {
                     return res;
                 }
 
-                res = Math.round(v / x * 100);
+                res = Math.floor(v / x * 100);
 
                 if (res > 100) {
                     res = 100;
