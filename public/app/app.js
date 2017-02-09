@@ -299,6 +299,7 @@
             .when('/game/:id', {
                 name : 'game',
                 templateUrl: 'app/game/templates/game.html',
+                templateUrl: '/app/game/templates/game.html',
                 controller: 'gameCtrl'
             })
             .when('/ranking', {
