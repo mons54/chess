@@ -204,10 +204,15 @@
                         ng-click="inviteFriends()">
                     <i class="material-icons">person_add</i>
                 </button>
+                <button class="app-button app-button--settings mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+                        show-modal="#modal-settings">
+                    <i class="material-icons">settings</i>
+                </button>
             </div>
 
             <div class="app-pagination app-pagination--fixed" pagination></div>
 
+            <modal-settings></modal-settings>
             <modal-profile></modal-profile>
             <modal-trophy></modal-trophy>
             <modal-create-game></modal-create-game>

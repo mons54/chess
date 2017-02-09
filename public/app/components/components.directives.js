@@ -78,6 +78,36 @@ directive('showProfile', ['$rootScope', 'socket',
     }
 ]).
 
+directive('modalSettings', ['$rootScope', 'socket',
+    function ($rootScope, socket) {
+        return {
+            restrict: 'E',
+            scope: true,
+            replace: true,
+            templateUrl: '/app/components/templates/modal-settings.html',
+            controller: ['$scope', function ($scope) {
+                
+                $scope.settings = $rootScope.user;
+
+                $scope.langs = {
+                    'ar': "‏العربية‏",
+                    'de': "Deutsch",
+                    'en': "English",
+                    'es': "Español",
+                    'fr': "Français",
+                    'it': "Italiano",
+                    'ja': "日本語",
+                    'nl': "Nederlands",
+                    'pt': "Português",
+                    'ru': "Русский",
+                    'tr': "Türkçe",
+                    'zh': "中文"
+                };
+            }]
+        }
+    }
+]).
+
 directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'user', 'paramsGame', 
 
     function ($rootScope, $route, modal, socket, user, paramsGame) {

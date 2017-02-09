@@ -1,0 +1,18 @@
+<div id="modal-settings" 
+     class="app-modal app-modal__bg" 
+     role="dialog" 
+     aria-hidden="true"
+     data-modal>
+    <div class="app-modal__content">
+        <div class="app-form__textfield">
+            <i class="material-icons">person</i>
+            <input type="text" ng-model="settings.name">
+        </div>
+        <div class="app-form__select">
+            <i class="material-icons">language</i>
+            <select ng-model="settings.lang" 
+                    ng-options="key as value for (key, value) in langs">
+            </select>
+        </div>
+    </div>
+</div>
