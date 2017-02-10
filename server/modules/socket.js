@@ -579,8 +579,13 @@ module.exports = function (io) {
                 db.update('users', { _id: db.objectId(white.uid) }, whiteData),
                 db.update('users', { _id: db.objectId(black.uid) }, blackData)
             ]).then(function () {
-                this.refreshUser(socketWhite);
-                this.refreshUser(socketBlack);
+                if (socketWhite) {
+                    this.refreshUser(socketWhite);
+                }
+
+                if (socketBlack) {
+                    this.refreshUser(socketBlack);
+                }
             }.bind(this));
         }.bind(this));
     };
