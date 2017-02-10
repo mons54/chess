@@ -3,6 +3,26 @@
   overflow: hidden;
 }
 
+.mdl-spinner {
+  direction: ltr;
+}
+
+.mdl-switch__track,
+.mdl-switch__thumb {
+  left: initial;
+  right: 0;
+}
+
+.mdl-switch__ripple-container {
+  left: initial;
+  right: -14px;
+}
+
+.mdl-switch.is-checked .mdl-switch__thumb {
+  left: initial;
+  right: 16px;
+}
+
 .app__pull-left {
   float: right;
 }
@@ -85,7 +105,12 @@
 
 .app-button__fixed {
   right: initial;
-  left: 36px;
+  left: 30px;
+}
+
+.app-button__fixed .app-button {
+  margin-left: initial;
+  margin-right: 6px;
 }
 
 .app-button__fixed--game.app-button__fixed--action {
@@ -93,12 +118,11 @@
   left: 102px;
 }
 
-.app-button__fixed--action .app-button {
-  margin-left: 0;
-  margin-right: 6px;
+.app-button__fixed .app-button:first-child {
+  margin-right: 0;
 }
 
-.app-button__fixed .app-button:last-child {
+.app-button__fixed--color .app-button.app-button--color {
   margin-right: 0;
 }
 
@@ -139,6 +163,40 @@
 .mdl-layout__drawer.is-visible {
   -webkit-transform: translateX(0);
   transform: translateX(0);
+}
+
+.app-modal__actions button {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+.app-modal__actions button:last-child {
+  margin-left: 0;
+}
+
+.app-form__choices-colors button {
+  margin-right: 0;
+  margin-left: 24px;
+}
+
+.app-modal__settings-field, 
+.app-form__textfield > .app-modal__settings-field, 
+.app-form__select > .app-modal__settings-field {
+  margin-left: 0;
+  margin-right: 40px;
+}
+
+.app-modal__settings-icon, 
+.app-form__textfield > .app-modal__settings-icon, 
+.app-form__select > .app-modal__settings-icon {
+  float: right;
+}
+
+.app-settings__loader,
+.app-settings__done {
+  position: absolute;
+  left: initial;
+  right: 24px;
 }
 
 .app-profile__info {
@@ -275,7 +333,6 @@
 }
 
 .app-ranking__spinner {
-  direction: ltr;
   right: initial;
   left: 10px;
 }
@@ -332,6 +389,10 @@
 
 @media (max-width: 479px) {
 
+  .app-form__choices-colors button {
+    margin-left: 8px;
+  }
+
   .app-head {
     padding: 8px;
   }
@@ -350,10 +411,6 @@
 }
 
 @media screen and (max-width: 599px) {
-
-  #modal-create-game .app-modal__head {
-    display: none;
-  }
 
   .app-create-game__choices .app-button {
     margin-right: 0;

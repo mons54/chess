@@ -288,7 +288,6 @@
             $rootScope.loading = true;
 
             $rootScope.user = {
-                gender: 1,
                 friends: []
             };
 

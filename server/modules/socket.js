@@ -2,7 +2,8 @@
 
 var request = require('request'),
     db = require(dirname + '/server/modules/db'),
-    moduleGame = require(dirname + '/server/modules/game');
+    moduleGame = require(dirname + '/server/modules/game'),
+    utils = require(dirname + '/public/utils');
 
 module.exports = function (io) {
 
@@ -23,8 +24,6 @@ module.exports = function (io) {
 
     Module.prototype.facebookConnect = function (socket, data) {
 
-        var self = this;
-
         request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,name,picture,locale', 
             function (error, response, body) {
                 try {
@@ -36,22 +35,26 @@ module.exports = function (io) {
                         return;
                     }
 
-                    self.create(socket, {
-                        facebookId: body.id,
+                    var facebookId = body.id;
+
+                    data = this.getBasicUserData({
                         name: body.name,
                         avatar: body.picture.data.url,
                         lang: body.locale
-                    }, { facebookId: body.id });
+                    });
+
+                    data.facebookId = facebookId;
+
+                    this.create(socket, data, { facebookId: facebookId });
+
                 } catch (Error) {
                     console.log(error, response);
                 }
-            }
+            }.bind(this)
         );
     };
 
     Module.prototype.googleConnect = function (socket, data) {
-        
-        var self = this;
 
         request.get('https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=' + data.accessToken, 
             function (error, response, body) {
@@ -64,16 +67,22 @@ module.exports = function (io) {
                         return;
                     }
 
-                    self.create(socket, {
-                        googleId: data.id,
+                    var googleId = data.id;
+
+                    data = this.getBasicUserData({
                         name: data.name,
                         avatar: data.avatar,
                         lang: data.lang
-                    }, { googleId: data.id });
+                    });
+
+                    data.googleId = googleId;
+
+                    this.create(socket, data, { googleId: googleId });
+
                 } catch (Error) {
                     console.log(error, response);
                 }
-            }
+            }.bind(this)
         );
     };
 
@@ -83,13 +92,8 @@ module.exports = function (io) {
             return;
         }
 
-        var self = this;
-
-        db.findOne('users', request, '_id name avatar facebookId lang dataGame colorGame sound blitz rapid unauthorized blackList trophies')
+        db.findOne('users', request)
         .then(function (response) {
-
-            data.name = data.name.substr(0, 30);
-            data.lang = data.lang.substr(0, 2);
 
             if (!response) {
                 return db.save('users', Object.assign(data, {
@@ -98,32 +102,19 @@ module.exports = function (io) {
                 }));
             }
 
-            if (!response.edited) {
-                var saveData = {};
-
-                if (data.name && data.name !== response.name) {
-                    saveData.name = data.name;
-                }
-
-                if (data.avatar && data.avatar !== response.avatar) {
-                    saveData.avatar = data.avatar;
-                }
-
-                if (data.lang && (!response.lang || data.lang !== response.lang)) {
-                    saveData.lang = data.lang;
-                }
-
-                if (Object.keys(saveData).length) {
-                    db.update('users', { _id: response._id }, saveData);
-                    Object.assign(response, saveData);
-                }
+            if (!response.edited &&
+                ((data.name && data.name !== response.name) ||
+                (data.avatar && data.avatar !== response.avatar) ||
+                (data.lang && (!response.lang || data.lang !== response.lang)))) {
+                db.update('users', { _id: response._id }, data);
+                Object.assign(response, data);
             }
 
             return response;
         })
         .then(function (response) {
 
-            var connected = self.getSocket(response.id);
+            var connected = this.getSocket(response.id);
 
             if (connected) {
                 connected.disconnect(true);
@@ -134,12 +125,12 @@ module.exports = function (io) {
             socket.name = response.name;
             socket.facebookId = response.facebookId;
 
-            self.connected[response.id] = socket.id;
+            this.connected[response.id] = socket.id;
             
-            return self.init(socket, response);
-        })
+            return this.init(socket, response);
+        }.bind(this))
         .then(function (response) {
-            var gid = self.getUserGame(response.id);
+            var gid = this.getUserGame(response.id);
             if (gid) {
                 socket.join(moduleGame.getRoom(gid), function () {
                     socket.emit('startGame', gid);
@@ -154,46 +145,51 @@ module.exports = function (io) {
                 colorGame: response.colorGame,
                 sound: response.sound
             });
-        });
+        }.bind(this)).catch(console.log);
     };
 
     Module.prototype.joinHome = function (socket) {
-        var self = this;
         socket.join('home', function () {
             socket.emit('listGames', moduleGame.createdGame);
             socket.emit('listChallenges', socket.challenges);
-            self.listChallengers();
-        });
+            this.listChallengers();
+        }.bind(this));
     };
 
     Module.prototype.refreshUser = function (socket) {
-        
-        var self = this;
-
         return db.findOne('users', { _id: db.objectId(socket.uid) }, 'blitz rapid unauthorized blackList trophies')
         .then(function (response) {
-            return self.init(socket, response);
-        });
+            return this.init(socket, response);
+        }.bind(this));
     };
 
-    Module.prototype.updateUser = function (uid, data) {
+    Module.prototype.getBasicUserData = function (data) {
+        
+        var userData = {};
 
-        var saveData = {};
-
-        if (data.edited) {
-            saveData.edited = true;
+        if (typeof data.avatar === 'string' && 
+            utils.patterns.avatar.test(data.avatar)) {
+            userData.avatar = data.avatar.trim();
         }
 
-        if (typeof data.avatar === 'string' && (/^(https?:)?\/\/[^\s]+\.(jpeg|jpg|gif|png)$/).test(data.avatar)) {
-            saveData.avatar = data.avatar;
-        }
-
-        if (typeof data.name === 'string') {
-            saveData.name = data.name.substr(0, 30);
+        if (typeof data.name === 'string' &&
+            utils.patterns.name.test(data.name)) {
+            userData.name = data.name.trim().substr(0, 30);
         }
 
         if (typeof data.lang === 'string') {
-            saveData.lang = data.lang.substr(0, 2);
+            userData.lang = data.lang.substr(0, 2);
+        }
+
+        return userData;
+    };
+
+    Module.prototype.updateUser = function (socket, data) {
+
+        var saveData = this.getBasicUserData(data);
+
+        if (data.edited) {
+            saveData.edited = true;
         }
 
         if (typeof data.dataGame === 'object') {
@@ -214,7 +210,16 @@ module.exports = function (io) {
         }
 
         if (Object.keys(saveData).length) {
-            db.update('users', { _id: db.objectId(uid) }, saveData);
+            return db.update('users', { _id: db.objectId(socket.uid) }, saveData).then(function () {
+                Object.assign(data, saveData);
+                if (data.name) {
+                    socket.name = data.name;
+                }
+                if (data.avatar) {
+                    socket.avatar = data.avatar;
+                }
+                return data;
+            });
         }
     };
 
@@ -244,8 +249,6 @@ module.exports = function (io) {
         };
         socket.blackList = blackList;
         socket.trophies = data.trophies;
-
-        var self = this;
 
         return db.all([
             db.count('users', { active_blitz: true, blitz: { $gt: data.blitz } }),
@@ -304,7 +307,7 @@ module.exports = function (io) {
         this.deleteChallenges(socket);
         this.deleteChallenges(socketOpponent);
 
-        var self = this, white, black, type = dataGame.game.type;
+        var white, black, type = dataGame.game.type;
 
         if (dataGame.color === 'white') {
             white = {
@@ -365,16 +368,16 @@ module.exports = function (io) {
 
             moduleGame.setGame(response.id, game);
 
-            self.userGames[socket.uid] = response.id;
-            self.userGames[socketOpponent.uid] = response.id;
+            this.userGames[socket.uid] = response.id;
+            this.userGames[socketOpponent.uid] = response.id;
 
             socket.join(room);
             socketOpponent.join(room);
 
-            self.setTimeoutGame(game);
+            this.setTimeoutGame(game);
 
             io.to(room).emit('startGame', response.id);
-        });
+        }.bind(this));
     };
 
     Module.prototype.clearTimeoutGame = function (gid) {
@@ -488,8 +491,7 @@ module.exports = function (io) {
 
         this.clearTimeoutGame(game.id);
 
-        var self = this,
-            white = game.white,
+        var white = game.white,
             black = game.black,
             result = game.result.value,
             hashGame = null,
@@ -528,18 +530,18 @@ module.exports = function (io) {
             })
         ]).then(function (response) {
 
-            data.white.success = self.getNewSuccess(response[0].success, result, 1);
-            data.black.success = self.getNewSuccess(response[1].success, result, 2);
-            data.white.blackList = self.getNewBlackList(response[0].blackList, response[0].lastGame, hashGame, game, 'white');
-            data.black.blackList = self.getNewBlackList(response[1].blackList, response[1].lastGame, hashGame, game, 'black');
+            data.white.success = this.getNewSuccess(response[0].success, result, 1);
+            data.black.success = this.getNewSuccess(response[1].success, result, 2);
+            data.white.blackList = this.getNewBlackList(response[0].blackList, response[0].lastGame, hashGame, game, 'white');
+            data.black.blackList = this.getNewBlackList(response[1].blackList, response[1].lastGame, hashGame, game, 'black');
             data.white.countGame = white.countGame + 1;
             data.black.countGame = black.countGame + 1;
 
-            var socketWhite = self.getSocket(white.uid),
-                socketBlack = self.getSocket(black.uid),
+            var socketWhite = this.getSocket(white.uid),
+                socketBlack = this.getSocket(black.uid),
                 reverseType = game.type === 'blitz' ? 'rapid' : 'blitz';
 
-            self.setTrophies(
+            this.setTrophies(
                 white.uid, 
                 response[0].trophies, 
                 data.white.success, 
@@ -547,7 +549,7 @@ module.exports = function (io) {
                 socketWhite
             );
 
-            self.setTrophies(
+            this.setTrophies(
                 black.uid, 
                 response[1].trophies,
                 data.black.success, 
@@ -577,10 +579,10 @@ module.exports = function (io) {
                 db.update('users', { _id: db.objectId(white.uid) }, whiteData),
                 db.update('users', { _id: db.objectId(black.uid) }, blackData)
             ]).then(function () {
-                self.refreshUser(socketWhite);
-                self.refreshUser(socketBlack);
-            });
-        });
+                this.refreshUser(socketWhite);
+                this.refreshUser(socketBlack);
+            }.bind(this));
+        }.bind(this));
     };
 
     Module.prototype.getGame = function (socket, gid) {
@@ -843,8 +845,6 @@ module.exports = function (io) {
 
             user = true;
 
-            var self = this;
-
             db.findOne('users', { _id: db.objectId(socket.uid) }, data.type)
             .then(function (response) {
                 var req = {};
@@ -853,16 +853,15 @@ module.exports = function (io) {
                 return db.count('users', req);
             })
             .then(function (response) {
-                page = self.formatPage(Math.ceil((response + 1) / limit));
-                self.initRanking(socket, page, limit, user, data.type, pages);
-            });
+                page = this.formatPage(Math.ceil((response + 1) / limit));
+                this.initRanking(socket, page, limit, user, data.type, pages);
+            }.bind(this));
         }
     };
 
     Module.prototype.initRanking = function (socket, page, limit, user, type, pages) {
 
-        var self = this,
-            active = {},
+        var active = {},
             request,
             data,
             offset,
@@ -934,15 +933,15 @@ module.exports = function (io) {
             position = response[0] + 1;
 
             var result = {
-                ranking: self.getRanking(socket, data, position, response[1], user, type)
+                ranking: this.getRanking(socket, data, position, response[1], user, type)
             };
 
             if (pages) {
-                result.pages = self.getPages(total, offset, limit);
+                result.pages = this.getPages(total, offset, limit);
             }
 
             socket.emit('ranking', result);
-        });
+        }.bind(this));
     };
 
     Module.prototype.getRanking = function (socket, data, position, count, user, type) {
@@ -1037,8 +1036,7 @@ module.exports = function (io) {
 
     Module.prototype.setTrophies = function (uid, oldTrophies, winsCons, points, socket) {
 
-        var self = this,
-            date = new Date();
+        var date = new Date();
 
         date.setDate(date.getDate() - 1);
 

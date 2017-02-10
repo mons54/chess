@@ -37,6 +37,8 @@ constant('languages', {
     'zh': "中文"
 }).
 
+constant('patterns', window.utils.patterns).
+
 /**
  * @ngdoc service
  * @name global.service:utils

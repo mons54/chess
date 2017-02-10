@@ -2,7 +2,9 @@
     <div class="app-profile">
         <div class="app__pull-left">
             <a show-profile="user" href>
-                <img class="app-profile__avatar" ng-src="{{ user.avatar }}">
+                <img avatar
+                     class="app-profile__avatar" 
+                     ng-src="{{ user.avatar }}">
             </a>
         </div>
         <div class="app-profile__name">
@@ -54,7 +56,9 @@
             <tbody>
                 <tr ng-repeat="game in createdGames">
                     <td show-profile="game" class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img class="app-table__avatar" ng-src="{{ game.avatar }}">
+                        <img avatar
+                             class="app-table__avatar" 
+                             ng-src="{{ game.avatar }}">
                         <span class="app-table__name">{{ game.name }}</span>
                     </td>
                     <td class="app-table__points">{{ game.points }}</td>
@@ -98,7 +102,9 @@
             <tbody>
                 <tr ng-repeat="challenge in challenges">
                     <td show-profile="challenge" class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img class="app-table__avatar" ng-src="{{challenge.avatar}}">
+                        <img avatar
+                             class="app-table__avatar" 
+                             ng-src="{{challenge.avatar}}">
                         <span class="app-table__name">{{ challenge.name }}</span>
                     </td>
                     <td class="app-table__points">{{ challenge.points }}</td>
@@ -137,7 +143,9 @@
             <tbody>
                 <tr ng-repeat="challenger in challengers">
                     <td show-profile="challenger" class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img class="app-table__avatar" ng-src="{{challenger.avatar}}">
+                        <img avatar
+                             class="app-table__avatar" 
+                             ng-src="{{challenger.avatar}}">
                         <span class="app-table__name">{{ challenger.name }}</span>
                     </td>
                     <td>
@@ -180,7 +188,9 @@
             <tbody>
                 <tr ng-repeat="friend in friends">
                     <td show-profile="friend" class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img class="app-table__avatar" ng-src="{{ friend.avatar }}">
+                        <img avatar
+                             class="app-table__avatar" 
+                             ng-src="{{ friend.avatar }}">
                         <span class="app-table__name">{{ friend.name }}</span>
                     </td>
                     <td title="{{ 'blitz'|translate }}">
@@ -213,18 +223,32 @@
         <div class="app-modal__content">
             <div class="app-profile app-profile--challenger">
                 <div class="app__pull-left">
-                    <img class="app-profile__avatar" ng-src="{{ challenger.avatar }}">
+                    <img avatar
+                         class="app-profile__avatar" 
+                         ng-src="{{ challenger.avatar }}">
                 </div>
                 <div class="app-profile__name">
                     <a class="app-profile__name" href>{{ challenger.name }}</a>
                 </div>
-                <div class="app-profile__info">
-                    <span class="app-icon app-icon__ranking"></span>
-                    <span>{{ challenger.ranking }}</span>
+                <div class="app-profile__info app-profile__info--blitz" title="{{ 'blitz'|translate }}">
+                    <i class="app-icon material-icons">flash_on</i>
+                    <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }} ({{ 'blitz'|translate }})">
+                        {{ challenger.blitz.points }}
+                    </div>
+                    <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }} ({{ 'blitz'|translate }})">
+                        <i class="app-icon material-icons">equalizer</i>
+                        {{ challenger.blitz.ranking | number }}
+                    </div>
                 </div>
-                <div class="app-profile__info">
-                    <span class="app-icon app-icon__points"></span>
-                    <span>{{ challenger.points }}</span>
+                <div class="app-profile__info app-profile__info--rapid" title="{{ 'rapid'|translate }}">
+                    <i class="app-icon material-icons">timer</i>
+                    <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }} ({{ 'rapid'|translate }})">
+                        {{ challenger.rapid.points }}
+                    </div>
+                    <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }} ({{ 'rapid'|translate }})">
+                        <i class="app-icon material-icons">equalizer</i>
+                        {{ challenger.rapid.ranking | number }}
+                    </div>
                 </div>
             </div>
             <form ng-submit="createChallenge(challenger.uid)" role="form">

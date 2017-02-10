@@ -230,7 +230,7 @@
          <div ng-repeat="message in messages" class="app-game__messages">
             <div class="app-game__message" ng-class="{'app-game__message--user': message.uid === user.uid, 'app-game__message--next': message.uid === messages[$index - 1].uid }">
                 <div class="app-game__message-avatar">
-                    <img ng-src="{{ message.avatar }}">
+                    <img avatar ng-src="{{ message.avatar }}">
                 </div>
                 <div class="app-game__message-content">
                     <div class="app-game__message-message">{{ message.message }}</div>
@@ -279,7 +279,8 @@
      ng-hide="hideFixedButton"
      ng-class="{'is-active': showColors}"
      data-colors-game>
-    <button ng-repeat="color in colorsGame"
+    <button type="button"
+            ng-repeat="color in colorsGame"
             ng-click="setColorGame(color)"
             class="app-button app-button--color app-button--color-{{ color }} mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
     </button>
