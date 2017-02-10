@@ -105,7 +105,6 @@ directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 't
                     scope.settings = {
                         edited: true,
                         avatar: value.avatar,
-                        name: value.name,
                         lang: value.lang,
                         colorGame: value.colorGame,
                         sound: value.sound
@@ -212,8 +211,6 @@ directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 't
                 };
 
                 scope.patternAvatar = patterns.avatar;
-
-                scope.patternName = patterns.name;
 
                 scope.languages = languages;
 

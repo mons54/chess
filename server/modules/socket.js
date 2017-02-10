@@ -35,17 +35,12 @@ module.exports = function (io) {
                         return;
                     }
 
-                    var facebookId = body.id;
-
-                    data = this.getBasicUserData({
+                    this.create(socket, {
+                        facebookId: body.id,
                         name: body.name,
                         avatar: body.picture.data.url,
-                        lang: body.locale
-                    });
-
-                    data.facebookId = facebookId;
-
-                    this.create(socket, data, { facebookId: facebookId });
+                        lang: body.locale.substr(0, 2)
+                    }, { facebookId: body.id });
 
                 } catch (Error) {
                     console.log(error, response);
@@ -67,17 +62,12 @@ module.exports = function (io) {
                         return;
                     }
 
-                    var googleId = data.id;
-
-                    data = this.getBasicUserData({
+                    this.create(socket, {
+                        googleId: data.id,
                         name: data.name,
                         avatar: data.avatar,
-                        lang: data.lang
-                    });
-
-                    data.googleId = googleId;
-
-                    this.create(socket, data, { googleId: googleId });
+                        lang: data.lang.substr(0, 2)
+                    }, { googleId: data.id });
 
                 } catch (Error) {
                     console.log(error, response);
@@ -102,12 +92,25 @@ module.exports = function (io) {
                 }));
             }
 
-            if (!response.edited &&
-                ((data.name && data.name !== response.name) ||
-                (data.avatar && data.avatar !== response.avatar) ||
-                (data.lang && (!response.lang || data.lang !== response.lang)))) {
-                db.update('users', { _id: response._id }, data);
-                Object.assign(response, data);
+            var saveData = {};
+
+            if (data.name && data.name !== response.name) {
+                saveData.name = data.name;
+            }
+
+            if (!response.edited && 
+                (data.avatar && data.avatar !== response.avatar)) {
+                saveData.avatar = data.avatar;
+            }
+
+            if (!response.edited && 
+                (data.lang && (!response.lang || data.lang !== response.lang))) {
+                saveData.lang = data.lang.substr(0, 2);
+            }
+
+            if (Object.keys(saveData).length) {
+                db.update('users', { _id: response._id }, saveData);
+                Object.assign(response, saveData);
             }
 
             return response;
@@ -163,33 +166,21 @@ module.exports = function (io) {
         }.bind(this));
     };
 
-    Module.prototype.getBasicUserData = function (data) {
-        
-        var userData = {};
-
-        if (typeof data.avatar === 'string' && 
-            utils.patterns.avatar.test(data.avatar)) {
-            userData.avatar = data.avatar.trim();
-        }
-
-        if (typeof data.name === 'string' &&
-            utils.patterns.name.test(data.name)) {
-            userData.name = data.name.trim().substr(0, 30);
-        }
-
-        if (typeof data.lang === 'string') {
-            userData.lang = data.lang.substr(0, 2);
-        }
-
-        return userData;
-    };
-
     Module.prototype.updateUser = function (socket, data) {
 
-        var saveData = this.getBasicUserData(data);
+        var saveData = {};
 
         if (data.edited) {
             saveData.edited = true;
+        }
+
+        if (typeof data.avatar === 'string' && 
+            utils.patterns.avatar.test(data.avatar)) {
+            saveData.avatar = data.avatar.trim();
+        }
+
+        if (typeof data.lang === 'string') {
+            saveData.lang = data.lang.substr(0, 2);
         }
 
         if (typeof data.dataGame === 'object') {
