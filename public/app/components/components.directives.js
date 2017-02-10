@@ -78,9 +78,154 @@ directive('showProfile', ['$rootScope', 'socket',
     }
 ]).
 
-directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'user', 'paramsGame', 
+directive('avatar', function() {
+    return {
+        link: function(scope, element, attrs) {
+            element.bind('error', function() {
+                attrs.$set('src', '/images/default-avatar.png');
+            });
+        }
+    }
+}).
 
-    function ($rootScope, $route, modal, socket, user, paramsGame) {
+directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 'translator', 'languages', 'colorsGame', 'patterns',
+    function ($rootScope, $timeout, $q, socket, user, translator, languages, colorsGame, patterns) {
+        return {
+            restrict: 'E',
+            scope: true,
+            replace: true,
+            templateUrl: '/app/components/templates/modal-settings.html',
+            link: function (scope, element) {
+
+                var defaultValues;
+
+                $rootScope.$watchCollection('user', setValues);
+
+                function setValues(value) {
+                    scope.settings = {
+                        edited: true,
+                        avatar: value.avatar,
+                        name: value.name,
+                        lang: value.lang,
+                        colorGame: value.colorGame,
+                        sound: value.sound
+                    };
+                    scope.defaultValues = angular.copy(scope.settings);
+
+                    var soundIsChecked = element.find('#settings-sound').is(':checked');
+
+                    if (soundIsChecked !== value.sound) {
+                        element.find('#settings-sound').click();
+                    }
+                }
+
+                function done() {
+                    delete scope.load;
+                    scope.done = true;
+                    $timeout(function () {
+                        delete scope.done;
+                    }, 1000);
+                }
+
+                scope.reset = function () {
+                    setValues(scope.defaultValues);
+                };
+
+                var avatarSrc,
+                    avatarIsValid;
+
+                scope.checkAvatar = checkAvatar;
+
+                function checkAvatar(callback) {
+
+                    if (!avatarSrc && !scope.settingsForm.avatar.$valid) {
+                        return;
+                    }
+
+                    if (avatarSrc && avatarSrc === scope.settings.avatar ||
+                        scope.settings.avatar === scope.defaultValues.avatar) {
+                        scope.settingsForm.avatar.$setValidity('avatarSrc', true);
+                        if (callback) {
+                            callback();
+                        }
+                        return;
+                    }
+
+                    avatarSrc = scope.settings.avatar;
+
+                    var avatar = new Image();
+
+                    avatar.onerror = function() {
+                        $timeout(function() {
+                            scope.settingsForm.avatar.$setValidity('avatarSrc', false);
+                        });
+                        avatarIsValid = false;
+                    };
+
+                    avatar.onload = function() {
+                        avatarIsValid = true;
+                        $timeout(function() {
+                            scope.settingsForm.avatar.$setValidity('avatarSrc', true);
+                        });
+                        if (callback) {
+                            callback();
+                        }
+                    };
+
+                    avatar.src = avatarSrc;
+                }
+
+                function updateUser() {
+                    var data = angular.copy(scope.settings);
+                    data.edited = true;
+                    scope.load = true;
+                    socket.emit('updateUser', data, function (response) {
+
+                        if (response.lang !== $rootScope.user.lang) {
+                            translator.use(response.lang);
+                        }
+
+                        if (response.colorGame) {
+                            user.setColorGame(response.colorGame);
+                        }
+
+                        user.setSound(response.sound);
+
+                        angular.extend($rootScope.user, response);
+                        setValues(response);
+                        done();
+                    });
+                }
+
+                scope.updateUser = function () {
+                    if (angular.equals(scope.defaultValues, scope.settings)) {
+                        done();
+                        return;
+                    }
+
+                    if (!avatarIsValid) {
+                        checkAvatar(updateUser);
+                        return;
+                    }
+
+                    updateUser();
+                };
+
+                scope.patternAvatar = patterns.avatar;
+
+                scope.patternName = patterns.name;
+
+                scope.languages = languages;
+
+                scope.colorsGame = colorsGame;
+            }
+        }
+    }
+]).
+
+directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'paramsGame', 
+
+    function ($rootScope, $route, modal, socket, paramsGame) {
         return {
             restrict: 'E',
             scope: true,
@@ -97,11 +242,9 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'user',
 
                 scope.paramsGame = paramsGame;
 
-                scope.game = user.getDataGame();
-
-                scope.$watchCollection('game', function (value) {
+                $rootScope.$watchCollection('dataGame', function (value) {
                     if (value) {
-                        user.setDataGame(value);
+                        scope.game = value;
                     }
                 });
 

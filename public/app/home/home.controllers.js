@@ -12,9 +12,9 @@ angular.module('home').
  * @requires global.service:utils
  * @requires global.constant:paramsGame
  */
-controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'user', 'utils', 'paramsGame', 'orderByFilter',
+controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame', 'orderByFilter',
     
-    function ($rootScope, $scope, socket, user, utils, paramsGame, orderByFilter) {
+    function ($rootScope, $scope, socket, utils, paramsGame, orderByFilter) {
 
         $scope.orderByFilter = {
             createdGames: {
@@ -132,11 +132,9 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'user', 'utils', 'para
 
         $scope.paramsGame = paramsGame;
 
-        $scope.challenge = user.getDataChallenge();
-
-        $scope.$watchCollection('challenge', function (value) {
+        $rootScope.$watchCollection('dataGame', function (value, oldValue) {
             if (value) {
-                user.setDataChallenge(value);
+                $scope.challenge = value;
             }
         });
 

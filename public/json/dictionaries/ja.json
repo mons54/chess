@@ -32,6 +32,8 @@
    "resign":"投了",
    "ok":"確認",
    "cancel":"キャンセル",
+   "reset": "リセット",
+   "settings": "設定",
    "create_game":"新しいゲーム",
    "search": "検索",
    "win":"勝利",

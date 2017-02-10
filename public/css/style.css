@@ -255,11 +255,84 @@ a {
 }
 
 .app-modal__actions button {
-  margin-right: 2%;
+  margin-right: 4px;
 }
 
 .app-modal__actions button:last-child {
   margin-right: 0;
+}
+
+.app-modal__settings .app-form__textfield,
+.app-modal__settings .app-form__select {
+  padding-top: 0;
+  margin-bottom: 24px;
+}
+
+.app-settings__loader,
+.app-settings__done {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+}
+
+.app-settings__done .app-icon {
+  color: #4CAF50;
+}
+
+.app-done.hide {
+  transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-in;
+  opacity: 0;
+}
+
+.app-form__choices-colors {
+  margin-bottom: 16px;
+}
+
+.app-form__choices-colors button {
+  margin-right: 24px;
+}
+
+.app-form__choices-colors button.checked {
+  border: 3px solid #C0CA33;
+}
+
+.app-form__choices-colors button:last-child {
+  margin-right: 0;
+}
+
+.app-modal__settings-icon,
+.app-form__textfield > .app-modal__settings-icon,
+.app-form__select > .app-modal__settings-icon {
+  float: left;
+  display: inline-block;
+  width: 24px;
+  color: rgba(0,0,0,.54);
+  vertical-align: middle;
+  padding: 8px 0;
+}
+
+.app-form__textfield > .app-modal__settings-icon,
+.app-form__select > .app-modal__settings-icon {
+  padding-top: 4px;
+}
+
+.app-modal__settings-field,
+.app-form__textfield > .app-modal__settings-field,
+.app-form__select > .app-modal__settings-field {
+  margin-left: 40px;
+  width: calc(100% - 40px);
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.app-form__switch {
+  padding-bottom: 24px;
+}
+
+.app-form__switch > .app-modal__settings-field {
+  top: 8px;
 }
 
 .app-form__textfield {
@@ -313,7 +386,12 @@ a {
   text-overflow: ellipsis
 }
 
-.app-form__textfield--float-label>input:not(:focus).mui--is-not-empty~label,.app-form__textfield--float-label>input:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>input:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>textarea:not(:focus).mui--is-not-empty~label,.app-form__textfield--float-label>textarea:not(:focus):not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield--float-label>textarea:not(:focus)[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
+.app-form__textfield--float-label>input:not(:focus).ng-not-empty~label,
+.app-form__textfield--float-label>input:not(:focus):not(:empty):not(.ng-empty):not(.ng-not-empty)~label,
+.app-form__textfield--float-label>input:not(:focus)[value]:not([value=""]):not(.ng-empty):not(.ng-not-empty)~label,
+.app-form__textfield--float-label>textarea:not(:focus).ng-not-empty~label,
+.app-form__textfield--float-label>textarea:not(:focus):not(:empty):not(.ng-empty):not(.ng-not-empty)~label,
+.app-form__textfield--float-label>textarea:not(:focus)[value]:not([value=""]):not(.ng-empty):not(.ng-not-empty)~label {
   color: rgba(0,0,0,.54);
   font-size: 12px;
   line-height: 15px;
@@ -404,22 +482,11 @@ a {
   margin-bottom: -1px
 }
 
-.app-form__textfield>input:invalid:not(:focus):not(:required),.app-form__textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:invalid:not(:focus):not(:required),.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
+.app-form__textfield>input.ng-invalid,
+.app-form__textfield>textarea.ng-invalid {
   border-color: #F44336;
-  border-width: 2px
-}
-
-.app-form__textfield>input:invalid:not(:focus):not(:required),.app-form__textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required),.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty),.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty) {
-  height: 33px;
+  border-width: 2px;
   margin-bottom: -1px
-}
-
-.app-form__textfield>input:invalid:not(:focus):not(:required)~label,.app-form__textfield>input:invalid:not(:focus):required.mui--is-not-empty~label,.app-form__textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:not(:required)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:invalid:not(:focus):not(:required)~label,.app-form__textfield>textarea:invalid:not(:focus):required.mui--is-not-empty~label,.app-form__textfield>textarea:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:not(:required)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required.mui--is-not-empty~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty)~label,.app-form__textfield>textarea:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty)~label {
-  color: #F44336
-}
-
-.app-form__textfield:not(.app-form__textfield--float-label)>input:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>textarea:invalid:not(:focus):required.mui--is-empty.mui--is-dirty~label,.app-form__textfield:not(.app-form__textfield--float-label)>textarea:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-dirty~label {
-  color: #F44336
 }
 
 @keyframes mui-node-inserted {
@@ -2118,10 +2185,6 @@ a {
     min-width: 40px;
   }
 
-  .app-button__fixed .app-button--invite-friends {
-    display: none;
-  }
-
   .app-button__fixed--color .app-button--color:nth-of-type(2) {
     bottom: 52px;
   }
@@ -2278,6 +2341,11 @@ a {
   }
 
   .app-head .app-button__create-game {
+    display: none;
+  }
+
+  .app-button__fixed .app-button--invite-friends,
+  .app-button__fixed .app-button--settings {
     display: none;
   }
 }
@@ -2785,6 +2853,24 @@ a {
     padding-left: 12px;
   }
 
+  .app-form__choices-colors .app-modal__settings-field {
+    padding-top: 8px;
+  }
+
+  .app-form__choices-colors button {
+    margin-right: 8px;
+  }
+
+  .app-form__choices-colors button.app-button {
+    height: 24px;
+    width: 24px;
+    min-width: 24px;
+  }
+
+  .app-form__choices-colors button.checked {
+    border-width: 2px;
+  }
+
   .app-table {
     font-size: 15px;
   }
@@ -2956,7 +3042,7 @@ a {
   }
 
   .app-modal__content {
-    padding: 16px;
+    padding: 24px 16px;
   }
 
   .app-ranking__toggle-content {

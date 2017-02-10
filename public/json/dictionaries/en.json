@@ -32,6 +32,8 @@
    "resign":"Resign",
    "ok":"Validate",
    "cancel":"Cancel",
+   "reset": "Reset",
+   "settings": "Settings",
    "create_game":"Create a game",
    "search": "Search",
    "win":"Win",

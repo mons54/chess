@@ -32,6 +32,8 @@
    "resign":"Geef op",
    "ok":"Bevestigen",
    "cancel":"Annuleren",
+   "reset": "Reset",
+   "settings": "Instellingen",
    "create_game":"Maak Game",
    "search": "Zoeken",
    "win":"Winnen",

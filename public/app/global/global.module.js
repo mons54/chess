@@ -17,6 +17,29 @@ angular.module('global', []).
 constant('host', 'www.worldofchess.online').
 
 /**
+ * @ngdoc languages
+ * @name global.constant:languages
+ * @description
+ * Available languages
+ */
+constant('languages', {
+    'ar': "‏العربية‏",
+    'de': "Deutsch",
+    'en': "English",
+    'es': "Español",
+    'fr': "Français",
+    'it': "Italiano",
+    'ja': "日本語",
+    'nl': "Nederlands",
+    'pt': "Português",
+    'ru': "Русский",
+    'tr': "Türkçe",
+    'zh': "中文"
+}).
+
+constant('patterns', window.utils.patterns).
+
+/**
  * @ngdoc service
  * @name global.service:utils
  * @description
@@ -367,7 +390,7 @@ factory('socket', ['$timeout', function ($timeout) {
  * @description 
  * Socket management.
  */
-service('user', ['$cookies', function ($cookies) {
+service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
 
     function get() {
         return $cookies.getObject('user') || {};
@@ -454,7 +477,31 @@ service('user', ['$cookies', function ($cookies) {
          * @param {bool} value Sound
          */
         setSound: function (value) {
+            $rootScope.user.sound = value;
             this.set('sound', value);
+        },
+        /**
+         * @ngdoc function
+         * @name #getColorGame
+         * @methodOf global.service:user
+         * @description 
+         * Get color game
+         * @returns {string} Color
+         */
+        getColorGame: function () {
+            return this.get('colorGame');
+        },
+        /**
+         * @ngdoc function
+         * @name #setColorGame
+         * @methodOf global.service:user
+         * @description 
+         * Set color game
+         * @param {string} value Color
+         */
+        setColorGame: function (value) {
+            $rootScope.user.colorGame = value;
+            this.set('colorGame', value);
         },
         /**
          * @ngdoc function
@@ -502,28 +549,6 @@ service('user', ['$cookies', function ($cookies) {
         },
         /**
          * @ngdoc function
-         * @name #getColorGame
-         * @methodOf global.service:user
-         * @description 
-         * Get color game
-         * @returns {string} Color
-         */
-        getColorGame: function () {
-            return this.get('colorGame');
-        },
-        /**
-         * @ngdoc function
-         * @name #setColorGame
-         * @methodOf global.service:user
-         * @description 
-         * Set color game
-         * @param {string} value Color
-         */
-        setColorGame: function (value) {
-            this.set('colorGame', value);
-        },
-        /**
-         * @ngdoc function
          * @name #getDataGame
          * @methodOf global.service:user
          * @description 
@@ -552,35 +577,6 @@ service('user', ['$cookies', function ($cookies) {
          */
         setDataGame: function (value) {
             this.set('dataGame', value);
-        },
-        /**
-         * @ngdoc function
-         * @name #getDataChallenge
-         * @methodOf global.service:user
-         * @description 
-         * Get data game
-         * @returns {object} Data Challenge
-         */
-        getDataChallenge: function () {
-            var data = this.get('dataChallenge');
-            if (!data) {
-                data = {
-                    color: null,
-                    game: 0
-                };
-            }
-            return data;
-        },
-        /**
-         * @ngdoc function
-         * @name #setDataChallenge
-         * @methodOf global.service:user
-         * @description 
-         * Set data game
-         * @param {string} value Data Challenge
-         */
-        setDataChallenge: function (value) {
-            this.set('dataChallenge', value);
         }
     }
 }]).
@@ -592,9 +588,9 @@ service('user', ['$cookies', function ($cookies) {
  * Service translator
  * @requires $http
  */
-service('translator', ['$rootScope', '$http', function($rootScope, $http) {
+service('translator', ['$rootScope', '$http', 'languages', function($rootScope, $http, languages) {
     return {
-        available: ['ar', 'de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'tr', 'zh'],
+        available: Object.keys(languages),
         lang: null,
         default: 'en',
         navigator: navigator.language || navigator.userLanguage,

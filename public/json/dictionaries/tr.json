@@ -32,6 +32,8 @@
    "resign":"Oyundan Çekil",
    "ok":"Onayla",
    "cancel":"Iptal",
+   "reset": "Sıfırla",
+   "settings": "Ayarlar",
    "create_game":"Yeni bir oyun kur",
    "search": "Arama",
    "win":"Kazan",
