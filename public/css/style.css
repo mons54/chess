@@ -563,7 +563,7 @@ a {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #FF5252;
+  border-color: #795548;
   border-width: 2px
 }
 
@@ -651,13 +651,13 @@ a {
 
 .app-footer {
   text-align: center;
-  height: 20px;
-  line-height: 20px;
+  height: 24px;
+  line-height: 24px;
   padding-bottom: 16px;
 }
 
 .app-layout.is-game .app-footer {
-  padding-bottom: 51px;
+  padding-bottom: 52px;
 }
 
 .app-footer a {
@@ -1443,15 +1443,15 @@ a {
 }
 
 .app-button__fixed.app-button__fixed--game {
-  bottom: 50px;
+  bottom: 52px;
 }
 
 .app-button__fixed--game.app-button__fixed--action {
-  right: 102px;
+  right: 104px;
 }
 
 .app-button__fixed .app-button {
-  margin-left: 6px;
+  margin-left: 8px;
 }
 
 .app-button__fixed .app-button:first-child {
@@ -1460,10 +1460,10 @@ a {
 
 .app-button__fixed--color {
   position: fixed;
-  right: 30px;
+  right: 28px;
   bottom: 46px;
   width: 56px;
-  padding: 0 6px;
+  padding: 0 8px;
 }
 
 .app-button__fixed--color.is-active,
@@ -2175,7 +2175,7 @@ a {
   }
 
   .app-button__fixed {
-    bottom: 14px;
+    bottom: 24px;
     right: 24px;
   }
 
@@ -2183,6 +2183,7 @@ a {
     width: 40px;
     height: 40px;
     min-width: 40px;
+     margin-left: 4px;
   }
 
   .app-button__fixed--color .app-button--color:nth-of-type(2) {
@@ -2213,6 +2214,19 @@ a {
     bottom: 364px;
   }
 
+  .app-button__fixed.app-button__fixed--color {
+    right: 0;
+  }
+
+  .app-button__fixed--color.active,
+  .app-button__fixed--color:hover {
+    height: 470px;
+  }
+
+  .app-button__fixed.app-button__fixed--action {
+    right: 76px;
+  }
+
   .app-game__toggle--played {
     right: 0;
   }
@@ -2223,11 +2237,11 @@ a {
 
   .app-footer {
     font-size: 13px;
+    padding-bottom: 48px;
   }
 
   .app-layout.is-game .app-footer {
-    padding-bottom: 56px;
-    padding-top: 4px;
+    padding-bottom: 68px;
   }
 }
 
@@ -2333,7 +2347,19 @@ a {
 
   .app-button__fixed {
     right: 16px;
-    bottom: 14px;
+    bottom: 16px;
+  }
+
+  .app-button__fixed.app-button__fixed--color {
+    right: -8px;
+  }
+
+  .app-button__fixed.app-button__fixed--action {
+    right: 64px;
+  }
+
+  .app-footer {
+    padding-bottom: 28px;
   }
 
   .app-button__fixed--pagination {
@@ -2354,33 +2380,6 @@ a {
   .mdl-cell--6-col, .mdl-cell--6-col-tablet.mdl-cell--6-col-tablet {
     margin-left: auto;
     margin-right: auto;
-  }
-}
-
-@media screen and (min-width: 600px) and (max-width: 1024px) {
-
-  .app-button__fixed--color {
-    right: 26px;
-    width: 40px;
-  }
-
-  .app-button__fixed--color.active,
-  .app-button__fixed--color:hover {
-    height: 470px;
-  }
-
-  .app-button__fixed.app-button__fixed--action {
-    right: 82px;
-  }
-
-  .app-footer {
-    padding-bottom: 24px;
-    padding-top: 6px;
-  }
-
-  .app-layout.is-game .app-footer {
-    padding-top: 8px;
-    padding-bottom: 56px;
   }
 }
 
@@ -2452,6 +2451,10 @@ a {
     padding: 0;
   }
 
+  .app-layout.is-game .app-footer {
+    padding-top: 16px;
+  }
+
   .app-layout.is-game .mdl-cell {
     margin: 0;
     width: 100%;
@@ -2463,24 +2466,12 @@ a {
     margin-bottom: 8px;
   }
 
-  .app-layout.is-game .app-footer {
-    padding-top: 18px;
-  }
-
   .app-table--game {
     border: 0;
   }
 
   .app-button__fixed.app-button__fixed--game {
-    bottom: 46px;
-  }
-
-  .app-button__fixed--color {
-    right: 4px;
-  }
-
-  .app-button__fixed.app-button__fixed--action {
-    right: 60px;
+    bottom: 52px;
   }
 }
 
@@ -2758,10 +2749,6 @@ a {
     border-radius: 50%;
   }
 
-  .app-button__fixed .app-button .material-icons {
-    font-size: 18px;
-  }
-
   .app-button__fixed--game {
     display: none;
   }
@@ -2781,23 +2768,8 @@ a {
     text-align: center;
   }
 
-  .app-footer {
-    padding-top: 8px;
-    padding-bottom: 24px;
-  }
-
-  .app-layout.is-game .app-footer {
-    padding-top: 6px;
-    padding-bottom: 45px;
-  }
-
-  .app-button__fixed {
-    bottom: 14px;
-    right: 16px;
-  }
-
   .app-button__fixed--pagination {
-    bottom: 59px;
+    bottom: 62px;
   }
 
   .app-profile__stat {

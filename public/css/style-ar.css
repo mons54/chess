@@ -105,21 +105,26 @@
 
 .app-button__fixed {
   right: initial;
-  left: 30px;
-}
-
-.app-button__fixed .app-button {
-  margin-left: initial;
-  margin-right: 6px;
+  left: 36px;
 }
 
 .app-button__fixed--game.app-button__fixed--action {
   right: initial;
-  left: 102px;
+  left: 104px;
+}
+
+.app-button__fixed .app-button {
+  margin-left: initial;
+  margin-right: 8px;
 }
 
 .app-button__fixed .app-button:first-child {
   margin-right: 0;
+}
+
+.app-button__fixed--color {
+  right: initial;
+  left: 28px;
 }
 
 .app-button__fixed--color .app-button.app-button--color {
@@ -338,8 +343,23 @@
 }
 
 @media screen and (max-width: 1024px) {
+
   .app-button__fixed {
+    right: initial;
     left: 24px;
+  }
+
+  .app-button__fixed .app-button {
+    margin-left: initial;
+    margin-right: 4px;
+  }
+
+  .app-button__fixed.app-button__fixed--color {
+    left: 0;
+  }
+
+  .app-button__fixed.app-button__fixed--action {
+    left: 76px;
   }
 
   .app-game__toggle--messages {
@@ -358,26 +378,13 @@
     right: initial;
     left: 16px;
   }
-}
 
-@media screen and (max-width: 1024px) and (min-width: 600px) {
-  .app-button__fixed--color {
-    left: 26px;
+  .app-button__fixed.app-button__fixed--color {
+    left: -8px;
   }
 
   .app-button__fixed.app-button__fixed--action {
-    left: 82px;
-  }
-}
-
-@media screen and (max-width: 745px) {
-  .app-button__fixed.app-button__fixed--action {
-    right: initial;
-    left: 60px;
-  }
-
-  .app-button__fixed--color {
-    left: 4px;
+    left: 64px;
   }
 }
 
@@ -401,10 +408,6 @@
     left: auto;
   }
 
-  .app-button__fixed {
-    left: 16px;
-  }
-
   .app-ranking__toggle-content .app-button:nth-child(2n +2) {
     float: left;
   }
@@ -419,11 +422,6 @@
 
   .app-create-game__choices .app-button:nth-of-type(3n + 3) {
     margin-left: 0; 
-  }
-
-  .app-button__fixed {
-    left: 16px;
-    right: initial;
   }
 
   .app-profile__stat:first-child {
