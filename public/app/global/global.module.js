@@ -392,48 +392,56 @@ factory('socket', ['$timeout', function ($timeout) {
  */
 service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
 
-    function get() {
-        return $cookies.getObject('user') || {};
-    }
-
-    function set(data) {
-        var expires = new Date();
-
-        expires.setDate(expires.getDate() + 365);
-
-        $cookies.putObject('user', data, {
-            expires: expires
-        });
-    }
-
     return {
         /**
          * @ngdoc function
-         * @name #get
+         * @name #has
+         * @methodOf global.service:user
+         * @description 
+         * Has cookies name
+         * @param {string} name Cookies name
+         * @returns {boolean} response
+         */
+        has: function (name) {
+            return typeof $cookies.get(name) !== 'undefined';
+        },
+        /**
+         * @ngdoc function
+         * @name #getUser
          * @methodOf global.service:user
          * @description 
          * Get user data
          * @param {string} name Name
          * @returns {object} Value
          */
-        get: function (name) {
-            return get()[name];
+        getUser: function (name) {
+            var user = $cookies.getObject('user') || {};
+            if (name) {
+                return user[name];
+            }
+            return user;
         },
         /**
          * @ngdoc function
-         * @name #set
+         * @name #setUser
          * @methodOf global.service:user
          * @description 
          * Set user data
          * @param {string} name Name
          * @param {string|object} value Value
          */
-        set: function (name, value) {
-            var data = get();
+        setUser: function (name, value) {
+
+            var data = this.getUser(),
+                expires = new Date();
 
             data[name] = value;
 
-            set(data);
+            expires.setDate(expires.getDate() + 365);
+
+            $cookies.putObject('user', data, {
+                expires: expires
+            });
         },
         /**
          * @ngdoc function
@@ -444,7 +452,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @returns {bool} Login
          */
         getLogin: function () {
-            return this.get('login');
+            return this.getUser('login');
         },
         /**
          * @ngdoc function
@@ -455,7 +463,51 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @param {bool} value Login
          */
         setLogin: function (value) {
-            this.set('login', value);
+            this.setUser('login', value);
+        },
+        /**
+         * @ngdoc function
+         * @name #getShowPlayed
+         * @methodOf global.service:user
+         * @description 
+         * Get show played value
+         * @returns {bool} Show
+         */
+        getShowPlayed: function () {
+            return this.getUser('showPlayed');
+        },
+        /**
+         * @ngdoc function
+         * @name #setShowPlayed
+         * @methodOf global.service:user
+         * @description 
+         * Set show played value
+         * @param {bool} value Show
+         */
+        setShowPlayed: function (value) {
+            this.setUser('showPlayed', value);
+        },
+        /**
+         * @ngdoc function
+         * @name #getShowMessages
+         * @methodOf global.service:user
+         * @description 
+         * Get show messages value
+         * @returns {bool} Show
+         */
+        getShowMessages: function () {
+            return this.getUser('showMessages');
+        },
+        /**
+         * @ngdoc function
+         * @name #setShowMessages
+         * @methodOf global.service:user
+         * @description 
+         * Set show messages value
+         * @param {bool} value Show
+         */
+        setShowMessages: function (value) {
+            this.setUser('showMessages', value);
         },
         /**
          * @ngdoc function
@@ -466,7 +518,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @returns {bool} Sound
          */
         getSound: function () {
-            return this.get('sound');
+            return !!$cookies.get('sound');
         },
         /**
          * @ngdoc function
@@ -478,7 +530,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          */
         setSound: function (value) {
             $rootScope.user.sound = value;
-            this.set('sound', value);
+            $cookies.put('sound', value);
         },
         /**
          * @ngdoc function
@@ -489,7 +541,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @returns {string} Color
          */
         getColorGame: function () {
-            return this.get('colorGame');
+            return $cookies.get('colorGame');
         },
         /**
          * @ngdoc function
@@ -501,51 +553,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          */
         setColorGame: function (value) {
             $rootScope.user.colorGame = value;
-            this.set('colorGame', value);
-        },
-        /**
-         * @ngdoc function
-         * @name #getShowPlayed
-         * @methodOf global.service:user
-         * @description 
-         * Get show played value
-         * @returns {bool} Show
-         */
-        getShowPlayed: function () {
-            return this.get('showPlayed');
-        },
-        /**
-         * @ngdoc function
-         * @name #setShowPlayed
-         * @methodOf global.service:user
-         * @description 
-         * Set show played value
-         * @param {bool} value Show
-         */
-        setShowPlayed: function (value) {
-            this.set('showPlayed', value);
-        },
-        /**
-         * @ngdoc function
-         * @name #getShowMessages
-         * @methodOf global.service:user
-         * @description 
-         * Get show messages value
-         * @returns {bool} Show
-         */
-        getShowMessages: function () {
-            return this.get('showMessages');
-        },
-        /**
-         * @ngdoc function
-         * @name #setShowMessages
-         * @methodOf global.service:user
-         * @description 
-         * Set show messages value
-         * @param {bool} value Show
-         */
-        setShowMessages: function (value) {
-            this.set('showMessages', value);
+            $cookies.put('colorGame', value);
         },
         /**
          * @ngdoc function
@@ -556,7 +564,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @returns {object} Data Game
          */
         getDataGame: function () {
-            var data = this.get('dataGame');
+            var data = $cookies.getObject('dataGame');
             if (!data) {
                 data = {
                     color: null,
@@ -565,6 +573,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
                     pointsMax: null
                 };
             }
+            $rootScope.dataGame = data;
             return data;
         },
         /**
@@ -576,7 +585,8 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @param {string} value Data Game
          */
         setDataGame: function (value) {
-            this.set('dataGame', value);
+            $rootScope.dataGame = value;
+            $cookies.putObject('dataGame', value);
         }
     }
 }]).

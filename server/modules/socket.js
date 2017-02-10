@@ -148,7 +148,7 @@ module.exports = function (io) {
                 colorGame: response.colorGame,
                 sound: response.sound
             });
-        }.bind(this)).catch(console.log);
+        }.bind(this));
     };
 
     Module.prototype.joinHome = function (socket) {

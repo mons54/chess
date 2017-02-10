@@ -233,21 +233,30 @@
                     $route.reload();
                 }
 
-                if (typeof data.dataGame === 'object' && Object.keys(data.dataGame).length) {
+                if (user.has('dataGame')) {
+                    $rootScope.dataGame = user.getDataGame();
+                } else {
                     user.setDataGame(data.dataGame);
                 }
 
-                $rootScope.dataGame = user.getDataGame();
-
-                if (data.colorGame) {
+                if (user.has('colorGame')) {
+                    $rootScope.user.colorGame = user.getColorGame();
+                } else {
                     user.setColorGame(data.colorGame);
                 }
 
-                user.setSound(data.sound);
+                if (user.has('sound')) {
+                    $rootScope.user.sound = user.getSound();
+                } else {
+                    user.setSound(data.sound);
+                }
 
-                delete data.dataGame;
-
-                angular.extend($rootScope.user, data);
+                angular.extend($rootScope.user, {
+                    uid: data.uid,
+                    name: data.name,
+                    avatar: data.avatar,
+                    lang: data.lang
+                });
 
                 delete $rootScope.refreshAccessToken;
                 delete $rootScope.isDisconnected;
