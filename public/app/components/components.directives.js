@@ -17,7 +17,7 @@ directive('button', function () {
                 element.blur();
             });
         }
-      };
+    };
 }).
 
 /**
