@@ -848,7 +848,7 @@ a {
 }
 
 .app-profile__name {
-  font-weight: 800;
+  font-weight: 700;
   font-size: 16px;
   margin-bottom: 8px;
   overflow: hidden;
@@ -2028,7 +2028,7 @@ a {
 }
 
 .app-game__result-points.negative {
-  color: #F44336;
+  color: #ff5252;
 }
 
 .app-game__result-link {
