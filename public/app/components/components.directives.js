@@ -495,8 +495,6 @@ directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'google
             templateUrl: '/app/components/templates/share.html',
             link: function(scope, element) {
 
-                var gindex = 1;
-
                 scope.url = 'https://' + host;
 
                 scope.$watch('share', function (value) {
@@ -524,25 +522,7 @@ directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'google
                         scope.description = value.description;
                         scope.caption = value.caption;
 
-                        if (gapi && gapi.interactivepost) {
-
-                            var gid = 'ginteractivepost-' + scope.$id + gindex;
-
-                            element.find('[data-google]').attr('id', gid);
-                            
-                            gapi.interactivepost.render(gid, {
-                                contenturl: scope.url,
-                                contentdeeplinkid: '/',
-                                clientid: googleClientId,
-                                cookiepolicy: 'single_host_origin',
-                                prefilltext: scope.title + ' - ' + scope.description,
-                                calltoactionlabel: 'PLAY',
-                                calltoactionurl: scope.url,
-                                calltoactiondeeplinkid: '/'
-                            });
-
-                            gindex++;
-                        }
+                        
                     }
                 });
 
