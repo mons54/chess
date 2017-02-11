@@ -1018,9 +1018,6 @@ a {
 
 .app-element__body .app-spinner {
   margin-top: 109px;
-  width: 50px;
-  height: 50px;
-  border-width: 4px;
 }
 
 .app-element .app-table {
@@ -1055,12 +1052,6 @@ a {
   height: 50px;
   -webkit-animation: spin 1s linear infinite;
   animation: spin 1s linear infinite;
-}
-
-.app-spinner--small {
-  border-width: 2px;
-  width: 20px;
-  height: 20px;
 }
 
 @keyframes spin {
@@ -1441,6 +1432,10 @@ a {
   right: 36px;
   bottom: 36px;
   z-index: 9;
+}
+
+.app-button__fixed--mobile {
+  display: none;
 }
 
 .app-button__fixed.app-button__fixed--game {
@@ -2359,6 +2354,14 @@ a {
   .app-button__fixed {
     right: 16px;
     bottom: 16px;
+  }
+
+  .app-button__fixed--desktop {
+    display: none;
+  }
+
+  .app-button__fixed--mobile {
+    display: initial;
   }
 
   .app-button__fixed.app-button__fixed--action {

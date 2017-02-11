@@ -3,6 +3,11 @@
   overflow: hidden;
 }
 
+.mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
+  padding-right: 24px;
+  padding-left: 0;
+}
+
 .mdl-spinner {
   direction: ltr;
 }
@@ -45,6 +50,10 @@
 
 .app-element .app-element__tools {
   float: left;
+}
+
+.app-element .app-spinner {
+  display: none;
 }
 
 .app-element .app-element__badge {
@@ -101,6 +110,7 @@
 
 .app-table__avatar {
   margin-left: 10px;
+  margin-right: 0;
 }
 
 .app-button__fixed {

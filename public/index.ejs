@@ -202,7 +202,7 @@
                 </footer>
             </div>
 
-            <div class="app-button__fixed app-button__fixed--more" 
+            <div class="app-button__fixed app-button__fixed--more app-button__fixed--desktop" 
                  ng-hide="isGame"
                  ng-class="{'app-button__fixed--pagination': pages, 'is-active': showMore }">
                  <button show-button 
@@ -231,6 +231,15 @@
                         ng-click="showMore = false"
                         class="app-button app-button--hide mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                     <i class="material-icons">clear</i>
+                </button>
+            </div>
+
+            <div class="app-button__fixed app-button__fixed--mobile" 
+                 ng-hide="isGame"
+                 ng-class="{'app-button__fixed--pagination': pages}">
+                <button class="app-button app-button--show mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+                        show-modal="#modal-create-game">
+                    <i class="material-icons">games</i>
                 </button>
             </div>
 
