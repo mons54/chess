@@ -69,7 +69,7 @@
 }
 
 .app-create-game__choices .app-button {
-  margin-left: 12px;
+  margin-left: 8px;
   margin-right: 0;
 }
 
@@ -111,24 +111,6 @@
 .app-button__fixed--game.app-button__fixed--action {
   right: initial;
   left: 104px;
-}
-
-.app-button__fixed .app-button {
-  margin-left: initial;
-  margin-right: 8px;
-}
-
-.app-button__fixed .app-button:first-child {
-  margin-right: 0;
-}
-
-.app-button__fixed--color {
-  right: initial;
-  left: 28px;
-}
-
-.app-button__fixed--color .app-button.app-button--color {
-  margin-right: 0;
 }
 
 .app-modal__actions {
@@ -344,22 +326,9 @@
 
 @media screen and (max-width: 1024px) {
 
-  .app-button__fixed {
-    right: initial;
-    left: 24px;
-  }
-
-  .app-button__fixed .app-button {
-    margin-left: initial;
-    margin-right: 4px;
-  }
-
-  .app-button__fixed.app-button__fixed--color {
-    left: 0;
-  }
-
   .app-button__fixed.app-button__fixed--action {
-    left: 76px;
+    right: initial;
+    left: 84px;
   }
 
   .app-game__toggle--messages {
@@ -378,18 +347,15 @@
     right: initial;
     left: 16px;
   }
-
-  .app-button__fixed.app-button__fixed--color {
-    left: -8px;
-  }
-
+  
   .app-button__fixed.app-button__fixed--action {
+    right: initial;
     left: 64px;
   }
 }
 
 @media (min-width: 600px) {
-  .app-create-game__choices .app-button:nth-of-type(3n + 3) {
+  .app-create-game__choices .app-button:nth-of-type(4n + 4) {
     margin-left: 0; 
   }
 }
@@ -416,8 +382,8 @@
 @media screen and (max-width: 599px) {
 
   .app-create-game__choices .app-button {
-    margin-right: 0;
     margin-left: 2%;
+    margin-right: 0;
   }
 
   .app-create-game__choices .app-button:nth-of-type(3n + 3) {

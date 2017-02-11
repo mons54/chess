@@ -1435,85 +1435,89 @@ a {
 }
 
 .app-button__fixed {
-  display: block;
   position: fixed;
+  display: block;
+  width: 56px;
   right: 36px;
   bottom: 36px;
   z-index: 9;
+}
+
+.app-button__fixed:hover,
+.app-button__fixed.is-active {
+  height: 260px;
+}
+
+.app-button__fixed .app-button {
+  position: absolute;
+  display: none;
+}
+
+.app-button__fixed:hover .app-button,
+.app-button__fixed.is-active .app-button {
+  display: initial;
+}
+
+.app-button__fixed .app-button:nth-of-type(2) {
+  bottom: 68px;
+}
+
+.app-button__fixed .app-button:nth-of-type(3) {
+  bottom: 136px;
+}
+
+.app-button__fixed .app-button:nth-of-type(4) {
+  bottom: 204px;
+}
+
+.app-button__fixed .app-button:nth-of-type(5) {
+  bottom: 272px;
+}
+
+.app-button__fixed .app-button:nth-of-type(6) {
+  bottom: 340px;
+}
+
+.app-button__fixed .app-button:nth-of-type(7) {
+  bottom: 408px;
+}
+
+.app-button__fixed .app-button:nth-of-type(8) {
+  bottom: 476px;
+}
+
+.app-button__fixed .app-button.app-button--show {
+  display: initial;
+  bottom: 0;
+}
+
+.app-button__fixed:hover .app-button.app-button--show,
+.app-button__fixed.is-active .app-button.app-button--show {
+  display: none;
+}
+
+.app-button__fixed:hover .app-button.app-button--hide,
+.app-button__fixed.is-active .app-button.app-button--hide {
+  bottom: 0;
+  display: initial;
 }
 
 .app-button__fixed.app-button__fixed--game {
   bottom: 52px;
 }
 
-.app-button__fixed--game.app-button__fixed--action {
+.app-button__fixed.app-button__fixed--action {
   right: 104px;
 }
 
-.app-button__fixed .app-button {
-  margin-left: 8px;
-}
-
-.app-button__fixed .app-button:first-child {
-  margin-left: 0;
-}
-
-.app-button__fixed--color {
-  position: fixed;
-  right: 28px;
-  bottom: 46px;
-  width: 56px;
-  padding: 0 8px;
-}
-
-.app-button__fixed--color.is-active,
-.app-button__fixed--color:hover {
+.app-button__fixed.app-button__fixed--color:hover,
+.app-button__fixed.app-button__fixed--color.is-active {
   height: 532px;
 }
 
-.app-button__fixed--color .app-button.app-button--color {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  margin-left: 0;
-}
-
-.app-button__fixed--color .app-button--color:nth-of-type(2) {
-  bottom: 68px;
-}
-
-.app-button__fixed--color .app-button--color:nth-of-type(3) {
-  bottom: 136px;
-}
-
-.app-button__fixed--color .app-button--color:nth-of-type(4) {
-  bottom: 204px;
-}
-
-.app-button__fixed--color .app-button--color:nth-of-type(5) {
-  bottom: 272px;
-}
-
-.app-button__fixed--color .app-button--color:nth-of-type(6) {
-  bottom: 340px;
-}
-
-.app-button__fixed--color .app-button--color:nth-of-type(7) {
-  bottom: 408px;
-}
-
-.app-button__fixed--color .app-button--color:nth-of-type(8) {
-  bottom: 476px;
-}
-
-.app-button__fixed--color.is-active .app-button--color,
-.app-button__fixed--color:hover .app-button--color,
-.app-button__fixed--color .app-button--color:first-child {
+.app-button__fixed.app-button__fixed--color:hover .app-button.app-button--show,
+.app-button__fixed.app-button__fixed--color.is-active .app-button.app-button--show {
   display: initial;
-}
-
-.app-button__fixed--color .app-button--color:first-child {
-  cursor: auto;
 }
 
 .app-game__played--phone {
@@ -2175,56 +2179,68 @@ a {
   }
 
   .app-button__fixed {
-    bottom: 24px;
-    right: 24px;
+    width: 40px;
   }
 
   .app-button__fixed .app-button {
     width: 40px;
     height: 40px;
     min-width: 40px;
-     margin-left: 4px;
-  }
-
-  .app-button__fixed--color .app-button--color:nth-of-type(2) {
-    bottom: 52px;
-  }
-
-  .app-button__fixed--color .app-button--color:nth-of-type(3) {
-    bottom: 104px;
-  }
-
-  .app-button__fixed--color .app-button--color:nth-of-type(4) {
-    bottom: 156px;
-  }
-
-  .app-button__fixed--color .app-button--color:nth-of-type(5) {
-    bottom: 208px;
-  }
-
-  .app-button__fixed--color .app-button--color:nth-of-type(6) {
-    bottom: 260px;
-  }
-
-  .app-button__fixed--color .app-button--color:nth-of-type(7) {
-    bottom: 312px;
-  }
-
-  .app-button__fixed--color .app-button--color:nth-of-type(8) {
-    bottom: 364px;
-  }
-
-  .app-button__fixed.app-button__fixed--color {
-    right: 0;
-  }
-
-  .app-button__fixed--color.active,
-  .app-button__fixed--color:hover {
-    height: 470px;
   }
 
   .app-button__fixed.app-button__fixed--action {
-    right: 76px;
+    right: 84px;
+  }
+
+  .app-layout.is-game .app-footer {
+    padding-bottom: 68px;
+  }
+
+  .app-button__fixed .app-button:nth-of-type(2) {
+    bottom: 52px;
+  }
+
+  .app-button__fixed .app-button:nth-of-type(3) {
+    bottom: 104px;
+  }
+
+  .app-button__fixed .app-button:nth-of-type(4) {
+    bottom: 156px;
+  }
+
+  .app-button__fixed .app-button:nth-of-type(5) {
+    bottom: 208px;
+  }
+
+  .app-button__fixed .app-button:nth-of-type(6) {
+    bottom: 260px;
+  }
+
+  .app-button__fixed .app-button:nth-of-type(7) {
+    bottom: 312px;
+  }
+
+  .app-button__fixed .app-button:nth-of-type(8) {
+    bottom: 364px;
+  }
+
+  .app-button__fixed .app-button.app-button--show {
+    bottom: 0;
+  }
+
+  .app-button__fixed:hover .app-button.app-button--hide,
+  .app-button__fixed.is-active .app-button.app-button--hide  {
+    bottom: 0;
+  }
+
+  .app-button__fixed:hover,
+  .app-button__fixed.is-active {
+    height: 196px;
+  }
+
+  .app-button__fixed--color:hover,
+  .app-button__fixed--color.is-active {
+    height: 470px;
   }
 
   .app-game__toggle--played {
@@ -2237,11 +2253,6 @@ a {
 
   .app-footer {
     font-size: 13px;
-    padding-bottom: 48px;
-  }
-
-  .app-layout.is-game .app-footer {
-    padding-bottom: 68px;
   }
 }
 
@@ -2350,10 +2361,6 @@ a {
     bottom: 16px;
   }
 
-  .app-button__fixed.app-button__fixed--color {
-    right: -8px;
-  }
-
   .app-button__fixed.app-button__fixed--action {
     right: 64px;
   }
@@ -2367,11 +2374,6 @@ a {
   }
 
   .app-head .app-button__create-game {
-    display: none;
-  }
-
-  .app-button__fixed .app-button--invite-friends,
-  .app-button__fixed .app-button--settings {
     display: none;
   }
 }

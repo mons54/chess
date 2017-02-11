@@ -202,18 +202,35 @@
                 </footer>
             </div>
 
-            <div ng-hide="isGame" class="app-button__fixed" ng-class="{'app-button__fixed--pagination': pages }">
-                <button class="app-button app-button--create-game mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+            <div class="app-button__fixed" 
+                 ng-hide="isGame"
+                 ng-class="{'app-button__fixed--pagination': pages, 'is-active': showMore }">
+                 <button show-button 
+                        type="button"
+                        ng-click="showMore = true"
+                        class="app-button app-button--show mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                    <i class="material-icons">add</i>
+                </button>
+                <button type="button"
+                        class="app-button mdl-button mdl-js-button mdl-button--fab"
                         show-modal="#modal-create-game">
                     <i class="material-icons">games</i>
                 </button>
-                <button class="app-button app-button--settings mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+                <button type="button"
+                        class="app-button mdl-button mdl-js-button mdl-button--fab"
                         show-modal="#modal-settings">
                     <i class="material-icons">settings</i>
                 </button>
-                <button class="app-button app-button--invite-friends mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"
+                <button type="button"
+                        class="app-button mdl-button mdl-js-button mdl-button--fab"
                         ng-click="inviteFriends()">
                     <i class="material-icons">person_add</i>
+                </button>
+                <button hide-button 
+                        type="button"
+                        ng-click="showMore = false"
+                        class="app-button app-button--hide mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                    <i class="material-icons">clear</i>
                 </button>
             </div>
 
