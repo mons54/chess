@@ -162,14 +162,18 @@ service('sound', ['user', function (user) {
         });
     }
 
-    function change() {
-        sound = !sound;
+    function set(value) {
+        if (typeof value !== 'boolean') {
+            value = true;
+        }
+        sound = value;
         user.setSound(sound);
-
         if (!sound) {
             loadAll();
         }
+    }
 
+    function get() {
         return sound;
     }
 
@@ -213,13 +217,22 @@ service('sound', ['user', function (user) {
         sound: sound,
         /**
          * @ngdoc function
-         * @name #change
+         * @name #set
          * @methodOf global.service:sound
          * @description 
          * Change on/off sound
          * @returns {bool} true (on) / false (off)
          */
-        change: change,
+        set: set,
+        /**
+         * @ngdoc function
+         * @name #set
+         * @methodOf global.service:sound
+         * @description 
+         * Change on/off sound
+         * @returns {bool} true (on) / false (off)
+         */
+        get: get,
         /**
          * @ngdoc function
          * @name #timer
@@ -518,7 +531,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @returns {bool} Sound
          */
         getSound: function () {
-            return !!$cookies.get('sound');
+            return $cookies.getObject('sound');
         },
         /**
          * @ngdoc function
@@ -530,7 +543,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          */
         setSound: function (value) {
             $rootScope.user.sound = value;
-            $cookies.put('sound', value);
+            $cookies.putObject('sound', value);
         },
         /**
          * @ngdoc function
