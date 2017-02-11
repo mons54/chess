@@ -1443,65 +1443,6 @@ a {
   z-index: 9;
 }
 
-.app-button__fixed:hover,
-.app-button__fixed.is-active {
-  height: 260px;
-}
-
-.app-button__fixed .app-button {
-  position: absolute;
-  display: none;
-}
-
-.app-button__fixed:hover .app-button,
-.app-button__fixed.is-active .app-button {
-  display: initial;
-}
-
-.app-button__fixed .app-button:nth-of-type(2) {
-  bottom: 68px;
-}
-
-.app-button__fixed .app-button:nth-of-type(3) {
-  bottom: 136px;
-}
-
-.app-button__fixed .app-button:nth-of-type(4) {
-  bottom: 204px;
-}
-
-.app-button__fixed .app-button:nth-of-type(5) {
-  bottom: 272px;
-}
-
-.app-button__fixed .app-button:nth-of-type(6) {
-  bottom: 340px;
-}
-
-.app-button__fixed .app-button:nth-of-type(7) {
-  bottom: 408px;
-}
-
-.app-button__fixed .app-button:nth-of-type(8) {
-  bottom: 476px;
-}
-
-.app-button__fixed .app-button.app-button--show {
-  display: initial;
-  bottom: 0;
-}
-
-.app-button__fixed:hover .app-button.app-button--show,
-.app-button__fixed.is-active .app-button.app-button--show {
-  display: none;
-}
-
-.app-button__fixed:hover .app-button.app-button--hide,
-.app-button__fixed.is-active .app-button.app-button--hide {
-  bottom: 0;
-  display: initial;
-}
-
 .app-button__fixed.app-button__fixed--game {
   bottom: 52px;
 }
@@ -1510,13 +1451,72 @@ a {
   right: 104px;
 }
 
-.app-button__fixed.app-button__fixed--color:hover,
-.app-button__fixed.app-button__fixed--color.is-active {
+.app-button__fixed--more:hover,
+.app-button__fixed--more.is-active {
+  height: 260px;
+}
+
+.app-button__fixed--more .app-button {
+  position: absolute;
+  display: none;
+}
+
+.app-button__fixed--more:hover .app-button,
+.app-button__fixed--more.is-active .app-button {
+  display: initial;
+}
+
+.app-button__fixed--more .app-button:nth-of-type(2) {
+  bottom: 68px;
+}
+
+.app-button__fixed--more .app-button:nth-of-type(3) {
+  bottom: 136px;
+}
+
+.app-button__fixed--more .app-button:nth-of-type(4) {
+  bottom: 204px;
+}
+
+.app-button__fixed--more .app-button:nth-of-type(5) {
+  bottom: 272px;
+}
+
+.app-button__fixed--more .app-button:nth-of-type(6) {
+  bottom: 340px;
+}
+
+.app-button__fixed--more .app-button:nth-of-type(7) {
+  bottom: 408px;
+}
+
+.app-button__fixed--more .app-button:nth-of-type(8) {
+  bottom: 476px;
+}
+
+.app-button__fixed--more .app-button.app-button--show {
+  display: initial;
+  bottom: 0;
+}
+
+.app-button__fixed--more:hover .app-button.app-button--show,
+.app-button__fixed--more.is-active .app-button.app-button--show {
+  display: none;
+}
+
+.app-button__fixed--more:hover .app-button.app-button--hide,
+.app-button__fixed--more.is-active .app-button.app-button--hide {
+  bottom: 0;
+  display: initial;
+}
+
+.app-button__fixed--more.app-button__fixed--color:hover,
+.app-button__fixed--more.app-button__fixed--color.is-active {
   height: 532px;
 }
 
-.app-button__fixed.app-button__fixed--color:hover .app-button.app-button--show,
-.app-button__fixed.app-button__fixed--color.is-active .app-button.app-button--show {
+.app-button__fixed--more.app-button__fixed--color:hover .app-button.app-button--show,
+.app-button__fixed--more.app-button__fixed--color.is-active .app-button.app-button--show {
   display: initial;
 }
 
@@ -2196,50 +2196,50 @@ a {
     padding-bottom: 68px;
   }
 
-  .app-button__fixed .app-button:nth-of-type(2) {
+  .app-button__fixed--more .app-button:nth-of-type(2) {
     bottom: 52px;
   }
 
-  .app-button__fixed .app-button:nth-of-type(3) {
+  .app-button__fixed--more .app-button:nth-of-type(3) {
     bottom: 104px;
   }
 
-  .app-button__fixed .app-button:nth-of-type(4) {
+  .app-button__fixed--more .app-button:nth-of-type(4) {
     bottom: 156px;
   }
 
-  .app-button__fixed .app-button:nth-of-type(5) {
+  .app-button__fixed--more .app-button:nth-of-type(5) {
     bottom: 208px;
   }
 
-  .app-button__fixed .app-button:nth-of-type(6) {
+  .app-button__fixed--more .app-button:nth-of-type(6) {
     bottom: 260px;
   }
 
-  .app-button__fixed .app-button:nth-of-type(7) {
+  .app-button__fixed--more .app-button:nth-of-type(7) {
     bottom: 312px;
   }
 
-  .app-button__fixed .app-button:nth-of-type(8) {
+  .app-button__fixed--more .app-button:nth-of-type(8) {
     bottom: 364px;
   }
 
-  .app-button__fixed .app-button.app-button--show {
+  .app-button__fixed--more .app-button.app-button--show {
     bottom: 0;
   }
 
-  .app-button__fixed:hover .app-button.app-button--hide,
-  .app-button__fixed.is-active .app-button.app-button--hide  {
+  .app-button__fixed--more:hover .app-button.app-button--hide,
+  .app-button__fixed--more.is-active .app-button.app-button--hide  {
     bottom: 0;
   }
 
-  .app-button__fixed:hover,
-  .app-button__fixed.is-active {
+  .app-button__fixed--more:hover,
+  .app-button__fixed--more.is-active {
     height: 196px;
   }
 
-  .app-button__fixed--color:hover,
-  .app-button__fixed--color.is-active {
+  .app-button__fixed--more.app-button__fixed--color:hover,
+  .app-button__fixed--more.app-button__fixed--color.is-active {
     height: 470px;
   }
 
