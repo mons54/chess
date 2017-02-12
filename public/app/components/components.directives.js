@@ -312,6 +312,46 @@ directive('gameChoices', function () {
 
 /**
  * @ngdoc directive
+ * @name components.directive:modalChallenges
+ * @description 
+ * Modal challenges
+ * @requires $rootScope
+ * @requires global.service:socket
+ * @requires components.service:modal
+ * @restrict E
+ * @scope
+ */
+directive('modalChallenges', ['$rootScope', 'socket', 'modal',
+    function ($rootScope, socket, modal) {
+        return {
+            restrict: 'E',
+            replace: true,
+            templateUrl: '/app/components/templates/modal-challenges.html',
+            link: function (scope, element) {
+
+                $rootScope.challenges = [];
+
+                scope.removeChallenge = function (uid) {
+                    socket.emit('removeChallenge', uid);
+                };
+
+                scope.startChallenge = function (uid) {
+                    socket.emit('startChallenge', uid);
+                };
+
+                socket.on('challenges', function (data) {
+                    $rootScope.challenges = data;
+                    if (!data.length) {
+                        modal(element).hide();
+                    }
+                });
+            }
+        };
+    }
+]).
+
+/**
+ * @ngdoc directive
  * @name components.directive:modalProfile
  * @description 
  * Show modal profile when receives an socket event.

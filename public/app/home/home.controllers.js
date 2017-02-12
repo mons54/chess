@@ -21,10 +21,6 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 expression: ['points', 'time', 'color'],
                 reverse: true
             },
-            challenges: {
-                expression: ['points', 'time', 'color'],
-                reverse: true
-            },
             challengers: {
                 expression: ['blitz.points', 'rapid.points'],
                 reverse: true
@@ -61,18 +57,6 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
 
         }, $scope);
 
-        socket.on('listChallenges', function (data) {
-            var challenges = [];
-            
-            angular.forEach(data, function (value, key) {
-                value.uid = key;
-                challenges.push(value);
-            });
-
-            $scope.challenges = orderByFilter(challenges, $scope.orderByFilter.challenges.expression, $scope.orderByFilter.challenges.reverse);
-
-        }, $scope);
-
         socket.on('challengers', function (data) {
             var challengers = [],
                 friends = [];
@@ -102,10 +86,6 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             socket.emit('startGame', uid);
         };
 
-        $scope.startChallenge = function (uid) {
-            socket.emit('startChallenge', uid);
-        };
-
         $scope.setChallenger = function (challenger) {
             $scope.challenger = challenger;
         };
@@ -114,10 +94,6 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             socket.emit('createChallenge', angular.extend($scope.challenge, {
                 uid: uid
             }));
-        };
-
-        $scope.removeChallenge = function (uid) {
-            socket.emit('removeChallenge', uid);
         };
 
         $scope.getClassColorGame = function (color) {
@@ -136,8 +112,6 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
             if (value) {
                 $scope.challenge = value;
             }
-        });
-
-        $scope.challenges = [];    
+        });  
     }
 ]);

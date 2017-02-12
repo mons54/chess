@@ -336,6 +336,10 @@
 
 @media screen and (max-width: 1024px) {
 
+  .app-header__row {
+    padding: 0 36px 0 16px;
+  }
+
   .app-button__fixed.app-button__fixed--action {
     right: initial;
     left: 84px;
@@ -361,6 +365,21 @@
   .app-button__fixed.app-button__fixed--action {
     right: initial;
     left: 64px;
+  }
+
+  .app-header__mobile-link {
+    display: inline-block;
+    padding: 8px 8px 0;
+  }
+
+  .app-header__mobile-link:first-child {
+    padding-right: 0;
+    padding-left: 8px;
+  }
+  
+  .app-header__mobile-link:last-child {
+    padding-left: 0;
+    padding-right: 8px;
   }
 }
 

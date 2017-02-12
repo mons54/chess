@@ -86,48 +86,6 @@
 </div>
 
 <div element class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <element-toggle name="'challenges'" collection="challenges" hide="true"></element-toggle>
-    <div element-content class="app-element__body">
-        <table ng-if="challenges.length"
-               class="app-table mdl-data-table mdl-js-data-table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th sortable collection="challenges" expression="['points', 'time', 'color']" icon="star"></th>
-                    <th sortable collection="challenges" expression="['color', 'points', 'time']" icon="invert_colors"></th>
-                    <th sortable collection="challenges" expression="['time', 'points', 'color']" icon="schedule"></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="challenge in challenges">
-                    <td show-profile="challenge" class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img avatar
-                             class="app-table__avatar" 
-                             ng-src="{{challenge.avatar}}">
-                        <span class="app-table__name">{{ challenge.name }}</span>
-                    </td>
-                    <td class="app-table__points">{{ challenge.points }}</td>
-                    <td class="app-table__color" ng-class="getClassColorGame(challenge.color)"></td>
-                    <td class="app-table__time">{{ challenge.game.time / 60 }} + {{ challenge.game.increment }}</td>
-                    <td class="app-table__actions">
-                        <button ng-click="removeChallenge(challenge.uid)" 
-                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                            <i class="material-icons">close</i>
-                        </button>
-                        <button ng-if="!challenge.create" 
-                                ng-click="startChallenge(challenge.uid)" 
-                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
-                            <i class="material-icons">check</i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div element class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <element-toggle name="'challengers'" collection="challengers"></element-toggle>
     <div element-content class="app-element__body">
         <table ng-show="challengers.length"

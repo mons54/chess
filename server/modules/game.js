@@ -268,7 +268,7 @@ Game.prototype.setMessage = function (gid, data) {
     var messages = this.games[gid].messages;
     messages.push(data);
     if (messages.length > 50) {
-        messages.splice(0, 1);
+        messages.shift();
     }
 };
 

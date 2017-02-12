@@ -127,6 +127,7 @@ module.exports = function (io) {
             socket.avatar = response.avatar;
             socket.name = response.name;
             socket.facebookId = response.facebookId;
+            socket.challenges = [];
 
             this.connected[response.id] = socket.id;
             
@@ -154,7 +155,6 @@ module.exports = function (io) {
     Module.prototype.joinHome = function (socket) {
         socket.join('home', function () {
             socket.emit('listGames', moduleGame.createdGame);
-            socket.emit('listChallenges', socket.challenges);
             this.listChallengers();
         }.bind(this));
     };
@@ -256,6 +256,8 @@ module.exports = function (io) {
                 blackList: socket.blackList,
                 trophies: data.trophies
             });
+
+            socket.emit('challenges', socket.challenges);
 
             return data;
         });
@@ -603,41 +605,50 @@ module.exports = function (io) {
         });
     };
 
-    Module.prototype.setChallenge = function (socket, key, value) {
-        if (!socket.challenges) {
-            socket.challenges = {};
-        }
+    Module.prototype.setChallenge = function (socket, value) {
 
-        socket.challenges[key] = value;
+        socket.challenges.push(value);
+
+        if (socket.challenges.length > 10) {
+            socket.challenges.shift();
+        }
     };
 
     Module.prototype.deleteChallenges = function (socket) {
-        if (!this.checkSocket(socket) || !socket.challenges) {
+
+        if (!this.checkSocket(socket)) {
             return;
         }
 
-        for (var uid in socket.challenges) {
-            this.deleteChallenge(this.getSocket(uid), socket.uid);
+        for (var i = 0; i < socket.challenges.length; i++) {
+            this.deleteChallenge(this.getSocket(socket.challenges[i].uid), socket.uid);
         }
 
-        delete socket.challenges;
+        socket.challenges = [];
     };
 
     Module.prototype.deleteChallenge = function (socket, uid) {
-        if (!socket || !socket.challenges || !socket.challenges[uid]) {
+
+        if (!socket) {
             return;
         }
 
-        delete socket.challenges[uid];
-        socket.emit('listChallenges', socket.challenges);
+        for (var i = 0; i < socket.challenges.length; i++) {
+            if (socket.challenges[i].uid === uid) {
+                socket.challenges.splice(i, 1);
+                socket.emit('challenges', socket.challenges);
+                break;
+            }
+        }
     };
 
     Module.prototype.getChallenge = function (socket, uid) {
-        if (!socket.challenges || !socket.challenges[uid]) {
-            return;
-        }
 
-        return socket.challenges[uid];
+        for (var i = 0; i < socket.challenges.length; i++) {
+            if (socket.challenges[i].uid === uid) {
+                return socket.challenges[i];
+            }
+        }
     };
 
     Module.prototype.getSocket = function (uid) {

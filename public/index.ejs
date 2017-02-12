@@ -121,23 +121,42 @@
                                show-modal="#modal-create-game">
                                 {{ 'create_game' | translate }}
                             </a>
-                            <a class="mdl-navigation__link mdl-typography--text-uppercase" 
+                            <a ng-if="challenges.length"
+                               class="mdl-navigation__link"
+                               show-modal="#modal-challenges"
+                               title="{{ 'challenges' | translate }}"
+                               href>
+                                <i class="app-icon material-icons"
+                                   ng-class="{'app-badge mdl-badge mdl-badge--overlap': !!challenges.length}"
+                                   data-badge="{{ challenges.length }}">notifications</i>
+                            </a>
+                            <a class="mdl-navigation__link" 
                                href
                                ng-click="logout()"
-                               ng-hide="isFacebookApp || user.gid">
-                               <i class="material-icons">power_settings_new</i>
+                               ng-hide="isFacebookApp">
+                               <i class="app-icon material-icons">power_settings_new</i>
                             </a>
                         </nav>
                     </div>
-                    <span class="app-mobile__title mdl-layout-title">
-                        <span class="app-logo">
-                            <span class="app-logo__icon"></span>
-                            <span class="app-logo__text" ng-bind="'name'|translate"></span>
+                    <div class="app-header__mobile">
+                        <span class="app-mobile__title mdl-layout-title">
+                            <span class="app-logo">
+                                <span class="app-logo__icon"></span>
+                                <span class="app-logo__text" ng-bind="'name'|translate"></span>
+                            </span>
                         </span>
-                    </span>
+                        <a ng-if="challenges.length"
+                           class="app-header__mobile-link"
+                           show-modal="#modal-challenges"
+                           title="{{ 'challenges' | translate }}"
+                           href>
+                            <i class="app-icon material-icons"
+                               ng-class="{'app-badge mdl-badge mdl-badge--overlap': !!challenges.length}"
+                               data-badge="{{ challenges.length }}">notifications</i>
+                        </a>
+                    </div>
                 </div>
             </header>
-
 
             <div class="app-drawer mdl-layout__drawer">
                 <span class="app-layout-title mdl-layout-title">
@@ -245,6 +264,7 @@
 
             <div class="app-pagination app-pagination--fixed" pagination></div>
 
+            <modal-challenges></modal-challenges>
             <modal-settings></modal-settings>
             <modal-profile></modal-profile>
             <modal-trophy></modal-trophy>

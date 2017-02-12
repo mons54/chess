@@ -268,6 +268,34 @@ a {
   margin-bottom: 24px;
 }
 
+.app-modal--challenges .app-modal__content {
+  padding: 0;
+}
+
+.app-modal--challenges .app-table .app-table__points {
+  width: 80px;
+}
+
+.app-modal--challenges .app-table .app-table__color {
+  width: 60px;
+}
+
+.app-modal--challenges .app-table .app-table__time {
+  width: 80px;
+}
+
+.app-modal--challenges .app-table .app-table__actions {
+  width: 112px;
+}
+
+.app-badge[data-badge]:after {
+  font-weight: normal;
+  width: 20px;
+  height: 20px;
+  right: -12px;
+  top: -12px;
+}
+
 .app-settings__loader,
 .app-settings__done {
   position: absolute;
@@ -592,7 +620,7 @@ a {
   width: auto;
 }
 
-.app-mobile__title {
+.app-header__mobile {
   display: none !important;
 }
 
@@ -640,7 +668,7 @@ a {
 }
 
 .app-header .material-icons {
-  color: #767777 !important;
+  color: #767777;
 }
 
 .app-header .mdl-navigation__link {
@@ -685,6 +713,10 @@ a {
   width: 500px;
   transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
   width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-navigation .mdl-navigation__link .app-icon {
+  margin-right: 0;
 }
 
 .app-navigation .mdl-navigation__link {
@@ -993,25 +1025,37 @@ a {
   color: #F44336;
 }
 
-.app-element .app-element__head {
-  margin: 0;
+.app-element__head {
   padding: 12px;
   background-color: #eef5f9;
   border-bottom: 1px solid #dadede;
-  border-radius: 3px 3px 0 0;
   color: #446479;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
-.app-element .app-element__head--toggle {
+.app-element__badge {
+  position: relative;
+  display: inline-block;
+  top: -1px;
+  margin-top: -5px;
+  padding: 0px 5px;
+  background-color: #ff5252;
+  color: #EEF5F9;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 3px;
+}
+
+.app-element__head--toggle {
   cursor: pointer;
 }
 
-.app-element .app-element__tools {
+.app-element__tools {
   float: right;
 }
 
-.app-element--small .app-element__body {
+.app-element .app-element__body {
   height: 309px;
   overflow-x: auto;
 }
@@ -1023,19 +1067,6 @@ a {
 .app-element .app-table {
   width: 100%;
   border: none;
-}
-
-.app-element .app-element__badge {
-  position: relative;
-  display: inline-block;
-  top: -1px;
-  margin-top: -5px;
-  padding: 0px 5px;
-  background-color: #795548;
-  color: #EEF5F9;
-  text-align: center;
-  font-size: 12px;
-  margin-left: 3px;
 }
 
 .app-element__loading {
@@ -1145,11 +1176,14 @@ a {
   margin-right: -18px;
 }
 
+.app-table__sortable .app-icon {
+  vertical-align: middle;
+}
+
 .app-table__sortable:after {
   content: '';
   display: inline-block;
   position: relative;
-  bottom: 7px;
   margin-left: 5px;
   border-style: solid;
 }
@@ -2170,7 +2204,7 @@ a {
     left: 8px;
   }
   .app-header__row {
-    padding: 0 16px;
+    padding: 0 16px 0 36px;
   }
 
   .app-button__fixed {
@@ -2314,13 +2348,31 @@ a {
     display: none !important;
   }
 
-  .app-mobile__title {
+  .app-header__mobile {
     display: block !important;
+  }
+
+  .app-mobile__title {
     position: absolute;
     left: 55px;
     top: 10px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  .app-header__mobile-link {
+    display: inline-block;
+    padding: 8px 8px 0;
+  }
+
+  .app-header__mobile-link:first-child {
+    padding-left: 0
+  }
+
+  .app-header__mobile-link:last-child {
+    padding-right: 0
+  }
+
+  .app-layout__drawer-right 
 
   .app-profile--game .app-profile__name {
     max-width: 450px;

@@ -84,28 +84,28 @@ module.exports = function (app, io) {
                 return;
             }
 
-            moduleSocket.setChallenge(socketOpponent, socket.uid, {
+            moduleSocket.setChallenge(socketOpponent, {
                 create: false,
+                uid: socket.uid,
                 avatar: socket.avatar,
                 name: socket.name,
                 points: socket[game.type].points,
-                ranking: socket.ranking,
                 color: color,
                 game: game
             });
 
-            moduleSocket.setChallenge(socket, data.uid, {
+            moduleSocket.setChallenge(socket, {
                 create: true,
+                uid: socketOpponent.uid,
                 avatar: socketOpponent.avatar,
                 name: socketOpponent.name,
                 points: socketOpponent[game.type].points,
-                ranking: socketOpponent.ranking,
                 color: color,
                 game: game
             });
 
-            socketOpponent.emit('listChallenges', socketOpponent.challenges);
-            socket.emit('listChallenges', socket.challenges);
+            socketOpponent.emit('challenges', socketOpponent.challenges);
+            socket.emit('challenges', socket.challenges);
         });
 
         socket.on('removeChallenge', function (uid) {
