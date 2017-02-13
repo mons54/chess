@@ -111,16 +111,16 @@ service('facebook', ['$rootScope', 'user', 'socket',
             
             socket.connect();
 
-            if ($rootScope.user.facebookFriends.length) {
+            if ($rootScope.user.friends.length) {
                 return;
             }
                         
-            $rootScope.user.facebookFriends.push(this.auth.id);
+            $rootScope.user.friends.push(this.auth.id);
 
             FB.api('/me/friends?fields=installed,id,name', function (res) {
                 angular.forEach(res.data, function (value) {
                     if (value.installed) {
-                        $rootScope.user.facebookFriends.push(value.id);
+                        $rootScope.user.friends.push(value.id);
                     }
                 });
             });

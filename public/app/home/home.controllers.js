@@ -25,7 +25,7 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
                 expression: ['blitz.points', 'rapid.points'],
                 reverse: true
             },
-            friends: {
+            favorites: {
                 expression: ['blitz.points', 'rapid.points'],
                 reverse: true
             }
@@ -70,34 +70,34 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
 
             $scope.challengers = orderByFilter(challengers, $scope.orderByFilter.challengers.expression, $scope.orderByFilter.challengers.reverse);
 
-            setFriends();
+            setFavorites();
 
         }, $scope);
 
-        $rootScope.$watchCollection('user.friends', function (value) {
+        $rootScope.$watchCollection('user.favorites', function (value) {
             if (!value || typeof value !== 'object') {
                 return;
             }
 
-            setFriends();
+            setFavorites();
         });
 
-        function setFriends() {
+        function setFavorites() {
 
-            var friends = [];
+            var favorites = [];
 
             angular.forEach($scope.challengers, function (challenger) {
                 if ($rootScope.user.uid == challenger.uid) {
                     return;
                 }
 
-                if ($rootScope.user.friends.indexOf(challenger.uid) !== -1 ||
-                    $rootScope.user.facebookFriends.indexOf(challenger.facebookId) !== -1) {
-                    friends.push(challenger);
+                if ($rootScope.user.favorites.indexOf(challenger.uid) !== -1 ||
+                    $rootScope.user.friends.indexOf(challenger.facebookId) !== -1) {
+                    favorites.push(challenger);
                 }
             });
 
-            $scope.friends = orderByFilter(friends, $scope.orderByFilter.friends.expression, $scope.orderByFilter.friends.reverse);
+            $scope.favorites = orderByFilter(favorites, $scope.orderByFilter.favorites.expression, $scope.orderByFilter.favorites.reverse);
         }
 
 
@@ -126,7 +126,9 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
         $scope.blackList = blackList;
 
         function blackList (data) {
-            return $rootScope.user.blackList.indexOf(data.uid) !== -1 || data.blackList.indexOf($rootScope.user.uid) !== -1;
+            return $rootScope.user.blackList &&
+                   $rootScope.user.blackList.indexOf(data.uid) !== -1 ||
+                   data.blackList.indexOf($rootScope.user.uid) !== -1;
         }
 
         $scope.paramsGame = paramsGame;

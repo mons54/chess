@@ -127,7 +127,7 @@ module.exports = function (io) {
             socket.avatar = response.avatar;
             socket.name = response.name;
             socket.facebookId = response.facebookId;
-            socket.friends = response.friends;
+            socket.favorites = response.favorites;
             socket.challenges = [];
 
             this.connected[response.id] = socket.id;
@@ -260,7 +260,7 @@ module.exports = function (io) {
                 blitz: socket.blitz,
                 rapid: socket.rapid,
                 blackList: socket.blackList,
-                friends: socket.friends,
+                favorites: socket.favorites,
                 trophies: data.trophies
             });
 
@@ -270,32 +270,32 @@ module.exports = function (io) {
         });
     };
 
-    Module.prototype.addFriend = function (socket, uid) {
+    Module.prototype.addFavorite = function (socket, uid) {
         
         if (!db.isObjectId(uid) ||
-            socket.friends.indexOf(uid) !== -1) {
+            socket.favorites.indexOf(uid) !== -1) {
             return;
         }
 
-        socket.friends.push(uid);
+        socket.favorites.push(uid);
 
         db.update('users', { _id: db.objectId(socket.uid) }, {
-            friends: socket.friends
+            favorites: socket.favorites
         });
     };
 
-    Module.prototype.removeFriend = function (socket, uid) {
+    Module.prototype.removeFavorite = function (socket, uid) {
         
-        var index = socket.friends.indexOf(uid);
+        var index = socket.favorites.indexOf(uid);
 
         if (index === -1) {
             return;
         }
 
-        socket.friends.splice(index, 1);
+        socket.favorites.splice(index, 1);
 
         db.update('users', { _id: db.objectId(socket.uid) }, {
-            friends: socket.friends
+            favorites: socket.favorites
         });
     };
 
@@ -882,7 +882,6 @@ module.exports = function (io) {
 
         var page = parseInt(data.page),
             limit = limit,
-            friends = data.friends,
             user;
 
         if (page) {

@@ -9,16 +9,14 @@
             <a href modal-close class="app-modal__close">
                 <i class="material-icons">clear</i>
             </a>
-            <div ng-if="friendAvailable(data)"
-                 class="app-profile__action">
-                <button ng-if="!isFriend"
-                        ng-click="addFriend(data.uid)" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-                    <i class="material-icons">person_add</i>
+            <div class="app-profile__action">
+                <button ng-if="favoriteAvailable(data)"
+                        ng-click="toogleFavorite(data.uid)" 
+                        class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                    <i ng-if="!isFavorite" class="app-icon app-icon--favorite material-icons">star</i>
+                    <i ng-if="isFavorite" class="app-icon app-icon--favorite-selected material-icons">star</i>
                 </button>
-                <button ng-if="isFriend"
-                        ng-click="removeFriend(data.uid)" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-                    <i class="material-icons">person</i>
-                </button>
+                <i ng-if="isFriend(data)" class="app-icon app-icon--friend material-icons">group</i>
             </div>
             <div class="app-profile">
                 <div class="app__pull-left">

@@ -41,7 +41,7 @@ function Module() {
                 unauthorized: Boolean,
                 blackList: Object,
                 trophies: Object,
-                friends: Array
+                favorites: Array
             })
             .index({blitz: 1})
             .index({rapid: 1})

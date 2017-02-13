@@ -360,8 +360,8 @@ directive('modalChallenges', ['$rootScope', 'socket', 'modal',
  * @restrict E
  * @scope
  */
-directive('modalProfile', ['$rootScope', 'socket', 'modal',
-    function ($rootScope, socket, modal) {
+directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
+    function ($rootScope, $window, socket, modal) {
         return {
             restrict: 'E',
             replace: true,
@@ -371,13 +371,11 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                 var defaultOptions = {
                     showTooltips: false
-                };
-
-                var colors = {
+                }, colors = {
                     wins: '#4CAF50',
                     draws: '#1E88E5',
                     losses: '#E53935'
-                };
+                }, isFavorite;
 
                 function progress(value) {
                     new ProgressBar.Circle('#' + value.type + '-' + value.name , {
@@ -415,36 +413,43 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     scope.data = data;
 
-                    var isFriend = $rootScope.isFriend(data.uid);
+                    isFavorite = $rootScope.isFavorite(data.uid);
 
-                    scope.isFriend = isFriend;
+                    scope.isFavorite = isFavorite;
 
                     modal(element).show(function () {
                         angular.forEach(scope.stats.blitz, progress);
                         angular.forEach(scope.stats.rapid, progress);
-                    }).one('hide', function () {
-                        if (typeof scope.isFriend === 'boolean' &&
-                            isFriend !== scope.isFriend) {
-                            $rootScope.$emit(scope.isFriend ? 'addFriend' : 'removeFriend', data.uid);
-                        }
-                    });
+                    }).one('hide', setFavorite);
 
                 }, scope);
 
-                scope.friendAvailable = function (data) {
+                function setFavorite() {
+                    if (typeof scope.isFavorite === 'boolean' &&
+                        isFavorite !== scope.isFavorite) {
+                        $rootScope.$emit(scope.isFavorite ? 'addFavorite' : 'removeFavorite', scope.data.uid);
+                        isFavorite = null;
+                    }
+                }
+
+                $window.onbeforeunload = setFavorite;
+
+                scope.isFriend = function (data) {
+                    return $rootScope.user.uid !== data.uid &&
+                           $rootScope.user.friends.indexOf(data.facebookId) !== -1;
+                };
+
+                scope.favoriteAvailable = function (data) {
                     if (!data) {
                         return;
                     }
                     
-                    return $rootScope.user.uid !== data.uid && $rootScope.user.facebookFriends.indexOf(data.facebookId) === -1;
+                    return $rootScope.user.uid !== data.uid && 
+                           $rootScope.user.friends.indexOf(data.facebookId) === -1;
                 };
 
-                scope.addFriend = function (uid) {
-                    scope.isFriend = true;
-                };
-
-                scope.removeFriend = function (uid) {
-                    scope.isFriend = false;
+                scope.toogleFavorite = function () {
+                    scope.isFavorite = !scope.isFavorite;
                 };
             }
         }

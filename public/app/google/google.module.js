@@ -109,8 +109,7 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
          * @name #handleLogin
          * @methodOf google.service:google
          * @description
-         * Set user data from facebook.
-         * Set user friends from facebook list.
+         * Set user data from google.
          */
         this.handleLogin = function () {
             user.setLogin(self.name);

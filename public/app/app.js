@@ -179,7 +179,7 @@
 
             function initUser() {
                 $rootScope.user = {
-                    facebookFriends: []
+                    friends: []
                 };
             }
 
@@ -279,35 +279,35 @@
                 }, 1000);
             });
 
-            $rootScope.isFriend = function (uid) {
-                return $rootScope.user.friends && $rootScope.user.friends.indexOf(uid) !== -1;
+            $rootScope.isFavorite = function (uid) {
+                return $rootScope.user.favorites && $rootScope.user.favorites.indexOf(uid) !== -1;
             };
 
-            $rootScope.$on('addFriend', function ($event, uid) {
+            $rootScope.$on('addFavorite', function ($event, uid) {
 
-                if ($rootScope.user.friends.indexOf(uid) !== -1) {
+                if ($rootScope.user.favorites.indexOf(uid) !== -1) {
                     return;
                 }
 
-                socket.emit('addFriend', uid);
+                socket.emit('addFavorite', uid);
 
                 $timeout(function () {
-                    $rootScope.user.friends.push(uid);
+                    $rootScope.user.favorites.push(uid);
                 });
             });
 
-            $rootScope.$on('removeFriend', function ($event, uid) {
+            $rootScope.$on('removeFavorite', function ($event, uid) {
 
-                var index = $rootScope.user.friends.indexOf(uid);
+                var index = $rootScope.user.favorites.indexOf(uid);
 
                 if (index === -1) {
                     return;
                 }
 
-                socket.emit('removeFriend', uid);
+                socket.emit('removeFavorite', uid);
 
                 $timeout(function () {
-                    $rootScope.user.friends.splice(index, 1);
+                    $rootScope.user.favorites.splice(index, 1);
                 });
             });
 

@@ -130,36 +130,36 @@
 </div>
 
 <div element 
-     ng-if="friends.length"
+     ng-if="favorites.length"
      class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <element-toggle name="'friends'" collection="friends"></element-toggle>
+    <element-toggle name="'favorites'" collection="favorites"></element-toggle>
     <div element-content class="app-element__body">
         <table class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
-                    <th sortable collection="friends" expression="['blitz.points', 'rapid.points']" icon="flash_on"></th>
-                    <th sortable collection="friends" expression="['rapid.points', 'blitz.points']" icon="timer"></th>
+                    <th sortable collection="favorites" expression="['blitz.points', 'rapid.points']" icon="flash_on"></th>
+                    <th sortable collection="favorites" expression="['rapid.points', 'blitz.points']" icon="timer"></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="friend in friends">
-                    <td show-profile="friend" class="app-table__user mdl-data-table__cell--non-numeric">
+                <tr ng-repeat="favorite in favorites">
+                    <td show-profile="favorite" class="app-table__user mdl-data-table__cell--non-numeric">
                         <img avatar
                              class="app-table__avatar" 
-                             ng-src="{{ friend.avatar }}">
-                        <span class="app-table__name">{{ friend.name }}</span>
+                             ng-src="{{ favorite.avatar }}">
+                        <span class="app-table__name">{{ favorite.name }}</span>
                     </td>
                     <td title="{{ 'blitz'|translate }}">
-                        {{ friend.blitz.points }}
+                        {{ favorite.blitz.points }}
                     </td>
                     <td title="{{ 'rapid'|translate }}">
-                        {{ friend.rapid.points }}
+                        {{ favorite.rapid.points }}
                     </td>
                     <td>
-                        <button ng-disabled="blackList(friend)"
-                                ng-click="setChallenger(friend)"
+                        <button ng-disabled="blackList(favorite)"
+                                ng-click="setChallenger(favorite)"
                                 show-modal="#modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>

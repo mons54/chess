@@ -873,6 +873,18 @@ a {
   right: 24px;
 }
 
+.app-profile__action .app-icon--favorite {
+  color: #9E9E9E;
+}
+
+.app-profile__action .app-icon--favorite-selected {
+  color: #FF9800;
+}
+
+.app-profile__action .app-icon--friend {
+  font-size: 32px;
+}
+
 .app-profile--challenger {
   margin-bottom: 30px;
 }

@@ -55,24 +55,24 @@ module.exports = function (app, io) {
             }
         });
 
-        socket.on('addFriend', function (uid) {
+        socket.on('addFavorite', function (uid) {
 
             if (!moduleSocket.checkSocket(socket) ||
                 typeof uid !== 'string') {
                 return;
             }
 
-            moduleSocket.addFriend(socket, uid);
+            moduleSocket.addFavorite(socket, uid);
         });
 
-        socket.on('removeFriend', function (uid) {
+        socket.on('removeFavorite', function (uid) {
 
             if (!moduleSocket.checkSocket(socket) ||
                 typeof uid !== 'string') {
                 return;
             }
 
-            moduleSocket.removeFriend(socket, uid);
+            moduleSocket.removeFavorite(socket, uid);
         });
 
         socket.on('createChallenge', function (data) {
