@@ -867,6 +867,12 @@ a {
   overflow: hidden;
 }
 
+.app-profile__action {
+  position: absolute;
+  top: 60px;
+  right: 24px;
+}
+
 .app-profile--challenger {
   margin-bottom: 30px;
 }

@@ -58,25 +58,48 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
         }, $scope);
 
         socket.on('challengers', function (data) {
-            var challengers = [],
-                friends = [];
+            var challengers = [];
 
             angular.forEach(data, function (value) {
                 if ($rootScope.user.uid == value.uid) {
                     return;
-                }
-                
-                if ($rootScope.user.friends.indexOf(value.facebookId) !== -1) {
-                    friends.push(value);
                 }
 
                 challengers.push(value);
             });
 
             $scope.challengers = orderByFilter(challengers, $scope.orderByFilter.challengers.expression, $scope.orderByFilter.challengers.reverse);
-            $scope.friends = orderByFilter(friends, $scope.orderByFilter.friends.expression, $scope.orderByFilter.friends.reverse);
+
+            setFriends();
 
         }, $scope);
+
+        $rootScope.$watchCollection('user.friends', function (value) {
+            if (!value || typeof value !== 'object') {
+                return;
+            }
+
+            setFriends();
+        });
+
+        function setFriends() {
+
+            var friends = [];
+
+            angular.forEach($scope.challengers, function (challenger) {
+                if ($rootScope.user.uid == challenger.uid) {
+                    return;
+                }
+
+                if ($rootScope.user.friends.indexOf(challenger.uid) !== -1 ||
+                    $rootScope.user.facebookFriends.indexOf(challenger.facebookId) !== -1) {
+                    friends.push(challenger);
+                }
+            });
+
+            $scope.friends = orderByFilter(friends, $scope.orderByFilter.friends.expression, $scope.orderByFilter.friends.reverse);
+        }
+
 
         $scope.removeGame = function () {
             socket.emit('removeGame');

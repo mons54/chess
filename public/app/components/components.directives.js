@@ -415,12 +415,37 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     scope.data = data;
 
+                    var isFriend = $rootScope.isFriend(data.uid);
+
+                    scope.isFriend = isFriend;
+
                     modal(element).show(function () {
                         angular.forEach(scope.stats.blitz, progress);
                         angular.forEach(scope.stats.rapid, progress);
+                    }).one('hide', function () {
+                        if (typeof scope.isFriend === 'boolean' &&
+                            isFriend !== scope.isFriend) {
+                            $rootScope.$emit(scope.isFriend ? 'addFriend' : 'removeFriend', data.uid);
+                        }
                     });
 
                 }, scope);
+
+                scope.friendAvailable = function (data) {
+                    if (!data) {
+                        return;
+                    }
+                    
+                    return $rootScope.user.uid !== data.uid && $rootScope.user.facebookFriends.indexOf(data.facebookId) === -1;
+                };
+
+                scope.addFriend = function (uid) {
+                    scope.isFriend = true;
+                };
+
+                scope.removeFriend = function (uid) {
+                    scope.isFriend = false;
+                };
             }
         }
     }

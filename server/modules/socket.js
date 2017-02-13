@@ -127,6 +127,7 @@ module.exports = function (io) {
             socket.avatar = response.avatar;
             socket.name = response.name;
             socket.facebookId = response.facebookId;
+            socket.friends = response.friends;
             socket.challenges = [];
 
             this.connected[response.id] = socket.id;
@@ -259,12 +260,42 @@ module.exports = function (io) {
                 blitz: socket.blitz,
                 rapid: socket.rapid,
                 blackList: socket.blackList,
+                friends: socket.friends,
                 trophies: data.trophies
             });
 
             socket.emit('challenges', socket.challenges);
 
             return data;
+        });
+    };
+
+    Module.prototype.addFriend = function (socket, uid) {
+        
+        if (!db.isObjectId(uid) ||
+            socket.friends.indexOf(uid) !== -1) {
+            return;
+        }
+
+        socket.friends.push(uid);
+
+        db.update('users', { _id: db.objectId(socket.uid) }, {
+            friends: socket.friends
+        });
+    };
+
+    Module.prototype.removeFriend = function (socket, uid) {
+        
+        var index = socket.friends.indexOf(uid);
+
+        if (index === -1) {
+            return;
+        }
+
+        socket.friends.splice(index, 1);
+
+        db.update('users', { _id: db.objectId(socket.uid) }, {
+            friends: socket.friends
         });
     };
 
@@ -716,14 +747,19 @@ module.exports = function (io) {
             return;
         }
 
-        db.findOne('users', { _id: objectId }, 'blitz rapid')
+        db.findOne('users', { _id: objectId }, 'blitz rapid facebookId')
         .then(function (response) {
+
+            data.facebookId = response.facebookId;
+
             data.blitz = {
                 points: response.blitz
             };
+
             data.rapid = {
                 points: response.rapid
             };
+
             return db.all([
                 db.count('users', {
                     active_blitz: true,

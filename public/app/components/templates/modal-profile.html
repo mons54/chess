@@ -9,6 +9,17 @@
             <a href modal-close class="app-modal__close">
                 <i class="material-icons">clear</i>
             </a>
+            <div ng-if="friendAvailable(data)"
+                 class="app-profile__action">
+                <button ng-if="!isFriend"
+                        ng-click="addFriend(data.uid)" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                    <i class="material-icons">person_add</i>
+                </button>
+                <button ng-if="isFriend"
+                        ng-click="removeFriend(data.uid)" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+                    <i class="material-icons">person</i>
+                </button>
+            </div>
             <div class="app-profile">
                 <div class="app__pull-left">
                     <img avatar class="app-profile__avatar" ng-src="{{ data.avatar }}">

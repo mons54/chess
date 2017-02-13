@@ -55,6 +55,26 @@ module.exports = function (app, io) {
             }
         });
 
+        socket.on('addFriend', function (uid) {
+
+            if (!moduleSocket.checkSocket(socket) ||
+                typeof uid !== 'string') {
+                return;
+            }
+
+            moduleSocket.addFriend(socket, uid);
+        });
+
+        socket.on('removeFriend', function (uid) {
+
+            if (!moduleSocket.checkSocket(socket) ||
+                typeof uid !== 'string') {
+                return;
+            }
+
+            moduleSocket.removeFriend(socket, uid);
+        });
+
         socket.on('createChallenge', function (data) {
 
             if (!data || 

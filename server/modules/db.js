@@ -40,7 +40,8 @@ function Module() {
                 success: Number,
                 unauthorized: Boolean,
                 blackList: Object,
-                trophies: Object
+                trophies: Object,
+                friends: Array
             })
             .index({blitz: 1})
             .index({rapid: 1})
@@ -100,8 +101,12 @@ Module.prototype.update = function (model, request, set) {
     return this.models[model].update(request, { $set: set }).exec();
 };
 
+Module.prototype.isObjectId = function (id) {
+    return mongoose.Types.ObjectId.isValid(id);
+};
+
 Module.prototype.objectId = function (id) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!this.isObjectId(id)) {
         return null;
     }
     return mongoose.Types.ObjectId(id);

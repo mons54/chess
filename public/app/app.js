@@ -126,6 +126,7 @@
                 $rootScope.loading = true;
                 user.setLogin(false);
                 socket.disconnect();
+                initUser();
                 modalConnect.show();
             }
 
@@ -174,6 +175,12 @@
                         facebook.login();
                     }
                 }
+            }
+
+            function initUser() {
+                $rootScope.user = {
+                    facebookFriends: []
+                };
             }
 
             socket.on('connect', function () {
@@ -272,6 +279,38 @@
                 }, 1000);
             });
 
+            $rootScope.isFriend = function (uid) {
+                return $rootScope.user.friends && $rootScope.user.friends.indexOf(uid) !== -1;
+            };
+
+            $rootScope.$on('addFriend', function ($event, uid) {
+
+                if ($rootScope.user.friends.indexOf(uid) !== -1) {
+                    return;
+                }
+
+                socket.emit('addFriend', uid);
+
+                $timeout(function () {
+                    $rootScope.user.friends.push(uid);
+                });
+            });
+
+            $rootScope.$on('removeFriend', function ($event, uid) {
+
+                var index = $rootScope.user.friends.indexOf(uid);
+
+                if (index === -1) {
+                    return;
+                }
+
+                socket.emit('removeFriend', uid);
+
+                $timeout(function () {
+                    $rootScope.user.friends.splice(index, 1);
+                });
+            });
+
             $window.onbeforeunload = function () {
                 if ($rootScope.socketServerDisconnect) {
                     return;
@@ -304,9 +343,7 @@
 
             $rootScope.loading = true;
 
-            $rootScope.user = {
-                friends: []
-            };
+            initUser();
 
             translator.use(translator.navigator);
             
