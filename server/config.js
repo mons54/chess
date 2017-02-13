@@ -14,11 +14,7 @@ module.exports = function (app) {
         var lang = file.substr(0, 2),
             dictionary = require(staticPath + 'json/dictionaries/' + file);
 
-        dictionaries[lang] = {
-            lang: lang,
-            title: dictionary.title,
-            description: dictionary.description
-        };
+        dictionaries[lang] = dictionary;
     });
 
     mongoose.connect('mongodb://127.0.0.1:27017/chess_new');
@@ -30,26 +26,57 @@ module.exports = function (app) {
     app.set('view engine', 'ejs');
 
     app.all('/facebook', function (req, res) {
-        var data = dictionaries[defaultLanguage];
-        data.lang = defaultLanguage;
+        var data = getMetaData(defaultLanguage);
         data.facebook = true;
         res.render('index', data);
     });
 
-    app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (req, res) {
+    app.get('/:lang([a-z]{2})/trophy/:id', function (req, res) {
         
         var data,
-            lang = req.params.lang;
+            lang = req.params.lang,
+            id = req.params.id;
+
+        if (!dictionaries.hasOwnProperty(lang)) {
+            res.status(406).send('Invalid language');
+            return;
+        }
+
+        data = dictionaries[lang].trophies.content[id];
+
+        if (!data) {
+            res.status(406).send('Invalid trophy id');
+            return;
+        }
+
+        data.lang = lang;
+        data.id = id;
+
+        res.render('views/trophy', data);
+    });
+
+    app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (req, res) {
+        
+        var data = getMetaData(req.params.lang);
+        data.facebook = false;
+
+        res.render('index', data);
+    });
+
+    function getMetaData(lang) {
 
         if (!dictionaries.hasOwnProperty(lang)) {
             lang = defaultLanguage;
         }
 
-        data = dictionaries[lang];
-        data.facebook = false;
+        var data = dictionaries[lang];
 
-        res.render('index', data);
-    });
+        return {
+            lang: lang,
+            title: data.title,
+            description: data.description
+        };
+    };
 };
 
 String.prototype.hash = function() {
