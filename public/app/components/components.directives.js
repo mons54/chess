@@ -435,7 +435,12 @@ directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
                 $window.onbeforeunload = setFavorite;
 
                 scope.isFriend = function (data) {
-                    return $rootScope.user.uid !== data.uid &&
+                    if (!data) {
+                        return;
+                    }
+                    
+                    return $rootScope.user &&
+                           $rootScope.user.uid !== data.uid &&
                            $rootScope.user.friends.indexOf(data.facebookId) !== -1;
                 };
 
@@ -444,7 +449,8 @@ directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
                         return;
                     }
                     
-                    return $rootScope.user.uid !== data.uid && 
+                    return $rootScope.user &&
+                           $rootScope.user.uid !== data.uid && 
                            $rootScope.user.friends.indexOf(data.facebookId) === -1;
                 };
 
