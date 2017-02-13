@@ -10,13 +10,13 @@
                 <i class="material-icons">clear</i>
             </a>
             <div class="app-profile__action">
-                <button ng-if="favoriteAvailable(data)"
+                <button ng-if="favoriteAvailable"
                         ng-click="toogleFavorite(data.uid)" 
                         class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
                     <i ng-if="!isFavorite" class="app-icon app-icon--favorite material-icons">star</i>
                     <i ng-if="isFavorite" class="app-icon app-icon--favorite-selected material-icons">star</i>
                 </button>
-                <i ng-if="isFriend(data)" class="app-icon app-icon--friend material-icons">group</i>
+                <i ng-if="isFriend" class="app-icon app-icon--friend material-icons">group</i>
             </div>
             <div class="app-profile">
                 <div class="app__pull-left">

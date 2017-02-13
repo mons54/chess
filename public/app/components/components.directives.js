@@ -417,6 +417,10 @@ directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
 
                     scope.isFavorite = isFavorite;
 
+                    scope.isFriend = isFriend(data);
+
+                    scope.favoriteAvailable = favoriteAvailable(data);
+
                     modal(element).show(function () {
                         angular.forEach(scope.stats.blitz, progress);
                         angular.forEach(scope.stats.rapid, progress);
@@ -434,7 +438,7 @@ directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
 
                 $window.onbeforeunload = setFavorite;
 
-                scope.isFriend = function (data) {
+                function isFriend(data) {
                     if (!data) {
                         return;
                     }
@@ -444,7 +448,7 @@ directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
                            $rootScope.user.friends.indexOf(data.facebookId) !== -1;
                 };
 
-                scope.favoriteAvailable = function (data) {
+                function favoriteAvailable(data) {
                     if (!data) {
                         return;
                     }
