@@ -44,7 +44,10 @@ module.exports = function (app, io) {
 
             if (refresh) {
                 moduleSocket.refreshUser(socket)
-                .then(function() {
+                .then(function(response) {
+                    if (!response) {
+                        return;
+                    }
                     moduleSocket.joinHome(socket);
                 });
             } else {

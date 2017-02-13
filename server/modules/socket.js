@@ -43,7 +43,7 @@ module.exports = function (io) {
                     }, { facebookId: body.id });
 
                 } catch (Error) {
-                    console.log(error, response);
+                    console.log(body);
                 }
             }.bind(this)
         );
@@ -70,7 +70,7 @@ module.exports = function (io) {
                     }, { googleId: data.id });
 
                 } catch (Error) {
-                    console.log(error, response);
+                    console.log(body);
                 }
             }.bind(this)
         );
@@ -134,6 +134,11 @@ module.exports = function (io) {
             return this.init(socket, response);
         }.bind(this))
         .then(function (response) {
+
+            if (!response) {
+                return;
+            }
+            
             var gid = this.getUserGame(response.id);
             if (gid) {
                 socket.join(moduleGame.getRoom(gid), function () {
@@ -218,7 +223,7 @@ module.exports = function (io) {
 
         if (data.unauthorized) {
             socket.emit('unauthorized');
-            throw new Error('unauthorized');
+            return;
         }
 
         var blackList = [];
