@@ -82,7 +82,7 @@ a {
 }
 
 .app__action {
-  color: #795548;
+  color: #ff5252;
   font-size: 10vw;
 }
 
@@ -728,7 +728,7 @@ a {
 }
 
 .app-navigation .mdl-navigation__link:hover {
-  border-bottom: 4px solid #607D8B;
+  border-bottom: 4px solid #ff5252;
 }
  
 .app-drawer {
@@ -898,7 +898,7 @@ a {
 }
 
 .app-profile__name {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 16px;
   margin-bottom: 8px;
   overflow: hidden;
@@ -1047,7 +1047,7 @@ a {
   padding: 12px;
   background-color: #eef5f9;
   border-bottom: 1px solid #dadede;
-  color: #607D8B;
+  color: #446479;
   font-size: 16px;
   line-height: 20px;
 }
@@ -1058,7 +1058,7 @@ a {
   top: -1px;
   margin-top: -5px;
   padding: 0px 5px;
-  background-color: #607D8B;
+  background-color: #ff5252;
   color: #EEF5F9;
   text-align: center;
   font-size: 12px;
@@ -1274,10 +1274,6 @@ a {
 
 .app-table--ranking tbody tr.is-user {
   background-color: #795548;
-  color: #fff;
-}
-
-.app-table--ranking tbody tr.is-user a {
   color: #fff;
 }
 
@@ -1637,7 +1633,7 @@ a {
 .app-game__toggle-count {
   position: relative;
   display: inline-block;
-  background-color: #607D8B;
+  background-color: #ff5252;
   color: #fff;
   width: 48px;
   height: 24px;
@@ -1655,7 +1651,7 @@ a {
   height: 0;
   border-style: solid;
   border-width: 0 5px 5px 0;
-  border-color: transparent #607D8B transparent transparent;
+  border-color: transparent #ff5252 transparent transparent;
 }
 
 .app-game__toggle-content {
@@ -1722,7 +1718,7 @@ a {
   padding: 5px 10px;
   min-height: 40px;
   margin: 0 10px 0 63px;
-  background-color: #607D8B;
+  background-color: #ff5252;
   color: #fff;
 }
 
@@ -1735,7 +1731,7 @@ a {
   height: 0;
   border-style: solid;
   border-width: 0 10px 10px 0;
-  border-color: transparent #607D8B transparent transparent;
+  border-color: transparent #ff5252 transparent transparent;
 }
 
 .app-game__message--user .app-game__message-avatar {
@@ -1779,7 +1775,7 @@ a {
 }
 
 .app-game__time--danger {
-  background-color: #607D8B;
+  background-color: #ff5252;
 }
 
 .app-game__time:last-child {
@@ -2079,7 +2075,7 @@ a {
 }
 
 .app-game__result-points.negative {
-  color: #607D8B;
+  color: #ff5252;
 }
 
 .app-game__result-link {
@@ -2172,7 +2168,7 @@ a {
 }
 
 .app-table--game-played td.is-active {
-  background-color: #607D8B;
+  background-color: #ff5252;
   color: #fff;
 }
 
@@ -2743,7 +2739,7 @@ a {
   }
 
   .app-game__played--phone-notation.is-active {
-    color: #607D8B;
+    color: #ff5252;
     font-weight: bold;
   }
 
@@ -3020,7 +3016,7 @@ a {
   }
 
   .app-profile--game .app-game__time--danger {
-    color: #607D8B;
+    color: #ff5252;
   }
 
   .app-game__lost-pieces {
