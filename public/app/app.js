@@ -94,7 +94,7 @@
 
             $rootScope.reconnect = function () {
                 socket.connect();
-                delete $rootScope.socketServerDisconnect;
+                delete $rootScope.disconnectMultiSocket;
             };
 
             $rootScope.logout = function () {
@@ -211,7 +211,7 @@
                 $rootScope.loading = true;
                 $rootScope.isDisconnected = true;
                 if (data === 'io server disconnect') {
-                    $rootScope.socketServerDisconnect = true;
+                    $rootScope.disconnectMultiSocket = true;
                 }
             });
 
@@ -316,7 +316,7 @@
             });
 
             $window.onbeforeunload = function () {
-                if ($rootScope.socketServerDisconnect) {
+                if ($rootScope.disconnectMultiSocket) {
                     return;
                 }
                 socket.emit('updateUser', {

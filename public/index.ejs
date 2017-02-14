@@ -47,8 +47,8 @@
     <body>
 
         <div ng-show="loading" class="app-loading">
-            <div ng-hide="socketServerDisconnect || unauthorized" class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-            <i ng-show="socketServerDisconnect" 
+            <div ng-hide="disconnectMultiSocket || unauthorized" class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <i ng-show="disconnectMultiSocket" 
                 ng-click="reconnect()"
                 ng-bind="'play_arrow'"
                 class="app__clickable app__action material-icons">
