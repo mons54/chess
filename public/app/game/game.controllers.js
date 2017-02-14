@@ -23,19 +23,26 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
     
     function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, modal, sound, colorsGame) {
 
-        $rootScope.loading = true;
-        $rootScope.isGame = true;
-
-        $scope.$on('$destroy', function() {
-            delete $rootScope.isGame;
-        });
-
         if ($rootScope.user.gid && $rootScope.user.gid !== $routeParams.id) {
             $location.path('/game/' + $rootScope.user.gid);
             return;
         }
-        
+
+        $rootScope.loading = true;
+        $rootScope.isGame = true;
+
         socket.emit('initGame', $routeParams.id);
+
+        $scope.$on('$destroy', function() {
+            cancelInterval();
+            delete $rootScope.isGame;
+        });
+
+        $rootScope.$watch('disconnectMultiSocket', function (value) {
+            if (value) {
+                cancelInterval();
+            }
+        });
 
         var defaultPieces = {
             pawn: 8,
@@ -484,9 +491,13 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.showMessages = value;
         }
 
+        function cancelInterval() {
+            $interval.cancel($interval.stopTimeGame);
+            sound.timer.load();
+        }
+
         var interval = 100;
 
-        $interval.cancel($interval.stopTimeGame);
         $interval.stopTimeGame = $interval(function () {
 
             var game = $scope.game;
