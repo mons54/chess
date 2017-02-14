@@ -1072,6 +1072,9 @@ a {
 
 .app-element__tools {
   float: right;
+  margin-top: -1px;
+  height: 24px;
+  width: 24px;
 }
 
 .app-element .app-element__body {
