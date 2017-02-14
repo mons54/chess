@@ -142,11 +142,10 @@ module.exports = function (io) {
             
             var gid = this.getUserGame(response.id);
             if (gid) {
-                socket.join(moduleGame.getRoom(gid), function () {
-                    socket.emit('startGame', gid);
-                });
+                socket.join(moduleGame.getRoom(gid));
             }
             socket.emit('connected', {
+                gid: gid,
                 uid: response.id,
                 avatar: response.avatar,
                 name: response.name,

@@ -207,7 +207,7 @@
             });
 
             socket.on('disconnect', function (data) {
-                modal('#modal-create-game').hide();
+                modal('[data-modal]').hide();
                 $rootScope.loading = true;
                 $rootScope.isDisconnected = true;
                 if (data === 'io server disconnect') {
@@ -225,7 +225,6 @@
             });
 
             socket.on('startGame', function (gid) {
-                modal('#modal-create-game').hide();
                 $rootScope.user.gid = gid;
                 redirectToGame();
             });
@@ -235,6 +234,11 @@
                 modalConnect.hide();
 
                 translator.use(data.lang);
+
+                if (data.gid) {
+                    $rootScope.user.gid = data.gid;
+                    redirectToGame();
+                }
 
                 if ($rootScope.isDisconnected) {
                     $route.reload();

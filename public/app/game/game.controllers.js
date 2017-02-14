@@ -29,6 +29,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         $scope.$on('$destroy', function() {
             delete $rootScope.isGame;
         });
+
+        if ($rootScope.user.gid && $rootScope.user.gid !== $routeParams.id) {
+            $location.path('/game/' + $rootScope.user.gid);
+            return;
+        }
         
         socket.emit('initGame', $routeParams.id);
 
