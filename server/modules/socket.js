@@ -159,6 +159,9 @@ module.exports = function (io) {
     };
 
     Module.prototype.joinHome = function (socket) {
+        if (this.getUserGame(socket.uid)) {
+            return;
+        }
         socket.join('home', function () {
             socket.emit('listGames', moduleGame.createdGame);
             this.listChallengers();
