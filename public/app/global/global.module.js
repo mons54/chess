@@ -147,8 +147,8 @@ service('sound', ['user', function (user) {
     if (typeof Audio === 'function') {
         sounds = {
             timer: new Audio('/sounds/timer.mp3'),
-            deplace: new Audio('/sounds/deplace.wav'),
-            capture: new Audio('/sounds/capture.wav')
+            deplace: new Audio('/sounds/deplace.mp3'),
+            capture: new Audio('/sounds/capture.mp3')
         };
     };
 
