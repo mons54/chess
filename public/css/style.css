@@ -728,7 +728,7 @@ a {
 }
 
 .app-navigation .mdl-navigation__link:hover {
-  border-bottom: 4px solid #E91E63;
+  border-bottom: 4px solid #DB4437;
 }
  
 .app-drawer {
@@ -1058,7 +1058,7 @@ a {
   display: inline-block;
   top: -1px;
   padding: 0px 4px;
-  background-color: #607D8B;
+  background-color: #795548;
   color: #EEF5F9;
   text-align: center;
   font-size: 12px;
