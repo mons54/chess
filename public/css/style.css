@@ -82,7 +82,7 @@ a {
 }
 
 .app__action {
-  color: #ff5252;
+  color: #DB4437;
   font-size: 10vw;
 }
 
@@ -728,7 +728,7 @@ a {
 }
 
 .app-navigation .mdl-navigation__link:hover {
-  border-bottom: 4px solid #ff5252;
+  border-bottom: 4px solid #E91E63;
 }
  
 .app-drawer {
@@ -1046,7 +1046,7 @@ a {
 .app-element__head {
   padding: 12px;
   background-color: #eef5f9;
-  border-bottom: 1px solid #dadede;
+  border-bottom: 1px solid rgba(0,0,0,.12);
   color: #446479;
   font-size: 16px;
   line-height: 20px;
@@ -1057,7 +1057,7 @@ a {
   display: inline-block;
   top: -1px;
   padding: 0px 4px;
-  background-color: #ff5252;
+  background-color: #607D8B;
   color: #EEF5F9;
   text-align: center;
   font-size: 12px;
@@ -1633,7 +1633,7 @@ a {
 .app-game__toggle-count {
   position: relative;
   display: inline-block;
-  background-color: #ff5252;
+  background-color: #DB4437;
   color: #fff;
   width: 48px;
   height: 24px;
@@ -1651,7 +1651,7 @@ a {
   height: 0;
   border-style: solid;
   border-width: 0 5px 5px 0;
-  border-color: transparent #ff5252 transparent transparent;
+  border-color: transparent #DB4437 transparent transparent;
 }
 
 .app-game__toggle-content {
@@ -1718,7 +1718,7 @@ a {
   padding: 5px 10px;
   min-height: 40px;
   margin: 0 10px 0 63px;
-  background-color: #ff5252;
+  background-color: #DB4437;
   color: #fff;
 }
 
@@ -1731,7 +1731,7 @@ a {
   height: 0;
   border-style: solid;
   border-width: 0 10px 10px 0;
-  border-color: transparent #ff5252 transparent transparent;
+  border-color: transparent #DB4437 transparent transparent;
 }
 
 .app-game__message--user .app-game__message-avatar {
@@ -1775,7 +1775,7 @@ a {
 }
 
 .app-game__time--danger {
-  background-color: #ff5252;
+  background-color: #DB4437;
 }
 
 .app-game__time:last-child {
@@ -2075,7 +2075,7 @@ a {
 }
 
 .app-game__result-points.negative {
-  color: #ff5252;
+  color: #DB4437;
 }
 
 .app-game__result-link {
@@ -2168,7 +2168,7 @@ a {
 }
 
 .app-table--game-played td.is-active {
-  background-color: #ff5252;
+  background-color: #DB4437;
   color: #fff;
 }
 
@@ -2739,7 +2739,7 @@ a {
   }
 
   .app-game__played--phone-notation.is-active {
-    color: #ff5252;
+    color: #DB4437;
     font-weight: bold;
   }
 
@@ -3016,7 +3016,7 @@ a {
   }
 
   .app-profile--game .app-game__time--danger {
-    color: #ff5252;
+    color: #DB4437;
   }
 
   .app-game__lost-pieces {
@@ -3084,8 +3084,7 @@ a {
 
   .app-modal__head {
     line-height: 28px;
-    padding: 21px;
-    font-size: 21px;
+    font-size: 20px;
   }
 
   .app-modal__content {

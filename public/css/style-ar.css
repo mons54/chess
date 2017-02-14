@@ -248,7 +248,7 @@
 .app-game__message:not(.app-game__message--next) .app-game__message-content:before {
   right: -8px;
   border-width: 0 0 10px 10px;
-  border-color: transparent transparent transparent #ff5252;
+  border-color: transparent transparent transparent #DB4437;
 }
 
 .app-game__message--user:not(.app-game__message--next) .app-game__message-content:before {
@@ -284,7 +284,7 @@
 
 .app-game__toggle-count:before {
   border-width: 0 0 5px 5px;
-  border-color: transparent transparent transparent #ff5252;
+  border-color: transparent transparent transparent #DB4437;
   right: -5px;
   left: initial;
 }
