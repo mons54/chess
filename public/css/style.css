@@ -1056,13 +1056,13 @@ a {
   position: relative;
   display: inline-block;
   top: -1px;
-  margin-top: -5px;
-  padding: 0px 5px;
+  padding: 0px 4px;
   background-color: #ff5252;
   color: #EEF5F9;
   text-align: center;
   font-size: 12px;
-  margin-left: 3px;
+  margin-left: 4px;
+  border-radius: 2px;
 }
 
 .app-element__head--toggle {
