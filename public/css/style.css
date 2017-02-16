@@ -1114,7 +1114,6 @@ a {
 .app-element__badge {
   position: relative;
   display: inline-block;
-  top: -1px;
   padding: 0px 4px;
   background-color: #DB4437;
   color: #EEF5F9;
@@ -1130,7 +1129,6 @@ a {
 
 .app-element__tools {
   float: right;
-  margin-top: -1px;
   height: 24px;
   width: 24px;
 }
@@ -2456,7 +2454,6 @@ a {
   
   .app-navigation__profile-infos-points {
     position: relative;
-    top: -1px;
   }
 
   .app-logo__text {
