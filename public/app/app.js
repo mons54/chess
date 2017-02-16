@@ -319,6 +319,7 @@
             });
 
             $window.onbeforeunload = function () {
+                $rootScope.$emit('unload');
                 if ($rootScope.disconnectMultiSocket) {
                     return;
                 }

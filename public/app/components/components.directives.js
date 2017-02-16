@@ -360,8 +360,8 @@ directive('modalChallenges', ['$rootScope', 'socket', 'modal',
  * @restrict E
  * @scope
  */
-directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
-    function ($rootScope, $window, socket, modal) {
+directive('modalProfile', ['$rootScope', 'socket', 'modal',
+    function ($rootScope, socket, modal) {
         return {
             restrict: 'E',
             replace: true,
@@ -436,7 +436,9 @@ directive('modalProfile', ['$rootScope', '$window', 'socket', 'modal',
                     }
                 }
 
-                $window.onbeforeunload = setFavorite;
+                $rootScope.$on('unload', function () {
+                    setFavorite();
+                });
 
                 function isFriend(data) {
                     if (!data) {
