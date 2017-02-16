@@ -91,6 +91,12 @@ a {
   margin: 0 !important;
 }
 
+.app-modal--login .app-logo {
+  padding: 4px 20px 4px 4px;
+  background-color: #795548;
+  border-radius: 24px;
+}
+
 .app-login__content-button {
   display: inline;
 }
@@ -214,8 +220,10 @@ a {
 .app-modal__close {
   z-index: 10;
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 20px;
+  right: 20px;
+  height: 24px;
+  width: 24px;
   color: rgba(0, 0, 0, 0.5);
 }
 
@@ -224,10 +232,9 @@ a {
 }
 
 .app-modal__head {
-  line-height: 30px;
-  padding: 24px;
+  line-height: 32px;
+  padding: 16px 56px;
   text-align: center;
-  text-transform: uppercase;
   font-size: 24px;
   background-color: #795548;
   color: #fff;
@@ -235,7 +242,7 @@ a {
 
 .app-modal__content {
   position: relative;
-  padding: 28px;
+  padding: 24px;
   background-color: #fff;
 }
 
@@ -299,8 +306,8 @@ a {
 .app-settings__loader,
 .app-settings__done {
   position: absolute;
-  left: 24px;
-  top: 24px;
+  left: 20px;
+  top: 20px;
 }
 
 .app-settings__done .app-icon {
@@ -630,36 +637,35 @@ a {
 }
 
 .app-logo {
-  position: relative;
   display: inline-block;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 15px;
-  background-color: #795548;
-  color: #fafafa;
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  border-radius: 20px;
+  height: 40px;
+  line-height: 40px;
 }
 
 .app-logo__icon {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 7px;
-  left: 15px;
+  width: 40px;
+  height: 40px;
   background-size: cover;
-  background-image: url(../images/logo.svg);
+  background-image: url(../images/logo.png);
+  border-radius: 50%;
 }
 
 .app-logo__text {
-  text-transform: uppercase;
-  padding-left: 30px;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 56px;
+  color: #fff;
+  font-family: "Trebuchet MS", Arial, sans-serif;
 }
 
 .app-header {
   overflow: visible;
-  background-color: white;
+  background-color: #795548;
+}
+
+.app-header-spacer--1024 {
+  display: none;
 }
 
 .app-header__row {
@@ -668,11 +674,11 @@ a {
 }
 
 .app-header .material-icons {
-  color: #757575;
+  color: #fff;
 }
 
 .app-header .mdl-navigation__link {
-  color: #757575;
+  color: #fff;
   font-weight: 700;
   font-size: 14px;
 }
@@ -697,12 +703,18 @@ a {
   margin-right: 0;
 }
 
+.app-button--create-game {
+  background-color: #5D4037;
+  margin: 0 36px 0 48px;
+  color: #fff;
+}
+
 .app-navigation {
   direction: ltr;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  width: 800px;
+  width: 1000px;
 }
 
 .app-navigation__container {
@@ -727,8 +739,47 @@ a {
   border-bottom: 4px solid transparent;
 }
 
-.app-navigation .mdl-navigation__link:hover {
-  border-bottom: 4px solid #DB4437;
+.app-navigation .mdl-navigation__link.selected {
+  border-bottom: 4px solid #fff;
+}
+
+.app-navigation__profile {
+  display: inline-block;
+  cursor: pointer;
+  height: 40px;
+  line-height: 28px;
+  vertical-align: middle;
+}
+
+.app-navigation__profile-infos {
+  height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 30px;
+  border-radius: 25px;
+  margin-right: 8px;
+  width: 72px;
+  padding-left: 8px;
+  background-color: #5D4037;
+}
+
+.app-navigation__profile-infos .app-icon {
+  vertical-align: middle;
+  font-size: 20px;
+  color: #D7CCC8;
+  padding-right: 4px;
+}
+
+.app-navigation__profile-infos-points {
+  vertical-align: middle;
+  font-weight: 700;
+  font-size: 15px;
+  color: #FF9800;
+}
+
+.app-navigation__profile-avatar {
+  display: inline-block;
+  margin-right: 8px;
 }
  
 .app-drawer {
@@ -755,16 +806,14 @@ a {
 .app-drawer .app-layout-title {
   position: relative;
   background: #795548;
-  line-height: 24px;
-  padding: 12px;
+  display: inline-block;
+  padding: 12px 0 12px 8px;
+  height: 64px;
+  line-height: 32px;
 }
 
 .app-drawer .app-layout-title .app-logo {
-  padding: 0 7px;
-}
-
-.app-drawer .app-layout-title .app-logo .app-logo__icon {
-  left: 7px;
+  padding-left: 4px;
 }
 
 .app-button--share {
@@ -827,12 +876,7 @@ a {
 .app-head {
   position: relative;
   padding: 12px;
-}
-
-.app-head .app-button__create-game {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
+  background-color: #fff;
 }
 
 .app-create-game__choices {
@@ -867,9 +911,15 @@ a {
   overflow: hidden;
 }
 
+.app-profile__card-avatar {
+  position: absolute;
+  top: 38px;
+  z-index: 10;
+}
+
 .app-profile__action {
   position: absolute;
-  top: 60px;
+  top: 24px;
   right: 24px;
 }
 
@@ -886,15 +936,25 @@ a {
 }
 
 .app-profile--challenger {
-  margin-bottom: 30px;
+  height: auto;
+  margin: 12px 0;
+}
+
+.app-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.app-avatar--navigation {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
 }
 
 .app-profile__avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 5px;
   margin-right: 12px;
-  overflow: hidden;
 }
 
 .app-profile__name {
@@ -975,7 +1035,7 @@ a {
 
 .app-profile__stats {
   padding: 8px;
-  background-color: #795548;
+  background-color: #5D4037;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1044,9 +1104,7 @@ a {
 }
 
 .app-element__head {
-  padding: 12px;
-  background-color: #eef5f9;
-  border-bottom: 1px solid rgba(0,0,0,.12);
+  padding: 16px;
   color: #757575;
   line-height: 20px;
   text-transform: uppercase;
@@ -1079,6 +1137,7 @@ a {
 
 .app-element .app-element__body {
   height: 309px;
+  border-top: 1px solid rgba(0,0,0,.12);
   overflow-x: auto;
 }
 
@@ -1118,8 +1177,8 @@ a {
 
 .app-search__game-edit {
   position: absolute;
-  right: 28px;
-  top: 28px;
+  right: 24px;
+  top: 24px;
 }
 
 .app-search__game-title {
@@ -1172,7 +1231,7 @@ a {
 }
 
 .app-ranking__toggle {
-  padding: 6px;
+  padding: 8px;
 }
 
 .app-ranking__spinner {
@@ -1231,7 +1290,7 @@ a {
   margin-right: 10px;
   width: 40px;
   height: 40px;
-  border-radius: 3px;
+  border-radius: 50%;
 }
 
 .app-table__icon-ranking {
@@ -1504,7 +1563,7 @@ a {
 
 .app-button__fixed--more:hover,
 .app-button__fixed--more.is-active {
-  height: 260px;
+  height: 328px;
 }
 
 .app-button__fixed--more .app-button {
@@ -2219,60 +2278,8 @@ a {
 
 @media screen and (max-width: 1024px) {
 
-  /* fix ie */
-  .mdl-button--fab .material-icons {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-  }
-  .app-header__row {
-    padding: 0 16px 0 36px;
-  }
-
-  .app-button__fixed {
-    width: 40px;
-  }
-
-  .app-button__fixed .app-button {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-  }
-
-  .app-button__fixed.app-button__fixed--action {
-    right: 84px;
-  }
-
   .app-layout.is-game .app-footer {
-    padding-bottom: 68px;
-  }
-
-  .app-button__fixed--more .app-button:nth-of-type(2) {
-    bottom: 52px;
-  }
-
-  .app-button__fixed--more .app-button:nth-of-type(3) {
-    bottom: 104px;
-  }
-
-  .app-button__fixed--more .app-button:nth-of-type(4) {
-    bottom: 156px;
-  }
-
-  .app-button__fixed--more .app-button:nth-of-type(5) {
-    bottom: 208px;
-  }
-
-  .app-button__fixed--more .app-button:nth-of-type(6) {
-    bottom: 260px;
-  }
-
-  .app-button__fixed--more .app-button:nth-of-type(7) {
-    bottom: 312px;
-  }
-
-  .app-button__fixed--more .app-button:nth-of-type(8) {
-    bottom: 364px;
+    padding-bottom: 84px;
   }
 
   .app-button__fixed--more .app-button.app-button--show {
@@ -2355,6 +2362,58 @@ a {
   }
 }
 
+@media only screen and (max-width : 1160px){
+  .app-header__row {
+    padding: 0 8px 0 20px;
+  }
+
+  .app-header .mdl-navigation__link {
+    padding: 0 20px;
+  }
+
+  .app-button--create-game {
+    margin: 0 28px 0 40px;
+  }
+}
+
+@media (min-width: 840px) and (max-width: 1024px) {
+  
+  .app-header {
+    min-height: 64px;
+  }
+
+  .app-header-spacer--1024 {
+    display: initial;
+  }
+
+  .app-title .app-logo__text {
+    display: none;
+  }
+
+  .app-header__row {
+    height: 64px;
+  }
+
+  .app-header__row .app-navigation {
+    height: 64px;
+    width: 100%;
+    padding-left: 56px;
+  }
+
+  .app-button--create-game {
+    margin: 0 28px 0 0;
+    padding: 0 8px;
+  }
+
+  .app-navigation__container {
+    width: 100%;
+  }
+
+  .app-header__row .app-navigation__link {
+    padding: 0 12px;
+  }
+}
+
 @media (min-width: 840px) {
   .mdl-layout__drawer-button {
     display: none;
@@ -2376,9 +2435,40 @@ a {
 
   .app-mobile__title {
     position: absolute;
-    left: 55px;
+    left: 56px;
     top: 10px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .app-navigation__profile-infos {
+    margin-right: 0;
+    line-height: 26px;
+    margin-left: 2px;
+  }
+
+  .app-navigation__profile-infos--blitz {
+    margin-left: 4px;
+  }
+
+  .app-navigation__profile-infos .app-icon {
+    padding-right: 0;
+  }
+  
+  .app-navigation__profile-infos-points {
+    position: relative;
+    top: -1px;
+  }
+
+  .app-logo__text {
+    font-weight: normal;
+    font-size: 20px;
+    text-transform: initial;
+    line-height: 36px;
+    margin-left: 0;
+  }
+
+  .app-modal__logo .app-logo__text {
+    margin-left: 56px;
   }
 
   .app-header__mobile-link {
@@ -2439,15 +2529,15 @@ a {
   }
 
   .app-button__fixed.app-button__fixed--action {
-    right: 64px;
+    right: 84px;
   }
 
   .app-footer {
-    padding-bottom: 28px;
+    padding-bottom: 48px;
   }
 
   .app-button__fixed--pagination {
-    bottom: 62px;
+    bottom: 64px;
   }
 
   .app-head .app-button__create-game {
@@ -2630,6 +2720,42 @@ a {
     z-index: 9;
   }
 
+  .app-modal__dialog {
+    min-height: 100%;
+  }
+
+  .app-modal__content {
+    padding: 16px 8px;
+  }
+
+  .app-modal--game .app-modal__dialog {
+    min-height: inherit;
+  }
+
+  .app-modal__close {
+    right: 16px;
+    top: 16px;
+  }
+
+  .app-settings__loader, .app-settings__done {
+    top: 16px;
+  }
+
+  .app-modal__head {
+    line-height: 28px;
+    font-size: 20px;
+    padding: 16px 8px;
+  }
+
+  .app-modal__content {
+    padding: 16px 8px;
+  }
+
+  .app-search__game-edit {
+    right: 16px;
+    top: 16px;
+  }
+
   .app-game__toggle {
     display: none;
     top: 0;
@@ -2655,14 +2781,18 @@ a {
 
   .app-game__toggle-head--phone {
     cursor: initial;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
   }
 
   .app-game__toggle-icon--phone {
     display: inline-block;
     position: absolute;
     top: 0;
-    height: 36px;
-    width: 36px;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
     border-right: 1px solid rgba(0,0,0,.12);
     border-left: 1px solid rgba(0,0,0,.12);
   }
@@ -2674,7 +2804,7 @@ a {
 
   .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
     border-left: 0;
-    left: 36px;
+    left: 40px;
   }
 
   .app-game__toggle--phone-archived .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
@@ -2683,12 +2813,12 @@ a {
 
   .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(3) {
     border-right: 0;
-    right: 72px;
+    right: 80px;
   }
 
   .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(4) {
     border-right: 0;
-    right: 36px;
+    right: 40px;
   }
 
   .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(5) {
@@ -2704,8 +2834,8 @@ a {
 
   .app-game__toggle-icon--phone .material-icons {
     position: absolute;
-    top: 6px;
-    left: 6px;
+    top: 8px;
+    left: 8px;
   }
 
   .app-game__played--phone {
@@ -2778,7 +2908,7 @@ a {
     display: none;
     position: absolute;
     background: #fff;
-    padding: 6px;
+    padding: 8px;
     height: 24px;
     width: 24px;
     border-top: 1px solid rgba(0,0,0,.12);
@@ -2832,6 +2962,11 @@ a {
     display: none;
   }
 
+  .app-layout.is-game .app-footer {
+    padding-top: 8px;
+    padding-bottom: 52px;
+  }
+
   .app-login__content-button {
     text-align: center;
     display: block;
@@ -2845,10 +2980,6 @@ a {
   .app-login__content-button button {
     width: 300px;
     text-align: center;
-  }
-
-  .app-button__fixed--pagination {
-    bottom: 62px;
   }
 
   .app-profile__stat {
@@ -2891,6 +3022,10 @@ a {
 }
 
 @media screen and (max-width: 479px) {
+
+  .mdl-grid {
+    padding: 8px 0;
+  }
 
   .mdl-data-table th {
     padding: 0 6px 12px 6px;
@@ -2949,7 +3084,7 @@ a {
     margin-bottom: 5px;
   }
 
-  .app-profile__avatar {
+  .app-avatar {
     width: 40px;
     height: 40px;
   }
@@ -2975,10 +3110,13 @@ a {
     display: initial;
   }
 
-  .app-profile--game .app-profile__avatar {
+  .app-profile--game .app-avatar {
     width: 32px;
     height: 32px;
     border-radius: 3px;
+  }
+
+  .app-profile--game .app-profile__avatar {
     margin-right: 9px;
   }
 
@@ -3086,13 +3224,8 @@ a {
     font-size: 18px;
   }
 
-  .app-modal__head {
-    line-height: 28px;
-    font-size: 20px;
-  }
-
-  .app-modal__content {
-    padding: 24px 16px;
+  .app-ranking__toggle {
+    padding: 4px;
   }
 
   .app-ranking__toggle-content {
@@ -3115,7 +3248,7 @@ a {
   }
 
   .app-element .app-element__head {
-    padding: 8px;
+    padding: 12px;
   }
 
   .app-element--small .app-element__body {

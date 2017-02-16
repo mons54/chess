@@ -69,9 +69,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return; 
             }
 
-            if (game.finish) {
+            if (game.finish && !game.archived) {
                 $timeout(function () {
                     $scope.shareResultData = getShareResultData(game);
+                    modal('[modal-game]').hide();
                     modal('#modal-finish-game').show();
                     delete $rootScope.user.gid;
                 }, 1000);

@@ -4,11 +4,17 @@
      aria-hidden="true"
      data-modal
      modal-close-bg>
-    <div class="app-modal__dialog">
+    <div class="app-modal__dialog app-modal__dialog--head">
+        <a ng-hide="loadGame" href modal-close class="app-modal__close">
+            <i class="material-icons">clear</i>
+        </a>
+        <div class="app-modal__head">
+            <div class="app-profile__card-avatar">
+                <img avatar class="app-avatar app-profile__avatar" ng-src="{{ data.avatar }}">
+            </div>
+            {{ data.name }}
+        </div>
         <div class="app-modal__content">
-            <a href modal-close class="app-modal__close">
-                <i class="material-icons">clear</i>
-            </a>
             <div class="app-profile__action">
                 <button ng-if="favoriteAvailable"
                         ng-click="toogleFavorite(data.uid)" 
@@ -17,34 +23,6 @@
                     <i ng-if="isFavorite" class="app-icon app-icon--favorite-selected material-icons">star</i>
                 </button>
                 <i ng-if="isFriend" class="app-icon app-icon--friend material-icons">group</i>
-            </div>
-            <div class="app-profile">
-                <div class="app__pull-left">
-                    <img avatar class="app-profile__avatar" ng-src="{{ data.avatar }}">
-                </div>
-                <div class="app-profile__name">
-                    <a class="app-profile__name">{{ data.name }}</a>
-                </div>
-                <div class="app-profile__info app-profile__info--blitz" title="{{ 'blitz'|translate }}">
-                    <i class="app-icon material-icons">flash_on</i>
-                    <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }} ({{ 'blitz'|translate }})">
-                        {{ data.blitz.points }}
-                    </div>
-                    <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }} ({{ 'blitz'|translate }})">
-                        <i class="app-icon material-icons">equalizer</i>
-                        {{ data.blitz.ranking | number }}
-                    </div>
-                </div>
-                <div class="app-profile__info app-profile__info--rapid" title="{{ 'rapid'|translate }}">
-                    <i class="app-icon material-icons">timer</i>
-                    <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }} ({{ 'rapid'|translate }})">
-                        {{ data.rapid.points }}
-                    </div>
-                    <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }} ({{ 'rapid'|translate }})">
-                        <i class="app-icon material-icons">equalizer</i>
-                        {{ data.rapid.ranking | number }}
-                    </div>
-                </div>
             </div>
             <div class="app-profile__game">
                 <div class="app-profile__info-title">

@@ -58,6 +58,8 @@
 
                 setTitle(toState.title);
 
+                $rootScope.currentRoute = toState.name; 
+
                 modal('[data-modal]').hide();
                 
                 // Used for refresh user when join home if true
@@ -119,6 +121,7 @@
             $rootScope.inviteFriends = utils.inviteFriends;
 
             function setTitle(title) {
+                $rootScope.title = title;
                 angular.element('title').text(translator.translate(title) + ' - World of Chess');
             }
 
@@ -389,7 +392,7 @@
             })
             .when('/game/:id', {
                 name : 'game',
-                title: 'game',
+                title: 'games',
                 templateUrl: '/app/game/templates/game.html',
                 controller: 'gameCtrl'
             })

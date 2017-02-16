@@ -4,7 +4,10 @@
      aria-hidden="true"
      data-modal
      modal-close-bg>
-    <div class="app-modal__dialog">
+    <div class="app-modal__dialog app-modal__dialog--head">
+        <a ng-hide="loadGame" href modal-close class="app-modal__close">
+            <i class="material-icons">clear</i>
+        </a>
         <div class="app-modal__head">{{ 'create_game'|translate }}</div>
         <div class="app-modal__content">
             <form ng-submit="createGame()"

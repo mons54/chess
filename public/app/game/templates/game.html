@@ -303,9 +303,10 @@
 
 <div ng-if="isPlayer()">
     <div id="modal-response-draw" 
-         class="app-modal app-modal__bg" 
+         class="app-modal app-modal--game app-modal__bg" 
          role="dialog" 
          aria-hidden="true"
+         modal-game
          data-modal
          modal-close-bg>
         <div class="app-modal__dialog">
@@ -329,10 +330,12 @@
     </div>
 
     <div id="modal-possible-draw"
-         class="app-modal app-modal__bg" 
+         class="app-modal app-modal--game app-modal__bg" 
          role="dialog" 
          aria-hidden="true"
-         data-modal>
+         modal-game
+         data-modal
+         modal-close-bg>
         <div class="app-modal__dialog">
             <div class="app-modal__content">
                 <h4 class="app-modal__title">{{ 'draw'|translate }} ?</h4>
@@ -354,11 +357,12 @@
     </div>
 
     <div id="modal-offer-draw" 
-         class="app-modal app-modal__bg" 
+         class="app-modal app-modal--game app-modal__bg" 
          role="dialog" 
          aria-hidden="true"
-         modal-close-bg
-         data-modal>
+         modal-game
+         data-modal
+         modal-close-bg>
         <div class="app-modal__dialog">
             <div class="app-modal__content">
                 <h4 class="app-modal__title">{{ 'offer_draw'|translate }} ?</h4>
@@ -380,11 +384,12 @@
     </div>
 
     <div id="modal-resign" 
-         class="app-modal app-modal__bg" 
+         class="app-modal app-modal--game app-modal__bg" 
          role="dialog" 
          aria-hidden="true"
-         modal-close-bg
-         data-modal>
+         modal-game
+         data-modal
+         modal-close-bg>
         <div class="app-modal__dialog">
             <div class="app-modal__content">
                 <h4 class="app-modal__title">{{ 'resign'|translate }} ?</h4>
@@ -406,9 +411,10 @@
     </div>
 
     <div id="modal-promotion" 
-         class="app-modal app-modal__bg"
+         class="app-modal app-modal--game app-modal__bg"
          role="dialog" 
          aria-hidden="true"
+         modal-game
          data-modal>
         <div class="app-modal__dialog">
             <div class="app-modal__content">
