@@ -16,6 +16,7 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
 
         $scope.$on('$destroy', function() {
             delete $rootScope.pages;
+            delete $rootScope.loadRanking;
         });
 
         socket.on('ranking', function (data) {
