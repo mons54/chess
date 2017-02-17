@@ -26,8 +26,9 @@
                             </tr>
                         </thead>
                         <tbody ng-if="challenges.length">
-                            <tr ng-repeat="challenge in challenges">
-                                <td show-profile="challenge" class="app-table__user mdl-data-table__cell--non-numeric">
+                            <tr ng-repeat="challenge in challenges"
+                                show-profile="challenge">
+                                <td class="app-table__user mdl-data-table__cell--non-numeric">
                                     <img avatar
                                          class="app-table__avatar" 
                                          ng-src="{{challenge.avatar}}">
@@ -42,12 +43,12 @@
                                 </td>
                                 <td class="app-table__time">{{ challenge.game.time / 60 }} + {{ challenge.game.increment }}</td>
                                 <td class="app-table__actions">
-                                    <button ng-click="removeChallenge(challenge.uid)" 
+                                    <button ng-click="$event.stopPropagation(); removeChallenge(challenge.uid)" 
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                                         <i class="app-icon material-icons">close</i>
                                     </button>
                                     <button ng-if="!challenge.create" 
-                                            ng-click="startChallenge(challenge.uid)" 
+                                            ng-click="$event.stopPropagation(); startChallenge(challenge.uid)" 
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                                         <i class="app-icon material-icons">check</i>
                                     </button>

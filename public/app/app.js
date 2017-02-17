@@ -107,6 +107,10 @@
                 logout();
             };
 
+            $rootScope.$watch('title', function (value) {
+                angular.element('title').text(translator.translate(value) + ' - World of Chess');
+            });
+
             $rootScope.$on('lang', function (event, value) {
                 $rootScope.lang = value;
                 setTitle($route.current.title);
@@ -121,8 +125,7 @@
             $rootScope.inviteFriends = utils.inviteFriends;
 
             function setTitle(title) {
-                $rootScope.title = title;
-                angular.element('title').text(translator.translate(title) + ' - World of Chess');
+                $rootScope.title = title || 'title';
             }
 
             function logout() {
@@ -274,8 +277,9 @@
 
                 delete $rootScope.refreshAccessToken;
                 delete $rootScope.isDisconnected;
-
-                $rootScope.loading = false;
+                delete $rootScope.loadProfile;
+                delete $rootScope.loading;
+                
                 $rootScope.ready = true;
             });
 
@@ -393,7 +397,6 @@
             })
             .when('/game/:id', {
                 name : 'game',
-                title: 'games',
                 templateUrl: '/app/game/templates/game.html',
                 controller: 'gameCtrl'
             })

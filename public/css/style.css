@@ -915,9 +915,13 @@ a {
 
 .app-profile__card-avatar {
   position: absolute;
-  top: 38px;
+  top: 48px;
   left: 60px;
   z-index: 10;
+}
+
+.app-modal--profile .app-modal__content {
+  padding-top: 32px;
 }
 
 .app-profile__action {
@@ -1033,7 +1037,7 @@ a {
 }
 
 .app-profile__game {
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 .app-profile__stats {
@@ -3005,7 +3009,7 @@ a {
   }
 
   .app-profile__card-avatar {
-    top: 34px;
+    top: 44px;
     left: 36px;
   }
 
