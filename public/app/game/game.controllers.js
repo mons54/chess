@@ -153,6 +153,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.orientation = 'white';
             }
 
+            if ($rootScope.user.lang === 'ar') {
+                letters.reverse();
+                $scope.orientation = $scope.orientation === 'black' ? 'white' : 'black';
+            }
+
             if (!game.finish) {
                 game.white.currentTime = game.white.time;
                 game.white.currentTimeTurn = game.white.timeTurn;
