@@ -277,8 +277,9 @@
 
                 delete $rootScope.refreshAccessToken;
                 delete $rootScope.isDisconnected;
-
-                $rootScope.loading = false;
+                delete $rootScope.loadProfile;
+                delete $rootScope.loading;
+                
                 $rootScope.ready = true;
             });
 
