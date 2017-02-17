@@ -35,6 +35,10 @@ module.exports = function (io) {
                         return;
                     }
 
+                    if (!body.locale) {
+                        body.locale = 'en';
+                    }
+
                     this.create(socket, {
                         facebookId: body.id,
                         name: body.name,
