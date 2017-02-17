@@ -2,8 +2,7 @@
     <div profile-game player="player2"></div>
 </div>
 
-<div class="app-game__board app-game__board--{{ colorGame }} app-element mdl-shadow--2dp mdl-cell mdl-cell--12-col" 
-     ng-class="{'app-game__board--player-white': orientation == 'white', 'app-game__board--player-black': orientation == 'black'}">
+<div class="app-game__board app-game__board--{{ colorGame }} app-element mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div ng-repeat="number in numbers" class="app-game__row">
         <div 
             ng-repeat="letter in letters" 

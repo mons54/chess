@@ -96,6 +96,120 @@
   float: right;
 }
 
+.app-game__board--pink .app-game__box {
+  background-color: #739673;
+}
+
+.app-game__board--blue .app-game__box {
+  background-color: #0D1F43;
+}
+
+.app-game__board--orange .app-game__box {
+  background-color: #18333C;
+}
+
+.app-game__board--green .app-game__box {
+  background-color: #789655;
+}
+
+.app-game__board--grey .app-game__box {
+  background-color: #3F3F3F;
+}
+
+.app-game__board--black .app-game__box {
+  background-color: #424242;
+}
+
+.app-game__board--brown .app-game__box {
+  background-color: #795548;
+}
+
+.app-game__box:before {
+  display: block;
+  content:'';
+  padding-top: 100%;
+}
+
+.app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #557896;
+}
+
+.app-game__board--pink .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--pink .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #739673;
+}
+
+.app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #0D1F43;
+}
+
+.app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #18333C;
+}
+
+.app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--green .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #789655;
+}
+
+.app-game__board--grey .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--grey .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #3F3F3F;
+}
+
+.app-game__board--black .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--black .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #424242;
+}
+
+.app-game__board--brown .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
+.app-game__board--brown .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
+  background-color: #795548;
+}
+
+.app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #CFD8DC;
+}
+
+.app-game__board--pink .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--pink .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #F0B4C8;
+}
+
+.app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #004787;
+}
+
+.app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #D55345;
+}
+
+.app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--green .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #f0f8d2;
+}
+
+.app-game__board--grey .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--grey .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #CCCCCC;
+}
+
+.app-game__board--black .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--black .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #E53935;
+}
+
+.app-game__board--brown .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
+.app-game__board--brown .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
+  background-color: #F0F0B4;
+}
+
 .app-head .app-button__create-game {
   left: 12px;
   right: initial;
