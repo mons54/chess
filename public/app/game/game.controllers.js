@@ -69,7 +69,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 return; 
             }
 
-            if (game.finish && !game.archived) {
+            if (!game.finish) {
+                game.lastTime = new Date().getTime();
+            } else if (!game.archived) {
                 $timeout(function () {
                     $scope.shareResultData = getShareResultData(game);
                     modal('[modal-game]').hide();
@@ -77,8 +79,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     delete $rootScope.user.gid;
                 }, 1000);
                 var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.type);
-            } else {
-                game.lastTime = new Date().getTime();
             }
 
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
@@ -142,7 +142,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.player2 = game.white;
                 $scope.player1.color = 'black';
                 $scope.player2.color = 'white';
-                $scope.orientation = 'black';
                 letters.reverse();
                 numbers.reverse();
             } else {
@@ -150,12 +149,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 $scope.player2 = game.black;
                 $scope.player1.color = 'white';
                 $scope.player2.color = 'black';
-                $scope.orientation = 'white';
             }
 
             if ($rootScope.user.lang === 'ar') {
                 letters.reverse();
-                $scope.orientation = $scope.orientation === 'black' ? 'white' : 'black';
             }
 
             if (!game.finish) {
