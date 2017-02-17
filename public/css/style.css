@@ -674,7 +674,7 @@ a {
 
 .app-header__row {
   position: relative;
-  padding: 0 40px 0 60px;
+  padding: 0 60px;
 }
 
 .app-header .material-icons {
@@ -787,7 +787,7 @@ a {
 
 .app-navigation__profile-avatar {
   display: inline-block;
-  margin-right: 8px;
+  margin-left: 8px;
 }
  
 .app-drawer {
