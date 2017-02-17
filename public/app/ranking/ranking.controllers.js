@@ -20,7 +20,6 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
 
         socket.on('ranking', function (data) {
 
-            $rootScope.loading = false;
             $rootScope.loadRanking = false;
 
             if (!data) {
@@ -73,8 +72,6 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
         $scope.setType = function (type) {
             emit(type);
         };
-
-        $rootScope.loading = true;
 
         componentHandler.upgradeElement($('[data-spinner]')[0]);
 
