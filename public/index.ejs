@@ -180,9 +180,14 @@
                        ng-click="closeDrawer()"
                        show-profile="user" 
                        class="app-navigation__profile">
-                        <img avatar
-                            class="app-avatar app-avatar--navigation" 
-                            ng-src="{{ user.avatar }}">
+                        <div class="app-navigation__profile-user">
+                            <img avatar
+                                class="app-avatar app-avatar--navigation" 
+                                ng-src="{{ user.avatar }}">
+                            <span class="app-navigation__profile-name">
+                                {{ user.name }}
+                            </span>
+                        </div>
                         <div class="app-navigation__profile-infos app-navigation__profile-infos--blitz"
                              title="{{ 'blitz'|translate }}">
                             <i class="app-icon material-icons">flash_on</i>
