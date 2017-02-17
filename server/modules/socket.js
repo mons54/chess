@@ -649,6 +649,8 @@ module.exports = function (io) {
 
     Module.prototype.setChallenge = function (socket, value) {
 
+        this.deleteChallenge(socket, value.uid);
+
         socket.challenges.push(value);
 
         if (socket.challenges.length > 10) {

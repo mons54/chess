@@ -21,7 +21,12 @@
                         <span class="app-table__name">{{ game.name }}</span>
                     </td>
                     <td class="app-table__points">{{ game.points }}</td>
-                    <td class="app-table__color" ng-class="getClassColorGame(game.color)"></td>
+                    <td class="app-table__color" 
+                        ng-class="{
+                            'app-table__color--white': game.color === 'white', 
+                            'app-table__color--black': game.color === 'black' 
+                        }">
+                    </td>
                     <td class="app-table__time">{{ game.game.time / 60 }} + {{ game.game.increment }}</td>
                     <td class="app-table__actions">
                         <button ng-if="game.uid == user.uid" 

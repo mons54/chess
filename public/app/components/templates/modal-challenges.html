@@ -34,7 +34,12 @@
                                     <span class="app-table__name">{{ challenge.name }}</span>
                                 </td>
                                 <td class="app-table__points">{{ challenge.points }}</td>
-                                <td class="app-table__color" ng-class="getClassColorGame(challenge.color)"></td>
+                                <td class="app-table__color" 
+                                    ng-class="{
+                                        'app-table__color--white': challenge.color === 'white', 
+                                        'app-table__color--black': challenge.color === 'black' 
+                                    }">
+                                </td>
                                 <td class="app-table__time">{{ challenge.game.time / 60 }} + {{ challenge.game.increment }}</td>
                                 <td class="app-table__actions">
                                     <button ng-click="removeChallenge(challenge.uid)" 
