@@ -774,6 +774,10 @@ a {
   padding-right: 4px;
 }
 
+.app-navigation__profile-infos--blitz .app-icon {
+  padding-right: 2px;
+}
+
 .app-navigation__profile-infos-points {
   vertical-align: middle;
   font-weight: 700;
@@ -2768,7 +2772,7 @@ a {
   }
 
   .app-modal__head {
-    line-height: 28px;
+    line-height: 24px;
     font-size: 20px;
     padding: 16px 8px;
   }
@@ -3009,7 +3013,7 @@ a {
   }
 
   .app-profile__card-avatar {
-    top: 44px;
+    top: 40px;
     left: 36px;
   }
 
