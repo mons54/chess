@@ -2357,7 +2357,7 @@ a {
 
 @media only screen and (max-width : 1160px){
   .app-header__row {
-    padding: 0 8px 0 20px;
+    padding: 0 20px;
   }
 
   .app-header .mdl-navigation__link {
