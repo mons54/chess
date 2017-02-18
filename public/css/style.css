@@ -2738,15 +2738,15 @@ a {
   }
 
   .app-modal__dialog {
-    min-height: 100%;
+    height: 100%;
+  }
+
+  .app-modal--game .app-modal__dialog {
+    height: inherit;
   }
 
   .app-modal__content {
     padding: 16px 8px;
-  }
-
-  .app-modal--game .app-modal__dialog {
-    min-height: inherit;
   }
 
   .app-profile__action {
@@ -2807,8 +2807,8 @@ a {
 
   .app-game__toggle-head--phone {
     cursor: initial;
+    width: 100%;
     height: 40px;
-    width: 40px;
     line-height: 40px;
   }
 
@@ -2870,6 +2870,7 @@ a {
 
   .app-game__played--phone {
     position: relative;
+    background-color: #fff;
   }
 
   .app-game__played--phone-actions {
@@ -2887,7 +2888,7 @@ a {
   }
 
   .app-game__played--phone-notations.has-actions {
-    margin-left: 68px;
+    margin-left: 72px;
   }
 
   .app-table--game-played-phone {
