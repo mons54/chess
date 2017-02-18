@@ -10,14 +10,17 @@
         </div>
     </div>
 
-    <div show-profile="player" ng-class="{'app-profile__show-pieces': hasLostPieces(player.lostPieces) }">
+    <div ng-class="{'app-profile__show-pieces': hasLostPieces(player.lostPieces) }">
         <div class="app__pull-left">
-            <img avatar
-                 class="app-avatar app-profile__avatar" 
-                 ng-src="{{ player.avatar }}">
+            <a show-profile="player" href>
+                <img avatar
+                     show-profile="player" 
+                     class="app-avatar app-profile__avatar" 
+                     ng-src="{{ player.avatar }}">
+            </a>
         </div>
         <div class="app-profile__name">
-            <a class="app-profile__name" href>{{ player.name }}</a>
+            <a show-profile="player" class="app-profile__name" href>{{ player.name }}</a>
         </div>
         <div class="app-profile__info app-profile__info--blitz" title="{{ 'blitz'|translate }}">
             <i class="app-icon material-icons">flash_on</i>
