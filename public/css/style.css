@@ -22,10 +22,6 @@ a {
   color: #fff;
 }
 
-[show-profile] {
-  cursor: pointer;
-}
-
 /* fix ie */
 .mdl-button--fab .material-icons {
   position: absolute;
