@@ -74,6 +74,14 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
 
         }, $scope);
 
+        socket.on('countConnected', function (data) {
+            $scope.countConnected = data;
+        });
+
+        socket.on('countGames', function (data) {
+            $scope.countGames = data;
+        });
+
         $rootScope.$watchCollection('user.favorites', function (value) {
             if (!value || typeof value !== 'object') {
                 return;

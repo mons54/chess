@@ -135,6 +135,10 @@ module.exports = function (io) {
             socket.challenges = [];
 
             this.connected[response.id] = socket.id;
+
+            if (!connected) {
+                io.to('home').emit('countConnected', Object.keys(this.connected).length);
+            }
             
             return this.init(socket, response);
         }.bind(this))
@@ -168,6 +172,8 @@ module.exports = function (io) {
         socket.join('home', function () {
             socket.emit('listGames', moduleGame.createdGame);
             this.listChallengers();
+            socket.emit('countConnected', Object.keys(this.connected).length);
+            socket.emit('countGames', Object.keys(moduleGame.games).length);
         }.bind(this));
     };
 
@@ -403,6 +409,8 @@ module.exports = function (io) {
 
             moduleGame.setGame(response.id, game);
 
+            io.to('home').emit('countGames').emit('countGames', Object.keys(moduleGame.games).length);
+
             this.userGames[socket.uid] = response.id;
             this.userGames[socketOpponent.uid] = response.id;
 
@@ -541,6 +549,7 @@ module.exports = function (io) {
         }
 
         moduleGame.deleteGame(game.id);
+        io.to('home').emit('countGames').emit('countGames', Object.keys(moduleGame.games).length);
 
         delete this.userGames[white.uid];
         delete this.userGames[black.uid];

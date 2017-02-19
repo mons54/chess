@@ -639,7 +639,7 @@ service('translator', ['$rootScope', '$http', 'languages', function($rootScope, 
                 $rootScope.$emit('lang', lang);
             }.bind(this));
         },
-        translate: function (key) {
+        translate: function (key, params) {
 
             if (!key || !this.data) {
                 return key;
@@ -663,13 +663,19 @@ service('translator', ['$rootScope', '$http', 'languages', function($rootScope, 
                 }
             }.bind(this));
 
+            if (result && params) {
+                angular.forEach(params, function(value, key) {
+                    result = result.replace('{' + key + '}', value);
+                });
+            }
+
             return result ? result : key;
         }
     };
 }]).
 filter('translate', ['translator', function (translator) {
-    function translate(value) {
-        return translator.translate(value);
+    function translate(value, params) {
+        return translator.translate(value, params);
     };
 
     translate.$stateful = true;

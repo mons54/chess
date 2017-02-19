@@ -14,6 +14,8 @@
    "challengers":"挑战者",
    "challenges": "挑战",
    "challenge": "挑战",
+   "players_online": "{n}在线玩家",
+   "games_in_play": "{n}场对局正在进行中",
    "time":"時間",
    "minutes":"分钟",
    "seconds": "秒",

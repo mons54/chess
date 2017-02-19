@@ -14,6 +14,8 @@
    "challengers":"Претенденты",
    "challenges": "Проблемы",
    "challenge": "Вызов",
+   "players_online": "{n} игрока онлайн",
+   "games_in_play": "{n} ведется партий",
    "time":"Время",
    "minutes":"Минут",
    "seconds": "Секунд",
