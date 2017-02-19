@@ -14,6 +14,8 @@
    "challengers":"Challengers",
    "challenges": "Défis",
    "challenge": "Défier",
+   "players_online": "{n} joueurs en ligne",
+   "games_in_play": "{n} parties en cours",
    "time":"Temps",
    "minutes":"Minutes",
    "seconds": "Secondes",

@@ -14,6 +14,8 @@
    "challengers":"Challengers",
    "challenges": "Sfide",
    "challenge": "Sfida",
+   "players_online": "{n} giocatori collegati",
+   "games_in_play": "{n} partite in gioco",
    "time":"Tempo",
    "minutes":"Minuti",
    "seconds": "Secondi",

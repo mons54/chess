@@ -15,10 +15,6 @@ function Game() {
     this.games = {};
 };
 
-Game.prototype.getGames = function () {
-    return this.games;
-};
-
 Game.prototype.create = function (socket, data) {
     
     var match,

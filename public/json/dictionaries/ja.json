@@ -14,6 +14,8 @@
    "challengers":"挑戦者",
    "challenges": "課題",
    "challenge": "挑戦",
+   "players_online": "{n}オンラインプレイヤー",
+   "games_in_play": "{n}試合プレイ中",
    "time":"時間",
    "minutes":"分",
    "seconds": "秒",

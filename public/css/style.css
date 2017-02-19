@@ -875,6 +875,11 @@ a {
   max-width: 760px;
 }
 
+.app-infos {
+  width: 100%;
+  padding: 0 8px;
+}
+
 .app-head {
   position: relative;
   padding: 12px;

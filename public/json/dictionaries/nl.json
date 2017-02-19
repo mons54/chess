@@ -14,6 +14,8 @@
    "challengers":"Challengers",
    "challenges": "Uitdagingen",
    "challenge": "Uitdaging",
+   "players_online": "{n} spelers online",
+   "games_in_play": "{n} partijen bezig",
    "time":"Tijd",
    "minutes":"Notulen",
    "seconds": "Seconden",

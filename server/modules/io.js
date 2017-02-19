@@ -354,6 +354,8 @@ module.exports = function (app, io) {
             }
 
             delete moduleSocket.connected[socket.uid];
+            io.to('home').emit('countConnected', Object.keys(moduleSocket.connected).length);
+            
             moduleSocket.listChallengers();
             
             moduleSocket.deleteChallenges(socket);
