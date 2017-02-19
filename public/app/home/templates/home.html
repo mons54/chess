@@ -1,7 +1,3 @@
-<div class="app-infos">
-    <div ng-if="countConnected !== undefined" class="app__pull-left">{{ 'players_online'|translate:{n: countConnected} }}</div>
-    <div ng-if="countGames !== undefined" class="app__pull-right">{{ 'games_in_play'|translate:{n: countGames} }}</div>
-</div>
 <div element class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <element-toggle name="'games'" collection="createdGames"></element-toggle>
     <div element-content class="app-element__body">
@@ -140,6 +136,11 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<div class="app-infos">
+    <div ng-if="displayConnected" ng-bind-html="displayConnected" class="app__pull-left"></div>
+    <div ng-if="displayGames" ng-bind-html="displayGames" class="app__pull-right"></div>
 </div>
 
 <div id="modal-challenger" 

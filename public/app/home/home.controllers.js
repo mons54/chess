@@ -12,9 +12,9 @@ angular.module('home').
  * @requires global.service:utils
  * @requires global.constant:paramsGame
  */
-controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame', 'orderByFilter',
+controller('homeCtrl', ['$rootScope', '$scope', '$sce', 'socket', 'translator', 'utils', 'paramsGame', 'orderByFilter',
     
-    function ($rootScope, $scope, socket, utils, paramsGame, orderByFilter) {
+    function ($rootScope, $scope, $sce, socket, translator, utils, paramsGame, orderByFilter) {
 
         $scope.orderByFilter = {
             createdGames: {
@@ -75,11 +75,15 @@ controller('homeCtrl', ['$rootScope', '$scope', 'socket', 'utils', 'paramsGame',
         }, $scope);
 
         socket.on('countConnected', function (data) {
-            $scope.countConnected = data;
+            $scope.displayConnected = $sce.trustAsHtml(translator.translate('players_online', {
+                n: '<strong>' + data + '</strong>'
+            }));
         });
 
         socket.on('countGames', function (data) {
-            $scope.countGames = data;
+            $scope.displayGames = $sce.trustAsHtml(translator.translate('games_in_play', {
+                n: '<strong>' + data + '</strong>'
+            }));
         });
 
         $rootScope.$watchCollection('user.favorites', function (value) {
