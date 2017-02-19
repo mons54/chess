@@ -631,16 +631,12 @@ engine.prototype.setPieceMat = function (piece) {
 };
 
 engine.prototype.setPieceMatCapture = function (piece) {
-
-    if (!this.kingCheckCapture) {
-        return;
-    }
-
     if (this.inArray(this.kingCheckCapture, piece.capture)) {
-
         this.checkmat = false;
-
         this.capture.push(this.kingCheckCapture);
+    } else if (this.inPassing && this.inArray(this.inPassing, piece.capture)) {
+        this.checkmat = false;
+        this.capture.push(this.inPassing);
     }
 };
 

@@ -362,6 +362,7 @@ var game = {
             }
         }
 
+        delete this.prise_en_passant;
         this.position_en_passant = [];
 
         if (this.jeu.position[depart].nom == 'pion') {
@@ -741,10 +742,11 @@ var game = {
                             var _capture = pion.capture.split('.');
 
                             if (this._in_array(this.roi_echec_capture, _capture)) {
-
                                 this.mat = false;
-
                                 capture = this.roi_echec_capture;
+                            } else if (this.prise_en_passant && this._in_array(this.prise_en_passant, _capture)) {
+                                this.mat = false;
+                                capture = this.prise_en_passant;
                             }
                         }
                     }
@@ -1528,7 +1530,7 @@ function run(gid) {
         result  = assert.checkGame(oldGame, newGame);
 
     if (result !== true) {
-        console.log('error', result);
+        console.log('error', JSON.stringify(result));
         return;
     }
 
