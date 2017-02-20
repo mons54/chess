@@ -656,6 +656,31 @@ module.exports = function (io) {
         });
     };
 
+    Module.prototype.getCurrentGames = function (socket, limit) {
+
+        if (!limit) {
+            limit = 8;
+        }
+
+        var games = [];
+
+        for (var i in moduleGame.games) {
+            games.push(moduleGame.games[i].data);
+        }
+
+        games = games.sort(function(a, b) {
+            return (a.white.points + a.black.points) + (b.white.points + b.black.points);
+        }).splice(0, limit);
+
+        // send the ids and socket join specific room 
+        // After send only the game turn (ex: a1 > a2) and calcul from front
+        games.forEach(function (value) {
+            socket.join('currentGame' + value.id);
+        });
+
+        return games;
+    };
+
     Module.prototype.setChallenge = function (socket, value) {
 
         this.deleteChallenge(socket, value.uid);

@@ -412,6 +412,12 @@
                 templateUrl: '/app/trophies/templates/trophies.html',
                 controller: 'trophiesCtrl'
             })
+            .when('/games', {
+                name : 'games',
+                title: 'games_in_play',
+                templateUrl: '/app/games/templates/games.html',
+                controller: 'gamesCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
