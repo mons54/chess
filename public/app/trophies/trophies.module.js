@@ -32,7 +32,7 @@ directive('progressBarTrophy', function () {
                     color: '#388E3C',
                     trailWidth: attrs.progressBarTrophyTrailWidth,
                     trailColor: '#795548'
-                }).animate(value / 100);
+                }).set(value / 100);
             }
         }
     };
