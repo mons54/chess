@@ -516,7 +516,7 @@ directive('sortable', ['$rootScope', 'orderByFilter',
  * @requires orderByFilter
  * @restrict E
  */
-directive('elementToggle', ['$timeout', function ($timeout) {
+directive('elementToggle', [function () {
     return {
         restrict: 'E',
         replace: true,
