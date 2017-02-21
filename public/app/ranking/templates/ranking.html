@@ -2,24 +2,24 @@
     <div class="app-ranking__toggle">
         <span class="app-ranking__toggle-content">
             <button ng-click="setType('blitz')"
-                    ng-class="{'mdl-button--accent': type === 'blitz'}"
+                    ng-class="{'checked': type === 'blitz'}"
                     class="app-button mdl-button mdl-js-button mdl-js-ripple-effect">
                 {{ 'blitz' | translate }}
             </button>
             <button ng-click="top100('blitz')"
-                    ng-class="{'mdl-button--accent': type === 'blitzTop100'}"
+                    ng-class="{'checked': type === 'blitzTop100'}"
                     class="app-button mdl-button mdl-js-button mdl-js-ripple-effect">
                 {{ 'blitz' | translate }} {{ 'top100'|translate }}
             </button>
         </span>
         <span class="app-ranking__toggle-content">
             <button ng-click="setType('rapid')"
-                    ng-class="{'mdl-button--accent': type === 'rapid'}"
+                    ng-class="{'checked': type === 'rapid'}"
                     class="app-button mdl-button mdl-js-button mdl-js-ripple-effect">
                 {{ 'rapid' | translate }}
             </button>
             <button ng-click="top100('rapid')"
-                    ng-class="{'mdl-button--accent': type === 'rapidTop100'}"
+                    ng-class="{'checked': type === 'rapidTop100'}"
                     class="app-button mdl-button mdl-js-button mdl-js-ripple-effect">
                 {{ 'rapid' | translate }} {{ 'top100'|translate }}
             </button>

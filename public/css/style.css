@@ -329,7 +329,7 @@ a {
 }
 
 .app-form__choices-colors button.checked {
-  border: 3px solid #FFC107;
+  border: 3px solid #607D8B;
 }
 
 .app-form__choices-colors button:last-child {
@@ -465,8 +465,8 @@ a {
 }
 
 .app-form__textfield>input:focus,.app-form__textfield>textarea:focus {
-  border-color: #795548;
-  border-width: 2px
+  border-color: #607D8B;
+  border-width: 2px;
 }
 
 .app-form__textfield>input:-moz-read-only,.app-form__textfield>input:disabled,.app-form__textfield>textarea:-moz-read-only,.app-form__textfield>textarea:disabled {
@@ -1052,6 +1052,7 @@ a {
 
 .app-profile__stats {
   padding: 8px;
+  background-color: #795548;
   background-color: #5D4037;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1249,6 +1250,10 @@ a {
   padding: 8px;
 }
 
+.app-ranking__toggle .app-button.checked {
+  color: #607D8B;
+}
+
 .app-ranking__spinner {
   position: absolute;
   z-index: 9;
@@ -1351,7 +1356,7 @@ a {
 }
 
 .app-table--ranking tbody tr.is-user {
-  background-color: #795548;
+  background-color: #607D8B;
   color: #fff;
 }
 
@@ -2173,6 +2178,10 @@ a {
   border: none;
 }
 
+.app-table--game tbody tr:hover {
+   background-color: inherit;
+}
+
 .app-table--game tbody tr td {
   padding: 0 20px;
 }
@@ -2230,7 +2239,7 @@ a {
 }
 
 .app-table--game-played td.is-active {
-  background-color: #DB4437;
+  background-color: #607D8B;
   color: #fff;
 }
 
