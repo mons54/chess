@@ -3,7 +3,7 @@
 var game = {
     options: {
         pointsMin: 1000,
-        pointsMax: 2800,
+        pointsMax: 2000,
         colors: ['white', 'black'],
         games: [{
             type: 'blitz',
