@@ -1016,6 +1016,7 @@ a {
 
 .app-profile--game-points {
   margin-left: 2px;
+  font-size: 13px;
 }
 
 .app-profile__info {
@@ -3228,6 +3229,10 @@ a {
     max-width: 180px;
     margin-bottom: 0;
     overflow: hidden;
+  }
+
+  .app-profile--game-points {
+    font-size: 12px;
   }
 
   .app-profile__name .app-icon--star {
