@@ -329,7 +329,7 @@ a {
 }
 
 .app-form__choices-colors button.checked {
-  border: 3px solid #C0CA33;
+  border: 3px solid #FFC107;
 }
 
 .app-form__choices-colors button:last-child {
@@ -594,17 +594,12 @@ a {
   display: none
 }
 
-.app-form__select select:focus,
 .app-form__select select.value {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #795548;
-  border-width: 2px
-}
-
-.app-form__select select.value {
-  border-color: #009688;
+  border-color: #739673;
+  border-width: 2px;
 }
 
 .app-form__select select:disabled {
@@ -906,7 +901,7 @@ a {
 }
 
 .app-create-game__choices .app-button.selected {
-  background-color: #009688;
+  background-color: #739673;
   color: #fff;
 }
 
