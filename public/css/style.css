@@ -954,7 +954,7 @@ a {
 
 .app-profile--challenger {
   height: auto;
-  margin: 12px 0;
+  margin: 32px 0 12px 0;
 }
 
 .app-avatar {
@@ -3124,7 +3124,6 @@ a {
 
   .app-profile--challenger {
     height: auto;
-    margin-top: 20px;
   }
 
   .app-profile__name {
