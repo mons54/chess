@@ -113,17 +113,17 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ 'white' | translate }}</td>
-                <td>{{ getPoints(game.white, game.black, 1) | relativeNumber }}</td>
+                <td ng-class="{'app-text__bold app-text__selected': game.result.value === 1}">{{ 'white' | translate }}</td>
+                <td ng-class="{'app-text__bold app-text__positive': game.result.value === 1}">{{ getPoints(game.white, game.black, 1) | relativeNumber }}</td>
                 <td>{{ getPoints(game.white, game.black, 0.5) | relativeNumber }}</td>
-                <td>{{ getPoints(game.white, game.black, 0) | relativeNumber }}</td>
+                <td ng-class="{'app-text__bold app-text__negative': game.result.value === 2}">{{ getPoints(game.white, game.black, 0) | relativeNumber }}</td>
                 <td ng-init="percentage = getPercentage(game.white, game.black)">{{ percentage }}%</td>
             </tr>
             <tr>
-                <td>{{ 'black' | translate }}</td>
-                <td>{{ getPoints(game.black, game.white, 1) | relativeNumber }}</td>
+                <td ng-class="{'app-text__bold app-text__selected': game.result.value === 2}">{{ 'black' | translate }}</td>
+                <td ng-class="{'app-text__bold app-text__positive': game.result.value === 2}">{{ getPoints(game.black, game.white, 1) | relativeNumber }}</td>
                 <td>{{ getPoints(game.black, game.white, 0.5) | relativeNumber }}</td>
-                <td>{{ getPoints(game.black, game.white, 0) | relativeNumber }}</td>
+                <td ng-class="{'app-text__bold app-text__negative': game.result.value === 1}">{{ getPoints(game.black, game.white, 0) | relativeNumber }}</td>
                 <td>{{ 100 - percentage }}%</td>
             </tr>
         </tbody>

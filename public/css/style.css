@@ -65,6 +65,22 @@ a {
   float: right;
 }
 
+.app-text__selected {
+  color: #795548;
+}
+
+.app-text__positive {
+  color: #4CAF50;
+}
+
+.app-text__negative {
+  color: #DB4437;
+}
+
+.app-text__bold {
+  font-weight: bold;
+}
+
 .app__text-left {
   text-align: left;
 }
