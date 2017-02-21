@@ -598,7 +598,7 @@ a {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #739673;
+  border-color: #43A047;
   border-width: 2px;
 }
 
@@ -901,7 +901,7 @@ a {
 }
 
 .app-create-game__choices .app-button.selected {
-  background-color: #739673;
+  background-color: #43A047;
   color: #fff;
 }
 
