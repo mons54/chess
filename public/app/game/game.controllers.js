@@ -72,15 +72,30 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             if (!game.finish) {
                 game.lastTime = new Date().getTime();
             } else {
+
                 if (!game.archived) {
                     $timeout(function () {
                         $scope.shareResultData = getShareResultData(game);
                         modal('[modal-game]').hide();
                         modal('#modal-finish-game').show();
                         delete $rootScope.user.gid;
-                    }, 1000);
+                    }, 500);
                 }
+
                 var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.type);
+
+                if (game.result.value === 1) {
+                    game.white.isWinner = true;
+                    game.white.resultPoints = $window.game.getPoints(game.white.points, game.black.points, 1, game.white.countGame);
+                    game.black.resultPoints = $window.game.getPoints(game.black.points, game.white.points, 0, game.black.countGame);
+                } else if (game.result.value === 2) {
+                    game.black.isWinner = true;
+                    game.white.resultPoints = $window.game.getPoints(game.white.points, game.black.points, 0, game.white.countGame);
+                    game.black.resultPoints = $window.game.getPoints(game.black.points, game.white.points, 1, game.black.countGame);
+                } else {
+                    game.white.resultPoints = $window.game.getPoints(game.white.points, game.black.points, 0.5, game.white.countGame);
+                    game.black.resultPoints = $window.game.getPoints(game.black.points, game.white.points, 0.5, game.black.countGame);
+                }
             }
 
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],

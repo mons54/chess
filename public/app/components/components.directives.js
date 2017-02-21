@@ -617,8 +617,6 @@ directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'google
                         scope.title = value.title;
                         scope.description = value.description;
                         scope.caption = value.caption;
-
-                        
                     }
                 });
 

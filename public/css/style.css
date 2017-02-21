@@ -4,7 +4,7 @@ body {
 }
 
 /* Disable ugly boxes around images in IE10 */
-a img{
+a img {
   border: 0px;
 }
 
@@ -993,10 +993,29 @@ a {
 .app-profile__name {
   font-weight: 700;
   font-size: 16px;
+  color: #795548;
   margin-bottom: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
+}
+
+.app-profile__name a {
+  font-weight: inherit;
+  color: #795548;
+}
+
+.app-profile__name .app-icon--star {
+  font-size: 16px;
+  vertical-align: middle;
+  color: #FFC107;
+  position: relative;
+  top: -2px;
+}
+
+.app-profile--game-points {
+  margin-left: 2px;
 }
 
 .app-profile__info {
@@ -1004,7 +1023,7 @@ a {
   margin-right: 6px;
   font-size: 15px;
   line-height: initial;
-  font-weight: bold;
+  font-weight: 700;
   max-height: 24px;
 }
 
@@ -1051,7 +1070,7 @@ a {
 }
 
 .app-profile__info-content > .app-icon {
-  font-size: 18px;
+  font-size: 16px;
   position: relative;
   top: 3px;
   margin-right: 3px;
@@ -3172,7 +3191,8 @@ a {
   }
 
   .app-profile__info > .app-icon {
-    font-size: 21px;
+    font-size: 20px;
+    position: relative;
   }
 
   .app-profile .app-profile__info-content--ranking {
@@ -3203,13 +3223,15 @@ a {
 
   .app-profile--game .app-profile__name {
     font-size: 13px;
-    line-height: 13px;
+    line-height: 14px;
+    height: 14px;
     max-width: 180px;
     margin-bottom: 0;
+    overflow: hidden;
   }
 
-  .app-profile--game .app-profile__info {
-    margin-top: 1px;
+  .app-profile__name .app-icon--star {
+    font-size: 12px;
   }
 
   .app-head {
