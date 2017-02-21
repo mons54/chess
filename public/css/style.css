@@ -604,7 +604,7 @@ a {
 }
 
 .app-form__select select.value {
-  border-color: #4CAF50;
+  border-color: #009688;
 }
 
 .app-form__select select:disabled {
@@ -906,7 +906,7 @@ a {
 }
 
 .app-create-game__choices .app-button.selected {
-  background-color: #4CAF50;
+  background-color: #009688;
   color: #fff;
 }
 
