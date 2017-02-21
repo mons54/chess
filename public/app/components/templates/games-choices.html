@@ -4,7 +4,7 @@
         <button type="button"
             ng-repeat="(key, game) in data.games"
             ng-click="model.game = key"
-            ng-class="{'mdl-button--accent': model.game === key }"
+            ng-class="{'selected': model.game === key }"
             class="app-button mdl-button mdl-js-button mdl-button--raised">
             <span class="app-create-game__choice-time">
                 {{ (game.time / 60) }} + {{ game.increment }}

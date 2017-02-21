@@ -905,6 +905,11 @@ a {
   padding: 8px;
 }
 
+.app-create-game__choices .app-button.selected {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
 .app-create-game__choice-name {
   display: block;
   text-transform: uppercase;
