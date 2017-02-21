@@ -17,7 +17,8 @@
                 <game-choices data="paramsGame" model="game"></game-choices>
                 <div class="app-form__select">
                     <select ng-model="game.color" 
-                            ng-options="value as value|translate for (key, value) in paramsGame.colors" 
+                            ng-options="value as value|translate for (key, value) in paramsGame.colors"
+                            ng-class="{'value': game.color }"
                             id="create-game-color">
                         <option value="">{{ 'random' | translate }}</option>
                     </select>
@@ -26,7 +27,8 @@
                 <div class="app-form__select-grid mdl-grid">
                     <div class="app-form__select mdl-cell--6-col">
                         <select ng-model="game.pointsMin"
-                                ng-options="value as value for (key, value) in paramsGame.pointsMin" 
+                                ng-options="value as value for (key, value) in paramsGame.pointsMin"
+                                ng-class="{'value': game.pointsMin }"
                                 id="create-game-points-min">
                             <option value="">∞</option>
                         </select>
@@ -35,6 +37,7 @@
                     <div class="app-form__select mdl-cell--6-col">
                         <select ng-model="game.pointsMax"
                                 ng-options="value as value for (key, value) in paramsGame.pointsMax"
+                                ng-class="{'value': game.pointsMax }"
                                 id="create-game-points-max">
                             <option value="">∞</option>
                         </select>

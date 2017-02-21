@@ -594,12 +594,17 @@ a {
   display: none
 }
 
-.app-form__select select:focus {
+.app-form__select select:focus,
+.app-form__select select.value {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
   border-color: #795548;
   border-width: 2px
+}
+
+.app-form__select select.value {
+  border-color: #4CAF50;
 }
 
 .app-form__select select:disabled {
