@@ -329,7 +329,7 @@ a {
 }
 
 .app-form__choices-colors button.checked {
-  border: 3px solid #607D8B;
+  border: 3px solid #795548;
 }
 
 .app-form__choices-colors button:last-child {
@@ -465,7 +465,7 @@ a {
 }
 
 .app-form__textfield>input:focus,.app-form__textfield>textarea:focus {
-  border-color: #607D8B;
+  border-color: #795548;
   border-width: 2px;
 }
 
@@ -598,7 +598,7 @@ a {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #607D8B;
+  border-color: #795548;
   border-width: 2px;
 }
 
@@ -901,7 +901,7 @@ a {
 }
 
 .app-create-game__choices .app-button.selected {
-  background-color: #607D8B;
+  background-color: #795548;
   color: #fff;
 }
 
@@ -1053,7 +1053,6 @@ a {
 .app-profile__stats {
   padding: 8px;
   background-color: #795548;
-  background-color: #5D4037;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1251,7 +1250,7 @@ a {
 }
 
 .app-ranking__toggle .app-button.checked {
-  color: #607D8B;
+  color: #795548;
 }
 
 .app-ranking__spinner {
@@ -1356,7 +1355,7 @@ a {
 }
 
 .app-table--ranking tbody tr.is-user {
-  background-color: #607D8B;
+  background-color: #795548;
   color: #fff;
 }
 
@@ -2239,7 +2238,7 @@ a {
 }
 
 .app-table--game-played td.is-active {
-  background-color: #607D8B;
+  background-color: #795548;
   color: #fff;
 }
 
@@ -2919,7 +2918,7 @@ a {
   }
 
   .app-game__played--phone-notation.is-active {
-    color: #607D8B;
+    color: #795548;
     font-weight: bold;
   }
 
