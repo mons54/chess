@@ -244,9 +244,19 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
                 scope.paramsGame = paramsGame;
 
                 $rootScope.$watchCollection('dataGame', function (value) {
-                    if (value) {
-                        scope.game = value;
+                    if (!value) {
+                        return;
                     }
+
+                    if (paramsGame.pointsMin.indexOf(value.pointsMin) === -1) {
+                        value.pointsMin = null;
+                    }
+
+                    if (paramsGame.pointsMax.indexOf(value.pointsMax) === -1) {
+                        value.pointsMax = null;
+                    }
+
+                    scope.game = value;
                 });
 
                 scope.$watch('game.pointsMin', function (value) {
