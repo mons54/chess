@@ -250,23 +250,9 @@
                     $route.reload();
                 }
 
-                if (user.has('dataGame')) {
-                    $rootScope.dataGame = user.getDataGame();
-                } else {
-                    user.setDataGame(data.dataGame);
-                }
-
-                if (user.has('colorGame')) {
-                    $rootScope.user.colorGame = user.getColorGame();
-                } else {
-                    user.setColorGame(data.colorGame);
-                }
-
-                if (user.has('sound')) {
-                    $rootScope.user.sound = user.getSound();
-                } else {
-                    user.setSound(data.sound);
-                }
+                user.setDataGame(data.dataGame);
+                user.setColorGame(data.colorGame);
+                user.setSound(data.sound);
 
                 angular.extend($rootScope.user, {
                     uid: data.uid,
