@@ -178,6 +178,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 game.black.currentTime = game.black.time;
                 game.black.currentTimeTurn = game.black.timeTurn;
             } else if (!game.lastTime) {
+                game.time *= 1000;
+                game.increment *= 1000;
+                game.timeTurn *= 1000;
                 game.white.time *= 1000;
                 game.white.timeTurn *= 1000;
                 game.black.time *= 1000;
