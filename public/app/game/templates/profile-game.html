@@ -23,11 +23,10 @@
             <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
             <a href show-profile="player">{{ player.name }}</a>
             <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
-            <span ng-if="player.resultPoints">
-                <span class="app-profile--game-points"
-                   ng-class="{'app-text__positive': player.resultPoints > 0, 'app-text__negative': player.resultPoints < 0 }">
-                    {{ player.resultPoints | relativeNumber }}
-                </span>
+            <span ng-if="player.resultPoints"
+                  class="app-profile--game-points"
+                  ng-class="{'app-text__positive': player.resultPoints > 0, 'app-text__negative': player.resultPoints < 0 }">
+                {{ player.resultPoints | relativeNumber }}
             </span>
         </div>
         <div class="app-profile__info app-profile__info--blitz" title="{{ 'blitz'|translate }}">
