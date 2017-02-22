@@ -100,7 +100,44 @@
     </table>
 </div>
 
-<div ng-if="game" class="mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div ng-if="game" 
+     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div class="app-game__infos">
+        <i class="app-icon material-icons">{{ game.type === 'blitz' ? 'flash_on' : 'timer' }}</i>
+        <span>{{ game.type | translate }}</span>
+        <i class="app-icon material-icons">schedule</i>
+        <span>{{ game.time / 60000 }} + {{ game.increment / 1000 }}</span>
+        <i ng-if="game.finish" class="app-icon material-icons">games</i>
+        <span ng-if="game.result.value === 1">1-0</span>
+        <span ng-if="game.result.value === 0">½-½</span>
+        <span ng-if="game.result.value === 2">0-1</span>
+        <span ng-if="game.finish">({{ game.result.name | translate }})</span>
+        <i class="app-icon material-icons">today</i>
+        <span>{{ getLocaleDate(game.startTime) }}</span>
+        <div ng-if="game.finish" 
+             class="app-game__played-actions">
+            <button ng-disabled="turn.first === null"
+                    ng-click="replay(turn.first)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">first_page</i>
+            </button>
+            <button ng-disabled="turn.prev === null"
+                    ng-click="replay(turn.prev)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">chevron_left</i>
+            </button>
+            <button ng-disabled="turn.next === null"
+                    ng-click="replay(turn.next)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">chevron_right</i>
+            </button>
+            <button ng-disabled="turn.last === null"
+                    ng-click="replay(turn.last)"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">last_page</i>
+            </button>
+        </div>
+    </div>
     <table class="app-table app-table--game app-table--game-stats mdl-data-table mdl-js-data-table">
         <thead>
             <tr>
