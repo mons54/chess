@@ -63,6 +63,11 @@
   padding-left: 4px;
 }
 
+.app-profile--game-points {
+  margin-left: 0;
+  margin-right: 2px;
+}
+
 .app-button--create-game {
   margin: 0 48px 0 36px;
 }
@@ -466,6 +471,19 @@
 .app-game__result-link .app-button {
   margin-right: 0;
   margin-left: 6px;
+}
+
+.app-game__played-actions {
+  float: left;
+}
+
+.app-game__infos .app-icon {
+  padding-left: 0;
+  padding-right: 4px;
+}
+
+.app-game__infos .app-icon:first-child {
+  padding-right: 0;
 }
 
 .app-button--share {

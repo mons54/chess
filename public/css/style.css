@@ -1002,6 +1002,7 @@ a {
 }
 
 .app-profile__name a {
+  display: inline-block;
   font-weight: inherit;
 }
 
