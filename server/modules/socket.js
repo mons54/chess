@@ -409,7 +409,7 @@ module.exports = function (io) {
 
             moduleGame.setGame(response.id, game);
 
-            io.to('home').emit('countGames').emit('countGames', Object.keys(moduleGame.games).length);
+            io.to('home').emit('countGames', Object.keys(moduleGame.games).length);
 
             this.userGames[socket.uid] = response.id;
             this.userGames[socketOpponent.uid] = response.id;
@@ -549,7 +549,7 @@ module.exports = function (io) {
         }
 
         moduleGame.deleteGame(game.id);
-        io.to('home').emit('countGames').emit('countGames', Object.keys(moduleGame.games).length);
+        io.to('home').emit('countGames', Object.keys(moduleGame.games).length);
 
         delete this.userGames[white.uid];
         delete this.userGames[black.uid];
