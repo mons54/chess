@@ -266,7 +266,7 @@
          <div ng-repeat="message in messages" class="app-game__messages">
             <div class="app-game__message" ng-class="{'app-game__message--user': message.uid === user.uid, 'app-game__message--next': message.uid === messages[$index - 1].uid }">
                 <div class="app-game__message-avatar">
-                    <img avatar ng-src="{{ message.avatar }}">
+                    <img avatar src="{{ message.avatar }}">
                 </div>
                 <div class="app-game__message-content">
                     <div class="app-game__message-message">{{ message.message }}</div>
