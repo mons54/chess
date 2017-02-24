@@ -1,9 +1,4 @@
 <div class="app-profile__action">
-    <a ng-if="profile.link"
-       ng-href="/profile/{{ profile.uid }}"
-       class="app-profile__link mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-        <i class="app-icon material-icons">more_horiz</i>
-    </a>
     <button ng-disabled="isFriend"
             ng-click="toogleFavorite()"
             class="app-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">

@@ -105,8 +105,6 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     scope.profile = profile;
 
-                    scope.profile.link = true;
-
                     modal(element).show().one('hide', function () {
                         $rootScope.setFavorite(profile.uid, scope.isFavorite);
                     });

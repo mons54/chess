@@ -969,11 +969,17 @@ a {
 }
 
 .app-profile__more {
+  position: relative;
   margin-top: 16px;
 }
 
 .app-profile__more .app-button {
+  margin-right: 8px;
   color: #DB4437;
+}
+
+.app-profile__link {
+  float: right;
 }
 
 .app-profile--challenger {

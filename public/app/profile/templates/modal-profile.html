@@ -20,12 +20,16 @@
             <profile-game game-type="'rapid'" game-data="profile.rapid"></profile-game>
             <div class="app-profile__more">
                 <a ng-href="/profile/{{ profile.uid }}#games" 
-                   class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
+                   class="app-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
                    ng-bind="'games'|translate">
                 </a>
                 <a ng-href="/profile/{{ profile.uid }}#trophies" 
-                   class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
+                   class="app-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
                    ng-bind="'trophies'|translate">
+                </a>
+                <a ng-href="/profile/{{ profile.uid }}"
+                   class="app-profile__link mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                    <i class="app-icon material-icons">more_horiz</i>
                 </a>
             </div>
         </div>
