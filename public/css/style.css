@@ -99,7 +99,7 @@ a {
 
 .app__action {
   color: #DB4437;
-  font-size: 240px;
+  font-size: 200px;
 }
 
 .app-header .mdl-menu__container {
@@ -2501,7 +2501,7 @@ a {
 
   .app__action {
     color: #DB4437;
-    font-size: 200px;
+    font-size: 160px;
   }
 
   .app-header__mobile {
@@ -2842,7 +2842,7 @@ a {
   }
 
   .app__action {
-    font-size: 160px;
+    font-size: 120px;
   }
 
   .app-modal__close {
