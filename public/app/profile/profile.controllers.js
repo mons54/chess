@@ -10,11 +10,14 @@ angular.module('profile').
  * @requires $rootScope
  * @requires $scope
  */
-controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$location', '$anchorScroll', 'socket',
+controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$location', '$timeout', '$anchorScroll', 'socket',
     
-    function ($rootScope, $scope, $routeParams, $window, $location, $anchorScroll, socket) {
+    function ($rootScope, $scope, $routeParams, $window, $location, $timeout, $anchorScroll, socket) {
+
+        $rootScope.loading = true;
 
         $scope.$on('$destroy', function () {
+            delete $rootScope.loading;
             if (!$scope.profile) {
                 return;
             }
@@ -42,9 +45,15 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
                 });
 
             };
+
+            delete $rootScope.loading;
+
+            scroll('trophies');
+
         }, $scope);
 
         socket.once('profileGames', function (data) {
+
             angular.forEach(data, function (game) {
                 if (game.data.result.value === 1) {
                     game.data.white.isWinner = true;
@@ -59,8 +68,20 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
                     game.data.black.resultPoints = $window.game.getPoints(game.data.black.points, game.data.white.points, 0.5, game.data.black.countGame);
                 }
             });
+
             $scope.games = data;
-        });
+
+            scroll('games');
+
+        }, $scope);
+
+        function scroll (menu) {
+            if ($location.hash() === menu) {
+                $timeout(function() {
+                    $anchorScroll();
+                });
+            }
+        }
 
         $scope.openTrophy = function (trophy) {
             var trophies = {};

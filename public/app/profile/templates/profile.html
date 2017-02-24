@@ -7,8 +7,8 @@
         </div>
     </div>
     <div class="app-card__profile-stats">
-        <profile-game game-type="'blitz'" game-data="profile.blitz"></profile-game>
-        <profile-game game-type="'rapid'" game-data="profile.rapid"></profile-game>
+        <profile-game ng-if="profile.blitz" game-type="'blitz'" game-data="profile.blitz"></profile-game>
+        <profile-game ng-if="profile.rapid" game-type="'rapid'" game-data="profile.rapid"></profile-game>
     </div>
     <div id="games"></div>
     <div id="trophies"></div>
@@ -69,7 +69,7 @@
                 <span class="app-profile__game-name">{{ game.data.white.name }}</span>
                 <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.white.isWinner}">
                     <i ng-if="game.data.white.isWinner" class="material-icons">star</i>
-                    <img avatar class="app-avatar" src="{{ game.data.white.avatar }}">
+                    <img avatar class="app-avatar" ng-src="{{ game.data.white.avatar }}">
                     <i ng-if="game.data.white.isWinner" class="material-icons">star</i>
                 </div>
                 <div class="app-profile__game-points">
@@ -84,7 +84,7 @@
                 <span class="app-profile__game--name">{{ game.data.black.name }}</span>
                 <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.black.isWinner}">
                     <i ng-if="game.data.black.isWinner" class="material-icons">star</i>
-                    <img avatar class="app-avatar" src="{{ game.data.black.avatar }}">
+                    <img avatar class="app-avatar" ng-src="{{ game.data.black.avatar }}">
                     <i ng-if="game.data.black.isWinner" class="material-icons">star</i>
                 </div>
                 <div class="app-profile__game-points">

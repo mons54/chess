@@ -18,6 +18,16 @@
             <profile-actions></profile-actions>
             <profile-game game-type="'blitz'" game-data="profile.blitz"></profile-game>
             <profile-game game-type="'rapid'" game-data="profile.rapid"></profile-game>
+            <div class="app-profile__more">
+                <a ng-href="/profile/{{ profile.uid }}#games" 
+                   class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
+                   ng-bind="'games'|translate">
+                </a>
+                <a ng-href="/profile/{{ profile.uid }}#trophies" 
+                   class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
+                   ng-bind="'trophies'|translate">
+                </a>
+            </div>
         </div>
     </div>
 </div>
