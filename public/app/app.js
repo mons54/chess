@@ -28,7 +28,8 @@
         'game',
         'home',
         'ranking',
-        'trophies'
+        'trophies',
+        'profile'
     ]).
 
     run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user', 'socket', 'modal', 'facebook', 'google', 'translator', 'utils',
@@ -263,7 +264,7 @@
 
                 delete $rootScope.refreshAccessToken;
                 delete $rootScope.isDisconnected;
-                delete $rootScope.loadProfile;
+                delete $rootScope.loadModalProfile;
                 delete $rootScope.loading;
                 
                 $rootScope.ready = true;
@@ -272,41 +273,39 @@
             socket.on('trophies', function (data) {
                 $timeout(function () {
                     $rootScope.user.trophies = data.trophies;
-                    $rootScope.$emit('trophies', data.newTrophies);
+                    $rootScope.$emit('trophies', {
+                        share: true,
+                        trophies: data.newTrophies
+                    });
                 }, 1000);
             });
+
+            $rootScope.setFavorite = function (uid, value) {
+
+                var isFavorite = $rootScope.isFavorite(uid);
+                
+                if (value === isFavorite) {
+                    return;
+                }
+
+                if (value) {
+                    socket.emit('addFavorite', uid);
+                    $timeout(function () {
+                        $rootScope.user.favorites.push(uid);
+                    });
+                } else  {
+                    var index = $rootScope.user.favorites.indexOf(uid);
+                    socket.emit('removeFavorite', uid);
+                    $timeout(function () {
+                        $rootScope.user.favorites.splice(index, 1);
+                    });
+                }
+
+            };
 
             $rootScope.isFavorite = function (uid) {
                 return $rootScope.user.favorites && $rootScope.user.favorites.indexOf(uid) !== -1;
             };
-
-            $rootScope.$on('addFavorite', function ($event, uid) {
-
-                if ($rootScope.user.favorites.indexOf(uid) !== -1) {
-                    return;
-                }
-
-                socket.emit('addFavorite', uid);
-
-                $timeout(function () {
-                    $rootScope.user.favorites.push(uid);
-                });
-            });
-
-            $rootScope.$on('removeFavorite', function ($event, uid) {
-
-                var index = $rootScope.user.favorites.indexOf(uid);
-
-                if (index === -1) {
-                    return;
-                }
-
-                socket.emit('removeFavorite', uid);
-
-                $timeout(function () {
-                    $rootScope.user.favorites.splice(index, 1);
-                });
-            });
 
             $window.onbeforeunload = function () {
                 $rootScope.$emit('unload');
@@ -397,6 +396,12 @@
                 title: 'trophies.title',
                 templateUrl: '/app/trophies/templates/trophies.html',
                 controller: 'trophiesCtrl'
+            })
+            .when('/profile/:id', {
+                name : 'profile',
+                templateUrl: '/app/profile/templates/profile.html',
+                controller: 'profileCtrl',
+                reloadOnSearch: false
             })
             .otherwise({
                 redirectTo: '/'

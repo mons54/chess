@@ -1,0 +1,13 @@
+<div class="app-profile__action">
+    <a ng-if="profile.link"
+       ng-href="/profile/{{ profile.uid }}"
+       class="app-profile__link mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+        <i class="app-icon material-icons">add</i>
+    </a>
+    <button ng-disabled="isFriend"
+            ng-click="toogleFavorite()"
+            class="app-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+        <i ng-if="!isFavorite" class="app-icon app-icon--favorite material-icons">star</i>
+        <i ng-if="isFavorite" class="app-icon app-icon--favorite-selected material-icons">star</i>
+    </button>
+</div>

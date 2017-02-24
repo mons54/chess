@@ -102,7 +102,8 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
                         return;
                     }
                     load = true;
-                    show(data);
+                    scope.share = data.share;
+                    show(data.trophies);
                 });
             }
         };

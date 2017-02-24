@@ -133,7 +133,7 @@
                                 {{ 'create_game' | translate }}
                             </button>
                             <a href
-                               show-profile="user" 
+                               show-profile="user.uid" 
                                class="app-navigation__profile">
                                 <div class="app-navigation__profile-infos app-navigation__profile-infos--blitz"
                                      title="{{ 'blitz'|translate }}">
@@ -178,7 +178,7 @@
                 <span class="app-layout-title mdl-layout-title">
                     <a href
                        ng-click="closeDrawer()"
-                       show-profile="user" 
+                       show-profile="user.uid" 
                        class="app-navigation__profile">
                         <div class="app-navigation__profile-user">
                             <img avatar
@@ -361,5 +361,8 @@
 
         <script src="app/trophies/trophies.module.js"></script>
         <script src="app/trophies/trophies.controllers.js"></script>
+
+        <script src="app/profile/profile.module.js"></script>
+        <script src="app/profile/profile.controllers.js"></script>
     </body>
 </html>

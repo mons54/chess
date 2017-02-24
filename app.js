@@ -10,4 +10,4 @@ global.dirname = __dirname;
 require(dirname + '/server/config')(app);
 require(dirname + '/server/modules/io')(app, io);
 
-server.listen(8000);
+server.listen(3000);

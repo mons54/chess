@@ -1,0 +1,118 @@
+<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-show="profile">
+    <div class="app-card__profile-title mdl-card__title">
+        <h2 class="mdl-card__title-text">{{ profile.name }}</h2>
+        <profile-actions></profile-actions>
+        <div class="app-card__profile-avatar">
+            <img avatar class="app-avatar" ng-src="{{ profile.avatar }}">
+        </div>
+    </div>
+    <div class="app-card__profile-stats">
+        <profile-game game-type="'blitz'" game-data="profile.blitz"></profile-game>
+        <profile-game game-type="'rapid'" game-data="profile.rapid"></profile-game>
+    </div>
+    <div id="games"></div>
+    <div id="trophies"></div>
+    <div class="app-card__profile-actions mdl-card__actions mdl-card--border">
+        <a ng-click="showMenu('games')" 
+           class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
+           ng-class="{'is-active': activeMenu === 'games'}">
+            {{ 'games'|translate }}
+        </a>
+        <a ng-click="showMenu('trophies')" 
+           class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
+           ng-class="{'is-active': activeMenu === 'trophies'}">
+            {{ 'trophies'|translate }}
+        </a>
+    </div>
+</div>
+
+<div ng-show="activeMenu === 'games'"
+     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
+     ng-repeat="game in games track by $index">
+    <div class="app-profile__game">
+        <div class="app-profile__game-board">
+            <div ng-repeat="number in numbers" class="app-game__row">
+                <div 
+                    ng-repeat="letter in letters" 
+                    ng-init="position = letter + number" 
+                    ng-class="{'last-turn': isLastTurn(position), 'is-check': isCheck(position) }"
+                    class="app-game__box"
+                    data-game-box>
+                    <div class="app-game__box-content">
+                        <span ng-if="game.data.pieces[position]" class="app-game__piece">
+                            <img ng-src="../images/game-1/{{ game.data.pieces[position].name }}-{{ game.data.pieces[position].color }}.svg"
+                                 class="app-game__piece-image app__no-drag">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-profile__game-content">
+            <div class="app-profile__game-result">{{ game.data.result.name | translate }}</div>
+            <div class="app-profile__game-player">
+                <span class="app-profile__game-name">{{ game.data.white.name }}</span>
+                <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.white.isWinner}">
+                    <i ng-if="game.data.white.isWinner" class="material-icons">star</i>
+                    <img avatar class="app-avatar" src="{{ game.data.white.avatar }}">
+                    <i ng-if="game.data.white.isWinner" class="material-icons">star</i>
+                </div>
+                <div class="app-profile__game-points">
+                    {{ game.data.white.points }} 
+                    <span class="app-profile__game-player-points-add"
+                          ng-class="{'app-text__positive': game.white.resultPoints > 0, 'app-text__negative': game.white.resultPoints < 0 }">
+                        {{ game.data.white.resultPoints | relativeNumber }}
+                    </span>
+                </div>
+            </div>
+            <div class="app-profile__game-player">
+                <span class="app-profile__game--name">{{ game.data.black.name }}</span>
+                <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.black.isWinner}">
+                    <i ng-if="game.data.black.isWinner" class="material-icons">star</i>
+                    <img avatar class="app-avatar" src="{{ game.data.black.avatar }}">
+                    <i ng-if="game.data.black.isWinner" class="material-icons">star</i>
+                </div>
+                <div class="app-profile__game-points">
+                    {{ game.data.black.points }} 
+                    <span class="app-profile__game-player-points-add"
+                          ng-class="{'app-text__positive': game.black.resultPoints > 0, 'app-text__negative': game.black.resultPoints < 0 }">
+                        {{ game.data.black.resultPoints | relativeNumber }}
+                    </span>
+                </div>
+            </div>
+            <div class="app-profile__game-infos">
+                <i class="app-icon material-icons">today</i>
+                <span>{{ game.data.startTime|localeDateTime }}</span>
+                <i class="app-icon material-icons">{{ game.data.type === 'blitz' ? 'flash_on' : 'timer' }}</i>
+                <span>{{ game.data.type | translate }}</span>
+                <i class="app-icon material-icons">schedule</i>
+                <span>{{ game.data.time / 60000 }} + {{ game.data.increment / 1000 }}</span>
+                <i class="app-icon material-icons">games</i>
+                <span ng-if="game.data.result.value === 1">1-0</span>
+                <span ng-if="game.data.result.value === 0">½-½</span>
+                <span ng-if="game.data.result.value === 2">0-1</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="activeMenu === 'trophies'"
+     class="app-trophy app-trophy--page mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"
+     ng-repeat="trophy in trophies track by $index"
+     ng-click="openTrophy(trophy)">
+    <div class="app-trophy__picture">
+        <img ng-if="trophy.value === 100" ng-src="../images/trophies/trophy-{{ trophy.id }}.svg">
+        <div ng-if="trophy.value !== 100"
+             progress-bar-trophy="trophy.value"
+             progress-bar-trophy-width="8"
+             progress-bar-trophy-trail-width="2"
+             class="app-trophy__progress-bar">
+        </div>
+        <div ng-if="trophy.value !== 100" class="app-trophy__progress-value">
+            {{ trophy.value }} %
+        </div>
+    </div>
+    <div class="app-trophy__content">
+        <h3 class="app-trophy__title">{{ 'trophies.content.' + trophy.id + '.title' | translate }}</h3>
+        <p class="app-trophy__desc">{{ 'trophies.content.' + trophy.id + '.description' | translate }}</p>
+    </div>
+</div>

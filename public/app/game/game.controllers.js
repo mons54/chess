@@ -398,14 +398,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return new Date(time).toLocaleTimeString();
         };
 
-        $scope.getLocaleDate = function(time) {
-            var date = new Date(time);
-            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString(navigator.language, {
-                hour: '2-digit', 
-                minute:'2-digit'
-            });
-        };
-
         $scope.setSound = function () {
             $scope.sound = !$scope.sound;
             sound.set($scope.sound);
