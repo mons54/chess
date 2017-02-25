@@ -1156,12 +1156,36 @@ a {
   color: #F44336;
 }
 
-.app-element__head {
-  padding: 16px;
-  color: #757575;
-  line-height: 20px;
+.app-element--mobile {
+  display: none;
+}
+
+.app-element__toggle {
   text-transform: uppercase;
-  font-weight: 700;
+  line-height: 20px;
+}
+
+.app-element__toggle:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.app-element__menu {
+  display: block;
+  float: left;
+  color: #000;
+  padding: 16px 24px;
+  text-transform: uppercase;
+}
+
+.app-element__menu:hover {
+    background-color: rgba(158,158,158,.2);
+}
+
+.app-element__menu.active {
+  color: #fff;
+  background-color: #795548;
 }
 
 .app-element__badge {
@@ -1176,34 +1200,15 @@ a {
   border-radius: 2px;
 }
 
-.app-element__head--toggle {
-  cursor: pointer;
-}
-
-.app-element__tools {
-  float: right;
-  height: 24px;
-  width: 24px;
-}
-
 .app-element .app-element__body {
-  height: 309px;
+  height: 698px;
   border-top: 1px solid rgba(0,0,0,.12);
   overflow-x: auto;
-}
-
-.app-element__body .app-spinner {
-  margin-top: 109px;
 }
 
 .app-element .app-table {
   width: 100%;
   border: none;
-}
-
-.app-element__loading {
-  text-align: center;
-  padding: 12px 0 8px 0;
 }
 
 .app-spinner {
@@ -1281,12 +1286,18 @@ a {
   position: relative;
 }
 
-.app-ranking__toggle {
-  padding: 8px;
-}
 
 .app-ranking__toggle .app-button.checked {
-  color: #795548;
+  background-color: #795548;
+  color: #fff;
+}
+
+.app-ranking__toggle .app-button {
+  padding: 16px 24px;
+  line-height: initial;
+  height: initial;
+  border-radius: initial;
+  float: left;
 }
 
 .app-ranking__spinner {
@@ -2787,6 +2798,14 @@ a {
 }
 
 @media screen and (max-width: 599px) {
+
+  .app-element__menu {
+    padding: 12px 20px;
+  }
+
+  .app-table__sortable .material-icons {
+    font-size: 21px;
+  }
   
   .app-table.app-table--game {
     font-size: 12px;
@@ -3164,6 +3183,19 @@ a {
     padding-left: 12px;
   }
 
+  .app-element .app-element__body {
+    height: 390px;
+    overflow-x: auto;
+  }
+
+  .app-element__menu {
+    padding: 8px 12px;
+    text-transform: none;
+    font-size: 13px;
+  }
+  .app-element__badge {
+  }
+
   .app-form__choices-colors .app-modal__settings-field {
     padding-top: 8px;
   }
@@ -3369,17 +3401,14 @@ a {
     font-size: 18px;
   }
 
-  .app-ranking__toggle {
-    padding: 4px;
-  }
-
   .app-ranking__toggle-content {
     display: block;
   }
 
   .app-ranking__toggle-content .app-button {
     min-width: 0;
-    padding: 0 8px;
+    display: inline-block;
+    padding: 8px 12px;
   }
 
   .app-ranking__toggle-content .app-button:nth-child(2n +2) {
@@ -3390,25 +3419,5 @@ a {
   .app-game__box.selected,
   .app-game__box.is-check {
     border-width: 2px;
-  }
-
-  .app-element .app-element__head {
-    padding: 12px;
-  }
-
-  .app-element--small .app-element__body {
-    height: 219px;
-    overflow-x: auto;
-  }
-
-  .app-element__body .app-spinner {
-    margin-top: 79px;
-    width: 30px;
-    height: 30px;
-    border-width: 3px;
-  }
-
-  .app-table__sortable .material-icons {
-    font-size: 21px;
   }
 }
