@@ -77,15 +77,13 @@
   margin-right: 56px;
 }
 
-.app-element .app-element__tools {
-  float: left;
-}
-
-.app-element .app-spinner {
-  display: none;
+.app-element__menu {
+  float: right;
 }
 
 .app-element .app-element__badge {
+  margin-right: 4px;
+  margin-left: 0;
   position: initial;
 }
 
@@ -500,6 +498,10 @@
   left: 10px;
 }
 
+.app-ranking__toggle .app-button {
+    float: right;
+}
+
 @media screen and (max-width: 1024px) {
 
   .app-header__row {
@@ -606,6 +608,10 @@
 }
 
 @media screen and (max-width: 599px) {
+
+  .app-ranking__toggle-content .app-button {
+    float: none;
+  }
 
   .app-profile__action {
     right: initial;
