@@ -517,6 +517,41 @@ directive('sortable', ['$rootScope', 'orderByFilter',
     }
 ]).
 
+/**
+ * @ngdoc directive
+ * @name components.directive:elementToggle
+ * @description 
+ * Use this directive to make a toggle element
+ * @requires $rootScope
+ * @requires orderByFilter
+ * @restrict E
+ */
+directive('elementToggle', [function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            name: '=',
+            collection: '=',
+            hide: '='
+        },
+        templateUrl: '/app/components/templates/element-toggle.html',
+        link: function (scope, element, attrs) {
+
+            if (scope.hide) {
+                toggle();
+            }
+
+            scope.toggle = toggle;
+
+            function toggle() {
+                scope.close = !scope.close;
+                element.parents('[element]').find('[element-content]').toggle();
+            }
+        }
+    };
+}]).
+
 directive('pagination', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'A',

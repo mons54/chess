@@ -1,0 +1,7 @@
+<div ng-click="toggle()" class="app-element__head app-element__head--toggle">
+    <span>{{ name|translate }}</span>
+    <span class="app-element__badge" ng-bind="collection.length || 0"></span>
+    <div class="app-element__tools">
+        <i class="material-icons">{{ close ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+    </div>
+</div>

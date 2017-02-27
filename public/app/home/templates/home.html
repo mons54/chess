@@ -1,40 +1,14 @@
-<div class="app-element app-element--desktop mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div class="app-element__toggle">
-        <span class="app-element__toggle-content">
-            <a href
-               ng-click="activeMenu = 'games'"
-               class="app-element__menu"
-               ng-class="{'active': activeMenu === 'games'}">
-                {{ 'games'|translate }}
-                <span class="app-element__badge" ng-bind="createdGames.length || 0"></span>
-            </a>
-            <a href
-               ng-click="activeMenu = 'challengers'"
-               class="app-element__menu"
-               ng-class="{'active': activeMenu === 'challengers'}">
-                {{ 'challengers'|translate }}
-                <span class="app-element__badge" ng-bind="challengers.length || 0"></span>
-            </a>
-        </span>
-        <span class="app-element__toggle-content">
-            <a href 
-               ng-click="activeMenu = 'favorites'"
-               class="app-element__menu"
-               ng-class="{'active': activeMenu === 'favorites'}">
-                {{ 'favorites'|translate }}
-                <span class="app-element__badge" ng-bind="favorites.length || 0"></span>
-            </a>
-        </span>
-    </div>
-    <div class="app-element__body">
-        <table ng-show="activeMenu === 'games' && createdGames.length"
+<div element class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <element-toggle name="'games'" collection="createdGames"></element-toggle>
+    <div element-content class="app-element__body">
+        <table ng-show="createdGames.length"
                class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
-                    <th sortable collection="createdGames" expression="['name', 'points', 'time', 'color']" icon="account_circle"></th>
-                    <th sortable collection="createdGames" expression="['points', 'time', 'color', 'name']" icon="star"></th>
-                    <th sortable collection="createdGames" expression="['color', 'points', 'time', 'name']" icon="invert_colors"></th>
-                    <th sortable collection="createdGames" expression="['time', 'points', 'color', 'name']" icon="schedule"></th>
+                    <th></th>
+                    <th sortable collection="createdGames" expression="['points', 'time', 'color']" icon="star"></th>
+                    <th sortable collection="createdGames" expression="['color', 'points', 'time']" icon="invert_colors"></th>
+                    <th sortable collection="createdGames" expression="['time', 'points', 'color']" icon="schedule"></th>
                     <th></th>
                 </tr>
             </thead>
@@ -70,13 +44,19 @@
                 </tr>
             </tbody>
         </table>
-        <table ng-show="activeMenu === 'challengers' && challengers.length"
+    </div>
+</div>
+
+<div element class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <element-toggle name="'challengers'" collection="challengers"></element-toggle>
+    <div element-content class="app-element__body">
+        <table ng-show="challengers.length"
                class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
-                    <th sortable collection="challengers" expression="['name', 'blitz.points', 'rapid.points']" icon="account_circle"></th>
-                    <th sortable collection="challengers" expression="['blitz.points', 'rapid.points', 'name']" icon="flash_on"></th>
-                    <th sortable collection="challengers" expression="['rapid.points', 'blitz.points', 'name']" icon="timer"></th>
+                    <th></th>
+                    <th sortable collection="challengers" expression="['blitz.points', 'rapid.points']" icon="flash_on"></th>
+                    <th sortable collection="challengers" expression="['rapid.points', 'blitz.points']" icon="timer"></th>
                     <th></th>
                 </tr>
             </thead>
@@ -106,13 +86,20 @@
                 </tr>
             </tbody>
         </table>
-        <table ng-show="activeMenu === 'favorites' && favorites.length"
-               class="app-table mdl-data-table mdl-js-data-table">
+    </div>
+</div>
+
+<div element 
+     ng-if="favorites.length"
+     class="app-element app-element--small mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <element-toggle name="'favorites'" collection="favorites"></element-toggle>
+    <div element-content class="app-element__body">
+        <table class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
-                    <th sortable collection="favorites" expression="['name', 'blitz.points', 'rapid.points']" icon="account_circle"></th>
-                    <th sortable collection="favorites" expression="['blitz.points', 'rapid.points', 'name']" icon="flash_on"></th>
-                    <th sortable collection="favorites" expression="['rapid.points', 'blitz.points', 'name']" icon="timer"></th>
+                    <th></th>
+                    <th sortable collection="favorites" expression="['blitz.points', 'rapid.points']" icon="flash_on"></th>
+                    <th sortable collection="favorites" expression="['rapid.points', 'blitz.points']" icon="timer"></th>
                     <th></th>
                 </tr>
             </thead>

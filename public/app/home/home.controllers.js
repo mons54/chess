@@ -16,8 +16,6 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', 'socket', 'translator', 
     
     function ($rootScope, $scope, $sce, socket, translator, utils, paramsGame, orderByFilter) {
 
-        $scope.activeMenu = 'games';
-
         $scope.orderByFilter = {
             createdGames: {
                 expression: ['points', 'time', 'color'],
