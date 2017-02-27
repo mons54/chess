@@ -414,12 +414,12 @@
 }
 
 .app-game__toggle--played {
-  left: 25px;
+  left: 24px;
   right: initial;
 }
 
 .app-game__toggle--messages {
-  right: 25px;
+  right: 24px;
   left: initial;
 }
 

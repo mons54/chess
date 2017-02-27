@@ -1733,7 +1733,7 @@ a {
 }
 
 .app-game__toggle--played {
-  right: 25px;
+  right: 24px;
 }
 
 .app-game__toggle--played .app-game__toggle-content--actions {
@@ -1752,7 +1752,7 @@ a {
 }
 
 .app-game__toggle--messages {
-  left: 25px;
+  left: 24px;
 }
 
 .app-game__toggle--phone {
@@ -2404,6 +2404,21 @@ a {
   }
 }
 
+@media screen and (max-width: 1645px) {
+  .app-game__toggle {
+    width: 36px;
+    overflow: hidden;
+  }
+
+  .app-game__toggle.show {
+    width: 350px;
+  }
+
+  .app-game__toggle .app-game__toggle-icon--action {
+    display: none;
+  }
+}
+
 @media screen and (min-width: 949px) and (max-height: 949px) {
 
   .app-head--game {
@@ -2500,18 +2515,6 @@ a {
     width: 50%;
     display: inline-block;
     margin-top: 8px;
-  }
-
-  .app-game__toggle {
-    width: 36px;
-  }
-
-  .app-game__toggle.show {
-    width: 350px;
-  }
-
-  .app-game__toggle .app-game__toggle-icon--action {
-    display: none;
   }
 
   @media screen and (min-height: 750px)  {
