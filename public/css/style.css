@@ -1220,6 +1220,7 @@ a {
 
 .app-profile__game-board {
   width: 240px;
+  display: block;
 }
 
 .app-profile__game-content {
@@ -1231,23 +1232,32 @@ a {
 .app-profile__game-result {
   text-align: center;
   font-size: 16px;
+  font-weight: 700;
   padding-bottom: 16px;
 }
 
 .app-profile__game-infos {
-  padding-bottom: 16px;
+  padding-bottom: 12px;
 }
 
 .app-profile__game-type {
-  font-size: 16px;
   line-height: 24px;
+  font-weight: 700;
+}
+
+.app-profile__game-date {
+  font-size: 12px;
+}
+
+.app-profile__game-date .app-icon {
+  font-size: 12px;
 }
 
 .app-profile__game-type .app-icon {
   color: rgba(0,0,0,.54);
   font-size: 16px;
   position: relative;
-  top: 2px;
+  top: 3px;
   margin-left: 4px;
 }
 
@@ -1270,6 +1280,19 @@ a {
 
 .app-profile__game-avatar {
   padding: 8px 0;
+}
+
+.app-profile__game-avatar .app-icon {
+  vertical-align: middle;
+}
+
+.app-profile__game-name {
+  font-size: 16px;
+}
+
+.app-profile__game-points {
+  margin-top: 8px;
+  font-size: 16px;
 }
 
 .app-element__head {

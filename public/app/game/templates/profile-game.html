@@ -12,10 +12,10 @@
 
     <div ng-class="{'app-profile__show-pieces': hasLostPieces(player.lostPieces) }">
         <div class="app-game__player-avatar">
-            <a show-profile="player" href>
+            <a show-profile="player.uid" href>
                 <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
                 <img avatar
-                     show-profile="player" 
+                     show-profile="player.uid" 
                      class="app-avatar app-profile__avatar" 
                      ng-src="{{ player.avatar }}">
                 <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
@@ -23,7 +23,7 @@
         </div>
         <div class="app-profile__name">
             <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
-            <a href show-profile="player">{{ player.name }}</a>
+            <a href show-profile="player.uid">{{ player.name }}</a>
             <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
             <span ng-if="player.resultPoints"
                   class="app-profile--game-points"

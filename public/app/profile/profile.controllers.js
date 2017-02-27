@@ -59,7 +59,7 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
                     game.data.white.isWinner = true;
                     game.data.white.resultPoints = $window.game.getPoints(game.data.white.points, game.data.black.points, 1, game.data.white.countGame);
                     game.data.black.resultPoints = $window.game.getPoints(game.data.black.points, game.data.white.points, 0, game.data.black.countGame);
-                } else if (game.result.value === 2) {
+                } else if (game.data.result.value === 2) {
                     game.data.black.isWinner = true;
                     game.data.white.resultPoints = $window.game.getPoints(game.data.white.points, game.data.black.points, 0, game.data.white.countGame);
                     game.data.black.resultPoints = $window.game.getPoints(game.data.black.points, game.data.white.points, 1, game.data.black.countGame);
@@ -74,6 +74,13 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
             scroll('games');
 
         }, $scope);
+
+        $scope.$watch(function () {
+            return location.hash;
+        }, function (value) {
+            $scope.activeMenu = $location.hash();
+            $anchorScroll();
+        });
 
         function scroll (menu) {
             if ($location.hash() === menu) {
