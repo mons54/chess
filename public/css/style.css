@@ -2424,7 +2424,7 @@ a {
     width: 100%;
   }
 
-  .app-game__time--turn {
+  .app-game__time-turn {
     right: 0;
   }
 
@@ -2507,7 +2507,7 @@ a {
   }
 
   .app-game__toggle.show {
-    width: inherit;
+    width: 350px;
   }
 
   .app-game__toggle .app-game__toggle-icon--action {

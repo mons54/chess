@@ -249,7 +249,7 @@
 
 <div ng-hide="game.archived" 
      class="app-game__toggle app-game__toggle--messages mdl-shadow--2dp" 
-     ng-class="{'show' : showMessagesPhone }">
+     ng-class="{'show' :  showMessages || showMessagesPhone }">
     <div class="app-game__toggle-head app-game__toggle-head--messages"
          ng-click="toggleMessages()">
         
