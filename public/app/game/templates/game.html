@@ -253,12 +253,13 @@
     <div class="app-game__toggle-head app-game__toggle-head--messages"
          ng-click="toggleMessages()">
         
-        <i class="app-game__toggle-icon app-game__toggle-icon--description material-icons">chat</i>
+        <span class="app-game__toggle-icon app-game__toggle-icon--description">
+            <i class="material-icons">chat</i>
+            <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
+        </span>
         <i class="app-game__toggle-icon app-game__toggle-icon--action material-icons">
             {{ showMessages ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
         </i>
-
-        <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
     </div>
     <div class="app-game__toggle-content app-game__toggle-content--messages"
          ng-show="showMessages"
@@ -289,6 +290,7 @@
     <div class="app-game__toggle-head app-game__toggle-head--phone">
         <div ng-hide="game.archived" class="app-game__toggle-icon--phone" ng-click="toggleMessages(true)">
             <i class="app-game__toggle-icon material-icons">chat</i>
+            <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
         </div>
         <div class="app-game__toggle-icon--phone" ng-click="togglePlayed(true)">
             <i class="app-game__toggle-icon material-icons">description</i>
@@ -305,9 +307,6 @@
                  ng-click="setColorGame(color)">
                 <span class="app-button app-button--color app-button--color-{{ color }}"></span>
             </div>
-        </div>
-        <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessages(true)">
-            <span class="app-game__toggle-count">{{ unreadMessages }}</span>
         </div>
     </div>
 </div>
