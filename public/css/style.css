@@ -2489,13 +2489,17 @@ a {
     height: 20px;
   }
 
+  .app-game__lost-pieces-group--pawn {
+    margin-bottom: 0;
+  }
+
   .app-game__lost-pieces-group--bishop,
   .app-game__lost-pieces-group--knight,
   .app-game__lost-pieces-group--rook,
   .app-game__lost-pieces-group--queen {
     width: 50%;
     display: inline-block;
-    margin-top: 4px;
+    margin-top: 8px;
   }
 
   .app-game__toggle {
