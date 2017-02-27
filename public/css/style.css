@@ -3193,6 +3193,8 @@ a {
     text-transform: none;
     font-size: 13px;
   }
+  .app-element__badge {
+  }
 
   .app-form__choices-colors .app-modal__settings-field {
     padding-top: 8px;
