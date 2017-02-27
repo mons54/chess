@@ -108,6 +108,9 @@
             };
 
             $rootScope.$watch('title', function (value) {
+                if (!value) {
+                    return;
+                }
                 angular.element('title').text(translator.translate(value) + ' - World of Chess');
             });
 
