@@ -3168,6 +3168,10 @@ a {
     padding-left: 12px;
   }
 
+  .mdl-data-table td:last-of-type, .mdl-data-table th:last-of-type {
+    padding-right: 12px;
+  }
+
   .app-form__choices-colors .app-modal__settings-field {
     padding-top: 8px;
   }
@@ -3187,16 +3191,12 @@ a {
   }
 
   .app-table {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .app-table__avatar {
     width: 30px;
     height: 30px;
-  }
-
-  .app-table__name {
-    display: none;
   }
 
   .app-table--ranking .app-table__name {
@@ -3417,6 +3417,6 @@ a {
   }
 
   .app-table__sortable .material-icons {
-    font-size: 21px;
+    font-size: 20px;
   }
 }
