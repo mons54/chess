@@ -39,21 +39,17 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
         restrict: 'A',
         link: function (scope, element, attr) {
 
-            var touch = utils.isTouch(),
-                selectedClass = 'selected',
+            var selectedClass = 'selected',
                 droppableClass =  'ui-droppable',
                 modalPromotion = modal('#modal-promotion');
 
             scope.$watch('game', function (game) {
 
                 if (game.finish) {
-                    if (touch) {
-                        element.unbind('click').removeClass('ui-droppable');
-                    } else if (element.draggable) {
-                        element.draggable({
-                            disabled: true
-                        });
-                    } 
+                    element.draggable({
+                        disabled: true
+                    }).unbind('click').closest('[data-game-box]').removeClass(selectedClass);
+                    $('.' + droppableClass).removeClass(droppableClass);
                     return;
                 }
 
@@ -66,45 +62,50 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
                     return;
                 }
 
-                if (touch) {
-                    element.click(function () {
-                        var isOpen = $(this).data('open');
-                        stopClickable($('[piece-draggable]'));
+                element.click(function () {
+                    var isOpen = $(this).data('open');
+                    startMove();
+                    if (isOpen) {
+                        stopClickable($(this));
                         $('.' + droppableClass).removeClass(droppableClass).unbind('click');
-                        if (isOpen) {
-                            stopClickable($(this));
-                            $('.' + droppableClass).removeClass(droppableClass).unbind('click');
-                        } else {
-                            $(this).data('open', true).closest('[data-game-box]').addClass(selectedClass);
-                            getMovements(function (position) {
-                                $('#' + position).addClass(droppableClass).click(function () {
-                                    stopClickable(element);
-                                    $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                    } else {
+                        $(this).data('open', true).closest('[data-game-box]').addClass(selectedClass);
+                        getMovements(function (position) {
+                            $('#' + position).addClass(droppableClass).click(function () {
+                                stopClickable(element);
+                                $('.' + droppableClass).removeClass(droppableClass).unbind('click');
+                                move($(this), position);
+                            });
+                        });
+                    }
+                });
+
+                element.draggable({
+                    disabled: false,
+                    helper: 'clone',
+                    zIndex: '99999',
+                    start: function (event, ui) {
+                        startMove();
+                        element.closest('[data-game-box]').addClass(selectedClass);
+                        getMovements(function (position) {
+                            $('#' + position).droppable({
+                                drop: function (event, ui) {
                                     move($(this), position);
-                                });
+                                }
                             });
-                        }
-                    });
-                } else {
-                    element.draggable({
-                        disabled: false,
-                        helper: 'clone',
-                        zIndex: '99999',
-                        start: function (event, ui) {
-                            getMovements(function (position) {
-                                $('#' + position).droppable({
-                                    drop: function (event, ui) {
-                                        move($(this), position);
-                                    }
-                                });
-                            });
-                        },
-                        stop: function (event, ui) {
-                            getMovements(function (position) {
-                                $('#' + position).droppable('destroy');
-                            });
-                        }
-                    });
+                        });
+                    },
+                    stop: function (event, ui) {
+                        stopClickable(element);
+                        getMovements(function (position) {
+                            $('#' + position).droppable('destroy');
+                        });
+                    }
+                });
+
+                function startMove() {
+                    stopClickable($('[piece-draggable]'));
+                    $('.' + droppableClass).removeClass(droppableClass).unbind('click');
                 }
 
                 function stopClickable (element) {
@@ -128,13 +129,10 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
                         sendMove(position);
                     }
 
-                    if (touch) {
-                        $('[piece-draggable]').unbind('click'); 
-                    } else {
-                        $('[piece-draggable]').draggable({
-                            disabled: true
-                        }); 
-                    }
+                    $('[piece-draggable]').unbind('click'); 
+                    $('[piece-draggable]').draggable({
+                        disabled: true
+                    });
                 }
 
                 function sendMove(position, promotion) {
