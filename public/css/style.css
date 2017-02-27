@@ -888,6 +888,7 @@ a {
 }
 
 .app-grid {
+  position: relative;
   max-width: 760px;
 }
 
@@ -1006,10 +1007,13 @@ a {
   font-weight: inherit;
 }
 
+.app-icon--star {
+  color: #FFC107;
+}
+
 .app-profile__name .app-icon--star {
   font-size: 16px;
   vertical-align: middle;
-  color: #FFC107;
   position: relative;
   top: -2px;
 }
@@ -1907,6 +1911,18 @@ a {
   width: 50%;
 }
 
+.app-game__timer {
+  float: right;
+}
+
+.app-game__player-avatar {
+  float: left;
+}
+
+.app-game__player-avatar .app-icon {
+  display: none;
+}
+
 .app-game__time {
   text-align: center;
   font-size: 16px;
@@ -2388,55 +2404,155 @@ a {
   }
 }
 
-@media screen and (min-width: 961px) {
-  @media (max-height: 959px) {
+@media screen and (min-width: 949px) and (max-height: 949px) {
+
+  .app-head--game {
+    position: absolute;
+    width: 126px;
+    right: 8px;
+    top: 8px;
+  }
+
+  .app-game__timer {
+    float: none;
+    bottom: 0;
+    margin-bottom: 16px;
+  }
+
+  .app-game__time {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .app-game__time--turn {
+    right: 0;
+  }
+
+  .app-profile--game {
+    position: relative;
+    height: 100%;
+  }
+
+  .app-game__player-avatar {
+    float: none;
+    text-align: center;
+  }
+
+  .app-profile--game .app-profile__info .app-icon {
+    font-size: 20px;
+    margin-right: 0;
+  }
+
+  .app-profile--game .app-profile__avatar {
+    margin-right: 0;
+  }
+
+  .app-profile--game .app-profile__name {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .app-profile--game .app-profile__name .app-icon {
+    display: none;
+  }
+
+  .app-profile--game .app-game__player-avatar .app-icon {
+    display: initial;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+
+  .app-profile--game .app-profile--game-points {
+    display: block;
+  }
+
+  .app-profile--game .app-profile__info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .app-profile--game .app-profile__info-content--ranking {
+    margin-top: 4px;
+    display: block;
+  }
+
+  .app-game__lost-pieces {
+    margin-top: 16px;
+    margin-right: 0;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .app-game__lost-piece { 
+    height: 20px;
+  }
+
+  .app-game__lost-pieces-group--knight {
+    float: left;
+  }
+
+  .app-game__lost-pieces-group--rook {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .app-game__lost-pieces-group--queen {
+    display: block;
+    margin-top: 4px;
+  }
+
+  .app-game__toggle {
+    width: 36px;
+  }
+
+  .app-game__toggle.show {
+    width: inherit;
+  }
+
+  .app-game__toggle .app-game__toggle-icon--action {
+    display: none;
+  }
+
+  @media screen and (min-height: 750px)  {
     .app-layout.is-game .app-grid {
-      max-width: 700px;
+      max-width: 900px;
     }
-    .app-layout.is-game .app-grid .mdl-cell--6-col, 
-    .app-layout.is-game .app-grid .mdl-cell--6-col-desktop.mdl-cell--6-col-desktop {
-      width: calc(100% - 16px);
+
+    .app-layout.is-game .app-game__board {
+      width: 744px;
+    }
+
+    .app-head--game {
+      height: 366px;
+    }
+
+    .app-head--game-bottom {
+      top: 386px;
     }
   }
 
-  @media (max-height: 899px) {
+  @media screen and (max-height: 749px)  {
     .app-layout.is-game .app-grid {
-      max-width: 650px;
+      max-width: calc(100vh + 158px);
     }
-  }
 
-  @media (max-height: 849px) {
-    .app-layout.is-game .app-grid {
-      max-width: 600px;
+    .app-layout.is-game .app-game__board {
+      width: 100vh;
     }
-  }
 
-  @media (max-height: 799px) {
-    .app-layout.is-game .app-grid {
-      max-width: 550px;
+    .app-head--game {
+      height: calc(50vh - 8px);
     }
-  }
 
-  @media (max-height: 749px) {
-    .app-layout.is-game .app-grid {
-      max-width: 500px;
-    }
-  }
-
-  @media (max-height: 699px) {
-    .app-layout.is-game .app-grid {
-      max-width: 450px;
-    }
-  }
-
-  @media (max-height: 649px) {
-    .app-layout.is-game .app-grid {
-      max-width: 400px;
+    .app-head--game-bottom {
+      top: calc(50vh + 16px);
     }
   }
 }
 
-@media only screen and (max-width : 1160px){
+@media only screen and (max-width : 1160px) {
   .app-header__row {
     padding: 0 20px;
   }
@@ -3146,8 +3262,6 @@ a {
     font-size: 20px;
     margin-bottom: 8px;
   }
-
-
 }
 
 @media screen and (max-width: 479px) {
@@ -3332,7 +3446,7 @@ a {
   }
 
   .app-game__lost-piece {
-    height: 15px;
+    height: 14px;
     margin-right: 0;
   }
 

@@ -1,22 +1,24 @@
 <div class="app-profile app-profile--game element">
-    <div class="app__pull-right">
+    <div class="app-game__timer">
         <div class="app-game__time" 
              ng-class="{'app-game__time--danger': isPlayerTurn(player) && player.time < 10000, 'app-game__time--turn': isPlayerTurn(player) }">
             {{ formatTime(player.time) }}
         </div>
-        <div class="app-game__time" 
+        <div class="app-game__time app-game__time--turn" 
              ng-class="{'app-game__time--danger': isPlayerTurn(player) && player.timeTurn < 10000, 'app-game__time--turn': isPlayerTurn(player)}">
             {{ formatTime(player.timeTurn) }}
         </div>
     </div>
 
     <div ng-class="{'app-profile__show-pieces': hasLostPieces(player.lostPieces) }">
-        <div class="app__pull-left">
+        <div class="app-game__player-avatar">
             <a show-profile="player" href>
+                <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
                 <img avatar
                      show-profile="player" 
                      class="app-avatar app-profile__avatar" 
                      ng-src="{{ player.avatar }}">
+                <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
             </a>
         </div>
         <div class="app-profile__name">

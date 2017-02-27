@@ -1,4 +1,4 @@
-<div class="app-head app-head--game mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-head app-head--game app-head--game-top mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile-game player="player2"></div>
 </div>
 
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="app-head app-head--game mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-head app-head--game app-head--game-bottom mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile-game player="player1"></div>
 </div>
 
@@ -167,7 +167,8 @@
     </table>
 </div>
 
-<div class="app-game__toggle app-game__toggle--played mdl-shadow--2dp" ng-class="{'show' : showPlayedPhone }">
+<div class="app-game__toggle app-game__toggle--played mdl-shadow--2dp" 
+     ng-class="{'show' : showPlayed || showPlayedPhone }">
     <div class="app-game__toggle-head"
          ng-click="togglePlayed()">
         
