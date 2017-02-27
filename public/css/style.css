@@ -1187,9 +1187,13 @@ a {
 }
 
 .app-element .app-element__body {
-  height: 309px;
+  max-height: 568px;
   border-top: 1px solid rgba(0,0,0,.12);
   overflow-x: auto;
+}
+
+.app-element--created-games .app-element__body {
+  height: 308px;
 }
 
 .app-element__body .app-spinner {
@@ -3396,9 +3400,13 @@ a {
     padding: 12px;
   }
 
-  .app-element--small .app-element__body {
-    height: 219px;
+  .app-element .app-element__body {
+    max-height: 390px;
     overflow-x: auto;
+  }
+
+  .app-element--created-games .app-element__body {
+    height: 218px;
   }
 
   .app-element__body .app-spinner {
