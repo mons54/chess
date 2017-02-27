@@ -2468,7 +2468,8 @@ a {
     margin-top: 8px;
   }
 
-  .app-profile--game .app-profile__name .app-icon {
+  .app-profile--game .app-profile__name .app-icon,
+  .app-profile--game .app-profile__info-content--ranking {
     display: none;
   }
 
@@ -2485,11 +2486,6 @@ a {
   .app-profile--game .app-profile__info {
     width: 100%;
     text-align: center;
-  }
-
-  .app-profile--game .app-profile__info-content--ranking {
-    margin-top: 4px;
-    display: block;
   }
 
   .app-game__lost-pieces {
@@ -2514,7 +2510,7 @@ a {
   .app-game__lost-pieces-group--queen {
     width: 50%;
     display: inline-block;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   @media screen and (min-height: 750px)  {
