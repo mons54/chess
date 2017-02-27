@@ -1,4 +1,4 @@
-<div class="app-head app-head--game mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-head app-head--game app-head--game-top mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile-game player="player2"></div>
 </div>
 
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="app-head app-head--game mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-head app-head--game app-head--game-bottom mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div profile-game player="player1"></div>
 </div>
 
@@ -167,7 +167,8 @@
     </table>
 </div>
 
-<div class="app-game__toggle app-game__toggle--played mdl-shadow--2dp" ng-class="{'show' : showPlayedPhone }">
+<div class="app-game__toggle app-game__toggle--played mdl-shadow--2dp" 
+     ng-class="{'show' : showPlayed || showPlayedPhone }">
     <div class="app-game__toggle-head"
          ng-click="togglePlayed()">
         
@@ -248,16 +249,17 @@
 
 <div ng-hide="game.archived" 
      class="app-game__toggle app-game__toggle--messages mdl-shadow--2dp" 
-     ng-class="{'show' : showMessagesPhone }">
+     ng-class="{'show' :  showMessages || showMessagesPhone }">
     <div class="app-game__toggle-head app-game__toggle-head--messages"
          ng-click="toggleMessages()">
         
-        <i class="app-game__toggle-icon app-game__toggle-icon--description material-icons">chat</i>
+        <span class="app-game__toggle-icon app-game__toggle-icon--description">
+            <i class="material-icons">chat</i>
+            <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
+        </span>
         <i class="app-game__toggle-icon app-game__toggle-icon--action material-icons">
             {{ showMessages ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
         </i>
-
-        <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
     </div>
     <div class="app-game__toggle-content app-game__toggle-content--messages"
          ng-show="showMessages"
@@ -266,7 +268,7 @@
          <div ng-repeat="message in messages" class="app-game__messages">
             <div class="app-game__message" ng-class="{'app-game__message--user': message.uid === user.uid, 'app-game__message--next': message.uid === messages[$index - 1].uid }">
                 <div class="app-game__message-avatar">
-                    <img avatar src="{{ message.avatar }}">
+                    <img avatar ng-src="{{ message.avatar }}">
                 </div>
                 <div class="app-game__message-content">
                     <div class="app-game__message-message">{{ message.message }}</div>
@@ -288,6 +290,7 @@
     <div class="app-game__toggle-head app-game__toggle-head--phone">
         <div ng-hide="game.archived" class="app-game__toggle-icon--phone" ng-click="toggleMessages(true)">
             <i class="app-game__toggle-icon material-icons">chat</i>
+            <span class="app-game__toggle-count" ng-if="unreadMessages">{{ unreadMessages }}</span>
         </div>
         <div class="app-game__toggle-icon--phone" ng-click="togglePlayed(true)">
             <i class="app-game__toggle-icon material-icons">description</i>
@@ -304,9 +307,6 @@
                  ng-click="setColorGame(color)">
                 <span class="app-button app-button--color app-button--color-{{ color }}"></span>
             </div>
-        </div>
-        <div class="app-game__toggle-count--phone" ng-if="unreadMessages" ng-click="toggleMessages(true)">
-            <span class="app-game__toggle-count">{{ unreadMessages }}</span>
         </div>
     </div>
 </div>

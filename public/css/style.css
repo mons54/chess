@@ -888,6 +888,7 @@ a {
 }
 
 .app-grid {
+  position: relative;
   max-width: 760px;
 }
 
@@ -1053,10 +1054,13 @@ a {
   font-weight: inherit;
 }
 
+.app-icon--star {
+  color: #FFC107;
+}
+
 .app-profile__name .app-icon--star {
   font-size: 16px;
   vertical-align: middle;
-  color: #FFC107;
   position: relative;
   top: -2px;
 }
@@ -1299,9 +1303,13 @@ a {
 }
 
 .app-element .app-element__body {
-  height: 309px;
+  max-height: 568px;
   border-top: 1px solid rgba(0,0,0,.12);
   overflow-x: auto;
+}
+
+.app-element--created-games .app-element__body {
+  height: 308px;
 }
 
 .app-element__body .app-spinner {
@@ -1837,7 +1845,7 @@ a {
 }
 
 .app-game__toggle--played {
-  right: 25px;
+  right: 24px;
 }
 
 .app-game__toggle--played .app-game__toggle-content--actions {
@@ -1856,7 +1864,7 @@ a {
 }
 
 .app-game__toggle--messages {
-  left: 25px;
+  left: 24px;
 }
 
 .app-game__toggle--phone {
@@ -1888,27 +1896,18 @@ a {
 }
 
 .app-game__toggle-count {
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  height: 8px;
+  line-height: 8px;
+  top: -4px;
+  right: -4px;
   background-color: #DB4437;
   color: #fff;
-  width: 48px;
-  height: 24px;
-  text-align: center;
-  line-height: 24px;
   font-size: 12px;
-}
-
-.app-game__toggle-count:before {
-  position: absolute;
-  top: 0;
-  left: -5px;
-  content: '';
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 5px 5px 0;
-  border-color: transparent #DB4437 transparent transparent;
+  padding: 4px;
+  opacity: 1;
+  border-radius: 3px;
+  z-index: 10;
 }
 
 .app-game__toggle-content {
@@ -2013,6 +2012,18 @@ a {
 
 .app-game__played-color {
   width: 50%;
+}
+
+.app-game__timer {
+  float: right;
+}
+
+.app-game__player-avatar {
+  float: left;
+}
+
+.app-game__player-avatar .app-icon {
+  display: none;
 }
 
 .app-game__time {
@@ -2496,55 +2507,154 @@ a {
   }
 }
 
-@media screen and (min-width: 961px) {
-  @media (max-height: 959px) {
+@media screen and (min-width: 949px) and (max-width: 1645px) {
+
+  .app-game__toggle {
+    width: 36px;
+    overflow: hidden;
+  }
+
+  .app-game__toggle.show {
+    width: 350px;
+  }
+
+  .app-game__toggle .app-game__toggle-icon--action {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 949px) and (max-height: 949px) {
+
+  .app-head--game {
+    position: absolute;
+    width: 126px;
+    right: 8px;
+    top: 8px;
+  }
+
+  .app-game__timer {
+    float: none;
+    bottom: 0;
+    margin-bottom: 16px;
+  }
+
+  .app-game__time {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .app-game__time-turn {
+    right: 0;
+  }
+
+  .app-profile--game {
+    position: relative;
+    height: 100%;
+  }
+
+  .app-game__player-avatar {
+    float: none;
+    text-align: center;
+  }
+
+  .app-profile--game .app-profile__info .app-icon {
+    font-size: 20px;
+    margin-right: 0;
+  }
+
+  .app-profile--game .app-profile__avatar {
+    margin-right: 0;
+  }
+
+  .app-profile--game .app-profile__name {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .app-profile--game .app-profile__name .app-icon,
+  .app-profile--game .app-profile__info-content--ranking {
+    display: none;
+  }
+
+  .app-profile--game .app-game__player-avatar .app-icon {
+    display: initial;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+
+  .app-profile--game .app-profile--game-points {
+    display: block;
+  }
+
+  .app-profile--game .app-profile__info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .app-game__lost-pieces {
+    margin-top: 16px;
+    margin-right: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .app-game__lost-piece { 
+    height: 20px;
+  }
+
+  .app-game__lost-pieces-group--pawn {
+    margin-bottom: 0;
+  }
+
+  .app-game__lost-pieces-group--bishop,
+  .app-game__lost-pieces-group--knight,
+  .app-game__lost-pieces-group--rook,
+  .app-game__lost-pieces-group--queen {
+    width: 50%;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  @media screen and (min-height: 750px)  {
     .app-layout.is-game .app-grid {
-      max-width: 700px;
+      max-width: 900px;
     }
-    .app-layout.is-game .app-grid .mdl-cell--6-col, 
-    .app-layout.is-game .app-grid .mdl-cell--6-col-desktop.mdl-cell--6-col-desktop {
-      width: calc(100% - 16px);
+
+    .app-layout.is-game .app-game__board {
+      width: 744px;
+    }
+
+    .app-head--game {
+      height: 366px;
+    }
+
+    .app-head--game-bottom {
+      top: 386px;
     }
   }
 
-  @media (max-height: 899px) {
+  @media screen and (max-height: 749px)  {
     .app-layout.is-game .app-grid {
-      max-width: 650px;
+      max-width: calc(100vh + 158px);
     }
-  }
 
-  @media (max-height: 849px) {
-    .app-layout.is-game .app-grid {
-      max-width: 600px;
+    .app-layout.is-game .app-game__board {
+      width: 100vh;
     }
-  }
 
-  @media (max-height: 799px) {
-    .app-layout.is-game .app-grid {
-      max-width: 550px;
+    .app-head--game {
+      height: calc(50vh - 8px);
     }
-  }
 
-  @media (max-height: 749px) {
-    .app-layout.is-game .app-grid {
-      max-width: 500px;
-    }
-  }
-
-  @media (max-height: 699px) {
-    .app-layout.is-game .app-grid {
-      max-width: 450px;
-    }
-  }
-
-  @media (max-height: 649px) {
-    .app-layout.is-game .app-grid {
-      max-width: 400px;
+    .app-head--game-bottom {
+      top: calc(50vh + 16px);
     }
   }
 }
 
-@media only screen and (max-width : 1160px){
+@media only screen and (max-width : 1160px) {
   .app-header__row {
     padding: 0 20px;
   }
@@ -3032,6 +3142,11 @@ a {
     left: 0;
   }
 
+  .app-game__toggle-count {
+    top: 2px;
+    right: 2px;
+  }
+
   .app-game__toggle-head--phone .app-game__toggle-icon--phone:nth-of-type(2) {
     border-left: 0;
     left: 40px;
@@ -3127,12 +3242,6 @@ a {
 
   .app-game__toggle .app-game__toggle-content--messages {
     height: calc(100% - 73px);
-  }
-
-  .app-game__toggle-count--phone {
-    display: inline-block;
-    height: 100%;
-    width: 65px;
   }
 
   .app-game__toggle-icon--color {
@@ -3259,8 +3368,6 @@ a {
     font-size: 20px;
     margin-bottom: 8px;
   }
-
-
 }
 
 @media screen and (max-width: 479px) {
@@ -3279,6 +3386,10 @@ a {
 
   .mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
     padding-left: 12px;
+  }
+
+  .mdl-data-table td:last-of-type, .mdl-data-table th:last-of-type {
+    padding-right: 12px;
   }
 
   .app-form__choices-colors .app-modal__settings-field {
@@ -3300,16 +3411,12 @@ a {
   }
 
   .app-table {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .app-table__avatar {
     width: 30px;
     height: 30px;
-  }
-
-  .app-table__name {
-    display: none;
   }
 
   .app-table--ranking .app-table__name {
@@ -3449,7 +3556,7 @@ a {
   }
 
   .app-game__lost-piece {
-    height: 15px;
+    height: 14px;
     margin-right: 0;
   }
 
@@ -3517,9 +3624,13 @@ a {
     padding: 12px;
   }
 
-  .app-element--small .app-element__body {
-    height: 219px;
+  .app-element .app-element__body {
+    max-height: 390px;
     overflow-x: auto;
+  }
+
+  .app-element--created-games .app-element__body {
+    height: 218px;
   }
 
   .app-element__body .app-spinner {
@@ -3530,6 +3641,6 @@ a {
   }
 
   .app-table__sortable .material-icons {
-    font-size: 21px;
+    font-size: 20px;
   }
 }
