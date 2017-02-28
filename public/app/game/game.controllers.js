@@ -57,7 +57,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         setColorGame(user.getColorGame());
 
         $scope.colorsGame = colorsGame;
-        $scope.sound = sound.get();
+        $scope.sound = user.getSound();
 
         socket.on('game', function (game) {
 
@@ -400,7 +400,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.setSound = function () {
             $scope.sound = !$scope.sound;
-            sound.set($scope.sound);
+            user.setSound($scope.sound);
         };
 
         $scope.setColorGame = function (color) {

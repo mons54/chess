@@ -109,6 +109,9 @@
             };
 
             $rootScope.$watch('title', function (value) {
+                if (!value) {
+                    return;
+                }
                 angular.element('title').text(translator.translate(value) + ' - World of Chess');
             });
 
@@ -249,6 +252,15 @@
 
                 if ($rootScope.isDisconnected) {
                     $route.reload();
+                }
+
+                if (!data.dataGame) {
+                    data.dataGame = {
+                        color: null,
+                        game: 0,
+                        pointsMin: null,
+                        pointsMax: null
+                    };
                 }
 
                 user.setDataGame(data.dataGame);

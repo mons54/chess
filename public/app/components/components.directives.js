@@ -52,8 +52,8 @@ directive('avatar', function() {
     }
 }).
 
-directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 'translator', 'sound', 'languages', 'colorsGame', 'patterns',
-    function ($rootScope, $timeout, $q, socket, user, translator, sound, languages, colorsGame, patterns) {
+directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 'translator', 'languages', 'colorsGame', 'patterns',
+    function ($rootScope, $timeout, $q, socket, user, translator, languages, colorsGame, patterns) {
         return {
             restrict: 'E',
             scope: true,
@@ -156,7 +156,7 @@ directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 't
                             user.setColorGame(response.colorGame);
                         }
 
-                        sound.set(response.sound);
+                        user.setSound(response.sound);
 
                         angular.extend($rootScope.user, response);
                         setValues(response);

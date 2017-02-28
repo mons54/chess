@@ -139,10 +139,16 @@ factory('utils', ['$rootScope', '$filter', '$window', 'host', 'facebookRedirectU
  * @description 
  * Sound management.
  */
-service('sound', ['user', function (user) {
+service('sound', ['$rootScope', 'user', function ($rootScope, user) {
 
     var sounds,
         sound = user.getSound();
+
+    $rootScope.$watch('user.sound', function (value) {
+        if (typeof value === 'boolean') {
+            sound = value;
+        }
+    });
 
     if (typeof Audio === 'function') {
         sounds = {
@@ -160,21 +166,6 @@ service('sound', ['user', function (user) {
         angular.forEach(sounds, function (value, name) {
             value.load();
         });
-    }
-
-    function set(value) {
-        if (typeof value !== 'boolean') {
-            value = true;
-        }
-        sound = value;
-        user.setSound(sound);
-        if (!sound) {
-            loadAll();
-        }
-    }
-
-    function get() {
-        return sound;
     }
 
     function Sound(name) {
@@ -214,25 +205,6 @@ service('sound', ['user', function (user) {
     }
 
     return {
-        sound: sound,
-        /**
-         * @ngdoc function
-         * @name #set
-         * @methodOf global.service:sound
-         * @description 
-         * Change on/off sound
-         * @returns {bool} true (on) / false (off)
-         */
-        set: set,
-        /**
-         * @ngdoc function
-         * @name #set
-         * @methodOf global.service:sound
-         * @description 
-         * Change on/off sound
-         * @returns {bool} true (on) / false (off)
-         */
-        get: get,
         /**
          * @ngdoc function
          * @name #timer
@@ -577,17 +549,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @returns {object} Data Game
          */
         getDataGame: function () {
-            var data = $cookies.getObject('dataGame');
-            if (!data) {
-                data = {
-                    color: null,
-                    game: 0,
-                    pointsMin: null,
-                    pointsMax: null
-                };
-            }
-            $rootScope.dataGame = data;
-            return data;
+            return $cookies.getObject('dataGame');
         },
         /**
          * @ngdoc function
