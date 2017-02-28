@@ -3306,6 +3306,10 @@ a {
     font-size: 14px;
   }
 
+  .app-table__sortable {
+    margin-right: -12px;
+  }
+
   .app-table__avatar {
     width: 30px;
     height: 30px;

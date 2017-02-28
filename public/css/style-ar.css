@@ -664,6 +664,11 @@
     float: left;
   }
 
+  .app-table__sortable {
+    margin-left: -12px;
+    margin-right: 0;
+  }
+
   .app-table__sortable:after {
     margin-right: 0;
   }
