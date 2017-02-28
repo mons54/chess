@@ -2090,21 +2090,13 @@ a {
   background-color: #C0CA33;
 }
 
-.app-game__box.selected,
 .app-game__box.is-check {
   border-style: ridge solid;
   border-width: 3px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-}
-
-.app-game__box.selected {
   border-color: #C0CA33;
-}
-
-.app-game__box.is-check {
-  border-color: #FF5722;
 }
 
 .app-game__box.ui-droppable {
