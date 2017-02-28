@@ -2106,6 +2106,10 @@ a {
   border-color: #C0CA33;
 }
 
+.app-game__box.ui-droppable {
+  cursor: pointer;
+}
+
 .app-game__box.ui-droppable:after {
   content: '';
   position: absolute;
