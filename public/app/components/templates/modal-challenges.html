@@ -43,14 +43,14 @@
                                 </td>
                                 <td class="app-table__time">{{ challenge.game.time / 60 }} + {{ challenge.game.increment }}</td>
                                 <td class="app-table__actions">
-                                    <button ng-click="$event.stopPropagation(); removeChallenge(challenge.uid)" 
-                                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                                        <i class="app-icon material-icons">close</i>
-                                    </button>
                                     <button ng-if="!challenge.create" 
                                             ng-click="$event.stopPropagation(); startChallenge(challenge.uid)" 
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                                         <i class="app-icon material-icons">check</i>
+                                    </button>
+                                    <button ng-click="$event.stopPropagation(); removeChallenge(challenge.uid)" 
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                        <i class="app-icon material-icons">close</i>
                                     </button>
                                 </td>
                             </tr>
