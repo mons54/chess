@@ -1314,7 +1314,8 @@ a {
 }
 
 .app-table__sortable {
-  display: block;
+  display: inline-block;
+  width: 100%;
   color: inherit;
   line-height: 0;
   margin-right: -18px;
@@ -3307,7 +3308,7 @@ a {
   }
 
   .app-table__sortable {
-    margin-right: -12px;
+    margin-right: -6px;
   }
 
   .app-table__avatar {
