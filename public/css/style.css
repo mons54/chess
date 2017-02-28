@@ -1350,7 +1350,7 @@ a {
 }
 
 .app-table__avatar {
-  margin-right: 10px;
+  margin-right: 8px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -3309,6 +3309,7 @@ a {
   .app-table__avatar {
     width: 30px;
     height: 30px;
+    margin-right: 4px;
   }
 
   .app-table--ranking .app-table__name {
