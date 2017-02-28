@@ -577,17 +577,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
          * @returns {object} Data Game
          */
         getDataGame: function () {
-            var data = $cookies.getObject('dataGame');
-            if (!data) {
-                data = {
-                    color: null,
-                    game: 0,
-                    pointsMin: null,
-                    pointsMax: null
-                };
-            }
-            $rootScope.dataGame = data;
-            return data;
+            return $cookies.getObject('dataGame');
         },
         /**
          * @ngdoc function
