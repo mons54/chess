@@ -3531,4 +3531,8 @@ a {
   .app-table__sortable .material-icons {
     font-size: 20px;
   }
+  
+  .app-table__sortable:after {
+    margin-left: 0;
+  }
 }
