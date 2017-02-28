@@ -1300,8 +1300,8 @@ a {
 .app-ranking__spinner {
   position: absolute;
   z-index: 9;
-  right: 10px;
-  top: 10px;
+  right: 8px;
+  top: 8px;
 }
 
 .app-spinner--search-game {
@@ -1328,7 +1328,7 @@ a {
   content: '';
   display: inline-block;
   position: relative;
-  margin-left: 5px;
+  margin-left: 4px;
   border-style: solid;
 }
 
