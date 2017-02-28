@@ -368,6 +368,16 @@
   margin-left: 0;
 }
 
+.app-profile__info--blitz {
+  margin-left: initial;
+  margin-right: -6px;
+}
+
+.app-profile__info--blitz .app-profile__info-content--points {
+  margin-left: initial;
+  margin-right: -3px;
+}
+
 .app-profile__stat:last-child {
   margin-right: 8px;
 }
