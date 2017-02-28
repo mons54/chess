@@ -2843,6 +2843,11 @@ a {
     border-bottom: 1px solid rgba(0, 0, 0, .12);
   }
 
+  .app-layout.is-game .app-head--game-top.mdl-cell,
+  .app-layout.is-game .app-game__board.mdl-cell {
+    border-bottom: none;
+  }
+
   .app-layout.is-game .mdl-cell:last-child {
     margin-bottom: 8px;
   }
