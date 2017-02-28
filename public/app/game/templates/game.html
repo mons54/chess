@@ -25,8 +25,40 @@
     <div profile-game player="player1"></div>
 </div>
 
-<div class="app-game__played--phone mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div ng-if="game.finish && game.played.length" class="app-game__played--phone-actions">
+<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-if="isPlayer() && !game.finish">
+    <table class="app-table app-table--game app-table--game-actions">
+        <tbody>
+            <tr>
+                <td>
+                    <button ng-disabled="!possibleResign()"
+                            show-modal="#modal-resign" 
+                            class="app-button mdl-button mdl-js-button">
+                            {{ 'resign'|translate }}
+                    </button>
+                </td>
+                <td>
+                    <button ng-disabled="!possibleOfferDraw()"
+                            show-modal="#modal-offer-draw" 
+                            class="app-button mdl-button mdl-js-button">
+                            {{ 'offer_draw'|translate }}
+                    </button>
+                </td>
+                <td>
+                    <button ng-disabled="!possibleDraw()"
+                            show-modal="#modal-possible-draw" 
+                            class="app-button mdl-button mdl-js-button">
+                            {{ 'null'|translate }}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div ng-if="game.played.length" 
+     class="app-game__played--phone mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div ng-if="game.finish"
+         class="app-game__played--phone-actions">
         <button ng-disabled="turn.prev === null"
                 ng-click="replay(turn.prev)"
                 class="mdl-button mdl-js-button mdl-button--icon">
@@ -68,36 +100,6 @@
             </tbody>
         </table>
     </div>
-</div>
-
-<div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-if="isPlayer() && !game.finish">
-    <table class="app-table app-table--game app-table--game-actions">
-        <tbody>
-            <tr>
-                <td>
-                    <button ng-disabled="!possibleResign()"
-                            show-modal="#modal-resign" 
-                            class="app-button mdl-button mdl-js-button">
-                            {{ 'resign'|translate }}
-                    </button>
-                </td>
-                <td>
-                    <button ng-disabled="!possibleOfferDraw()"
-                            show-modal="#modal-offer-draw" 
-                            class="app-button mdl-button mdl-js-button">
-                            {{ 'offer_draw'|translate }}
-                    </button>
-                </td>
-                <td>
-                    <button ng-disabled="!possibleDraw()"
-                            show-modal="#modal-possible-draw" 
-                            class="app-button mdl-button mdl-js-button">
-                            {{ 'null'|translate }}
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 
 <div ng-if="game" 
