@@ -40,9 +40,15 @@
 
         <!-- Page styles -->
         <link href="css/material/material.min.css" rel="stylesheet">
-        <link href="css/material/icon.css" rel="stylesheet" >
-        <link href="css/style.css" rel="stylesheet">
-        <link ng-if="lang === 'ar'" ng-href="css/style-ar.css" rel="stylesheet">
+
+        <% if (typeof env === 'string' && env === 'dev') { %>
+            <link href="css/material/icon.css" rel="stylesheet" >
+            <link href="css/style.css" rel="stylesheet">
+            <link ng-if="lang === 'ar'" href="css/style-ar.css" rel="stylesheet">
+         <% } else { %>
+            <link href="web/css/app.min.css" rel="stylesheet">
+            <link ng-if="lang === 'ar'" href="web/css/app-ar.min.css" rel="stylesheet">
+        <% } %>
     </head>
     <body>
 

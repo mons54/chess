@@ -20,6 +20,7 @@
         "gulp-ngdocs": "*",
         "gulp-concat": "*",
         "gulp-uglify": "*",
+        "gulp-minify-css": "*",
         "supervisor": "*"
     }
 }

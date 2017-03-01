@@ -1,14 +1,14 @@
 'use strict';
 
 var gulp = require('gulp'),
+    gulpDocs = require('gulp-ngdocs'),
     concat = require('gulp-concat'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    minifyCss = require('gulp-minify-css');
 
 gulp.
 task('ngdocs', [], function () {
-    var gulpDocs = require('gulp-ngdocs');
-
-    return gulpDocs.sections({
+    gulpDocs.sections({
         api: {
             glob:'./public/app/**/*.js',
             api: true,
@@ -21,8 +21,8 @@ task('ngdocs', [], function () {
     }))
     .pipe(gulp.dest('./public/docs'));
 }).
-task('prod', function() {
-    return gulp.src([
+task('minify', function() {
+    gulp.src([
         './node_modules/socket.io-client/socket.io.js', 
         './public/*.js',
         './public/app/app.js',
@@ -32,4 +32,19 @@ task('prod', function() {
     pipe(concat('app.min.js')).
     pipe(uglify()).
     pipe(gulp.dest('./public/web/js'));
+
+    gulp.src([
+        './public/css/material/icon.css', 
+        './public/css/style.css'
+    ]).
+    pipe(concat('app.min.css')).
+    pipe(minifyCss()).
+    pipe(gulp.dest('./public/web/css'));
+
+    gulp.src([
+        './public/css/style-ar.css'
+    ]).
+    pipe(concat('app-ar.min.css')).
+    pipe(minifyCss()).
+    pipe(gulp.dest('./public/web/css'));
 });
