@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('components').
 
 /**
@@ -13,7 +11,7 @@ service('modal', ['$timeout', function ($timeout) {
     return function (element) {
 
         if (typeof element === 'string') {
-            var element = angular.element(element);
+            element = angular.element(element);
         }
 
         element.show = function (callback) {

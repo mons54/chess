@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc overview
  * @name trophies
@@ -94,8 +92,6 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
                         });
                     });
                 }
-
-                scope.chart
 
                 $rootScope.$on('trophies', function (event, data) {
                     if (load) {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<%= lang %>" ng-app="app" data-facebook="<%= facebook %>">
+<html lang="<%= lang %>" ng-app="app" data-facebook="<%= facebook %>" data-env="<%= typeof env === 'string' ? env : null %>">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,9 +40,15 @@
 
         <!-- Page styles -->
         <link href="css/material/material.min.css" rel="stylesheet">
-        <link href="css/material/icon.css" rel="stylesheet" >
-        <link href="css/style.css" rel="stylesheet">
-        <link ng-if="lang === 'ar'" ng-href="css/style-ar.css" rel="stylesheet">
+
+        <% if (typeof env === 'string' && env === 'dev') { %>
+            <link href="css/material/icon.css" rel="stylesheet" >
+            <link href="css/style.css" rel="stylesheet">
+            <link ng-if="lang === 'ar'" href="css/style-ar.css" rel="stylesheet">
+         <% } else { %>
+            <link href="web/css/app.min.css" rel="stylesheet">
+            <link ng-if="lang === 'ar'" ng-href="web/css/app-ar.min.css" rel="stylesheet">
+        <% } %>
     </head>
     <body>
 
@@ -319,47 +325,47 @@
         <div id="fb-root"></div>
 
         <script src="https://apis.google.com/js/api.js"></script>
-        <script src="https://apis.google.com/js/plusone.js" async defer></script>
-
-        <script src="socket.io/socket.io.js"></script>
-
-        <script src="chess.js"></script>
-        <script src="utils.js"></script>
-
         <script src="lib/jquery.min.js"></script>
         <script src="lib/jquery-ui.min.js"></script>
-
         <script src="lib/progress-bar.min.js"></script>
-
         <script src="lib/material.min.js"></script>
-
         <script src="lib/angular.min.js"></script>
         <script src="lib/angular-route.min.js"></script>
         <script src="lib/angular-cookies.min.js"></script>
 
-        <script src="app/app.js"></script>
+        <% if (typeof env === 'string' && env === 'dev') { %>
 
-        <script src="app/global/global.module.js"></script>
+            <script src="socket.io/socket.io.js"></script>
 
-        <script src="app/facebook/facebook.module.js"></script>
+            <script src="chess.js"></script>
+            <script src="utils.js"></script>
 
-        <script src="app/google/google.module.js"></script>
+            <script src="app/app.js"></script>
 
-        <script src="app/components/components.module.js"></script>
-        <script src="app/components/components.services.js"></script>
-        <script src="app/components/components.directives.js"></script>
+            <script src="app/global/global.module.js"></script>
 
-        <script src="app/game/game.module.js"></script>
-        <script src="app/game/game.controllers.js"></script>
-        <script src="app/game/game.directives.js"></script>
+            <script src="app/facebook/facebook.module.js"></script>
 
-        <script src="app/home/home.module.js"></script>
-        <script src="app/home/home.controllers.js"></script>
+            <script src="app/google/google.module.js"></script>
 
-        <script src="app/ranking/ranking.module.js"></script>
-        <script src="app/ranking/ranking.controllers.js"></script>
+            <script src="app/components/components.module.js"></script>
+            <script src="app/components/components.services.js"></script>
+            <script src="app/components/components.directives.js"></script>
 
-        <script src="app/trophies/trophies.module.js"></script>
-        <script src="app/trophies/trophies.controllers.js"></script>
+            <script src="app/game/game.module.js"></script>
+            <script src="app/game/game.controllers.js"></script>
+            <script src="app/game/game.directives.js"></script>
+
+            <script src="app/home/home.module.js"></script>
+            <script src="app/home/home.controllers.js"></script>
+
+            <script src="app/ranking/ranking.module.js"></script>
+            <script src="app/ranking/ranking.controllers.js"></script>
+
+            <script src="app/trophies/trophies.module.js"></script>
+            <script src="app/trophies/trophies.controllers.js"></script>
+        <% } else { %>
+            <script src="web/js/app.min.js"></script>
+        <% } %>
     </body>
 </html>
