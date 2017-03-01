@@ -1,5 +1,3 @@
-'use strict';
-
 var game = {
     options: {
         pointsMin: 1000,

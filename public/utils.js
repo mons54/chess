@@ -1,4 +1,3 @@
-
 var utils = {
     patterns: {
         avatar: /^(https?:)?\/\/[^\s]+\.(jpeg|jpg|gif|png)(\?[^\s]+)?/
