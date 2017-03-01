@@ -2410,11 +2410,8 @@ a {
 
 @media screen and (min-width: 949px) and (max-height: 949px) {
 
-  .app-head--game {
+  .app-layout.is-game .mdl-cell.app-head--game {
     position: absolute;
-    width: 126px;
-    right: 8px;
-    top: 8px;
   }
 
   .app-game__timer {
@@ -2502,39 +2499,52 @@ a {
     margin-top: 4px;
   }
 
-  @media screen and (min-height: 750px)  {
+  @media screen and (min-height: 760px)  {
     .app-layout.is-game .app-grid {
       max-width: 900px;
     }
 
-    .app-layout.is-game .app-game__board {
+    .app-layout.is-game .mdl-cell.app-game__board {
       width: 744px;
     }
 
-    .app-head--game {
+    .app-layout.is-game .mdl-cell.app-head--game {
+      width: 126px;
       height: 366px;
+      right: 8px;
+      top: 8px;
     }
 
-    .app-head--game-bottom {
+    .app-layout.is-game .mdl-cell.app-head--game-bottom {
       top: 386px;
     }
   }
 
-  @media screen and (max-height: 749px)  {
+  @media screen and (max-height: 759px)  {
+
     .app-layout.is-game .app-grid {
-      max-width: calc(100vh + 158px);
+      max-width: calc(100vh + 148px);
+      padding: 4px;
     }
 
-    .app-layout.is-game .app-game__board {
-      width: 100vh;
+    .app-layout.is-game .mdl-cell {
+      margin: 4px;
+      width: calc(100% - 8px);
     }
 
-    .app-head--game {
-      height: calc(50vh - 8px);
+    .app-layout.is-game .mdl-cell.app-game__board {
+      width: calc(100vh - 16px);
+    }
+    
+    .app-layout.is-game .mdl-cell.app-head--game {
+      width: 148px;
+      height: calc(50vh - 12px);
+      right: 4px;
+      top: 4px;
     }
 
-    .app-head--game-bottom {
-      top: calc(50vh + 16px);
+    .app-layout.is-game .mdl-cell.app-head--game-bottom {
+      top: 50vh;
     }
   }
 }
