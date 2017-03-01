@@ -144,7 +144,7 @@ Game.prototype.resign = function (socket, id) {
         game.finish || 
         !this.isPlayer(game, socket.uid) || 
         game.played.length < 4 ||
-        new Date().getTime() - game.startTime < 60000) {
+        new Date().getTime() - game.startTime < 30000) {
         return;
     }
 
