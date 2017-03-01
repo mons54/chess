@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc overview
  * @name global
@@ -23,18 +21,18 @@ constant('host', 'www.worldofchess.online').
  * Available languages
  */
 constant('languages', {
-    'ar': "‏العربية‏",
-    'de': "Deutsch",
-    'en': "English",
-    'es': "Español",
-    'fr': "Français",
-    'it': "Italiano",
-    'ja': "日本語",
-    'nl': "Nederlands",
-    'pt': "Português",
-    'ru': "Русский",
-    'tr': "Türkçe",
-    'zh': "中文"
+'ar': "‏العربية‏",
+'de': "Deutsch",
+'en': "English",
+'es': "Español",
+'fr': "Français",
+'it': "Italiano",
+'ja': "日本語",
+'nl': "Nederlands",
+'pt': "Português",
+'ru': "Русский",
+'tr': "Türkçe",
+'zh': "中文"
 }).
 
 constant('patterns', window.utils.patterns).
@@ -156,7 +154,7 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
             deplace: new Audio('/sounds/deplace.mp3'),
             capture: new Audio('/sounds/capture.mp3')
         };
-    };
+    }
 
     function loadAll() {
         if (!sounds) {
@@ -364,7 +362,7 @@ factory('socket', ['$timeout', function ($timeout) {
                         callback.apply(socket, args);
                     }
                 });
-            })
+            });
         }
     };
 }]).
@@ -563,7 +561,7 @@ service('user', ['$rootScope', '$cookies', function ($rootScope, $cookies) {
             $rootScope.dataGame = value;
             $cookies.putObject('dataGame', value);
         }
-    }
+    };
 }]).
 
 /**
@@ -636,9 +634,10 @@ service('translator', ['$rootScope', '$http', 'languages', function($rootScope, 
     };
 }]).
 filter('translate', ['translator', function (translator) {
+    
     function translate(value, params) {
         return translator.translate(value, params);
-    };
+    }
 
     translate.$stateful = true;
 

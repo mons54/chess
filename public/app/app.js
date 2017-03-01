@@ -11,7 +11,6 @@
      * App module.
      * @requires ngRoute
      * @requires ngCookies
-     * @requires easypiechart
      * @requires components
      * @requires game
      * @requires home

@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('trophies').
 
 /**
@@ -31,6 +29,6 @@ controller('trophiesCtrl', ['$rootScope', '$scope', '$timeout', 'socket',
                 value: userTrophies[i] || 0
             });
 
-        };
+        }
     }
 ]);

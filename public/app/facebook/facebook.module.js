@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc overview
  * @name facebook
@@ -124,7 +122,7 @@ service('facebook', ['$rootScope', 'user', 'socket',
                     }
                 });
             });
-        }
+        };
 
         return this;
     }

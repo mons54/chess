@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('game').
 
 /**
@@ -61,6 +59,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         socket.on('game', function (game) {
 
+            var gameCopy;
+
             $rootScope.loading = false;
 
             if (!game) {
@@ -82,7 +82,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     }, 500);
                 }
 
-                var gameCopy = $window.game.newGame(game.id, game.white, game.black, game.type);
+                gameCopy = $window.game.newGame(game.id, game.white, game.black, game.type);
 
                 if (game.result.value === 1) {
                     game.white.isWinner = true;
@@ -137,7 +137,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 data.index = index;
                 data.time = ((data.time - time) / 1000).toFixed(2);
                 if (gameCopy) {
-                    new $window.chess.engine(gameCopy, value.start, value.end, value.promotion);
+                    gameCopy = new $window.chess.engine(gameCopy, value.start, value.end, value.promotion);
                     value.pieces = angular.copy(gameCopy.pieces);
                 }
                 time = value.time;
@@ -422,7 +422,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                         return;
                     }
                     $timeout(function() {
-                        $scope.showColors = false
+                        $scope.showColors = false;
                     });
                     $(this).unbind('click');
                 });
@@ -589,13 +589,13 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
                 }
             }
             return false;
-        }
+        };
 
         $scope.getLostPieces = function(number) {
             var pieces = [];
             for (var i = 0; i < number; i++) {
                 pieces.push(i);
-            };
+            }
             return pieces;   
         };
         

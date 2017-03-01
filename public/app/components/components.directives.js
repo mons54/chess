@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('components').
 
 /**
@@ -73,8 +71,8 @@ directive('showProfile', ['$rootScope', 'socket',
                         avatar: scope.showProfile.avatar
                     });
                 });
-            } 
-        }
+            }
+        };
     }
 ]).
 
@@ -85,7 +83,7 @@ directive('avatar', function() {
                 attrs.$set('src', '/images/default-avatar.png');
             });
         }
-    }
+    };
 }).
 
 directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 'translator', 'languages', 'colorsGame', 'patterns',
@@ -220,7 +218,7 @@ directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 't
 
                 scope.colorsGame = colorsGame;
             }
-        }
+        };
     }
 ]).
 
@@ -265,7 +263,7 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
                         if (!value || value < i) {
                             paramsGame.pointsMax.push(i);
                         }
-                    };
+                    }
                 });
 
                 scope.$watch('game.pointsMax', function (value) {
@@ -274,7 +272,7 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
                         if (!value || value > i) {
                             paramsGame.pointsMin.push(i);
                         }
-                    };
+                    }
                 });
 
                 scope.createGame = function () {
@@ -458,7 +456,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                     return $rootScope.user &&
                            $rootScope.user.uid !== data.uid &&
                            $rootScope.user.friends.indexOf(data.facebookId) !== -1;
-                };
+                }
 
                 function favoriteAvailable(data) {
                     if (!data) {
@@ -468,13 +466,13 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
                     return $rootScope.user &&
                            $rootScope.user.uid !== data.uid && 
                            $rootScope.user.friends.indexOf(data.facebookId) === -1;
-                };
+                }
 
                 scope.toogleFavorite = function () {
                     scope.isFavorite = !scope.isFavorite;
                 };
             }
-        }
+        };
     }
 ]).
 
@@ -639,4 +637,3 @@ directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'google
         };
     }
 ]);
-

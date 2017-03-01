@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('game').
 
 /**
@@ -192,7 +190,8 @@ directive('scrollGame', ['$timeout', function ($timeout) {
 
                     $timeout(function() {
 
-                        var active = element.find('[data-scroll-game-active="' + newValue + '"]');
+                        var active = element.find('[data-scroll-game-active="' + newValue + '"]'),
+                            offset;
 
                         if (!active.length) {
                             return;
@@ -203,9 +202,11 @@ directive('scrollGame', ['$timeout', function ($timeout) {
                         }
 
                         if (direction === 'left') {
+
+                            offset = active.position().left;
+
                             var left = element.scrollLeft(),
                                 right = element.scrollLeft() + element.width(),
-                                offset = active.position().left,
                                 width = active.outerWidth();
 
                             if (offset < left) {
@@ -214,9 +215,11 @@ directive('scrollGame', ['$timeout', function ($timeout) {
                                 element.scrollLeft(offset + width - element.width());
                             }
                         } else {
+
+                            offset = active.position().top;
+
                             var top = element.scrollTop(),
                                 bottom = element.scrollTop() + element.height(),
-                                offset = active.position().top,
                                 height = active.outerHeight();
 
                             if (offset < top) {
