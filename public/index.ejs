@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<%= lang %>" ng-app="app" data-facebook="<%= facebook %>">
+<html lang="<%= lang %>" ng-app="app" data-facebook="<%= facebook %>" data-env="<%= typeof env === 'string' ? env : null %>">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,7 +47,7 @@
             <link ng-if="lang === 'ar'" href="css/style-ar.css" rel="stylesheet">
          <% } else { %>
             <link href="web/css/app.min.css" rel="stylesheet">
-            <link ng-if="lang === 'ar'" href="web/css/app-ar.min.css" rel="stylesheet">
+            <link ng-if="lang === 'ar'" ng-href="web/css/app-ar.min.css" rel="stylesheet">
         <% } %>
     </head>
     <body>

@@ -8,11 +8,11 @@ angular.module('facebook', []).
 
 /**
  * @ngdoc parameters
- * @name facebook.constant:facebookRedirectUri
+ * @name facebook.constant:facebookAppId
  * @description
  * The redirect uri.
  */
-constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
+constant('facebookAppId', $('html').data('env') === 'dev' ? '1709923609297773' : '1687859708170830').
 
 /**
  * @ngdoc service
@@ -23,9 +23,9 @@ constant('facebookRedirectUri', 'https://apps.facebook.com/1687859708170830').
  * @requires global.service:user
  * @requires global.service:socket
  */
-service('facebook', ['$rootScope', 'user', 'socket',
+service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId',
 
-    function ($rootScope, user, socket) {
+    function ($rootScope, user, socket, facebookAppId) {
 
         var self = this;
 
@@ -52,7 +52,7 @@ service('facebook', ['$rootScope', 'user', 'socket',
          */
         this.init = function () {
             FB.init({
-                appId: '1687859708170830',
+                appId: facebookAppId,
                 xfbml: true,
                 version: 'v2.8'
             });

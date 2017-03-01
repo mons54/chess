@@ -7,7 +7,8 @@ module.exports = function (app) {
         bodyParser = require('body-parser'),
         staticPath = dirname + '/public/',
         dictionaries = {},
-        defaultLanguage = 'en';
+        defaultLanguage = 'en',
+        env = process.env.NODE_ENV;
 
     require('fs').readdirSync(staticPath + 'json/dictionaries').forEach(function (file) {
         
@@ -21,7 +22,11 @@ module.exports = function (app) {
         };
     });
 
-    mongoose.connect('mongodb://127.0.0.1:27017/chess_new');
+    if (env === 'dev') {
+        mongoose.connect('mongodb://mons54:jsOL160884@ds141209.mlab.com:41209/chess-test');
+    } else {
+        mongoose.connect('mongodb://127.0.0.1:27017/chess_new');
+    }
 
     app.use(express.static(staticPath));
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,6 +38,7 @@ module.exports = function (app) {
         var data = dictionaries[defaultLanguage];
         data.lang = defaultLanguage;
         data.facebook = true;
+        data.env = env;
         res.render('index', data);
     });
 
@@ -47,7 +53,7 @@ module.exports = function (app) {
 
         data = dictionaries[lang];
         data.facebook = false;
-
+        data.env = env;
         res.render('index', data);
     });
 };

@@ -579,8 +579,8 @@ directive('pagination', ['$rootScope', function ($rootScope) {
     };
 }]).
 
-directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'googleClientId',
-    function ($window, $filter, host, facebookRedirectUri, googleClientId) {
+directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClientId',
+    function ($window, $filter, host, facebookAppId, googleClientId) {
         return {
             restrict: 'A',
             scope: {
@@ -625,8 +625,8 @@ directive('share', ['$window', '$filter', 'host', 'facebookRedirectUri', 'google
 
                     FB.ui({
                         method: 'feed',
-                        redirect_uri: facebookRedirectUri,
-                        link: facebookRedirectUri,
+                        redirect_uri: 'https://apps.facebook.com/' + facebookAppId,
+                        link: 'https://apps.facebook.com/' + facebookAppId,
                         picture: 'https://' + host + '/images/' + scope.picture,
                         name: scope.title,
                         caption: scope.caption,

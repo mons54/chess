@@ -21,18 +21,18 @@ constant('host', 'www.worldofchess.online').
  * Available languages
  */
 constant('languages', {
-'ar': "‏العربية‏",
-'de': "Deutsch",
-'en': "English",
-'es': "Español",
-'fr': "Français",
-'it': "Italiano",
-'ja': "日本語",
-'nl': "Nederlands",
-'pt': "Português",
-'ru': "Русский",
-'tr': "Türkçe",
-'zh': "中文"
+    ar: "‏العربية‏",
+    de: "Deutsch",
+    en: "English",
+    es: "Español",
+    fr: "Français",
+    it: "Italiano",
+    ja: "日本語",
+    nl: "Nederlands",
+    pt: "Português",
+    ru: "Русский",
+    tr: "Türkçe",
+    zh: "中文"
 }).
 
 constant('patterns', window.utils.patterns).
@@ -44,12 +44,11 @@ constant('patterns', window.utils.patterns).
  * Utils methods
  * @requires $rootScope
  * @requires $filter
- * @requires facebook.constant:facebookRedirectUri
  * @requires global.constant:host
  */
-factory('utils', ['$rootScope', '$filter', '$window', 'host', 'facebookRedirectUri',
+factory('utils', ['$rootScope', '$filter', '$window', 'host',
     
-    function ($rootScope, $filter, $window, host, facebookRedirectUri) {
+    function ($rootScope, $filter, $window, host) {
 
         return {
 
@@ -68,42 +67,6 @@ factory('utils', ['$rootScope', '$filter', '$window', 'host', 'facebookRedirectU
 
             /**
              * @ngdoc function
-             * @name #share
-             * @methodOf global.service:utils
-             * @description
-             * Share on facebook
-             * @param {string} caption The description to share
-             */
-            share: function (data) {
-
-                if (!data.picture) {
-                    data.picture = 'logo.png';
-                }
-
-                if (!data.name) {
-                    data.name = $filter('translate')('title');
-                }
-
-                if (!data.description) {
-                    data.description = $filter('translate')('description');
-                }
-
-                if (!data.caption) {
-                    data.caption = $filter('translate')('title');
-                }
-
-                FB.ui({
-                    method: 'feed',
-                    redirect_uri: facebookRedirectUri,
-                    link: facebookRedirectUri,
-                    picture: 'https://' + host + '/images/' + data.picture,
-                    name: data.name,
-                    caption: data.caption,
-                    description: data.description
-                });
-            },
-            /**
-             * @ngdoc function
              * @name #inviteFriends
              * @methodOf global.service:utils
              * @description
@@ -115,17 +78,6 @@ factory('utils', ['$rootScope', '$filter', '$window', 'host', 'facebookRedirectU
                     title: $filter('translate')('title'),
                     message: $filter('translate')('description')
                 });
-            },
-            /**
-             * @ngdoc function
-             * @name #isTouch
-             * @methodOf global.service:utils
-             * @description
-             * Check if device has touch
-             * @returns {bool} has touch
-             */
-            isTouch: function () {
-                return 'ontouchstart' in $window || navigator.msMaxTouchPoints;
             }
         };
     }
