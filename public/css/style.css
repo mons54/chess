@@ -2840,10 +2840,13 @@ a {
   }
 
   .app-logo__text {
+    display: inline-block;
     font-weight: normal;
     font-size: 20px;
     text-transform: initial;
     line-height: 36px;
+    height: 36px;
+    overflow: hidden;
     margin-left: 0;
   }
 
@@ -3142,13 +3145,14 @@ a {
   }
 
   .app-profile__more {
-    margin: 8px 0;
+    margin: 8px 0 0 0;
   }
 
   .app-profile__more .app-button {
     min-width: initial;
     margin-right: 4px;
-    padding: 0 12px;
+    padding: 0 8px;
+    margin-bottom: 8px;
   }
 
   .app-card__profile-title {

@@ -43,6 +43,8 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
 
         socket.once('profile', function (data) {
 
+            $rootScope.title = data.name;
+
             $scope.profile = data;
 
             var userTrophies = data.trophies || {};

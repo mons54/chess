@@ -378,7 +378,6 @@ config(['$routeProvider', '$locationProvider',
         $routeProvider
         .when('/', {
             name : 'home',
-            title: 'home',
             templateUrl: '/app/home/templates/home.html',
             controller: 'homeCtrl'
         })
