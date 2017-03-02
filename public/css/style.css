@@ -978,10 +978,6 @@ a {
   margin-right: 8px;
 }
 
-.app-profile__link {
-  float: right;
-}
-
 .app-profile--challenger {
   height: auto;
   margin: 32px 0 12px 0;
@@ -3148,9 +3144,7 @@ a {
 
   .app-profile__more .app-button {
     min-width: initial;
-    margin-right: 4px;
-    padding: 0 8px;
-    margin-bottom: 8px;
+    padding: 0 12px;
   }
 
   .app-card__profile-title {
