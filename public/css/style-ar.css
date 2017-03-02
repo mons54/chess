@@ -280,9 +280,14 @@
   text-align: left;
 }
 
-.app-profile__action {
-  right: initial;
-  left: 24px;
+.app-card__profile-avatar {
+  left: initial;
+  right: 32px;
+}
+
+.app-card__profile-title .app-profile__action {
+   left: 16px;
+   right: initial;
 }
 
 .app-profile__card-avatar {
@@ -293,6 +298,20 @@
 .app-profile__avatar {
   margin-right: 0;
   margin-left: 10px;
+}
+
+.app-profile__game-content {
+  margin-right: 256px;
+  margin-left: 0;
+}
+
+.app-profile__game-type .app-icon {
+    margin-left: 0;
+    margin-right: 4px;
+}
+
+.app-profile__game-type .app-icon:first-child {
+    margin-right: 0;
 }
 
 .app-modal__close {
@@ -654,6 +673,13 @@
   }
 }
 
+@media screen and (max-width: 799px) {
+  .app-profile__game-content {
+    margin-left: 0;
+    margin-right: calc(33% + 8px);
+  } 
+}
+
 @media (min-width: 600px) {
   .app-create-game__choices .app-button:nth-of-type(4n + 4) {
     margin-left: 0; 
@@ -689,6 +715,15 @@
 }
 
 @media screen and (max-width: 599px) {
+  
+  .app-card__profile-stats {
+    margin: 0 8px;
+    max-width: 100%;
+  }
+
+  .app-profile__game-content {
+    margin-right: 0;
+  }
 
   .app-profile__action {
     right: initial;
