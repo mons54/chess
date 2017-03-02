@@ -29,7 +29,7 @@
                 </div>
                 <p class="app-trophy__desc">{{ 'trophies.content.' + trophy.id + '.description' | translate }}</p>
             </div>
-            <div ng-if="trophy.value === 100" class="app-share" share="shareData"></div>
+            <div ng-if="share && trophy.value === 100" class="app-share" share="shareData"></div>
         </div>
     </div>
 </div>

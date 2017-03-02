@@ -322,12 +322,20 @@ module.exports = function (app, io) {
             }
         });
 
-        socket.on('profile', function (data) {
-            if (!moduleSocket.checkSocket(socket) || !data || !data.uid) {
+        socket.on('profile', function (uid) {
+            if (!moduleSocket.checkSocket(socket)) {
                 return;
             }
 
-            moduleSocket.profile(socket, data);
+            moduleSocket.profile(socket, uid);
+        });
+
+        socket.on('profileGames', function (data) {
+            if (!moduleSocket.checkSocket(socket)) {
+                return;
+            }
+
+            moduleSocket.profileGames(socket, data);
         });
 
         socket.on('ranking', function (data) {

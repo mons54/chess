@@ -94,11 +94,15 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
                 }
 
                 $rootScope.$on('trophies', function (event, data) {
+                    
                     if (load) {
                         return;
                     }
+
                     load = true;
-                    show(data);
+                    scope.share = data.share;
+                    
+                    show(data.trophies);
                 });
             }
         };

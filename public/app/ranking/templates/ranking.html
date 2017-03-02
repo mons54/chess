@@ -30,7 +30,7 @@
     </div>
     <table class="app-table app-table--ranking mdl-data-table mdl-js-data-table">
         <tbody>
-            <tr ng-repeat="rank in ranking" show-profile="rank" ng-class="{'is-user': rank.uid === user.uid }">
+            <tr ng-repeat="rank in ranking" show-profile="rank.uid" ng-class="{'is-user': rank.uid === user.uid }">
                 <td class="app-table__rank mdl-data-table__cell--non-numeric">{{ rank.position }}</td>
                 <td class="app-table__user mdl-data-table__cell--non-numeric">
                     <img avatar

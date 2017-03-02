@@ -14,7 +14,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="game in createdGames"
-                    show-profile="game">
+                    show-profile="game.uid">
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
                         <img avatar
                              class="app-table__avatar" 
@@ -62,7 +62,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="favorite in favorites"
-                    show-profile="favorite" >
+                    show-profile="favorite.uid" >
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
                         <img avatar
                              class="app-table__avatar" 
@@ -104,7 +104,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="challenger in challengers"
-                    show-profile="challenger">
+                    show-profile="challenger.uid">
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
                         <img avatar
                              class="app-table__avatar" 

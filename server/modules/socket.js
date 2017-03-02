@@ -756,17 +756,23 @@ module.exports = function (io) {
         io.sockets.to('home').emit('challengers', challengers);
     };
 
-    Module.prototype.profile = function (socket, data) {
+    Module.prototype.profile = function (socket, uid) {
 
-        var objectId = db.objectId(data.uid);
+        var objectId = db.objectId(uid);
 
         if (!objectId) {
             return;
         }
 
-        db.findOne('users', { _id: objectId }, 'blitz rapid facebookId')
+        var data = {
+            uid: uid
+        };
+
+        db.findOne('users', { _id: objectId }, 'name avatar blitz rapid facebookId trophies')
         .then(function (response) {
 
+            data.name = response.name;
+            data.avatar = response.avatar;
             data.facebookId = response.facebookId;
 
             data.blitz = {
@@ -776,6 +782,8 @@ module.exports = function (io) {
             data.rapid = {
                 points: response.rapid
             };
+
+            data.trophies = response.trophies;
 
             return db.all([
                 db.count('users', {
@@ -791,9 +799,9 @@ module.exports = function (io) {
                     },
                     {
                         $or: [{
-                            white: data.uid
+                            white: uid
                         }, {
-                            black: data.uid
+                            black: uid
                         }]
                     }]
                 }),
@@ -803,10 +811,10 @@ module.exports = function (io) {
                     },
                     {
                         $or: [{
-                            white: data.uid,
+                            white: uid,
                             result: 1
                         }, {
-                            black: data.uid,
+                            black: uid,
                             result: 2
                         }]
                     }]
@@ -817,10 +825,10 @@ module.exports = function (io) {
                     },
                     {
                         $or: [{
-                            white: data.uid,
+                            white: uid,
                             result: 0
                         }, {
-                            black: data.uid,
+                            black: uid,
                             result: 0
                         }]
                     }]
@@ -838,9 +846,9 @@ module.exports = function (io) {
                     },
                     {
                         $or: [{
-                            white: data.uid
+                            white: uid
                         }, {
-                            black: data.uid
+                            black: uid
                         }]
                     }]
                 }),
@@ -850,10 +858,10 @@ module.exports = function (io) {
                     },
                     {
                         $or: [{
-                            white: data.uid,
+                            white: uid,
                             result: 1
                         }, {
-                            black: data.uid,
+                            black: uid,
                             result: 2
                         }]
                     }]
@@ -864,10 +872,10 @@ module.exports = function (io) {
                     },
                     {
                         $or: [{
-                            white: data.uid,
+                            white: uid,
                             result: 0
                         }, {
-                            black: data.uid,
+                            black: uid,
                             result: 0
                         }]
                     }]
@@ -888,6 +896,47 @@ module.exports = function (io) {
             data.rapid.losses = data.rapid.games - (data.rapid.wins + data.rapid.draws);
 
             socket.emit('profile', data);
+        });
+    };
+
+    Module.prototype.profileGames = function (socket, data) {
+
+        if (typeof data !== 'object' || typeof data.offset !== 'number') {
+            return;
+        }
+
+        var objectId = db.objectId(data.uid);
+
+        if (!objectId) {
+            return;
+        }
+
+        var request = [];
+
+        request.push(db.find('games', {
+            $or: [{
+                white: data.uid
+            }, {
+                black: data.uid
+            }]
+        }).sort({date: -1}).limit(10).skip(parseInt(data.offset)));
+
+        if (typeof data.count !== 'number') {
+            request.push(db.count('games', {
+                $or: [{
+                    white: data.uid
+                }, {
+                    black: data.uid
+                }]
+            }));
+        }
+
+        db.all(request).then(function (response) {
+            socket.emit('profileGames', {
+                games: response[0],
+                offset: data.offset + response[0].length,
+                count: response[1] ? response[1] : data.count
+            });
         });
     };
 

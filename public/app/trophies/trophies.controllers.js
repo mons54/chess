@@ -13,11 +13,15 @@ controller('trophiesCtrl', ['$rootScope', '$scope', '$timeout', 'socket',
     function ($rootScope, $scope, $timeout, socket) {
 
         $scope.openTrophy = function (trophy) {
-            var data = {};
+            
+            var trophies = {};
 
-            data[trophy.id] = trophy.value;
+            trophies[trophy.id] = trophy.value;
 
-            $rootScope.$emit('trophies', data);
+            $rootScope.$emit('trophies', {
+                share: true,
+                trophies: trophies
+            });
         };
 
         var userTrophies = $rootScope.user.trophies || {};

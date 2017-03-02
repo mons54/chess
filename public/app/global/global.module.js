@@ -585,6 +585,7 @@ service('translator', ['$rootScope', '$http', 'languages', function($rootScope, 
         }
     };
 }]).
+
 filter('translate', ['translator', function (translator) {
     
     function translate(value, params) {
@@ -595,8 +596,20 @@ filter('translate', ['translator', function (translator) {
 
     return translate;
 }]).
+
 filter('relativeNumber', function () {
     return function (value) {
         return value > 0 ? '+' + value : value;
     };
+}).
+
+filter('localeDateTime', function () {
+    return function (value) {
+        var date = new Date(value);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString(navigator.language, {
+            hour: '2-digit', 
+            minute:'2-digit'
+        });
+    };
 });
+

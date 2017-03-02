@@ -1,0 +1,32 @@
+<div class="app-profile__info-game">
+    <div class="app-profile__info-title">
+        {{ gameType|translate }}
+        <div class="app-profile__info app-profile__info--game app-profile__info--rapid" title="{{ gameType|translate }}">
+            <i class="app-icon material-icons" ng-bind="gameType === 'blitz' ? 'flash_on' : 'timer'"></i>
+            <div class="app-profile__info-content app-profile__info-content--points" title="{{ 'points'|translate }}">
+                {{ gameData.points }}
+            </div>
+            <div class="app-profile__info-content app-profile__info-content--ranking" title="{{ 'ranking'|translate }}">
+                <i class="app-icon material-icons">equalizer</i>
+                {{ gameData.ranking | number }}
+            </div>
+        </div>
+    </div>
+    <div class="app-profile__stats">
+        <div ng-repeat="stat in stats" class="app-profile__stat app-profile__stat--{{ stat.name }}">
+            <div progress-bar-profile 
+                 value="stat.data" 
+                 color="{{ stat.color }}"
+                 class="app-profile__progress-bar" ></div>
+                <div class="app-profile__stat-text">
+                    <span class="app-profile__stat-value">
+                        {{ stat.value }}
+                    </span>
+                    <span class="app-profile__stat-desc">
+                        {{ stat.name|translate }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

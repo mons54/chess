@@ -1,0 +1,40 @@
+<div id="modal-profile" 
+     class="app-modal app-modal--profile app-modal__bg" 
+     role="dialog" 
+     aria-hidden="true"
+     data-modal
+     modal-close-bg>
+    <div class="app-modal__dialog app-modal__dialog--head">
+        <a ng-hide="loadGame" href modal-close class="app-modal__close">
+            <i class="material-icons">clear</i>
+        </a>
+        <div class="app-modal__head">
+            <div class="app-profile__card-avatar">
+                <img avatar class="app-avatar" ng-src="{{ profile.avatar }}">
+            </div>
+            {{ profile.name }}
+        </div>
+        <div class="app-modal__content">
+            <profile-actions></profile-actions>
+            <profile-game ng-if="profile" game-type="'blitz'" game-data="profile.blitz"></profile-game>
+            <profile-game ng-if="profile" game-type="'rapid'" game-data="profile.rapid"></profile-game>
+            <div class="app-profile__more">
+                <a modal-close
+                   ng-href="/profile/{{ profile.uid }}#games" 
+                   class="app-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                   ng-bind="'games'|translate">
+                </a>
+                <a modal-close
+                   ng-href="/profile/{{ profile.uid }}#trophies" 
+                   class="app-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                   ng-bind="'trophies'|translate">
+                </a>
+                <a modal-close
+                   ng-href="/profile/{{ profile.uid }}"
+                   class="app-profile__link mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                    <i class="app-icon material-icons">more_horiz</i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
