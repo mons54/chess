@@ -42,7 +42,7 @@
     <ng-include src="'/app/profile/templates/game.html'"></ng-include>
 </div>
 
-<div ng-show="loadGames" class="app-profile__game-spinner">
+<div ng-show="games.blitz.load || games.rapid.load" class="app-profile__game-spinner">
     <div data-spinner class="mdl-spinner mdl-js-spinner is-active"></div>
 </div>
 

@@ -128,7 +128,6 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
 
         if ($scope.menu.indexOf($location.hash()) === -1) {
             $location.hash('blitz');
-            return;
         }
 
         $scope.$watch(function () {
