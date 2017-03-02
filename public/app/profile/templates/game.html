@@ -41,15 +41,19 @@
             <span ng-if="game.data.result.value === null">?-?</span>
         </div>
 
-        <div class="app-profile__game-player"
-             ng-click="$event.stopPropagation()"
-             show-profile="game.data.white.uid">
-            <span class="app-profile__game-name">
+        <div class="app-profile__game-player">
+            <span ng-click="$event.stopPropagation()"
+                  show-profile="game.data.white.uid"
+                  class="app-profile__game-name">
                 {{ game.data.white.name }}
             </span>
             <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.white.isWinner}">
                 <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
-                <img avatar class="app-avatar" ng-src="{{ game.data.white.avatar }}">
+                <img avatar 
+                     ng-click="$event.stopPropagation()"
+                     show-profile="game.data.white.uid"
+                     class="app-avatar" 
+                     ng-src="{{ game.data.white.avatar }}">
                 <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
             </div>
             <div class="app-profile__game-points">
@@ -60,15 +64,19 @@
                 </span>
             </div>
         </div>
-        <div class="app-profile__game-player"
-             ng-click="$event.stopPropagation()"
-             show-profile="game.data.black.uid">
-            <span class="app-profile__game-name">
+        <div class="app-profile__game-player">
+            <span ng-click="$event.stopPropagation()"
+                  show-profile="game.data.black.uid"
+                  class="app-profile__game-name">
                   {{ game.data.black.name }}
             </span>
             <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.black.isWinner}">
                 <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
-                <img avatar class="app-avatar" ng-src="{{ game.data.black.avatar }}">
+                <img avatar 
+                     ng-click="$event.stopPropagation()"
+                     show-profile="game.data.black.uid"
+                     class="app-avatar" 
+                     ng-src="{{ game.data.black.avatar }}">
                 <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
             </div>
             <div class="app-profile__game-points">
