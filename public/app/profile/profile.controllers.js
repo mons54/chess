@@ -8,9 +8,9 @@ angular.module('profile').
  * @requires $rootScope
  * @requires $scope
  */
-controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$location', '$timeout', '$anchorScroll', 'socket',
+controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$location', '$timeout', '$anchorScroll', 'socket', 'user',
     
-    function ($rootScope, $scope, $routeParams, $window, $location, $timeout, $anchorScroll, socket) {
+    function ($rootScope, $scope, $routeParams, $window, $location, $timeout, $anchorScroll, socket, user) {
 
         $rootScope.loading = true;
 
@@ -51,13 +51,19 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
 
         }, $scope);
 
+        $scope.colorGame = user.getColorGame();
+
+        $rootScope.$watch('user.colorGame', function (value) {
+            if (value) {
+                $scope.colorGame = value;;
+            }
+        });
+
         $scope.games = [];
 
         socket.on('profileGames', function (data) {
 
             angular.forEach(data.games, function (game) {
-
-                console.log(game.data.result.value)
 
                 if (game.data.result.value === 1) {
                     game.data.white.isWinner = true;

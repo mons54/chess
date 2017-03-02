@@ -30,7 +30,7 @@
      class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
      ng-repeat="game in games track by $index">
     <div ng-click="goGame(game._id)" class="app-profile__game">
-        <div class="app-profile__game-board">
+        <div class="app-profile__game-board app-game__board--{{ colorGame }}">
             <div ng-repeat="number in numbers" class="app-game__row">
                 <div 
                     ng-repeat="letter in letters" 
