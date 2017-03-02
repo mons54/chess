@@ -971,7 +971,7 @@ a {
 
 .app-profile__more {
   position: relative;
-  margin: 16px 8px 0 8px;
+  margin: 16px 0 0;
 }
 
 .app-profile__more .app-button {
@@ -1021,6 +1021,10 @@ a {
 
 .app-card__profile-actions .app-button.is-active {
   color: #795548;
+}
+
+.app-card__profile-stats {
+  margin: 16px;
 }
 
 .app-avatar {
@@ -1136,7 +1140,7 @@ a {
 }
 
 .app-profile__info-game {
-  margin: 8px;
+  margin: 8px 0;
 }
 
 .app-profile__stats {
@@ -1242,10 +1246,6 @@ a {
 
 .app-profile__game-result-text {
   margin-bottom: 4px;
-}
-
-.app-profile__game-infos {
-  padding-bottom: 12px;
 }
 
 .app-profile__game-type {
@@ -3134,15 +3134,6 @@ a {
   
   .app-profile__info-game {
     margin: 8px 0;
-  }
-
-  .app-profile__more {
-    margin: 8px 0 0 0;
-  }
-
-  .app-profile__more .app-button {
-    min-width: initial;
-    padding: 0 12px;
   }
 
   .app-card__profile-title {
