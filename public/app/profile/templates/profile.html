@@ -11,7 +11,7 @@
            ng-click="showMenu(value)" 
            class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
            ng-class="{'is-active': activeMenu === value}">
-            {{ value|translate }}
+            {{ value === 'trophies' ? 'trophies.title' : value | translate }}
         </a>
     </div>
 </div>
