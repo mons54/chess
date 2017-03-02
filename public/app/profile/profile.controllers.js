@@ -91,7 +91,7 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
                 $scope.games.push(game);
             });
 
-            if (data.offset === 0) {
+            if (!$scope.offsetGames) {
                 scroll('games');
             }
 
