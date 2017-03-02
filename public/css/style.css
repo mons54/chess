@@ -3184,6 +3184,11 @@ a {
     height: 24px;
   }
 
+  .app-card__profile-stats {
+    max-width: 100%;
+    margin: 0 8px;
+  }
+
   .app-profile__game-board {
     display: none;
   }
@@ -3195,6 +3200,10 @@ a {
 
   .app-profile__game-type {
     font-size: 13px;
+  }
+
+  .app-profile__game-result {
+    margin: 8px 0;
   }
 
   .app-profile__game-avatar {

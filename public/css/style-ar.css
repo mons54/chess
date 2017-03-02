@@ -719,11 +719,6 @@
 }
 
 @media screen and (max-width: 599px) {
-  
-  .app-card__profile-stats {
-    margin: 0 8px;
-    max-width: 100%;
-  }
 
   .app-profile__game-content {
     margin-right: 0;
