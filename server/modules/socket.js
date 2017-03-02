@@ -901,7 +901,8 @@ module.exports = function (io) {
 
     Module.prototype.profileGames = function (socket, data) {
 
-        if (typeof data !== 'object' || typeof data.offset !== 'number') {
+        if (typeof data !== 'object' || 
+            typeof data.offset !== 'number') {
             return;
         }
 
@@ -911,9 +912,11 @@ module.exports = function (io) {
             return;
         }
 
-        var request = [];
+        var type = data.type === 'rapid' ? 'rapid' : 'blitz',
+            request = [];
 
         request.push(db.find('games', {
+            type: type,
             $or: [{
                 white: data.uid
             }, {
@@ -923,6 +926,7 @@ module.exports = function (io) {
 
         if (typeof data.count !== 'number') {
             request.push(db.count('games', {
+                type: type,
                 $or: [{
                     white: data.uid
                 }, {
@@ -933,6 +937,7 @@ module.exports = function (io) {
 
         db.all(request).then(function (response) {
             socket.emit('profileGames', {
+                type: type,
                 games: response[0],
                 offset: data.offset + response[0].length,
                 count: response[1] ? response[1] : data.count

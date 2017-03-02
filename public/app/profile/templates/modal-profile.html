@@ -21,9 +21,14 @@
             <div ng-if="!user.gid" 
                  class="app-profile__more">
                 <a modal-close
-                   ng-href="/profile/{{ profile.uid }}#games" 
+                   ng-href="/profile/{{ profile.uid }}#blitz" 
                    class="app-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-                   ng-bind="'games'|translate">
+                   ng-bind="'blitz'|translate">
+                </a>
+                <a modal-close
+                   ng-href="/profile/{{ profile.uid }}#rapid" 
+                   class="app-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+                   ng-bind="'rapid'|translate">
                 </a>
                 <a modal-close
                    ng-href="/profile/{{ profile.uid }}#trophies" 

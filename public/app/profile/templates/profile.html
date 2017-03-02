@@ -6,113 +6,40 @@
             <img avatar class="app-avatar" ng-src="{{ profile.avatar }}">
         </div>
     </div>
-    <div class="app-card__profile-stats">
-        <profile-game ng-if="profile.blitz" game-type="'blitz'" game-data="profile.blitz"></profile-game>
-        <profile-game ng-if="profile.rapid" game-type="'rapid'" game-data="profile.rapid"></profile-game>
-    </div>
-    <div id="games"></div>
-    <div id="trophies"></div>
     <div class="app-card__profile-actions mdl-card__actions mdl-card--border">
-        <a ng-click="showMenu('games')" 
+        <a ng-repeat="value in menu"
+           ng-click="showMenu(value)" 
            class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
-           ng-class="{'is-active': activeMenu === 'games'}">
-            {{ 'games'|translate }}
-        </a>
-        <a ng-click="showMenu('trophies')" 
-           class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
-           ng-class="{'is-active': activeMenu === 'trophies'}">
-            {{ 'trophies.title'|translate }}
+           ng-class="{'is-active': activeMenu === value}">
+            {{ value|translate }}
         </a>
     </div>
 </div>
 
-<div ng-show="activeMenu === 'games'"
-     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
-     ng-repeat="game in games track by $index">
-    <div ng-click="goGame(game._id)" class="app-profile__game">
-        <div class="app-profile__game-board app-game__board--{{ colorGame }}">
-            <div ng-repeat="number in numbers" class="app-game__row">
-                <div 
-                    ng-repeat="letter in letters" 
-                    ng-init="position = letter + number" 
-                    ng-class="{'last-turn': isLastTurn(position), 'is-check': isCheck(position) }"
-                    class="app-game__box"
-                    data-game-box>
-                    <div class="app-game__box-content">
-                        <span ng-if="game.data.pieces[position]" class="app-game__piece">
-                            <img ng-src="../images/game-1/{{ game.data.pieces[position].name }}-{{ game.data.pieces[position].color }}.svg"
-                                 class="app-game__piece-image app__no-drag">
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="app-profile__game-content">
-            <div class="app-profile__game-infos">
-                <div class="app-profile__game-type">
-                    <i class="app-icon material-icons">{{ game.data.type === 'blitz' ? 'flash_on' : 'timer' }}</i>
-                    <span>{{ game.data.type | translate }}</span>
-                    <i class="app-icon material-icons">schedule</i>
-                    <span>{{ game.data.time / 60000 }} + {{ game.data.increment / 1000 }}</span>
-                    <i ng-if="game.data.result.value !== null" class="app-icon material-icons">games</i>
-                    {{ game.data.result.name | translate }}
-                </div>
-                <div class="app-profile__game-date">
-                    <i class="app-icon material-icons">today</i>
-                    <span>{{ game.data.startTime|localeDateTime }}</span>
-                </div>
-            </div>
-            <div class="app-profile__game-result"
-                 ng-class="{
-                    'app-text__positive': game.data.white.uid === profile.uid && game.data.white.isWinner || game.data.black.uid === profile.uid && game.data.black.isWinner,
-                    'app-text__negative': game.data.white.uid === profile.uid && game.data.black.isWinner || game.data.black.uid === profile.uid && game.data.white.isWinner 
-                 }">
-                <span ng-if="game.data.result.value === 1">1-0</span>
-                <span ng-if="game.data.result.value === 0">½-½</span>
-                <span ng-if="game.data.result.value === 2">0-1</span>
-                <span ng-if="game.data.result.value === null">?-?</span>
-            </div>
-
-            <div class="app-profile__game-player"
-                 ng-click="$event.stopPropagation()"
-                 show-profile="game.data.white.uid">
-                <span class="app-profile__game-name">
-                    {{ game.data.white.name }}
-                </span>
-                <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.white.isWinner}">
-                    <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
-                    <img avatar class="app-avatar" ng-src="{{ game.data.white.avatar }}">
-                    <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
-                </div>
-                <div class="app-profile__game-points">
-                    {{ game.data.white.points }} 
-                    <span class="app-profile__game-player-points-add"
-                          ng-class="{'app-text__positive': game.data.white.resultPoints > 0, 'app-text__negative': game.data.white.resultPoints < 0 }">
-                        {{ game.data.white.resultPoints | relativeNumber }}
-                    </span>
-                </div>
-            </div>
-            <div class="app-profile__game-player"
-                 ng-click="$event.stopPropagation()"
-                 show-profile="game.data.black.uid">
-                <span class="app-profile__game-name">
-                      {{ game.data.black.name }}
-                </span>
-                <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.black.isWinner}">
-                    <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
-                    <img avatar class="app-avatar" ng-src="{{ game.data.black.avatar }}">
-                    <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
-                </div>
-                <div class="app-profile__game-points">
-                    {{ game.data.black.points }} 
-                    <span class="app-profile__game-player-points-add"
-                          ng-class="{'app-text__positive': game.data.black.resultPoints > 0, 'app-text__negative': game.data.black.resultPoints < 0 }">
-                        {{ game.data.black.resultPoints | relativeNumber }}
-                    </span>
-                </div>
-            </div>
-        </div>
+<div ng-if="profile.blitz && activeMenu === 'blitz'" 
+     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div class="app-card__profile-stats">
+        <profile-game game-type="'blitz'" game-data="profile.blitz"></profile-game>
     </div>
+</div>
+
+<div ng-show="activeMenu === 'blitz'"
+     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
+     ng-repeat="game in games.blitz.data track by $index">
+    <ng-include src="'/app/profile/templates/game.html'"></ng-include>
+</div>
+
+<div ng-if="profile.rapid && activeMenu === 'rapid'" 
+     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+    <div class="app-card__profile-stats">
+        <profile-game game-type="'rapid'" game-data="profile.rapid"></profile-game>
+    </div>
+</div>
+
+<div ng-show="activeMenu === 'rapid'"
+     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
+     ng-repeat="game in games.rapid.data track by $index">
+    <ng-include src="'/app/profile/templates/game.html'"></ng-include>
 </div>
 
 <div ng-show="loadGames" class="app-profile__game-spinner">
