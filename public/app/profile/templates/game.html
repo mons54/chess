@@ -17,16 +17,16 @@
         </div>
     </div>
     <div class="app-profile__game-content">
+        <div class="app-profile__game-date">
+            <i class="app-icon material-icons">today</i>
+            <span>{{ game.data.startTime|localeDateTime }}</span>
+        </div>
         <div class="app-profile__game-infos">
             <div class="app-profile__game-type">
                 <i class="app-icon material-icons">{{ game.data.type === 'blitz' ? 'flash_on' : 'timer' }}</i>
                 <span>{{ game.data.type | translate }}</span>
                 <i class="app-icon material-icons">schedule</i>
                 <span>{{ game.data.time / 60000 }} + {{ game.data.increment / 1000 }}</span>
-            </div>
-            <div class="app-profile__game-date">
-                <i class="app-icon material-icons">today</i>
-                <span>{{ game.data.startTime|localeDateTime }}</span>
             </div>
         </div>
         <div class="app-profile__game-result"

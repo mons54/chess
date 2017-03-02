@@ -305,7 +305,7 @@
 }
 
 .app-profile__game-content {
-  margin-right: 256px;
+  margin-right: 8px;
   margin-left: 0;
 }
 
@@ -316,6 +316,10 @@
 
 .app-profile__game-type .app-icon:first-child {
     margin-right: 0;
+}
+
+.app-profile__game-date {
+  float: left;
 }
 
 .app-modal__close {
@@ -677,12 +681,6 @@
   }
 }
 
-@media screen and (max-width: 799px) {
-  .app-profile__game-content {
-    margin-left: 0;
-    margin-right: calc(33% + 8px);
-  } 
-}
 
 @media (min-width: 600px) {
   .app-create-game__choices .app-button:nth-of-type(4n + 4) {

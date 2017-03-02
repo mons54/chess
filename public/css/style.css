@@ -1237,15 +1237,16 @@ a {
 }
 
 .app-profile__game-content {
-  margin-left: 256px;
   width: 472px;
+  margin-left: 8px;
+  display: inline-block;
 }
 
 .app-profile__game-result {
   text-align: center;
   font-size: 16px;
   font-weight: 700;
-  padding-bottom: 8px;
+  padding: 8px 0;
 }
 
 .app-profile__game-result-text {
@@ -1264,6 +1265,7 @@ a {
 
 .app-profile__game-date {
   font-size: 12px;
+  float: right;
 }
 
 .app-profile__game-date .app-icon {
@@ -2957,7 +2959,7 @@ a {
   }
 
   .app-profile__game-content {
-    margin-left: calc(33% + 8px);
+    /* margin-left: calc(33% + 8px); */
     width: calc(100% - 33% - 8px);
   }
 
@@ -2973,6 +2975,7 @@ a {
   .app-profile__game-result {
     font-size: 15px;
     padding-bottom: 0;
+    padding: 16px 0 8px 0;
     line-height: 16px;
   }
   
@@ -3203,7 +3206,7 @@ a {
   }
 
   .app-profile__game-result {
-    margin: 8px 0;
+    padding: 12px 0 4px 0;
   }
 
   .app-profile__game-avatar {
