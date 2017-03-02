@@ -18,7 +18,8 @@
             <profile-actions></profile-actions>
             <profile-game ng-if="profile" game-type="'blitz'" game-data="profile.blitz"></profile-game>
             <profile-game ng-if="profile" game-type="'rapid'" game-data="profile.rapid"></profile-game>
-            <div class="app-profile__more">
+            <div ng-if="!user.gid" 
+                 class="app-profile__more">
                 <a modal-close
                    ng-href="/profile/{{ profile.uid }}#games" 
                    class="app-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent"

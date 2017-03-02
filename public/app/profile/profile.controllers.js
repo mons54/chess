@@ -144,7 +144,8 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
 
         $('.app-content').on('scroll', function () {
 
-            if ($scope.activeMenu !== 'games' || 
+            if ($scope.activeMenu !== 'games' ||
+                !$scope.offsetGames ||
                 $scope.offsetGames >= $scope.countGames ||
                 $scope.loadGames ||
                 this.scrollTop + this.offsetHeight + $('.app-footer').height() < this.scrollHeight) {
