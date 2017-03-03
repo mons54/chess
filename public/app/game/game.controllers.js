@@ -33,7 +33,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.$on('$destroy', function() {
             if ($scope.game && !$scope.game.archived) {
-                socket.emit('leaveGame', $routeParams.id);
+                socket.emit('leaveGame', $scope.game.id);
             }
             cancelInterval();
             delete $rootScope.isGame;
