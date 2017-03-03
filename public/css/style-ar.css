@@ -290,10 +290,6 @@
    right: initial;
 }
 
-.app-profile__link {
-  float: left;
-}
-
 .app-profile__card-avatar {
   left: initial;
   right: 60px;
