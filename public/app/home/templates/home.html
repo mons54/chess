@@ -1,9 +1,9 @@
 <div element class="app-element app-element--created-games mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <element-toggle name="'games'" collection="createdGames"></element-toggle>
     <div element-content 
-         ng-show="createdGames.length"
          class="app-element__body">
-        <table class="app-table mdl-data-table mdl-js-data-table">
+        <table ng-show="createdGames.length" 
+               class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
                     <th></th>
