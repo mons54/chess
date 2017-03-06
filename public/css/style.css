@@ -971,7 +971,7 @@ a {
 
 .app-profile__more {
   position: relative;
-  margin: 16px 0 0;
+  padding-top: 8px;
 }
 
 .app-profile__more .app-button {
@@ -1024,7 +1024,7 @@ a {
 }
 
 .app-card__profile-stats {
-  margin: 16px;
+  padding: 8px 16px;
 }
 
 .app-avatar {
@@ -3131,6 +3131,11 @@ a {
 }
 
 @media screen and (max-width: 599px) {
+
+  .app-profile__more .app-button {
+    min-width: initial;
+    margin-bottom: 8px;
+  }
   
   .app-profile__info-game {
     margin: 8px 0;
@@ -3166,7 +3171,7 @@ a {
   }
 
   .app-card__profile-stats {
-    margin: 0 8px;
+    padding: 0 8px;
   }
 
   .app-profile__game-board {
@@ -3562,7 +3567,11 @@ a {
 @media screen and (max-width: 479px) {
 
   .mdl-grid {
-    padding: 8px 0;
+    padding: 4px 0 8px 0;
+  }
+
+  .mdl-grid .mdl-cell {
+    margin: 4px 8px;
   }
 
   .mdl-data-table th {

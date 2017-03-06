@@ -175,6 +175,9 @@ directive('profileGame', ['$rootScope', 'socket', 'modal',
                 }
 
                 scope.$watchCollection('gameData', function (value) {
+                    if (!value) {
+                        return;
+                    }
                     scope.stats = [];
                     angular.forEach(['wins', 'draws', 'losses'], function (name) {
                         scope.stats.push(getData(value, name, attrs.gameType));

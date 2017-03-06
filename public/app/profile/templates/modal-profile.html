@@ -16,9 +16,9 @@
         </div>
         <div class="app-modal__content">
             <profile-actions></profile-actions>
-            <profile-game ng-if="profile" game-type="'blitz'" game-data="profile.blitz"></profile-game>
-            <profile-game ng-if="profile" game-type="'rapid'" game-data="profile.rapid"></profile-game>
-            <div ng-if="!user.gid" 
+            <profile-game game-type="'blitz'" game-data="profile.blitz"></profile-game>
+            <profile-game game-type="'rapid'" game-data="profile.rapid"></profile-game>
+            <div ng-if="!user.gid"
                  class="app-profile__more">
                 <a modal-close
                    ng-href="/profile/{{ profile.uid }}#blitz" 

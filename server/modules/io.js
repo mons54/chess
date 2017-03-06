@@ -231,6 +231,13 @@ module.exports = function (app, io) {
             }
         });
 
+        socket.on('leaveGame', function (gid) {
+            if (typeof gid !== 'string') {
+                return;
+            }
+            socket.leave(moduleGame.getRoom(gid));
+        });
+
         socket.on('moveGame', function (data) {
             if (!moduleSocket.checkSocket(socket) || !data.id) {
                 return;
