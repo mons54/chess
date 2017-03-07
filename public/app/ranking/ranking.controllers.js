@@ -12,6 +12,8 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
     
     function ($rootScope, $scope, socket) {
 
+        $scope.type = 'blitz';
+
         $scope.$on('$destroy', function() {
             delete $rootScope.pages;
             delete $rootScope.loadRanking;
@@ -42,18 +44,17 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
         }, $scope);
 
         $rootScope.$on('page', function ($event, page) {
-            emit($scope.type, page);
+            emit(page);
         });
 
-        function emit(type, page) {
+        function emit(page) {
             if ($rootScope.loadRanking) {
                 return;
             }
             $rootScope.page = page;
             $rootScope.loadRanking = true;
-            $scope.type = type;
             socket.emit('ranking', {
-                type: type,
+                type: $scope.type,
                 page: page
             });
             return true;
@@ -63,17 +64,17 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             if ($rootScope.loadRanking) {
                 return;
             }
-            $scope.type = type + 'Top100';
             $rootScope.loadRanking = true;
             socket.emit('rankingTop100', type);
         };
 
         $scope.setType = function (type) {
-            emit(type);
+            $scope.type = type;
+            emit();
         };
 
         componentHandler.upgradeElement($('[data-spinner]')[0]);
 
-        emit('blitz');
+        emit();
     }
 ]);

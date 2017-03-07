@@ -285,9 +285,12 @@
   right: 32px;
 }
 
+.app-profile__action {
+  left: 24px;
+}
+
 .app-card__profile-title .app-profile__action {
-   left: 16px;
-   right: initial;
+  left: 16px;
 }
 
 .app-profile__card-avatar {
