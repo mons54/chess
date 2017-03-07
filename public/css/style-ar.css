@@ -286,12 +286,11 @@
 }
 
 .app-profile__action {
-  left: initial;
-  right: 24px;
+  right: initial;
+  left: 24px;
 }
 
 .app-card__profile-title .app-profile__action {
-  right: initial;
   left: 16px;
 }
 
