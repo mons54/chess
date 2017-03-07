@@ -291,6 +291,7 @@
 }
 
 .app-card__profile-title .app-profile__action {
+  right: initial;
   left: 16px;
 }
 
