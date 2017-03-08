@@ -449,7 +449,7 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                     if (value) {
 
                         if (!value.picture) {
-                            value.picture = 'logo.png';
+                            value.picture = 'logo-mini.png';
                         }
 
                         if (!value.name) {
