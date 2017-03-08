@@ -78,7 +78,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
                 if (!game.archived) {
                     $timeout(function () {
-                        $scope.shareResultData = getShareResultData(game);
                         modal('[modal-game]').hide();
                         modal('#modal-finish-game').show();
                         delete $rootScope.user.gid;
@@ -91,14 +90,19 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     game.white.isWinner = true;
                     game.white.resultPoints = $window.game.getPoints(game.white.points, game.black.points, 1, game.white.countGame);
                     game.black.resultPoints = $window.game.getPoints(game.black.points, game.white.points, 0, game.black.countGame);
+                    game.result.print = '1-0';
                 } else if (game.result.value === 2) {
                     game.black.isWinner = true;
                     game.white.resultPoints = $window.game.getPoints(game.white.points, game.black.points, 0, game.white.countGame);
                     game.black.resultPoints = $window.game.getPoints(game.black.points, game.white.points, 1, game.black.countGame);
+                    game.result.print = '0-1';
                 } else {
                     game.white.resultPoints = $window.game.getPoints(game.white.points, game.black.points, 0.5, game.white.countGame);
                     game.black.resultPoints = $window.game.getPoints(game.black.points, game.white.points, 0.5, game.black.countGame);
+                    game.result.print = '½-½';
                 }
+
+                shareResultData(game);
             }
 
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
@@ -460,19 +464,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $scope.colorGame = color;
         }
 
-        function getShareResultData(game) {
-
-            var description = $filter('translate')(game.result.name);
-
-            if (game.result.value === 1) {
-                description += ' - ' + $filter('translate')('winner') + ': ' + game.white.name;
-            } else if (game.result.value === 2) {
-                description += ' - ' + $filter('translate')('winner') + ': ' + game.black.name;
-            }
-
-            return {
-                title: game.white.name + ' ~ ' + game.black.name,
-                description: description
+        function shareResultData(game) {
+            $scope.shareResultData = {
+                title: $filter('translate')(game.type) + ' - ' + game.time / 60000 + '+' + game.increment / 1000 + ' - ' + $filter('translate')(game.result.name),
+                description: game.white.name + ' (' + game.white.points + ' ' + $filter('relativeNumber')(game.white.resultPoints) + ') ' + game.result.print + ' ' + game.black.name + ' (' + game.black.points + ' ' + $filter('relativeNumber')(game.black.resultPoints) + ')'
             };
         }
 

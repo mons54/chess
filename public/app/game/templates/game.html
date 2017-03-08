@@ -2,7 +2,7 @@
     <div profile-game player="player2"></div>
 </div>
 
-<div class="app-game__board app-game__board--{{ colorGame }} app-element mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div class="app-game__board app-game__board--{{ colorGame }} app-element mdl-shadow--2dp mdl-cell mdl-cell--12-col" game-to-png>
     <div ng-repeat="number in numbers" class="app-game__row">
         <div 
             ng-repeat="letter in letters" 
@@ -110,9 +110,7 @@
         <i class="app-icon material-icons">schedule</i>
         <span>{{ game.time / 60000 }} + {{ game.increment / 1000 }}</span>
         <i ng-if="game.finish" class="app-icon material-icons">games</i>
-        <span ng-if="game.result.value === 1">1-0</span>
-        <span ng-if="game.result.value === 0">½-½</span>
-        <span ng-if="game.result.value === 2">0-1</span>
+        <span ng-if="game.finish">{{ game.result.print }}</span>
         <span ng-if="game.finish">({{ game.result.name | translate }})</span>
         <i class="app-icon material-icons">today</i>
         <span>{{ game.startTime|localeDateTime }}</span>
@@ -334,8 +332,8 @@
     </button>
     <button class="app-button app-button--show mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
             ng-hide="!game.finish"
-            show-modal="#modal-create-game">
-        <i class="material-icons">games</i>
+            show-modal="#modal-finish-game">
+        <i class="material-icons">flag</i>
     </button>
 </div>
 
