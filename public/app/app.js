@@ -101,13 +101,6 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             logout();
         };
 
-        $rootScope.$watch('title', function (value) {
-            if (!value) {
-                return;
-            }
-            angular.element('title').text(translator.translate(value) + ' - World of Chess');
-        });
-
         $rootScope.$on('lang', function (event, value) {
             $rootScope.lang = value;
             setTitle($route.current.title);
@@ -122,7 +115,12 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         $rootScope.inviteFriends = utils.inviteFriends;
 
         function setTitle(title) {
-            $rootScope.title = title || 'title';
+            if (typeof title !== 'string') {
+                title = 'title';
+            }
+            $rootScope.title = title;
+
+            angular.element('title').text(translator.translate($rootScope.title) + ' - World of Chess');
         }
 
         function logout() {
