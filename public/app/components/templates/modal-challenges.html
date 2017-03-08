@@ -14,14 +14,13 @@
         <div class="app-modal__content">
             <div class="app-element">
                 <div element-content class="app-element__body">
-                    <table ng-show="challenges.length" 
-                           class="app-table mdl-data-table mdl-js-data-table">
+                    <table class="app-table mdl-data-table mdl-js-data-table">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th sortable collection="challenges" expression="['points', 'time', 'color']" icon="star"></th>
-                                <th sortable collection="challenges" expression="['color', 'points', 'time']" icon="invert_colors"></th>
-                                <th sortable collection="challenges" expression="['time', 'points', 'color']" icon="schedule"></th>
+                                <th sortable collection="challenges" expression="['name', 'points', 'time', 'color']" icon="account_circle"></th>
+                                <th sortable collection="challenges" expression="['points', 'time', 'color', 'name']" icon="star"></th>
+                                <th sortable collection="challenges" expression="['color', 'points', 'time', 'name']" icon="invert_colors"></th>
+                                <th sortable collection="challenges" expression="['time', 'points', 'color', 'name']" icon="schedule"></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -56,9 +55,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div ng-hide="challenges.length" class="app-element__loading">
-                        <div class="app-spinner app-spinner--small"></div>
-                    </div>
                 </div>
             </div>
         </div>

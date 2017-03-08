@@ -249,6 +249,7 @@
                     </a>
                     <a class="mdl-navigation__link" 
                        href
+                       ng-if="!isFacebookApp"
                        ng-click="closeDrawer(); logout()">
                         <i class="material-icons" role="presentation">power_settings_new</i>
                         {{ 'logout' | translate }}
@@ -290,7 +291,7 @@
                 </button>
                 <button type="button"
                         class="app-button mdl-button mdl-js-button mdl-button--fab"
-                        ng-hide="isFacebookApp"
+                        ng-if="!isFacebookApp"
                         ng-click="logout()">
                     <i class="material-icons">power_settings_new</i>
                 </button>

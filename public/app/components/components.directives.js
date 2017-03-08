@@ -50,8 +50,8 @@ directive('avatar', function() {
     };
 }).
 
-directive('modalSettings', ['$rootScope', '$timeout', '$q', 'socket', 'user', 'translator', 'languages', 'colorsGame', 'patterns',
-    function ($rootScope, $timeout, $q, socket, user, translator, languages, colorsGame, patterns) {
+directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'translator', 'languages', 'colorsGame', 'patterns',
+    function ($rootScope, $timeout, socket, user, translator, languages, colorsGame, patterns) {
         return {
             restrict: 'E',
             scope: true,
@@ -293,13 +293,20 @@ directive('gameChoices', function () {
  * @restrict E
  * @scope
  */
-directive('modalChallenges', ['$rootScope', 'socket', 'modal',
-    function ($rootScope, socket, modal) {
+directive('modalChallenges', ['$rootScope', 'socket', 'modal', 'orderByFilter',
+    function ($rootScope, socket, modal, orderByFilter) {
         return {
             restrict: 'E',
             replace: true,
             templateUrl: '/app/components/templates/modal-challenges.html',
             link: function (scope, element) {
+
+                scope.orderByFilter = {
+                    challenges: {
+                        expression: ['points', 'time', 'color', 'name'],
+                        reverse: true
+                    }
+                };
 
                 $rootScope.challenges = [];
 
@@ -312,7 +319,7 @@ directive('modalChallenges', ['$rootScope', 'socket', 'modal',
                 };
 
                 socket.on('challenges', function (data) {
-                    $rootScope.challenges = data;
+                    $rootScope.challenges = orderByFilter(data, scope.orderByFilter.challenges.expression, scope.orderByFilter.challenges.reverse);
                     if (!data.length) {
                         modal(element).hide();
                     }

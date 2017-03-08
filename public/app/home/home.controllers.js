@@ -16,15 +16,15 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', 'socket', 'translator', 
 
         $scope.orderByFilter = {
             createdGames: {
-                expression: ['points', 'time', 'color'],
+                expression: ['points', 'time', 'color', 'name'],
                 reverse: true
             },
             challengers: {
-                expression: ['blitz.points', 'rapid.points'],
+                expression: ['blitz.points', 'rapid.points', 'name'],
                 reverse: true
             },
             favorites: {
-                expression: ['blitz.points', 'rapid.points'],
+                expression: ['blitz.points', 'rapid.points', 'name'],
                 reverse: true
             }
         };
