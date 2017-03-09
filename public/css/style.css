@@ -2059,6 +2059,7 @@ a {
 
 .app-game__timer {
   float: right;
+  height: 100%;
 }
 
 .app-game__player-avatar {
@@ -2068,7 +2069,6 @@ a {
 .app-game__player-avatar .app-icon {
   display: none;
 }
-
 .app-game__time {
   text-align: center;
   font-size: 16px;
@@ -2570,6 +2570,7 @@ a {
 
   .app-game__timer {
     float: none;
+    height: initial;
     bottom: 0;
     margin-bottom: 16px;
   }
