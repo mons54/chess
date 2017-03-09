@@ -84,6 +84,16 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     }, 500);
                 }
 
+                if (!game.lastTime) {
+                    game.time *= 1000;
+                    game.increment *= 1000;
+                    game.timeTurn *= 1000;
+                    game.white.time *= 1000;
+                    game.white.timeTurn *= 1000;
+                    game.black.time *= 1000;
+                    game.black.timeTurn *= 1000;
+                }
+
                 gameCopy = $window.game.newGame(game.id, game.white, game.black, game.type);
 
                 if (game.result.value === 1) {
@@ -125,35 +135,52 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 moveSound.play();
             }
 
-            game.black.lostPieces = angular.copy(defaultPieces);
-            game.white.lostPieces = angular.copy(defaultPieces);
-
-            angular.forEach(game.pieces, function (piece) {
-                if (!game[piece.color].lostPieces[piece.name]) {
-                    return;
-                }
-                game[piece.color].lostPieces[piece.name]--;
-            });
+            setLostPieces(game);
 
             $scope.played = [];
 
             var time = game.startTime;
 
             angular.forEach(game.played, function (value, index) {
+
                 var data = angular.copy(value);
+
                 data.index = index;
-                data.time = ((data.time - time) / 1000).toFixed(2);
+
                 if (gameCopy) {
+
                     gameCopy = new $window.chess.engine(gameCopy, value.start, value.end, value.promotion);
+
                     value.pieces = angular.copy(gameCopy.pieces);
+
+                    if (!game.played[index + 1]) {
+                        value.playersTime = {
+                            black: game.black.time,
+                            white: game.white.time
+                        };
+                    } else if (index % 2) {
+                        value.playersTime = {
+                            black: (game.played[index - 2] ? game.played[index - 2].playersTime.black : game.time) - (data.time - time) + game.increment,
+                            white: game.played[index - 1].playersTime.white
+                        };
+                    } else {
+                        value.playersTime = {
+                            white: (game.played[index - 2] ? game.played[index - 2].playersTime.white : game.time) - (data.time - time) + game.increment,
+                            black: game.played[index - 1] ? game.played[index - 1].playersTime.black : game.time
+                        };
+                    }
                 }
+
+                data.time = ((data.time - time) / 1000).toFixed(2);
+
                 time = value.time;
-                if (index % 2 === 0) {
+
+                if (index % 2) {
+                    $scope.played[$scope.played.length - 1].black = data;
+                } else {
                     $scope.played.push({
                         white: data
                     });
-                } else {
-                    $scope.played[$scope.played.length - 1].black = data;
                 }
             });
 
@@ -184,14 +211,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 game.white.currentTimeTurn = game.white.timeTurn;
                 game.black.currentTime = game.black.time;
                 game.black.currentTimeTurn = game.black.timeTurn;
-            } else if (!game.lastTime) {
-                game.time *= 1000;
-                game.increment *= 1000;
-                game.timeTurn *= 1000;
-                game.white.time *= 1000;
-                game.white.timeTurn *= 1000;
-                game.black.time *= 1000;
-                game.black.timeTurn *= 1000;
             }
 
             $scope.game = game;
@@ -351,9 +370,22 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.replay = function (index) {
-            if ($scope.game.finish) {
-                setTurn($scope.game, index);
+            
+            if (!$scope.game.finish) {
+                return;
             }
+
+            setTurn($scope.game, index);
+
+            $scope.game.pieces = $scope.game.played[index].pieces;
+
+            setLostPieces($scope.game);
+
+            var played = $scope.game.played[index],
+                lastTime = $scope.game.played[index - 1] ? $scope.game.played[index - 1].time : $scope.game.startTime;
+
+            $scope.game.white.time = played.playersTime.white;
+            $scope.game.black.time = played.playersTime.black;
         };
 
         $scope.togglePlayed = function (isPhone) {
@@ -446,20 +478,27 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         function setTurn(game, index) {
 
-            var length = game.played.length,
-                turn = {
-                    index: game.played[index] ? index : null,
-                    first: index !== 0 && game.played[0] ? 0 : null,
-                    prev: game.played[index - 1] ? index - 1 : null,
-                    next: game.played[index + 1] ? index + 1 : null,
-                    last: index !== length - 1 && game.played[length - 1] ? length - 1 : null
-                };
+            var length = game.played.length;
 
-            if (turn.index !== null) {
-                game.pieces = game.played[turn.index].pieces;
-            }
+            $scope.turn = {
+                index: game.played[index] ? index : null,
+                first: index !== 0 && game.played[0] ? 0 : null,
+                prev: game.played[index - 1] ? index - 1 : null,
+                next: game.played[index + 1] ? index + 1 : null,
+                last: index !== length - 1 && game.played[length - 1] ? length - 1 : null
+            };
+        }
 
-            $scope.turn = turn;
+        function setLostPieces(game) {
+            game.black.lostPieces = angular.copy(defaultPieces);
+            game.white.lostPieces = angular.copy(defaultPieces);
+
+            angular.forEach(game.pieces, function (piece) {
+                if (!game[piece.color].lostPieces[piece.name]) {
+                    return;
+                }
+                game[piece.color].lostPieces[piece.name]--;
+            });
         }
 
         function setColorGame(color) {
@@ -574,19 +613,16 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
     
     function ($rootScope, $scope, socket, utils) {
 
+        $scope.$parent.$watch('game', function(value) {
+            $scope.game = value;
+        });
+
         $scope.isPlayerTurn = function (player) {
-            return $scope.$parent.game && $scope.$parent.game.turn === player.color;
+            return $scope.game && $scope.game.turn === player.color;
         };
 
         $scope.hasLostPieces = function (lostPieces) {
-            if (typeof lostPieces === 'object') {
-                for (var i in lostPieces) {
-                    if (lostPieces[i]) {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return typeof lostPieces === 'object' && Object.keys(lostPieces).length;
         };
 
         $scope.getLostPieces = function(number) {

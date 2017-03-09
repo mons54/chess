@@ -4,7 +4,8 @@
              ng-class="{'app-game__time--danger': isPlayerTurn(player) && player.time < 10000, 'app-game__time--turn': isPlayerTurn(player) }">
             {{ formatTime(player.time) }}
         </div>
-        <div class="app-game__time app-game__time-turn"
+        <div ng-if="!game.finish"
+             class="app-game__time app-game__time-turn"
              ng-class="{'app-game__time--danger': isPlayerTurn(player) && player.timeTurn < 10000, 'app-game__time--turn': isPlayerTurn(player)}">
             {{ formatTime(player.timeTurn) }}
         </div>
