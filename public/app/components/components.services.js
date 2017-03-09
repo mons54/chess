@@ -17,8 +17,7 @@ service('modal', ['$timeout', function ($timeout) {
         element.show = function (callback) {
 
             if (!element.parent().is('body, [data-layout]')) {
-                element.defaultParent = element.parent();
-                $('[data-layout]').prepend(element);
+                $('#modal-container').prepend(element);
             }
             element.addClass('app-modal--active').trigger('show');
 
@@ -40,9 +39,6 @@ service('modal', ['$timeout', function ($timeout) {
         };
 
         element.hide = function () {
-            if (element.defaultParent) {
-                element.defaultParent.append(element);
-            }
             element.removeClass('app-modal--active').trigger('hide', element.data);
         };
 

@@ -52,9 +52,9 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
             setTitle(toState.title);
 
-            $rootScope.currentRoute = toState.name; 
+            $rootScope.currentRoute = toState.name;
 
-            modal('[data-modal]').hide();
+            hideModal();
             
             // Used for refresh user when join home if true
             if (fromState && $rootScope.user && !$rootScope.user.refresh) {
@@ -184,6 +184,11 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             };
         }
 
+        function hideModal() {
+            $('#modal-container').empty();
+            modal('[data-modal]').hide();
+        }
+
         socket.on('connect', function () {
             var login = user.getLogin();
 
@@ -208,10 +213,10 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         });
 
         socket.on('disconnect', function (data) {
-            modal('[data-modal]').hide();
             $rootScope.loading = true;
             $rootScope.isDisconnected = true;
             if (data === 'io server disconnect') {
+                hideModal();
                 $rootScope.disconnectMultiSocket = true;
             }
         });
