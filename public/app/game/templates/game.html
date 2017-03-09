@@ -298,7 +298,10 @@
         <div class="app-game__toggle-icon--phone" ng-hide="user.gid" show-modal="#modal-create-game">
             <i class="app-game__toggle-icon material-icons">games</i>
         </div>
-        <div class="app-game__toggle-icon--phone" ng-click="setSound()">
+        <div ng-if="game.finish" show-modal="#modal-finish-game" class="app-game__toggle-icon--phone">
+            <i class="app-game__toggle-icon material-icons">flag</i>
+        </div>
+        <div ng-if="!game.finish" ng-click="setSound()" class="app-game__toggle-icon--phone">
             <i class="app-game__toggle-icon material-icons">{{ sound ? 'volume_up' : 'volume_off'}}</i>
         </div>
         <div class="app-game__toggle-icon--phone" ng-class="{'is-active': showColors}" data-colors-game>
