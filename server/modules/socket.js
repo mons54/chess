@@ -348,9 +348,16 @@ module.exports = function (io) {
         this.deleteChallenges(socket);
         this.deleteChallenges(socketOpponent);
 
-        var white, black, type = dataGame.game.type;
+        var white, 
+            black, 
+            color = dataGame.color, 
+            type = dataGame.game.type;
 
-        if (dataGame.color === 'white') {
+        if (!color) {
+            color = moduleGame.getRandomColor();
+        }
+
+        if (color === 'white') {
             white = {
                 uid: socketOpponent.uid,
                 avatar: socketOpponent.avatar,
@@ -394,6 +401,11 @@ module.exports = function (io) {
             black.countGame = response[1];
 
             game = moduleGame.start(white, black, dataGame.game);
+
+            game.rematch = {
+                game: dataGame.game.index,
+                color: dataGame.color
+            };
 
             return db.save('games', {
                 type: game.type,

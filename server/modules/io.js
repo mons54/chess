@@ -100,9 +100,6 @@ module.exports = function (app, io) {
                 !challenge.create &&
                 challenge.game.index === game.index &&
                 (!color || !challenge.color || color !== challenge.color)) {
-                if (!challenge.color) {
-                    challenge.color = moduleGame.getRandomColor(color);
-                }
                 moduleSocket.startGame(socket, socketOpponent, challenge);
                 return;
             }
@@ -162,9 +159,6 @@ module.exports = function (app, io) {
                 return;
             }
 
-            if (!challenge.color) {
-                challenge.color = moduleGame.getRandomColor();
-            }
             moduleSocket.startGame(socket, socketOpponent, challenge);
         });
 
@@ -176,9 +170,6 @@ module.exports = function (app, io) {
             var game = moduleGame.create(socket, data);
 
             if (game) {
-                if (!game.color) {
-                    game.color = moduleGame.getRandomColor(data.color);
-                }
                 startGame(game);
                 return;
             }
@@ -205,10 +196,6 @@ module.exports = function (app, io) {
                 socket.blackList.indexOf(uid) !== -1 || 
                 createdGame.blackList.indexOf(socket.uid) !== -1) {
                 return;
-            }
-
-            if (!createdGame.color) {
-                createdGame.color = moduleGame.getRandomColor();
             }
 
             startGame(createdGame);

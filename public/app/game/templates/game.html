@@ -498,7 +498,7 @@
                             <i ng-if="game.white.isWinner" class="material-icons">star</i>
                         </div>
                         <div class="app-game__result-points">
-                            {{ game.white.points + game.white.resultPoints }} 
+                            {{ game.white.points }} 
                             <span class="app-game__result-points-add"
                                   ng-class="{'app-text__positive': game.white.resultPoints > 0, 'app-text__negative': game.white.resultPoints < 0 }">
                                 {{ game.white.resultPoints | relativeNumber }}
@@ -515,7 +515,7 @@
                             <i ng-if="game.black.isWinner" class="material-icons">star</i>
                         </div>
                         <div class="app-game__result-points">
-                            {{ game.black.points + game.black.resultPoints }}
+                            {{ game.black.points }}
                             <span class="app-game__result-points-add"
                                   ng-class="{'app-text__positive': game.black.resultPoints > 0, 'app-text__negative': game.black.resultPoints < 0 }">
                                 {{ game.black.resultPoints | relativeNumber }}
@@ -528,13 +528,15 @@
             </div>
 
             <div class="app-game__result-link">
+                <button ng-if="!game.archived && isPlayer()"
+                        ng-click="rematch()"
+                        class="app-button mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
+                    {{ 'rematch' | translate }}
+                </button>
                 <button modal-close show-modal="#modal-create-game"
                         class="app-button mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
                     {{ 'create_game' | translate }}
                 </button>
-                <a modal-close href="/" class="app-button mdl-button mdl-js-button mdl-button--raised">
-                    {{ 'home' | translate}}
-                </a>
             </div>
         </div>
     </div>

@@ -97,10 +97,7 @@ Game.prototype.getGameType = function (game) {
  * @param {string} color Color opponent
  * @returns {&string} Random color
  */
-Game.prototype.getRandomColor = function (color) {
-    if (color) {
-        return color === 'white' ? 'black' : 'white';
-    }
+Game.prototype.getRandomColor = function () {
     return this.options.colors[Math.round(Math.random())];
 };
 

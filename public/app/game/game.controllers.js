@@ -436,6 +436,14 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
         };
 
+        $scope.rematch = function () {
+            socket.emit('createChallenge', {
+                uid: $scope.game.white.uid === $rootScope.user.uid ? $scope.game.black.uid : $scope.game.white.uid,
+                color: $scope.game.rematch.color,
+                game: $scope.game.rematch.game
+            });
+        };
+
         function setTurn(game, index) {
 
             var length = game.played.length,
