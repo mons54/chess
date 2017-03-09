@@ -1,5 +1,6 @@
 <div class="app-profile__action">
-    <button ng-disabled="isFriend"
+    <button ng-if="user.uid !== profile.uid"
+            ng-disabled="isFriend"
             ng-click="toogleFavorite()"
             class="app-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
         <i ng-if="!isFavorite" class="app-icon app-icon--favorite material-icons">star</i>

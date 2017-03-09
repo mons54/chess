@@ -89,6 +89,8 @@
             </div>
         </div>
 
+        <div id="modal-container"></div>
+
         <div class="app-layout mdl-layout mdl-js-layout mdl-layout--fixed-header" 
              ng-show="!loading" 
              ng-class="{'is-user-game': user.gid, 'is-game': isGame, 'is-toggle': isToggle }"
@@ -314,8 +316,6 @@
 
             <div class="app-pagination app-pagination--fixed" pagination></div>
 
-            <div id="modal-container"></div>
-            
             <modal-challenges></modal-challenges>
             <modal-settings></modal-settings>
             <modal-profile></modal-profile>

@@ -528,7 +528,8 @@
             </div>
 
             <div class="app-game__result-link">
-                <button ng-if="!game.archived && isPlayer()"
+                <button modal-close
+                        ng-if="!game.archived && isPlayer()"
                         ng-click="rematch()"
                         class="app-button mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect">
                     {{ 'rematch' | translate }}
