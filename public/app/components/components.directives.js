@@ -449,7 +449,7 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                     if (value) {
 
                         if (!value.picture) {
-                            value.picture = '/logo-mini.png';
+                            value.picture = 'logo-mini.png';
                         }
 
                         if (!value.name) {
@@ -480,7 +480,7 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                         method: 'feed',
                         redirect_uri: 'https://apps.facebook.com/' + facebookAppId,
                         link: 'https://apps.facebook.com/' + facebookAppId,
-                        picture: 'https://' + host + '/images' + scope.picture,
+                        picture: 'https://' + host + '/images/' + scope.picture,
                         name: scope.title,
                         caption: scope.caption,
                         description: scope.description
