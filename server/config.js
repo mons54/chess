@@ -42,6 +42,19 @@ module.exports = function (app) {
         res.render('index', data);
     });
 
+    app.get('/images', function(req, res) {
+        if (!req.query.data) {
+            res.redirect('/');
+            return;
+        }
+        var img = new Buffer(req.query.data, 'base64');
+        res.writeHead(200, {
+            'Content-Type': 'image/png',
+            'Content-Length': img.length
+        });
+        res.end(img); 
+    });
+
     app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (req, res) {
         
         var data,
