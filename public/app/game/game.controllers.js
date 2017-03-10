@@ -514,7 +514,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         function shareResultData(game) {
             $scope.shareResultData = {
                 title: $filter('translate')(game.type) + ' · ' + game.time / 60000 + '+' + game.increment / 1000 + ' · ' + $filter('translate')(game.result.name),
-                description: game.white.name + ' · ' + game.white.points + ' ' + $filter('relativeNumber')(game.white.resultPoints) + ' · ' + game.result.print + ' · ' + game.black.name + ' · ' + game.black.points + ' ' + $filter('relativeNumber')(game.black.resultPoints)
+                description: game.white.name + ' ' + game.white.points + ' · ' + game.result.print + ' · ' + game.black.name + ' ' + game.black.points,
+                link: '/game/' + game.id
             };
 
             if (typeof domtoimage !== 'object') {
@@ -531,7 +532,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 
                 domtoimage.toPng(div[0]).
                 then(function (data) {
-                    $scope.shareResultData.picture = '?data=' + encodeURIComponent(data.split(',')[1]);
+                    $scope.shareResultData.picture = '/?data=' + encodeURIComponent(data.split(',')[1]);
                     div.remove();
                 }, div.remove);
 

@@ -442,14 +442,18 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
             templateUrl: '/app/components/templates/share.html',
             link: function(scope, element) {
 
-                scope.url = 'https://' + host;
+                var url = 'https://' + host;
 
                 scope.$watchCollection('share', function (value) {
 
                     if (value) {
 
+                        if (!value.link) {
+                            value.link = '/';
+                        }
+
                         if (!value.picture) {
-                            value.picture = 'logo-mini.png';
+                            value.picture = '/logo-mini.png';
                         }
 
                         if (!value.name) {
@@ -464,7 +468,8 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                             value.caption = $filter('translate')('title');
                         }
 
-                        scope.picture = value.picture;
+                        scope.link = url + value.link;
+                        scope.picture = url + '/images' + value.picture;
                         scope.title = value.title;
                         scope.description = value.description;
                         scope.caption = value.caption;
@@ -479,8 +484,8 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                     FB.ui({
                         method: 'feed',
                         redirect_uri: 'https://apps.facebook.com/' + facebookAppId,
-                        link: 'https://apps.facebook.com/' + facebookAppId,
-                        picture: 'https://' + host + '/images/' + scope.picture,
+                        link: scope.link,
+                        picture: scope.picture,
                         name: scope.title,
                         caption: scope.caption,
                         description: scope.description
