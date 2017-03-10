@@ -523,7 +523,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
 
             $timeout(function() {
-                
                 var div = $('<div/>').css({
                     position: 'absolute',
                     width: '300px',
@@ -536,7 +535,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                     div.remove();
                 }, div.remove);
 
-            }, 500);
+            });
         }
 
         function getMessageId(message) {
