@@ -516,6 +516,26 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 title: $filter('translate')(game.type) + ' - ' + game.time / 60000 + '+' + game.increment / 1000 + ' - ' + $filter('translate')(game.result.name),
                 description: game.white.name + ' (' + game.white.points + ' ' + $filter('relativeNumber')(game.white.resultPoints) + ') ' + game.result.print + ' ' + game.black.name + ' (' + game.black.points + ' ' + $filter('relativeNumber')(game.black.resultPoints) + ')'
             };
+
+            if (typeof domtoimage !== 'object') {
+                return;
+            }
+
+            $timeout(function() {
+                
+                var div = $('<div/>').css({
+                    position: 'absolute',
+                    width: '300px',
+                    height: '300px'
+                }).addClass('app-game__board app-game__board--' + $scope.colorGame).append($('.app-game__board').clone().html()).appendTo($('body'));
+                
+                domtoimage.toPng(div[0]).
+                then(function (data) {
+                    $scope.shareResultData.picture = '?data=' + encodeURIComponent(data.split(',')[1]);
+                    div.remove();
+                }, div.remove);
+
+            }, 500);
         }
 
         function getMessageId(message) {
