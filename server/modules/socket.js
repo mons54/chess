@@ -339,10 +339,6 @@ module.exports = function (io) {
         moduleGame.deleteCreatedGame(socketOpponent.uid);
         
         this.listGames();
-        
-        socket.leave('home');
-        socketOpponent.leave('home');
-        
         this.listChallengers();
         
         this.deleteChallenges(socket);
@@ -425,6 +421,8 @@ module.exports = function (io) {
 
             this.userGames[socket.uid] = response.id;
             this.userGames[socketOpponent.uid] = response.id;
+
+            this.listChallengers();
 
             socket.join(room);
             socketOpponent.join(room);
@@ -565,6 +563,8 @@ module.exports = function (io) {
 
         delete this.userGames[white.uid];
         delete this.userGames[black.uid];
+
+        this.listChallengers();
 
         data = {
             white: {
@@ -744,25 +744,22 @@ module.exports = function (io) {
 
     Module.prototype.listChallengers = function () {
 
-        var challengers = [],
-            room = io.sockets.adapter.rooms['home'];
+        var challengers = [];
 
-        if (room && room.sockets) {
-            for (var socketId in room.sockets) {
-                var socket = io.sockets.connected[socketId];
-                if (!socket || !socket.uid) {
-                    continue;
-                }
-                challengers.push({
-                    uid: socket.uid,
-                    facebookId: socket.facebookId,
-                    avatar: socket.avatar,
-                    name: socket.name,
-                    blitz: socket.blitz,
-                    rapid: socket.rapid,
-                    blackList: socket.blackList
-                });
-            };
+        for (var socketId in io.sockets.connected) {
+            var socket = io.sockets.connected[socketId];
+            if (!socket || !socket.uid || this.userGames[socket.uid]) {
+                continue;
+            }
+            challengers.push({
+                uid: socket.uid,
+                facebookId: socket.facebookId,
+                avatar: socket.avatar,
+                name: socket.name,
+                blitz: socket.blitz,
+                rapid: socket.rapid,
+                blackList: socket.blackList
+            });
         }
 
         io.sockets.to('home').emit('challengers', challengers);
