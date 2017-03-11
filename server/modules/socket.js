@@ -774,6 +774,7 @@ module.exports = function (io) {
         }
 
         var data = {
+            online: !!this.connected[uid],
             uid: uid
         };
 
