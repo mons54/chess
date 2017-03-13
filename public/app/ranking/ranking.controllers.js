@@ -64,6 +64,7 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             if ($rootScope.loadRanking) {
                 return;
             }
+            $scope.type = type + 'Top100';
             $rootScope.loadRanking = true;
             socket.emit('rankingTop100', type);
         };
