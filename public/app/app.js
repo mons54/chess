@@ -42,7 +42,6 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
     function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator, utils) {
 
         $rootScope.$on('$routeChangeStart', function() {
-
             if ($rootScope.user && $rootScope.user.gid) {
                 redirectToGame();
             }
@@ -55,6 +54,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             $rootScope.currentRoute = toState.name;
 
             hideModal();
+            closeDrawer();
             
             // Used for refresh user when join home if true
             if (fromState && $rootScope.user && !$rootScope.user.refresh) {
@@ -62,10 +62,8 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             }
         });
 
-        /**
-         * Close menu mobile
-         */
-        $rootScope.closeDrawer = function () {
+        
+        function closeDrawer () {
 
             var drawer = angular.element('.mdl-layout__drawer');
             if (!drawer || !drawer.hasClass('is-visible')) {
@@ -78,7 +76,9 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             }
 
             layout.toggleDrawer();
-        };
+        }
+
+        $rootScope.closeDrawer = closeDrawer;
 
         $rootScope.facebookLogin = function () {
             facebook.login();
