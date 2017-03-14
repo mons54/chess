@@ -248,20 +248,20 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
             if ($rootScope.isDisconnected) {
                 $route.reload();
-            }
+            } else {
+                if (!data.dataGame) {
+                    data.dataGame = {
+                        color: null,
+                        game: 0,
+                        pointsMin: null,
+                        pointsMax: null
+                    };
+                }
 
-            if (!data.dataGame) {
-                data.dataGame = {
-                    color: null,
-                    game: 0,
-                    pointsMin: null,
-                    pointsMax: null
-                };
+                user.setDataGame(data.dataGame);
+                user.setColorGame(data.colorGame);
+                user.setSound(data.sound);
             }
-
-            user.setDataGame(data.dataGame);
-            user.setColorGame(data.colorGame);
-            user.setSound(data.sound);
 
             angular.extend($rootScope.user, {
                 uid: data.uid,

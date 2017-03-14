@@ -36,6 +36,10 @@ module.exports = function (app, io) {
             }
         });
 
+        socket.on('leaveHome', function () {
+            socket.leave('home');
+        });
+
         socket.on('joinHome', function (refresh) {
             
             if (!moduleSocket.checkSocket(socket)) {
