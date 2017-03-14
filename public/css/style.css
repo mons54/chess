@@ -1504,6 +1504,10 @@ a {
   text-overflow: ellipsis;
 }
 
+.app-table__user a {
+  color: inherit;
+}
+
 .app-table__avatar {
   margin-right: 8px;
   width: 40px;
@@ -1547,10 +1551,6 @@ a {
 .app-table--ranking {
   width: 100%;
   border: none;
-}
-
-.app-table--ranking tbody tr {
-  cursor: pointer;
 }
 
 .app-table--ranking tbody tr.is-user {

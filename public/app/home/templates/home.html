@@ -14,13 +14,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="game in createdGames"
-                    show-profile="game.uid">
+                <tr ng-repeat="game in createdGames">
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img avatar
-                             class="app-table__avatar" 
-                             ng-src="{{ game.avatar }}">
-                        <span class="app-table__name">{{ game.name }}</span>
+                        <a href
+                           show-profile="game.uid">
+                            <img avatar
+                                 class="app-table__avatar" 
+                                 ng-src="{{ game.avatar }}">
+                            <span class="app-table__name">{{ game.name }}</span>
+                        </a>
                     </td>
                     <td class="app-table__points">{{ game.points }}</td>
                     <td class="app-table__color" 
@@ -32,7 +34,7 @@
                     <td class="app-table__time">{{ game.game.time / 60 }} + {{ game.game.increment }}</td>
                     <td class="app-table__actions">
                         <button ng-if="game.uid == user.uid" 
-                                ng-click="$event.stopPropagation(); removeGame()" 
+                                ng-click="removeGame()" 
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                             <i class="material-icons">close</i>
                         </button>
@@ -63,13 +65,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="favorite in favorites"
-                    show-profile="favorite.uid" >
+                <tr ng-repeat="favorite in favorites">
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img avatar
-                             class="app-table__avatar" 
-                             ng-src="{{ favorite.avatar }}">
-                        <span class="app-table__name">{{ favorite.name }}</span>
+                        <a href
+                           show-profile="favorite.uid">
+                            <img avatar
+                                 class="app-table__avatar" 
+                                 ng-src="{{ favorite.avatar }}">
+                            <span class="app-table__name">{{ favorite.name }}</span>
+                        </a>
                     </td>
                     <td title="{{ 'blitz'|translate }}">
                         {{ favorite.blitz.points }}
@@ -79,7 +83,7 @@
                     </td>
                     <td>
                         <button ng-disabled="blackList(favorite)"
-                                ng-click="$event.stopPropagation(); setChallenger(favorite)"
+                                ng-click="setChallenger(favorite)"
                                 show-modal="#modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
@@ -106,13 +110,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="challenger in challengers"
-                    show-profile="challenger.uid">
+                <tr ng-repeat="challenger in challengers">
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <img avatar
-                             class="app-table__avatar" 
-                             ng-src="{{challenger.avatar}}">
-                        <span class="app-table__name">{{ challenger.name }}</span>
+                        <a href
+                           show-profile="challenger.uid">
+                            <img avatar
+                                 class="app-table__avatar" 
+                                 ng-src="{{challenger.avatar}}">
+                            <span class="app-table__name">{{ challenger.name }}</span>
+                        </a>
                     </td>
                     <td>
                         {{ challenger.blitz.points }}
@@ -122,7 +128,7 @@
                     </td>
                     <td>
                         <button ng-disabled="blackList(challenger)"
-                                ng-click="$event.stopPropagation(); setChallenger(challenger)"
+                                ng-click="setChallenger(challenger)"
                                 show-modal="#modal-challenger"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
