@@ -551,6 +551,10 @@
   left: 8px;
 }
 
+.app-ranking__count {
+  text-align: left;
+}
+
 @media screen and (max-width: 1024px) {
 
   .app-header__row {

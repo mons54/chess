@@ -993,7 +993,7 @@ module.exports = function (io) {
             request,
             data,
             offset,
-            total,
+            count,
             position;
 
         active['active_' + type] = true;
@@ -1016,7 +1016,8 @@ module.exports = function (io) {
                     points: socket[type].points
                 };
                 socket.emit('ranking', {
-                    ranking:[row]
+                    ranking:[row],
+                    count: 1
                 });
                 throw Error();
             } 
@@ -1027,7 +1028,7 @@ module.exports = function (io) {
                 response++;
             }
 
-            total = response;
+            count = response;
 
             var sort = {},
                 hint = {};
@@ -1061,11 +1062,12 @@ module.exports = function (io) {
             position = response[0] + 1;
 
             var result = {
-                ranking: this.getRanking(socket, data, position, response[1], user, type)
+                ranking: this.getRanking(socket, data, position, response[1], user, type),
+                count: count
             };
 
             if (pages) {
-                result.pages = this.getPages(total, offset, limit);
+                result.pages = this.getPages(count, offset, limit);
             }
 
             socket.emit('ranking', result);
@@ -1144,10 +1146,10 @@ module.exports = function (io) {
         return page <= 0 ? 1 : page;
     };
 
-    Module.prototype.getPages = function (total, offset, limit) {
+    Module.prototype.getPages = function (count, offset, limit) {
         
         var page = Math.ceil(offset / limit) + 1,
-            last = Math.ceil(total / limit);
+            last = Math.ceil(count / limit);
 
         if (last <= 1) {
             return;

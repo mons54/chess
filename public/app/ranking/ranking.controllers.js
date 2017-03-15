@@ -37,6 +37,7 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             }
 
             $scope.ranking = data.ranking;
+            $scope.count = data.count;
 
             angular.forEach($scope.ranking, function (value) {
                 usersId.push(value.uid);
