@@ -389,7 +389,7 @@ config(['$routeProvider', '$locationProvider',
             templateUrl: '/app/game/templates/game.html',
             controller: 'gameCtrl'
         })
-        .when('/ranking', {
+        .when('/ranking/:type?/:page?', {
             name : 'ranking',
             title: 'ranking',
             templateUrl: '/app/ranking/templates/ranking.html',

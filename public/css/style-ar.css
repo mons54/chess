@@ -707,10 +707,6 @@
     left: auto;
   }
 
-  .app-ranking__toggle-content .app-button:nth-child(2n +2) {
-    float: left;
-  }
-
   .app-table__sortable {
     margin-left: -6px;
     margin-right: 0;
@@ -722,6 +718,10 @@
 }
 
 @media screen and (max-width: 599px) {
+
+  .app-ranking__toggle-content .app-button:nth-child(2n +2) {
+    float: left;
+  }
 
   .app-profile__game-content {
     margin-right: 0;

@@ -2767,6 +2767,10 @@ a {
   .mdl-layout__drawer-button {
     display: none;
   }
+
+  .app-ranking__content {
+    min-height: 651px;
+  }
 }
 
 @media (max-width: 839px) {
@@ -3566,6 +3570,19 @@ a {
     font-size: 20px;
     margin-bottom: 8px;
   }
+
+  .app-ranking__toggle-content {
+    display: block;
+  }
+
+  .app-ranking__toggle-content .app-button {
+    min-width: 0;
+    padding: 0 8px;
+  }
+
+  .app-ranking__toggle-content .app-button:nth-child(2n +2) {
+    float: right;
+  }
 }
 
 @media screen and (max-width: 479px) {
@@ -3802,19 +3819,6 @@ a {
 
   .app-ranking__toggle {
     padding: 4px;
-  }
-
-  .app-ranking__toggle-content {
-    display: block;
-  }
-
-  .app-ranking__toggle-content .app-button {
-    min-width: 0;
-    padding: 0 8px;
-  }
-
-  .app-ranking__toggle-content .app-button:nth-child(2n +2) {
-    float: right;
   }
 
   .app-game__box.last-turn,

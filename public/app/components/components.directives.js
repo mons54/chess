@@ -410,8 +410,6 @@ directive('pagination', ['$rootScope', function ($rootScope) {
         templateUrl: '/app/components/templates/pagination.html',
         link: function (scope, element) {
 
-            $rootScope.page = false;
-
             scope.setPage = function (page) {
                 page = parseInt(page);
                 if (!page || page < 0 || page === $rootScope.pages.page || page > $rootScope.pages.last) {

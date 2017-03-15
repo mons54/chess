@@ -1040,6 +1040,11 @@ module.exports = function (io) {
         })
         .then(function (response) {
 
+            if (!response.length) {
+                socket.emit('ranking', false);
+                return;
+            }
+
             data = response;
 
             var points = (user && socket[type].points > response[0][type]) ? socket[type].points : response[0][type],
@@ -1058,6 +1063,10 @@ module.exports = function (io) {
             ]);
         })
         .then(function (response) {
+
+            if (!response) {
+                return;
+            }
 
             position = response[0] + 1;
 

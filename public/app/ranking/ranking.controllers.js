@@ -8,15 +8,35 @@ angular.module('ranking').
  * @requires $rootScope
  * @requires $scope
  */
-controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
+controller('rankingCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'socket',
     
-    function ($rootScope, $scope, socket) {
+    function ($rootScope, $scope, $routeParams, $location, socket) {
 
-        $scope.type = 'blitz';
+        componentHandler.upgradeElement($('[data-spinner]')[0]);
+
+        $rootScope.loadRanking = true;
+
+        if ($routeParams.type === 'blitz-100') {
+            $scope.type = 'blitzTop100';
+            socket.emit('rankingTop100', 'blitz');
+        } else if ($routeParams.type === 'rapid-100') {
+            $scope.type = 'rapidTop100';
+            socket.emit('rankingTop100', 'rapid');
+        } else if ($routeParams.type === 'blitz' || $routeParams.type === 'rapid') {
+            $scope.type = $routeParams.type;
+            socket.emit('ranking', {
+                type: $routeParams.type,
+                page: $routeParams.page 
+            });
+        } else {
+            $location.path('ranking/blitz');
+            return;
+        }
 
         $scope.$on('$destroy', function() {
-            delete $rootScope.pages;
-            delete $rootScope.loadRanking;
+            if ($routeParams.type !== $scope.type) {
+                delete $rootScope.pages;
+            }
         });
 
         socket.on('ranking', function (data) {
@@ -24,11 +44,9 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             $rootScope.loadRanking = false;
 
             if (!data) {
+                $location.path('ranking/' + $routeParams.type);
                 return;
             }
-
-            var usersId = [],
-                usersName;
 
             $rootScope.pages = data.pages;
 
@@ -39,44 +57,10 @@ controller('rankingCtrl', ['$rootScope', '$scope', 'socket',
             $scope.ranking = data.ranking;
             $scope.count = data.count;
 
-            angular.forEach($scope.ranking, function (value) {
-                usersId.push(value.uid);
-            });
         }, $scope);
 
         $rootScope.$on('page', function ($event, page) {
-            emit(page);
+            $location.path('ranking/' + $scope.type + '/' + page);
         });
-
-        function emit(page) {
-            if ($rootScope.loadRanking) {
-                return;
-            }
-            $rootScope.page = page;
-            $rootScope.loadRanking = true;
-            socket.emit('ranking', {
-                type: $scope.type,
-                page: page
-            });
-            return true;
-        }
-
-        $scope.top100 = function (type) {
-            if ($rootScope.loadRanking) {
-                return;
-            }
-            $scope.type = type + 'Top100';
-            $rootScope.loadRanking = true;
-            socket.emit('rankingTop100', type);
-        };
-
-        $scope.setType = function (type) {
-            $scope.type = type;
-            emit();
-        };
-
-        componentHandler.upgradeElement($('[data-spinner]')[0]);
-
-        emit();
     }
 ]);
