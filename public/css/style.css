@@ -3854,14 +3854,14 @@ a {
     color: #DB4437;
   }
 
-  .app-game__lost-pieces {
+  .app-profile--game .app-game__lost-pieces {
     direction: ltr;
     float: none;
     margin-top: 2px;
     margin-right: 0;
   }
 
-  .app-profile__info {
+  .app-profile--game .app-profile__info {
     display: none;
   }
 
