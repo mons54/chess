@@ -44,7 +44,7 @@
         <div class="app-profile__game-player">
             <span ng-click="$event.stopPropagation()"
                   show-profile="game.data.white.uid"
-                  class="app-profile__game-name">
+                  class="app-profile__game-name app__no-select">
                 {{ game.data.white.name }}
             </span>
             <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.white.isWinner}">
@@ -67,7 +67,7 @@
         <div class="app-profile__game-player">
             <span ng-click="$event.stopPropagation()"
                   show-profile="game.data.black.uid"
-                  class="app-profile__game-name">
+                  class="app-profile__game-name app__no-select">
                   {{ game.data.black.name }}
             </span>
             <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.black.isWinner}">
