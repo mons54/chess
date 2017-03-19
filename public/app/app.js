@@ -49,7 +49,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
         $rootScope.$on('$routeChangeSuccess', function(event, toState, fromState) {
 
-            $('[autoscroll').scrollTop(0);
+            $('[autoscroll]').scrollTop(0);
 
             setTitle(toState.title);
 
