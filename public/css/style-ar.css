@@ -346,11 +346,6 @@
   right: 0;
 }
 
-.app-mobile__title {
-  left: initial;
-  right: 55px;
-}
-
 .mdl-layout__drawer {
   right: 0;
   -webkit-transform: translateX(250px);
@@ -647,7 +642,7 @@
 @media (max-width: 839px) {
 
   .app-mobile__title {
-    left: initial;
+    left: 60px;
     right: 56px;
   }
 
