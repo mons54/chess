@@ -329,6 +329,11 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             });
         };
 
+        $window.onhashchange = function () {
+            hideModal();
+            closeDrawer();
+        };
+
         $window.fbAsyncInit = function () {
 
             facebook.init();
