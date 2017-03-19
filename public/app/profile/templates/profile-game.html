@@ -11,6 +11,11 @@
                 {{ gameData.ranking | number }}
             </div>
         </div>
+        <a ng-if="showMore" 
+           ng-href="/profile/{{ uid }}/#{{ gameType }}"
+           class="app-profile__info-more">
+            <i class="material-icons">open_in_new</i>
+        </a>
     </div>
     <div class="app-profile__stats">
         <div ng-repeat="stat in stats" class="app-profile__stat app-profile__stat--{{ stat.name }}">

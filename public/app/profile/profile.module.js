@@ -145,14 +145,16 @@ directive('progressBarProfile', [function () {
  * @restrict E
  * @scope
  */
-directive('profileGame', ['$rootScope', 'socket', 'modal',
-    function ($rootScope, socket, modal) {
+directive('profileGame', ['$rootScope', '$timeout', 'socket', 'modal',
+    function ($rootScope, $timeout, socket, modal) {
         return {
             restrict: 'E',
             replace: true,
             scope: {
                 gameType: '=',
-                gameData: '='
+                gameData: '=',
+                showMore: '=',
+                uid: '='
             },
             templateUrl: '/app/profile/templates/profile-game.html',
             link: function (scope, element, attrs) {
@@ -182,6 +184,10 @@ directive('profileGame', ['$rootScope', 'socket', 'modal',
                     angular.forEach(['wins', 'draws', 'losses'], function (name) {
                         scope.stats.push(getData(value, name, attrs.gameType));
                     });
+                });
+
+                scope.$watch('uid', function () {
+                    $timeout(componentHandler.upgradeAllRegistered);
                 });
             }
         }
