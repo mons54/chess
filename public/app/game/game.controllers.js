@@ -641,17 +641,6 @@ controller('profileGameCtrl', ['$rootScope', '$scope', 'socket', 'utils',
             return $scope.game && $scope.game.turn === player.color;
         };
 
-        $scope.hasLostPieces = function (lostPieces) {
-            if (typeof lostPieces === 'object') {
-                for (var i in lostPieces) {
-                    if (lostPieces[i]) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
-
         $scope.getLostPieces = function(number) {
             var pieces = [];
             for (var i = 0; i < number; i++) {

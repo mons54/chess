@@ -302,7 +302,7 @@
 
 .app-profile__avatar {
   margin-right: 0;
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
 .app-profile__game-content {
@@ -559,6 +559,11 @@
   text-align: left;
 }
 
+.app-profile--game-points-result {
+  margin-right: 2px;
+  margin-left: 0;
+}
+
 @media screen and (max-width: 1024px) {
 
   .app-header__row {
@@ -803,6 +808,20 @@
 }
 
 @media (max-width: 479px) {
+
+  .app-profile--game-points-result {
+    margin-right: 0;
+  }
+  
+  .app-game__lost-pieces {
+    float: none;
+    direction: rtl;
+  }
+
+  .app-profile--game .app-profile__avatar {
+    margin-left: 4px;
+    margin-right: 0;
+  }
 
   .app-form__choices-colors button {
     margin-left: 8px;

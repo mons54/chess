@@ -1051,12 +1051,17 @@ a {
 .app-profile__name {
   font-weight: 700;
   font-size: 16px;
-  color: #795548;
   margin-bottom: 8px;
+  display: block;
+}
+
+.app-profile__name-text {
+  font-weight: 700;
+  display: inline-block;
+  vertical-align: bottom;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: block;
 }
 
 .app-profile__name a {
@@ -1075,9 +1080,15 @@ a {
   top: -2px;
 }
 
-.app-profile--game-points {
+.app-profile--game-points-result {
   margin-left: 2px;
   font-size: 14px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.app-profile--game-points {
+  display: none;
 }
 
 .app-profile__info {
@@ -2663,7 +2674,7 @@ a {
     vertical-align: middle;
   }
 
-  .app-profile--game .app-profile--game-points {
+  .app-profile--game .app-profile--game-points-result {
     display: block;
   }
 
@@ -3129,7 +3140,9 @@ a {
     bottom: 52px;
   }
 
-
+  .app-profile__name-text {
+    max-width: calc(100% - 340px);
+  }
 }
 
 @media screen and (min-width: 600px) {
@@ -3755,24 +3768,31 @@ a {
   .app-profile--game .app-avatar {
     width: 32px;
     height: 32px;
-    border-radius: 3px;
   }
 
   .app-profile--game .app-profile__avatar {
-    margin-right: 9px;
+    margin-right: 4px;
   }
 
   .app-profile--game .app-profile__name {
     font-size: 13px;
     line-height: 14px;
     height: 14px;
-    max-width: 180px;
     margin-bottom: 0;
-    overflow: hidden;
+  }
+
+  .app-profile__name-text {
+    max-width: calc(100% - 184px);
   }
 
   .app-profile--game-points {
+    display: initial;
     font-size: 12px;
+  }
+
+  .app-profile--game-points-result {
+    font-size: 12px;
+    margin-left: 0;
   }
 
   .app-profile__name .app-icon--star {
@@ -3825,18 +3845,13 @@ a {
   }
 
   .app-game__lost-pieces {
-    display: none;
     direction: ltr;
     float: none;
     margin-top: 2px;
     margin-right: 0;
   }
 
-  .app-profile__show-pieces .app-game__lost-pieces {
-    display: block;
-  }
-
-  .app-profile__show-pieces .app-profile__info {
+  .app-profile__info {
     display: none;
   }
 
