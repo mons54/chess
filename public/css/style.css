@@ -942,18 +942,18 @@ a {
 
 .app-profile__card-avatar {
   position: absolute;
-  top: 48px;
-  left: 60px;
+  top: 40px;
+  left: 24px;
   z-index: 10;
 }
 
 .app-modal--profile .app-modal__content {
-  padding-top: 32px;
+  padding-top: 28px;
 }
 
 .app-profile__action {
   position: absolute;
-  top: 24px;
+  top: 16px;
   right: 24px;
 }
 
@@ -3213,6 +3213,10 @@ a {
     padding: 0 8px;
   }
 
+  .app-modal--profile .app-modal__content {
+    padding-top: 24px;
+  }
+
   .app-profile__game-board {
     display: none;
   }
@@ -3297,7 +3301,7 @@ a {
   }
 
   .app-profile__action {
-    top: 16px;
+    top: 12px;
     right: 8px;
   }
 
@@ -3560,8 +3564,8 @@ a {
   }
 
   .app-profile__card-avatar {
-    top: 40px;
-    left: 36px;
+    top: 32px;
+    left: 8px;
   }
 
   .app-profile__stat {

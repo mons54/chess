@@ -297,7 +297,7 @@
 
 .app-profile__card-avatar {
   left: initial;
-  right: 60px;
+  right: 24px;
 }
 
 .app-profile__avatar {
@@ -738,7 +738,7 @@
 
   .app-profile__card-avatar {
     left: initial;
-    right: 36px;
+    right: 8px;
   }
 
   .app-profile__stat:first-child {
