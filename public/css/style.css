@@ -22,6 +22,14 @@ a {
   color: #fff;
 }
 
+*:focus {
+  outline: none;
+}
+
+.mdl-data-table tbody tr:hover {
+  background-color: inherit;
+}
+
 /* fix ie */
 .mdl-button--fab .material-icons {
   position: absolute;
@@ -3769,6 +3777,10 @@ a {
 
   .app-profile__name .app-icon--star {
     font-size: 12px;
+  }
+
+  .app-profile__trophies {
+    padding: 0;
   }
 
   .app-profile__trophy {
