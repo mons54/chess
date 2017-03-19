@@ -101,11 +101,16 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
     });
 
     if (typeof Audio === 'function') {
+        
         sounds = {
             timer: new Audio('/sounds/timer.mp3'),
             deplace: new Audio('/sounds/deplace.mp3'),
             capture: new Audio('/sounds/capture.mp3')
         };
+
+        angular.forEach(sounds, function (sound) {
+            sound.volume = 0.5;
+        });
     }
 
     function loadAll() {
