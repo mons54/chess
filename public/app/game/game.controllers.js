@@ -525,7 +525,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $timeout(function() {
                 var div = $('<div/>').css({
                     position: 'absolute',
-                    right: '-10000px',
                     width: '300px',
                     height: '300px'
                 }).addClass('app-game__board app-game__board--' + $scope.colorGame).append($('.app-game__board').clone().html()).appendTo($('body'));
