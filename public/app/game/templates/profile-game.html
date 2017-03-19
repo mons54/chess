@@ -23,7 +23,7 @@
         </div>
         <div class="app-profile__name">
             <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
-            <span class="app-profile__name-text">{{ player.name }}</span>
+            <a href show-profile="player.uid" class="app-profile__name-text">{{ player.name }}</a>
             <i ng-if="player.isWinner" class="app-icon app-icon--star material-icons">star</i>
             <span class="app-profile--game-points">({{ player.points }})</span>
             <span ng-if="player.resultPoints"
