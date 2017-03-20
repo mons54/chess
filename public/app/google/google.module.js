@@ -31,7 +31,7 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
             var profile = user.getBasicProfile();
 
             self.auth = {
-                accessToken: user.getAuthResponse().access_token,
+                accessToken: user.getAuthResponse().id_token,
                 id: user.getId(),
                 avatar: profile.Paa,
                 name: profile.ig,

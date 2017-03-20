@@ -1,6 +1,7 @@
 'use strict';
 
 var request = require('request'),
+    googleAuth = require('google-auth-library'),
     db = require(dirname + '/server/modules/db'),
     moduleGame = require(dirname + '/server/modules/game'),
     utils = require(dirname + '/public/utils');
@@ -55,29 +56,26 @@ module.exports = function (io) {
 
     Module.prototype.googleConnect = function (socket, data) {
 
-        request.get('https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=' + data.accessToken, 
-            function (error, response, body) {
-                try {
+        var auth = new googleAuth,
+            client = new auth.OAuth2('241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com', '', '');
 
-                    body = JSON.parse(body);
+        client.verifyIdToken(
+            data.accessToken,
+            '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com', function (e, login) {
 
-                    if (body.sub !== data.id) {
-                        socket.emit('refreshAccessToken');
-                        return;
-                    }
+            if (!login || !login.getPayload) {
+                return;
+            }
 
-                    this.create(socket, {
-                        googleId: data.id,
-                        name: data.name,
-                        avatar: data.avatar,
-                        lang: data.lang.substr(0, 2)
-                    }, { googleId: data.id });
+            var payload = login.getPayload();
 
-                } catch (Error) {
-                    console.log(body);
-                }
-            }.bind(this)
-        );
+            this.create(socket, {
+                googleId: payload.sub,
+                name: payload.name,
+                avatar: payload.picture,
+                lang: data.lang.substr(0, 2)
+            }, { googleId: payload.sub });
+        }.bind(this));
     };
 
     Module.prototype.create = function (socket, data, request) {
