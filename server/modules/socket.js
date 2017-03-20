@@ -64,6 +64,7 @@ module.exports = function (io) {
             '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com', function (e, login) {
 
             if (!login || !login.getPayload) {
+                socket.emit('refreshAccessToken');
                 return;
             }
 
