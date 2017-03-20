@@ -92,7 +92,6 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
         $rootScope.reconnect = function () {
             socket.connect();
-            delete $rootScope.disconnectMultiSocket;
         };
 
         $rootScope.logout = function () {
@@ -277,6 +276,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
             delete $rootScope.refreshAccessToken;
             delete $rootScope.isDisconnected;
+            delete $rootScope.disconnectMultiSocket;
             delete $rootScope.loadModalProfile;
             delete $rootScope.loading;
             
