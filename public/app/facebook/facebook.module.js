@@ -23,33 +23,12 @@ constant('facebookAppId', $('html').data('env') === 'dev' ? '1709923609297773' :
  * @requires global.service:user
  * @requires global.service:socket
  */
-service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId',
+service('facebook', ['$rootScope', '$q', 'user', 'socket', 'facebookAppId',
 
-    function ($rootScope, user, socket, facebookAppId) {
-
-        var self = this;
+    function ($rootScope, $q, user, socket, facebookAppId) {
 
         this.name = 'facebook';
 
-        function setLoginStatus (response) {
-            self.status = response.status;
-            if (response.status === 'connected') {
-                self.auth = {
-                    id: response.authResponse.userID,
-                    accessToken: response.authResponse.accessToken
-                };
-            } else {
-                delete self.auth;
-            }
-        }
-
-        /**
-         * @ngdoc function
-         * @name #init
-         * @methodOf facebook.service:facebook
-         * @description
-         * Init app Facebook.
-         */
         this.init = function () {
             FB.init({
                 appId: facebookAppId,
@@ -58,54 +37,57 @@ service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId',
             });
         };
 
-        /**
-         * @ngdoc function
-         * @name #setLoginStatus
-         * @methodOf facebook.service:facebook
-         * @description
-         * Set Facebook login status.
-         * @param {function} callback Callback
-         */
-        this.setLoginStatus = function (callback) {
+        this.silenceLogin = function () {
+
+            var deferred = $q.defer();
+
             FB.getLoginStatus(function (response) {
-                setLoginStatus(response);
-                callback(self);
-            });
+                if (response.authResponse) {
+                    deferred.resolve(response);
+                    this.handleLogin(response);
+                } else {
+                    deferred.reject(response);
+                }
+            }.bind(this));
+
+            return deferred.promise;
         };
 
-        /**
-         * @ngdoc function
-         * @name #login
-         * @methodOf facebook.service:facebook
-         * @description
-         * Facebook login.
-         */
         this.login = function () {
-            if (this.status === 'connected') {
-                this.handleLogin();
-            } else {
-                FB.login(function (response) {
-                    setLoginStatus(response);
-                    self.handleLogin();
-                }, {
-                    scope: 'user_friends'
-                });
-            }
+
+            var deferred = $q.defer();
+
+            FB.getLoginStatus(function (response) {
+                if (response.authResponse) {
+                    deferred.resolve(response);
+                    this.handleLogin(response);
+                } else {
+                    FB.login(function (response) {
+                        if (response.authResponse) {
+                            deferred.resolve(response);
+                            this.handleLogin(response);
+                        } else {
+                            deferred.reject(response);
+                        }
+                    }.bind(this), {
+                        scope: 'user_friends'
+                    });
+                }
+            }.bind(this));
+
+            return deferred.promise;
         };
 
-        /**
-         * @ngdoc function
-         * @name #handleLogin
-         * @methodOf facebook.service:facebook
-         * @description
-         * Set user data from facebook.
-         * Set user friends from facebook list.
-         */
-        this.handleLogin = function () {
+        this.handleLogin = function (response) {
 
             if (!this.isFacebookApp) {
                 user.setLogin(this.name);
             }
+
+            this.auth = {
+                id: response.authResponse.userID,
+                accessToken: response.authResponse.accessToken
+            };
             
             socket.connect();
 

@@ -18,34 +18,12 @@ constant('googleClientId', '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.g
  * @requires global.service:socket
  * @requires global.service:translator
  */
-service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator',
+service('google', ['$rootScope', '$q', 'googleClientId', 'user', 'socket', 'translator',
 
-    function ($rootScope, googleClientId, user, socket, translator) {
-
-        var self = this;
+    function ($rootScope, $q, googleClientId, user, socket, translator) {
 
         this.name = 'google';
 
-        function setAuth (user) {
-
-            var profile = user.getBasicProfile();
-
-            self.auth = {
-                accessToken: user.getAuthResponse().id_token,
-                id: user.getId(),
-                avatar: profile.Paa,
-                name: profile.ig,
-                lang: translator.navigator
-            };
-        }
-
-        /**
-         * @ngdoc function
-         * @name #init
-         * @methodOf google.service:google
-         * @description
-         * Init app Google.
-         */
         this.init = function () {
             return gapi.client.init({
                 apiKey: 'AIzaSyDo-HJeI3NjUs4T0HVett5W2SBfeUcpIXY',
@@ -53,65 +31,41 @@ service('google', ['$rootScope', 'googleClientId', 'user', 'socket', 'translator
                 clientId: googleClientId,
                 scope: 'profile'
             }).then(function(response) {
-                gapi.auth2.getAuthInstance().isSignedIn.listen(function() {
-                    self.setLoginStatus(self.handleLogin);
-                });
-            }, function (err) {
-                self.status = 'error';
-            });
+                gapi.auth2.getAuthInstance().isSignedIn.listen(this.handleLogin);
+            }.bind(this));
         };
 
-        /**
-         * @ngdoc function
-         * @name #setLoginStatus
-         * @methodOf google.service:google
-         * @description
-         * Set Google login status.
-         * @param {function} callback Callback
-         */
-        this.setLoginStatus = function (callback) {
+        this.silenceLogin = function () {
 
-            if (this.status === 'error') {
-                callback();
-                return;
-            }
+            var deferred = $q.defer();
 
-            var isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-            if (!isSignedIn) {
-                this.status = 'unknown';
-                delete this.auth;
+            if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+                deferred.resolve('connected');
+                this.handleLogin();
             } else {
-                this.status = 'connected';
+                deferred.reject('unknown');
             }
 
-            callback(this);
+            return deferred.promise;
         };
 
-        /**
-         * @ngdoc function
-         * @name #login
-         * @methodOf google.service:google
-         * @description
-         * Google login.
-         */
         this.login = function () {
-            if (this.status === 'connected') {
+            if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
                 this.handleLogin();
             } else {
                 gapi.auth2.getAuthInstance().signIn();
             }
         };
 
-        /**
-         * @ngdoc function
-         * @name #handleLogin
-         * @methodOf google.service:google
-         * @description
-         * Set user data from google.
-         */
         this.handleLogin = function () {
-            user.setLogin(self.name);
-            setAuth(gapi.auth2.getAuthInstance().currentUser.get());
+
+            user.setLogin(this.name);
+
+            this.auth = {
+                accessToken: gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token,
+                lang: translator.navigator
+            };
+
             socket.connect();
         };
 

@@ -127,7 +127,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
         function logout() {
             $rootScope.loading = true;
-            user.setLogin(false);
+            user.setLogin(null);
             socket.disconnect();
             initUser();
             modalConnect.show();
@@ -138,46 +138,6 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
          */
         function redirectToGame () {
             $location.path('/game/' + $rootScope.user.gid);
-        }
-
-        function setLoginStatus() {
-            facebookSetLoginStatus();
-            googleSetLoginStatus();
-        }
-
-        function facebookSetLoginStatus () {
-            facebook.setLoginStatus(callBackLoginStatus);
-        }
-
-        function googleSetLoginStatus () {
-            google.setLoginStatus(callBackLoginStatus);
-        }
-
-        function callBackLoginStatus(service) {
-
-            if (!service) {
-                return;
-            }
-
-            var login = user.getLogin();
-
-            if (facebook.isFacebookApp) {
-                login = facebook.name;
-            }
-
-            if (!facebook.isFacebookApp && (!login || login === service.name && service.status !== 'connected')) {
-                modalConnect.show();
-                return;
-            }
-
-
-            if (login === service.name) {
-                if (service.status === 'connected') {
-                    service.handleLogin();
-                } else if (facebook.isFacebookApp) {
-                    facebook.login();
-                }
-            }
         }
 
         function initUser() {
@@ -191,16 +151,19 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             modal('[data-modal]').hide();
         }
 
-        socket.on('connect', function () {
-            var login = facebook.isFacebookApp ? 'facebook' : user.getLogin();
+        function getLogin() {
+            return facebook.isFacebookApp ? 'facebook' : user.getLogin();
+        }
 
-            if (login === 'facebook' && facebook.auth) {
+        socket.on('connect', function () {
+
+            console.log(google.auth)
+            if (facebook.auth) {
                 socket.emit('facebookConnect', facebook.auth);
-            } else if (login === 'google' && google.auth) {
+            } else if (google.auth) {
                 socket.emit('googleConnect', google.auth);
-            } else if (!login) {
-                socket.disconnect();
-                modalConnect.show();
+            } else {
+                logout();
             }
         });
 
@@ -208,13 +171,20 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
             if ($rootScope.refreshAccessToken) {
                 logout();
+                return;
             }
 
             $rootScope.refreshAccessToken = true;
 
-            socket.disconnect();
+            var login = getLogin();
 
-            setLoginStatus();
+            if (login === 'facebook') {
+                facebook.silenceLogin();
+            } else if (login === 'google') {
+                google.silenceLogin();
+            } else {
+                logout();
+            }
         });
 
         socket.on('disconnect', function (data) {
@@ -338,10 +308,17 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
             facebook.init();
 
-            facebookSetLoginStatus();
+            if (facebook.isFacebookApp || login === 'facebook') {
+                facebook.silenceLogin().catch(function() {
+                    if (!facebook.isFacebookApp) {
+                        modalConnect.show();
+                    }
+                });
+            }
         };
 
-        var modalConnect = modal('#modal-connect');
+        var login = user.getLogin(),
+            modalConnect = modal('#modal-connect');
 
         facebook.isFacebookApp = angular.element('html').data('facebook');
 
@@ -349,7 +326,15 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
 
         if (!facebook.isFacebookApp && typeof gapi !== 'undefined' && gapi.load) {
             gapi.load('client', function () {
-                google.init().then(googleSetLoginStatus);
+                google.init().then(function () {
+                    if (login === 'google') {
+                        google.silenceLogin().catch(function() {
+                            if (login === 'google') {
+                                modalConnect.show();
+                            }
+                        });
+                    }
+                });
             });
         }
 
@@ -358,6 +343,10 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         initUser();
 
         translator.use(translator.navigator);
+
+        if (!login) {
+            modalConnect.show();
+        }
         
         (function(d, s, id){
             var js, fjs = d.getElementsByTagName(s)[0];
