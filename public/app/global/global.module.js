@@ -78,6 +78,10 @@ factory('utils', ['$rootScope', '$filter', '$window', 'host',
                     title: $filter('translate')('title'),
                     message: $filter('translate')('description')
                 });
+            },
+
+            isTouch: function () {
+                return $window.hasOwnProperty('ontouchstart') || $window.navigator.maxTouchPoints;
             }
         };
     }

@@ -37,7 +37,7 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
         restrict: 'A',
         link: function (scope, element, attr) {
 
-            var selectedClass = 'selected',
+            var selectedClass = utils.isTouch() ? 'is-touch' : 'selected',
                 droppableClass =  'ui-droppable',
                 modalPromotion = modal('#modal-promotion');
 
