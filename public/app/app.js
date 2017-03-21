@@ -294,7 +294,13 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         });
 
         $rootScope.setFavorite = function (uid, value) {
+
+            if (!$rootScope.user.favorites) {
+                return;
+            }
+
             var isFavorite = $rootScope.isFavorite(uid);
+            
             if (value === isFavorite) {
                 return;
             }
