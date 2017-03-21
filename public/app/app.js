@@ -41,15 +41,22 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
      */
     function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator, utils) {
 
-        $rootScope.$on('$routeChangeStart', function(event) {
+        $rootScope.$on('$routeChangeStart', function(event, toState, fromState) {
             
-            if (!$rootScope.ready && $route.current) {
+            if ((!$rootScope.user || !$rootScope.user.gid) &&
+                !$rootScope.ready && $route.current) {
                 event.preventDefault();
                 return;
             }
 
             if ($rootScope.user && $rootScope.user.gid) {
-                redirectToGame();
+                if (fromState.name === 'game' && fromState.params.id === $rootScope.user.gid) {
+                    event.preventDefault();
+                    return;
+                }
+                if (toState.name !== 'game' || toState.params.id === $rootScope.user.gid) {
+                    redirectToGame();
+                }
             }
         });
 
