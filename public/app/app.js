@@ -41,7 +41,13 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
      */
     function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator, utils) {
 
-        $rootScope.$on('$routeChangeStart', function() {
+        $rootScope.$on('$routeChangeStart', function(event) {
+            
+            if (!$rootScope.ready && $route.current) {
+                event.preventDefault();
+                return;
+            }
+
             if ($rootScope.user && $rootScope.user.gid) {
                 redirectToGame();
             }
@@ -125,7 +131,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         }
 
         function logout() {
-            $rootScope.loading = true;
+            delete $rootScope.ready;
             user.setLogin(false);
             socket.disconnect();
             initUser();
