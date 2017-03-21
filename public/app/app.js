@@ -198,8 +198,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             } else if (login === 'google' && google.auth) {
                 socket.emit('googleConnect', google.auth);
             } else if (!login) {
-                socket.disconnect();
-                modalConnect.show();
+                logout();
             }
         });
 
