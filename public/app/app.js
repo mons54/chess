@@ -42,12 +42,6 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
     function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator, utils) {
 
         $rootScope.$on('$routeChangeStart', function(event, toState, fromState) {
-            
-            if ((!$rootScope.user || !$rootScope.user.gid) &&
-                !$rootScope.ready && $route.current) {
-                event.preventDefault();
-                return;
-            }
 
             if ($rootScope.user && $rootScope.user.gid) {
                 if (fromState.name === 'game' && fromState.params.id === $rootScope.user.gid) {
