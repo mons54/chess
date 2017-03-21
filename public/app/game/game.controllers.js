@@ -126,13 +126,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 game.played.length !== $scope.game.played.length &&
                 game.played[game.played.length - 1]) {
 
-                var moveSound = sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'];
-
-                if (moveSound.isPlayed()) {
-                    moveSound.load();
-                }
-
-                moveSound.play();
+                sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'].play();
             }
 
             setLostPieces(game);
@@ -291,13 +285,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.move = function (start, end, promotion) {
 
-            var moveSound = sound[$scope.game.pieces[end] ? 'capture' : 'deplace'];
-
-            if (moveSound.isPlayed()) {
-                moveSound.load();
-            }
-
-            moveSound.play();
+            sound[$scope.game.pieces[end] ? 'capture' : 'deplace'].play();
 
             socket.emit('moveGame', {
                 id: $scope.game.id,
@@ -582,7 +570,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         function cancelInterval() {
             $interval.cancel($interval.stopTimeGame);
-            sound.timer.load();
+            sound.timer.stop();
         }
 
         var interval = 100;
@@ -592,9 +580,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             var game = $scope.game;
 
             if (!game || game.finish) {
-                if (sound.timer.isPlayed()) {
-                    sound.timer.load();
-                }
+                sound.timer.stop();
                 return;
             }
 
@@ -609,11 +595,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 player.timeTurn = player.currentTimeTurn - diff;
             }
 
-            if (sound.timer.isPlayed()) {
-                if (!$scope.isPlayerTurn()) {
-                    sound.timer.load();
-                }
-            } else if ($scope.isPlayerTurn() && (player.time < 10000 || player.timeTurn < 10000)) {
+            if (!$scope.isPlayerTurn()) {
+                sound.timer.stop();
+            } else if (player.time < 10000 || player.timeTurn < 10000) {
                 sound.timer.play();
             }
 

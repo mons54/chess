@@ -101,6 +101,9 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
     $rootScope.$watch('user.sound', function (value) {
         if (typeof value === 'boolean') {
             sound = value;
+            if (!sound) {
+                stopAll();
+            }
         }
     });
 
@@ -117,13 +120,13 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         });
     }
 
-    function loadAll() {
+    function stopAll() {
         if (!sounds) {
             return;
         }
 
-        angular.forEach(sounds, function (value, name) {
-            value.load();
+        angular.forEach(sounds, function (value) {
+            value.stop();
         });
     }
 
@@ -134,32 +137,29 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         }
 
         this.play = function () {
-            if (sound && this.isPaused()) {
+            if (sound && !this.isPlayed()) {
                 this.sound.play();
             }
             return this;
         };
 
         this.pause = function () {
-            if (sound && this.isPlayed()) {
+            if (this.isPlayed()) {
                 this.sound.pause();
             }
             return this;
         };
 
-        this.load = function () {
-            if (sound && this.sound) {
-                this.sound.load();
+        this.stop = function () {
+            if (this.isPlayed()) {
+                this.sound.pause();
+                this.sound.currentTime = 0;
             }
             return this;
         };
 
         this.isPlayed = function () {
             return this.sound && !this.sound.paused;
-        };
-
-        this.isPaused = function () {
-            return this.sound && this.sound.paused;
         };
     }
 
