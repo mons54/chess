@@ -84,12 +84,12 @@
                 </div>
                 <div class="app-login__content-button">
                     <button class="app-login__button app-login__button--facebook" ng-click="facebookLogin()">
-                        {{ 'login_with_facebook' | translate }}
+                        <span ng-if="lang">{{ 'login_with_facebook' | translate }}</span>
                     </button>
                 </div>
                 <div class="app-login__content-button">
                     <button class="app-login__button app-login__button--google" ng-click="googleLogin()">
-                        {{ 'login_with_google' | translate }}
+                        <span ng-if="lang">{{ 'login_with_google' | translate }}</span>
                     </button>
                 </div>
             </div>
