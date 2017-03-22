@@ -1570,7 +1570,7 @@ a {
 }
 
 .app-table td.app-table__user {
-  max-width: 240px;
+  max-width: 280px;
   width: 120px;
   overflow: hidden;
   white-space: nowrap;
