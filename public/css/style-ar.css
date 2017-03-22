@@ -809,6 +809,10 @@
 
 @media (max-width: 479px) {
 
+  .app-table td.app-table__avatar:first-of-type {
+    padding-left: 4px;
+  }
+
   .app-profile--game-points-result {
     margin-right: 0;
   }

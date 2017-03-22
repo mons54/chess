@@ -17,21 +17,43 @@
                     <table class="app-table mdl-data-table mdl-js-data-table">
                         <thead>
                             <tr>
-                                <th sortable collection="challenges" expression="['name', 'points', 'time', 'color']" icon="account_circle"></th>
-                                <th sortable collection="challenges" expression="['points', 'time', 'color', 'name']" icon="star"></th>
-                                <th sortable collection="challenges" expression="['color', 'points', 'time', 'name']" icon="invert_colors"></th>
-                                <th sortable collection="challenges" expression="['time', 'points', 'color', 'name']" icon="schedule"></th>
+                                <th></th>
+                                <th sortable 
+                                    collection="challenges" 
+                                    expression="['name', 'points', 'time', 'color']" 
+                                    icon="account_circle"
+                                    class="mdl-data-table__cell--non-numeric">
+                                </th>
+                                <th sortable 
+                                    collection="challenges" 
+                                    expression="['points', 'time', 'color', 'name']" 
+                                    icon="star">
+                                </th>
+                                <th sortable 
+                                    collection="challenges" 
+                                    expression="['color', 'points', 'time', 'name']" 
+                                    icon="invert_colors">
+                                </th>
+                                <th sortable 
+                                    collection="challenges" 
+                                    expression="['time', 'points', 'color', 'name']" 
+                                    icon="schedule">
+                                </th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody ng-if="challenges.length">
                             <tr ng-repeat="challenge in challenges"
                                 show-profile="challenge.uid">
+                                <td class="app-table__avatar">
+                                    <a href show-profile="challenge.uid">
+                                        <img avatar class="app-avatar" ng-src="{{ challenge.avatar }}">
+                                    </a>
+                                </td>
                                 <td class="app-table__user mdl-data-table__cell--non-numeric">
-                                    <img avatar
-                                         class="app-table__avatar" 
-                                         ng-src="{{challenge.avatar}}">
-                                    <span class="app-table__name">{{ challenge.name }}</span>
+                                    <a href show-profile="challenge.uid">
+                                        <span class="app-table__name">{{ challenge.name }}</span>
+                                    </a>
                                 </td>
                                 <td class="app-table__points">{{ challenge.points }}</td>
                                 <td class="app-table__color" 

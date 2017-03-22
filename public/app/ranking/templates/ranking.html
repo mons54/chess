@@ -34,12 +34,13 @@
                 <tr ng-repeat="rank in ranking" 
                     ng-class="{'is-user': rank.uid === user.uid }">
                     <td class="app-table__rank mdl-data-table__cell--non-numeric">{{ rank.position }}</td>
+                    <td class="app-table__avatar mdl-data-table__cell--non-numeric">
+                        <a href show-profile="rank.uid">
+                            <img avatar class="app-avatar" ng-src="{{ rank.avatar }}">
+                        </a>
+                    </td>
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <a href
-                           show-profile="rank.uid">
-                            <img avatar
-                                 class="app-table__avatar" 
-                                 ng-src="{{rank.avatar}}">
+                        <a href show-profile="rank.uid">
                             <span class="app-table__name">{{ rank.name }}</span>
                         </a>
                     </td>

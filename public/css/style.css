@@ -1559,23 +1559,31 @@ a {
   border-width: 5px 5px 0 5px;
 }
 
-.app-table__user {
-  max-width: 150px;
+.app-table td.app-table__avatar {
+  padding-right: 0;
+  width: 40px;
+}
+
+.app-table td.app-table__avatar img {
+  width: 40px;
+  height: 40px;
+}
+
+.app-table td.app-table__user {
+  max-width: 240px;
+  width: 120px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.app-table__user a {
-  color: inherit;
-  font-weight: inherit;
+.app-table--ranking td.app-table__user {
+  max-width: 320px;
 }
 
-.app-table__avatar {
-  margin-right: 8px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.app-table td.app-table__user a {
+  color: inherit;
+  font-weight: inherit;
 }
 
 .app-table__icon-ranking {
@@ -3209,6 +3217,14 @@ a {
 
 @media screen and (max-width: 599px) {
 
+  .app-table td.app-table__user {
+    max-width: 200px;
+  }
+
+  .app-table--ranking td.app-table__user {
+    max-width: 280px;
+  }
+
   .app-profile__more .app-button {
     min-width: initial;
     margin-bottom: 8px;
@@ -3685,7 +3701,7 @@ a {
   }
 
   .mdl-data-table td {
-    padding: 12px 6px;
+    padding: 12px 4px;
   }
 
   .mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
@@ -3722,10 +3738,22 @@ a {
     margin-right: -6px;
   }
 
-  .app-table__avatar {
+  .app-table td.app-table__avatar {
+    width: 30px;
+    padding-right: 4px;
+  }
+
+  .app-table td.app-table__user {
+    max-width: 100px;
+  }
+
+  .app-table--ranking td.app-table__user {
+    max-width: 160px;
+  }
+
+  .app-table td.app-table__avatar img {
     width: 30px;
     height: 30px;
-    margin-right: 4px;
   }
 
   .app-table--ranking .app-table__name {

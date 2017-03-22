@@ -6,21 +6,40 @@
                class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
-                    <th sortable collection="createdGames" expression="['name', 'points', 'time', 'color']" icon="account_circle"></th>
-                    <th sortable collection="createdGames" expression="['points', 'time', 'color', 'name']" icon="star"></th>
-                    <th sortable collection="createdGames" expression="['color', 'points', 'time', 'name']" icon="invert_colors"></th>
-                    <th sortable collection="createdGames" expression="['time', 'points', 'color', 'name']" icon="schedule"></th>
+                    <th></th>
+                    <th sortable 
+                        collection="createdGames" 
+                        expression="['name', 'points', 'time', 'color']" 
+                        icon="account_circle"
+                        class="mdl-data-table__cell--non-numeric">
+                    </th>
+                    <th sortable 
+                        collection="createdGames" 
+                        expression="['points', 'time', 'color', 'name']" 
+                        icon="star">
+                    </th>
+                    <th sortable 
+                        collection="createdGames" 
+                        expression="['color', 'points', 'time', 'name']" 
+                        icon="invert_colors">
+                    </th>
+                    <th sortable 
+                        collection="createdGames" 
+                        expression="['time', 'points', 'color', 'name']" 
+                        icon="schedule">
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="game in createdGames">
+                    <td class="app-table__avatar">
+                        <a href show-profile="game.uid">
+                            <img avatar class="app-avatar" ng-src="{{ game.avatar }}">
+                        </a>
+                    </td>
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <a href
-                           show-profile="game.uid">
-                            <img avatar
-                                 class="app-table__avatar" 
-                                 ng-src="{{ game.avatar }}">
+                        <a href show-profile="game.uid">
                             <span class="app-table__name">{{ game.name }}</span>
                         </a>
                     </td>
@@ -50,7 +69,7 @@
     </div>
 </div>
 
-<div element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+<div ng-if="favorites.length" element class="app-element mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <element-toggle name="'favorites'" collection="favorites"></element-toggle>
     <div element-content 
          ng-show="favorites.length"
@@ -58,20 +77,35 @@
         <table class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
-                    <th sortable collection="favorites" expression="['name', 'blitz.points', 'rapid.points']" icon="account_circle"></th>
-                    <th sortable collection="favorites" expression="['blitz.points', 'rapid.points', 'name']" icon="flash_on"></th>
-                    <th sortable collection="favorites" expression="['rapid.points', 'blitz.points', 'name']" icon="timer"></th>
+                    <th></th>
+                    <th sortable 
+                        collection="favorites" 
+                        expression="['name', 'blitz.points', 'rapid.points']" 
+                        icon="account_circle"
+                        class="mdl-data-table__cell--non-numeric">
+                    </th>
+                    <th sortable 
+                        collection="favorites" 
+                        expression="['blitz.points', 'rapid.points', 'name']" 
+                        icon="flash_on">
+                    </th>
+                    <th sortable 
+                        collection="favorites" 
+                        expression="['rapid.points', 'blitz.points', 'name']" 
+                        icon="timer">
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="favorite in favorites">
+                    <td class="app-table__avatar">
+                        <a href show-profile="favorite.uid">
+                            <img avatar class="app-avatar" ng-src="{{ favorite.avatar }}">
+                        </a>
+                    </td>
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <a href
-                           show-profile="favorite.uid">
-                            <img avatar
-                                 class="app-table__avatar" 
-                                 ng-src="{{ favorite.avatar }}">
+                        <a href show-profile="favorite.uid">
                             <span class="app-table__name">{{ favorite.name }}</span>
                         </a>
                     </td>
@@ -103,20 +137,35 @@
         <table class="app-table mdl-data-table mdl-js-data-table">
             <thead>
                 <tr>
-                    <th sortable collection="challengers" expression="['name', 'blitz.points', 'rapid.points']" icon="account_circle"></th>
-                    <th sortable collection="challengers" expression="['blitz.points', 'rapid.points', 'name']" icon="flash_on"></th>
-                    <th sortable collection="challengers" expression="['rapid.points', 'blitz.points', 'name']" icon="timer"></th>
+                    <th></th>
+                    <th sortable 
+                        collection="challengers" 
+                        expression="['name', 'blitz.points', 'rapid.points']" 
+                        icon="account_circle"
+                        class="mdl-data-table__cell--non-numeric">
+                    </th>
+                    <th sortable 
+                        collection="challengers" 
+                        expression="['blitz.points', 'rapid.points', 'name']" 
+                        icon="flash_on">
+                    </th>
+                    <th sortable 
+                        collection="challengers" 
+                        expression="['rapid.points', 'blitz.points', 'name']" 
+                        icon="timer">
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="challenger in challengers">
+                    <td class="app-table__avatar">
+                        <a href show-profile="challenger.uid">
+                            <img avatar class="app-avatar" ng-src="{{ challenger.avatar }}">
+                        </a>
+                    </td>
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <a href
-                           show-profile="challenger.uid">
-                            <img avatar
-                                 class="app-table__avatar" 
-                                 ng-src="{{challenger.avatar}}">
+                        <a href show-profile="challenger.uid">
                             <span class="app-table__name">{{ challenger.name }}</span>
                         </a>
                     </td>
