@@ -86,8 +86,10 @@ service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId',
             } else {
                 FB.login(function (response) {
                     setLoginStatus(response);
-                    self.handleLogin();
-                }, {
+                    if (this.status === 'connected') {
+                        this.handleLogin();
+                    }
+                }.bind(this), {
                     scope: 'user_friends'
                 });
             }
