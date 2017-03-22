@@ -3085,6 +3085,14 @@ a {
 
 @media screen and (max-width: 745px) {
 
+  .app-table td.app-table__user {
+    max-width: 240px;
+  }
+
+  .app-table--ranking td.app-table__user {
+    max-width: 300px;
+  }
+
   .app-game__message {
     padding: 5px 10px;
   }
