@@ -1808,7 +1808,7 @@ a {
     cursor: auto;
 }
 
-.app-loading {
+.app-overlay {
   position: absolute;
   display: -webkit-box;
   display: -webkit-flex;
