@@ -114,6 +114,14 @@ a {
   cursor: pointer;
 }
 
+.app-init {
+  width: 120px;
+  height: 120px;
+  background-image: url(/images/logo.png);
+  background-size: cover;
+  border-radius: 50%;
+}
+
 .app__action {
   color: #DB4437;
   font-size: 200px;
@@ -1819,7 +1827,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #f3f3f3;
 }
 
 .app-loader {
