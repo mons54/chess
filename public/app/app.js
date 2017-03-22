@@ -346,12 +346,12 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         
         $window.onbeforeunload = function () {
             
-            if ($rootScope.isDisconnected) {
+            if (!socket.connected) {
                 return;
             }
 
             $rootScope.$emit('unload');
-            
+
             socket.emit('updateUser', {
                 dataGame: user.getDataGame(),
                 colorGame: user.getColorGame(),
