@@ -346,7 +346,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         
         $window.onbeforeunload = function () {
             
-            if (!socket.connected) {
+            if (!socket.isConnected()) {
                 return;
             }
 
