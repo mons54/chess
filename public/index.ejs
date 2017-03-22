@@ -122,11 +122,6 @@
                                href="/ranking/blitz"
                                ng-bind="'ranking'|translate">
                             </a>
-                            <a class="app-navigation__link mdl-navigation__link mdl-typography--text-uppercase"
-                               ng-class="{'selected': currentRoute === 'trophies'}"
-                               href="/trophies"
-                               ng-bind="'trophies.title'|translate">
-                            </a>
                             <a ng-if="challenges.length"
                                class="app-navigation__link mdl-navigation__link"
                                show-modal="#modal-challenges"
@@ -227,12 +222,6 @@
                         {{ 'ranking' | translate }}
                     </a>
                     <a class="mdl-navigation__link" 
-                       href="/trophies"
-                       ng-click="closeDrawer()">
-                        <i class="material-icons" role="presentation">star</i>
-                        {{ 'trophies.title' | translate }}
-                    </a>
-                    <a class="mdl-navigation__link" 
                        href
                        ng-click="closeDrawer()"
                        show-modal="#modal-create-game">
@@ -310,6 +299,7 @@
 
             <div class="app-button__fixed app-button__fixed--mobile" 
                  ng-hide="isGame"
+                 ng-click="closeDrawer()"
                  ng-class="{'app-button__fixed--pagination': pages}">
                 <button class="app-button app-button--show mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
                         show-modal="#modal-create-game">
