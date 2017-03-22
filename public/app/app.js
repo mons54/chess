@@ -346,7 +346,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         
         $window.onbeforeunload = function () {
             $rootScope.$emit('unload');
-            if ($rootScope.disconnectMultiSocket) {
+            if ($rootScope.isDisconnected) {
                 return;
             }
             socket.emit('updateUser', {
