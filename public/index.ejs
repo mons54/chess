@@ -56,18 +56,18 @@
     <body>
 
         <div ng-show="loading" class="app-loading">
-            <div ng-hide="disconnectMultiSocket || unauthorized || !ready" 
-                 class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate">
+            <div ng-show="!connected" class="app-init"></div>
+            <div ng-hide="disconnectMultiSocket || unauthorized || !connected" 
+                 class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate ng-hide">
             </div>
-            <div ng-show="!ready" class="app-init"></div>
             <i ng-show="disconnectMultiSocket" 
                 ng-click="reconnect()"
                 ng-bind="'play_arrow'"
-                class="app__clickable app__no-select app__action material-icons">
+                class="app__clickable app__no-select app__action material-icons ng-hide">
             </i>
             <i ng-show="unauthorized"
                ng-bind="'remove_circle'" 
-               class="app__action material-icons">
+               class="app__action material-icons ng-hide">
             </i>
         </div>
 
@@ -97,7 +97,8 @@
 
         <div id="modal-container"></div>
 
-        <div class="app-layout mdl-layout mdl-js-layout mdl-layout--fixed-header" 
+        <div class="app-layout mdl-layout mdl-js-layout mdl-layout--fixed-header"
+             ng-if="ready"
              ng-show="!loading" 
              ng-class="{'is-user-game': user.gid, 'is-game': isGame, 'is-toggle': isToggle }"
              data-layout>
@@ -256,7 +257,7 @@
 
             <div class="app-content mdl-layout__content" autoscroll="true">
                 <a name="top"></a>
-                <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
+                <div class="app-grid mdl-grid" ng-view></div>
                 <footer class="app-footer">
                     <a id="fanpage" href="https://www.facebook.com/ChessCommunity" target="_blank">{{ 'fanpage' | translate }}</a>
                 </footer>
