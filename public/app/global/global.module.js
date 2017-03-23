@@ -137,7 +137,8 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         }
 
         this.play = function () {
-            if (sound && !this.isPlayed()) {
+            if (sound) {
+                this.sound.currentTime = 0;
                 this.sound.play();
             }
             return this;
