@@ -244,6 +244,8 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             if (data === 'io server disconnect') {
                 hideModal();
                 $rootScope.disconnectMultiSocket = true;
+            } else if (!$rootScope.unauthorized) {
+                $rootScope.loading = true;
             }
         });
 
@@ -343,10 +345,13 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         };
         
         $window.onbeforeunload = function () {
-            $rootScope.$emit('unload');
-            if ($rootScope.disconnectMultiSocket) {
+            
+            if (!socket.isConnected()) {
                 return;
             }
+
+            $rootScope.$emit('unload');
+
             socket.emit('updateUser', {
                 dataGame: user.getDataGame(),
                 colorGame: user.getColorGame(),

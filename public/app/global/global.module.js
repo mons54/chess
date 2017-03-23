@@ -206,6 +206,11 @@ factory('socket', ['$timeout', function ($timeout) {
         deferedEvents = [];
 
     return {
+
+        isConnected: function () {
+            return socket && socket.connected;
+        },
+        
         /**
          * @ngdoc function
          * @name #connect
