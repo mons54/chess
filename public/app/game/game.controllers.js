@@ -330,7 +330,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.possibleResign = function () {
-            return !$scope.game.finish && $scope.game.played.length >= 4 && new Date().getTime() - $scope.game.startTime >= 30000;
+            return !$scope.game.finish && $scope.game.played.length >= 4;
         };
 
         $scope.possibleOfferDraw = function () {

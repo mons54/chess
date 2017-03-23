@@ -140,8 +140,7 @@ Game.prototype.resign = function (socket, id) {
     if (!game || 
         game.finish || 
         !this.isPlayer(game, socket.uid) || 
-        game.played.length < 4 ||
-        new Date().getTime() - game.startTime < 30000) {
+        game.played.length < 4) {
         return;
     }
 
