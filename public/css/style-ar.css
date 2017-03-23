@@ -77,9 +77,36 @@
   margin: 0 48px 0 36px;
 }
 
+.app-modal--login .app-logo {
+  padding: 4px 4px 4px 20px;
+}
+
+.app-modal--login .app-logo__icon {
+  right: 4px;
+}
+
 .app-logo__text {
   margin-left: 0;
   margin-right: 56px;
+}
+
+.app-login__button {
+  padding: 0 48px 0 16px;
+}
+
+.app-login__button:before {
+  left: inherit;
+  right: 0;
+}
+
+.app-login__button--facebook:before {
+  border-right: initial;
+  border-left: #364e92 1px solid;
+}
+
+.app-login__button--google:before {
+  border-right: initial;
+  border-left: #BB3F30 1px solid;
 }
 
 .app-element .app-element__tools {
@@ -659,6 +686,11 @@
 
   .app-logo__text {
     margin-right: 0;
+  }
+
+  .app-modal__logo .app-logo__text {
+    margin-left: 0;
+    margin-right: 56px;
   }
 
   .app-navigation__profile-infos {
