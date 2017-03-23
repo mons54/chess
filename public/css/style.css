@@ -133,6 +133,7 @@ a {
 }
 
 .app-modal--login .app-logo {
+  position: relative;
   padding: 4px 20px 4px 4px;
   background-color: #795548;
   border-radius: 24px;
@@ -147,7 +148,7 @@ a {
   box-sizing: border-box;
   position: relative;
   margin: 0.2em;
-  padding: 0 15px 0 46px;
+  padding: 0 16px 0 48px;
   border: none;
   text-align: left;
   line-height: 34px;
@@ -183,7 +184,7 @@ a {
 
 .app-login__button--facebook:before {
   border-right: #364e92 1px solid;
-  background: url('/images/icon_facebook.png') 6px 6px no-repeat;
+  background: url('/images/icon_facebook.png') 4px 6px no-repeat;
 }
 
 .app-login__button--facebook:hover,
@@ -199,7 +200,7 @@ a {
 
 .app-login__button--google:before {
   border-right: #BB3F30 1px solid;
-  background: url('/images/icon_google.png') 6px 6px no-repeat;
+  background: url('/images/icon_google.png') 4px 6px no-repeat;
 }
 
 .app-login__button--google:hover,
