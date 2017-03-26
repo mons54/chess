@@ -10,9 +10,9 @@
  * @requires global.service:utils
  * @requires global.constant:paramsGame
  */
-controller('homeCtrl', ['$rootScope', '$scope', '$sce', 'socket', 'translator', 'utils', 'paramsGame', 'orderByFilter',
+controller('homeCtrl', ['$rootScope', '$scope', '$sce', '$timeout', 'socket', 'translator', 'utils', 'paramsGame', 'orderByFilter',
     
-    function ($rootScope, $scope, $sce, socket, translator, utils, paramsGame, orderByFilter) {
+    function ($rootScope, $scope, $sce, $timeout, socket, translator, utils, paramsGame, orderByFilter) {
 
         $scope.$on('$destroy', function() {
             socket.emit('leaveHome');
@@ -34,10 +34,14 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', 'socket', 'translator', 
         };
         
         socket.emit('joinHome', $rootScope.user.refresh);
+
+        var createdGames;
         
         socket.on('listGames', function (data) {
-            var createdGames = [],
-                userGame;
+
+            var userGame;
+
+            createdGames = [];
             
             angular.forEach(data, function (value, key) {
                 value.uid = key;
@@ -51,13 +55,23 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', 'socket', 'translator', 
                 }
             });
 
-            $scope.createdGames = orderByFilter(createdGames, $scope.orderByFilter.createdGames.expression, $scope.orderByFilter.createdGames.reverse);
-
-            if (userGame) {
-                $scope.createdGames.unshift(userGame);
+            if (!$scope.createdGames || !$scope.createdGames.length) {
+                setCreatedGame(createdGames, userGame);
+            } else if (!$scope.disableCreatedGame) {
+                $scope.disableCreatedGame = true;
+                $timeout(function() {
+                    setCreatedGame(createdGames, userGame);
+                }, 1000);
             }
 
         }, $scope);
+
+        function setCreatedGame(createdGames, userGame) {
+            $scope.createdGames = orderByFilter(createdGames, $scope.orderByFilter.createdGames.expression, $scope.orderByFilter.createdGames.reverse);
+            if (userGame) {
+                $scope.createdGames.unshift(userGame);
+            }
+        }
 
         socket.on('challengers', function (data) {
             var challengers = [];

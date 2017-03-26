@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="game in createdGames">
+                <tr ng-repeat="game in createdGames" enable-created-game>
                     <td class="app-table__avatar">
                         <a href show-profile="game.uid">
                             <img avatar class="app-avatar" ng-src="{{ game.avatar }}">
@@ -53,11 +53,13 @@
                     <td class="app-table__time">{{ game.game.time / 60 }} + {{ game.game.increment }}</td>
                     <td class="app-table__actions">
                         <button ng-if="game.uid == user.uid" 
+                                ng-disabled="disableCreatedGame"
                                 ng-click="removeGame()" 
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                             <i class="material-icons">close</i>
                         </button>
                         <button ng-if="game.uid != user.uid" 
+                                ng-disabled="disableCreatedGame"
                                 ng-click="$event.stopPropagation(); startGame(game.uid)" 
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
                             <i class="material-icons">check</i>
