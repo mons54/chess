@@ -126,7 +126,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 game.played.length !== $scope.game.played.length &&
                 game.played[game.played.length - 1]) {
 
-                sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'].play();
+                sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'].load().play();
             }
 
             setLostPieces(game);
@@ -285,7 +285,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
         $scope.move = function (start, end, promotion) {
 
-            sound[$scope.game.pieces[end] ? 'capture' : 'deplace'].play();
+            sound[$scope.game.pieces[end] ? 'capture' : 'deplace'].load().play();
 
             socket.emit('moveGame', {
                 id: $scope.game.id,

@@ -137,7 +137,7 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         }
 
         this.play = function () {
-            if (sound) {
+            if (sound && !this.isPlayed()) {
                 this.sound.play();
             }
             return this;
@@ -154,6 +154,13 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
             if (this.isPlayed()) {
                 this.sound.pause();
                 this.sound.currentTime = 0;
+            }
+            return this;
+        };
+
+        this.load = function () {
+            if (this.isPlayed()) {
+                this.sound.load();
             }
             return this;
         };
