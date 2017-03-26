@@ -101,18 +101,15 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
     $rootScope.$watch('user.sound', function (value) {
         if (typeof value === 'boolean') {
             sound = value;
-            if (!sound) {
-                stopAll();
-            }
         }
     });
 
     if (typeof Audio === 'function') {
         
         sounds = {
-            timer: new Audio('/sounds/timer.mp3'),
-            deplace: new Audio('/sounds/deplace.mp3'),
-            capture: new Audio('/sounds/capture.mp3')
+            timer: '/sounds/timer.mp3',
+            deplace: '/sounds/deplace.mp3',
+            capture: '/sounds/capture.mp3'
         };
 
         angular.forEach(sounds, function (sound) {
@@ -120,25 +117,15 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         });
     }
 
-    function stopAll() {
-        if (!sounds) {
-            return;
-        }
-
-        angular.forEach(sounds, function (value) {
-            value.stop();
-        });
-    }
-
     function Sound(name) {
+
         if (sounds &&
             sounds[name]) {
-            this.sound = sounds[name];
+            this.sound = new Audio(sounds[name]);
         }
 
         this.play = function () {
             if (sound) {
-                this.sound.currentTime = 0;
                 this.sound.play();
             }
             return this;
@@ -162,37 +149,11 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         this.isPlayed = function () {
             return this.sound && !this.sound.paused;
         };
+
+        return this;
     }
 
-    return {
-        /**
-         * @ngdoc function
-         * @name #timer
-         * @methodOf global.service:sound
-         * @description 
-         * Manage sound timer
-         * @returns {object} soundService
-         */
-        timer: new Sound('timer'),
-        /**
-         * @ngdoc function
-         * @name #capture
-         * @methodOf global.service:sound
-         * @description 
-         * Manage sound capture
-         * @returns {object} soundService
-         */
-        capture: new Sound('capture'),
-        /**
-         * @ngdoc function
-         * @name #deplace
-         * @methodOf global.service:sound
-         * @description 
-         * Manage sound deplace
-         * @returns {object} soundService
-         */
-        deplace: new Sound('deplace')
-    };
+    return Sound;
 }]).
 
 /**
