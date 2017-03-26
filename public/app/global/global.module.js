@@ -95,18 +95,33 @@ factory('utils', ['$rootScope', '$filter', '$window', 'host',
  */
 service('sound', ['$rootScope', 'user', function ($rootScope, user) {
 
+    var sounds,
+        sound = user.getSound();
+
     $rootScope.$watch('user.sound', function (value) {
         if (typeof value === 'boolean') {
             sound = value;
         }
     });
 
+    if (typeof Audio === 'function') {
+        
+        sounds = {
+            timer: '/sounds/timer.mp3',
+            deplace: '/sounds/deplace.mp3',
+            capture: '/sounds/capture.mp3'
+        };
+
+        angular.forEach(sounds, function (sound) {
+            sound.volume = 0.5;
+        });
+    }
+
     function Sound(name) {
 
         if (sounds &&
             sounds[name]) {
             this.sound = new Audio(sounds[name]);
-            this.sound.volume = 0.5;
         }
 
         this.play = function () {
@@ -116,27 +131,26 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
             return this;
         };
 
+        this.pause = function () {
+            if (this.isPlayed()) {
+                this.sound.pause();
+            }
+            return this;
+        };
+
         this.stop = function () {
-            if (this.sound && !this.sound.paused) {
+            if (this.isPlayed()) {
                 this.sound.pause();
                 this.sound.currentTime = 0;
             }
             return this;
         };
 
-        return this;
-    }
-
-    var sounds,
-        sound = user.getSound();
-
-    if (typeof Audio === 'function') {
-        
-        sounds = {
-            timer: '/sounds/timer.mp3',
-            deplace: '/sounds/deplace.mp3',
-            capture: '/sounds/capture.mp3'
+        this.isPlayed = function () {
+            return this.sound && !this.sound.paused;
         };
+
+        return this;
     }
 
     return Sound;
