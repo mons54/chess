@@ -55,17 +55,13 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', '$timeout', 'socket', 't
                 }
             });
 
-            if ($rootScope.user.uid === '5893fb0e3171801b200028d1') {
-                if (!$scope.createdGames || !$scope.createdGames.length) {
-                    setCreatedGame(createdGames, userGame);
-                } else if (!$scope.disableCreatedGame) {
-                    $scope.disableCreatedGame = true;
-                    $timeout(function() {
-                        setCreatedGame(createdGames, userGame);
-                    }, 1000);
-                }
-            } else {
+            if (!$scope.createdGames || !$scope.createdGames.length) {
                 setCreatedGame(createdGames, userGame);
+            } else if (!$scope.disableCreatedGame) {
+                $scope.disableCreatedGame = true;
+                $timeout(function() {
+                    setCreatedGame(createdGames, userGame);
+                }, 1000);
             }
 
         }, $scope);
