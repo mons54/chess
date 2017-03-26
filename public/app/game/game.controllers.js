@@ -575,10 +575,6 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             timerSound.stop();
         }
 
-        function stopTimerSound() {
-            timerSound.stop();
-        }
-
         var interval = 100;
 
         $interval.stopTimeGame = $interval(function () {
@@ -586,7 +582,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             var game = $scope.game;
 
             if (!game || game.finish) {
-                stopTimerSound();
+                timerSound.stop();
                 return;
             }
 
