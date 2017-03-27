@@ -3527,14 +3527,17 @@ a {
     font-weight: bold;
   }
 
+  .app-game__played--phone {
+    padding-left: 4px;
+  }
+
   .app-game__played--phone .app-table--game tr td {
     border: none;
     padding-left: 0;
   }
 
   .app-game__played--phone .app-table--game tr td {
-    padding: 0;
-    padding-right: 8px;
+    padding: 0 4px;
   }
 
   .app-game__toggle .app-game__toggle-content {
