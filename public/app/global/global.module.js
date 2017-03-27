@@ -126,7 +126,10 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         }
 
         angular.forEach(sounds, function (value) {
-            value.stop();
+            if (!value.paused) {
+                value.pause();
+                value.currentTime = 0;
+            }
         });
     }
 
