@@ -619,7 +619,9 @@ module.exports = function (io) {
             };
 
             whiteData[game.type] = data.white.points;
-            whiteData['active_' + game.type] = true;
+            if (data.white.countGame >= 9) {
+                whiteData['active_' + game.type] = true;
+            }
 
             var blackData = {
                 success: data.black.success,
@@ -628,7 +630,9 @@ module.exports = function (io) {
             };
 
             blackData[game.type] = data.black.points;
-            blackData['active_' + game.type] = true;
+            if (data.black.countGame >= 9) {
+                blackData['active_' + game.type] = true;
+            }
 
             db.all([
                 db.update('users', { _id: db.objectId(white.uid) }, whiteData),
