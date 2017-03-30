@@ -44,8 +44,8 @@ Game.prototype.create = function (socket, data) {
             (!match || value.createAt < game.createAt) &&
             (!value.pointsMin || value.pointsMin <= points) &&
             (!value.pointsMax || value.pointsMax >= points) &&
-            (!pointsMin || pointsMin <= value.pointsMin) &&
-            (!pointsMax || pointsMax >= value.pointsMax) &&
+            (!pointsMin || pointsMin <= value.points) &&
+            (!pointsMax || pointsMax >= value.points) &&
             blackList.indexOf(value.uid) === -1 &&
             value.blackList.indexOf(uid) === -1) {
             match = value;
