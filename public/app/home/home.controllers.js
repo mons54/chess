@@ -55,7 +55,9 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', '$timeout', 'socket', 't
                 }
             });
 
-            if (!$scope.createdGames || !$scope.createdGames.length) {
+            if (!$scope.createdGames || 
+                !$scope.createdGames.length ||
+                angular.equals($scope.createdGames, createdGames)) {
                 setCreatedGame(createdGames, userGame);
             } else if (!$scope.disableCreatedGame) {
                 $scope.disableCreatedGame = true;
