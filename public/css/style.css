@@ -991,6 +991,14 @@ a {
   color: #FF9800;
 }
 
+.app-profile__action .app-icon--blacklist {
+  color: #9E9E9E;
+}
+
+.app-profile__action .app-icon--blacklist-selected {
+  color: #DB4437;
+}
+
 .app-profile__more {
   position: relative;
   padding-top: 8px;
@@ -1020,6 +1028,15 @@ a {
 
 .app-card__profile-title .app-profile__action .app-button {
   background-color: #5D4037;
+  margin-right: 4px;
+}
+
+.app-profile__action .app-button {
+  margin-right: 4px;
+}
+
+.app-profile__action .app-button:last-child {
+  margin-right: 0;
 }
 
 .app-card__profile-title-text {

@@ -77,7 +77,8 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', '$timeout', 'socket', 't
             var challengers = [];
 
             angular.forEach(data, function (value) {
-                if ($rootScope.user.uid == value.uid) {
+                if ($rootScope.user.uid == value.uid ||
+                    blackList(value)) {
                     return;
                 }
 

@@ -243,7 +243,7 @@ module.exports = function (io) {
         if (data.blackList instanceof Object) {
             var expires  = this.getBlackListExpires();
             for (var uid in data.blackList) {
-                if (data.blackList[uid] >= expires) {
+                if (!data.blackList[uid] || data.blackList[uid] >= expires) {
                     blackList.push(uid);
                 }
             };
@@ -308,6 +308,44 @@ module.exports = function (io) {
         db.update('users', { _id: db.objectId(socket.uid) }, {
             favorites: socket.favorites
         });
+    };
+
+    Module.prototype.addBlackList = function (socket, uid) {
+        
+        if (!db.isObjectId(uid) ||
+            !Array.isArray(socket.blackList) ||
+            socket.blackList.indexOf(uid) !== -1) {
+            return;
+        }
+
+        socket.blackList.push(uid);
+
+        var data = {};
+
+        data['blackList.' + uid] = null;
+
+        db.update('users', { _id: db.objectId(socket.uid) }, data);
+    };
+
+    Module.prototype.removeBlackList = function (socket, uid) {
+
+        var index;
+
+        if (Array.isArray(socket.blackList)) {
+            index = socket.blackList.indexOf(uid);
+        }
+
+        if (index === -1) {
+            return;
+        }
+
+        socket.blackList.splice(index, 1);
+
+        var data = {};
+
+        data['blackList.' + uid] = 1;
+
+        db.unset('users', { _id: db.objectId(socket.uid) }, data);
     };
 
     Module.prototype.listGames = function () {
@@ -485,7 +523,7 @@ module.exports = function (io) {
         } else {
             var expires  = this.getBlackListExpires();
             for (var uid in blackList) {
-                if (expires > blackList[uid]) {
+                if (blackList[uid] && expires > blackList[uid]) {
                     delete blackList[uid];
                 }
             };

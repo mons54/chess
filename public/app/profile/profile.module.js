@@ -55,14 +55,20 @@ directive('profileActions', ['$rootScope',
                     }
 
                     scope.isFavorite = $rootScope.isFavorite(profile.uid);
+                    scope.isBlackList = $rootScope.isBlackList(profile.uid);
                     scope.isFriend = isFriend(profile);
                     
                     scope.toogleFavorite = function () {
                         scope.isFavorite = !scope.isFavorite;
                     };
 
+                    scope.toogleBlackList = function () {
+                        scope.isBlackList = !scope.isBlackList;
+                    };
+
                     $rootScope.$on('unload', function () {
                         $rootScope.setFavorite(scope.profile.uid, scope.isFavorite);
+                        $rootScope.setBlackList(scope.profile.uid, scope.isBlackList);
                     });
 
                     function isFriend(profile) {
@@ -107,6 +113,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     modal(element).show().one('hide', function () {
                         $rootScope.setFavorite(profile.uid, scope.isFavorite);
+                        $rootScope.setBlackList(profile.uid, scope.isBlackList);
                     });
 
                 }, scope);

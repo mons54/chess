@@ -97,8 +97,12 @@ Module.prototype.save = function (model, data) {
     return new this.models[model](data).save();
 };
 
-Module.prototype.update = function (model, request, set) {
-    return this.models[model].update(request, { $set: set }).exec();
+Module.prototype.update = function (model, request, data) {
+    return this.models[model].update(request, { $set: data }).exec();
+};
+
+Module.prototype.unset = function (model, request, data) {
+    return this.models[model].update(request, { $unset: data }).exec();
 };
 
 Module.prototype.isObjectId = function (id) {

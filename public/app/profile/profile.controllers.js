@@ -20,6 +20,7 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
                 return;
             }
             $rootScope.setFavorite($scope.profile.uid, $scope.isFavorite);
+            $rootScope.setBlackList($scope.profile.uid, $scope.isBlackList);
         });
 
         $scope.menu = ['blitz', 'rapid', 'trophies'];

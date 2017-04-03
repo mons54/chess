@@ -79,6 +79,26 @@ module.exports = function (app, io) {
             moduleSocket.removeFavorite(socket, uid);
         });
 
+        socket.on('addBlackList', function (uid) {
+
+            if (!moduleSocket.checkSocket(socket) ||
+                typeof uid !== 'string') {
+                return;
+            }
+
+            moduleSocket.addBlackList(socket, uid);
+        });
+
+        socket.on('removeBlackList', function (uid) {
+
+            if (!moduleSocket.checkSocket(socket) ||
+                typeof uid !== 'string') {
+                return;
+            }
+
+            moduleSocket.removeBlackList(socket, uid);
+        });
+
         socket.on('createChallenge', function (data) {
 
             if (!data || 

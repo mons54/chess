@@ -343,6 +343,36 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
         $rootScope.isFavorite = function (uid) {
             return $rootScope.user.favorites && $rootScope.user.favorites.indexOf(uid) !== -1;
         };
+
+        $rootScope.setBlackList = function (uid, value) {
+
+            if (!$rootScope.user.blackList) {
+                return;
+            }
+
+            var isBlackList = $rootScope.isBlackList(uid);
+            
+            if (value === isBlackList) {
+                return;
+            }
+            
+            if (value) {
+                socket.emit('addBlackList', uid);
+                $timeout(function () {
+                    $rootScope.user.blackList.push(uid);
+                });
+            } else  {
+                var index = $rootScope.user.blackList.indexOf(uid);
+                socket.emit('removeBlackList', uid);
+                $timeout(function () {
+                    $rootScope.user.blackList.splice(index, 1);
+                });
+            }
+        };
+
+        $rootScope.isBlackList = function (uid) {
+            return $rootScope.user.blackList && $rootScope.user.blackList.indexOf(uid) !== -1;
+        };
         
         $window.onbeforeunload = function () {
             
