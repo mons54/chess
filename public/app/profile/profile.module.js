@@ -92,7 +92,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
             restrict: 'E',
             replace: true,
             scope: true,
-            templateUrl: '/app/profile/templates/modal-profile.html',
+            templateUrl: 'modal-profile.html',
             link: function (scope, element) {
 
                 socket.on('profile', function (profile) {

@@ -55,7 +55,7 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
             replace: true,
             scope: true,
             priority: 1000,
-            templateUrl: '/app/trophies/templates/modal-trophy.html',
+            templateUrl: 'modal-trophy.html',
             link: function (scope, element) {
 
                 var modalTrophy = modal(element),

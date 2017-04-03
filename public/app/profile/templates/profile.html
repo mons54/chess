@@ -26,7 +26,7 @@
 <div ng-show="activeMenu === 'blitz'"
      class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
      ng-repeat="game in games.blitz.data track by $index">
-    <ng-include src="'/app/profile/templates/game.html'"></ng-include>
+    <ng-include src="'profile-game.html'"></ng-include>
 </div>
 
 <div ng-if="profile.rapid && activeMenu === 'rapid'" 
@@ -39,7 +39,7 @@
 <div ng-show="activeMenu === 'rapid'"
      class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
      ng-repeat="game in games.rapid.data track by $index">
-    <ng-include src="'/app/profile/templates/game.html'"></ng-include>
+    <ng-include src="'profile-game.html'"></ng-include>
 </div>
 
 <div ng-show="games.blitz.load || games.rapid.load" class="app-profile__game-spinner">

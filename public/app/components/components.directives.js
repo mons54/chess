@@ -56,7 +56,7 @@ directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'transla
             restrict: 'E',
             scope: true,
             replace: true,
-            templateUrl: '/app/components/templates/modal-settings.html',
+            templateUrl: 'modal-settings.html',
             link: function (scope, element) {
 
                 var defaultValues;
@@ -193,7 +193,7 @@ directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'params
             restrict: 'E',
             scope: true,
             replace: true,
-            templateUrl: '/app/components/templates/modal-create-game.html',
+            templateUrl: 'modal-create-game.html',
             link: function (scope, element) {
 
                 var pointsMin = paramsGame.pointsMin,
@@ -298,7 +298,7 @@ directive('modalChallenges', ['$rootScope', 'socket', 'modal', 'orderByFilter',
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: '/app/components/templates/modal-challenges.html',
+            templateUrl: 'modal-challenges.html',
             link: function (scope, element) {
 
                 scope.orderByFilter = {
