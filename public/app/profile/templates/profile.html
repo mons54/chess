@@ -9,7 +9,7 @@
     <div class="app-card__profile-actions mdl-card__actions mdl-card--border">
         <a ng-repeat="value in menu"
            ng-click="showMenu(value)" 
-           class="app-button mdl-button mdl-js-button mdl-js-ripple-effect"
+           class="app-button mdl-button mdl-js-button"
            ng-class="{'is-active': activeMenu === value}">
             {{ value === 'trophies' ? 'trophies.title' : value | translate }}
         </a>
