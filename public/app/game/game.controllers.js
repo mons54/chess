@@ -26,17 +26,18 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             return;
         }
 
-        $rootScope.loading = true;
+        $rootScope.loadingContent = true;
         $rootScope.isGame = true;
 
         socket.emit('initGame', $routeParams.id);
 
         $scope.$on('$destroy', function() {
+            delete $rootScope.loadingContent;
+            delete $rootScope.isGame;
             if ($scope.game && !$scope.game.archived) {
                 socket.emit('leaveGame', $scope.game.id);
             }
             cancelInterval();
-            delete $rootScope.isGame;
         });
 
         $rootScope.$watch('disconnectMultiSocket', function (value) {
@@ -64,7 +65,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
 
             var gameCopy;
 
-            $rootScope.loading = false;
+            delete $rootScope.loadingContent;
 
             if (!game) {
                 delete $rootScope.user.gid;

@@ -12,10 +12,10 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
     
     function ($rootScope, $scope, $routeParams, $window, $location, $timeout, socket, user) {
 
-        $rootScope.loading = true;
+        $rootScope.loadingContent = true;
 
         $scope.$on('$destroy', function () {
-            delete $rootScope.loading;
+            delete $rootScope.loadingContent;
             if (!$scope.profile) {
                 return;
             }
@@ -59,7 +59,7 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
 
             };
 
-            delete $rootScope.loading;
+            delete $rootScope.loadingContent;
 
         }, $scope);
 
