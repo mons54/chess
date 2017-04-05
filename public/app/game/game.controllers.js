@@ -119,14 +119,10 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
                 numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
-            /**
-             * Play sound if is not player turn and has last turn
-             */
-            if (!$scope.isPlayerTurn() &&
-                $scope.game &&
+            if ($scope.game &&
+                game[game.turn].uid === $rootScope.user.uid &&
                 game.played.length !== $scope.game.played.length &&
                 game.played[game.played.length - 1]) {
-
                 sound[$scope.game.pieces[game.played[game.played.length - 1].end] ? 'capture' : 'deplace'].load().play();
             }
 
