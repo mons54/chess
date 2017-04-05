@@ -374,6 +374,11 @@
   margin-left: 0;
 }
 
+.app-modal__head {
+  padding-right: 8px;
+  padding-left: 40px;
+}
+
 .app-modal__close {
   right: inherit;
   left: 20px;
