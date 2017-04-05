@@ -3334,7 +3334,7 @@ a {
   .app-profile__game-points {
     margin-top: 0;
     font-size: 14px;
-}
+  }
   
   .app-table.app-table--game {
     font-size: 12px;
@@ -3402,14 +3402,15 @@ a {
     top: 16px;
   }
 
-  .app-modal__head {
-    line-height: 24px;
-    font-size: 20px;
+  .app-modal__head,
+  .app-modal__content {
     padding: 16px 8px;
   }
 
-  .app-modal__content {
-    padding: 16px 8px;
+  .app-modal__head {
+    line-height: 24px;
+    font-size: 20px;
+    padding-right: 40px;
   }
 
   .app-search__game-edit {
@@ -3652,8 +3653,14 @@ a {
   }
 
   .app-profile__card-avatar {
-    top: 32px;
+    top: 36px;
     left: 8px;
+  }
+
+  .app-profile__card-name {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
   .app-profile__stat {
