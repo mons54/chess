@@ -148,11 +148,11 @@
 }
 
 .app-game__board--blue .app-game__box {
-  background-color: #0D1F43;
+  background-color: #32644b;
 }
 
 .app-game__board--orange .app-game__box {
-  background-color: #18333C;
+  background-color: #787878;
 }
 
 .app-game__board--green .app-game__box {
@@ -189,12 +189,12 @@
 
 .app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
 .app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #0D1F43;
+  background-color: #32644b;
 }
 
 .app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
 .app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(odd) {
-  background-color: #18333C;
+  background-color: #787878;
 }
 
 .app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(even),
@@ -229,17 +229,17 @@
 
 .app-game__board--blue .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--blue .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
-  background-color: #004787;
+  background-color: #E6E6E6;
 }
 
 .app-game__board--orange .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--orange .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
-  background-color: #D55345;
+  background-color: #D0CDCF;
 }
 
 .app-game__board--green .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
 .app-game__board--green .app-game__row:nth-of-type(odd) .app-game__box:nth-of-type(even) {
-  background-color: #f0f8d2;
+  background-color: #EEEED2;
 }
 
 .app-game__board--grey .app-game__row:nth-of-type(even) .app-game__box:nth-of-type(odd),
