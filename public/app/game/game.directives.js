@@ -32,7 +32,7 @@ directive('profileGame', ['utils',
  * @scope
  * @param {string} position The position of the piece.
  */
-directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
+directive('pieceDraggable', ['socket', 'modal', 'utils', function (socket, modal, utils) {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
@@ -134,7 +134,12 @@ directive('pieceDraggable', ['modal', 'utils', function (modal, utils) {
                 }
 
                 function sendMove(position, promotion) {
-                    scope.move(attr.position, position, promotion);
+                    socket.emit('moveGame', {
+                        id: game.id,
+                        start: attr.position,
+                        end: position,
+                        promotion: promotion
+                    });
                 }
 
                 function isPromotion(position) {
