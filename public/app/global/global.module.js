@@ -140,21 +140,21 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         }
 
         this.play = function () {
-            if (sound && !this.isPlayed()) {
+            if (sound && this.sound && this.sound.paused) {
                 this.sound.play();
             }
             return this;
         };
 
         this.pause = function () {
-            if (this.isPlayed()) {
+            if (this.sound && !this.sound.paused) {
                 this.sound.pause();
             }
             return this;
         };
 
         this.stop = function () {
-            if (this.isPlayed()) {
+            if (this.sound && !this.sound.paused) {
                 this.sound.pause();
                 this.sound.currentTime = 0;
             }
@@ -162,14 +162,10 @@ service('sound', ['$rootScope', 'user', function ($rootScope, user) {
         };
 
         this.load = function () {
-            if (this.isPlayed()) {
+            if (this.sound) {
                 this.sound.load();
             }
             return this;
-        };
-
-        this.isPlayed = function () {
-            return this.sound && !this.sound.paused;
         };
     }
 
