@@ -83,6 +83,8 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                         modal('#modal-finish-game').show();
                         delete $rootScope.user.gid;
                     }, 500);
+                } else {
+                    delete $rootScope.user.gid;
                 }
 
                 if (!game.lastTime) {
