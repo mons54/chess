@@ -781,7 +781,6 @@ a {
   border-bottom: 4px solid transparent;
 }
 
-.app-navigation .mdl-navigation__link:hover,
 .app-navigation .mdl-navigation__link.selected {
   border-bottom: 4px solid #fff
 }
