@@ -781,8 +781,12 @@ a {
   border-bottom: 4px solid transparent;
 }
 
+.app-navigation .mdl-navigation__link:not(.selected):not(:hover) {
+  opacity: .65;
+}
+
 .app-navigation .mdl-navigation__link.selected {
-  border-bottom: 4px solid #fff
+  border-bottom: 4px solid #fff;
 }
 
 .app-navigation__profile {
