@@ -786,10 +786,6 @@ a {
   border-bottom: 4px solid #fff
 }
 
-.app-navigation .mdl-navigation__link:hover ~ .selected {
-  border-bottom: 4px solid transparent;
-}
-
 .app-navigation__profile {
   display: inline-block;
   cursor: pointer;
