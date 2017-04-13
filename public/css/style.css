@@ -1055,7 +1055,7 @@ a {
 }
 
 .app-card__profile-actions {
-  padding-top: 24px;
+  padding-top: 32px;
 }
 
 .app-card__profile-actions .app-button {
@@ -3276,6 +3276,10 @@ a {
   .app-card__profile-title .app-profile__action {
     top: 20px;
     right: 20px;
+  }
+
+  .app-card__profile-actions {
+    padding-top: 28px;
   }
 
   .app-card__profile-actions .app-button {
