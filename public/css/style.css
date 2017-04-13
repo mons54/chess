@@ -781,8 +781,8 @@ a {
   border-bottom: 4px solid transparent;
 }
 
-.app-navigation .mdl-navigation__link:not(.selected):not(:hover) {
-  opacity: .65;
+.app-navigation .mdl-navigation__link:hover {
+  background-color: rgba(158,158,158,.2);
 }
 
 .app-navigation .mdl-navigation__link.selected {
