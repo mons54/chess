@@ -57,11 +57,13 @@ module.exports = function (io) {
     Module.prototype.googleConnect = function (socket, data) {
 
         var auth = new googleAuth,
-            client = new auth.OAuth2('241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com', '', '');
+            clientIds = [
+                '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com', 
+                '241448993510-tpm610r2sqc7b4242al3tnhibltve3kj.apps.googleusercontent.com'
+            ],
+            client = new auth.OAuth2(clientIds, '', '');
 
-        client.verifyIdToken(
-            data.accessToken,
-            '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com', function (e, login) {
+        client.verifyIdToken(data.accessToken, clientIds, function (e, login) {
 
             if (!login || !login.getPayload) {
                 socket.emit('refreshAccessToken');
