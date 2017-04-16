@@ -40,7 +40,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
      * @param {object} google Google service
      */
     function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator, utils) {
-
+        
         $rootScope.$on('$routeChangeStart', function(event, toState, fromState) {
 
             if ($rootScope.user && $rootScope.user.gid) {

@@ -777,8 +777,12 @@ a {
   display: inline-block;
   height: 60px;
   line-height: 68px;
-  background-color: transparent !important;
+  background-color: transparent;
   border-bottom: 4px solid transparent;
+}
+
+.app-navigation .mdl-navigation__link:hover {
+  background-color: rgba(158,158,158,.2);
 }
 
 .app-navigation .mdl-navigation__link.selected {
@@ -1051,7 +1055,7 @@ a {
 }
 
 .app-card__profile-actions {
-  padding-top: 24px;
+  padding-top: 32px;
 }
 
 .app-card__profile-actions .app-button {
@@ -3272,6 +3276,10 @@ a {
   .app-card__profile-title .app-profile__action {
     top: 20px;
     right: 20px;
+  }
+
+  .app-card__profile-actions {
+    padding-top: 28px;
   }
 
   .app-card__profile-actions .app-button {
