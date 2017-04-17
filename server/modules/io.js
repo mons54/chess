@@ -13,10 +13,6 @@ module.exports = function (app, io) {
                 !data.accessToken) {
                 return;
             }
-
-            if (data.time) {
-                console.log(data.time - new Date().getTime());
-            }
             moduleSocket.facebookConnect(socket, data);
         });
 
