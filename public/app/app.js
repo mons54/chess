@@ -216,6 +216,7 @@ run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user'
             var success = false
 
             if (login === 'facebook' && facebook.auth) {
+                facebook.auth.time = new Date().getTime();
                 socket.emit('facebookConnect', facebook.auth);
                 success = true;
             } else if (login === 'google' && google.auth) {
