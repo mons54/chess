@@ -7,6 +7,10 @@ module.exports = function (app, io) {
 
     io.on('connection', function (socket) {
 
+        socket.on('time', function (data, callback) {
+            callback(new Date().getTime());
+        });
+
         socket.on('facebookConnect', function (data) {
             if (!data || 
                 !data.id || 
