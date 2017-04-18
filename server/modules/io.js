@@ -8,7 +8,7 @@ module.exports = function (app, io) {
     io.on('connection', function (socket) {
 
         socket.on('time', function (data, callback) {
-            callback(new Date().getTime());
+            callback(Date.now());
         });
 
         socket.on('facebookConnect', function (data) {
@@ -288,7 +288,7 @@ module.exports = function (app, io) {
 
             var gid = data.gid,
                 message = data.message.replace(/<(?:.|\n)*?>/gm, '').substr(0, 250),
-                time = new Date().getTime(),
+                time = Date.now(),
                 data = {
                     uid: socket.uid,
                     name: socket.name,

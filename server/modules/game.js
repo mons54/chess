@@ -63,7 +63,7 @@ Game.prototype.create = function (socket, data) {
         game: game,
         pointsMin: pointsMin,
         pointsMax: pointsMax,
-        createAt: new Date().getTime()
+        createAt: Date.now()
     };
 
     return match;

@@ -74,7 +74,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
 
             if (!game.finish) {
-                game.lastTime = new Date().getTime();
+                game.lastTime = Date.now();
             } else {
 
                 if (!game.archived) {
@@ -571,7 +571,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             }
 
             var player = game[game.turn],
-                diff = new Date().getTime() - game.lastTime;
+                diff = Date.now() - game.lastTime;
 
             if (player.currentTimeTurn - diff < interval) {
                 player.time = 0;

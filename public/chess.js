@@ -56,7 +56,7 @@ var game = {
 
         return {
             type: type,
-            startTime: new Date().getTime(),
+            startTime: Date.now(),
             finish: false,
             turn: 'white',
             turn50: 0,
@@ -539,7 +539,7 @@ engine.prototype.init = function (start, end, promotion) {
     }
 
     this.game.played.push({
-        time: new Date().getTime(),
+        time: Date.now(),
         hash: hash,
         start: start,
         end: end,

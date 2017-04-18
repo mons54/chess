@@ -532,7 +532,7 @@ module.exports = function (io) {
         }
 
         if (lastGame && lastGame === newGame) {
-            blackList[color === 'white' ? game.black.uid : game.white.uid] = new Date().getTime();
+            blackList[color === 'white' ? game.black.uid : game.white.uid] = Date.now();
             console.log('blackList', blackList);
         }
 
@@ -589,7 +589,7 @@ module.exports = function (io) {
             hashGame = null,
             data;
 
-        if (result !== 0 && (game.played.length < 4 || new Date().getTime() - game.startTime < game.timeTurn)) {
+        if (result !== 0 && (game.played.length < 4 || Date.now() - game.startTime < game.timeTurn)) {
             hashGame = '';
             game.played.forEach(function (value) {
                 hashGame += value.hash;
