@@ -56,7 +56,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                 var time = Date.now();
                 timeValue += timeStart - time;
                 timeCount++;
-                $rootScope.timeDiff = Math.round(value - time - ((timeValue / timeCount) / 2));
+                $rootScope.timeDiff = Math.round(value - time - timeValue / timeCount / 2);
                 timeStart = null;
             });
         }, 1000);
