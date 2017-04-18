@@ -25,21 +25,41 @@ angular.module('app', [
     'profile'
 ]).
 
-run(['$rootScope', '$route', '$http', '$location', '$window', '$timeout', 'user', 'socket', 'modal', 'facebook', 'google', 'translator', 'utils',
+run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'user', 'socket', 'modal', 'facebook', 'google', 'translator', 'utils',
 
     /**
      * @param {object} $rootScope Global scope
      * @param {object} $route Service route
-     * @param {object} $http Service http
      * @param {object} $location Service location
      * @param {object} $window Service window
-     * @param {object} $window Service window
+     * @param {object} $timeout Service timeout
+     * @param {object} $interval Service interval
      * @param {object} user User service
      * @param {object} modal Modal service
      * @param {object} facebook Facebook service
      * @param {object} google Google service
      */
-    function ($rootScope, $route, $http, $location, $window, $timeout, user, socket, modal, facebook, google, translator, utils) {
+    function ($rootScope, $route, $location, $window, $timeout, $interval, user, socket, modal, facebook, google, translator, utils) {
+
+        $rootScope.timeDiff = 0;
+
+        var timeStart = null,
+            timeValue = 0,
+            timeCount = 0;
+
+        $interval(function () {
+            if (timeStart) {
+                return;
+            }
+            timeStart = Date.now();
+            socket.emit('time', null, function (value) {
+                var time = Date.now();
+                timeValue += timeStart - time;
+                timeCount++;
+                $rootScope.timeDiff = Math.round(value - time - ((timeValue / timeCount) / 2));
+                timeStart = null;
+            });
+        }, 1000);
         
         $rootScope.$on('$routeChangeStart', function(event, toState, fromState) {
 
