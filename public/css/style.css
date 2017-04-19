@@ -809,6 +809,10 @@ a {
   background-color: #5D4037;
 }
 
+.app-navigation__profile-infos:hover {
+  background-color: rgba(158,158,158,.2);
+}
+
 .app-navigation__profile-infos .app-icon {
   vertical-align: middle;
   font-size: 20px;
@@ -2902,6 +2906,7 @@ a {
 
   .app-navigation__profile-user {
     margin-bottom: 12px;
+    display: block;
   }
 
   .app-navigation__profile-name {
