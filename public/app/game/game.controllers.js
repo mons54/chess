@@ -17,9 +17,9 @@ angular.module('game').
  * @requires global.service:utils
  * @requires components.service:modal
  */
-controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'modal', 'sound', 'colorsGame',
+controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$interval', '$window', '$cookies', '$timeout', 'socket', 'user', 'modal', 'sound', 'colorsGame', 'utils',
     
-    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, modal, sound, colorsGame) {
+    function ($rootScope, $scope, $routeParams, $location, $filter, $interval, $window, $cookies, $timeout, socket, user, modal, sound, colorsGame, utils) {
 
         if ($rootScope.user.gid && $rootScope.user.gid !== $routeParams.id) {
             $location.path('/game/' + $rootScope.user.gid);
@@ -34,6 +34,7 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         $scope.$on('$destroy', function() {
             delete $rootScope.loadingContent;
             delete $rootScope.isGame;
+            delete $rootScope.isToggle;
             if ($scope.game && !$scope.game.archived) {
                 socket.emit('leaveGame', $scope.game.id);
             }
@@ -54,8 +55,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             queen: 1
         };
 
-        setShowPlayed(user.getShowPlayed());
-        setShowMessages(user.getShowMessages());
+        if (!utils.isTouch()) {
+            setShowPlayed(user.getShowPlayed());
+            setShowMessages(user.getShowMessages());
+        }
+        
         setColorGame(user.getColorGame());
 
         $scope.colorsGame = colorsGame;
