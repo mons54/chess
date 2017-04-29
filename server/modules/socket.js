@@ -202,7 +202,7 @@ module.exports = function (io) {
             saveData.lang = data.lang.substr(0, 2);
         }
 
-        if (typeof data.dataGame === 'object') {
+        if (data.dataGame && typeof data.dataGame === 'object') {
             saveData.dataGame = {
                 color: typeof data.dataGame.color !== 'string' ? null : data.dataGame.color,
                 game: typeof data.dataGame.game !== 'number' ? 0 : data.dataGame.game,
@@ -954,7 +954,8 @@ module.exports = function (io) {
 
     Module.prototype.profileGames = function (socket, data) {
 
-        if (typeof data !== 'object' || 
+        if (!data ||
+            typeof data !== 'object' || 
             typeof data.offset !== 'number') {
             return;
         }
