@@ -664,7 +664,7 @@
     right: 0;
   }
 
-  @media screen and (min-height: 760px)  {
+  @media screen and (min-height: 759px)  {
     .app-layout.is-game .mdl-cell.app-head--game {
       right: initial;
       left: 8px;
