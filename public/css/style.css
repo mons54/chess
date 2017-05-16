@@ -2767,7 +2767,7 @@ a {
     margin-top: 4px;
   }
 
-  @media screen and (min-height: 760px)  {
+  @media screen and (min-height: 759px)  {
     .app-layout.is-game .app-grid {
       max-width: 900px;
     }
