@@ -725,6 +725,12 @@ a {
   font-size: 14px;
 }
 
+#ad-header {
+  text-align: center;
+  padding-top: 16px;
+  height: 90px;
+}
+
 .app-footer {
   text-align: center;
   height: 24px;
@@ -3054,8 +3060,11 @@ a {
 }
 
 @media screen and (max-width: 799px) {
-  
 
+  #ad-header {
+    display: none;
+  }
+  
   .app-profile__game-board {
     width: 33%;
   }

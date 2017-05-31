@@ -89,6 +89,16 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
             if (fromState && $rootScope.user && !$rootScope.user.refresh) {
                 $rootScope.user.refresh = true;
             }
+
+            if (typeof LSM_Slot === 'function') {
+
+                LSM_Slot({
+                    adkey: 'c5b',
+                    ad_size: '728x90',
+                    slot: 'slot174397',
+                    _render_div_id: 'ad-header'
+                });
+            }
         });
 
         
