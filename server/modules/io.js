@@ -163,9 +163,10 @@ module.exports = function (app, io) {
             moduleSocket.deleteChallenge(socket, uid);
         });
 
-        socket.on('startChallenge', function (uid) {
+        socket.on('startChallenge', function (uid, callback) {
             if (!moduleSocket.checkSocket(socket) ||
                 !moduleSocket.checkStartGame(socket, uid)) {
+                callback(false);
                 return;
             }
 
@@ -173,17 +174,20 @@ module.exports = function (app, io) {
 
             if (!socketOpponent) {
                 moduleSocket.deleteChallenge(socket, uid);
+                callback(false);
                 return;
             }
 
             if (moduleSocket.getUserGame(socketOpponent.uid)) {
                 moduleSocket.deleteChallenges(socketOpponent);
+                callback(false);
                 return;
             }
 
             var challenge = moduleSocket.getChallenge(socketOpponent, socket.uid);
 
             if (!challenge || !challenge.create) {
+                callback(false);
                 return;
             }
 
@@ -213,8 +217,9 @@ module.exports = function (app, io) {
             moduleSocket.listGames();
         });
 
-        socket.on('startGame', function (uid) {
+        socket.on('startGame', function (uid, callback) {
             if (!moduleSocket.checkStartGame(socket, uid)) {
+                callback(false);
                 return;
             }
 
@@ -223,6 +228,7 @@ module.exports = function (app, io) {
             if (!createdGame || 
                 socket.blackList.indexOf(uid) !== -1 || 
                 createdGame.blackList.indexOf(socket.uid) !== -1) {
+                callback(false);
                 return;
             }
 

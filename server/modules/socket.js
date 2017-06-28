@@ -373,15 +373,6 @@ module.exports = function (io) {
     };
 
     Module.prototype.startGame = function (socket, socketOpponent, dataGame) {
-        
-        moduleGame.deleteCreatedGame(socket.uid);
-        moduleGame.deleteCreatedGame(socketOpponent.uid);
-        
-        this.listGames();
-        this.listChallengers();
-        
-        this.deleteChallenges(socket);
-        this.deleteChallenges(socketOpponent);
 
         var white, 
             black, 
@@ -442,15 +433,24 @@ module.exports = function (io) {
                 color: dataGame.color
             };
 
-            return db.save('games', {
-                type: game.type,
-                date: new Date(),
-                white: white.uid,
-                black: black.uid,
-                data: game
-            })
-        }).
+            if (this.getUserGame(socket.uid) ||
+                this.getUserGame(socketOpponent.uid)) {
+                return false;
+            } else {
+                return db.save('games', {
+                    type: game.type,
+                    date: new Date(),
+                    white: white.uid,
+                    black: black.uid,
+                    data: game
+                });
+            }
+        }.bind(this)).
         then(function (response) {
+
+            if (!response) {
+                return;
+            }
 
             var room = moduleGame.getRoom(response.id);
 
@@ -461,7 +461,14 @@ module.exports = function (io) {
             this.userGames[socket.uid] = response.id;
             this.userGames[socketOpponent.uid] = response.id;
 
+            moduleGame.deleteCreatedGame(socket.uid);
+            moduleGame.deleteCreatedGame(socketOpponent.uid);
+            
+            this.listGames();
             this.listChallengers();
+            
+            this.deleteChallenges(socket);
+            this.deleteChallenges(socketOpponent);
 
             socket.join(room);
             socketOpponent.join(room);

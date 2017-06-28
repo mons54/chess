@@ -315,7 +315,11 @@ directive('modalChallenges', ['$rootScope', 'socket', 'modal', 'orderByFilter',
                 };
 
                 scope.startChallenge = function (uid) {
-                    socket.emit('startChallenge', uid);
+                    $rootScope.loadingContent = true;
+                    modal(element).hide();
+                    socket.emit('startChallenge', uid, function () {
+                        delete $rootScope.loadingContent;
+                    });
                 };
 
                 socket.on('challenges', function (data) {

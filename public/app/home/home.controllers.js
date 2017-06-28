@@ -137,7 +137,10 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', '$timeout', 'socket', 't
         };
 
         $scope.startGame = function (uid) {
-            socket.emit('startGame', uid);
+            $rootScope.loadingContent = true;
+            socket.emit('startGame', uid, function () {
+                delete $rootScope.loadingContent;
+            });
         };
 
         $scope.setChallenger = function (challenger) {
