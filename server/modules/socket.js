@@ -149,7 +149,7 @@ module.exports = function (io) {
                 return;
             }
             
-            var gid = this.getUserGame(response.id);
+            var gid = db.objectId(this.getUserGame(response.id));
             if (gid) {
                 socket.join(moduleGame.getRoom(gid));
             }
@@ -417,7 +417,7 @@ module.exports = function (io) {
 
         var game, req = {};
 
-        db.all([
+        return db.all([
             db.count('games', { $and: [{ type: type }, { $or: [{ white: white.uid }, { black: white.uid }] }] }),
             db.count('games', { $and: [{ type: type }, { $or: [{ white: black.uid }, { black: black.uid }] }] })
         ]).
@@ -437,13 +437,24 @@ module.exports = function (io) {
                 this.getUserGame(socketOpponent.uid)) {
                 return false;
             } else {
+                this.userGames[socket.uid] = true;
+                this.userGames[socketOpponent.uid] = true;
                 return db.save('games', {
                     type: game.type,
                     date: new Date(),
                     white: white.uid,
                     black: black.uid,
                     data: game
-                });
+                }).
+                catch(function() {
+                    if (this.getUserGame(socket.uid) === true) {
+                        delete this.userGames[socket.uid];
+                    }
+
+                    if (this.getUserGame(socketOpponent.uid) === true) {
+                        delete this.userGames[socketOpponent.uid];
+                    }
+                }.bind(this));
             }
         }.bind(this)).
         then(function (response) {

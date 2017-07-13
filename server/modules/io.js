@@ -2,7 +2,8 @@
 
 module.exports = function (app, io) {
 
-    var moduleSocket = require(dirname + '/server/modules/socket')(io),
+    var q = require('q'),
+        moduleSocket = require(dirname + '/server/modules/socket')(io),
         moduleGame   = require(dirname + '/server/modules/game');
 
     io.on('connection', function (socket) {
@@ -232,7 +233,7 @@ module.exports = function (app, io) {
                 return;
             }
 
-            startGame(createdGame);
+            startGame(createdGame).then(callback);
         });
 
         socket.on('initGame', function (gid) {
@@ -402,12 +403,20 @@ module.exports = function (app, io) {
         });
 
         function startGame(game) {
-            var socketOpponent = moduleSocket.getSocket(game.uid);
+
+            var deferred = q.defer(),
+                socketOpponent = moduleSocket.getSocket(game.uid);
+
             if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
-                moduleSocket.startGame(socket, socketOpponent, game);
+                moduleSocket.
+                startGame(socket, socketOpponent, game).
+                then(deferred.resolve).
+                catch(deferred.resolve);
             } else {
-                moduleGame.deleteCreatedGame(game.uid);
+                deferred.resolve(moduleGame.deleteCreatedGame(game.uid));
             }
+
+            return deferred.promise;
         }
     });
 };
