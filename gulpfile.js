@@ -23,7 +23,6 @@ task('ngdocs', [], function () {
 }).
 task('minify', function() {
     gulp.src([
-        './node_modules/socket.io-client/socket.io.js', 
         './public/*.js',
         './public/app/app.js',
         './public/app/**/*.module.js', 

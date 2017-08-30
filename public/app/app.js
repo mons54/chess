@@ -41,25 +41,10 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
      */
     function ($rootScope, $route, $location, $window, $timeout, $interval, user, socket, modal, facebook, google, translator, utils) {
 
-        $rootScope.timeDiff = 0;
-
-        var timeStart = null,
-            timeValue = 0,
-            timeCount = 0;
-
-        $interval(function () {
-            if (timeStart || !socket.isConnected()) {
-                return;
-            }
-            timeStart = Date.now();
-            socket.emit('time', null, function (value) {
-                var time = Date.now();
-                timeValue += timeStart - time;
-                timeCount++;
-                $rootScope.timeDiff = Math.round(value - time - timeValue / timeCount / 2);
-                timeStart = null;
-            });
-        }, 1000);
+        $rootScope.ts = timesync.create({
+            server: '/timesync',
+            interval: 1000
+        });
         
         $rootScope.$on('$routeChangeStart', function(event, toState, fromState) {
 

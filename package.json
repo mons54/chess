@@ -14,7 +14,8 @@
         "mongoose": "4.6.5",
         "request": "2.79.0",
         "q": "1.4.1",
-        "google-auth-library": "0.10.0"
+        "google-auth-library": "0.10.0",
+        "timesync": "0.4.1"
     },
     "devDependencies": {
         "gulp": "*",

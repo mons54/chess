@@ -5,6 +5,7 @@ module.exports = function (app) {
     var express = require('express'),
         mongoose = require('mongoose'),
         bodyParser = require('body-parser'),
+        timeSyncServer = require('timesync/server'),
         staticPath = dirname + '/public/',
         dictionaries = {},
         defaultLanguage = 'en',
@@ -69,6 +70,8 @@ module.exports = function (app) {
         data.env = env;
         res.render('index', data);
     });
+
+    app.use('/timesync', timeSyncServer.requestHandler);
 };
 
 String.prototype.hash = function() {
