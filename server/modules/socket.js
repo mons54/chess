@@ -2,6 +2,7 @@
 
 var request = require('request'),
     googleAuth = require('google-auth-library'),
+    crypto = require('crypto'),
     db = require(dirname + '/server/modules/db'),
     moduleGame = require(dirname + '/server/modules/game'),
     utils = require(dirname + '/public/utils');
@@ -79,6 +80,12 @@ module.exports = function (io) {
                 lang: data.lang.substr(0, 2)
             }, { googleId: payload.sub });
         }.bind(this));
+    };
+
+    Module.prototype.vkConnect = function (socket, data) {
+        if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + 'IviSb4PSyaLf7mPwxBhB').digest('hex')) {
+            console.log('valid');
+        }
     };
 
     Module.prototype.create = function (socket, data, request) {

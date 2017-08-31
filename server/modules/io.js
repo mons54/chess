@@ -29,6 +29,14 @@ module.exports = function (app, io) {
             moduleSocket.googleConnect(socket, data);
         });
 
+        socket.on('vkConnect', function (data) {
+            if (!data ||
+                typeof data !== 'object') {
+                return;
+            }
+            moduleSocket.vkConnect(socket, data);
+        });
+
         socket.on('updateUser', function (data, callback) {
             if (!moduleSocket.checkSocket(socket)) {
                 return;

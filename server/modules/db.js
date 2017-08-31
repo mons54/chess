@@ -25,6 +25,13 @@ function Module() {
                     unique: true, 
                     sparse: true
                 },
+                vkId: {
+                    type: String,
+                    trim: true, 
+                    index: true, 
+                    unique: true, 
+                    sparse: true
+                },
                 edited: Boolean,
                 lastGame: String,
                 name: String,

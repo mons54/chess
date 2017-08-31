@@ -433,6 +433,20 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
             });
         }
 
+        if (VK !== 'undefined' && VK.init) {
+            VK.init({
+                apiId: 6090659
+            });
+
+            VK.Auth.login(function (response) {
+                if (response.status !== 'connected') {
+                    return;
+                }
+                socket.connect();
+                socket.emit('vkConnect', response.session);
+            });
+        }
+
         initUser();
 
         translator.use(translator.navigator);
