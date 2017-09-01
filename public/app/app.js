@@ -264,7 +264,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
             if (data === 'io server disconnect') {
                 hideModal();
                 $rootScope.disconnectMultiSocket = true;
-            } else if (!$rootScope.unauthorized) {
+            } else if (data !== 'io client disconnect') {
                 $rootScope.loading = true;
             }
         });
