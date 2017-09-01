@@ -12,7 +12,7 @@ angular.module('vkontakte', []).
  * @description
  * VK Api Id
  */
-constant('vkontakteApiId', 6170101).
+constant('vkontakteApiId', 6170407).
 
 /**
  * @ngdoc service
