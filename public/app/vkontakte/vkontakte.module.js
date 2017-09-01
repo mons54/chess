@@ -97,7 +97,7 @@ service('vkontakte', ['$rootScope', 'vkontakteApiId', 'user', 'socket', 'transla
          */
         this.init = function () {
             VK.init({
-                apiId: 6090659
+                apiId: vkontakteApiId
             });
         };
 
