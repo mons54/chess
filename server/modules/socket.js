@@ -84,7 +84,7 @@ module.exports = function (io) {
 
     Module.prototype.vkontakteConnect = function (socket, data) {
         
-        if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + '4SzPS026S0Vav7dMkRzr').digest('hex')) {
+        if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + 'qi1CxP2DF4b4DJ7zLDH9').digest('hex')) {
             
             var user = data.user;
 
