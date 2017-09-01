@@ -52,8 +52,9 @@
     "fanpage":"مروحة الصفحة",
     "terms_service":"شروط الخدمة",
     "privacy_policy":"سياسة الخصوصية",
-    "login_with_facebook": "تسجيل الدخول باستخدام الفيسبوك",
+    "login_with_facebook": "تسجيل الدخول مع الفيسبوك",
     "login_with_google": "تسجيل الدخول مع جوجل",
+    "login_with_vkontakte": "تسجيل الدخول مع فكونتاكتي",
     "logout": "تسجيل الخروج",
     "trophies":{
         "title":"الجوائز",

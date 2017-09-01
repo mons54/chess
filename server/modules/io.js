@@ -29,12 +29,12 @@ module.exports = function (app, io) {
             moduleSocket.googleConnect(socket, data);
         });
 
-        socket.on('vkConnect', function (data) {
+        socket.on('vkontakteConnect', function (data) {
             if (!data ||
-                typeof data !== 'object') {
+                !data.user) {
                 return;
             }
-            moduleSocket.vkConnect(socket, data);
+            moduleSocket.vkontakteConnect(socket, data);
         });
 
         socket.on('updateUser', function (data, callback) {

@@ -17,6 +17,7 @@ angular.module('app', [
     'global',
     'facebook',
     'google',
+    'vkontakte',
     'components',
     'game',
     'home',
@@ -25,7 +26,7 @@ angular.module('app', [
     'profile'
 ]).
 
-run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'user', 'socket', 'modal', 'facebook', 'google', 'translator', 'utils',
+run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'user', 'socket', 'modal', 'facebook', 'google', 'vkontakte', 'translator', 'utils',
 
     /**
      * @param {object} $rootScope Global scope
@@ -38,8 +39,9 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
      * @param {object} modal Modal service
      * @param {object} facebook Facebook service
      * @param {object} google Google service
+     * @param {object} vkontakte Vkontakte service
      */
-    function ($rootScope, $route, $location, $window, $timeout, $interval, user, socket, modal, facebook, google, translator, utils) {
+    function ($rootScope, $route, $location, $window, $timeout, $interval, user, socket, modal, facebook, google, vkontakte, translator, utils) {
 
         $rootScope.ts = timesync.create({
             server: '/timesync',
@@ -104,6 +106,10 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
         $rootScope.closeDrawer = closeDrawer;
 
+        $rootScope.hasLogout = function () {
+            return !facebook.isFacebookApp && !vkontakte.isVkontakteApp;
+        };
+
         $rootScope.facebookLogin = function () {
             facebook.login();
         };
@@ -112,15 +118,15 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
             google.login();
         };
 
+        $rootScope.vkontakteLogin = function () {
+            vkontakte.login();
+        };
+
         $rootScope.reconnect = function () {
             socket.connect();
         };
 
         $rootScope.logout = function () {
-            if (facebook.isFacebookApp) {
-                return;
-            }
-
             logout();
         };
 
@@ -169,6 +175,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
         function setLoginStatus() {
             facebookSetLoginStatus();
             googleSetLoginStatus();
+            vkontakteSetLoginStatus();
         }
 
         function facebookSetLoginStatus () {
@@ -177,6 +184,10 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
         function googleSetLoginStatus () {
             google.setLoginStatus(callBackLoginStatus);
+        }
+
+        function vkontakteSetLoginStatus () {
+            vkontakte.setLoginStatus(callBackLoginStatus);
         }
 
         function callBackLoginStatus(service) {
@@ -189,9 +200,9 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
             if (facebook.isFacebookApp) {
                 login = facebook.name;
-            }
-
-            if (!facebook.isFacebookApp && (!login || login === service.name && service.status !== 'connected')) {
+            } else if (vkontakte.isVkontakteApp) {
+                login = vkontakte.name;
+            } else if(!login || login === service.name && service.status !== 'connected') {
                 modalConnect.show();
                 return;
             }
@@ -202,6 +213,8 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                     service.handleLogin();
                 } else if (facebook.isFacebookApp) {
                     facebook.login();
+                } else if (vkontakte.isVkontakteApp) {
+                    vkontakte.login();
                 }
             }
         }
@@ -221,7 +234,15 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
             delete $rootScope.disconnectMultiSocket;
 
-            var login = facebook.isFacebookApp ? 'facebook' : user.getLogin();
+            var login;
+
+            if (facebook.isFacebookApp) {
+                login = 'facebook';
+            } else if (vkontakte.isVkontakteApp) {
+                login = 'vkontakte';
+            } else {
+                login = user.getLogin();
+            }
 
             if (!login) {
                 logout();
@@ -235,6 +256,9 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                 success = true;
             } else if (login === 'google' && google.auth) {
                 socket.emit('googleConnect', google.auth);
+                success = true;
+            } else if (login === 'vkontakte' && vkontakte.auth) {
+                socket.emit('vkontakteConnect', vkontakte.auth);
                 success = true;
             }
 
@@ -414,37 +438,38 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
             closeDrawer();
         };
 
-        $window.fbAsyncInit = function () {
-
-            facebook.init();
-
-            facebookSetLoginStatus();
-        };
-
         var modalConnect = modal('#modal-connect');
 
         facebook.isFacebookApp = angular.element('html').data('facebook');
+        vkontakte.isVkontakteApp = angular.element('html').data('vkontakte');
 
-        $rootScope.isFacebookApp = facebook.isFacebookApp;
+        if (!vkontakte.isVkontakteApp) {
 
-        if (!facebook.isFacebookApp && typeof gapi !== 'undefined' && gapi.load) {
+            $window.fbAsyncInit = function () {
+
+                facebook.init();
+
+                facebookSetLoginStatus();
+            };
+        }
+
+        if (!facebook.isFacebookApp && 
+            !vkontakte.isVkontakteApp && 
+            typeof gapi !== 'undefined' && 
+            gapi.load) {
+
             gapi.load('client', function () {
                 google.init().then(googleSetLoginStatus);
             });
         }
 
-        if (VK !== 'undefined' && VK.init) {
-            VK.init({
-                apiId: 6090659
-            });
+        if (!facebook.isFacebookApp && 
+            typeof VK !== 'undefined' && 
+            VK.init) {
 
-            VK.Auth.login(function (response) {
-                if (response.status !== 'connected') {
-                    return;
-                }
-                socket.connect();
-                socket.emit('vkConnect', response.session);
-            });
+            vkontakte.init();
+
+            vkontakteSetLoginStatus();
         }
 
         initUser();

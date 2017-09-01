@@ -20,6 +20,7 @@ constant('facebookAppId', $('html').data('env') === 'dev' ? '1709923609297773' :
  * @description 
  * Facebook service.
  * @requires $rootScope
+ * @requires facebook.constant:facebookAppId
  * @requires global.service:user
  * @requires global.service:socket
  */

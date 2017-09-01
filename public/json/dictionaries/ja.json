@@ -54,6 +54,7 @@
    "privacy_policy":"個人情報保護方針",
    "login_with_facebook": "Facebookアカウントでログインする",
    "login_with_google": "Googleアカウントでログインする",
+   "login_with_vkontakte": "VKアカウントでログインする",
    "logout": "ログアウト",
    "trophies":{
       "title":"トロフィー",

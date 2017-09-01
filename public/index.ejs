@@ -1,5 +1,9 @@
 <!doctype html>
-<html lang="<%= lang %>" ng-app="app" data-facebook="<%= facebook %>" data-env="<%= typeof env === 'string' ? env : null %>">
+<html lang="<%= lang %>"
+      ng-app="app"
+      data-facebook="<%= facebook %>"
+      data-vkontakte="<%= vkontakte %>"
+      data-env="<%= typeof env === 'string' ? env : null %>">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -92,6 +96,11 @@
                 <div class="app-login__content-button">
                     <button class="app-login__button app-login__button--google" ng-click="googleLogin()">
                         {{ 'login_with_google' | translate }}
+                    </button>
+                </div>
+                <div class="app-login__content-button">
+                    <button class="app-login__button app-login__button--vkontakte" ng-click="vkontakteLogin()">
+                        {{ 'login_with_vkontakte' | translate }}
                     </button>
                 </div>
             </div>
@@ -251,7 +260,7 @@
                     </a>
                     <a class="mdl-navigation__link" 
                        href
-                       ng-if="!isFacebookApp"
+                       ng-if="hasLogout()"
                        ng-click="closeDrawer(); logout()">
                         <i class="material-icons" role="presentation">power_settings_new</i>
                         {{ 'logout' | translate }}
@@ -297,7 +306,7 @@
                 </button>
                 <button type="button"
                         class="app-button mdl-button mdl-js-button mdl-button--fab"
-                        ng-if="!isFacebookApp"
+                        ng-if="hasLogout()"
                         ng-click="logout()">
                     <i class="material-icons">power_settings_new</i>
                 </button>
@@ -789,6 +798,8 @@
             <script src="app/facebook/facebook.module.js"></script>
 
             <script src="app/google/google.module.js"></script>
+
+            <script src="app/vkontakte/vkontakte.module.js"></script>
 
             <script src="app/components/components.module.js"></script>
             <script src="app/components/components.services.js"></script>

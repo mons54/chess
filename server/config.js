@@ -39,6 +39,16 @@ module.exports = function (app) {
         var data = dictionaries[defaultLanguage];
         data.lang = defaultLanguage;
         data.facebook = true;
+        data.vkontakte = false;
+        data.env = env;
+        res.render('index', data);
+    });
+
+    app.all('/vkontakte', function (req, res) {
+        var data = dictionaries[defaultLanguage];
+        data.lang = defaultLanguage;
+        data.facebook = false;
+        data.vkontakte = true;
         data.env = env;
         res.render('index', data);
     });
@@ -67,6 +77,7 @@ module.exports = function (app) {
 
         data = dictionaries[lang];
         data.facebook = false;
+        data.vkontakte = false;
         data.env = env;
         res.render('index', data);
     });

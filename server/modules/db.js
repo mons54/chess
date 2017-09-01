@@ -25,7 +25,7 @@ function Module() {
                     unique: true, 
                     sparse: true
                 },
-                vkId: {
+                vkontakteId: {
                     type: String,
                     trim: true, 
                     index: true, 

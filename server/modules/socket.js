@@ -82,9 +82,18 @@ module.exports = function (io) {
         }.bind(this));
     };
 
-    Module.prototype.vkConnect = function (socket, data) {
-        if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + 'IviSb4PSyaLf7mPwxBhB').digest('hex')) {
-            console.log('valid');
+    Module.prototype.vkontakteConnect = function (socket, data) {
+        
+        if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + 'u0ARXaDPrz6nQtnLC3Sf').digest('hex')) {
+            
+            var user = data.user;
+
+            this.create(socket, {
+                vkontakteId: data.mid,
+                name: user.name,
+                avatar: user.picture,
+                lang: user.lang
+            }, { vkontakteId: data.mid });
         }
     };
 

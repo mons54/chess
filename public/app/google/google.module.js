@@ -6,6 +6,12 @@
  */
 angular.module('google', []).
 
+/**
+ * @ngdoc parameters
+ * @name google.constant:googleClientId
+ * @description
+ * Google Client Id
+ */
 constant('googleClientId', '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.googleusercontent.com').
 
 /**
@@ -14,6 +20,7 @@ constant('googleClientId', '241448993510-5860ln6qoa9a1iov1t3j6uirsvhlerbb.apps.g
  * @description 
  * Google service.
  * @requires $rootScope
+ * @requires google.constant:googleClientId
  * @requires global.service:user
  * @requires global.service:socket
  * @requires global.service:translator
