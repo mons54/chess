@@ -218,6 +218,19 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             modal('#modal-response-draw').show();
         }, $scope);
 
+        socket.on('messageGame', function (message) {
+            if (!$scope.messages) {
+                return;
+            }
+            $scope.messages.push(message);
+            if ($scope.showMessages) {
+                addReadMessage(message);
+                setCookieReadMessages();
+            } else if (isUnreadMessage(message)) {
+                $scope.unreadMessages++;
+            }
+        }, $scope);
+
         socket.on('messagesGame', function (messages) {
 
             $scope.messages = messages;
@@ -351,15 +364,14 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.togglePlayed = function (isPhone) {
-
             if (isPhone || $scope.showPlayedPhone) {
                 $scope.showPlayed = $scope.showPlayedPhone;
                 $scope.showPlayedPhone = !$scope.showPlayedPhone;
                 $rootScope.isToggle = $scope.showPlayedPhone;
             }
-
-            $scope.showPlayed = !$scope.showPlayed;
-            $scope.hideFixedButton = !$scope.showPlayed;
+            var value = !$scope.showPlayed;
+            setShowPlayed(value);
+            user.setShowPlayed(value);
         };
 
         $scope.toggleMessages = function (isPhone) {
@@ -373,7 +385,9 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
                 showMessages();
             }
 
-            $scope.showMessages = !$scope.showMessages;
+            var value = !$scope.showMessages;
+            setShowMessages(value);
+            user.setShowMessages(value);
 
             if ($scope.showMessages) {
                 $timeout(function () {
@@ -530,6 +544,15 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
             $cookies.putObject('gameReadMessages', messages, {
                 expires: expires
             });
+        }
+
+        function setShowPlayed(value) {
+            $scope.showPlayed = value;
+            $scope.hideFixedButton = value;
+        }
+
+        function setShowMessages(value) {
+            $scope.showMessages = value;
         }
 
         function cancelInterval() {
