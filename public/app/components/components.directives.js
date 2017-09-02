@@ -40,6 +40,12 @@ directive('showModal', ['modal',
     }
 ]).
 
+/**
+ * @ngdoc directive
+ * @name components.directive:avatar
+ * @description 
+ * Load default avatar if error src.
+ */
 directive('avatar', function() {
     return {
         link: function(scope, element, attrs) {
@@ -186,6 +192,19 @@ directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'transla
     }
 ]).
 
+/**
+ * @ngdoc directive
+ * @name components.directive:modalCreateGame
+ * @description 
+ * Modal create game.
+ * @requires $rootScope
+ * @requires $route
+ * @requires components.service:modal
+ * @requires global.service:socket
+ * @requires game.constant:paramsGame
+ * @restrict E
+ * @scope
+ */
 directive('modalCreateGame', ['$rootScope', '$route', 'modal', 'socket', 'paramsGame', 
 
     function ($rootScope, $route, modal, socket, paramsGame) {
