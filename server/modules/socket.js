@@ -44,7 +44,7 @@ module.exports = function (io) {
                     this.create(socket, {
                         facebookId: body.id,
                         name: body.name,
-                        avatar: body.picture.data.url,
+                        avatar: 'https://graph.facebook.com/' + body.id + '/picture',
                         lang: body.locale.substr(0, 2)
                     }, { facebookId: body.id });
 
