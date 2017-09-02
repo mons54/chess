@@ -4,8 +4,7 @@ var request = require('request'),
     googleAuth = require('google-auth-library'),
     crypto = require('crypto'),
     db = require(dirname + '/server/modules/db'),
-    moduleGame = require(dirname + '/server/modules/game'),
-    utils = require(dirname + '/public/utils');
+    moduleGame = require(dirname + '/server/modules/game');
 
 module.exports = function (io) {
 
@@ -119,8 +118,7 @@ module.exports = function (io) {
                 saveData.name = data.name;
             }
 
-            if (!response.edited && 
-                (data.avatar && data.avatar !== response.avatar)) {
+            if (data.avatar && data.avatar !== response.avatar) {
                 saveData.avatar = data.avatar;
             }
 
@@ -209,11 +207,6 @@ module.exports = function (io) {
             saveData.edited = true;
         }
 
-        if (typeof data.avatar === 'string' && 
-            utils.patterns.avatar.test(data.avatar)) {
-            saveData.avatar = data.avatar.trim();
-        }
-
         if (typeof data.lang === 'string') {
             saveData.lang = data.lang.substr(0, 2);
         }
@@ -238,12 +231,6 @@ module.exports = function (io) {
         if (Object.keys(saveData).length) {
             return db.update('users', { _id: db.objectId(socket.uid) }, saveData).then(function () {
                 Object.assign(data, saveData);
-                if (data.name) {
-                    socket.name = data.name;
-                }
-                if (data.avatar) {
-                    socket.avatar = data.avatar;
-                }
                 return data;
             });
         }

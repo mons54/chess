@@ -56,8 +56,23 @@ directive('avatar', function() {
     };
 }).
 
-directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'translator', 'languages', 'colorsGame', 'patterns',
-    function ($rootScope, $timeout, socket, user, translator, languages, colorsGame, patterns) {
+/**
+ * @ngdoc directive
+ * @name components.directive:modalSettings
+ * @description 
+ * Modal user settings.
+ * @requires $rootScope
+ * @requires $timeout
+ * @requires global.service:socket
+ * @requires global.service:user
+ * @requires global.service:translator
+ * @requires global.constant:languages
+ * @requires game.constant:colorsGame
+ * @restrict E
+ * @scope
+ */
+directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'translator', 'languages', 'colorsGame',
+    function ($rootScope, $timeout, socket, user, translator, languages, colorsGame) {
         return {
             restrict: 'E',
             scope: true,
@@ -76,7 +91,6 @@ directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'transla
                 function setValues(value) {
                     scope.settings = {
                         edited: true,
-                        avatar: value.avatar,
                         lang: value.lang,
                         colorGame: value.colorGame,
                         sound: value.sound
@@ -101,50 +115,6 @@ directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'transla
                 scope.reset = function () {
                     setValues(scope.defaultValues);
                 };
-
-                var avatarSrc,
-                    avatarIsValid;
-
-                scope.checkAvatar = checkAvatar;
-
-                function checkAvatar(callback) {
-
-                    if (!avatarSrc && !scope.settingsForm.avatar.$valid) {
-                        return;
-                    }
-
-                    if (avatarSrc && avatarSrc === scope.settings.avatar ||
-                        scope.settings.avatar === scope.defaultValues.avatar) {
-                        scope.settingsForm.avatar.$setValidity('avatarSrc', true);
-                        if (callback) {
-                            callback();
-                        }
-                        return;
-                    }
-
-                    avatarSrc = scope.settings.avatar;
-
-                    var avatar = new Image();
-
-                    avatar.onerror = function() {
-                        $timeout(function() {
-                            scope.settingsForm.avatar.$setValidity('avatarSrc', false);
-                        });
-                        avatarIsValid = false;
-                    };
-
-                    avatar.onload = function() {
-                        avatarIsValid = true;
-                        $timeout(function() {
-                            scope.settingsForm.avatar.$setValidity('avatarSrc', true);
-                        });
-                        if (callback) {
-                            callback();
-                        }
-                    };
-
-                    avatar.src = avatarSrc;
-                }
 
                 function updateUser() {
                     var data = angular.copy(scope.settings);
@@ -174,15 +144,8 @@ directive('modalSettings', ['$rootScope', '$timeout', 'socket', 'user', 'transla
                         return;
                     }
 
-                    if (!avatarIsValid) {
-                        checkAvatar(updateUser);
-                        return;
-                    }
-
                     updateUser();
                 };
-
-                scope.patternAvatar = patterns.avatar;
 
                 scope.languages = languages;
 
