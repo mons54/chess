@@ -451,38 +451,42 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
                 facebookSetLoginStatus();
             };
-        }
 
-        if (!facebook.isFacebookApp && 
-            !vkontakte.isVkontakteApp && 
-            typeof gapi !== 'undefined' && 
-            gapi.load) {
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
 
-            gapi.load('client', function () {
-                google.init().then(googleSetLoginStatus);
-            });
-        }
+            if (!facebook.isFacebookApp) {
 
-        if (!facebook.isFacebookApp && 
-            typeof VK !== 'undefined' && 
-            VK.init) {
+                if (typeof gapi !== 'undefined' && gapi.load) {
+                    gapi.load('client', function () {
+                        google.init().then(googleSetLoginStatus);
+                    });
+                }
 
-            vkontakte.init();
+                $window.vkAsyncInit = function () {
 
-            vkontakteSetLoginStatus();
+                    vkontakte.init();
+
+                    vkontakteSetLoginStatus();
+                };
+                
+                (function(d, s) {
+                    var el = document.createElement(s);
+                    el.src = 'https://vk.com/js/api/openapi.js';
+                    el.async = true;
+                    document.getElementById('vk-root').appendChild(el);
+                }(document, 'script'));
+            }
         }
 
         initUser();
 
         translator.use(translator.navigator);
-        
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
 
         $window.twttr = (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0],
