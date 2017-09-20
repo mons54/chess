@@ -67,26 +67,45 @@ service('vkontakte', ['$rootScope', 'vkontakteApiId', 'user', 'socket', 'transla
             self.status = response.status;
             if (response.status === 'connected') {
                 self.auth = response.session;
-                VK.api('users.get', {fields: 'photo_50, language'}, function(response) {
-                    if (response &&
-                        response.response &&
-                        response.response[0]) {
-
-                        var response = response.response[0];
-
-                        self.auth.user = {
-                            name: response.nickname || (response.first_name + ' ' + response.last_name),
-                            picture: response.photo_50,
-                            lang: getLanguage(response.language)
-                        };
-                    }    
-                    callback();
+                VK.api('users.get', {fields: 'photo_50, language'}, function (response) {
+                    self.setUser(response, callback);
                 });
             } else {
                 delete self.auth;
                 callback();
             }
         }
+
+        /**
+         * @ngdoc function
+         * @name #setUser
+         * @methodOf vkontakte.service:vkontakte
+         * @description
+         * @param {object} response Response
+         * @param {function} callback Callback
+         * Set user data
+         */
+        this.setUser = function (response, callback) {
+
+            if (!self.auth) {
+                return;
+            }
+
+            if (response &&
+                response.response &&
+                response.response[0]) {
+
+                var response = response.response[0];
+
+                self.auth.user = {
+                    name: response.nickname || (response.first_name + ' ' + response.last_name),
+                    picture: response.photo_50,
+                    lang: getLanguage(response.language)
+                };
+
+                callback();
+            }
+        };
 
         /**
          * @ngdoc function
@@ -146,10 +165,9 @@ service('vkontakte', ['$rootScope', 'vkontakteApiId', 'user', 'socket', 'transla
          * Set user data from VK.
          */
         this.handleLogin = function () {
-            if (!this.isVkontakteApp) {
-                user.setLogin(this.name);
-            }
-            
+
+            user.setLogin(this.name);
+
             socket.connect();
         };
 

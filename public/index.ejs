@@ -2,7 +2,7 @@
 <html lang="<%= lang %>"
       ng-app="app"
       data-facebook="<%= facebook %>"
-      data-vkontakte="<%= vkontakte %>"
+      data-vkontakte="<%= vkontakte ? JSON.stringify(vkontakte) : false %>"
       data-env="<%= typeof env === 'string' ? env : null %>">
     <head>
         <meta charset="utf-8">
@@ -759,10 +759,16 @@
         </div>
           
         <div id="fb-root"></div>
-        <div id="vk-root"></div>
+
+        <% if (vkontakte) { %>
+            <script src="https://vk.com/js/api/xd_connection.js?2"></script>
+        <% } else { %>
+            <div id="vk-root"></div>
+        <% } %>
+
 
         <script src="https://apis.google.com/js/api.js" async defer></script>
-        <script src="https://ads.lfstmedia.com/getad?site=287948" defer async></script>
+        <script src="https://ads.lfstmedia.com/getad?site=287948" async defer></script>
 
         <script src="lib/jquery.min.js"></script>
         <script src="lib/jquery-ui.min.js"></script>

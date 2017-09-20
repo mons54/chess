@@ -48,7 +48,7 @@ module.exports = function (app) {
         var data = dictionaries[defaultLanguage];
         data.lang = defaultLanguage;
         data.facebook = false;
-        data.vkontakte = true;
+        data.vkontakte = req.query;
         data.env = env;
         res.render('index', data);
     });

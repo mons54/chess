@@ -107,7 +107,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
         $rootScope.closeDrawer = closeDrawer;
 
         $rootScope.hasLogout = function () {
-            return !facebook.isFacebookApp && !vkontakte.isVkontakteApp;
+            return !facebook.isFacebookApp && !vkontakte.data;
         };
 
         $rootScope.facebookLogin = function () {
@@ -200,7 +200,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
             if (facebook.isFacebookApp) {
                 login = facebook.name;
-            } else if (vkontakte.isVkontakteApp) {
+            } else if (vkontakte.data) {
                 login = vkontakte.name;
             } else if(!login || login === service.name && service.status !== 'connected') {
                 modalConnect.show();
@@ -213,7 +213,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                     service.handleLogin();
                 } else if (facebook.isFacebookApp) {
                     facebook.login();
-                } else if (vkontakte.isVkontakteApp) {
+                } else if (vkontakte.auth) {
                     vkontakte.login();
                 }
             }
@@ -238,7 +238,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
             if (facebook.isFacebookApp) {
                 login = 'facebook';
-            } else if (vkontakte.isVkontakteApp) {
+            } else if (vkontakte.data) {
                 login = 'vkontakte';
             } else {
                 login = user.getLogin();
@@ -441,9 +441,29 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
         var modalConnect = modal('#modal-connect');
 
         facebook.isFacebookApp = angular.element('html').data('facebook');
-        vkontakte.isVkontakteApp = angular.element('html').data('vkontakte');
+        vkontakte.data = angular.element('html').data('vkontakte');
 
-        if (!vkontakte.isVkontakteApp) {
+        if (vkontakte.data) {
+
+            VK.init(function () {
+
+                vkontakte.status = 'connected';
+
+                vkontakte.auth = {
+                    accessToken: vkontakte.data.access_token
+                };
+
+                VK.api('users.get', {
+                    user_id: vkontakte.auth.user_id,
+                    fields: 'photo_50, language'
+                }, function (response) {
+                    vkontakte.setUser(response, function () {
+                        callBackLoginStatus(vkontakte);
+                    });
+                });
+            });
+
+        } else {
 
             $window.fbAsyncInit = function () {
 

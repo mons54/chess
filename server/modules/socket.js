@@ -4,7 +4,12 @@ var request = require('request'),
     googleAuth = require('google-auth-library'),
     crypto = require('crypto'),
     db = require(dirname + '/server/modules/db'),
-    moduleGame = require(dirname + '/server/modules/game');
+    moduleGame = require(dirname + '/server/modules/game'),
+    vk = require('vk-call').vk,
+    vkApi = new vk({
+        token: 'b632df47b632df47b632df477db66cfab2bb632b632df47ef9b7fba48e91282f89c8045',
+        timeout: 10000
+    });
 
 module.exports = function (io) {
 
@@ -26,6 +31,7 @@ module.exports = function (io) {
     Module.prototype.facebookConnect = function (socket, data) {
 
         request.get('https://graph.facebook.com/v2.8/' + data.id + '?access_token=' + data.accessToken + '&fields=id,name,picture,locale', 
+            
             function (error, response, body) {
                 try {
                     
@@ -47,9 +53,7 @@ module.exports = function (io) {
                         lang: body.locale.substr(0, 2)
                     }, { facebookId: body.id });
 
-                } catch (Error) {
-                    console.log(body);
-                }
+                } catch (Error) {}
             }.bind(this)
         );
     };
@@ -82,8 +86,31 @@ module.exports = function (io) {
     };
 
     Module.prototype.vkontakteConnect = function (socket, data) {
-        
-        if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + 'qi1CxP2DF4b4DJ7zLDH9').digest('hex')) {
+
+        if (data.accessToken) {
+
+            vkApi.call('secure.checkToken', {
+                token: data.accessToken
+            })
+            .then(function (response) {
+
+                if (!response ||
+                    !response.user_id) {
+                    return;
+                }
+
+                var user = data.user;
+
+                this.create(socket, {
+                    vkontakteId: response.user_id,
+                    name: user.name,
+                    avatar: user.picture,
+                    lang: user.lang
+                }, { vkontakteId: response.user_id });
+
+            }.bind(this));
+
+        } else if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + 'qi1CxP2DF4b4DJ7zLDH9').digest('hex')) {
             
             var user = data.user;
 
