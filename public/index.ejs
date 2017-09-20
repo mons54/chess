@@ -254,6 +254,7 @@
                     </a>
                     <a class="mdl-navigation__link" 
                        href
+                       ng-if="isFacebookApp()"
                        ng-click="closeDrawer(); inviteFriends()">
                         <i class="material-icons">person_add</i>
                         {{ 'invite' | translate }}
@@ -301,6 +302,7 @@
                 </button>
                 <button type="button"
                         class="app-button mdl-button mdl-js-button mdl-button--fab"
+                        ng-if="isFacebookApp()"
                         ng-click="inviteFriends()">
                     <i class="material-icons">person_add</i>
                 </button>

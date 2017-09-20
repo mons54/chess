@@ -106,6 +106,10 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
         $rootScope.closeDrawer = closeDrawer;
 
+        $rootScope.isFacebookApp = function () {
+            return facebook.isFacebookApp;
+        };
+
         $rootScope.hasLogout = function () {
             return !facebook.isFacebookApp && !vkontakte.data;
         };
