@@ -129,6 +129,11 @@ service('vkontakte', ['$rootScope', 'vkontakteApiId', 'user', 'socket', 'transla
          * @param {function} callback Callback
          */
         this.setLoginStatus = function (callback) {
+
+            if (typeof VK === 'undefined') {
+                return;
+            }
+
             VK.Auth.getLoginStatus(function (response) {
                 setLoginStatus(response, function () {
                     callback(self);
