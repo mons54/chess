@@ -9,6 +9,10 @@ var request = require('request'),
     vkApi = new vk({
         token: 'b632df47b632df47b632df477db66cfab2bb632b632df47ef9b7fba48e91282f89c8045',
         timeout: 10000
+    }),
+    vkApiMobile = new vk({
+        token: '18a6d8bc18a6d8bc18a6d8bc9718f8ff89118a618a6d8bc410f1b90f7ec3824cbee4255',
+        timeout: 10000
     });
 
 module.exports = function (io) {
@@ -89,7 +93,7 @@ module.exports = function (io) {
 
         if (data.accessToken) {
 
-            vkApi.call('secure.checkToken', {
+            (data.mobile ? vkApiMobile : vkApi).call('secure.checkToken', {
                 token: data.accessToken
             })
             .then(function (response) {
@@ -108,7 +112,10 @@ module.exports = function (io) {
                     lang: user.lang
                 }, { vkontakteId: response.user_id });
 
-            }.bind(this));
+            }.bind(this))
+            .catch(function (error) {
+                socket.emit('refreshAccessToken');
+            });
 
         } else if (data.sig === crypto.createHash('md5').update('expire=' + data.expire + 'mid=' + data.mid + 'secret=' + data.secret + 'sid=' + data.sid  + 'qi1CxP2DF4b4DJ7zLDH9').digest('hex')) {
             
