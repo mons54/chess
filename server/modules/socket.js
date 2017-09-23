@@ -13,7 +13,15 @@ var request = require('request'),
     vkApiMobile = new vk({
         token: '18a6d8bc18a6d8bc18a6d8bc9718f8ff89118a618a6d8bc410f1b90f7ec3824cbee4255',
         timeout: 10000
-    });
+    }),
+    ok = require('ok.ru'),
+    okSecretKey = 'E836A8578BFD445FA13AF277';
+
+ok.setOptions({
+  applicationSecretKey: okSecretKey,
+  applicationKey: 'CBAJFQMLEBABABABA',
+  applicationId: '1255102464',
+});
 
 module.exports = function (io) {
 
@@ -127,6 +135,42 @@ module.exports = function (io) {
                 avatar: user.picture,
                 lang: user.lang
             }, { vkontakteId: data.mid });
+        }
+    };
+
+    Module.prototype.okruConnect = function (socket, data) {
+
+        if (data.accessToken) {
+
+            ok.setAccessToken(data.accessToken);
+            ok.get({
+                method: 'users.getCurrentUser' 
+            }, function (error, response) {
+
+                if (!response.uid) {
+                    socket.emit('refreshAccessToken');
+                    return;
+                }
+
+                this.create(socket, {
+                    okruId: response.uid,
+                    name: response.name,
+                    avatar: response.pic_1,
+                    lang: response.locale
+                }, { okruId: response.uid });
+
+            }.bind(this));
+
+        } else if (data.user && data.sig === crypto.createHash('md5').update(data.uid + data.key + okSecretKey).digest('hex')) {
+            
+            var user = data.user;
+
+            this.create(socket, {
+                okruId: data.uid,
+                name: user.name,
+                avatar: user.picture,
+                lang: user.lang
+            }, { okruId: data.uid });
         }
     };
 

@@ -40,6 +40,7 @@ module.exports = function (app) {
         data.lang = defaultLanguage;
         data.facebook = true;
         data.vkontakte = false;
+        data.okru = false;
         data.env = env;
         res.render('index', data);
     });
@@ -49,6 +50,17 @@ module.exports = function (app) {
         data.lang = defaultLanguage;
         data.facebook = false;
         data.vkontakte = req.query;
+        data.okru = false;
+        data.env = env;
+        res.render('index', data);
+    });
+
+    app.all('/okru', function (req, res) {
+        var data = dictionaries[defaultLanguage];
+        data.lang = defaultLanguage;
+        data.facebook = false;
+        data.vkontakte = false;
+        data.okru = req.query;
         data.env = env;
         res.render('index', data);
     });
@@ -78,6 +90,7 @@ module.exports = function (app) {
         data = dictionaries[lang];
         data.facebook = false;
         data.vkontakte = false;
+        data.okru = false;
         data.env = env;
         res.render('index', data);
     });

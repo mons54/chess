@@ -37,6 +37,13 @@ module.exports = function (app, io) {
             moduleSocket.vkontakteConnect(socket, data);
         });
 
+        socket.on('okruConnect', function (data) {
+            if (!data) {
+                return;
+            }
+            moduleSocket.okruConnect(socket, data);
+        });
+
         socket.on('updateUser', function (data, callback) {
             if (!moduleSocket.checkSocket(socket)) {
                 return;
