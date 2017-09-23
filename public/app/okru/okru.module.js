@@ -17,41 +17,49 @@ angular.module('okru', []).
  * @requires global.service:socket
  * @requires global.service:translator
  */
-service('okru', function () {
+service('okru', ['socket',
+    
+    function (socket) {
 
-    var self = this;
+        var self = this;
 
-    this.name = 'okru';
+        this.name = 'okru';
 
-    this.init = function (callback) {
+        this.init = function (callback) {
 
-        self.status = 'connected';
+            self.status = 'connected';
 
-        self.auth = {
-            sig: self.data.auth_sig,
-            uid: self.data.logged_user_id,
-            key: self.data.session_key
+            self.auth = {
+                sig: self.data.auth_sig,
+                uid: self.data.logged_user_id,
+                key: self.data.session_key
+            };
+
+            var rParams = FAPI.Util.getRequestParameters();
+
+            FAPI.init(rParams['api_server'], rParams['apiconnection'], function() {
+                FAPI.Client.call({
+                    fields: 'first_name,last_name,location,pic128x128',
+                    method: 'users.getCurrentUser'
+                }, function (method, response) {
+
+                    self.auth.user = {
+                        name: response.first_name + ' ' + response.last_name,
+                        picture: response.pic128x128,
+                        lang: response.locale
+                    };
+
+                    callback(self);
+                });
+            });
+
         };
 
-        var rParams = FAPI.Util.getRequestParameters();
+        this.handleLogin = function () {
 
-        FAPI.init(rParams['api_server'], rParams['apiconnection'], function() {
-            FAPI.Client.call({
-                fields: 'first_name,last_name,location,pic128x128',
-                method: 'users.getCurrentUser'
-            }, function (method, response) {
+            socket.connect();
+        };
 
-                self.auth.user = {
-                    name: response.first_name + ' ' + response.last_name,
-                    picture: response.pic128x128,
-                    lang: response.locale
-                };
-
-                callback(self);
-            });
-        });
-
-    };
-
-    return this;
-});
+        return this;
+    }
+]);
