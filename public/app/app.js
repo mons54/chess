@@ -18,6 +18,7 @@ angular.module('app', [
     'facebook',
     'google',
     'vkontakte',
+    'okru',
     'components',
     'game',
     'home',
@@ -26,7 +27,7 @@ angular.module('app', [
     'profile'
 ]).
 
-run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'user', 'socket', 'modal', 'facebook', 'google', 'vkontakte', 'translator', 'utils',
+run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'user', 'socket', 'modal', 'facebook', 'google', 'vkontakte', 'okru', 'translator', 'utils',
 
     /**
      * @param {object} $rootScope Global scope
@@ -41,7 +42,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
      * @param {object} google Google service
      * @param {object} vkontakte Vkontakte service
      */
-    function ($rootScope, $route, $location, $window, $timeout, $interval, user, socket, modal, facebook, google, vkontakte, translator, utils) {
+    function ($rootScope, $route, $location, $window, $timeout, $interval, user, socket, modal, facebook, google, vkontakte, okru, translator, utils) {
 
         $rootScope.ts = timesync.create({
             server: '/timesync',
@@ -206,6 +207,8 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                 login = facebook.name;
             } else if (vkontakte.data) {
                 login = vkontakte.name;
+            } else if (okru.data) {
+                login = okru.name;
             } else if(!login || login === service.name && service.status !== 'connected') {
                 modalConnect.show();
                 return;
@@ -217,8 +220,6 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                     service.handleLogin();
                 } else if (facebook.isFacebookApp) {
                     facebook.login();
-                } else if (vkontakte.auth) {
-                    vkontakte.login();
                 }
             }
         }
@@ -244,6 +245,8 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                 login = 'facebook';
             } else if (vkontakte.data) {
                 login = 'vkontakte';
+            } else if (okru.data) {
+                login = 'okru';
             } else {
                 login = user.getLogin();
             }
@@ -263,6 +266,9 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                 success = true;
             } else if (login === 'vkontakte' && vkontakte.auth) {
                 socket.emit('vkontakteConnect', vkontakte.auth);
+                success = true;
+            } else if (login === 'okru' && okru.auth) {
+                socket.emit('okruConnect', okru.auth);
                 success = true;
             }
 
@@ -442,10 +448,12 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
             closeDrawer();
         };
 
-        var modalConnect = modal('#modal-connect');
+        var modalConnect = modal('#modal-connect'),
+            html = angular.element('html');
 
-        facebook.isFacebookApp = angular.element('html').data('facebook');
-        vkontakte.data = angular.element('html').data('vkontakte');
+        facebook.isFacebookApp = html.data('facebook');
+        vkontakte.data = html.data('vkontakte');
+        okru.data = html.data('okru');
 
         if (vkontakte.data) {
 
@@ -466,6 +474,10 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                     });
                 });
             });
+
+        } else if (okru.data) {
+
+            okru.init(callBackLoginStatus);
 
         } else {
 
