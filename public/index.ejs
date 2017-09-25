@@ -275,7 +275,9 @@
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                 </div>
                 <a name="top"></a>
-                <div id="ad-header" ng-hide="user.gid"></div>
+                <% if (!vkontakte) { %>
+                    <div id="ad-header" ng-hide="user.gid"></div>
+                <% } %>
                 <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
                 <footer class="app-footer">
                     <a id="fanpage" href="https://www.facebook.com/ChessCommunity" target="_blank">{{ 'fanpage' | translate }}</a>
@@ -767,6 +769,7 @@
             <script src="https://vk.com/js/api/xd_connection.js?2"></script>
         <% } else { %>
             <div id="vk-root"></div>
+            <script src="https://ads.lfstmedia.com/getad?site=287948" async defer></script>
         <% } %>
 
         <% if (okru) { %>
@@ -774,7 +777,6 @@
         <% } %>
 
         <script src="https://apis.google.com/js/api.js" async defer></script>
-        <script src="https://ads.lfstmedia.com/getad?site=287948" async defer></script>
 
         <script src="lib/jquery.min.js"></script>
         <script src="lib/jquery-ui.min.js"></script>

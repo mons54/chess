@@ -3081,7 +3081,6 @@ a {
   }
 
   .app-profile__game-content {
-    /* margin-left: calc(33% + 8px); */
     width: calc(100% - 33% - 8px);
   }
 
