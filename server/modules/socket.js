@@ -526,8 +526,22 @@ module.exports = function (io) {
         var game, req = {};
 
         return db.all([
-            db.count('games', { $and: [{ type: type }, { $or: [{ white: white.uid }, { black: white.uid }] }] }),
-            db.count('games', { $and: [{ type: type }, { $or: [{ white: black.uid }, { black: black.uid }] }] })
+            db.count('games', {
+                type: type,
+                $or: [{ 
+                    white: white.uid 
+                }, { 
+                    black: white.uid 
+                }]
+            }),
+            db.count('games', { 
+                type: type, 
+                $or: [{ 
+                    white: black.uid 
+                }, { 
+                    black: black.uid 
+                }] 
+            })
         ]).
         then(function (response) {
 
@@ -1326,9 +1340,30 @@ module.exports = function (io) {
         date.setDate(date.getDate() - 1);
 
         db.all([
-            db.count('games', { $or: [{ white: uid }, { black: uid }] }),
-            db.count('games', { $or: [{ $and: [{ black: uid, result: 2 }] }, { $and: [{ white: uid, result: 1 }] }] }),
-            db.count('games', { $and: [{ date: { $gt: date } }, { $or: [{white: uid}, {black: uid}] } ]})
+            db.count('games', { 
+                $or: [{ 
+                    white: uid 
+                }, { 
+                    black: uid 
+                }] 
+            }),
+            db.count('games', { 
+                $or: [{
+                    black: uid, 
+                    result: 2 
+                }, {
+                    white: uid, 
+                    result: 1 
+                }]
+            }),
+            db.count('games', {
+                date: { $gt: date }, 
+                $or: [{
+                    white: uid
+                }, {
+                    black: uid
+                }]
+            })
         ]).then(function (response) {
 
             var newTrophies = {},
