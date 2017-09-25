@@ -184,6 +184,13 @@ module.exports = function (io) {
         .then(function (response) {
 
             if (!response) {
+
+                if (data.avatar && (!data.avatar.startsWith('https://') || data.avatar.length > 2000) {
+                    delete data.avatar;
+                }
+
+                data.name = data.name.charAt(100);
+
                 return db.save('users', Object.assign(data, {
                     blitz: 1500,
                     rapid: 1500
