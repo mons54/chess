@@ -62,7 +62,7 @@ module.exports = function (io) {
                         facebookId: body.id,
                         name: body.name,
                         avatar: 'https://graph.facebook.com/' + body.id + '/picture',
-                        lang: body.locale.substr(0, 2)
+                        lang: body.locale
                     }, { facebookId: body.id });
 
                 } catch (Error) {}
@@ -92,7 +92,7 @@ module.exports = function (io) {
                 googleId: payload.sub,
                 name: payload.name,
                 avatar: payload.picture,
-                lang: data.lang.substr(0, 2)
+                lang: data.lang
             }, { googleId: payload.sub });
         }.bind(this));
     };
@@ -174,6 +174,33 @@ module.exports = function (io) {
         }
     };
 
+    Module.prototype.createUser = function (data) {
+
+        if (typeof data.avatar === 'string' && data.avatar.startsWith('https://')) {
+            data.avatar = data.avatar.substr(0, 2000);
+        } else {
+            delete data.avatar;
+        }
+
+        if (typeof data.name === 'string') {
+            data.name = data.name.substr(0, 50);
+        } else {
+            delete data.name;
+        }
+
+        if (typeof data.lang === 'string') {
+            data.lang = data.lang.substr(0, 2);
+        } else {
+            delete data.lang;
+        }
+
+        return db.save('users', Object.assign(data, {
+            blitz: 1500,
+            rapid: 1500
+        }));
+    };
+
+
     Module.prototype.create = function (socket, data, request) {
         
         if (socket.uid) {
@@ -184,34 +211,24 @@ module.exports = function (io) {
         .then(function (response) {
 
             if (!response) {
-
-                if (data.avatar && (!data.avatar.startsWith('https://') || data.avatar.length > 2000) {
-                    delete data.avatar;
-                }
-
-                data.name = data.name.charAt(100);
-
-                return db.save('users', Object.assign(data, {
-                    blitz: 1500,
-                    rapid: 1500
-                })).
-                catch(function(error) {
-                    console.log(error);
-                });
+                return this.createUser(data);
             }
 
             var saveData = {};
 
-            if (data.name && data.name !== response.name) {
-                saveData.name = data.name;
+            if (typeof data.name === 'string' && 
+                data.name !== response.name) {
+                saveData.name = data.name.substr(0, 50);
             }
 
-            if (data.avatar && data.avatar !== response.avatar) {
-                saveData.avatar = data.avatar;
+            if (typeof data.avatar === 'string' && 
+                data.avatar.startsWith('https://') &&
+                data.avatar !== response.avatar) {
+                saveData.avatar = data.avatar.substr(0, 2000);
             }
 
             if (!response.edited && 
-                (data.lang && (!response.lang || data.lang !== response.lang))) {
+                (typeof data.lang === 'string' && (!response.lang || data.lang !== response.lang))) {
                 saveData.lang = data.lang.substr(0, 2);
             }
 
@@ -221,7 +238,7 @@ module.exports = function (io) {
             }
 
             return response;
-        })
+        }.bind(this))
         .then(function (response) {
 
             var connected = this.getSocket(response.id);
