@@ -187,7 +187,10 @@ module.exports = function (io) {
                 return db.save('users', Object.assign(data, {
                     blitz: 1500,
                     rapid: 1500
-                }));
+                })).
+                catch(function(error) {
+                    console.log(error);
+                });
             }
 
             var saveData = {};
@@ -945,44 +948,32 @@ module.exports = function (io) {
                     }
                 }),
                 db.count('games', {
-                    $and: [{
-                        type: 'blitz',
-                        result: {$exists: true}
-                    },
-                    {
-                        $or: [{
-                            white: uid
-                        }, {
-                            black: uid
-                        }]
+                    type: 'blitz',
+                    result: { $exists: true },
+                    $or: [{
+                        white: uid
+                    }, {
+                        black: uid
                     }]
                 }),
                 db.count('games', {
-                    $and: [{
-                        type: 'blitz'
-                    },
-                    {
-                        $or: [{
-                            white: uid,
-                            result: 1
-                        }, {
-                            black: uid,
-                            result: 2
-                        }]
+                    type: 'blitz',
+                    $or: [{
+                        white: uid,
+                        result: 1
+                    }, {
+                        black: uid,
+                        result: 2
                     }]
                 }),
                 db.count('games', {
-                    $and: [{
-                        type: 'blitz'
-                    },
-                    {
-                        $or: [{
-                            white: uid,
-                            result: 0
-                        }, {
-                            black: uid,
-                            result: 0
-                        }]
+                    type: 'blitz',
+                    $or: [{
+                        white: uid,
+                        result: 0
+                    }, {
+                        black: uid,
+                        result: 0
                     }]
                 }),
                 db.count('users', {
@@ -992,44 +983,32 @@ module.exports = function (io) {
                     }
                 }),
                 db.count('games', {
-                    $and: [{
-                        type: 'rapid',
-                        result: {$exists: true}
-                    },
-                    {
-                        $or: [{
-                            white: uid
-                        }, {
-                            black: uid
-                        }]
+                    type: 'rapid',
+                    result: { $exists: true },
+                    $or: [{
+                        white: uid
+                    }, {
+                        black: uid
                     }]
                 }),
                 db.count('games', {
-                    $and: [{
-                        type: 'rapid'
-                    },
-                    {
-                        $or: [{
-                            white: uid,
-                            result: 1
-                        }, {
-                            black: uid,
-                            result: 2
-                        }]
+                    type: 'rapid',
+                    $or: [{
+                        white: uid,
+                        result: 1
+                    }, {
+                        black: uid,
+                        result: 2
                     }]
                 }),
                 db.count('games', {
-                    $and: [{
-                        type: 'rapid'
-                    },
-                    {
-                        $or: [{
-                            white: uid,
-                            result: 0
-                        }, {
-                            black: uid,
-                            result: 0
-                        }]
+                    type: 'rapid',
+                    $or: [{
+                        white: uid,
+                        result: 0
+                    }, {
+                        black: uid,
+                        result: 0
                     }]
                 })
             ]);
