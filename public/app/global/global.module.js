@@ -617,7 +617,7 @@ filter('translate', ['translator', function (translator) {
 
 filter('relativeNumber', function () {
     return function (value) {
-        return value > 0 ? '+' + value : value;
+        return value < 0 ? value : '+' + value;
     };
 }).
 
