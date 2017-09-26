@@ -1,164 +1,165 @@
 {
-   "name":"Xadrez",
-   "title":"Xadrez Online",
-   "description":"Jogue online com amigos ou oponentes aleatórios.",
-   "home":"Home",
-   "ranking":"Classificação",
-   "blitz": "Blitz",
-   "rapid": "Rápido",
-   "classical": "Clássico",
-   "top100": "Top 100",
-   "invite":"Convidar amigos",
-   "points":"Pontos",
-   "games": "Partidas",
-   "challengers":"Challengers",
-   "challenges": "Desafios",
-   "challenge": "Desafio",
-   "players": "jogadores",
-   "players_online": "{n} jogadores conectados",
-   "games_in_play": "{n} partidas em andamento",
-   "time":"Tempo",
-   "minutes":"Minutos",
-   "seconds": "Segundos",
-   "color":"Cor",
-   "white":"Brancas",
-   "black":"Pretas",
-   "random": "Aleatória",
-   "min":"Mínimo",
-   "max":"Máximo",
-   "winner":"Vencedor",
-   "game_over":"Game Over",
-   "mat":"Xeque-mate",
-   "pat":"Afogamento",
-   "null":"Empate",
-   "offer_draw":"Propor empate",
-   "offers_a_draw":"propõe empate",
-   "resign":"Desistir",
-   "ok":"Validar",
-   "cancel":"Cancelar",
-   "reset": "Reset",
-   "settings": "Configurações",
-   "create_game":"Criar uma partida",
-   "rematch": "Revanche",
-   "search": "Pesquisa",
-   "win":"Vitória",
-   "lose":"Derrota",
-   "draw":"Empate",
-   "wins":"Vitórias",
-   "losses":"Derrotas",
-   "draws":"Empates",
-   "friends":"Amigos",
-   "favorites": "Favoritos",
-   "fanpage":"Fan Page",
-   "terms_service":"Termos de Serviço",
-   "privacy_policy":"Política de Privacidade",
-   "login_with_facebook": "Entrar com o Facebook",
-   "login_with_google": "Entrar com o Google",
-   "login_with_vkontakte": "Entrar com o VK",
-   "logout": "Terminar Sessão",
-   "trophies":{
-      "title":"Troféus",
-      "content":{
-         "1":{
-            "title":"Principiante",
-            "description":"Jogar 1 partida"
-         },
-         "2":{
-            "title":"Aprendiz",
-            "description":"Jogar 100 partidas"
-         },
-         "3":{
-            "title":"Experiente",
-            "description":"Jogar 500 partidas"
-         },
-         "4":{
-            "title":"Confirmado",
-            "description":"Jogar 2000 partidas"
-         },
-         "5":{
-            "title":"Veterano",
-            "description":"Jogar 5000 partidas"
-         },
-         "6":{
-            "title":"Novato",
-            "description":"Ganhar 1 partida"
-         },
-         "7":{
-            "title":"Concorrente",
-            "description":"Ganhar 50 partidas"
-         },
-         "8":{
-            "title":"Desafiador",
-            "description":"Ganhar 250 partidas"
-         },
-         "9":{
-            "title":"Campeão",
-            "description":"Ganhar 1000 partidas"
-         },
-         "10":{
-            "title":"Titã",
-            "description":"Ganhar 2500 partidas"
-         },
-         "11":{
-            "title":"Amador",
-            "description":"Jogar 5 partidas em um dia"
-         },
-         "12":{
-            "title":"Apaixonado",
-            "description":"Jogar 10 partidas em um dia"
-         },
-         "13":{
-            "title":"Aficionado",
-            "description":"Jogar 25 partidas em um dia"
-         },
-         "14":{
-            "title":"Fanático",
-            "description":"Jogar 50 partidas em um dia"
-         },
-         "15":{
-            "title":"Viciado",
-            "description":"Jogar 100 partidas em um dia"
-         },
-         "16":{
-            "title":"Vencedor",
-            "description":"Ganhar 2 partidas consecutivos"
-         },
-         "17":{
-            "title":"Conquistador",
-            "description":"Ganhar 5 partidas consecutivos"
-         },
-         "18":{
-            "title":"Gladiador",
-            "description":"Ganhar 10 partidas consecutivos"
-         },
-         "19":{
-            "title":"Colosso",
-            "description":"Ganhar 15 partidas consecutivos"
-         },
-         "20":{
-            "title":"Invencível",
-            "description":"Ganhar 20 partidas consecutivos"
-         },
-         "21":{
-            "title":"Bom jogador",
-            "description":"Obter 1600 pontos"
-         },
-         "22":{
-            "title":"Muito bom jogador",
-            "description":"Obter 1800 pontos"
-         },
-         "23":{
-            "title":"Especialista",
-            "description":"Obter 2000 pontos"
-         },
-         "24":{
-            "title":"Mestre",
-            "description":"Obter 2400 pontos"
-         },
-         "25":{
-            "title":"Grande mestre",
-            "description":"Obter 2800 pontos"
-         }
-      }
-   }
+    "name":"Xadrez",
+    "title":"Xadrez Online",
+    "description":"Jogue online com amigos ou oponentes aleatórios.",
+    "home":"Home",
+    "ranking":"Classificação",
+    "blitz":"Blitz",
+    "rapid":"Rápido",
+    "classical":"Clássico",
+    "top100":"Top 100",
+    "invite":"Convidar amigos",
+    "share":"Compartilhar",
+    "points":"Pontos",
+    "games":"Partidas",
+    "challengers":"Challengers",
+    "challenges":"Desafios",
+    "challenge":"Desafio",
+    "players":"jogadores",
+    "players_online":"{n} jogadores conectados",
+    "games_in_play":"{n} partidas em andamento",
+    "time":"Tempo",
+    "minutes":"Minutos",
+    "seconds":"Segundos",
+    "color":"Cor",
+    "white":"Brancas",
+    "black":"Pretas",
+    "random":"Aleatória",
+    "min":"Mínimo",
+    "max":"Máximo",
+    "winner":"Vencedor",
+    "game_over":"Game Over",
+    "mat":"Xeque-mate",
+    "pat":"Afogamento",
+    "null":"Empate",
+    "offer_draw":"Propor empate",
+    "offers_a_draw":"propõe empate",
+    "resign":"Desistir",
+    "ok":"Validar",
+    "cancel":"Cancelar",
+    "reset":"Reset",
+    "settings":"Configurações",
+    "create_game":"Criar uma partida",
+    "rematch":"Revanche",
+    "search":"Pesquisa",
+    "win":"Vitória",
+    "lose":"Derrota",
+    "draw":"Empate",
+    "wins":"Vitórias",
+    "losses":"Derrotas",
+    "draws":"Empates",
+    "friends":"Amigos",
+    "favorites":"Favoritos",
+    "fanpage":"Fan Page",
+    "terms_service":"Termos de Serviço",
+    "privacy_policy":"Política de Privacidade",
+    "login_with_facebook":"Entrar com o Facebook",
+    "login_with_google":"Entrar com o Google",
+    "login_with_vkontakte":"Entrar com o VK",
+    "logout":"Terminar Sessão",
+    "trophies":{
+        "title":"Troféus",
+        "content":{
+            "1":{
+                "title":"Principiante",
+                "description":"Jogar 1 partida"
+            },
+            "2":{
+                "title":"Aprendiz",
+                "description":"Jogar 100 partidas"
+            },
+            "3":{
+                "title":"Experiente",
+                "description":"Jogar 500 partidas"
+            },
+            "4":{
+                "title":"Confirmado",
+                "description":"Jogar 2000 partidas"
+            },
+            "5":{
+                "title":"Veterano",
+                "description":"Jogar 5000 partidas"
+            },
+            "6":{
+                "title":"Novato",
+                "description":"Ganhar 1 partida"
+            },
+            "7":{
+                "title":"Concorrente",
+                "description":"Ganhar 50 partidas"
+            },
+            "8":{
+                "title":"Desafiador",
+                "description":"Ganhar 250 partidas"
+            },
+            "9":{
+                "title":"Campeão",
+                "description":"Ganhar 1000 partidas"
+            },
+            "10":{
+                "title":"Titã",
+                "description":"Ganhar 2500 partidas"
+            },
+            "11":{
+                "title":"Amador",
+                "description":"Jogar 5 partidas em um dia"
+            },
+            "12":{
+                "title":"Apaixonado",
+                "description":"Jogar 10 partidas em um dia"
+            },
+            "13":{
+                "title":"Aficionado",
+                "description":"Jogar 25 partidas em um dia"
+            },
+            "14":{
+                "title":"Fanático",
+                "description":"Jogar 50 partidas em um dia"
+            },
+            "15":{
+                "title":"Viciado",
+                "description":"Jogar 100 partidas em um dia"
+            },
+            "16":{
+                "title":"Vencedor",
+                "description":"Ganhar 2 partidas consecutivos"
+            },
+            "17":{
+                "title":"Conquistador",
+                "description":"Ganhar 5 partidas consecutivos"
+            },
+            "18":{
+                "title":"Gladiador",
+                "description":"Ganhar 10 partidas consecutivos"
+            },
+            "19":{
+                "title":"Colosso",
+                "description":"Ganhar 15 partidas consecutivos"
+            },
+            "20":{
+                "title":"Invencível",
+                "description":"Ganhar 20 partidas consecutivos"
+            },
+            "21":{
+                "title":"Bom jogador",
+                "description":"Obter 1600 pontos"
+            },
+            "22":{
+                "title":"Muito bom jogador",
+                "description":"Obter 1800 pontos"
+            },
+            "23":{
+                "title":"Especialista",
+                "description":"Obter 2000 pontos"
+            },
+            "24":{
+                "title":"Mestre",
+                "description":"Obter 2400 pontos"
+            },
+            "25":{
+                "title":"Grande mestre",
+                "description":"Obter 2800 pontos"
+            }
+        }
+    }
 }

@@ -1,164 +1,165 @@
 {
-   "name":"Scacchi",
-   "title":"Scacchi Online",
-   "description":"Giocare a scacchi in linea contro i giocatori di tutte il mondo.",
-   "home":"Home",
-   "ranking":"Classifica",
-   "top100": "Top 100",
-   "blitz": "Lampo",
-   "rapid": "Rapido",
-   "classical": "Classico",
-   "invite":"Invita Amici",
-   "points":"Punteggio",
-   "games": "Partite",
-   "challengers":"Challengers",
-   "challenges": "Sfide",
-   "challenge": "Sfida",
-   "players": "giocatori",
-   "players_online": "{n} giocatori collegati",
-   "games_in_play": "{n} partite in gioco",
-   "time":"Tempo",
-   "minutes":"Minuti",
-   "seconds": "Secondi",
-   "color":"Colore",
-   "white":"Bianco",
-   "random": "Casuale",
-   "black":"Nero",
-   "min":"Minimo",
-   "max":"Massimo",
-   "winner":"Vincitore",
-   "game_over":"Game Over",
-   "mat":"Scacco Matto",
-   "pat":"Stallo",
-   "null":"Patta",
-   "offer_draw":"Offri la patta",
-   "offers_a_draw":"offre la patta",
-   "resign":"Abbandonare",
-   "ok":"Conferma",
-   "cancel":"Annulla",
-   "reset": "Reset",
-   "settings": "Impostazioni",
-   "create_game":"Crea una partita",
-   "rematch": "Rivincita",
-   "search": "Cerca",
-   "win":"Vittoria",
-   "lose":"Sconfitta",
-   "draw":"Pareggio",
-   "wins":"Vittorie",
-   "losses":"Sconfitte",
-   "draws":"Pareggi",
-   "friends":"Amici",
-   "favorites": "Preferiti",
-   "fanpage":"Fan Page",
-   "terms_service":"Termini di servizio",
-   "privacy_policy":"Informativa sulla privacy",
-   "login_with_facebook": "Accedi con Facebook",
-   "login_with_google": "Accedi con Google",
-   "login_with_vkontakte": "Accedi con VK",
-   "logout": "Esci",
-   "trophies":{
-      "title":"Trofei",
-      "content":{
-         "1":{
-            "title":"Principiante",
-            "description":"Gioca 1 partita"
-         },
-         "2":{
-            "title":"Apprendista",
-            "description":"Giocare 100 partite"
-         },
-         "3":{
-            "title":"Competente",
-            "description":"Giocare 500 partite"
-         },
-         "4":{
-            "title":"Specialista",
-            "description":"Giocare 2000 partite"
-         },
-         "5":{
-            "title":"Veterano",
-            "description":"Giocare 5000 partite"
-         },
-         "6":{
-            "title":"Novizio",
-            "description":"Vincere 1 partita"
-         },
-         "7":{
-            "title":"Concorrente",
-            "description":"Vincere 50 partita"
-         },
-         "8":{
-            "title":"Sfidante",
-            "description":"Vincere 250 partita"
-         },
-         "9":{
-            "title":"Campione",
-            "description":"Vincere 1000 partita"
-         },
-         "10":{
-            "title":"Titano",
-            "description":"Vincere 2500 partita"
-         },
-         "11":{
-            "title":"Amatore",
-            "description":"Giocare 5 partita in un giorno"
-         },
-         "12":{
-            "title":"Ammiratore",
-            "description":"Giocare 10 partita in un giorno"
-         },
-         "13":{
-            "title":"Appassionato",
-            "description":"Giocare 25 partita in un giorno"
-         },
-         "14":{
-            "title":"Fan",
-            "description":"Giocare 50 partita in un giorno"
-         },
-         "15":{
-            "title":"Fanatico",
-            "description":"Giocare 100 partita in un giorno"
-         },
-         "16":{
-            "title":"Vincitore",
-            "description":"Vincere 2 partita consecutive"
-         },
-         "17":{
-            "title":"Conquistatore",
-            "description":"Vincere 5 partita consecutive"
-         },
-         "18":{
-            "title":"Gladiatore",
-            "description":"Vincere 10 partita consecutive"
-         },
-         "19":{
-            "title":"Colosso",
-            "description":"Vincere 15 partita consecutive"
-         },
-         "20":{
-            "title":"Invincibile",
-            "description":"Vincere 20 partita consecutive"
-         },
-         "21":{
-            "title":"Buon giocatore",
-            "description":"Ottenere 1600 punti"
-         },
-         "22":{
-            "title":"Molto buon giocatore",
-            "description":"Ottenere 1800 punti"
-         },
-         "23":{
-            "title":"Esperto",
-            "description":"Ottenere 2000 punti"
-         },
-         "24":{
-            "title":"Maestro",
-            "description":"Ottenere 2400 punti"
-         },
-         "25":{
-            "title":"Grande Maestro",
-            "description":"Ottenere 2800 punti"
-         }
-      }
-   }
+    "name":"Scacchi",
+    "title":"Scacchi Online",
+    "description":"Giocare a scacchi in linea contro i giocatori di tutte il mondo.",
+    "home":"Home",
+    "ranking":"Classifica",
+    "top100":"Top 100",
+    "blitz":"Lampo",
+    "rapid":"Rapido",
+    "classical":"Classico",
+    "invite":"Invita Amici",
+    "share":"Condividi",
+    "points":"Punteggio",
+    "games":"Partite",
+    "challengers":"Challengers",
+    "challenges":"Sfide",
+    "challenge":"Sfida",
+    "players":"giocatori",
+    "players_online":"{n} giocatori collegati",
+    "games_in_play":"{n} partite in gioco",
+    "time":"Tempo",
+    "minutes":"Minuti",
+    "seconds":"Secondi",
+    "color":"Colore",
+    "white":"Bianco",
+    "random":"Casuale",
+    "black":"Nero",
+    "min":"Minimo",
+    "max":"Massimo",
+    "winner":"Vincitore",
+    "game_over":"Game Over",
+    "mat":"Scacco Matto",
+    "pat":"Stallo",
+    "null":"Patta",
+    "offer_draw":"Offri la patta",
+    "offers_a_draw":"offre la patta",
+    "resign":"Abbandonare",
+    "ok":"Conferma",
+    "cancel":"Annulla",
+    "reset":"Reset",
+    "settings":"Impostazioni",
+    "create_game":"Crea una partita",
+    "rematch":"Rivincita",
+    "search":"Cerca",
+    "win":"Vittoria",
+    "lose":"Sconfitta",
+    "draw":"Pareggio",
+    "wins":"Vittorie",
+    "losses":"Sconfitte",
+    "draws":"Pareggi",
+    "friends":"Amici",
+    "favorites":"Preferiti",
+    "fanpage":"Fan Page",
+    "terms_service":"Termini di servizio",
+    "privacy_policy":"Informativa sulla privacy",
+    "login_with_facebook":"Accedi con Facebook",
+    "login_with_google":"Accedi con Google",
+    "login_with_vkontakte":"Accedi con VK",
+    "logout":"Esci",
+    "trophies":{
+        "title":"Trofei",
+        "content":{
+            "1":{
+                "title":"Principiante",
+                "description":"Gioca 1 partita"
+            },
+            "2":{
+                "title":"Apprendista",
+                "description":"Giocare 100 partite"
+            },
+            "3":{
+                "title":"Competente",
+                "description":"Giocare 500 partite"
+            },
+            "4":{
+                "title":"Specialista",
+                "description":"Giocare 2000 partite"
+            },
+            "5":{
+                "title":"Veterano",
+                "description":"Giocare 5000 partite"
+            },
+            "6":{
+                "title":"Novizio",
+                "description":"Vincere 1 partita"
+            },
+            "7":{
+                "title":"Concorrente",
+                "description":"Vincere 50 partita"
+            },
+            "8":{
+                "title":"Sfidante",
+                "description":"Vincere 250 partita"
+            },
+            "9":{
+                "title":"Campione",
+                "description":"Vincere 1000 partita"
+            },
+            "10":{
+                "title":"Titano",
+                "description":"Vincere 2500 partita"
+            },
+            "11":{
+                "title":"Amatore",
+                "description":"Giocare 5 partita in un giorno"
+            },
+            "12":{
+                "title":"Ammiratore",
+                "description":"Giocare 10 partita in un giorno"
+            },
+            "13":{
+                "title":"Appassionato",
+                "description":"Giocare 25 partita in un giorno"
+            },
+            "14":{
+                "title":"Fan",
+                "description":"Giocare 50 partita in un giorno"
+            },
+            "15":{
+                "title":"Fanatico",
+                "description":"Giocare 100 partita in un giorno"
+            },
+            "16":{
+                "title":"Vincitore",
+                "description":"Vincere 2 partita consecutive"
+            },
+            "17":{
+                "title":"Conquistatore",
+                "description":"Vincere 5 partita consecutive"
+            },
+            "18":{
+                "title":"Gladiatore",
+                "description":"Vincere 10 partita consecutive"
+            },
+            "19":{
+                "title":"Colosso",
+                "description":"Vincere 15 partita consecutive"
+            },
+            "20":{
+                "title":"Invincibile",
+                "description":"Vincere 20 partita consecutive"
+            },
+            "21":{
+                "title":"Buon giocatore",
+                "description":"Ottenere 1600 punti"
+            },
+            "22":{
+                "title":"Molto buon giocatore",
+                "description":"Ottenere 1800 punti"
+            },
+            "23":{
+                "title":"Esperto",
+                "description":"Ottenere 2000 punti"
+            },
+            "24":{
+                "title":"Maestro",
+                "description":"Ottenere 2400 punti"
+            },
+            "25":{
+                "title":"Grande Maestro",
+                "description":"Ottenere 2800 punti"
+            }
+        }
+    }
 }

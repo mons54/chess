@@ -1,164 +1,165 @@
 {
-   "name":"Ajedrez",
-   "title": "Ajedrez en línea",
-   "description":"Juega en línea contra otros jugadores. Que seas amateur del juego rapido o seas partidario de las partidas largas, Ajedrez esta hecho a su medida. Su ranking se actualiza despues de cada partida.",
-   "home":"Home",
-   "ranking":"Clasificación",
-   "top100": "Top 100",
-   "blitz": "Blitz",
-   "rapid": "Rápido",
-   "classical": "Normal",
-   "invite":"Invitar amigos",
-   "points":"Puntuación",
-   "games": "Partidas",
-   "challengers":"Challengers",
-   "challenges": "Desafíos",
-   "challenge": "Desafío",
-   "players": "jugadores",
-   "players_online": "{n} jugadores online",
-   "games_in_play": "{n} partidas en juego",
-   "time":"Tiempo",
-   "minutes":"Minutos",
-   "seconds": "Segundos",
-   "color":"Color",
-   "random": "Aleatorio",
-   "white":"Blanco",
-   "black":"Negro",
-   "min":"Mínimo",
-   "max":"Máximo",
-   "winner":"Ganador",
-   "game_over":"Game Over",
-   "mat":"Jaque mate",
-   "pat":"Ahogado",
-   "null":"Tablas",
-   "offer_draw":"Ofrecer tablas",
-   "offers_a_draw":"ofrece tablas",
-   "resign":"Abandonar",
-   "ok":"Aceptar",
-   "cancel":"Cancelar",
-   "reset": "Restablecer",
-   "settings": "Configuración",
-   "create_game":"Crear una partida",
-   "rematch": "Revancha",
-   "search": "Buscar",
-   "win":"Victoria",
-   "lose":"Derrota",
-   "draw":"Tablas",
-   "wins":"Victorias",
-   "losses":"Derrotas",
-   "draws":"Tablas",
-   "friends":"Amigos",
-   "favorites": "Favoritos",
-   "fanpage":"Fan Page",
-   "terms_service":"Condiciones del servicio",
-   "privacy_policy":"Política de privacidad",
-   "login_with_facebook": "Inicia con Facebook",
-   "login_with_google": "Inicia con Google",
-   "login_with_vkontakte": "Inicia con VK",
-   "logout": "Salir",
-   "trophies":{
-      "title":"Trofeos",
-      "content":{
-         "1":{
-            "title":"Principiante",
-            "description":"Jugar 1 partida"
-         },
-         "2":{
-            "title":"Aprendiz",
-            "description":"Jugar 100 partidas"
-         },
-         "3":{
-            "title":"Experimentado",
-            "description":"Jugar 500 partidas"
-         },
-         "4":{
-            "title":"Especialista",
-            "description":"Jugar 2000 partidas"
-         },
-         "5":{
-            "title":"Veterano",
-            "description":"Jugar 5000 partidas"
-         },
-         "6":{
-            "title":"Novicio",
-            "description":"Ganar 1 partida"
-         },
-         "7":{
-            "title":"Competidor",
-            "description":"Ganar 50 partidas"
-         },
-         "8":{
-            "title":"Desafiador",
-            "description":"Ganar 250 partidas"
-         },
-         "9":{
-            "title":"Campeón",
-            "description":"Ganar 1000 partidas"
-         },
-         "10":{
-            "title":"Titán",
-            "description":"Ganar 2500 partidas"
-         },
-         "11":{
-            "title":"Amateur",
-            "description":"Jugar 5 partidas en un día"
-         },
-         "12":{
-            "title":"Aficionado",
-            "description":"Jugar 10 partidas en un día"
-         },
-         "13":{
-            "title":"Apasionado",
-            "description":"Jugar 25 partidas en un día"
-         },
-         "14":{
-            "title":"Enamorado",
-            "description":"Jugar 50 partidas en un día"
-         },
-         "15":{
-            "title":"Adicto",
-            "description":"Jugar 100 partidas en un día"
-         },
-         "16":{
-            "title":"Ganador",
-            "description":"Ganar 2 partidas consecutivos"
-         },
-         "17":{
-            "title":"Conquistador",
-            "description":"Ganar 5 partidas consecutivos"
-         },
-         "18":{
-            "title":"Gladiador",
-            "description":"Ganar 10 partidas consecutivos"
-         },
-         "19":{
-            "title":"Coloso",
-            "description":"Ganar 15 partidas consecutivos"
-         },
-         "20":{
-            "title":"Invencible",
-            "description":"Ganar 20 partidas consecutivos"
-         },
-         "21":{
-            "title":"Buen jugador",
-            "description":"Obtener 1600 puntos"
-         },
-         "22":{
-            "title":"Muy buen jugador",
-            "description":"Obtener 1800 puntos"
-         },
-         "23":{
-            "title":"Experto",
-            "description":"Obtener 2000 puntos"
-         },
-         "24":{
-            "title":"Maestro",
-            "description":"Obtener 2400 puntos"
-         },
-         "25":{
-            "title":"Gran Maestro",
-            "description":"Obtener 2800 puntos"
-         }
-      }
-   }
+    "name":"Ajedrez",
+    "title":"Ajedrez en línea",
+    "description":"Juega en línea contra otros jugadores. Que seas amateur del juego rapido o seas partidario de las partidas largas, Ajedrez esta hecho a su medida. Su ranking se actualiza despues de cada partida.",
+    "home":"Home",
+    "ranking":"Clasificación",
+    "top100":"Top 100",
+    "blitz":"Blitz",
+    "rapid":"Rápido",
+    "classical":"Normal",
+    "invite":"Invitar amigos",
+    "share":"Compartir",
+    "points":"Puntuación",
+    "games":"Partidas",
+    "challengers":"Challengers",
+    "challenges":"Desafíos",
+    "challenge":"Desafío",
+    "players":"jugadores",
+    "players_online":"{n} jugadores online",
+    "games_in_play":"{n} partidas en juego",
+    "time":"Tiempo",
+    "minutes":"Minutos",
+    "seconds":"Segundos",
+    "color":"Color",
+    "random":"Aleatorio",
+    "white":"Blanco",
+    "black":"Negro",
+    "min":"Mínimo",
+    "max":"Máximo",
+    "winner":"Ganador",
+    "game_over":"Game Over",
+    "mat":"Jaque mate",
+    "pat":"Ahogado",
+    "null":"Tablas",
+    "offer_draw":"Ofrecer tablas",
+    "offers_a_draw":"ofrece tablas",
+    "resign":"Abandonar",
+    "ok":"Aceptar",
+    "cancel":"Cancelar",
+    "reset":"Restablecer",
+    "settings":"Configuración",
+    "create_game":"Crear una partida",
+    "rematch":"Revancha",
+    "search":"Buscar",
+    "win":"Victoria",
+    "lose":"Derrota",
+    "draw":"Tablas",
+    "wins":"Victorias",
+    "losses":"Derrotas",
+    "draws":"Tablas",
+    "friends":"Amigos",
+    "favorites":"Favoritos",
+    "fanpage":"Fan Page",
+    "terms_service":"Condiciones del servicio",
+    "privacy_policy":"Política de privacidad",
+    "login_with_facebook":"Inicia con Facebook",
+    "login_with_google":"Inicia con Google",
+    "login_with_vkontakte":"Inicia con VK",
+    "logout":"Salir",
+    "trophies":{
+        "title":"Trofeos",
+        "content":{
+            "1":{
+                "title":"Principiante",
+                "description":"Jugar 1 partida"
+            },
+            "2":{
+                "title":"Aprendiz",
+                "description":"Jugar 100 partidas"
+            },
+            "3":{
+                "title":"Experimentado",
+                "description":"Jugar 500 partidas"
+            },
+            "4":{
+                "title":"Especialista",
+                "description":"Jugar 2000 partidas"
+            },
+            "5":{
+                "title":"Veterano",
+                "description":"Jugar 5000 partidas"
+            },
+            "6":{
+                "title":"Novicio",
+                "description":"Ganar 1 partida"
+            },
+            "7":{
+                "title":"Competidor",
+                "description":"Ganar 50 partidas"
+            },
+            "8":{
+                "title":"Desafiador",
+                "description":"Ganar 250 partidas"
+            },
+            "9":{
+                "title":"Campeón",
+                "description":"Ganar 1000 partidas"
+            },
+            "10":{
+                "title":"Titán",
+                "description":"Ganar 2500 partidas"
+            },
+            "11":{
+                "title":"Amateur",
+                "description":"Jugar 5 partidas en un día"
+            },
+            "12":{
+                "title":"Aficionado",
+                "description":"Jugar 10 partidas en un día"
+            },
+            "13":{
+                "title":"Apasionado",
+                "description":"Jugar 25 partidas en un día"
+            },
+            "14":{
+                "title":"Enamorado",
+                "description":"Jugar 50 partidas en un día"
+            },
+            "15":{
+                "title":"Adicto",
+                "description":"Jugar 100 partidas en un día"
+            },
+            "16":{
+                "title":"Ganador",
+                "description":"Ganar 2 partidas consecutivos"
+            },
+            "17":{
+                "title":"Conquistador",
+                "description":"Ganar 5 partidas consecutivos"
+            },
+            "18":{
+                "title":"Gladiador",
+                "description":"Ganar 10 partidas consecutivos"
+            },
+            "19":{
+                "title":"Coloso",
+                "description":"Ganar 15 partidas consecutivos"
+            },
+            "20":{
+                "title":"Invencible",
+                "description":"Ganar 20 partidas consecutivos"
+            },
+            "21":{
+                "title":"Buen jugador",
+                "description":"Obtener 1600 puntos"
+            },
+            "22":{
+                "title":"Muy buen jugador",
+                "description":"Obtener 1800 puntos"
+            },
+            "23":{
+                "title":"Experto",
+                "description":"Obtener 2000 puntos"
+            },
+            "24":{
+                "title":"Maestro",
+                "description":"Obtener 2400 puntos"
+            },
+            "25":{
+                "title":"Gran Maestro",
+                "description":"Obtener 2800 puntos"
+            }
+        }
+    }
 }

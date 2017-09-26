@@ -1,164 +1,165 @@
 {
-   "name":"Échecs",
-   "title": "Échecs en ligne",
-   "description":"Jouez aux échecs contre des joueurs du monde entier. Défiez les meilleurs et faites vous une place dans le classement.",
-   "home":"Accueil",
-   "ranking":"Classement",
-   "top100": "Top 100",
-   "blitz": "Blitz",
-   "rapid": "Rapide",
-   "classical": "Classique",
-   "invite":"Inviter des amis",
-   "points":"Points",
-   "games": "Parties",
-   "challengers":"Challengers",
-   "challenges": "Défis",
-   "challenge": "Défier",
-   "players": "joueurs",
-   "players_online": "{n} joueurs en ligne",
-   "games_in_play": "{n} parties en cours",
-   "time":"Temps",
-   "minutes":"Minutes",
-   "seconds": "Secondes",
-   "color":"Couleur",
-   "random": "Aléatoire",
-   "white":"Blanc",
-   "black":"Noir",
-   "min":"Minimum",
-   "max":"Maximum",
-   "winner":"Gagnant",
-   "game_over":"Game Over",
-   "mat":"Échec et mat",
-   "pat":"Pat",
-   "null":"Nulle",
-   "offer_draw":"Proposer la nulle",
-   "offers_a_draw":"propose la nulle",
-   "resign":"Abandonner",
-   "ok":"Valider",
-   "cancel":"Annuler",
-   "reset": "Reset",
-   "settings": "Paramètres",
-   "create_game":"Créer une partie",
-   "rematch": "Revanche",
-   "search": "Recherche",
-   "win":"Victoire",
-   "lose":"Défaite",
-   "draw":"Nulle",
-   "wins":"Victoires",
-   "losses":"Défaites",
-   "draws":"Nulles",
-   "friends":"Amis",
-   "favorites": "Favoris",
-   "fanpage":"Fan Page",
-   "terms_service":"Conditions d'utilisation",
-   "privacy_policy":"Politique de confidentialité",
-   "login_with_facebook": "Connexion avec Facebook",
-   "login_with_google": "Connexion avec Google",
-   "login_with_vkontakte": "Connexion avec VK",
-   "logout": "Déconnexion",
-   "trophies":{
-      "title":"Trophées",
-      "content":{
-         "1":{
-            "title":"Débutant",
-            "description":"Jouer 1 partie"
-         },
-         "2":{
-            "title":"Apprenti",
-            "description":"Jouer 100 parties"
-         },
-         "3":{
-            "title":"Expérimenté",
-            "description":"Jouer 500 parties"
-         },
-         "4":{
-            "title":"Spécialiste",
-            "description":"Jouer 2000 parties"
-         },
-         "5":{
-            "title":"Vétéran",
-            "description":"Jouer 5000 parties"
-         },
-         "6":{
-            "title":"Novice",
-            "description":"Gagner 1 partie"
-         },
-         "7":{
-            "title":"Compétiteur",
-            "description":"Gagner 50 parties"
-         },
-         "8":{
-            "title":"Challenger",
-            "description":"Gagner 250 parties"
-         },
-         "9":{
-            "title":"Champion",
-            "description":"Gagner 1000 parties"
-         },
-         "10":{
-            "title":"Titan",
-            "description":"Gagner 2500 parties"
-         },
-         "11":{
-            "title":"Amateur",
-            "description":"Jouer 5 parties en une journée"
-         },
-         "12":{
-            "title":"Passionné",
-            "description":"Jouer 10 parties en une journée"
-         },
-         "13":{
-            "title":"Frénétique",
-            "description":"Jouer 25 parties en une journée"
-         },
-         "14":{
-            "title":"Fanatique",
-            "description":"Jouer 50 parties en une journée"
-         },
-         "15":{
-            "title":"Addict",
-            "description":"Jouer 100 parties en une journée"
-         },
-         "16":{
-            "title":"Gagnant",
-            "description":"Gagner 2 parties à la suite"
-         },
-         "17":{
-            "title":"Conquérant",
-            "description":"Gagner 5 parties à la suite"
-         },
-         "18":{
-            "title":"Gladiateur",
-            "description":"Gagner 10 parties à la suite"
-         },
-         "19":{
-            "title":"Colosse",
-            "description":"Gagner 15 parties à la suite"
-         },
-         "20":{
-            "title":"Invincible",
-            "description":"Gagner 20 parties à la suite"
-         },
-         "21":{
-            "title":"Bon joueur",
-            "description":"Obtenir 1600 points"
-         },
-         "22":{
-            "title":"Très bon joueur",
-            "description":"Obtenir 1800 points"
-         },
-         "23":{
-            "title":"Expert",
-            "description":"Obtenir 2000 points"
-         },
-         "24":{
-            "title":"Maitre",
-            "description":"Obtenir 2400 points"
-         },
-         "25":{
-            "title":"Grand maitre",
-            "description":"Obtenir 2800 points"
-         }
-      }
-   }
+    "name":"Échecs",
+    "title":"Échecs en ligne",
+    "description":"Jouez aux échecs contre des joueurs du monde entier. Défiez les meilleurs et faites vous une place dans le classement.",
+    "home":"Accueil",
+    "ranking":"Classement",
+    "top100":"Top 100",
+    "blitz":"Blitz",
+    "rapid":"Rapide",
+    "classical":"Classique",
+    "invite":"Inviter des amis",
+    "share":"Partager",
+    "points":"Points",
+    "games":"Parties",
+    "challengers":"Challengers",
+    "challenges":"Défis",
+    "challenge":"Défier",
+    "players":"joueurs",
+    "players_online":"{n} joueurs en ligne",
+    "games_in_play":"{n} parties en cours",
+    "time":"Temps",
+    "minutes":"Minutes",
+    "seconds":"Secondes",
+    "color":"Couleur",
+    "random":"Aléatoire",
+    "white":"Blanc",
+    "black":"Noir",
+    "min":"Minimum",
+    "max":"Maximum",
+    "winner":"Gagnant",
+    "game_over":"Game Over",
+    "mat":"Échec et mat",
+    "pat":"Pat",
+    "null":"Nulle",
+    "offer_draw":"Proposer la nulle",
+    "offers_a_draw":"propose la nulle",
+    "resign":"Abandonner",
+    "ok":"Valider",
+    "cancel":"Annuler",
+    "reset":"Reset",
+    "settings":"Paramètres",
+    "create_game":"Créer une partie",
+    "rematch":"Revanche",
+    "search":"Recherche",
+    "win":"Victoire",
+    "lose":"Défaite",
+    "draw":"Nulle",
+    "wins":"Victoires",
+    "losses":"Défaites",
+    "draws":"Nulles",
+    "friends":"Amis",
+    "favorites":"Favoris",
+    "fanpage":"Fan Page",
+    "terms_service":"Conditions d'utilisation",
+    "privacy_policy":"Politique de confidentialité",
+    "login_with_facebook":"Connexion avec Facebook",
+    "login_with_google":"Connexion avec Google",
+    "login_with_vkontakte":"Connexion avec VK",
+    "logout":"Déconnexion",
+    "trophies":{
+        "title":"Trophées",
+        "content":{
+            "1":{
+                "title":"Débutant",
+                "description":"Jouer 1 partie"
+            },
+            "2":{
+                "title":"Apprenti",
+                "description":"Jouer 100 parties"
+            },
+            "3":{
+                "title":"Expérimenté",
+                "description":"Jouer 500 parties"
+            },
+            "4":{
+                "title":"Spécialiste",
+                "description":"Jouer 2000 parties"
+            },
+            "5":{
+                "title":"Vétéran",
+                "description":"Jouer 5000 parties"
+            },
+            "6":{
+                "title":"Novice",
+                "description":"Gagner 1 partie"
+            },
+            "7":{
+                "title":"Compétiteur",
+                "description":"Gagner 50 parties"
+            },
+            "8":{
+                "title":"Challenger",
+                "description":"Gagner 250 parties"
+            },
+            "9":{
+                "title":"Champion",
+                "description":"Gagner 1000 parties"
+            },
+            "10":{
+                "title":"Titan",
+                "description":"Gagner 2500 parties"
+            },
+            "11":{
+                "title":"Amateur",
+                "description":"Jouer 5 parties en une journée"
+            },
+            "12":{
+                "title":"Passionné",
+                "description":"Jouer 10 parties en une journée"
+            },
+            "13":{
+                "title":"Frénétique",
+                "description":"Jouer 25 parties en une journée"
+            },
+            "14":{
+                "title":"Fanatique",
+                "description":"Jouer 50 parties en une journée"
+            },
+            "15":{
+                "title":"Addict",
+                "description":"Jouer 100 parties en une journée"
+            },
+            "16":{
+                "title":"Gagnant",
+                "description":"Gagner 2 parties à la suite"
+            },
+            "17":{
+                "title":"Conquérant",
+                "description":"Gagner 5 parties à la suite"
+            },
+            "18":{
+                "title":"Gladiateur",
+                "description":"Gagner 10 parties à la suite"
+            },
+            "19":{
+                "title":"Colosse",
+                "description":"Gagner 15 parties à la suite"
+            },
+            "20":{
+                "title":"Invincible",
+                "description":"Gagner 20 parties à la suite"
+            },
+            "21":{
+                "title":"Bon joueur",
+                "description":"Obtenir 1600 points"
+            },
+            "22":{
+                "title":"Très bon joueur",
+                "description":"Obtenir 1800 points"
+            },
+            "23":{
+                "title":"Expert",
+                "description":"Obtenir 2000 points"
+            },
+            "24":{
+                "title":"Maitre",
+                "description":"Obtenir 2400 points"
+            },
+            "25":{
+                "title":"Grand maitre",
+                "description":"Obtenir 2800 points"
+            }
+        }
+    }
 }

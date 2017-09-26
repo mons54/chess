@@ -1,29 +1,30 @@
 {
     "name":"Schach",
-    "title": "Online-Schach",
+    "title":"Online-Schach",
     "description":"Spielen Partie Schach gegen andere Spieler. Vergleichen Sie Ihre Ergebnisse mit anderen Spielern und erkämpfen Sie sich einen Platz in der Rangliste.",
     "home":"Home",
     "ranking":"Rangliste",
-    "top100": "Top 100",
-    "blitz": "Blitz",
-    "rapid": "Schnell",
-    "classical": "Klassisch",
+    "top100":"Top 100",
+    "blitz":"Blitz",
+    "rapid":"Schnell",
+    "classical":"Klassisch",
     "invite":"Freunde einladen",
+    "share":"Teilen",
     "points":"Wertungszahl",
-    "games": "Spiele",
+    "games":"Spiele",
     "challengers":"Challengers",
-    "challenges": "Herausforderungen",
-    "challenge": "Herausforderung",
-    "players": "Spieler",
-    "players_online": "{n} Spieler online",
-    "games_in_play": "{n} laufende Spiele",
+    "challenges":"Herausforderungen",
+    "challenge":"Herausforderung",
+    "players":"Spieler",
+    "players_online":"{n} Spieler online",
+    "games_in_play":"{n} laufende Spiele",
     "time":"Zeit",
     "minutes":"Minuten",
-    "seconds": "Sekunden",
+    "seconds":"Sekunden",
     "color":"Farbe",
     "white":"weiß",
     "black":"Schwarz",
-    "random": "Zufällige",
+    "random":"Zufällige",
     "min":"Mini",
     "max":"Maxi",
     "winner":"Gewinner",
@@ -36,11 +37,11 @@
     "resign":"Aufgeben",
     "ok":"Bestätigen",
     "cancel":"Abbrechen",
-    "reset": "Reset",
-    "settings": "Einstellungen",
-	"create_game":"Neue Partie",
-    "rematch": "Rematch",
-    "search": "Suche",
+    "reset":"Reset",
+    "settings":"Einstellungen",
+    "create_game":"Neue Partie",
+    "rematch":"Rematch",
+    "search":"Suche",
     "win":"Sieg",
     "lose":"Niederlage",
     "draw":"Remis",
@@ -48,14 +49,14 @@
     "losses":"Niederlagen",
     "draws":"Remis",
     "friends":"Freunde",
-    "favorites": "Favoriten",
+    "favorites":"Favoriten",
     "fanpage":"Fan Page",
     "terms_service":"Nutzungsbedingungen",
     "privacy_policy":"Datenschutz",
-    "login_with_facebook": "Mit Facebook anmelden",
-    "login_with_google": "Mit Google anmelden",
-    "login_with_vkontakte": "Mit Google VK",
-    "logout": "Abmelden",
+    "login_with_facebook":"Mit Facebook anmelden",
+    "login_with_google":"Mit Google anmelden",
+    "login_with_vkontakte":"Mit Google VK",
+    "logout":"Abmelden",
     "trophies":{
         "title":"Trophäen",
         "content":{
@@ -144,20 +145,20 @@
                 "description":"Erhalten Sie 1600 Punkte"
             },
             "22":{
-               "title":"Sehr guter Spieler",
-               "description":"Erhalten Sie 1800 Punkte"
+                "title":"Sehr guter Spieler",
+                "description":"Erhalten Sie 1800 Punkte"
             },
             "23":{
-               "title":"Experte",
-               "description":"Erhalten Sie 2000 Punkte"
+                "title":"Experte",
+                "description":"Erhalten Sie 2000 Punkte"
             },
             "24":{
-               "title":"Schachmeister",
-               "description":"Erhalten Sie 2400 Punkte"
+                "title":"Schachmeister",
+                "description":"Erhalten Sie 2400 Punkte"
             },
             "25":{
-               "title":"Schachgroßmeister",
-               "description":"Erhalten Sie 2800 Punkte"
+                "title":"Schachgroßmeister",
+                "description":"Erhalten Sie 2800 Punkte"
             }
         }
     }

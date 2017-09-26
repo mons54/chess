@@ -1,164 +1,165 @@
 {
-   "name":"Satranç",
-   "title":"Satranç Çevrimiçi",
-   "description":"Dünyanın her yerinden insanlarla satranç oyna.",
-   "home":"Ana sayfa",
-   "ranking":"Sıralaması",
-   "top100": "En iyi 100",
-   "blitz": "Yıldırım",
-   "rapid": "Hızlı",
-   "classical": "Klassikal",
-   "invite":"Arkadaşlarınızla oyna",
-   "points":"Derece",
-   "games": "Oyunlar",
-   "challengers":"Rakipler",
-   "challenges": "Meydan okuma",
-   "challenge": "Zorluklar",
-   "players": "oyuncu",
-   "players_online": "{n} oyuncu çevrimiçi",
-   "games_in_play": "Şu anda {n} oyun oynanıyor",
-   "time":"Zaman",
-   "minutes":"Dakika",
-   "seconds": "Saniyeler",
-   "color":"Renk",
-   "white":"Beyaz",
-   "black":"Siyah",
-   "random": "Rastgele",
-   "min":"Min",
-   "max":"Max",
-   "winner":"Kazanan",
-   "game_over":"Oyun bitti",
-   "mat":"Mat",
-   "pat":"Pat",
-   "null":"Berabere",
-   "offer_draw":"Berabere teklif et",
-   "offers_a_draw":"berabere teklif ediyor",
-   "resign":"Oyundan Çekil",
-   "ok":"Onayla",
-   "cancel":"Iptal",
-   "reset": "Sıfırla",
-   "settings": "Ayarlar",
-   "create_game":"Yeni bir oyun kur",
-   "rematch": "Rövanş",
-   "search": "Arama",
-   "win":"Kazan",
-   "lose":"Kaybet",
-   "draw":"Berabere",
-   "wins":"Kez kazandı",
-   "losses":"Kez kaybetti",
-   "draws":"Kez berabere",
-   "friends":"Arkadaşlar",
-   "favorites": "Favori",
-   "fanpage":"Fan Page",
-   "terms_service":"Hizmet Şartları",
-   "privacy_policy":"Gizlilik Politikası",
-   "login_with_facebook": "Facebook ile oturum aç",
-   "login_with_google": "Google ile oturum aç",
-   "login_with_vkontakte": "VK ile oturum aç",
-   "logout": "Çıkış Yap",
-   "trophies":{
-      "title":"Kupalar",
-      "content":{
-         "1":{
-            "title":"Acemi",
-            "description":"1 oyunu oynayın"
-         },
-         "2":{
-            "title":"Çırak",
-            "description":"100 oyun oynayın"
-         },
-         "3":{
-            "title":"Deneyimli",
-            "description":"500 oyun oynayın"
-         },
-         "4":{
-            "title":"Uzman",
-            "description":"2000 oyun oynayın"
-         },
-         "5":{
-            "title":"Emektar",
-            "description":"5000 oyun oynayın"
-         },
-         "6":{
-            "title":"Acemi",
-            "description":"1 oyunu kazanmak"
-         },
-         "7":{
-            "title":"Yarışmacı",
-            "description":"50 oyun kazanmak"
-         },
-         "8":{
-            "title":"Meydan okuyucu",
-            "description":"250 oyun kazanmak"
-         },
-         "9":{
-            "title":"Şampiyon",
-            "description":"1000 oyun kazanmak"
-         },
-         "10":{
-            "title":"Titan",
-            "description":"2500 oyun kazanmak"
-         },
-         "11":{
-            "title":"Amatör",
-            "description":"Bir günde 5 oyun oynayın"
-         },
-         "12":{
-            "title":"Tutkulu",
-            "description":"Bir günde 10 oyun oynayın"
-         },
-         "13":{
-            "title":"Aşık",
-            "description":"Bir günde 25 oyun oynayın"
-         },
-         "14":{
-            "title":"Fanatik",
-            "description":"Bir günde 50 oyun oynayın"
-         },
-         "15":{
-            "title":"Tiryaki",
-            "description":"Bir günde 100 oyun oynayın"
-         },
-         "16":{
-            "title":"Galip",
-            "description":"2 ardıl oyun kazanmak"
-         },
-         "17":{
-            "title":"Fatih",
-            "description":"5 ardıl oyun kazanmak"
-         },
-         "18":{
-            "title":"Gladyatör",
-            "description":"10 ardıl oyun kazanmak"
-         },
-         "19":{
-            "title":"Devasa",
-            "description":"15 ardıl oyun kazanmak"
-         },
-         "20":{
-            "title":"Yenilmez",
-            "description":"20 ardıl oyun kazanmak"
-         },
-         "21":{
-            "title":"İyi oyuncu",
-            "description":"1600 puanı al"
-         },
-         "22":{
-            "title":"Çok iyi oyuncu",
-            "description":"1800 puanı al"
-         },
-         "23":{
-            "title":"Eksper",
-            "description":"2000 puanı al"
-         },
-         "24":{
-            "title":"Ustası",
-            "description":"2400 puanı al"
-         },
-         "25":{
-            "title":"Büyükusta",
-            "description":"2800 puanı al"
-         }
-      }
-   }
+    "name":"Satranç",
+    "title":"Satranç Çevrimiçi",
+    "description":"Dünyanın her yerinden insanlarla satranç oyna.",
+    "home":"Ana sayfa",
+    "ranking":"Sıralaması",
+    "top100":"En iyi 100",
+    "blitz":"Yıldırım",
+    "rapid":"Hızlı",
+    "classical":"Klassikal",
+    "invite":"Arkadaşlarınızla oyna",
+    "share":"Paylaş",
+    "points":"Derece",
+    "games":"Oyunlar",
+    "challengers":"Rakipler",
+    "challenges":"Meydan okuma",
+    "challenge":"Zorluklar",
+    "players":"oyuncu",
+    "players_online":"{n} oyuncu çevrimiçi",
+    "games_in_play":"Şu anda {n} oyun oynanıyor",
+    "time":"Zaman",
+    "minutes":"Dakika",
+    "seconds":"Saniyeler",
+    "color":"Renk",
+    "white":"Beyaz",
+    "black":"Siyah",
+    "random":"Rastgele",
+    "min":"Min",
+    "max":"Max",
+    "winner":"Kazanan",
+    "game_over":"Oyun bitti",
+    "mat":"Mat",
+    "pat":"Pat",
+    "null":"Berabere",
+    "offer_draw":"Berabere teklif et",
+    "offers_a_draw":"berabere teklif ediyor",
+    "resign":"Oyundan Çekil",
+    "ok":"Onayla",
+    "cancel":"Iptal",
+    "reset":"Sıfırla",
+    "settings":"Ayarlar",
+    "create_game":"Yeni bir oyun kur",
+    "rematch":"Rövanş",
+    "search":"Arama",
+    "win":"Kazan",
+    "lose":"Kaybet",
+    "draw":"Berabere",
+    "wins":"Kez kazandı",
+    "losses":"Kez kaybetti",
+    "draws":"Kez berabere",
+    "friends":"Arkadaşlar",
+    "favorites":"Favori",
+    "fanpage":"Fan Page",
+    "terms_service":"Hizmet Şartları",
+    "privacy_policy":"Gizlilik Politikası",
+    "login_with_facebook":"Facebook ile oturum aç",
+    "login_with_google":"Google ile oturum aç",
+    "login_with_vkontakte":"VK ile oturum aç",
+    "logout":"Çıkış Yap",
+    "trophies":{
+        "title":"Kupalar",
+        "content":{
+            "1":{
+                "title":"Acemi",
+                "description":"1 oyunu oynayın"
+            },
+            "2":{
+                "title":"Çırak",
+                "description":"100 oyun oynayın"
+            },
+            "3":{
+                "title":"Deneyimli",
+                "description":"500 oyun oynayın"
+            },
+            "4":{
+                "title":"Uzman",
+                "description":"2000 oyun oynayın"
+            },
+            "5":{
+                "title":"Emektar",
+                "description":"5000 oyun oynayın"
+            },
+            "6":{
+                "title":"Acemi",
+                "description":"1 oyunu kazanmak"
+            },
+            "7":{
+                "title":"Yarışmacı",
+                "description":"50 oyun kazanmak"
+            },
+            "8":{
+                "title":"Meydan okuyucu",
+                "description":"250 oyun kazanmak"
+            },
+            "9":{
+                "title":"Şampiyon",
+                "description":"1000 oyun kazanmak"
+            },
+            "10":{
+                "title":"Titan",
+                "description":"2500 oyun kazanmak"
+            },
+            "11":{
+                "title":"Amatör",
+                "description":"Bir günde 5 oyun oynayın"
+            },
+            "12":{
+                "title":"Tutkulu",
+                "description":"Bir günde 10 oyun oynayın"
+            },
+            "13":{
+                "title":"Aşık",
+                "description":"Bir günde 25 oyun oynayın"
+            },
+            "14":{
+                "title":"Fanatik",
+                "description":"Bir günde 50 oyun oynayın"
+            },
+            "15":{
+                "title":"Tiryaki",
+                "description":"Bir günde 100 oyun oynayın"
+            },
+            "16":{
+                "title":"Galip",
+                "description":"2 ardıl oyun kazanmak"
+            },
+            "17":{
+                "title":"Fatih",
+                "description":"5 ardıl oyun kazanmak"
+            },
+            "18":{
+                "title":"Gladyatör",
+                "description":"10 ardıl oyun kazanmak"
+            },
+            "19":{
+                "title":"Devasa",
+                "description":"15 ardıl oyun kazanmak"
+            },
+            "20":{
+                "title":"Yenilmez",
+                "description":"20 ardıl oyun kazanmak"
+            },
+            "21":{
+                "title":"İyi oyuncu",
+                "description":"1600 puanı al"
+            },
+            "22":{
+                "title":"Çok iyi oyuncu",
+                "description":"1800 puanı al"
+            },
+            "23":{
+                "title":"Eksper",
+                "description":"2000 puanı al"
+            },
+            "24":{
+                "title":"Ustası",
+                "description":"2400 puanı al"
+            },
+            "25":{
+                "title":"Büyükusta",
+                "description":"2800 puanı al"
+            }
+        }
+    }
 }

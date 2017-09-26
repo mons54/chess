@@ -1,164 +1,165 @@
 {
-   "name":"Schaken",
-   "title":"Schaken Online",
-   "description":"Schaak tegen spelers over de hele wereld. Verbeter uw schaken en je ranking.",
-   "home":"Home",
-   "ranking":"Ranglijst",
-   "top100": "Top 100",
-   "blitz": "Blitzschaak",
-   "rapid": "Snelschaak",
-   "classical": "Klassiek",
-   "invite":"Vrienden uitnodigen",
-   "points":"Rating",
-   "games": "Partijen",
-   "challengers":"Challengers",
-   "challenges": "Uitdagingen",
-   "challenge": "Uitdaging",
-   "players": "spelers",
-   "players_online": "{n} spelers online",
-   "games_in_play": "{n} partijen bezig",
-   "time":"Tijd",
-   "minutes":"Notulen",
-   "seconds": "Seconden",
-   "color":"Kleur",
-   "white":"Wit",
-   "black":"Zwart",
-   "random": "Willekeurige",
-   "min":"Minimum",
-   "max":"Maximaal",
-   "winner":"Winnaar",
-   "game_over":"Game Over",
-   "mat":"Schaakmat",
-   "pat":"Patstelling",
-   "null":"Remise",
-   "offer_draw":"Remise aanbieden",
-   "offers_a_draw":"biedt remise aan",
-   "resign":"Geef op",
-   "ok":"Bevestigen",
-   "cancel":"Annuleren",
-   "reset": "Reset",
-   "settings": "Instellingen",
-   "create_game":"Maak Game",
-   "rematch": "Rematch",
-   "search": "Zoeken",
-   "win":"Winnen",
-   "lose":"Verliezen",
-   "draw":"Remise",
-   "wins":"Gewonnen",
-   "losses":"Verloren",
-   "draws":"Remise",
-   "friends":"Vrienden",
-   "favorites": "Favorieten",
-   "fanpage":"Fan Page",
-   "terms_service":"Gebruiksvoorwaarden",
-   "privacy_policy":"Privacy Policy",
-   "login_with_facebook": "Log in met Facebook",
-   "login_with_google": "Log in met Google",
-   "login_with_vkontakte": "Log in met VK",
-   "logout": "Afmelden",
-   "trophies":{
-      "title":"Trofeeën",
-      "content":{
-         "1":{
-            "title":"Beginner",
-            "description":"Spelen 1 partij"
-         },
-         "2":{
-            "title":"Leerling",
-            "description":"Spelen 100 partijen"
-         },
-         "3":{
-            "title":"Ervaren",
-            "description":"Spelen 500 partijen"
-         },
-         "4":{
-            "title":"Specialist",
-            "description":"Spelen 2000 partijen"
-         },
-         "5":{
-            "title":"Veteraan",
-            "description":"Spelen 5000 partijen"
-         },
-         "6":{
-            "title":"Novice",
-            "description":"Win 1 partij"
-         },
-         "7":{
-            "title":"Concurrent",
-            "description":"Win 50 partijen"
-         },
-         "8":{
-            "title":"Uitdager",
-            "description":"Win 250 partijen"
-         },
-         "9":{
-            "title":"Kampioen",
-            "description":"Win 1000 partijen"
-         },
-         "10":{
-            "title":"Titan",
-            "description":"Win 2500 partijen"
-         },
-         "11":{
-            "title":"Amateur",
-            "description":"Spelen 5 partijen in één dag"
-         },
-         "12":{
-            "title":"Bewonderaar",
-            "description":"Spelen 10 partijen in één dag"
-         },
-         "13":{
-            "title":"Lover",
-            "description":"Spelen 25 partijen in één dag"
-         },
-         "14":{
-            "title":"Fan",
-            "description":"Spelen 50 partijen in één dag"
-         },
-         "15":{
-            "title":"Addict",
-            "description":"Spelen 100 partijen in één dag"
-         },
-         "16":{
-            "title":"Winnaar",
-            "description":"Win 2 opeenvolgende partijen"
-         },
-         "17":{
-            "title":"Veroveraar",
-            "description":"Win 5 opeenvolgende partijen"
-         },
-         "18":{
-            "title":"Gladiator",
-            "description":"Win 10 opeenvolgende partijen"
-         },
-         "19":{
-            "title":"Kolos",
-            "description":"Win 15 opeenvolgende partijen"
-         },
-         "20":{
-            "title":"Onoverwinnelijk",
-            "description":"Win 20 opeenvolgende partijen"
-         },
-         "21":{
-            "title":"Goede speler",
-            "description":"Krijg 1600 punten"
-         },
-         "22":{
-            "title":"Zeer goede speler",
-            "description":"Krijg 1800 punten"
-         },
-         "23":{
-            "title":"Deskundige",
-            "description":"Krijg 2000 punten"
-         },
-         "24":{
-            "title":"Meester",
-            "description":"Krijg 2400 punten"
-         },
-         "25":{
-            "title":"Grootmeester",
-            "description":"Krijg 2800 punten"
-         }
-      }
-   }
+    "name":"Schaken",
+    "title":"Schaken Online",
+    "description":"Schaak tegen spelers over de hele wereld. Verbeter uw schaken en je ranking.",
+    "home":"Home",
+    "ranking":"Ranglijst",
+    "top100":"Top 100",
+    "blitz":"Blitzschaak",
+    "rapid":"Snelschaak",
+    "classical":"Klassiek",
+    "invite":"Vrienden uitnodigen",
+    "share":"Delen",
+    "points":"Rating",
+    "games":"Partijen",
+    "challengers":"Challengers",
+    "challenges":"Uitdagingen",
+    "challenge":"Uitdaging",
+    "players":"spelers",
+    "players_online":"{n} spelers online",
+    "games_in_play":"{n} partijen bezig",
+    "time":"Tijd",
+    "minutes":"Notulen",
+    "seconds":"Seconden",
+    "color":"Kleur",
+    "white":"Wit",
+    "black":"Zwart",
+    "random":"Willekeurige",
+    "min":"Minimum",
+    "max":"Maximaal",
+    "winner":"Winnaar",
+    "game_over":"Game Over",
+    "mat":"Schaakmat",
+    "pat":"Patstelling",
+    "null":"Remise",
+    "offer_draw":"Remise aanbieden",
+    "offers_a_draw":"biedt remise aan",
+    "resign":"Geef op",
+    "ok":"Bevestigen",
+    "cancel":"Annuleren",
+    "reset":"Reset",
+    "settings":"Instellingen",
+    "create_game":"Maak Game",
+    "rematch":"Rematch",
+    "search":"Zoeken",
+    "win":"Winnen",
+    "lose":"Verliezen",
+    "draw":"Remise",
+    "wins":"Gewonnen",
+    "losses":"Verloren",
+    "draws":"Remise",
+    "friends":"Vrienden",
+    "favorites":"Favorieten",
+    "fanpage":"Fan Page",
+    "terms_service":"Gebruiksvoorwaarden",
+    "privacy_policy":"Privacy Policy",
+    "login_with_facebook":"Log in met Facebook",
+    "login_with_google":"Log in met Google",
+    "login_with_vkontakte":"Log in met VK",
+    "logout":"Afmelden",
+    "trophies":{
+        "title":"Trofeeën",
+        "content":{
+            "1":{
+                "title":"Beginner",
+                "description":"Spelen 1 partij"
+            },
+            "2":{
+                "title":"Leerling",
+                "description":"Spelen 100 partijen"
+            },
+            "3":{
+                "title":"Ervaren",
+                "description":"Spelen 500 partijen"
+            },
+            "4":{
+                "title":"Specialist",
+                "description":"Spelen 2000 partijen"
+            },
+            "5":{
+                "title":"Veteraan",
+                "description":"Spelen 5000 partijen"
+            },
+            "6":{
+                "title":"Novice",
+                "description":"Win 1 partij"
+            },
+            "7":{
+                "title":"Concurrent",
+                "description":"Win 50 partijen"
+            },
+            "8":{
+                "title":"Uitdager",
+                "description":"Win 250 partijen"
+            },
+            "9":{
+                "title":"Kampioen",
+                "description":"Win 1000 partijen"
+            },
+            "10":{
+                "title":"Titan",
+                "description":"Win 2500 partijen"
+            },
+            "11":{
+                "title":"Amateur",
+                "description":"Spelen 5 partijen in één dag"
+            },
+            "12":{
+                "title":"Bewonderaar",
+                "description":"Spelen 10 partijen in één dag"
+            },
+            "13":{
+                "title":"Lover",
+                "description":"Spelen 25 partijen in één dag"
+            },
+            "14":{
+                "title":"Fan",
+                "description":"Spelen 50 partijen in één dag"
+            },
+            "15":{
+                "title":"Addict",
+                "description":"Spelen 100 partijen in één dag"
+            },
+            "16":{
+                "title":"Winnaar",
+                "description":"Win 2 opeenvolgende partijen"
+            },
+            "17":{
+                "title":"Veroveraar",
+                "description":"Win 5 opeenvolgende partijen"
+            },
+            "18":{
+                "title":"Gladiator",
+                "description":"Win 10 opeenvolgende partijen"
+            },
+            "19":{
+                "title":"Kolos",
+                "description":"Win 15 opeenvolgende partijen"
+            },
+            "20":{
+                "title":"Onoverwinnelijk",
+                "description":"Win 20 opeenvolgende partijen"
+            },
+            "21":{
+                "title":"Goede speler",
+                "description":"Krijg 1600 punten"
+            },
+            "22":{
+                "title":"Zeer goede speler",
+                "description":"Krijg 1800 punten"
+            },
+            "23":{
+                "title":"Deskundige",
+                "description":"Krijg 2000 punten"
+            },
+            "24":{
+                "title":"Meester",
+                "description":"Krijg 2400 punten"
+            },
+            "25":{
+                "title":"Grootmeester",
+                "description":"Krijg 2800 punten"
+            }
+        }
+    }
 }
