@@ -255,7 +255,7 @@
                     </a>
                     <a class="mdl-navigation__link" 
                        href
-                       ng-if="isFacebookApp()"
+                       ng-if="isFacebookLogin()"
                        ng-click="closeDrawer(); inviteFriends()">
                         <i class="material-icons">person_add</i>
                         {{ 'invite' | translate }}
@@ -280,7 +280,12 @@
                 <% } %>
                 <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
                 <footer class="app-footer">
-                    <a id="fanpage" href="https://www.facebook.com/ChessCommunity" target="_blank">{{ 'fanpage' | translate }}</a>
+                    <a id="fanpage"
+                       ng-hide="isVkontakteLogin()"
+                       href="https://www.facebook.com/ChessCommunity" 
+                       target="_blank">
+                        {{ 'fanpage' | translate }}
+                    </a>
                 </footer>
             </div>
 
@@ -305,7 +310,7 @@
                 </button>
                 <button type="button"
                         class="app-button mdl-button mdl-js-button mdl-button--fab"
-                        ng-if="isFacebookApp()"
+                        ng-if="isFacebookLogin()"
                         ng-click="inviteFriends()">
                     <i class="material-icons">person_add</i>
                 </button>
