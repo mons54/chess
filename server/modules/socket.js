@@ -987,15 +987,6 @@ module.exports = function (io) {
                 }),
                 db.count('games', {
                     type: 'blitz',
-                    result: { $exists: true },
-                    $or: [{
-                        white: uid
-                    }, {
-                        black: uid
-                    }]
-                }),
-                db.count('games', {
-                    type: 'blitz',
                     $or: [{
                         white: uid,
                         result: 1
@@ -1012,6 +1003,16 @@ module.exports = function (io) {
                     }, {
                         black: uid,
                         result: 0
+                    }]
+                }),
+                db.count('games', {
+                    type: 'blitz',
+                    $or: [{
+                        white: uid,
+                        result: 2
+                    }, {
+                        black: uid,
+                        result: 1
                     }]
                 }),
                 db.count('users', {
@@ -1022,15 +1023,6 @@ module.exports = function (io) {
                 }),
                 db.count('games', {
                     type: 'rapid',
-                    result: { $exists: true },
-                    $or: [{
-                        white: uid
-                    }, {
-                        black: uid
-                    }]
-                }),
-                db.count('games', {
-                    type: 'rapid',
                     $or: [{
                         white: uid,
                         result: 1
@@ -1048,21 +1040,29 @@ module.exports = function (io) {
                         black: uid,
                         result: 0
                     }]
+                }),
+                db.count('games', {
+                    type: 'rapid',
+                    $or: [{
+                        white: uid,
+                        result: 2
+                    }, {
+                        black: uid,
+                        result: 1
+                    }]
                 })
             ]);
         })
         .then(function (response) {
             data.blitz.ranking = response[0] + 1;
-            data.blitz.games = response[1];
-            data.blitz.wins = response[2];
-            data.blitz.draws = response[3];
-            data.blitz.losses = data.blitz.games - (data.blitz.wins + data.blitz.draws);
+            data.blitz.wins = response[1];
+            data.blitz.draws = response[2];
+            data.blitz.losses = response[3];
 
             data.rapid.ranking = response[4] + 1;
-            data.rapid.games = response[5];
-            data.rapid.wins = response[6];
-            data.rapid.draws = response[7];
-            data.rapid.losses = data.rapid.games - (data.rapid.wins + data.rapid.draws);
+            data.rapid.wins = response[5];
+            data.rapid.draws = response[6];
+            data.rapid.losses = response[7];
 
             socket.emit('profile', data);
         });
