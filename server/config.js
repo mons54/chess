@@ -19,7 +19,8 @@ module.exports = function (app) {
         dictionaries[lang] = {
             lang: lang,
             title: dictionary.title,
-            description: dictionary.description
+            description: dictionary.description,
+            trophies: dictionary.trophies
         };
     });
 
@@ -76,6 +77,25 @@ module.exports = function (app) {
             'Content-Length': img.length
         });
         res.end(img); 
+    });
+
+    app.get('/:lang([a-z]{2})/trophy/:id', function (req, res) {
+
+        var lang = req.params.lang,
+            id = req.params.id;
+
+        if (!dictionaries.hasOwnProperty(lang)) {
+            lang = defaultLanguage;
+        }
+
+
+        var data = dictionaries[lang].trophies.content[id];
+
+        data.lang = lang;
+        data.id = id;
+
+
+        res.render('views/trophy', data);
     });
 
     app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (req, res) {

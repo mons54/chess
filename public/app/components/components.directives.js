@@ -436,6 +436,10 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                             value.link = '/';
                         }
 
+                        if (!value.href) {
+                            value.href = '/';
+                        }
+
                         if (!value.picture) {
                             value.picture = '/logo-mini.png';
                         }
@@ -453,6 +457,7 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                         }
 
                         scope.link = url + value.link;
+                        scope.href = url + value.href;
                         scope.picture = url + '/images' + value.picture;
                         scope.title = value.title;
                         scope.description = value.description;
@@ -461,18 +466,15 @@ directive('share', ['$window', '$filter', 'host', 'facebookAppId', 'googleClient
                 });
 
                 scope.facebook = function () {
+
                     if (!FB) {
                         return;
                     }
 
                     FB.ui({
-                        method: 'feed',
-                        redirect_uri: 'https://apps.facebook.com/' + facebookAppId,
-                        link: scope.link,
-                        picture: scope.picture,
-                        name: scope.title,
-                        caption: scope.caption,
-                        description: scope.description
+                        method: 'share',
+                        href: scope.href,
+                        hashtag: '#chess'
                     });
                 };
             }
