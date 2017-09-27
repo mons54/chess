@@ -12,16 +12,7 @@ module.exports = function (app) {
         env = process.env.NODE_ENV;
 
     require('fs').readdirSync(staticPath + 'json/dictionaries').forEach(function (file) {
-        
-        var lang = file.substr(0, 2),
-            dictionary = require(staticPath + 'json/dictionaries/' + file);
-
-        dictionaries[lang] = {
-            lang: lang,
-            title: dictionary.title,
-            description: dictionary.description,
-            trophies: dictionary.trophies
-        };
+        dictionaries[file.substr(0, 2)] = require(staticPath + 'json/dictionaries/' + file);
     });
 
     if (env === 'dev') {
