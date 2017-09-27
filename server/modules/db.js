@@ -77,6 +77,8 @@ function Module() {
             .index({black: 1, type: 1})
             .index({white: 1, type: 1, result: 1})
             .index({black: 1, type: 1, result: 1})
+            .index({white: 1, type: 1, date: -1})
+            .index({black: 1, type: 1, date: -1})
         )
     };
 }

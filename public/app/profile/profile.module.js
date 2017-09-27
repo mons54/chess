@@ -187,7 +187,11 @@ directive('profileGame', ['$rootScope', '$timeout', 'socket', 'modal',
                     if (!value) {
                         return;
                     }
+
                     scope.stats = [];
+
+                    value.games = value.wins + value.draws + value.losses;
+                    
                     angular.forEach(['wins', 'draws', 'losses'], function (name) {
                         scope.stats.push(getData(value, name, attrs.gameType));
                     });
