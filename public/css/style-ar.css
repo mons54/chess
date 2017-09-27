@@ -53,14 +53,16 @@
   direction: ltr;
 }
 
-.app-navigation__profile-infos {
-  margin-right: 0;
-  margin-left: 12px;
+.app-navigation__profile-avatar {
+  margin-left: 0;
+  margin-right: 8px;
 }
 
 .app-navigation__profile-infos {
   padding-left: 0;
   padding-right: 12px;
+  margin-right: 0;
+  margin-left: 8px;
 }
 
 .app-navigation__profile-infos .app-icon {
