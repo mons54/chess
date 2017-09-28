@@ -2,6 +2,44 @@
 
 module.exports = function (app) {
 
+    function render(response, request, facebook, vkontakte, okru, lang, title, description, image) {
+
+        lang = getLang(lang);
+
+        if (!title) {
+            title = dictionaries[lang].title;
+        }
+
+        if (!description) {
+            description = dictionaries[lang].description;
+        }
+
+        if (!image) {
+            image = 'logo.png';
+        }
+
+        return response.render('index', {
+            env: env,
+            path: request.url,
+            facebook: facebook,
+            vkontakte: vkontakte,
+            okru: okru,
+            lang: lang,
+            title: title,
+            description: description,
+            image: image
+        });
+    }
+
+    function getLang(lang) {
+
+        if (!dictionaries.hasOwnProperty(lang)) {
+            return defaultLanguage;
+        }
+
+        return lang;
+    }
+
     var express = require('express'),
         mongoose = require('mongoose'),
         bodyParser = require('body-parser'),
@@ -12,16 +50,7 @@ module.exports = function (app) {
         env = process.env.NODE_ENV;
 
     require('fs').readdirSync(staticPath + 'json/dictionaries').forEach(function (file) {
-        
-        var lang = file.substr(0, 2),
-            dictionary = require(staticPath + 'json/dictionaries/' + file);
-
-        dictionaries[lang] = {
-            lang: lang,
-            title: dictionary.title,
-            description: dictionary.description,
-            trophies: dictionary.trophies
-        };
+        dictionaries[file.substr(0, 2)] = require(staticPath + 'json/dictionaries/' + file);
     });
 
     if (env === 'dev') {
@@ -36,86 +65,59 @@ module.exports = function (app) {
     app.set('views', staticPath);
     app.set('view engine', 'ejs');
 
-    app.all('/facebook', function (req, res) {
-        var data = dictionaries[defaultLanguage];
-        data.lang = defaultLanguage;
-        data.facebook = true;
-        data.vkontakte = false;
-        data.okru = false;
-        data.env = env;
-        res.render('index', data);
-    });
+    app.use('/timesync', timeSyncServer.requestHandler);
 
-    app.all('/vkontakte', function (req, res) {
-        var data = dictionaries[defaultLanguage];
-        data.lang = defaultLanguage;
-        data.facebook = false;
-        data.vkontakte = req.query;
-        data.okru = false;
-        data.env = env;
-        res.render('index', data);
-    });
-
-    app.all('/okru', function (req, res) {
-        var data = dictionaries[defaultLanguage];
-        data.lang = defaultLanguage;
-        data.facebook = false;
-        data.vkontakte = false;
-        data.okru = req.query;
-        data.env = env;
-        res.render('index', data);
-    });
-
-    app.get('/images', function(req, res) {
-        if (!req.query.data) {
-            res.redirect('/');
+    app.get('/images', function(request, response) {
+        if (!request.query.data) {
+            response.redirect('/');
             return;
         }
-        var img = new Buffer(req.query.data, 'base64');
-        res.writeHead(200, {
+        var img = new Buffer(request.query.data, 'base64');
+        response.writeHead(200, {
             'Content-Type': 'image/png',
             'Content-Length': img.length
         });
-        res.end(img); 
+        response.end(img); 
     });
 
-    app.get('/:lang([a-z]{2})/trophy/:id', function (req, res) {
+    app.all('/facebook', function (request, response) {
+        render(response, request, true, false, false);
+    });
 
-        var lang = req.params.lang,
-            id = req.params.id;
+    app.all('/vkontakte', function (request, response) {
+        render(response, request, false, request.query, false);
+    });
 
-        if (!dictionaries.hasOwnProperty(lang)) {
-            lang = defaultLanguage;
+    app.all('/okru', function (request, response) {
+        render(response, request, false, false, request.query);
+    });
+
+    app.get('/:lang([a-z]{2})/trophy/:id', function (request, response) {
+
+        var id = request.params.id,
+            lang = getLang(request.params.lang),
+            trophy = dictionaries[lang].trophies.content[id];
+
+        if (!trophy) {
+            response.redirect('/');
         }
 
-
-        var data = dictionaries[lang].trophies.content[id];
-
-        data.lang = lang;
-        data.id = id;
-
-
-        res.render('views/trophy', data);
+        render(
+            response, 
+            request, 
+            false, 
+            false, 
+            false, 
+            lang, 
+            trophy.title, 
+            trophy.description, 
+            'trophies/trophy-' + id + '.png'
+        );
     });
 
-    app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (req, res) {
-        
-        var data,
-            lang = req.params.lang;
-
-        if (!dictionaries.hasOwnProperty(lang)) {
-            lang = defaultLanguage;
-        }
-
-        data = dictionaries[lang];
-        data.facebook = false;
-        data.vkontakte = false;
-        data.okru = false;
-        data.env = env;
-        res.render('index', data);
+    app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (request, response) {
+        render(response, request, false, false, false, request.params.lang);
     });
-
-    app.use('/timesync', timeSyncServer.requestHandler);
 };
 
 String.prototype.hash = function() {
