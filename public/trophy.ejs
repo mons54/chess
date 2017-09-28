@@ -1,0 +1,15 @@
+<% 
+    var 
+    trophy = text.trophies.content[id],
+    content = include('views/trophy', {
+        id: id,
+        trophy: trophy
+    }); 
+%> 
+<%-include('index', {
+        text: text,
+        title: trophy.title,
+        description: trophy.description,
+        content: content
+    }); 
+%>

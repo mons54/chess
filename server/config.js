@@ -34,7 +34,7 @@ module.exports = function (app) {
         data.vkontakte = false;
         data.okru = false;
         data.env = env;
-        res.render('index', data);
+        res.render('app', data);
     });
 
     app.all('/vkontakte', function (req, res) {
@@ -44,7 +44,7 @@ module.exports = function (app) {
         data.vkontakte = req.query;
         data.okru = false;
         data.env = env;
-        res.render('index', data);
+        res.render('app', data);
     });
 
     app.all('/okru', function (req, res) {
@@ -54,7 +54,7 @@ module.exports = function (app) {
         data.vkontakte = false;
         data.okru = req.query;
         data.env = env;
-        res.render('index', data);
+        res.render('app', data);
     });
 
     app.get('/images', function(req, res) {
@@ -79,14 +79,11 @@ module.exports = function (app) {
             lang = defaultLanguage;
         }
 
-
-        var data = dictionaries[lang].trophies.content[id];
-
-        data.lang = lang;
-        data.id = id;
-
-
-        res.render('views/trophy', data);
+        res.render('trophy', {
+            id: id,
+            lang: lang,
+            text: dictionaries[lang]
+        });
     });
 
     app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (req, res) {
@@ -99,11 +96,12 @@ module.exports = function (app) {
         }
 
         data = dictionaries[lang];
+        data.lang = lang;
         data.facebook = false;
         data.vkontakte = false;
         data.okru = false;
         data.env = env;
-        res.render('index', data);
+        res.render('app', data);
     });
 
     app.use('/timesync', timeSyncServer.requestHandler);

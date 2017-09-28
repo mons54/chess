@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="<%= lang %>"
+      ng-app="app"
+      data-facebook="<%= facebook %>"
+      data-vkontakte="<%= vkontakte ? JSON.stringify(vkontakte) : false %>"
+      data-okru="<%= okru ? JSON.stringify(okru) : false %>"
+      data-env="<%= typeof env === 'string' ? env : null %>">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="<%= description %>">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+        <meta property="og:url" content="https://www.worldofchess.online/<%= lang %>/"/>
+        <meta property="og:locale" content="<%= lang %>" />
+        <meta property="og:title" content="<%= title %> - World of Chess" />
+        <meta property="og:description" content="<%= description %>" />
+        <meta property="og:image" content="https://www.worldofchess.online/images/logo.png" />
+        <meta property="fb:app_id" content="1687859708170830" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@WorldOfChess_" />
+        <meta name="twitter:title" content="<%= title %> - World of Chess" />
+        <meta name="twitter:description" content="<%= description %>" />
+        <meta name="twitter:image" content="https://www.worldofchess.online/images/logo.png" />
+
+        <meta name="theme-color" content="#795548" />
+
+        <base href="/">
+        
+        <title><%= title %> - World of Chess</title>
+
+        <link rel="alternate" hreflang="ar" href="https://www.worldofchess.online/ar/"/>
+        <link rel="alternate" hreflang="de" href="https://www.worldofchess.online/de/"/>
+        <link rel="alternate" hreflang="en" href="https://www.worldofchess.online/en/"/>
+        <link rel="alternate" hreflang="es" href="https://www.worldofchess.online/es/"/>
+        <link rel="alternate" hreflang="fr" href="https://www.worldofchess.online/fr/"/>
+        <link rel="alternate" hreflang="it" href="https://www.worldofchess.online/it/"/>
+        <link rel="alternate" hreflang="ja" href="https://www.worldofchess.online/ja/"/>
+        <link rel="alternate" hreflang="nl" href="https://www.worldofchess.online/nl/"/>
+        <link rel="alternate" hreflang="pt" href="https://www.worldofchess.online/pt/"/>
+        <link rel="alternate" hreflang="ru" href="https://www.worldofchess.online/ru/"/>
+        <link rel="alternate" hreflang="tr" href="https://www.worldofchess.online/tr/"/>
+        <link rel="alternate" hreflang="zh" href="https://www.worldofchess.online/zh/"/>
+        
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/manifest.json">
+
+        <!-- Page styles -->
+        <link href="css/material/material.min.css" rel="stylesheet">
+
+        <% if (typeof env === 'string' && env === 'dev') { %>
+            <link href="css/material/icon.css" rel="stylesheet" >
+            <link href="css/style.css" rel="stylesheet">
+            <link ng-if="lang === 'ar'" href="css/style-ar.css" rel="stylesheet">
+         <% } else { %>
+            <link href="web/css/app.min.css" rel="stylesheet">
+            <link ng-if="lang === 'ar'" ng-href="web/css/app-ar.min.css" rel="stylesheet">
+        <% } %>
+    </head>
+    <body>
+
+        <div ng-show="!connected || loading || disconnectMultiSocket || unauthorized" 
+             class="app-overlay">
+            <div ng-show="!connected" class="app-init"></div>
+            <div ng-show="loading && !disconnectMultiSocket && !unauthorized" 
+                 class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate ng-hide">
+            </div>
+            <i ng-show="disconnectMultiSocket" 
+                ng-click="reconnect()"
+                ng-bind="'play_arrow'"
+                class="app__clickable app__no-select app__action material-icons ng-hide">
+            </i>
+            <i ng-show="unauthorized"
+               ng-bind="'block'" 
+               class="app__action material-icons ng-hide">
+            </i>
+        </div>
+
+        <div id="modal-connect" 
+             class="app-modal app-modal--login app-modal__bg" 
+             role="dialog" 
+             aria-hidden="true">
+            <div ng-show="lang"
+                 class="app-modal__content">
+                <div class="app-modal__logo">
+                    <span class="app-logo">
+                        <span class="app-logo__icon"></span>
+                        <span class="app-logo__text" ng-bind="'name'|translate"></span>
+                    </span>
+                </div>
+                <div class="app-login__content-button">
+                    <button class="app-login__button app-login__button--facebook" ng-click="facebookLogin()">
+                        {{ 'login_with_facebook' | translate }}
+                    </button>
+                </div>
+                <div class="app-login__content-button">
+                    <button class="app-login__button app-login__button--google" ng-click="googleLogin()">
+                        {{ 'login_with_google' | translate }}
+                    </button>
+                </div>
+                <div class="app-login__content-button">
+                    <button class="app-login__button app-login__button--vkontakte" ng-click="vkontakteLogin()">
+                        {{ 'login_with_vkontakte' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-container"></div>
+
+        <div class="app-layout mdl-layout mdl-js-layout mdl-layout--fixed-header"
+             ng-show="ready && !loading" 
+             ng-class="{'is-user-game': user.gid, 'is-game': isGame, 'is-toggle': isToggle }"
+             data-layout>
+             
+            <header class="app-header mdl-layout__header">
+                <div class="app-header__row mdl-layout__header-row">
+                    <a href="/" class="app-title app-logo">
+                        <span class="app-logo__icon"></span>
+                        <span class="app-logo__text" ng-bind="'name'|translate"></span>
+                    </a>
+
+                    <!-- Add spacer, to align navigation to the right in desktop -->
+                    <div class="app-header-spacer mdl-layout-spacer"></div>
+              
+                    <!-- Navigation -->
+                    <div class="app-navigation__container">
+                        <nav class="app-navigation mdl-navigation">
+                            <a class="app-navigation__link mdl-navigation__link mdl-typography--text-uppercase"
+                               ng-class="{'selected': currentRoute === 'home'}"
+                               href="/"
+                               ng-bind="'home'|translate">
+                            </a>
+                            <a class="app-navigation__link mdl-navigation__link mdl-typography--text-uppercase"
+                               ng-class="{'selected': currentRoute === 'ranking'}"
+                               href="/ranking/blitz"
+                               ng-bind="'ranking'|translate">
+                            </a>
+                            <a ng-if="challenges.length"
+                               class="app-navigation__link mdl-navigation__link"
+                               show-modal="#modal-challenges"
+                               title="{{ 'challenges' | translate }}"
+                               href>
+                                <i class="app-icon material-icons"
+                                   ng-class="{'app-badge mdl-badge mdl-badge--overlap': !!challenges.length}"
+                                   data-badge="{{ challenges.length }}">games</i>
+                            </a>
+                            <div class="app-header-spacer app-header-spacer--1024 mdl-layout-spacer"></div>
+                            <button type="button"
+                                    class="app-button app-button--create-game mdl-button"
+                                    ng-hide="user.gid"
+                                    show-modal="#modal-create-game">
+                                {{ 'create_game' | translate }}
+                            </button>
+                            <div class="app-navigation__profile">
+                                <a ng-href="/profile/{{ user.uid }}/#blitz"
+                                   class="app-navigation__profile-infos app-navigation__profile-infos--blitz"
+                                   title="{{ 'blitz'|translate }}">
+                                    <i class="app-icon material-icons">flash_on</i>
+                                    <span class="app-navigation__profile-infos-points">
+                                        {{ user.blitz.points }}
+                                    </span>
+                                </a>
+                                <a ng-href="/profile/{{ user.uid }}/#rapid"
+                                   class="app-navigation__profile-infos app-navigation__profile-infos--rapid" 
+                                   title="{{ 'rapid'|translate }}">
+                                    <i class="app-icon material-icons">timer</i>
+                                    <span class="app-navigation__profile-infos-points">
+                                        {{ user.rapid.points }}
+                                    </span>
+                                </a>
+                                <a ng-href="/profile/{{ user.uid }}/#trophies"
+                                   class="app-navigation__profile-avatar">
+                                    <img avatar
+                                         class="app-avatar app-avatar--navigation" 
+                                         ng-src="{{ user.avatar }}">
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="app-header__mobile">
+                        <span class="app-mobile__title mdl-layout-title">
+                            <span class="app-logo__text" ng-bind="title|translate"></span>
+                        </span>
+                        <a ng-if="challenges.length"
+                           class="app-header__mobile-link"
+                           show-modal="#modal-challenges"
+                           title="{{ 'challenges' | translate }}"
+                           href>
+                            <i class="app-icon material-icons"
+                               ng-class="{'app-badge mdl-badge mdl-badge--overlap': !!challenges.length}"
+                               data-badge="{{ challenges.length }}">games</i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <div class="app-drawer mdl-layout__drawer">
+                <span class="app-layout-title mdl-layout-title">
+                    <div class="app-navigation__profile">
+                        <a ng-href="/profile/{{ user.uid }}/#trophies"
+                           class="app-navigation__profile-user">
+                            <img avatar
+                                class="app-avatar app-avatar--navigation" 
+                                ng-src="{{ user.avatar }}">
+                            <span class="app-navigation__profile-name">
+                                {{ user.name }}
+                            </span>
+                        </a>
+                        <a ng-href="/profile/{{ user.uid }}/#blitz"
+                           class="app-navigation__profile-infos app-navigation__profile-infos--blitz"
+                             title="{{ 'blitz'|translate }}">
+                            <i class="app-icon material-icons">flash_on</i>
+                            <span class="app-navigation__profile-infos-points">
+                                {{ user.blitz.points }}
+                            </span>
+                        </a>
+                        <a ng-href="/profile/{{ user.uid }}/#rapid"
+                           class="app-navigation__profile-infos" 
+                             title="{{ 'points'|translate }} ({{ 'rapid'|translate }})">
+                            <i class="app-icon material-icons">timer</i>
+                            <span class="app-navigation__profile-infos-points">
+                                {{ user.rapid.points }}
+                            </span>
+                        </a>
+                    </div>
+                </span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" 
+                       href="/" 
+                       ng-click="closeDrawer()">
+                        <i class="material-icons" role="presentation">home</i>
+                        {{ 'home' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href="/ranking/blitz"
+                       ng-click="closeDrawer()">
+                        <i class="material-icons" role="presentation">looks_one</i>
+                        {{ 'ranking' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href
+                       ng-click="closeDrawer()"
+                       show-modal="#modal-create-game">
+                        <i class="material-icons">games</i>
+                        {{ 'create_game' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href
+                       ng-click="closeDrawer()"
+                       show-modal="#modal-settings">
+                        <i class="material-icons">settings</i>
+                        {{ 'settings' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href
+                       ng-if="isFacebookLogin()"
+                       ng-click="closeDrawer(); inviteFriends()">
+                        <i class="material-icons">person_add</i>
+                        {{ 'invite' | translate }}
+                    </a>
+                    <a class="mdl-navigation__link" 
+                       href
+                       ng-if="hasLogout()"
+                       ng-click="closeDrawer(); logout()">
+                        <i class="material-icons" role="presentation">power_settings_new</i>
+                        {{ 'logout' | translate }}
+                    </a>
+                </nav>
+            </div>
+
+            <div class="app-content mdl-layout__content" autoscroll="true">
+                <div ng-show="loadingContent" class="app-overlay">
+                    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                </div>
+                <a name="top"></a>
+                <% if (!vkontakte) { %>
+                    <div id="ad-header" ng-hide="user.gid"></div>
+                <% } %>
+                <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
+                <footer class="app-footer">
+                    <a id="fanpage"
+                       ng-hide="isVkontakteLogin()"
+                       href="https://www.facebook.com/ChessCommunity" 
+                       target="_blank">
+                        {{ 'fanpage' | translate }}
+                    </a>
+                </footer>
+            </div>
+
+            <div class="app-button__fixed app-button__fixed--more app-button__fixed--desktop" 
+                 ng-hide="isGame"
+                 ng-class="{'app-button__fixed--pagination': pages, 'is-active': showMore }">
+                 <button show-button 
+                        type="button"
+                        ng-click="showMore = true"
+                        class="app-button app-button--show mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                    <i class="material-icons">add</i>
+                </button>
+                <button type="button"
+                        class="app-button mdl-button mdl-js-button mdl-button--fab"
+                        show-modal="#modal-create-game">
+                    <i class="material-icons">games</i>
+                </button>
+                <button type="button"
+                        class="app-button mdl-button mdl-js-button mdl-button--fab"
+                        show-modal="#modal-settings">
+                    <i class="material-icons">settings</i>
+                </button>
+                <button type="button"
+                        class="app-button mdl-button mdl-js-button mdl-button--fab"
+                        ng-if="isFacebookLogin()"
+                        ng-click="inviteFriends()">
+                    <i class="material-icons">person_add</i>
+                </button>
+                <button type="button"
+                        class="app-button mdl-button mdl-js-button mdl-button--fab"
+                        ng-if="hasLogout()"
+                        ng-click="logout()">
+                    <i class="material-icons">power_settings_new</i>
+                </button>
+                <button hide-button 
+                        type="button"
+                        ng-click="showMore = false"
+                        class="app-button app-button--hide mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                    <i class="material-icons">clear</i>
+                </button>
+            </div>
+
+            <div class="app-button__fixed app-button__fixed--mobile" 
+                 ng-hide="isGame"
+                 ng-click="closeDrawer()"
+                 ng-class="{'app-button__fixed--pagination': pages}">
+                <button class="app-button app-button--show mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+                        show-modal="#modal-create-game">
+                    <i class="material-icons">games</i>
+                </button>
+            </div>
+
+            <div class="app-pagination app-pagination--fixed" pagination></div>
+
+            <modal-challenges></modal-challenges>
+            <modal-settings></modal-settings>
+            <modal-profile></modal-profile>
+            <modal-trophy></modal-trophy>
+            <modal-create-game></modal-create-game>
+
+            <script type="text/ng-template" id="profile-game.html">
+                <div ng-click="goGame(game._id)" class="app-profile__game">
+                    <div class="app-profile__game-board app-game__board--{{ colorGame }}">
+                        <div ng-repeat="number in numbers" class="app-game__row">
+                            <div 
+                                ng-repeat="letter in letters" 
+                                ng-init="position = letter + number" 
+                                ng-class="{'last-turn': isLastTurn(position), 'is-check': isCheck(position) }"
+                                class="app-game__box"
+                                data-game-box>
+                                <div class="app-game__box-content">
+                                    <span ng-if="game.data.pieces[position]" class="app-game__piece">
+                                        <img ng-src="../images/game-1/{{ game.data.pieces[position].name }}-{{ game.data.pieces[position].color }}.svg"
+                                             class="app-game__piece-image app__no-drag">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-profile__game-content">
+                        <div class="app-profile__game-date">
+                            <i class="app-icon material-icons">today</i>
+                            <span>{{ game.data.startTime|localeDateTime }}</span>
+                        </div>
+                        <div class="app-profile__game-infos">
+                            <div class="app-profile__game-type">
+                                <i class="app-icon material-icons">{{ game.data.type === 'blitz' ? 'flash_on' : 'timer' }}</i>
+                                <span>{{ game.data.type | translate }}</span>
+                                <i class="app-icon material-icons">schedule</i>
+                                <span>{{ game.data.time / 60000 }} + {{ game.data.increment / 1000 }}</span>
+                            </div>
+                        </div>
+                        <div class="app-profile__game-result"
+                             ng-class="{
+                                'app-text__positive': game.data.white.uid === profile.uid && game.data.white.isWinner || game.data.black.uid === profile.uid && game.data.black.isWinner,
+                                'app-text__negative': game.data.white.uid === profile.uid && game.data.black.isWinner || game.data.black.uid === profile.uid && game.data.white.isWinner 
+                             }">
+                            <div class="app-profile__game-result-text">{{ game.data.result.name | translate }}</div>
+                            <span ng-if="game.data.result.value === 1">1-0</span>
+                            <span ng-if="game.data.result.value === 0">½-½</span>
+                            <span ng-if="game.data.result.value === 2">0-1</span>
+                            <span ng-if="game.data.result.value === null">?-?</span>
+                        </div>
+
+                        <div class="app-profile__game-player">
+                            <span ng-click="$event.stopPropagation()"
+                                  show-profile="game.data.white.uid"
+                                  class="app-profile__game-name app__no-select">
+                                {{ game.data.white.name }}
+                            </span>
+                            <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.white.isWinner}">
+                                <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
+                                <img avatar 
+                                     ng-click="$event.stopPropagation()"
+                                     show-profile="game.data.white.uid"
+                                     class="app-avatar" 
+                                     ng-src="{{ game.data.white.avatar }}">
+                                <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
+                            </div>
+                            <div class="app-profile__game-points">
+                                {{ game.data.white.points }} 
+                                <span class="app-profile__game-player-points-add"
+                                      ng-class="{'app-text__positive': game.data.white.resultPoints > 0, 'app-text__negative': game.data.white.resultPoints < 0 }">
+                                    {{ game.data.white.resultPoints | relativeNumber }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="app-profile__game-player">
+                            <span ng-click="$event.stopPropagation()"
+                                  show-profile="game.data.black.uid"
+                                  class="app-profile__game-name app__no-select">
+                                  {{ game.data.black.name }}
+                            </span>
+                            <div class="app-profile__game-avatar" ng-class="{'is-winner': game.data.black.isWinner}">
+                                <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
+                                <img avatar 
+                                     ng-click="$event.stopPropagation()"
+                                     show-profile="game.data.black.uid"
+                                     class="app-avatar" 
+                                     ng-src="{{ game.data.black.avatar }}">
+                                <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
+                            </div>
+                            <div class="app-profile__game-points">
+                                {{ game.data.black.points }} 
+                                <span class="app-profile__game-player-points-add"
+                                      ng-class="{'app-text__positive': game.data.black.resultPoints > 0, 'app-text__negative': game.data.black.resultPoints < 0 }">
+                                    {{ game.data.black.resultPoints | relativeNumber }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="modal-challenges.html">
+                <div id="modal-challenges" 
+                     class="app-modal app-modal--challenges app-modal__bg" 
+                     role="dialog" 
+                     aria-hidden="true"
+                     data-modal
+                     modal-close-bg>
+                    <div class="app-modal__dialog app-modal__dialog--head">
+                        <a href modal-close class="app-modal__close">
+                            <i class="material-icons">clear</i>
+                        </a>
+                        <div class="app-modal__head">
+                            {{ 'challenges' | translate }}
+                        </div>
+                        <div class="app-modal__content">
+                            <div class="app-element">
+                                <div element-content class="app-element__body">
+                                    <table class="app-table mdl-data-table mdl-js-data-table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th sortable 
+                                                    collection="challenges" 
+                                                    expression="['name', 'points', 'time', 'color']" 
+                                                    icon="account_circle"
+                                                    class="mdl-data-table__cell--non-numeric">
+                                                </th>
+                                                <th sortable 
+                                                    collection="challenges" 
+                                                    expression="['points', 'time', 'color', 'name']" 
+                                                    icon="star">
+                                                </th>
+                                                <th sortable 
+                                                    collection="challenges" 
+                                                    expression="['color', 'points', 'time', 'name']" 
+                                                    icon="invert_colors">
+                                                </th>
+                                                <th sortable 
+                                                    collection="challenges" 
+                                                    expression="['time', 'points', 'color', 'name']" 
+                                                    icon="schedule">
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-if="challenges.length">
+                                            <tr ng-repeat="challenge in challenges"
+                                                show-profile="challenge.uid">
+                                                <td class="app-table__avatar">
+                                                    <a href show-profile="challenge.uid">
+                                                        <img avatar class="app-avatar" ng-src="{{ challenge.avatar }}">
+                                                    </a>
+                                                </td>
+                                                <td class="app-table__user mdl-data-table__cell--non-numeric">
+                                                    <a href show-profile="challenge.uid">
+                                                        <span class="app-table__name">{{ challenge.name }}</span>
+                                                    </a>
+                                                </td>
+                                                <td class="app-table__points">{{ challenge.points }}</td>
+                                                <td class="app-table__color" 
+                                                    ng-class="{
+                                                        'app-table__color--white': challenge.color === 'white', 
+                                                        'app-table__color--black': challenge.color === 'black' 
+                                                    }">
+                                                </td>
+                                                <td class="app-table__time">{{ challenge.game.time / 60 }} + {{ challenge.game.increment }}</td>
+                                                <td class="app-table__actions">
+                                                    <button ng-if="!challenge.create" 
+                                                            ng-click="$event.stopPropagation(); startChallenge(challenge.uid)" 
+                                                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-button--colored">
+                                                        <i class="app-icon material-icons">check</i>
+                                                    </button>
+                                                    <button ng-click="$event.stopPropagation(); removeChallenge(challenge.uid)" 
+                                                            class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                                                        <i class="app-icon material-icons">close</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="modal-settings.html">
+                <div id="modal-settings" 
+                     class="app-modal app-modal__settings app-modal__bg" 
+                     role="dialog" 
+                     aria-hidden="true"
+                     data-modal
+                     modal-close-bg>
+                    <div class="app-modal__dialog app-modal__dialog--head">
+                        <a href modal-close class="app-modal__close">
+                            <i class="material-icons">clear</i>
+                        </a>
+                        <div class="app-modal__head">
+                            <div ng-show="load" class="app-settings__loader">
+                                <div data-spinner class="mdl-spinner mdl-js-spinner is-active"></div>
+                            </div>
+                            <div class="app-done app-settings__done" ng-class="{'hide': !done }">
+                                <i class="app-icon material-icons">done</i>
+                            </div>
+                            {{ 'settings'|translate }}
+                        </div>
+                        <div class="app-modal__content">
+                            <form ng-submit="settingsForm.$valid && updateUser()"
+                                  name="settingsForm"
+                                  role="form">
+                                <div class="app-form__select">
+                                    <label for="settings-lang" class="app-modal__settings-icon">
+                                        <i class="material-icons">language</i>
+                                    </label>
+                                    <select id="settings-lang"
+                                            ng-model="settings.lang" 
+                                            ng-options="key as value for (key, value) in languages"
+                                            class="app-modal__settings-field">
+                                    </select>
+                                </div>
+
+                                <div class="app-form__choices-colors">
+                                    <span class="app-modal__settings-icon">
+                                        <i class="material-icons">invert_colors</i>
+                                    </span>
+                                    <div class="app-modal__settings-field">
+                                        <button type="button"
+                                                ng-repeat="color in colorsGame"
+                                                ng-click="settings.colorGame = color"
+                                                ng-class="{'checked': settings.colorGame === color }"
+                                                class="app-button app-button--color app-button--color-{{ color }} mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect">
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="app-form__switch">
+                                    <span class="app-modal__settings-icon">
+                                        <i class="material-icons">volume_up</i>
+                                    </span>
+                                    <label class="app-modal__settings-field mdl-switch mdl-js-switch mdl-js-ripple-effect" for="settings-sound">
+                                        <input ng-model="settings.sound" type="checkbox" id="settings-sound" class="mdl-switch__input">
+                                        <span class="mdl-switch__label"></span>
+                                    </label>
+                                </div>
+
+                                <div class="app-modal__actions">
+                                    <button ng-click="reset()" type="button" class="mdl-button mdl-button--raised">{{ 'reset'|translate }}</button>
+                                    <button ng-disabled="load" type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'ok'|translate }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </script>
+
+            <script type="text/ng-template" id="modal-profile.html">
+                <div id="modal-profile" 
+                     class="app-modal app-modal--profile app-modal__bg" 
+                     role="dialog" 
+                     aria-hidden="true"
+                     data-modal
+                     modal-close-bg>
+                    <div class="app-modal__dialog app-modal__dialog--head">
+                        <a ng-hide="loadGame" href modal-close class="app-modal__close">
+                            <i class="material-icons">clear</i>
+                        </a>
+                        <div class="app-modal__head">
+                            <div class="app-profile__card-avatar">
+                                <img avatar class="app-avatar" ng-src="{{ profile.avatar }}">
+                            </div>
+                            <div class="app-profile__card-name">{{ profile.name }}</div>
+                        </div>
+                        <div class="app-modal__content">
+                            <profile-actions></profile-actions>
+                            <profile-game game-type="'blitz'" game-data="profile.blitz" uid="profile.uid" show-more="!user.gid"></profile-game>
+                            <profile-game game-type="'rapid'" game-data="profile.rapid" uid="profile.uid" show-more="!user.gid"></profile-game>
+                            <div class="app-profile__info-game">
+                                <div class="app-profile__info-title">
+                                    {{ 'trophies.title'|translate }}
+                                    <a ng-if="!user.gid"
+                                       ng-href="/profile/{{ profile.uid }}/#trophies"
+                                       class="app-profile__info-more">
+                                        <i class="material-icons">open_in_new</i>
+                                    </a>
+                                </div>
+                                <div data-trophies class="app-profile__trophies">
+                                    <div ng-repeat="trophy in profile.trophies"
+                                         ng-class="{'no-trophy': trophy < 100 }"
+                                         id="trophy-{{ $index }}"
+                                         class="app-profile__trophy">
+                                        <img ng-src="../images/trophies/trophy-{{ $index + 1 }}.svg">
+                                        <div class="mdl-tooltip mdl-tooltip--top" data-mdl-for="trophy-{{ $index }}">
+                                            {{ 'trophies.content.' + ($index + 1) + '.title' | translate }} 
+                                            · 
+                                            {{ 'trophies.content.' + ($index + 1) + '.description' | translate }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="modal-trophy.html">
+                <div id="modal-trophy"
+                     class="app-modal app-modal__bg" 
+                     role="dialog" 
+                     aria-hidden="true"
+                     data-modal
+                     modal-close-bg>
+                    <div class="app-modal__dialog app-modal__dialog--head">
+                        <a href modal-close class="app-modal__close">
+                            <i class="material-icons">clear</i>
+                        </a>
+                        <div class="app-modal__head">
+                            {{ 'trophies.content.' + trophy.id + '.title' | translate }}
+                        </div>
+                        <div class="app-modal__content">
+                            <div class="app-trophy app-trophy--modal">
+                                <div class="app-trophy__picture">
+                                    <img ng-if="trophy.value === 100" ng-src="../images/trophies/trophy-{{ trophy.id }}.svg">
+                                    <div ng-if="trophy.value !== 100"
+                                         id="progress-bar"
+                                         progress-bar-trophy="trophy.value"
+                                         progress-bar-trophy-watch="trophy"
+                                         progress-bar-trophy-width="8"
+                                         progress-bar-trophy-trail-width="2"
+                                         class="app-trophy__progress-bar">
+                                    </div>
+                                    <div ng-if="trophy.value !== 100" class="app-trophy__progress-value">
+                                        {{ trophy.value }} %
+                                    </div>
+                                </div>
+                                <p class="app-trophy__desc">{{ 'trophies.content.' + trophy.id + '.description' | translate }}</p>
+                            </div>
+                            <div ng-if="share && trophy.value === 100" class="app-share" share="shareData"></div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="modal-create-game.html">
+                <div id="modal-create-game" 
+                     class="app-modal app-modal__bg" 
+                     role="dialog" 
+                     aria-hidden="true"
+                     data-modal
+                     modal-close-bg>
+                    <div class="app-modal__dialog app-modal__dialog--head">
+                        <a ng-hide="loadGame" href modal-close class="app-modal__close">
+                            <i class="material-icons">clear</i>
+                        </a>
+                        <div class="app-modal__head">{{ 'create_game'|translate }}</div>
+                        <div class="app-modal__content">
+                            <form ng-submit="createGame()"
+                                  ng-hide="loadGame"
+                                  role="form">
+
+                                <game-choices data="paramsGame" model="game"></game-choices>
+                                <div class="app-form__select">
+                                    <select ng-model="game.color" 
+                                            ng-options="value as value|translate for (key, value) in paramsGame.colors"
+                                            ng-class="{'value': game.color }"
+                                            id="create-game-color">
+                                        <option value="">{{ 'random' | translate }}</option>
+                                    </select>
+                                    <label for="create-game-color">{{ 'color'|translate }}</label>
+                                </div>
+                                <div class="app-form__select-grid mdl-grid">
+                                    <div class="app-form__select mdl-cell--6-col">
+                                        <select ng-model="game.pointsMin"
+                                                ng-options="value as value for (key, value) in paramsGame.pointsMin"
+                                                ng-class="{'value': game.pointsMin }"
+                                                id="create-game-points-min">
+                                            <option value="">∞</option>
+                                        </select>
+                                        <label for="create-game-points-min">{{ 'min'|translate }}</label>
+                                    </div>
+                                    <div class="app-form__select mdl-cell--6-col">
+                                        <select ng-model="game.pointsMax"
+                                                ng-options="value as value for (key, value) in paramsGame.pointsMax"
+                                                ng-class="{'value': game.pointsMax }"
+                                                id="create-game-points-max">
+                                            <option value="">∞</option>
+                                        </select>
+                                        <label for="create-game-points-max">{{ 'max'|translate }}</label>
+                                    </div>
+                                </div>
+                                <div class="app-modal__actions">
+                                    <button modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
+                                    <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored">{{ 'create_game'|translate }}</button>
+                                </div>
+                            </form>
+                            <div class="app-search__game" ng-show="loadGame">
+                                <button ng-click="stopLoad();" 
+                                        class="app-search__game-edit mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                                    <i class="material-icons">edit</i>
+                                </button>
+                                <div class="app-search__game-title">
+                                    <span>{{ 'search'|translate }} ...</span>
+                                </div>
+                                <div class="app-search__game-params">
+                                    <div class="app-search__game-name">
+                                        {{ paramsGame.games[game.game].type|translate }}
+                                    </div>
+                                    <div class="app-search__game-time">
+                                        {{ paramsGame.games[game.game].time / 60 }} + {{ paramsGame.games[game.game].increment }}
+                                    </div>
+                                </div>
+                                <div class="app-search__game-spinner">
+                                    <span class="app-search__game-color"
+                                          ng-class="getColorClass(game.color)">
+                                    </span>
+                                    <span class="app-spinner"></span>
+                                </div>
+                                <div>
+                                    <button ng-click="removeGame()" modal-close type="button" class="mdl-button mdl-button--raised">{{ 'cancel'|translate }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+        </div>
+          
+        <div id="fb-root"></div>
+
+        <% if (vkontakte) { %>
+            <script src="https://vk.com/js/api/xd_connection.js?2"></script>
+        <% } else { %>
+            <div id="vk-root"></div>
+            <script src="https://ads.lfstmedia.com/getad?site=287948" async defer></script>
+        <% } %>
+
+        <% if (okru) { %>
+            <script src="https://api.ok.ru/js/fapi5.js" async defer></script>
+        <% } %>
+
+        <script src="https://apis.google.com/js/api.js" async defer></script>
+
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/jquery-ui.min.js"></script>
+        <script src="lib/progress-bar.min.js"></script>
+        <script src="lib/material.min.js"></script>
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-route.min.js"></script>
+        <script src="lib/angular-cookies.min.js"></script>
+        <script src="lib/html2image.min.js"></script>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="timesync/timesync.js"></script>
+
+        <% if (typeof env === 'string' && env === 'dev') { %>
+
+            <script src="chess.js"></script>
+
+            <script src="app/app.js"></script>
+
+            <script src="app/global/global.module.js"></script>
+
+            <script src="app/facebook/facebook.module.js"></script>
+
+            <script src="app/google/google.module.js"></script>
+
+            <script src="app/vkontakte/vkontakte.module.js"></script>
+
+            <script src="app/okru/okru.module.js"></script>
+
+            <script src="app/components/components.module.js"></script>
+            <script src="app/components/components.services.js"></script>
+            <script src="app/components/components.directives.js"></script>
+
+            <script src="app/game/game.module.js"></script>
+            <script src="app/game/game.controllers.js"></script>
+            <script src="app/game/game.directives.js"></script>
+
+            <script src="app/home/home.module.js"></script>
+            <script src="app/home/home.controllers.js"></script>
+
+            <script src="app/ranking/ranking.module.js"></script>
+            <script src="app/ranking/ranking.controllers.js"></script>
+
+            <script src="app/trophies/trophies.module.js"></script>
+            <script src="app/trophies/trophies.controllers.js"></script>
+
+            <script src="app/profile/profile.module.js"></script>
+            <script src="app/profile/profile.controllers.js"></script>
+
+        <% } else { %>
+            <script src="web/js/app.min.js"></script>
+        <% } %>
+
+    </body>
+</html>

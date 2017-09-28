@@ -1,34 +1,9 @@
-<!doctype html>
-<html lang="<%= lang %>">
-    <head>
-        <title><%= title %></title>
-        <meta name="description" 
-              content="<%= description %>">
-
-        <meta property="og:type"            
-              content="article">
-        <meta property="og:locale"
-              content="<%= lang %>">
-        <meta property="og:title"
-              content="<%= title %>">
-        <meta property="og:image"
-              content="https://www.worldofchess.online/images/trophies/trophy-<%= id %>.png">
-        <meta property="og:description"
-              content="<%= description %>">
-        <meta property="og:url"
-              content="https://www.worldofchess.online/<%= lang %>/trophy/<%= id %>">
-        <meta property="fb:app_id"
-              content="1687859708170830">
-
-        <meta name="twitter:card"
-              content="summary">
-        <meta name="twitter:site"
-              content="@WorldOfChess_">
-        <meta name="twitter:title"
-              content="<%= title %>">
-        <meta name="twitter:description"
-              content="<%= description %>">
-        <meta name="twitter:image"
-              content="https://www.worldofchess.online/images/trophies/trophy-<%= id %>.png">
-    </head>
-</html>
+<div class="view__trophy-title">
+    <%= trophy.title %>
+</div>
+<div class="view__trophy-image">
+    <img src="/images/trophies/trophy-<%= id %>.svg">
+</div>
+<div class="view__trophy-description">
+    <%= trophy.description %>
+</div>
