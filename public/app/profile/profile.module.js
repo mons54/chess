@@ -8,6 +8,28 @@
  */
 angular.module('profile', []).
 
+directive('profileHeader', ['$rootScope', 'socket',
+    function ($rootScope, socket) {
+        return {
+            templateUrl: '/app/profile/templates/profile-header.html',
+            link: function (scope, element, attrs) {
+
+                socket.emit('profile', attrs.uid);
+
+                socket.once('profile', function (data) {
+
+                    scope.profile = data;
+                    
+                    $rootScope.title = data.name;
+
+                    delete $rootScope.loadingContent;
+
+                }, scope);
+            }
+        };
+    }
+]).
+
 /**
  * @ngdoc directive
  * @name profile.directive:showProfile
@@ -36,7 +58,7 @@ directive('showProfile', ['$rootScope', 'socket',
                     socket.emit('profile', scope.showProfile);
                 });
             } 
-        }
+        };
     }
 ]).
 
@@ -78,7 +100,7 @@ directive('profileActions', ['$rootScope',
                     }
                 });
             }
-        }
+        };
     }
 ]).
 
@@ -118,7 +140,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                 }, scope);
             }
-        }
+        };
     }
 ]).
 
@@ -139,7 +161,7 @@ directive('progressBarProfile', [function () {
                 }).animate(value / 100);
             });
         }
-    }
+    };
 }]).
 
 /**
@@ -201,6 +223,6 @@ directive('profileGame', ['$rootScope', '$timeout', 'socket', 'modal',
                     $timeout(componentHandler.upgradeAllRegistered);
                 });
             }
-        }
+        };
     }
 ]);

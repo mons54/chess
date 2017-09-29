@@ -551,34 +551,40 @@ config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
         $routeProvider
         .when('/', {
-            name : 'home',
+            name: 'home',
             title: 'home',
             templateUrl: '/app/home/templates/home.html',
             controller: 'homeCtrl'
         })
         .when('/game/:id', {
-            name : 'game',
+            name: 'game',
             templateUrl: '/app/game/templates/game.html',
             controller: 'gameCtrl'
         })
         .when('/ranking/:type/:page?', {
-            name : 'ranking',
+            name: 'ranking',
             title: 'ranking',
             templateUrl: '/app/ranking/templates/ranking.html',
             controller: 'rankingCtrl'
         })
         .when('/trophies', {
-            name : 'trophies',
+            name: 'trophies',
             title: 'trophies.title',
             templateUrl: '/app/trophies/templates/trophies.html',
             controller: 'trophiesCtrl'
         })
         .when('/profile/:id', {
-            name : 'profile',
+            name: 'profile',
             title: false,
             templateUrl: '/app/profile/templates/profile.html',
             controller: 'profileCtrl',
             reloadOnSearch: false
+        })
+        .when('/user/:uid/trophies', {
+            name: 'profile',
+            title: false,
+            templateUrl: '/app/trophies/templates/trophies.html',
+            controller: 'trophiesCtrl'
         })
         .otherwise({
             redirectTo: '/'

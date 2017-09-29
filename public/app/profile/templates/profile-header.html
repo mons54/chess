@@ -1,0 +1,27 @@
+<div class="app-card__profile-title mdl-card__title">
+    <h2 class="app-card__profile-title-text mdl-card__title-text">{{ profile.name }}</h2>
+    <profile-actions></profile-actions>
+    <div class="app-card__profile-avatar">
+        <img avatar class="app-avatar" ng-src="{{ profile.avatar }}">
+    </div>
+</div>
+<div class="app-card__profile-actions mdl-card__actions mdl-card--border">
+
+    <a href="{{ uid }}/blitz"
+       class="app-button mdl-button mdl-js-button"
+       ng-class="{'is-active': activeMenu === 'blitz'}">
+        {{ 'blitz' | translate }}
+    </a>
+
+    <a href="{{ uid }}/rapid"
+       class="app-button mdl-button mdl-js-button"
+       ng-class="{'is-active': activeMenu === 'rapid'}">
+        {{ 'rapid' | translate }}
+    </a>
+
+    <a href="{{ uid }}/trophies"
+       class="app-button mdl-button mdl-js-button"
+       ng-class="{'is-active': activeMenu === 'trophies'}">
+        {{ 'rapid' | translate }}
+    </a>
+</div>

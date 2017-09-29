@@ -8,31 +8,10 @@ angular.module('trophies').
  * @requires $rootScope
  * @requires $scope
  */
-controller('trophiesCtrl', ['$rootScope', '$scope', '$timeout', 'socket',
+controller('trophiesCtrl', ['$rootScope', '$scope', '$routeParams', 'socket',
     
-    function ($rootScope, $scope, $timeout, socket) {
+    function ($rootScope, $scope, $routeParams, socket) {
 
-        $scope.openTrophy = function (trophy) {
-            
-            var trophies = {};
-
-            trophies[trophy.id] = trophy.value;
-
-            $rootScope.$emit('trophies', {
-                share: true,
-                trophies: trophies
-            });
-        };
-
-        var userTrophies = $rootScope.user.trophies || {};
-
-        $scope.trophies = [];
-        for (var i = 1; i <= 25; i++) {
-            $scope.trophies.push({
-                id: i,
-                value: userTrophies[i] || 0
-            });
-
-        }
+        $scope.uid = $routeParams.uid;
     }
 ]);
