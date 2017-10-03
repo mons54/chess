@@ -51,7 +51,7 @@
      ng-repeat="trophy in trophies track by $index"
      ng-click="openTrophy(trophy)">
     <div class="app-trophy__picture">
-        <img ng-if="trophy.value === 100" ng-src="../images/trophies/trophy-{{ trophy.id }}.svg">
+        <img ng-if="trophy.value === 100" ng-src="/images/trophies/trophy-{{ trophy.id }}.svg">
         <div ng-if="trophy.value !== 100"
              progress-bar-trophy="trophy.value"
              progress-bar-trophy-width="8"

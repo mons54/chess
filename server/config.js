@@ -4,7 +4,13 @@ module.exports = function (app) {
 
     function render(response, request, facebook, vkontakte, okru, lang, title, description, image) {
 
+        var base = '/';
+
         lang = getLang(lang);
+
+        if (request.params.lang === lang) {
+            base += lang + '/';
+        }
 
         if (!title) {
             title = dictionaries[lang].title;
@@ -20,6 +26,7 @@ module.exports = function (app) {
 
         return response.render('index', {
             env: env,
+            base: base,
             path: request.url,
             facebook: facebook,
             vkontakte: vkontakte,
@@ -92,7 +99,7 @@ module.exports = function (app) {
         render(response, request, false, false, request.query);
     });
 
-    app.get('/:lang([a-z]{2})/trophy/:id', function (request, response) {
+    app.get('/:lang([a-z]{2})/user/:uid([a-f0-9]{24})/trophies/:id([0-9]{1,2})', function (request, response) {
 
         var id = request.params.id,
             lang = getLang(request.params.lang),
@@ -116,6 +123,7 @@ module.exports = function (app) {
     });
 
     app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (request, response) {
+
         render(response, request, false, false, false, request.params.lang);
     });
 };

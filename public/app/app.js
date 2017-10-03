@@ -580,7 +580,19 @@ config(['$routeProvider', '$locationProvider',
             controller: 'profileCtrl',
             reloadOnSearch: false
         })
-        .when('/user/:uid/trophies', {
+        .when('/user/:uid/blitz', {
+            name: 'profile',
+            title: false,
+            templateUrl: '/app/profile/templates/blitz.html',
+            controller: 'profileCtrl'
+        })
+        .when('/user/:uid/rapid', {
+            name: 'profile',
+            title: false,
+            templateUrl: '/app/profile/templates/rapid.html',
+            controller: 'profileCtrl'
+        })
+        .when('/user/:uid/trophies/:tid?', {
             name: 'profile',
             title: false,
             templateUrl: '/app/trophies/templates/trophies.html',

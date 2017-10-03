@@ -464,7 +464,7 @@
                            class="app-game__icon app-game__icon--{{ piece }}" 
                            modal-close 
                            data-icon="{{ piece }}">
-                           <img ng-src="../images/game-1/{{ piece }}-{{ getPlayerColor() }}.svg"
+                           <img ng-src="/images/game-1/{{ piece }}-{{ getPlayerColor() }}.svg"
                              class="app-game__piece-image">
                         </a>
                     </div>
@@ -497,7 +497,7 @@
                         </div>
                         <div class="app-game__result-icon" ng-class="{'is-winner': game.white.isWinner}">
                             <i ng-if="game.white.isWinner" class="material-icons">star</i>
-                            <img src="../images/game-1/queen-white.svg">
+                            <img src="/images/game-1/queen-white.svg">
                             <i ng-if="game.white.isWinner" class="material-icons">star</i>
                         </div>
                         <div class="app-game__result-points">
@@ -514,7 +514,7 @@
                         </div>
                         <div class="app-game__result-icon" ng-class="{'is-winner': game.black.isWinner}">
                             <i ng-if="game.black.isWinner" class="material-icons">star</i>
-                            <img src="../images/game-1/queen-black.svg">
+                            <img src="/images/game-1/queen-black.svg">
                             <i ng-if="game.black.isWinner" class="material-icons">star</i>
                         </div>
                         <div class="app-game__result-points">

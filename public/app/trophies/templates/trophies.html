@@ -1,3 +1,24 @@
 <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-show="profile">
     <profile-header uid="{{ uid }}"></profile-header>
 </div>
+
+<div class="app-trophy app-trophy--page mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"
+     ng-repeat="trophy in trophies track by $index"
+     ng-click="openTrophy(trophy)">
+    <div class="app-trophy__picture">
+        <img ng-if="trophy.value === 100" ng-src="/images/trophies/trophy-{{ trophy.id }}.svg">
+        <div ng-if="trophy.value !== 100"
+             progress-bar-trophy="trophy.value"
+             progress-bar-trophy-width="8"
+             progress-bar-trophy-trail-width="2"
+             class="app-trophy__progress-bar">
+        </div>
+        <div ng-if="trophy.value !== 100" class="app-trophy__progress-value">
+            {{ trophy.value }} %
+        </div>
+    </div>
+    <div class="app-trophy__content">
+        <h3 class="app-trophy__title">{{ 'trophies.content.' + trophy.id + '.title' | translate }}</h3>
+        <p class="app-trophy__desc">{{ 'trophies.content.' + trophy.id + '.description' | translate }}</p>
+    </div>
+</div>
