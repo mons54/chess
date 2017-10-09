@@ -51,6 +51,7 @@ module.exports = function (app) {
         mongoose = require('mongoose'),
         bodyParser = require('body-parser'),
         timeSyncServer = require('timesync/server'),
+        db = require(dirname + '/server/modules/db'),
         staticPath = dirname + '/public/',
         dictionaries = {},
         defaultLanguage = 'en',
@@ -120,6 +121,47 @@ module.exports = function (app) {
             trophy.description, 
             'trophies/trophy-' + id + '.png'
         );
+    });
+
+    app.get('/:lang([a-z]{2})/game/:gid([a-f0-9]{24})', function (request, response) {
+        
+        var gid = request.params.gid,
+            objectId = db.objectId(gid),
+            lang = getLang(request.params.lang);
+
+        if (!objectId) {
+            response.redirect('/');
+            return;
+        }
+
+        db.findOne('games', { _id: objectId }).then(function (data) {
+
+            var print;
+
+            if (data.result === 1) {
+                print = '1-0';
+            } else if (data.result === 2) {
+                print = '0-1';
+            } else {
+                print = '½-½';
+            };
+
+           var title = dictionaries[lang][data.type] + ' - ' + data.data.time / 60000 + '+' + data.data.increment / 1000 + ' - ' + dictionaries[lang][data.data.result.name],
+                description = data.data.white.name + ' ' + data.data.white.points + ' - ' + print + ' - ' + data.data.black.name + ' ' + data.data.black.points,
+                image = request.query.image ? '?data=' + encodeURIComponent(request.query.image) : null;
+
+            render(
+                response, 
+                request, 
+                false,
+                false,
+                false,
+                lang,
+                title,
+                description,
+                image
+            );
+        });
     });
 
     app.get('(/:lang([a-z]{2}))?(/[a-z][^.]+)?', function (request, response) {
