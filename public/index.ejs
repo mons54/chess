@@ -64,15 +64,15 @@
         <div ng-show="!connected || loading || disconnectMultiSocket || unauthorized" 
              class="app-overlay">
             <div ng-show="!connected" class="app-init"></div>
-            <div ng-show="loading && !disconnectMultiSocket && !unauthorized" 
+            <div ng-show="connected && loading && !disconnectMultiSocket && !unauthorized" 
                  class="app-loader mdl-progress mdl-js-progress mdl-progress__indeterminate ng-hide">
             </div>
-            <i ng-show="disconnectMultiSocket" 
+            <i ng-show="connected && disconnectMultiSocket" 
                 ng-click="reconnect()"
                 ng-bind="'play_arrow'"
                 class="app__clickable app__no-select app__action material-icons ng-hide">
             </i>
-            <i ng-show="unauthorized"
+            <i ng-show="connected && unauthorized"
                ng-bind="'block'" 
                class="app__action material-icons ng-hide">
             </i>
