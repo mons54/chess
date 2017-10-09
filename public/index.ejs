@@ -155,7 +155,7 @@
                                 {{ 'create_game' | translate }}
                             </button>
                             <div class="app-navigation__profile">
-                                <a ng-href="/profile/{{ user.uid }}/#blitz"
+                                <a ng-href="/user/{{ user.uid }}/blitz"
                                    class="app-navigation__profile-infos app-navigation__profile-infos--blitz"
                                    title="{{ 'blitz'|translate }}">
                                     <i class="app-icon material-icons">flash_on</i>
@@ -163,7 +163,7 @@
                                         {{ user.blitz.points }}
                                     </span>
                                 </a>
-                                <a ng-href="/profile/{{ user.uid }}/#rapid"
+                                <a ng-href="/user/{{ user.uid }}/rapid"
                                    class="app-navigation__profile-infos app-navigation__profile-infos--rapid" 
                                    title="{{ 'rapid'|translate }}">
                                     <i class="app-icon material-icons">timer</i>
@@ -171,7 +171,7 @@
                                         {{ user.rapid.points }}
                                     </span>
                                 </a>
-                                <a ng-href="/profile/{{ user.uid }}/#trophies"
+                                <a ng-href="/user/{{ user.uid }}/trophies"
                                    class="app-navigation__profile-avatar">
                                     <img avatar
                                          class="app-avatar app-avatar--navigation" 
@@ -200,7 +200,7 @@
             <div class="app-drawer mdl-layout__drawer">
                 <span class="app-layout-title mdl-layout-title">
                     <div class="app-navigation__profile">
-                        <a ng-href="/profile/{{ user.uid }}/#trophies"
+                        <a ng-href="/user/{{ user.uid }}/trophies"
                            class="app-navigation__profile-user">
                             <img avatar
                                 class="app-avatar app-avatar--navigation" 
@@ -209,7 +209,7 @@
                                 {{ user.name }}
                             </span>
                         </a>
-                        <a ng-href="/profile/{{ user.uid }}/#blitz"
+                        <a ng-href="/user/{{ user.uid }}/blitz"
                            class="app-navigation__profile-infos app-navigation__profile-infos--blitz"
                              title="{{ 'blitz'|translate }}">
                             <i class="app-icon material-icons">flash_on</i>
@@ -217,7 +217,7 @@
                                 {{ user.blitz.points }}
                             </span>
                         </a>
-                        <a ng-href="/profile/{{ user.uid }}/#rapid"
+                        <a ng-href="/user/{{ user.uid }}/rapid"
                            class="app-navigation__profile-infos" 
                              title="{{ 'points'|translate }} ({{ 'rapid'|translate }})">
                             <i class="app-icon material-icons">timer</i>
@@ -623,7 +623,7 @@
                                 <div class="app-profile__info-title">
                                     {{ 'trophies.title'|translate }}
                                     <a ng-if="!user.gid"
-                                       ng-href="/profile/{{ profile.uid }}/#trophies"
+                                       ng-href="/user/{{ user.uid }}/trophies"
                                        class="app-profile__info-more">
                                         <i class="material-icons">open_in_new</i>
                                     </a>

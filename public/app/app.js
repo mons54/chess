@@ -573,30 +573,17 @@ config(['$routeProvider', '$locationProvider',
             templateUrl: '/app/trophies/templates/trophies.html',
             controller: 'trophiesCtrl'
         })
-        .when('/profile/:id', {
-            name: 'profile',
-            title: false,
-            templateUrl: '/app/profile/templates/profile.html',
-            controller: 'profileCtrl',
-            reloadOnSearch: false
-        })
-        .when('/user/:uid/blitz', {
-            name: 'profile',
-            title: false,
-            templateUrl: '/app/profile/templates/blitz.html',
-            controller: 'profileCtrl'
-        })
-        .when('/user/:uid/rapid', {
-            name: 'profile',
-            title: false,
-            templateUrl: '/app/profile/templates/rapid.html',
-            controller: 'profileCtrl'
-        })
         .when('/user/:uid/trophies/:tid?', {
             name: 'profile',
             title: false,
             templateUrl: '/app/trophies/templates/trophies.html',
             controller: 'trophiesCtrl'
+        })
+        .when('/user/:uid/:type', {
+            name: 'profile',
+            title: false,
+            templateUrl: '/app/profile/templates/profile.html',
+            controller: 'profileCtrl'
         })
         .otherwise({
             redirectTo: '/'

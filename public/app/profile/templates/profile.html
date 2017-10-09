@@ -1,69 +1,19 @@
 <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col" ng-show="profile">
-    <div class="app-card__profile-title mdl-card__title">
-        <h2 class="app-card__profile-title-text mdl-card__title-text">{{ profile.name }}</h2>
-        <profile-actions></profile-actions>
-        <div class="app-card__profile-avatar">
-            <img avatar class="app-avatar" ng-src="{{ profile.avatar }}">
-        </div>
-    </div>
-    <div class="app-card__profile-actions mdl-card__actions mdl-card--border">
-        <a ng-repeat="value in menu"
-           ng-click="showMenu(value)" 
-           class="app-button mdl-button mdl-js-button"
-           ng-class="{'is-active': activeMenu === value}">
-            {{ value === 'trophies' ? 'trophies.title' : value | translate }}
-        </a>
-    </div>
+    <profile-header uid="{{ uid }}"></profile-header>
 </div>
 
-<div ng-if="profile.blitz && activeMenu === 'blitz'" 
+<div ng-if="profile[type]" 
      class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
     <div class="app-card__profile-stats">
-        <profile-game game-type="'blitz'" game-data="profile.blitz"></profile-game>
+        <profile-game game-type="type" game-data="profile[type]"></profile-game>
     </div>
 </div>
 
-<div ng-show="activeMenu === 'blitz'"
-     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
-     ng-repeat="game in games.blitz.data track by $index">
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
+     ng-repeat="game in games.data track by $index">
     <ng-include src="'profile-game.html'"></ng-include>
 </div>
 
-<div ng-if="profile.rapid && activeMenu === 'rapid'" 
-     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-    <div class="app-card__profile-stats">
-        <profile-game game-type="'rapid'" game-data="profile.rapid"></profile-game>
-    </div>
-</div>
-
-<div ng-show="activeMenu === 'rapid'"
-     class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col"
-     ng-repeat="game in games.rapid.data track by $index">
-    <ng-include src="'profile-game.html'"></ng-include>
-</div>
-
-<div ng-show="games.blitz.load || games.rapid.load" class="app-profile__game-spinner">
+<div ng-show="games.load" class="app-profile__game-spinner">
     <div data-spinner class="mdl-spinner mdl-js-spinner is-active"></div>
-</div>
-
-<div ng-show="activeMenu === 'trophies'"
-     class="app-trophy app-trophy--page mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"
-     ng-repeat="trophy in trophies track by $index"
-     ng-click="openTrophy(trophy)">
-    <div class="app-trophy__picture">
-        <img ng-if="trophy.value === 100" ng-src="/images/trophies/trophy-{{ trophy.id }}.svg">
-        <div ng-if="trophy.value !== 100"
-             progress-bar-trophy="trophy.value"
-             progress-bar-trophy-width="8"
-             progress-bar-trophy-trail-width="2"
-             class="app-trophy__progress-bar">
-        </div>
-        <div ng-if="trophy.value !== 100" class="app-trophy__progress-value">
-            {{ trophy.value }} %
-        </div>
-    </div>
-    <div class="app-trophy__content">
-        <h3 class="app-trophy__title">{{ 'trophies.content.' + trophy.id + '.title' | translate }}</h3>
-        <p class="app-trophy__desc">{{ 'trophies.content.' + trophy.id + '.description' | translate }}</p>
-    </div>
 </div>

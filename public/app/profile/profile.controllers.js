@@ -23,47 +23,43 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
             $rootScope.setBlackList($scope.profile.uid, $scope.isBlackList);
         });
 
-        $scope.menu = ['blitz', 'rapid', 'trophies'];
+        if ($routeParams.type !== 'blitz' &&
+            $routeParams.type !== 'rapid') {
+            $routeParams.type = 'blitz';
+        }
+
+        $scope.uid = $routeParams.uid;
+
+        $scope.type = $scope.activeMenu = $routeParams.type;
 
         $scope.letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         $scope.numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
 
-        socket.emit('profile', $routeParams.id);
+        $scope.colorGame = user.getColorGame();
+
+        $scope.games = {
+            data: [],
+            offset: null,
+            count: 0,
+            load: true
+        };
 
         socket.emit('profileGames', {
-            uid: $routeParams.id,
-            type: 'blitz',
+            uid: $routeParams.uid,
+            type: $routeParams.type,
             offset: 0
         });
 
-        socket.emit('profileGames', {
-            uid: $routeParams.id,
-            type: 'rapid',
-            offset: 0
-        });
+        $scope.$watch('profile', function (data) {
 
-        socket.once('profile', function (data) {
+            if (!data) {
+                return;
+            }
 
             $rootScope.title = data.name;
 
-            $scope.profile = data;
-
-            var userTrophies = data.trophies || {};
-
-            $scope.trophies = [];
-            for (var i = 1; i <= 25; i++) {
-                $scope.trophies.push({
-                    id: i,
-                    value: userTrophies[i] || 0
-                });
-
-            };
-
             delete $rootScope.loadingContent;
-
-        }, $scope);
-
-        $scope.colorGame = user.getColorGame();
+        });
 
         $rootScope.$watch('user.colorGame', function (value) {
             if (value) {
@@ -71,22 +67,9 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
             }
         });
 
-        $scope.games = {
-            blitz: {
-                data: [],
-                offset: null,
-                count: 0
-            },
-            rapid: {
-                data: [],
-                offset: null,
-                count: 0
-            }
-        };
-
         socket.on('profileGames', function (data) {
 
-            var games = $scope.games[data.type];
+            var games = $scope.games;
 
             if (!games) {
                 return;
@@ -117,83 +100,39 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
                     game.data.black.timeTurn *= 1000;
                 }
 
-                games.data.push(game);
+                $scope.games.data.push(game);
             });
 
-            games.count = data.count;
-            games.offset = data.offset;
+            $scope.games.count = data.count;
+            $scope.games.offset = data.offset;
 
-            delete games.load;
+            delete $scope.games.load;
 
         }, $scope);
-
-        if ($scope.menu.indexOf($location.hash()) === -1) {
-            $location.hash('blitz');
-        }
-
-        $scope.$watch(function () {
-            return $location.hash();
-        }, function (value) {
-            if (!value) {
-                return;
-            }
-
-            if (value && $scope.menu.indexOf(value) === -1) {
-                $location.hash('blitz');
-            }
-            $scope.activeMenu = $location.hash();
-        });
-
-        
-        $scope.activeMenu = $location.hash();
-
-        if ($scope.games[$scope.activeMenu]) {
-            $scope.games[$scope.activeMenu].load = true;
-        }
 
         $scope.goGame = function (id) {
             $location.path('/game/' + id);
         };
 
-        $scope.openTrophy = function (trophy) {
-            var trophies = {};
-
-            trophies[trophy.id] = trophy.value;
-
-            $rootScope.$emit('trophies', {
-                share: $rootScope.user.uid === $scope.profile.uid,
-                trophies: trophies
-            });
-        };
-
-        $scope.showMenu = function (menu) {
-            $scope.activeMenu = menu;
-
-            if ($location.hash() !== menu) {
-                $location.hash(menu);
-            }
-        };
-
         $('.app-content').on('scroll', function () {
 
-            var type = $scope.activeMenu,
-                games = $scope.games[type];
+            var type = $routeParams.type,
+                games = $scope.games;
 
-            if (!games ||
-                !games.offset ||
-                games.offset >= games.count ||
-                games.load ||
+            if (!$scope.games.offset ||
+                $scope.games.offset >= $scope.games.count ||
+                $scope.games.load ||
                 this.scrollTop + this.offsetHeight + $('.app-footer').height() < this.scrollHeight) {
                 return;
             }
 
-            games.load = true;
+            $scope.games.load = true;
             $scope.$apply();
 
             socket.emit('profileGames', {
                 uid: $routeParams.id,
                 type: type,
-                offset: games.offset
+                offset: $scope.games.offset
             });
         });
 

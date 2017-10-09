@@ -12,6 +12,8 @@ controller('trophiesCtrl', ['$rootScope', '$scope', '$routeParams', 'socket',
     
     function ($rootScope, $scope, $routeParams, socket) {
 
+        $rootScope.loadingContent = true;
+
         $scope.uid = $routeParams.uid;
 
         $scope.activeMenu = 'trophies';
@@ -41,6 +43,8 @@ controller('trophiesCtrl', ['$rootScope', '$scope', '$routeParams', 'socket',
             if (trophy) {
                 $scope.openTrophy(trophy);
             }
+
+            delete $rootScope.loadingContent;
         });
 
         $scope.openTrophy = function (trophy) {
