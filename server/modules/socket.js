@@ -29,7 +29,7 @@ module.exports = function (io) {
         this.connected = {};
         this.userGames = {};
         this.timeout = {};
-        db.find('games', { result: { $exists: false } }).then(function(response) {
+        db.find('games', { result: null }).then(function(response) {
             response.forEach(function (game) {
                 moduleGame.setTimeTurn(game.data);
                 moduleGame.setGame(game.id, game.data);
@@ -566,7 +566,8 @@ module.exports = function (io) {
                     date: new Date(),
                     white: white.uid,
                     black: black.uid,
-                    data: game
+                    data: game,
+                    result: null
                 }).
                 catch(function() {
                     if (this.getUserGame(socket.uid) === true) {
