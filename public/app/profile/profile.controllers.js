@@ -119,7 +119,8 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
             var type = $routeParams.type,
                 games = $scope.games;
 
-            if (!$scope.games.offset ||
+            if ($rootScope.loadingContent ||
+                !$scope.games.offset ||
                 $scope.games.offset >= $scope.games.count ||
                 $scope.games.load ||
                 this.scrollTop + this.offsetHeight + $('.app-footer').height() < this.scrollHeight) {
@@ -130,7 +131,7 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
             $scope.$apply();
 
             socket.emit('profileGames', {
-                uid: $routeParams.id,
+                uid: $routeParams.uid,
                 type: type,
                 offset: $scope.games.offset
             });

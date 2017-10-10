@@ -14,6 +14,8 @@ directive('profileHeader', ['$rootScope', 'socket',
             templateUrl: '/app/profile/templates/profile-header.html',
             link: function (scope, element, attrs) {
 
+                scope.uid = attrs.uid;
+
                 socket.emit('profile', attrs.uid);
 
                 socket.once('profile', function (data) {

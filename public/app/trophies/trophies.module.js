@@ -79,8 +79,8 @@ directive('modalTrophy', ['$rootScope', '$timeout', '$filter', 'modal',
                     scope.trophy = trophy;
 
                     scope.shareData = {
-                        link: '/' + $rootScope.lang + '/trophy/' + trophy.id,
-                        href: '/' + $rootScope.lang + '/trophy/' + trophy.id,
+                        link: '/' + $rootScope.lang + '/user/' + $rootScope.user.uid + '/trophies/' + trophy.id,
+                        href: '/' + $rootScope.lang + '/user/' + $rootScope.user.uid + '/trophies/' + trophy.id,
                         title: $filter('translate')('trophies.content.' + trophy.id + '.title'),
                         description: $filter('translate')('trophies.content.' + trophy.id + '.description'),
                         picture: '/trophies/trophy-' + trophy.id + '.png'
