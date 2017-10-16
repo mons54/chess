@@ -281,12 +281,27 @@
                 <% } %>
                 <div class="app-grid mdl-grid" ng-if="ready" ng-view></div>
                 <footer class="app-footer">
-                    <a id="fanpage"
-                       ng-hide="isVkontakteLogin()"
-                       href="https://www.facebook.com/ChessCommunity" 
-                       target="_blank">
-                        {{ 'fanpage' | translate }}
-                    </a>
+                    <% if (!vkontakte) { %>
+                        <a class="app__fanpage-link"
+                           ng-hide="isVkontakteLogin()"
+                           href="https://www.facebook.com/ChessCommunity" 
+                           target="_blank">
+                            {{ 'fanpage' | translate }}
+                        </a>
+                        <div class="app__fanpage">
+                            <div class="fb-like-box" 
+                                 data-href="https://www.facebook.com/ChessCommunity" 
+                                 data-width="444" 
+                                 data-height="250"
+                                 data-colorscheme="light" 
+                                 data-show-faces="true" 
+                                 data-header="false" 
+                                 data-stream="false" 
+                                 data-show-border="false">
+                            </div>
+                            <div id="ad-fanpage"></div>
+                        </div>
+                    <% } %>
                 </footer>
             </div>
 

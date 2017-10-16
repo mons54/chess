@@ -86,6 +86,13 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                     slot: 'slot174397',
                     _render_div_id: 'ad-header'
                 });
+
+                LSM_Slot({
+                    adkey: '76b',
+                    ad_size: '300x250',
+                    slot: 'slot174398',
+                    _render_div_id: 'ad-fanpage'
+                });
             }
         });
 
