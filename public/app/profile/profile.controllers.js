@@ -77,15 +77,19 @@ controller('profileCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$
 
             angular.forEach(data.games, function (game) {
 
-                if (game.data.result.value === 1) {
+                if (game.result && !game.data.result.name) {
+                    game.data.result.name = 'resign';
+                }
+
+                if (game.result === 1) {
                     game.data.white.isWinner = true;
                     game.data.white.resultPoints = $window.game.getPoints(game.data.white.points, game.data.black.points, 1, game.data.white.countGame);
                     game.data.black.resultPoints = $window.game.getPoints(game.data.black.points, game.data.white.points, 0, game.data.black.countGame);
-                } else if (game.data.result.value === 2) {
+                } else if (game.result === 2) {
                     game.data.black.isWinner = true;
                     game.data.white.resultPoints = $window.game.getPoints(game.data.white.points, game.data.black.points, 0, game.data.white.countGame);
                     game.data.black.resultPoints = $window.game.getPoints(game.data.black.points, game.data.white.points, 1, game.data.black.countGame);
-                } else if (game.data.result.value === 0) {
+                } else if (game.result === 0) {
                     game.data.white.resultPoints = $window.game.getPoints(game.data.white.points, game.data.black.points, 0.5, game.data.white.countGame);
                     game.data.black.resultPoints = $window.game.getPoints(game.data.black.points, game.data.white.points, 0.5, game.data.black.countGame);
                 }

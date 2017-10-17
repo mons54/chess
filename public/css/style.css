@@ -4061,12 +4061,16 @@ a {
   }
 
   .app-element .app-element__body {
-    max-height: 390px;
+    max-height: 218px;
     overflow-x: auto;
   }
 
   .app-element--created-games .app-element__body {
     height: 218px;
+  }
+  
+  .app-modal__content .app-element__body {
+    max-height: initial;
   }
 
   .app-element__body .app-spinner {
