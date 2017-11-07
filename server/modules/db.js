@@ -76,6 +76,7 @@ function Module() {
             })
             .index({result: 1})
             .index({white: 1})
+            .index({date: -1})
             .index({black: 1})
             .index({white: 1, type: 1})
             .index({black: 1, type: 1})
@@ -94,11 +95,11 @@ Module.prototype.all = function (promises) {
 };
 
 Module.prototype.findOne = function (model, request, fields) {
-    return this.models[model].findOne(request, fields).maxTime(maxTime);
+    return this.models[model].findOne(request, fields);
 };
 
 Module.prototype.find = function (model, request) {
-    return this.models[model].find(request).maxTime(maxTime);
+    return this.models[model].find(request);
 };
 
 Module.prototype.count = function (model, request) {
@@ -112,7 +113,6 @@ Module.prototype.exec = function (model, request, sort, skip, limit, hint) {
     .skip(skip)
     .limit(limit)
     .hint(hint)
-    .maxTime(maxTime)
     .exec();
 };
 
