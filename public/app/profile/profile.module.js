@@ -50,14 +50,7 @@ directive('showProfile', ['$rootScope', 'socket',
             },
             link: function (scope, element) {
                 element.bind('click', function () {
-
-                    if ($rootScope.loadModalProfile) {
-                        return;
-                    }
-
-                    $rootScope.loadModalProfile = true;
-
-                    socket.emit('profile', scope.showProfile);
+                    $rootScope.$emit('showProfile', scope.showProfile);
                 });
             } 
         };
@@ -125,19 +118,45 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
             templateUrl: 'modal-profile.html',
             link: function (scope, element) {
 
-                socket.on('profile', function (profile) {
+                componentHandler.upgradeElement($('[data-spinner]')[0]);
 
-                    if (!$rootScope.loadModalProfile) {
+                var elementModal = modal(element);
+
+                $rootScope.$on('showProfile', function (event, value) {
+
+                    if (!value || scope.load) {
                         return;
                     }
 
-                    delete $rootScope.loadModalProfile;
+                    scope.profile = value;
 
-                    scope.profile = profile;
+                    socket.emit('profile', value.uid);
 
-                    modal(element).show().one('hide', function () {
-                        $rootScope.setFavorite(profile.uid, scope.isFavorite);
-                        $rootScope.setBlackList(profile.uid, scope.isBlackList);
+                    elementModal.show();
+
+                    scope.load = true;
+                });
+
+                socket.on('profile', function (value) {
+
+                    if (!scope.load) {
+                        return;
+                    }
+
+                    delete scope.load;
+
+                    scope.profile = value;
+
+                    scope.profile.ready = true;
+
+                    elementModal.one('hide', function () {
+
+                        scope.$apply(function () {
+                            delete scope.profile;
+                        });
+
+                        $rootScope.setFavorite(value.uid, scope.isFavorite);
+                        $rootScope.setBlackList(value.uid, scope.isBlackList);
                     });
 
                 }, scope);

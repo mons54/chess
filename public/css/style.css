@@ -1039,6 +1039,11 @@ a {
   margin-right: 8px;
 }
 
+.app-profile__load {
+  text-align: center;
+  padding: 20px 0;
+}
+
 .app-profile--challenger {
   height: auto;
   margin: 32px 0 12px 0;

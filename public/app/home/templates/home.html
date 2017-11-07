@@ -34,12 +34,12 @@
             <tbody>
                 <tr ng-repeat="game in createdGames" enable-created-game>
                     <td class="app-table__avatar">
-                        <a href show-profile="game.uid">
+                        <a href show-profile="game">
                             <img avatar class="app-avatar" ng-src="{{ game.avatar }}">
                         </a>
                     </td>
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <a href show-profile="game.uid">
+                        <a href show-profile="game">
                             <span class="app-table__name">{{ game.name }}</span>
                         </a>
                     </td>
@@ -102,12 +102,12 @@
             <tbody>
                 <tr ng-repeat="favorite in favorites">
                     <td class="app-table__avatar">
-                        <a href show-profile="favorite.uid">
+                        <a href show-profile="favorite">
                             <img avatar class="app-avatar" ng-src="{{ favorite.avatar }}">
                         </a>
                     </td>
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <a href show-profile="favorite.uid">
+                        <a href show-profile="favorite">
                             <span class="app-table__name">{{ favorite.name }}</span>
                         </a>
                     </td>
@@ -162,12 +162,12 @@
             <tbody>
                 <tr ng-repeat="challenger in challengers">
                     <td class="app-table__avatar">
-                        <a href show-profile="challenger.uid">
+                        <a href show-profile="challenger">
                             <img avatar class="app-avatar" ng-src="{{ challenger.avatar }}">
                         </a>
                     </td>
                     <td class="app-table__user mdl-data-table__cell--non-numeric">
-                        <a href show-profile="challenger.uid">
+                        <a href show-profile="challenger">
                             <span class="app-table__name">{{ challenger.name }}</span>
                         </a>
                     </td>

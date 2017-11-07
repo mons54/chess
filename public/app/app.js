@@ -363,7 +363,6 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
             delete $rootScope.refreshAccessToken;
             delete $rootScope.isDisconnected;
-            delete $rootScope.loadModalProfile;
             delete $rootScope.loading;
 
             $rootScope.ready = true;

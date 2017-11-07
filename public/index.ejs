@@ -408,7 +408,7 @@
 
                         <div class="app-profile__game-player">
                             <span ng-click="$event.stopPropagation()"
-                                  show-profile="game.data.white.uid"
+                                  show-profile="game.data.white"
                                   class="app-profile__game-name app__no-select">
                                 {{ game.data.white.name }}
                             </span>
@@ -416,7 +416,7 @@
                                 <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
                                 <img avatar 
                                      ng-click="$event.stopPropagation()"
-                                     show-profile="game.data.white.uid"
+                                     show-profile="game.data.white"
                                      class="app-avatar" 
                                      ng-src="{{ game.data.white.avatar }}">
                                 <i ng-if="game.data.white.isWinner" class="app-icon app-icon--star material-icons">star</i>
@@ -431,7 +431,7 @@
                         </div>
                         <div class="app-profile__game-player">
                             <span ng-click="$event.stopPropagation()"
-                                  show-profile="game.data.black.uid"
+                                  show-profile="game.data.black"
                                   class="app-profile__game-name app__no-select">
                                   {{ game.data.black.name }}
                             </span>
@@ -439,7 +439,7 @@
                                 <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
                                 <img avatar 
                                      ng-click="$event.stopPropagation()"
-                                     show-profile="game.data.black.uid"
+                                     show-profile="game.data.black"
                                      class="app-avatar" 
                                      ng-src="{{ game.data.black.avatar }}">
                                 <i ng-if="game.data.black.isWinner" class="app-icon app-icon--star material-icons">star</i>
@@ -503,14 +503,14 @@
                                         </thead>
                                         <tbody ng-if="challenges.length">
                                             <tr ng-repeat="challenge in challenges"
-                                                show-profile="challenge.uid">
+                                                show-profile="challenge">
                                                 <td class="app-table__avatar">
-                                                    <a href show-profile="challenge.uid">
+                                                    <a href show-profile="challenge">
                                                         <img avatar class="app-avatar" ng-src="{{ challenge.avatar }}">
                                                     </a>
                                                 </td>
                                                 <td class="app-table__user mdl-data-table__cell--non-numeric">
-                                                    <a href show-profile="challenge.uid">
+                                                    <a href show-profile="challenge">
                                                         <span class="app-table__name">{{ challenge.name }}</span>
                                                     </a>
                                                 </td>
@@ -631,31 +631,38 @@
                             <div class="app-profile__card-name">{{ profile.name }}</div>
                         </div>
                         <div class="app-modal__content">
-                            <profile-actions></profile-actions>
-                            <profile-game game-type="'blitz'" game-data="profile.blitz" uid="profile.uid" show-more="!user.gid"></profile-game>
-                            <profile-game game-type="'rapid'" game-data="profile.rapid" uid="profile.uid" show-more="!user.gid"></profile-game>
-                            <div class="app-profile__info-game">
-                                <div class="app-profile__info-title">
-                                    {{ 'trophies.title'|translate }}
-                                    <a ng-if="!user.gid"
-                                       ng-href="/user/{{ profile.uid }}/trophies"
-                                       class="app-profile__info-more">
-                                        <i class="material-icons">open_in_new</i>
-                                    </a>
-                                </div>
-                                <div data-trophies class="app-profile__trophies">
-                                    <div ng-repeat="trophy in profile.trophies"
-                                         ng-class="{'no-trophy': trophy < 100 }"
-                                         id="trophy-{{ $index }}"
-                                         class="app-profile__trophy">
-                                        <img ng-src="/images/trophies/trophy-{{ $index + 1 }}.svg">
-                                        <div class="mdl-tooltip mdl-tooltip--top" data-mdl-for="trophy-{{ $index }}">
-                                            {{ 'trophies.content.' + ($index + 1) + '.title' | translate }} 
-                                            · 
-                                            {{ 'trophies.content.' + ($index + 1) + '.description' | translate }}
+                            <div ng-show="profile.ready">
+                                <profile-actions></profile-actions>
+                                <profile-game game-type="'blitz'" game-data="profile.blitz" uid="profile.uid" show-more="!user.gid"></profile-game>
+                                <profile-game game-type="'rapid'" game-data="profile.rapid" uid="profile.uid" show-more="!user.gid"></profile-game>
+                                <div class="app-profile__info-game">
+                                    <div class="app-profile__info-title">
+                                        {{ 'trophies.title'|translate }}
+                                        <a ng-if="!user.gid"
+                                           ng-href="/user/{{ profile.uid }}/trophies"
+                                           class="app-profile__info-more">
+                                            <i class="material-icons">open_in_new</i>
+                                        </a>
+                                    </div>
+                                    <div data-trophies class="app-profile__trophies">
+                                        <div ng-repeat="trophy in profile.trophies"
+                                             ng-class="{'no-trophy': trophy < 100 }"
+                                             id="trophy-{{ $index }}"
+                                             class="app-profile__trophy">
+                                            <img ng-src="/images/trophies/trophy-{{ $index + 1 }}.svg">
+                                            <div class="mdl-tooltip mdl-tooltip--top" data-mdl-for="trophy-{{ $index }}">
+                                                {{ 'trophies.content.' + ($index + 1) + '.title' | translate }} 
+                                                · 
+                                                {{ 'trophies.content.' + ($index + 1) + '.description' | translate }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="app-profile__load"
+                                 ng-show="!profile.ready">
+                                <div data-spinner class="mdl-spinner mdl-js-spinner is-active"></div>
                             </div>
                         </div>
                     </div>
