@@ -1006,6 +1006,7 @@ a {
 
 .app-modal--profile .app-modal__content {
   padding-top: 28px;
+  min-height: 700px;
 }
 
 .app-profile__action {
@@ -3364,6 +3365,7 @@ a {
 
   .app-modal--profile .app-modal__content {
     padding-top: 24px;
+    min-height: auto;
   }
 
   .app-profile__game-board {
