@@ -527,18 +527,20 @@ module.exports = function (io) {
 
         return db.all([
             db.count('games', {
-                type: type,
-                $or: [{ 
+                $or: [{
+                    type: type,
                     white: white.uid 
-                }, { 
+                }, {
+                    type: type,
                     black: white.uid 
                 }]
             }),
-            db.count('games', { 
-                type: type, 
-                $or: [{ 
+            db.count('games', {
+                $or: [{
+                    type: type, 
                     white: black.uid 
                 }, { 
+                    type: type,
                     black: black.uid 
                 }] 
             })
@@ -987,31 +989,34 @@ module.exports = function (io) {
                     }
                 }),
                 db.count('games', {
-                    type: 'blitz',
                     $or: [{
+                        type: 'blitz',
                         white: uid,
                         result: 1
                     }, {
+                        type: 'blitz',
                         black: uid,
                         result: 2
                     }]
                 }),
                 db.count('games', {
-                    type: 'blitz',
                     $or: [{
+                        type: 'blitz',
                         white: uid,
                         result: 0
                     }, {
+                        type: 'blitz',
                         black: uid,
                         result: 0
                     }]
                 }),
                 db.count('games', {
-                    type: 'blitz',
                     $or: [{
+                        type: 'blitz',
                         white: uid,
                         result: 2
                     }, {
+                        type: 'blitz',
                         black: uid,
                         result: 1
                     }]
@@ -1023,31 +1028,34 @@ module.exports = function (io) {
                     }
                 }),
                 db.count('games', {
-                    type: 'rapid',
                     $or: [{
+                        type: 'rapid',
                         white: uid,
                         result: 1
                     }, {
+                        type: 'rapid',
                         black: uid,
                         result: 2
                     }]
                 }),
                 db.count('games', {
-                    type: 'rapid',
                     $or: [{
+                        type: 'rapid',
                         white: uid,
                         result: 0
                     }, {
+                        type: 'rapid',
                         black: uid,
                         result: 0
                     }]
                 }),
                 db.count('games', {
-                    type: 'rapid',
                     $or: [{
+                        type: 'rapid',
                         white: uid,
                         result: 2
                     }, {
+                        type: 'rapid',
                         black: uid,
                         result: 1
                     }]
@@ -1087,20 +1095,22 @@ module.exports = function (io) {
             request = [];
 
         request.push(db.find('games', {
-            type: type,
             $or: [{
+                type: type,
                 white: data.uid
             }, {
+                type: type,
                 black: data.uid
             }]
         }).sort({date: -1}).limit(10).skip(parseInt(data.offset)));
 
         if (typeof data.count !== 'number') {
             request.push(db.count('games', {
-                type: type,
                 $or: [{
+                    type: type,
                     white: data.uid
                 }, {
+                    type: type,
                     black: data.uid
                 }]
             }));
@@ -1358,10 +1368,11 @@ module.exports = function (io) {
                 }]
             }),
             db.count('games', {
-                date: { $gt: date }, 
                 $or: [{
+                    date: { $gt: date }, 
                     white: uid
                 }, {
+                    date: { $gt: date }, 
                     black: uid
                 }]
             })
