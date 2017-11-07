@@ -1,7 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    q = require('q');
+    q = require('q'),
+    maxTime = 1000;
 
 mongoose.Promise = q.Promise;
 
@@ -93,11 +94,11 @@ Module.prototype.all = function (promises) {
 };
 
 Module.prototype.findOne = function (model, request, fields) {
-    return this.models[model].findOne(request, fields);
+    return this.models[model].findOne(request, fields).maxTime(maxTime);
 };
 
 Module.prototype.find = function (model, request) {
-    return this.models[model].find(request);
+    return this.models[model].find(request).maxTime(maxTime);
 };
 
 Module.prototype.count = function (model, request) {
@@ -111,6 +112,7 @@ Module.prototype.exec = function (model, request, sort, skip, limit, hint) {
     .skip(skip)
     .limit(limit)
     .hint(hint)
+    .maxTime(maxTime)
     .exec();
 };
 
