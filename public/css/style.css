@@ -1458,13 +1458,13 @@ a {
 }
 
 .app-element .app-element__body {
-  max-height: 308px;
+  max-height: 309px;
   border-top: 1px solid rgba(0,0,0,.12);
   overflow-x: auto;
 }
 
 .app-element--created-games .app-element__body {
-  height: 308px;
+  height: 309px;
 }
 
 .app-element__body .app-spinner {
