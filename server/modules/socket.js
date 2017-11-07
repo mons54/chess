@@ -527,28 +527,26 @@ module.exports = function (io) {
 
         return db.all([
             db.count('games', {
-                $or: [{
-                    type: type,
-                    white: white.uid 
-                }, {
-                    type: type,
-                    black: white.uid 
-                }]
+                type: type,
+                white: white.uid
             }),
             db.count('games', {
-                $or: [{
-                    type: type, 
-                    white: black.uid 
-                }, { 
-                    type: type,
-                    black: black.uid 
-                }] 
+                type: type,
+                black: white.uid
+            }),
+            db.count('games', { 
+                type: type, 
+                white: black.uid
+            }),
+            db.count('games', { 
+                type: type, 
+                black: black.uid
             })
         ]).
         then(function (response) {
 
-            white.countGame = response[0];
-            black.countGame = response[1];
+            white.countGame = response[0] + response[1];
+            black.countGame = response[2] + response[3];
 
             game = moduleGame.start(white, black, dataGame.game);
 
@@ -989,37 +987,34 @@ module.exports = function (io) {
                     }
                 }),
                 db.count('games', {
-                    $or: [{
-                        type: 'blitz',
-                        white: uid,
-                        result: 1
-                    }, {
-                        type: 'blitz',
-                        black: uid,
-                        result: 2
-                    }]
+                    type: 'blitz',
+                    white: uid,
+                    result: 1
                 }),
                 db.count('games', {
-                    $or: [{
-                        type: 'blitz',
-                        white: uid,
-                        result: 0
-                    }, {
-                        type: 'blitz',
-                        black: uid,
-                        result: 0
-                    }]
+                    type: 'blitz',
+                    black: uid,
+                    result: 2
                 }),
                 db.count('games', {
-                    $or: [{
-                        type: 'blitz',
-                        white: uid,
-                        result: 2
-                    }, {
-                        type: 'blitz',
-                        black: uid,
-                        result: 1
-                    }]
+                    type: 'blitz',
+                    white: uid,
+                    result: 0
+                }),
+                db.count('games', {
+                    type: 'blitz',
+                    black: uid,
+                    result: 0
+                }),
+                db.count('games', {
+                    type: 'blitz',
+                    white: uid,
+                    result: 2
+                }),
+                db.count('games', {
+                    type: 'blitz',
+                    black: uid,
+                    result: 1
                 }),
                 db.count('users', {
                     active_rapid: true,
@@ -1028,50 +1023,47 @@ module.exports = function (io) {
                     }
                 }),
                 db.count('games', {
-                    $or: [{
-                        type: 'rapid',
-                        white: uid,
-                        result: 1
-                    }, {
-                        type: 'rapid',
-                        black: uid,
-                        result: 2
-                    }]
+                    type: 'rapid',
+                    white: uid,
+                    result: 1
                 }),
                 db.count('games', {
-                    $or: [{
-                        type: 'rapid',
-                        white: uid,
-                        result: 0
-                    }, {
-                        type: 'rapid',
-                        black: uid,
-                        result: 0
-                    }]
+                    type: 'rapid',
+                    black: uid,
+                    result: 2
                 }),
                 db.count('games', {
-                    $or: [{
-                        type: 'rapid',
-                        white: uid,
-                        result: 2
-                    }, {
-                        type: 'rapid',
-                        black: uid,
-                        result: 1
-                    }]
+                    type: 'rapid',
+                    white: uid,
+                    result: 0
+                }),
+                db.count('games', {
+                    type: 'rapid',
+                    black: uid,
+                    result: 0
+                }),
+                db.count('games', {
+                    type: 'rapid',
+                    white: uid,
+                    result: 2
+                }),
+                db.count('games', {
+                    type: 'rapid',
+                    black: uid,
+                    result: 1
                 })
             ]);
         })
         .then(function (response) {
             data.blitz.ranking = response[0] + 1;
-            data.blitz.wins = response[1];
-            data.blitz.draws = response[2];
-            data.blitz.losses = response[3];
+            data.blitz.wins = response[1] + response[2];
+            data.blitz.draws = response[3] + response[4];
+            data.blitz.losses = response[5] + response[6];
 
-            data.rapid.ranking = response[4] + 1;
-            data.rapid.wins = response[5];
-            data.rapid.draws = response[6];
-            data.rapid.losses = response[7];
+            data.rapid.ranking = response[7] + 1;
+            data.rapid.wins = response[8] + response[9];
+            data.rapid.draws = response[10] + response[11];
+            data.rapid.losses = response[12] + response[13];
 
             socket.emit('profile', data);
         });
@@ -1095,22 +1087,20 @@ module.exports = function (io) {
             request = [];
 
         request.push(db.find('games', {
+            type: type,
             $or: [{
-                type: type,
                 white: data.uid
             }, {
-                type: type,
                 black: data.uid
             }]
         }).sort({date: -1}).limit(10).skip(parseInt(data.offset)));
 
         if (typeof data.count !== 'number') {
             request.push(db.count('games', {
+                type: type,
                 $or: [{
-                    type: type,
                     white: data.uid
                 }, {
-                    type: type,
                     black: data.uid
                 }]
             }));
@@ -1351,37 +1341,34 @@ module.exports = function (io) {
         date.setDate(date.getDate() - 1);
 
         db.all([
-            db.count('games', { 
-                $or: [{ 
-                    white: uid 
-                }, { 
-                    black: uid 
-                }] 
-            }),
-            db.count('games', { 
-                $or: [{
-                    black: uid, 
-                    result: 2 
-                }, {
-                    white: uid, 
-                    result: 1 
-                }]
+            db.count('games', {
+                white: uid
             }),
             db.count('games', {
-                $or: [{
-                    date: { $gt: date }, 
-                    white: uid
-                }, {
-                    date: { $gt: date }, 
-                    black: uid
-                }]
+                black: uid
+            }),
+            db.count('games', {
+                white: uid, 
+                result: 1
+            }),
+            db.count('games', {
+                black: uid, 
+                result: 2
+            }),
+            db.count('games', {
+                white: uid,
+                date: { $gt: date }
+            }),
+            db.count('games', {
+                black: uid,
+                date: { $gt: date }
             })
         ]).then(function (response) {
 
             var newTrophies = {},
-                games = response[0],
-                wins = response[1],
-                gamesDay = response[2],
+                games = response[0] + response[1],
+                wins = response[2] + response[3],
+                gamesDay = response[4] + response[5],
                 trophies = {
                     1:  getProgression(1, games, 1),
                     2:  getProgression(2, games, 100),
