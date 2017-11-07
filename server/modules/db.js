@@ -74,6 +74,7 @@ function Module() {
                 date: Date,
                 data: Object
             })
+            .index({type: 1})
             .index({result: 1})
             .index({white: 1})
             .index({black: 1})
