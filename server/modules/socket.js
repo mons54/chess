@@ -1097,12 +1097,13 @@ module.exports = function (io) {
 
         if (typeof data.count !== 'number') {
             request.push(db.count('games', {
-                type: type,
-                $or: [{
-                    white: data.uid
-                }, {
-                    black: data.uid
-                }]
+                white: data.uid,
+                type: type
+            }));
+
+            request.push(db.count('games', {
+                black: data.uid,
+                type: type
             }));
         }
 
@@ -1111,7 +1112,7 @@ module.exports = function (io) {
                 type: type,
                 games: response[0],
                 offset: data.offset + response[0].length,
-                count: response[1] ? response[1] : data.count
+                count: response[1] ? response[1] + response[2] : data.count
             });
         });
     };
