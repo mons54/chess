@@ -631,7 +631,8 @@
                             <div class="app-profile__card-name">{{ profile.name }}</div>
                         </div>
                         <div class="app-modal__content">
-                            <div ng-show="profile.ready">
+                            <div ng-show="profile.ready"
+                                 data-profile-content>
                                 <profile-actions></profile-actions>
                                 <profile-game game-type="'blitz'" game-data="profile.blitz" uid="profile.uid" show-more="!user.gid"></profile-game>
                                 <profile-game game-type="'rapid'" game-data="profile.rapid" uid="profile.uid" show-more="!user.gid"></profile-game>

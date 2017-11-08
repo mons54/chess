@@ -151,9 +151,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     elementModal.one('hide', function () {
 
-                        scope.$apply(function () {
-                            delete scope.profile;
-                        });
+                        element.find('[data-profile-content]').addClass('ng-hide');
 
                         $rootScope.setFavorite(value.uid, scope.isFavorite);
                         $rootScope.setBlackList(value.uid, scope.isBlackList);
