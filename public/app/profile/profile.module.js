@@ -124,7 +124,7 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                 $rootScope.$on('showProfile', function (event, value) {
 
-                    if (!value || scope.load) {
+                    if (!value || $rootScope.loadProfile) {
                         return;
                     }
 
@@ -134,16 +134,16 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     elementModal.show();
 
-                    scope.load = true;
+                    $rootScope.loadProfile = true;
                 });
 
                 socket.on('profile', function (value) {
 
-                    if (!scope.load) {
+                    if (!$rootScope.loadProfile) {
                         return;
                     }
 
-                    delete scope.load;
+                    delete $rootScope.loadProfile;
 
                     scope.profile = value;
 
