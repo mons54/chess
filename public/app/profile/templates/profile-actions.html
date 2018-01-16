@@ -2,8 +2,8 @@
     <button ng-if="user.uid !== profile.uid"
             ng-click="toogleBlackList()"
             class="app-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-        <i ng-if="!isBlackList" class="app-icon app-icon--blacklist material-icons">block</i>
-        <i ng-if="isBlackList" class="app-icon app-icon--blacklist-selected material-icons">block</i>
+        <i ng-if="!isBlackListed" class="app-icon app-icon--blacklist material-icons">block</i>
+        <i ng-if="isBlackListed" class="app-icon app-icon--blacklist-selected material-icons">block</i>
     </button>
     <button ng-if="user.uid !== profile.uid"
             ng-disabled="isFriend"

@@ -411,13 +411,8 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
 
         $rootScope.setBlackList = function (uid, value) {
 
-            if (!$rootScope.user.blackList) {
-                return;
-            }
-
-            var isBlackList = $rootScope.isBlackList(uid);
-            
-            if (value === isBlackList) {
+            if (!$rootScope.user.blackList || 
+                value === $rootScope.isBlackList(uid)) {
                 return;
             }
             

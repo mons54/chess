@@ -348,13 +348,13 @@ module.exports = function (io) {
             return;
         }
 
-        var blackList = [];
+        var blackList = {};
         
         if (data.blackList instanceof Object) {
             var expires  = this.getBlackListExpires();
             for (var uid in data.blackList) {
                 if (!data.blackList[uid] || data.blackList[uid] >= expires) {
-                    blackList.push(uid);
+                    blackList[uid] = data.blackList[uid];
                 }
             };
         }
@@ -380,7 +380,7 @@ module.exports = function (io) {
             socket.emit('user', {
                 blitz: socket.blitz,
                 rapid: socket.rapid,
-                blackList: socket.blackList,
+                blackList: Object.keys(socket.blackList),
                 favorites: socket.favorites,
                 trophies: data.trophies
             });
@@ -421,41 +421,35 @@ module.exports = function (io) {
     };
 
     Module.prototype.addBlackList = function (socket, uid) {
-        
+
         if (!db.isObjectId(uid) ||
-            !Array.isArray(socket.blackList) ||
-            socket.blackList.indexOf(uid) !== -1) {
+            socket.blackList.hasOwnProperty(uid)) {
             return;
         }
-
-        socket.blackList.push(uid);
 
         var data = {};
 
         data['blackList.' + uid] = null;
 
-        db.update('users', { _id: db.objectId(socket.uid) }, data);
+        db.update('users', { _id: db.objectId(socket.uid) }, data).then(function () {
+            socket.blackList[uid] = null;
+        });
     };
 
     Module.prototype.removeBlackList = function (socket, uid) {
 
-        var index;
-
-        if (Array.isArray(socket.blackList)) {
-            index = socket.blackList.indexOf(uid);
-        }
-
-        if (index === -1) {
+        if (!db.isObjectId(uid) ||
+            !socket.blackList.hasOwnProperty(uid)) {
             return;
         }
-
-        socket.blackList.splice(index, 1);
 
         var data = {};
 
         data['blackList.' + uid] = 1;
 
-        db.unset('users', { _id: db.objectId(socket.uid) }, data);
+        db.unset('users', { _id: db.objectId(socket.uid) }, data).then(function () {
+            delete socket.blackList[uid];
+        });
     };
 
     Module.prototype.listGames = function () {
@@ -471,7 +465,7 @@ module.exports = function (io) {
     };
 
     Module.prototype.isBlackListed = function (data, uid) {
-        return data.indexOf(uid) !== -1;
+        return data.hasOwnProperty(uid);
     };
 
     Module.prototype.checkStartGame = function (socket, uid) {
@@ -660,7 +654,10 @@ module.exports = function (io) {
         return date.getTime();
     };
 
-    Module.prototype.getNewBlackList = function (blackList, lastGame, newGame, game, color) {
+    Module.prototype.getNewBlackList = function (data, newGame, game, color) {
+
+        var blackList = data.blackList,
+            lastGame = data.lastGame;
 
         if (!(blackList instanceof Object)) {
             blackList = {};
@@ -674,8 +671,9 @@ module.exports = function (io) {
         }
 
         if (lastGame && lastGame === newGame) {
-            blackList[color === 'white' ? game.black.uid : game.white.uid] = Date.now();
-            console.log('blackList', blackList);
+            var uid = color === 'white' ? game.black.uid : game.white.uid;
+            blackList[uid] = Date.now();
+            console.log('blackList: ' + data.id + ' => ' + uid);
         }
 
         return blackList;
@@ -769,8 +767,8 @@ module.exports = function (io) {
 
             data.white.success = this.getNewSuccess(response[0].success, result, 1);
             data.black.success = this.getNewSuccess(response[1].success, result, 2);
-            data.white.blackList = this.getNewBlackList(response[0].blackList, response[0].lastGame, hashGame, game, 'white');
-            data.black.blackList = this.getNewBlackList(response[1].blackList, response[1].lastGame, hashGame, game, 'black');
+            data.white.blackList = this.getNewBlackList(response[0], hashGame, game, 'white');
+            data.black.blackList = this.getNewBlackList(response[1], hashGame, game, 'black');
             data.white.countGame = white.countGame + 1;
             data.black.countGame = black.countGame + 1;
 
@@ -943,7 +941,7 @@ module.exports = function (io) {
                 name: socket.name,
                 blitz: socket.blitz,
                 rapid: socket.rapid,
-                blackList: socket.blackList
+                blackList: Object.keys(socket.blackList)
             });
         }
 
