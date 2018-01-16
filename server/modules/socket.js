@@ -551,6 +551,7 @@ module.exports = function (io) {
             game = moduleGame.start(white, black, dataGame.game);
 
             game.rematch = {
+                uid: socketOpponent.uid,
                 game: dataGame.game.index,
                 color: dataGame.color
             };

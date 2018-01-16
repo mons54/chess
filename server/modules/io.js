@@ -423,10 +423,7 @@ module.exports = function (app, io) {
                 socketOpponent = moduleSocket.getSocket(game.uid);
 
             if (socketOpponent && !moduleSocket.getUserGame(socketOpponent.uid)) {
-                moduleSocket.
-                startGame(socket, socketOpponent, game).
-                then(deferred.resolve).
-                catch(deferred.resolve);
+                moduleSocket.startGame(socket, socketOpponent, game).then(deferred.resolve).catch(deferred.resolve);
             } else {
                 deferred.resolve(moduleGame.deleteCreatedGame(game.uid));
             }

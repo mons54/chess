@@ -444,10 +444,11 @@ controller('gameCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$f
         };
 
         $scope.rematch = function () {
+            var rematch = $scope.game.rematch;
             socket.emit('createChallenge', {
                 uid: $scope.game.white.uid === $rootScope.user.uid ? $scope.game.black.uid : $scope.game.white.uid,
-                color: $scope.game.rematch.color,
-                game: $scope.game.rematch.game
+                color: rematch.color && rematch.uid !== $rootScope.user.uid ? (rematch.color === 'white' ? 'black' : 'white') : rematch.color,
+                game: rematch.game
             });
         };
 
