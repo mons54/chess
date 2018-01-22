@@ -156,7 +156,6 @@ controller('homeCtrl', ['$rootScope', '$scope', '$sce', '$timeout', 'socket', 't
         $scope.blackList = blackList;
 
         function blackList (data) {
-            console.log(data.blackList)
             return $rootScope.user.blackList &&
                    $rootScope.user.blackList.indexOf(data.uid) !== -1 ||
                    data.blackList.indexOf($rootScope.user.uid) !== -1;
