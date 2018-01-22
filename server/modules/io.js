@@ -133,8 +133,8 @@ module.exports = function (app, io) {
                 game = moduleGame.getGameType(data.game);
 
             if (!socketOpponent ||
-                socket.blackList.indexOf(data.uid) !== -1 ||
-                socketOpponent.blackList.indexOf(socket.uid) !== -1) {
+                socket.blackList.hasOwnProperty(data.uid) ||
+                socketOpponent.blackList.hasOwnProperty(socket.uid)) {
                 return;
             }
 
@@ -242,8 +242,8 @@ module.exports = function (app, io) {
             var createdGame = moduleGame.createdGame[uid];
 
             if (!createdGame || 
-                socket.blackList.indexOf(uid) !== -1 || 
-                createdGame.blackList.indexOf(socket.uid) !== -1) {
+                socket.blackList.hasOwnProperty(uid) || 
+                createdGame.blackList.hasOwnProperty(socket.uid)) {
                 callback(false);
                 return;
             }

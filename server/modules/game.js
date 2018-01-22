@@ -24,7 +24,7 @@ Game.prototype.create = function (socket, data) {
         pointsMax = data.pointsMax ? parseInt(data.pointsMax) : null,
         uid = socket.uid,
         points = socket[game.type].points,
-        blackList = socket.blackList;
+        blackList = Object.keys(socket.blackList);
 
     if (pointsMin && pointsMin < this.options.pointsMin) {
         pointsMin = this.options.pointsMin;
