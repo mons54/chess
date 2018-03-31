@@ -109,8 +109,8 @@ directive('profileActions', ['$rootScope',
  * @restrict E
  * @scope
  */
-directive('modalProfile', ['$rootScope', 'socket', 'modal',
-    function ($rootScope, socket, modal) {
+directive('modalProfile', ['$rootScope', '$timeout', 'socket', 'modal',
+    function ($rootScope, $timeout, socket, modal) {
         return {
             restrict: 'E',
             replace: true,
@@ -118,13 +118,11 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
             templateUrl: 'modal-profile.html',
             link: function (scope, element) {
 
-                componentHandler.upgradeElement($('[data-spinner]')[0]);
-
                 var elementModal = modal(element);
 
                 $rootScope.$on('showProfile', function (event, value) {
 
-                    if (!value || scope.load) {
+                    if (!value || $rootScope.loadProfile) {
                         return;
                     }
 
@@ -132,29 +130,26 @@ directive('modalProfile', ['$rootScope', 'socket', 'modal',
 
                     socket.emit('profile', value.uid);
 
-                    elementModal.show();
+                    $timeout(function () {
+                        elementModal.show();
+                    });
 
-                    scope.load = true;
+                    $rootScope.loadProfile = true;
                 });
 
                 socket.on('profile', function (value) {
 
-                    if (!scope.load) {
+                    if (!$rootScope.loadProfile) {
                         return;
                     }
 
-                    delete scope.load;
+                    delete $rootScope.loadProfile;
 
                     scope.profile = value;
 
                     scope.profile.ready = true;
 
                     elementModal.one('hide', function () {
-
-                        scope.$apply(function () {
-                            delete scope.profile;
-                        });
-
                         $rootScope.setFavorite(value.uid, scope.isFavorite);
                         $rootScope.setBlackList(value.uid, scope.isBlackList);
                     });

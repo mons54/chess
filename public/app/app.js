@@ -361,6 +361,7 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                 lang: data.lang
             });
 
+            delete $rootScope.loadProfile;
             delete $rootScope.refreshAccessToken;
             delete $rootScope.isDisconnected;
             delete $rootScope.loading;
