@@ -58,6 +58,10 @@ function Module() {
                 trophies: Object,
                 favorites: Array
             })
+            .index({blitz: 1})
+            .index({active_blitz: 1})
+            .index({rapid: 1})
+            .index({active_rapid: 1})
         ),
         games: mongoose.model('games', 
             new mongoose.Schema({
@@ -69,6 +73,11 @@ function Module() {
                 data: Object,
                 progress: Boolean
             })
+            .index({progress: 1})
+            .index({white: 1, date: 1})
+            .index({black: 1, date: 1})
+            .index({white: 1, type: 1, result: 1})
+            .index({black: 1, type: 1, result: 1})
         )
     };
 }
