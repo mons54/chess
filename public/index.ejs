@@ -792,7 +792,14 @@
             <script src="https://vk.com/js/api/xd_connection.js?2"></script>
         <% } else { %>
             <div id="vk-root"></div>
-            <script src="https://ads.lfstmedia.com/getad?site=287948" async defer></script>
+            <script type="text/javascript">
+                if (window.innerWidth > 800) {
+                    var script = document.createElement('script');
+                    script.src = 'https://ads.lfstmedia.com/getad?site=287948';
+                    script.type  = 'text/javascript';
+                    document.getElementsByTagName('body')[0].appendChild(script);
+                }
+            </script>
         <% } %>
 
         <% if (okru) { %>

@@ -11,20 +11,20 @@
         "ejs": "2.5.5",
         "express": "4.14.0",
         "google-auth-library": "0.10.0",
-        "mongoose": "4.6.5",
+        "mongoose": "^5.0.15",
         "ok.ru": "1.2.0",
         "q": "1.4.1",
         "request": "2.79.0",
-        "socket.io": "1.5.1",
+        "socket.io": "^2.1.0",
         "timesync": "0.4.1",
         "vk-call": "1.0.0"
     },
     "devDependencies": {
         "gulp": "*",
-        "gulp-ngdocs": "*",
         "gulp-concat": "*",
-        "gulp-uglify": "*",
         "gulp-minify-css": "*",
+        "gulp-ngdocs": "*",
+        "gulp-uglify": "*",
         "supervisor": "*"
     }
 }

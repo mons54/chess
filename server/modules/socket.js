@@ -29,7 +29,7 @@ module.exports = function (io) {
         this.connected = {};
         this.userGames = {};
         this.timeout = {};
-        db.find('games', { result: null }).then(function(response) {
+        db.find('games', { progress: true }).then(function(response) {
             response.forEach(function (game) {
                 moduleGame.setTimeTurn(game.data);
                 moduleGame.setGame(game.id, game.data);
@@ -559,6 +559,7 @@ module.exports = function (io) {
                     white: white.uid,
                     black: black.uid,
                     data: game,
+                    progress: true,
                     result: null
                 }).
                 catch(function() {
@@ -758,6 +759,7 @@ module.exports = function (io) {
             db.findOne('users', { _id: db.objectId(black.uid) }),
             db.update('games', { _id: db.objectId(game.id) }, {
                 result: result,
+                progress: false,
                 data: game
             })
         ]).then(function (response) {
