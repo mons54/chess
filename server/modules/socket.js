@@ -1149,20 +1149,17 @@ module.exports = function (io) {
 
     Module.prototype.initRanking = function (socket, page, limit, user, type, pages) {
 
-        var active = {},
-            request,
+        var request = {},
             data,
             offset,
             count,
             position;
 
-        active['active_' + type] = true;
+        request['active_' + type] = true;
 
         if (user) {
-            request = { $and: [active, { _id: { $ne: db.objectId(socket.uid) } }] };
-        } else {
-            request = active;
-        }
+            request._id = { $ne: db.objectId(socket.uid) }
+        } 
 
         db.count('users', request)
         .then(function (response) {
