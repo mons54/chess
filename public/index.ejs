@@ -120,6 +120,14 @@
              ng-show="ready && !loading" 
              ng-class="{'is-user-game': user.gid, 'is-game': isGame, 'is-toggle': isToggle }"
              data-layout>
+
+             <% if (facebook || vkontakte) { %>
+                <div style="text-align: center; background-color: #607D8B">
+                    <a href="https://www.worldofchess.online" 
+                       target="_blank"
+                       style="color: #f3f3f3; display: block; padding: 2px 0;">www.worldofchess.online</a>
+                </div>
+            <% } %>
              
             <header class="app-header mdl-layout__header">
                 <div class="app-header__row mdl-layout__header-row">
@@ -281,13 +289,7 @@
                 <div ng-show="loadingContent" class="app-overlay">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                 </div>
-                <% if (facebook || vkontakte) { %>
-                    <div style="margin-top: 16px; text-align: center;">
-                        <a href="https://www.worldofchess.online" target="_blank" name="top">www.worldofchess.online</a>
-                    </div>
-                <% } else { %>
-                    <a name="top"></a>
-                <% } %>
+                <a name="top"></a>
                 <% if (!vkontakte) { %>
                     <div id="ad-header" ng-hide="user.gid"></div>
                 <% } %>
