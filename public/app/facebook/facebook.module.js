@@ -1,7 +1,7 @@
 /**
  * @ngdoc overview
  * @name facebook
- * @description 
+ * @description
  * Facebook module
  */
 angular.module('facebook', []).
@@ -17,16 +17,16 @@ constant('facebookAppId', $('html').data('env') === 'dev' ? '1709923609297773' :
 /**
  * @ngdoc service
  * @name facebook.service:facebook
- * @description 
+ * @description
  * Facebook service.
  * @requires $rootScope
  * @requires facebook.constant:facebookAppId
  * @requires global.service:user
  * @requires global.service:socket
  */
-service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId',
+service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId', 'translator',
 
-    function ($rootScope, user, socket, facebookAppId) {
+    function ($rootScope, user, socket, facebookAppId, translator) {
 
         var self = this;
 
@@ -37,7 +37,8 @@ service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId',
             if (response.status === 'connected') {
                 self.auth = {
                     id: response.authResponse.userID,
-                    accessToken: response.authResponse.accessToken
+                    accessToken: response.authResponse.accessToken,
+                    lang: translator.navigator
                 };
             } else {
                 delete self.auth;
@@ -109,13 +110,13 @@ service('facebook', ['$rootScope', 'user', 'socket', 'facebookAppId',
             if (!this.isFacebookApp) {
                 user.setLogin(this.name);
             }
-            
+
             socket.connect();
 
             if ($rootScope.user.friends.length) {
                 return;
             }
-                        
+
             $rootScope.user.friends.push(this.auth.id);
 
             FB.api('/me/friends?fields=installed,id,name', function (res) {
