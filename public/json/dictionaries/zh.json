@@ -57,6 +57,7 @@
     "login_with_google":"与Google登录",
     "login_with_vkontakte":"与VK登录",
     "logout":"退出",
+    "adblock": "停用adblock即可播放",
     "trophies":{
         "title":"奖杯",
         "content":{

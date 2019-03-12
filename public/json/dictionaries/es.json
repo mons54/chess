@@ -57,6 +57,7 @@
     "login_with_google":"Inicia con Google",
     "login_with_vkontakte":"Inicia con VK",
     "logout":"Salir",
+    "adblock": "Deshabilita adblock para jugar",
     "trophies":{
         "title":"Trofeos",
         "content":{

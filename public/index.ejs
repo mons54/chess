@@ -79,9 +79,9 @@
         </div>
 
         <div id="modal-adblock"
-             class="app-modal app-overlay"
-             style="background-color: #FF5722">
+             class="app-modal app-overlay app-modal--adblock">
             <img src="/images/adblock.png">
+            <h1>{{ 'adblock' | translate }}</h1>
         </div>
 
         <div id="modal-connect" 
@@ -804,8 +804,7 @@
 
         <% if (vkontakte) { %>
             <script src="https://vk.com/js/api/xd_connection.js?2"></script>
-        <% } else { %>
-            <div id="vk-root"></div>
+        <% } else  { %>
             <script type="text/javascript">
                 if (window.innerWidth > 800) {
                     var script = document.createElement('script');
@@ -814,13 +813,16 @@
                     document.getElementsByTagName('body')[0].appendChild(script);
                 }
             </script>
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({
-                      google_ad_client: "ca-pub-7922409685664362",
-                      enable_page_level_ads: true
-                 });
-            </script>
+            <% if (!facebook) { %>
+                <div id="vk-root"></div>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({
+                          google_ad_client: "ca-pub-7922409685664362",
+                          enable_page_level_ads: true
+                     });
+                </script>
+            <% } %>
         <% } %>
 
         <% if (okru) { %>

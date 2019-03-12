@@ -57,6 +57,7 @@
     "login_with_google":"تسجيل الدخول مع جوجل",
     "login_with_vkontakte":"تسجيل الدخول مع فكونتاكتي",
     "logout":"تسجيل الخروج",
+    "adblock": "تعطيل adblock للعب",
     "trophies":{
         "title":"الجوائز",
         "content":{

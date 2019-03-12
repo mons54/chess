@@ -366,6 +366,17 @@ a {
   width: 112px;
 }
 
+.app-overlay.app-modal--adblock {
+  display: flex;
+  flex-direction: column;
+  background-color: #FF5722;
+}
+
+.app-overlay.app-modal--adblock h1 {
+  font-weight: 600;
+  color: #fff;
+}
+
 .app-badge[data-badge]:after {
   font-weight: normal;
   width: 20px;

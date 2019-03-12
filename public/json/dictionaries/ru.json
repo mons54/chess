@@ -57,6 +57,7 @@
     "login_with_google":"Войти через Google",
     "login_with_vkontakte":"Войти через VK",
     "logout":"Выйти",
+    "adblock": "Отключить adBlock, чтобы играть",
     "trophies":{
         "title":"Награды",
         "content":{

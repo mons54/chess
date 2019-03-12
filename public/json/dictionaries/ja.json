@@ -57,6 +57,7 @@
     "login_with_google":"Googleアカウントでログインする",
     "login_with_vkontakte":"VKアカウントでログインする",
     "logout":"ログアウト",
+    "adblock": "再生するadblockを無効にする",
     "trophies":{
         "title":"トロフィー",
         "content":{

@@ -57,6 +57,7 @@
     "login_with_google":"Connexion avec Google",
     "login_with_vkontakte":"Connexion avec VK",
     "logout":"Déconnexion",
+    "adblock": "Désactivez adblock pour jouer",
     "trophies":{
         "title":"Trophées",
         "content":{

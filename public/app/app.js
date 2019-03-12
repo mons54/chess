@@ -93,6 +93,9 @@ run(['$rootScope', '$route', '$location', '$window', '$timeout', '$interval', 'u
                     slot: 'slot174398',
                     _render_div_id: 'ad-fanpage'
                 });
+            } else {
+                modal('#modal-adblock').show();
+                socket.disconnect();
             }
         });
 
